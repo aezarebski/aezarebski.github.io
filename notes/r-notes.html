@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-28 Tue 21:27 -->
+<!-- 2019-05-30 Thu 22:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -244,6 +244,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org5f24310">1.2. R6 and OOP</a></li>
 <li><a href="#org1cd2d03">1.3. CRAN packages</a></li>
+<li><a href="#org1737a4c">1.4. Packrat for dependency management</a></li>
 </ul>
 </li>
 </ul>
@@ -350,11 +351,64 @@ If the package depends on a specific version of the package this can be added to
 </ul>
 </div>
 </div>
+
+<div id="outline-container-org1737a4c" class="outline-3">
+<h3 id="org1737a4c"><span class="section-number-3">1.4</span> Packrat for dependency management</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Packrat is developed by the team at RStudio.
+It relies on the notion of a <i>project</i>, which we might think of as a single analysis or collection of related analyses.
+A project should live in a single directory.
+To start a packrat project use
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">packrat::init<span style="color: #4f97d7;">()</span>
+</pre>
+</div>
+
+<p>
+This creates a directory <code>packrat</code> and a <code>.Rprofile</code> file.
+The profile file is how R knows to use the private library rather than the shared one.
+There is a file <code>packrat/packrat.lock</code> which contains the package details.
+</p>
+
+<p>
+Packages are installed as usual with <code>install.packages</code>, but now they will be stored in the private packrat library.
+Packages are not added to the <code>packrat.lock</code> file until a <i>snapshot</i> of the current packages is made
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">packrat::snapshot<span style="color: #4f97d7;">()</span>
+</pre>
+</div>
+
+<p>
+If you want a status report from packrat about how the packages there is <code>packrat::status</code>.
+To install local packages, packrat needs to be told where they live
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">packrat::set_opts<span style="color: #4f97d7;">(</span>local.repos = <span style="color: #2d9574;">"&lt;path/to/package&gt;"</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+When moving a project between machines the installed packages will probably break.
+However, the <code>packrat</code> directory stores copies of the source for each of the packages so they can be <i>restored</i>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">packrat::restore<span style="color: #4f97d7;">()</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-05-28 Tue 21:27</p>
+<p class="date">Created: 2019-05-30 Thu 22:03</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
