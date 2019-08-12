@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-20 Thu 21:23 -->
+<!-- 2019-08-12 Mon 22:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -227,6 +227,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -240,13 +262,21 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgf5017df">1.1.1. Package development loop</a></li>
 <li><a href="#org6db6431">1.1.2. Package dependencies</a></li>
+<li><a href="#org9daa779">1.1.3. Vignettes</a></li>
 </ul>
 </li>
 <li><a href="#orgcbb6347">1.2. R6 and OOP</a></li>
-<li><a href="#orga4f8243">1.3. CRAN packages</a></li>
-<li><a href="#org4201310">1.4. Packrat for dependency management</a></li>
-<li><a href="#orga0205df">1.5. String handling</a></li>
-<li><a href="#orgbcea7db">1.6. Cheat sheets</a></li>
+<li><a href="#orge5b175a">1.3. Packages I like</a></li>
+<li><a href="#orgdfb443e">1.4. Dependency management with <code>packrat</code></a></li>
+<li><a href="#orgc8d5d50">1.5. Package and project management with <code>usethis</code></a></li>
+<li><a href="#orgd5d9f41">1.6. String handling with <code>stringr</code></a></li>
+<li><a href="#orgc6f2ee1">1.7. Differential equations with <code>deSolve</code></a>
+<ul>
+<li><a href="#org4f88a7f">1.7.1. Basic SIR example</a></li>
+<li><a href="#org0cb9794">1.7.2. SIR example with C implementation</a></li>
+</ul>
+</li>
+<li><a href="#orgbcea7db">1.8. Cheat sheets</a></li>
 </ul>
 </li>
 </ul>
@@ -298,11 +328,12 @@ Here are some notes about package creation based on reading through that book.
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 The <code>DESCRIPTION</code> file is the place to go!
-<i>Hadley says:</i> use <code>use_package("foo", "bar")</code> to have <code>foo</code> and <code>bar</code> added to the dependencies of the package being developed.
+<i>Hadley says:</i> use <del><code>use_package("foo", "bar")</code></del> to have <code>foo</code> and <code>bar</code> added to the dependencies of the package being developed.
+The <code>devtools::use_packag</code> function has been deprecated in favour of <code>usethis::use_package</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">devtools::use_package<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"foo"</span>, <span style="color: #2d9574;">"bar"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">usethis::use_package<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"foo"</span>, <span style="color: #2d9574;">"bar"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -329,6 +360,16 @@ If the package depends on a specific version of the package this can be added to
 </div>
 </div>
 </div>
+
+<div id="outline-container-org9daa779" class="outline-4">
+<h4 id="org9daa779"><span class="section-number-4">1.1.3</span> Vignettes</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+Create a template vignette with <code>usethis::use_vignette</code>.
+There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">R Markdown Cheat Sheet</a>
+</p>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgcbb6347" class="outline-3">
@@ -349,8 +390,8 @@ If the package depends on a specific version of the package this can be added to
 </div>
 </div>
 
-<div id="outline-container-orga4f8243" class="outline-3">
-<h3 id="orga4f8243"><span class="section-number-3">1.3</span> CRAN packages</h3>
+<div id="outline-container-orge5b175a" class="outline-3">
+<h3 id="orge5b175a"><span class="section-number-3">1.3</span> Packages I like</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li><a href="https://cran.r-project.org/web/packages/ape/ape.pdf">ape</a> Analyses of Phylogenetics and Evolution</li>
@@ -361,8 +402,8 @@ If the package depends on a specific version of the package this can be added to
 </div>
 </div>
 
-<div id="outline-container-org4201310" class="outline-3">
-<h3 id="org4201310"><span class="section-number-3">1.4</span> Packrat for dependency management</h3>
+<div id="outline-container-orgdfb443e" class="outline-3">
+<h3 id="orgdfb443e"><span class="section-number-3">1.4</span> Dependency management with <code>packrat</code></h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Packrat is developed by the team at RStudio.
@@ -414,9 +455,17 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </div>
 </div>
 
-<div id="outline-container-orga0205df" class="outline-3">
-<h3 id="orga0205df"><span class="section-number-3">1.5</span> String handling</h3>
+<div id="outline-container-orgc8d5d50" class="outline-3">
+<h3 id="orgc8d5d50"><span class="section-number-3">1.5</span> Package and project management with <code>usethis</code></h3>
 <div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>Add dependencies to packages with <code>usethis::use_package</code> instead of <code>devtools::use_package</code> which is now deprecated. It is the same deal with <code>use_vignette</code>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd5d9f41" class="outline-3">
+<h3 id="orgd5d9f41"><span class="section-number-3">1.6</span> String handling with <code>stringr</code></h3>
+<div class="outline-text-3" id="text-1-6">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -461,11 +510,105 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </div>
 </div>
 
+<div id="outline-container-orgc6f2ee1" class="outline-3">
+<h3 id="orgc6f2ee1"><span class="section-number-3">1.7</span> Differential equations with <code>deSolve</code></h3>
+<div class="outline-text-3" id="text-1-7">
+</div>
+<div id="outline-container-org4f88a7f" class="outline-4">
+<h4 id="org4f88a7f"><span class="section-number-4">1.7.1</span> Basic SIR example</h4>
+<div class="outline-text-4" id="text-1-7-1">
+<p>
+Simple SIR model 
+</p>
+
+<p>
+\[
+\frac{ds}{dt} = -\beta s i \quad\text{and}\quad \frac{di}{dt} = \beta s i - \gamma i.
+\]
+</p>
+
+<p>
+The following demonstrates how to solve this system with <code>deSolve</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>deSolve<span style="color: #4f97d7;">)</span>
+
+<span style="color: #bc6ec5; font-weight: bold;">sir_diff</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>time, state, params<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    with<span style="color: #bc6ec5;">(</span>as.list<span style="color: #2d9574;">(</span>c<span style="color: #67b11d;">(</span>params, state<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, <span style="color: #2d9574;">{</span>
+        ds <span style="color: #a45bad;">&lt;-</span> - beta * susceptible * infectious
+        di <span style="color: #a45bad;">&lt;-</span> beta * susceptible * infectious - gamma * infectious
+        list<span style="color: #67b11d;">(</span>c<span style="color: #b1951d;">(</span>ds, di<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+    <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
+
+params <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>beta = <span style="color: #a45bad;">1.2</span>, gamma = <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+state <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>susceptible = <span style="color: #a45bad;">0.99</span>, infectious = <span style="color: #a45bad;">0.01</span><span style="color: #4f97d7;">)</span>
+times <span style="color: #a45bad;">&lt;-</span> seq<span style="color: #4f97d7;">(</span>from = <span style="color: #a45bad;">0</span>, to = <span style="color: #a45bad;">20</span>, length = <span style="color: #a45bad;">100</span><span style="color: #4f97d7;">)</span>
+pd <span style="color: #a45bad;">&lt;-</span> matrix<span style="color: #4f97d7;">(</span>nrow = <span style="color: #a45bad;">2</span>, ncol = <span style="color: #a45bad;">2</span>, data = <span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span>
+out1 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: #4f97d7;">(</span>state, times, sir_diff, parms = params<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cb9794" class="outline-4">
+<h4 id="org0cb9794"><span class="section-number-4">1.7.2</span> SIR example with C implementation</h4>
+<div class="outline-text-4" id="text-1-7-2">
+<p>
+Then we can implement the differential in C as 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">file sirmod.c </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #bc6ec5;">#include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">R.h</span><span style="color: #4f97d7;">&gt;</span>
+
+<span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #ce537a; font-weight: bold;">double</span> <span style="color: #7590db;">params</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">2</span><span style="color: #4f97d7;">]</span>;
+<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">beta</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span>
+<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">gamma</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">initializer </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">initmod</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5;">(</span>* <span style="color: #bc6ec5; font-weight: bold;">odeparams</span><span style="color: #bc6ec5;">)(</span><span style="color: #ce537a; font-weight: bold;">int</span> *, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">{</span>
+  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">N</span>=<span style="color: #a45bad;">2</span>;
+  odeparams<span style="color: #bc6ec5;">(</span>&amp;N, params<span style="color: #bc6ec5;">)</span>;
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">Derivatives and 1 output variable </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">derivs</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">neq</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">t</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">y</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">ydot</span>,
+             <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">yout</span>, <span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">ip</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>ip<span style="color: #2d9574;">[</span><span style="color: #a45bad;">0</span><span style="color: #2d9574;">]</span> &lt;<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> error<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"nout should be at least 1"</span><span style="color: #bc6ec5;">)</span>;
+  ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = -beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
+  ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> = beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> - gamma*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
+  yout<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = <span style="color: #a45bad;">1.0</span>-y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>+y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
+<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">END file sirmod.c </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+</pre>
+</div>
+
+<p>
+Then we need to compile this and load the object for use of <code>deSovle</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">system<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"R CMD SHLIB sirmod.c"</span><span style="color: #4f97d7;">)</span>
+dyn.load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"sirmod.so"</span><span style="color: #4f97d7;">)</span>
+out2 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: #4f97d7;">(</span>state, times, func = <span style="color: #2d9574;">"derivs"</span>, parms = params,
+                     dllname = <span style="color: #2d9574;">"sirmod"</span>, initfunc = <span style="color: #2d9574;">"initmod"</span>, nout = <span style="color: #a45bad;">1</span>,
+                     outnames = <span style="color: #2d9574;">"recovered"</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgbcea7db" class="outline-3">
-<h3 id="orgbcea7db"><span class="section-number-3">1.6</span> Cheat sheets</h3>
-<div class="outline-text-3" id="text-1-6">
+<h3 id="orgbcea7db"><span class="section-number-3">1.8</span> Cheat sheets</h3>
+<div class="outline-text-3" id="text-1-8">
 <ul class="org-ul">
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">rmarkdown</a></li>
+<li><a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_purrr.pdf">purrr</a></li>
 </ul>
 </div>
 </div>
@@ -473,7 +616,7 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-06-20 Thu 21:23</p>
+<p class="date">Created: 2019-08-12 Mon 22:24</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
