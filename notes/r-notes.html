@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-12 Mon 22:24 -->
+<!-- 2019-09-01 Sun 10:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="Alexander E. Zarebski" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -333,7 +346,7 @@ The <code>devtools::use_packag</code> function has been deprecated in favour of 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">usethis::use_package<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"foo"</span>, <span style="color: #2d9574;">"bar"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">usethis::use_package("foo", "bar")
 </pre>
 </div>
 
@@ -413,7 +426,7 @@ To start a packrat project use
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::init<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">packrat::init()
 </pre>
 </div>
 
@@ -429,7 +442,7 @@ Packages are not added to the <code>packrat.lock</code> file until a <i>snapshot
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::snapshot<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">packrat::snapshot()
 </pre>
 </div>
 
@@ -439,7 +452,7 @@ To install local packages, packrat needs to be told where they live
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::set_opts<span style="color: #4f97d7;">(</span>local.repos = <span style="color: #2d9574;">"&lt;path/to/package&gt;"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">packrat::set_opts(local.repos = "&lt;path/to/package&gt;")
 </pre>
 </div>
 
@@ -449,7 +462,7 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::restore<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">packrat::restore()
 </pre>
 </div>
 </div>
@@ -532,21 +545,21 @@ The following demonstrates how to solve this system with <code>deSolve</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>deSolve<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">library(deSolve)
 
-<span style="color: #bc6ec5; font-weight: bold;">sir_diff</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>time, state, params<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    with<span style="color: #bc6ec5;">(</span>as.list<span style="color: #2d9574;">(</span>c<span style="color: #67b11d;">(</span>params, state<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, <span style="color: #2d9574;">{</span>
-        ds <span style="color: #a45bad;">&lt;-</span> - beta * susceptible * infectious
-        di <span style="color: #a45bad;">&lt;-</span> beta * susceptible * infectious - gamma * infectious
-        list<span style="color: #67b11d;">(</span>c<span style="color: #b1951d;">(</span>ds, di<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-    <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+sir_diff &lt;- function(time, state, params) {
+    with(as.list(c(params, state)), {
+        ds &lt;- - beta * susceptible * infectious
+        di &lt;- beta * susceptible * infectious - gamma * infectious
+        list(c(ds, di))
+    })
+}
 
-params <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>beta = <span style="color: #a45bad;">1.2</span>, gamma = <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
-state <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>susceptible = <span style="color: #a45bad;">0.99</span>, infectious = <span style="color: #a45bad;">0.01</span><span style="color: #4f97d7;">)</span>
-times <span style="color: #a45bad;">&lt;-</span> seq<span style="color: #4f97d7;">(</span>from = <span style="color: #a45bad;">0</span>, to = <span style="color: #a45bad;">20</span>, length = <span style="color: #a45bad;">100</span><span style="color: #4f97d7;">)</span>
-pd <span style="color: #a45bad;">&lt;-</span> matrix<span style="color: #4f97d7;">(</span>nrow = <span style="color: #a45bad;">2</span>, ncol = <span style="color: #a45bad;">2</span>, data = <span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span>
-out1 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: #4f97d7;">(</span>state, times, sir_diff, parms = params<span style="color: #4f97d7;">)</span>
+params &lt;- c(beta = 1.2, gamma = 1)
+state &lt;- c(susceptible = 0.99, infectious = 0.01)
+times &lt;- seq(from = 0, to = 20, length = 100)
+pd &lt;- matrix(nrow = 2, ncol = 2, data = 0)
+out1 &lt;- deSolve::ode(state, times, sir_diff, parms = params)
 </pre>
 </div>
 </div>
@@ -560,30 +573,30 @@ Then we can implement the differential in C as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">file sirmod.c </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #bc6ec5;">#include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">R.h</span><span style="color: #4f97d7;">&gt;</span>
+<pre class="src src-C">/* file sirmod.c */
+#include &lt;R.h&gt;
 
-<span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #ce537a; font-weight: bold;">double</span> <span style="color: #7590db;">params</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">2</span><span style="color: #4f97d7;">]</span>;
-<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">beta</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span>
-<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">gamma</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
+static double params[2];
+#define beta params[0]
+#define gamma params[1]
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">initializer </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">initmod</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5;">(</span>* <span style="color: #bc6ec5; font-weight: bold;">odeparams</span><span style="color: #bc6ec5;">)(</span><span style="color: #ce537a; font-weight: bold;">int</span> *, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">{</span>
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">N</span>=<span style="color: #a45bad;">2</span>;
-  odeparams<span style="color: #bc6ec5;">(</span>&amp;N, params<span style="color: #bc6ec5;">)</span>;
-<span style="color: #4f97d7;">}</span>
+/* initializer */
+void initmod(void (* odeparams)(int *, double *))
+{
+  int N=2;
+  odeparams(&amp;N, params);
+}
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">Derivatives and 1 output variable </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">derivs</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">neq</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">t</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">y</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">ydot</span>,
-             <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">yout</span>, <span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">ip</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>ip<span style="color: #2d9574;">[</span><span style="color: #a45bad;">0</span><span style="color: #2d9574;">]</span> &lt;<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> error<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"nout should be at least 1"</span><span style="color: #bc6ec5;">)</span>;
-  ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = -beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
-  ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> = beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> - gamma*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
-  yout<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = <span style="color: #a45bad;">1.0</span>-y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>+y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
-<span style="color: #4f97d7;">}</span>
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">END file sirmod.c </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+/* Derivatives and 1 output variable */
+void derivs (int *neq, double *t, double *y, double *ydot,
+             double *yout, int *ip)
+{
+  if (ip[0] &lt;1) error("nout should be at least 1");
+  ydot[0] = -beta*y[0]*y[1];
+  ydot[1] = beta*y[0]*y[1] - gamma*y[1];
+  yout[0] = 1.0-y[0]+y[1];
+}
+/* END file sirmod.c */
 </pre>
 </div>
 
@@ -592,11 +605,11 @@ Then we need to compile this and load the object for use of <code>deSovle</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">system<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"R CMD SHLIB sirmod.c"</span><span style="color: #4f97d7;">)</span>
-dyn.load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"sirmod.so"</span><span style="color: #4f97d7;">)</span>
-out2 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: #4f97d7;">(</span>state, times, func = <span style="color: #2d9574;">"derivs"</span>, parms = params,
-                     dllname = <span style="color: #2d9574;">"sirmod"</span>, initfunc = <span style="color: #2d9574;">"initmod"</span>, nout = <span style="color: #a45bad;">1</span>,
-                     outnames = <span style="color: #2d9574;">"recovered"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">system("R CMD SHLIB sirmod.c")
+dyn.load("sirmod.so")
+out2 &lt;- deSolve::ode(state, times, func = "derivs", parms = params,
+                     dllname = "sirmod", initfunc = "initmod", nout = 1,
+                     outnames = "recovered")
 </pre>
 </div>
 </div>
@@ -615,8 +628,8 @@ out2 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-08-12 Mon 22:24</p>
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2019-09-01 Sun 10:54</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
