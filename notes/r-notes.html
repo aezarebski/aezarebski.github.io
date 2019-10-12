@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-02 Fri 17:55 -->
+<!-- 2019-10-12 Sat 14:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="root" />
+<meta name="author" content="Alex Zarebski" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -269,27 +269,31 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge847140">1. R notes</a>
+<li><a href="#orge847140">R notes</a>
 <ul>
-<li><a href="#orgcea412f">1.1. R Packages by Wickham and Bryan</a>
+<li><a href="#orgcea412f">R Packages by Wickham and Bryan</a>
 <ul>
-<li><a href="#orgf21d270">1.1.1. Package development loop</a></li>
-<li><a href="#orga8463b0">1.1.2. Package dependencies</a></li>
-<li><a href="#orgfedd1f2">1.1.3. Vignettes</a></li>
+<li><a href="#orgf21d270">Package development loop</a></li>
+<li><a href="#orga8463b0">Package dependencies</a></li>
+<li><a href="#orgfedd1f2">Vignettes</a></li>
 </ul>
 </li>
-<li><a href="#org89f56c8">1.2. R6 and OOP</a></li>
-<li><a href="#org05cb89d">1.3. Packages I like</a></li>
-<li><a href="#org0e87877">1.4. Dependency management with <code>packrat</code></a></li>
-<li><a href="#orgd520b56">1.5. Package and project management with <code>usethis</code></a></li>
-<li><a href="#orgbe59013">1.6. String handling with <code>stringr</code></a></li>
-<li><a href="#orge294d07">1.7. Differential equations with <code>deSolve</code></a>
+<li><a href="#org89f56c8">R6 and OOP</a></li>
+<li><a href="#org05cb89d">Packages I like</a></li>
+<li><a href="#org0e87877">Dependency management with <code>packrat</code></a>
 <ul>
-<li><a href="#org9ac098c">1.7.1. Basic SIR example</a></li>
-<li><a href="#org065670b">1.7.2. SIR example with C implementation</a></li>
+<li><a href="#orgb3d0997">Different R versions</a></li>
 </ul>
 </li>
-<li><a href="#org93d7e8c">1.8. Cheat sheets</a></li>
+<li><a href="#orgd520b56">Package and project management with <code>usethis</code></a></li>
+<li><a href="#orgbe59013">String handling with <code>stringr</code></a></li>
+<li><a href="#orge294d07">Differential equations with <code>deSolve</code></a>
+<ul>
+<li><a href="#org9ac098c">Basic SIR example</a></li>
+<li><a href="#org065670b">SIR example with C implementation</a></li>
+</ul>
+</li>
+<li><a href="#org93d7e8c">Cheat sheets</a></li>
 </ul>
 </li>
 </ul>
@@ -300,12 +304,12 @@ for the JavaScript code in this tag.
 </p>
 
 <div id="outline-container-orge847140" class="outline-2">
-<h2 id="orge847140"><span class="section-number-2">1</span> R notes</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="orge847140">R notes</h2>
+<div class="outline-text-2" id="text-orge847140">
 </div>
 <div id="outline-container-orgcea412f" class="outline-3">
-<h3 id="orgcea412f"><span class="section-number-3">1.1</span> R Packages by Wickham and Bryan</h3>
-<div class="outline-text-3" id="text-1-1">
+<h3 id="orgcea412f">R Packages by Wickham and Bryan</h3>
+<div class="outline-text-3" id="text-orgcea412f">
 <p>
 There is a new edition of the <a href="https://r-pkgs.org/">R packages book available online</a>.
 Here are some notes about package creation based on reading through that book.
@@ -313,8 +317,8 @@ Here are some notes about package creation based on reading through that book.
 </div>
 
 <div id="outline-container-orgf21d270" class="outline-4">
-<h4 id="orgf21d270"><span class="section-number-4">1.1.1</span> Package development loop</h4>
-<div class="outline-text-4" id="text-1-1-1">
+<h4 id="orgf21d270">Package development loop</h4>
+<div class="outline-text-4" id="text-orgf21d270">
 <ol class="org-ol">
 <li><code>library(devtools)</code></li>
 <li><code>create_package("~/path/to/my/package")</code></li>
@@ -337,8 +341,8 @@ Here are some notes about package creation based on reading through that book.
 </div>
 
 <div id="outline-container-orga8463b0" class="outline-4">
-<h4 id="orga8463b0"><span class="section-number-4">1.1.2</span> Package dependencies</h4>
-<div class="outline-text-4" id="text-1-1-2">
+<h4 id="orga8463b0">Package dependencies</h4>
+<div class="outline-text-4" id="text-orga8463b0">
 <p>
 The <code>DESCRIPTION</code> file is the place to go!
 <i>Hadley says:</i> use <del><code>use_package("foo", "bar")</code></del> to have <code>foo</code> and <code>bar</code> added to the dependencies of the package being developed.
@@ -375,8 +379,8 @@ If the package depends on a specific version of the package this can be added to
 </div>
 
 <div id="outline-container-orgfedd1f2" class="outline-4">
-<h4 id="orgfedd1f2"><span class="section-number-4">1.1.3</span> Vignettes</h4>
-<div class="outline-text-4" id="text-1-1-3">
+<h4 id="orgfedd1f2">Vignettes</h4>
+<div class="outline-text-4" id="text-orgfedd1f2">
 <p>
 Create a template vignette with <code>usethis::use_vignette</code>.
 There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">R Markdown Cheat Sheet</a>
@@ -386,8 +390,8 @@ There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdow
 </div>
 
 <div id="outline-container-org89f56c8" class="outline-3">
-<h3 id="org89f56c8"><span class="section-number-3">1.2</span> R6 and OOP</h3>
-<div class="outline-text-3" id="text-1-2">
+<h3 id="org89f56c8">R6 and OOP</h3>
+<div class="outline-text-3" id="text-org89f56c8">
 <ul class="org-ul">
 <li>R6 classes are a popular way to bring traditional OOP to R, they have reference semantics.</li>
 <li>R6 is available on CRAN</li>
@@ -404,8 +408,8 @@ There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdow
 </div>
 
 <div id="outline-container-org05cb89d" class="outline-3">
-<h3 id="org05cb89d"><span class="section-number-3">1.3</span> Packages I like</h3>
-<div class="outline-text-3" id="text-1-3">
+<h3 id="org05cb89d">Packages I like</h3>
+<div class="outline-text-3" id="text-org05cb89d">
 <ul class="org-ul">
 <li><a href="https://cran.r-project.org/web/packages/ape/ape.pdf">ape</a> Analyses of Phylogenetics and Evolution</li>
 <li><a href="https://cran.r-project.org/web/packages/stringr/stringr.pdf">stringr</a> Simple, Consistent Wrappers for Common String Operations</li>
@@ -416,8 +420,8 @@ There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdow
 </div>
 
 <div id="outline-container-org0e87877" class="outline-3">
-<h3 id="org0e87877"><span class="section-number-3">1.4</span> Dependency management with <code>packrat</code></h3>
-<div class="outline-text-3" id="text-1-4">
+<h3 id="org0e87877">Dependency management with <code>packrat</code></h3>
+<div class="outline-text-3" id="text-org0e87877">
 <p>
 Packrat is developed by the team at RStudio.
 It relies on the notion of a <i>project</i>, which we might think of as a single analysis or collection of related analyses.
@@ -466,19 +470,29 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </pre>
 </div>
 </div>
+
+<div id="outline-container-orgb3d0997" class="outline-4">
+<h4 id="orgb3d0997">Different R versions</h4>
+<div class="outline-text-4" id="text-orgb3d0997">
+<p>
+<code>packrat</code> complained when I tried to use a different version of R to work on a project.
+Different versions of R-3.x.x are available <a href="https://cran.r-project.org/src/base/R-3/">here</a>.
+</p>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgd520b56" class="outline-3">
-<h3 id="orgd520b56"><span class="section-number-3">1.5</span> Package and project management with <code>usethis</code></h3>
-<div class="outline-text-3" id="text-1-5">
+<h3 id="orgd520b56">Package and project management with <code>usethis</code></h3>
+<div class="outline-text-3" id="text-orgd520b56">
 <ul class="org-ul">
 <li>Add dependencies to packages with <code>usethis::use_package</code> instead of <code>devtools::use_package</code> which is now deprecated. It is the same deal with <code>use_vignette</code>.</li>
 </ul>
 </div>
 </div>
 <div id="outline-container-orgbe59013" class="outline-3">
-<h3 id="orgbe59013"><span class="section-number-3">1.6</span> String handling with <code>stringr</code></h3>
-<div class="outline-text-3" id="text-1-6">
+<h3 id="orgbe59013">String handling with <code>stringr</code></h3>
+<div class="outline-text-3" id="text-orgbe59013">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -524,12 +538,12 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </div>
 
 <div id="outline-container-orge294d07" class="outline-3">
-<h3 id="orge294d07"><span class="section-number-3">1.7</span> Differential equations with <code>deSolve</code></h3>
-<div class="outline-text-3" id="text-1-7">
+<h3 id="orge294d07">Differential equations with <code>deSolve</code></h3>
+<div class="outline-text-3" id="text-orge294d07">
 </div>
 <div id="outline-container-org9ac098c" class="outline-4">
-<h4 id="org9ac098c"><span class="section-number-4">1.7.1</span> Basic SIR example</h4>
-<div class="outline-text-4" id="text-1-7-1">
+<h4 id="org9ac098c">Basic SIR example</h4>
+<div class="outline-text-4" id="text-org9ac098c">
 <p>
 Simple SIR model 
 </p>
@@ -566,8 +580,8 @@ out1 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 
 <div id="outline-container-org065670b" class="outline-4">
-<h4 id="org065670b"><span class="section-number-4">1.7.2</span> SIR example with C implementation</h4>
-<div class="outline-text-4" id="text-1-7-2">
+<h4 id="org065670b">SIR example with C implementation</h4>
+<div class="outline-text-4" id="text-org065670b">
 <p>
 Then we can implement the differential in C as 
 </p>
@@ -617,8 +631,8 @@ out2 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 
 <div id="outline-container-org93d7e8c" class="outline-3">
-<h3 id="org93d7e8c"><span class="section-number-3">1.8</span> Cheat sheets</h3>
-<div class="outline-text-3" id="text-1-8">
+<h3 id="org93d7e8c">Cheat sheets</h3>
+<div class="outline-text-3" id="text-org93d7e8c">
 <ul class="org-ul">
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">rmarkdown</a></li>
 <li><a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_purrr.pdf">purrr</a></li>
@@ -628,8 +642,8 @@ out2 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: root</p>
-<p class="date">Created: 2019-08-02 Fri 17:55</p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2019-10-12 Sat 14:06</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
