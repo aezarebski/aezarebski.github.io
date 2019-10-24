@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-12 Sat 14:06 -->
+<!-- 2019-10-24 Thu 10:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -587,21 +587,21 @@ Then we can implement the differential in C as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">file sirmod.c </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">file sirmod.c</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
 <span style="color: #bc6ec5;">#include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">R.h</span><span style="color: #4f97d7;">&gt;</span>
 
 <span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #ce537a; font-weight: bold;">double</span> <span style="color: #7590db;">params</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">2</span><span style="color: #4f97d7;">]</span>;
 <span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">beta</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span>
 <span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">gamma</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">initializer </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">initializer</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
 <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">initmod</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5;">(</span>* <span style="color: #bc6ec5; font-weight: bold;">odeparams</span><span style="color: #bc6ec5;">)(</span><span style="color: #ce537a; font-weight: bold;">int</span> *, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7;">{</span>
   <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">N</span>=<span style="color: #a45bad;">2</span>;
   odeparams<span style="color: #bc6ec5;">(</span>&amp;N, params<span style="color: #bc6ec5;">)</span>;
 <span style="color: #4f97d7;">}</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">Derivatives and 1 output variable </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">Derivatives and 1 output variable</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
 <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">derivs</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">neq</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">t</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">y</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">ydot</span>,
              <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">yout</span>, <span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">ip</span><span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7;">{</span>
@@ -610,7 +610,7 @@ Then we can implement the differential in C as
   ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> = beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> - gamma*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
   yout<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = <span style="color: #a45bad;">1.0</span>-y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>+y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
 <span style="color: #4f97d7;">}</span>
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">END file sirmod.c </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">END file sirmod.c</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
 </pre>
 </div>
 
@@ -643,7 +643,7 @@ out2 <span style="color: #a45bad;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-10-12 Sat 14:06</p>
+<p class="date">Created: 2019-10-24 Thu 10:34</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
