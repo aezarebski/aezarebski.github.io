@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -247,30 +247,60 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org410ced3">Hello</a></li>
+<li><a href="#orgb82815a">Git notes</a>
+<ul>
+<li><a href="#org2406909">Branches</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org410ced3" class="outline-2">
-<h2 id="org410ced3">Hello</h2>
-<div class="outline-text-2" id="text-org410ced3">
 <p>
-The notes on this site likely contain many errors.
-If you find an error, please let me know so I can correct it.
+<a href="../index.html">Home</a>
 </p>
 
-<ul class="org-ul">
-<li><a href="./notes/sh-notes.html">Bourne shell notes</a></li>
-<li><a href="./notes/git-notes.html">Git notes</a></li>
-<li><a href="./notes/phylogenetics-notes.html">Phylogenetics notes</a></li>
-<li><a href="./notes/haskell-notes.html">Haskell notes</a></li>
-<li><a href="./notes/latex-notes.html">Latex notes</a></li>
-<li><a href="./notes/maxima-notes.html">Maxima notes</a></li>
-<li><a href="./notes/org-mode-notes.html">org-mode notes</a></li>
-<li><a href="./notes/r-notes.html">R notes</a></li>
-<li><a href="./notes/spacemacs-notes.html">spacemacs/emacs notes</a></li>
-<li><a href="./notes/linux.html">Linux notes</a></li>
-</ul>
+<div id="outline-container-orgb82815a" class="outline-2">
+<h2 id="orgb82815a">Git notes</h2>
+<div class="outline-text-2" id="text-orgb82815a">
+</div>
+<div id="outline-container-org2406909" class="outline-3">
+<h3 id="org2406909">Branches</h3>
+<div class="outline-text-3" id="text-org2406909">
+<p>
+The following shows a visualisation of the commits among all the branches.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">git log --all --decorate --oneline --graph
+</pre>
+</div>
+
+<p>
+To get a list of the filenames of the files that differ between commits use the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">git diff --name-only SHA1 SHA2
+</pre>
+</div>
+
+<p>
+Suppose you have a <code>master</code> branch and a <code>feature-messy</code> branch.
+The <code>feature-messy</code> branch has a bunch of messy commits.
+The following steps allow you to include all the work from <code>feature-messy</code> into a single commit in a new branch, <code>feature-neat</code>, which can then be merged into master without looking messy.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">git checkout master
+git checkout -b feature-neat
+git checkout feature-neat
+git merge --squash feature-messy
+git commit <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">This step may require more attention</span>
+git checkout master
+git merge feature-neat
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
