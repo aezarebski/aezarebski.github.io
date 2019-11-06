@@ -247,10 +247,10 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb82815a">Git notes</a>
+<li><a href="#org855ceb3">Stan notes</a>
 <ul>
-<li><a href="#org2406909">Branches</a></li>
-<li><a href="#org072e7e1">Magit via spacemacs</a></li>
+<li><a href="#org651b8e8">Optimisation</a></li>
+<li><a href="#org13826dc">Variational Bayes</a></li>
 </ul>
 </li>
 </ul>
@@ -260,120 +260,32 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgb82815a" class="outline-2">
-<h2 id="orgb82815a">Git notes</h2>
-<div class="outline-text-2" id="text-orgb82815a">
+<div id="outline-container-org855ceb3" class="outline-2">
+<h2 id="org855ceb3">Stan notes</h2>
+<div class="outline-text-2" id="text-org855ceb3">
 </div>
-<div id="outline-container-org2406909" class="outline-3">
-<h3 id="org2406909">Branches</h3>
-<div class="outline-text-3" id="text-org2406909">
+<div id="outline-container-org651b8e8" class="outline-3">
+<h3 id="org651b8e8">Optimisation</h3>
+<div class="outline-text-3" id="text-org651b8e8">
 <p>
-The following shows a visualisation of the commits among all the branches.
+In <code>rstan</code> the <code>optimizing</code> function returns a point estiamte from the joint posterior.
+By default, this uses the L-BFGS algorithm to maximise the posterior.
+Iterations are terminated when one of three tolerances are met, i.e., the step-size, change of objective function, or norm of the gradient is small enough.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">git log --all --decorate --oneline --graph
-</pre>
-</div>
-
 <p>
-To get a list of the filenames of the files that differ between commits use the following
+<b>PRO-TIP</b> In the optimisation, the Jacobian adjustment is turned off (since it is unneccessary).
+In some cases, removing constraints on parameters can improve the performance of the optimiser.
+When in doubt, try both specifications.
 </p>
-
-<div class="org-src-container">
-<pre class="src src-shell">git diff --name-only SHA1 SHA2
-</pre>
 </div>
-
+</div>
+<div id="outline-container-org13826dc" class="outline-3">
+<h3 id="org13826dc">Variational Bayes</h3>
+<div class="outline-text-3" id="text-org13826dc">
 <p>
-Suppose you have a <code>master</code> branch and a <code>feature-messy</code> branch.
-The <code>feature-messy</code> branch has a bunch of messy commits.
-The following steps allow you to include all the work from <code>feature-messy</code> into a single commit in a new branch, <code>feature-neat</code>, which can then be merged into master without looking messy.
+In <code>rstan-2.19.2</code> the <code>vb</code> command which uses variational inference is still considered <i>experimental</i>.
 </p>
-
-<div class="org-src-container">
-<pre class="src src-shell">git checkout master
-git checkout -b feature-neat
-git checkout feature-neat
-git merge --squash feature-messy
-git commit <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">This step may require more attention</span>
-git checkout master
-git merge feature-neat
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org072e7e1" class="outline-3">
-<h3 id="org072e7e1">Magit via spacemacs</h3>
-<div class="outline-text-3" id="text-org072e7e1">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Keys</th>
-<th scope="col" class="org-left">Command</th>
-<th scope="col" class="org-left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>SPC g s</code></td>
-<td class="org-left"><code>magit-status</code></td>
-<td class="org-left">Open the status buffer</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>F p</code></td>
-<td class="org-left"><code>magit-pull-from-pushremote</code></td>
-<td class="org-left">Pull commits from remote</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>s</code> and <code>u</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Stage and unstage files</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>c c</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Create commit</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>, k</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Kill (cancel) a commit</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-c C-c</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Confirm commit</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>p p</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Push commits to remote</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>l l</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Show commits graphically</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
