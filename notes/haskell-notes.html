@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-31 Thu 16:58 -->
+<!-- 2019-11-15 Fri 15:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -257,6 +257,7 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#orgadd64ef">Syntax</a></li>
+<li><a href="#org7d102cf">Numbers</a></li>
 <li><a href="#org1ff72d6"><code>hindent</code></a></li>
 <li><a href="#orgbdc9004">Haskell layer in Spacemacs</a></li>
 <li><a href="#org6bd25d3">Language extensions</a>
@@ -290,7 +291,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-4" id="text-orgb0cc4cf">
 <div class="org-src-container">
 <pre class="src src-sh">stack new my-project
-<span style="color: #4f97d7;">cd</span> my-project
+<span style="color: #3a81c3;">cd</span> my-project
 stack setup
 stack build
 stack exec my-project-exe
@@ -333,32 +334,43 @@ There is some basic syntax which is easy to forget.
 
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #2aa1ae;">-- |wild card</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> xs
+<span style="color: #6c3163; font-weight: bold;">f</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> xs
 
 <span style="color: #2aa1ae;">-- |as-pattern</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> l<span style="color: #7590db;">@</span><span style="color: #4f97d7;">(</span>x<span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x<span style="color: #ce537a; font-weight: bold;">:</span>l
+<span style="color: #6c3163; font-weight: bold;">f</span> l<span style="color: #715ab1;">@</span><span style="color: #3a81c3;">(</span>x<span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x<span style="color: #ba2f59; font-weight: bold;">:</span>l
 
 <span style="color: #2aa1ae;">-- |guards</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x
-  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">0</span>     <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0</span>
-  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&gt;=</span> <span style="color: #a45bad;">0</span>    <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1</span>
-  <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">=</span> undefined
+<span style="color: #6c3163; font-weight: bold;">f</span> x
+  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;</span> <span style="color: #4e3163;">0</span>     <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">0</span>
+  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&gt;=</span> <span style="color: #4e3163;">0</span>    <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">1</span>
+  <span style="color: #715ab1;">|</span> otherwise <span style="color: #715ab1;">=</span> undefined
 
 <span style="color: #2aa1ae;">-- |case expression</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">case</span> x <span style="color: #4f97d7; font-weight: bold;">of</span>
-  pattern1 <span style="color: #7590db;">-&gt;</span> expression1
-  pattern2 <span style="color: #7590db;">-&gt;</span> expression2
-  <span style="color: #4f97d7; font-weight: bold;">_</span>        <span style="color: #7590db;">-&gt;</span> undefined
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> x <span style="color: #3a81c3; font-weight: bold;">of</span>
+  pattern1 <span style="color: #715ab1;">-&gt;</span> expression1
+  pattern2 <span style="color: #715ab1;">-&gt;</span> expression2
+  <span style="color: #3a81c3; font-weight: bold;">_</span>        <span style="color: #715ab1;">-&gt;</span> undefined
 
 <span style="color: #2aa1ae;">-- |where clause</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> g z
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    z <span style="color: #7590db;">=</span> epxression
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> g z
+  <span style="color: #3a81c3; font-weight: bold;">where</span>
+    z <span style="color: #715ab1;">=</span> epxression
 
 <span style="color: #2aa1ae;">-- |letexpression</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">let</span> z <span style="color: #7590db;">=</span> expression
-      <span style="color: #4f97d7; font-weight: bold;">in</span> g z
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">let</span> z <span style="color: #715ab1;">=</span> expression
+      <span style="color: #3a81c3; font-weight: bold;">in</span> g z
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d102cf" class="outline-3">
+<h3 id="org7d102cf">Numbers</h3>
+<div class="outline-text-3" id="text-org7d102cf">
+
+<div class="figure">
+<p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
+</p>
 </div>
 </div>
 </div>
@@ -381,9 +393,9 @@ To enable the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>haskell <span style="color: #4f97d7;">:variables</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>haskell <span style="color: #3a81c3;">:variables</span>
          haskell-enable-hindent-style <span style="color: #2d9574;">"johan-tibell"</span>
-         haskell-process-type 'stack-ghci<span style="color: #4f97d7;">)</span>
+         haskell-process-type 'stack-ghci<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -404,7 +416,7 @@ Allows for a neater way to specify the types using <code>@</code> syntax.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">read <span style="color: #bc6ec5; font-weight: bold;">@</span><span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #2d9574;">"1"</span>   <span style="color: #2aa1ae; background-color: #292e34;">-- </span><span style="color: #2aa1ae; background-color: #292e34;">read "1" would raise an exception.</span>
+<pre class="src src-haskell">read <span style="color: #6c3163; font-weight: bold;">@</span><span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #2d9574;">"1"</span>   <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">read "1" would raise an exception.</span>
 </pre>
 </div>
 </div>
@@ -414,7 +426,7 @@ Allows for a neater way to specify the types using <code>@</code> syntax.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-10-31 Thu 16:58</p>
+<p class="date">Created: 2019-11-15 Fri 15:46</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
