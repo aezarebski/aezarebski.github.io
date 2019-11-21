@@ -247,27 +247,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org667b5b7">Haskell notes</a>
+<li><a href="#orgbd2a845">Notes on writing</a>
 <ul>
-<li><a href="#org20d6260"><span class="todo TODO">TODO</span> Debugging</a></li>
-<li><a href="#org603200f"><code>stack</code></a>
+<li><a href="#org2eec7ee">Advice from Andrew Gelman</a>
 <ul>
-<li><a href="#orgb0cc4cf">Starting a new project</a></li>
-<li><a href="#orgf42360c">Running tests</a></li>
-<li><a href="#org1fed3de">Haddock documentation</a></li>
+<li><a href="#orga0a4a7f">General Advice</a></li>
 </ul>
 </li>
-<li><a href="#orgadd64ef">Syntax</a></li>
-<li><a href="#org7d102cf">Numbers</a></li>
-<li><a href="#org1ff72d6"><code>hindent</code></a></li>
-<li><a href="#orgbdc9004">Haskell layer in Spacemacs</a></li>
-<li><a href="#org6bd25d3">Language extensions</a>
-<ul>
-<li><a href="#orgf492c12"><code>OverloadedStrings</code></a></li>
-<li><a href="#orgee27c89"><code>TypeApplications</code></a></li>
-</ul>
-</li>
-<li><a href="#org447016e">Packages I like</a></li>
 </ul>
 </li>
 </ul>
@@ -277,227 +263,35 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org667b5b7" class="outline-2">
-<h2 id="org667b5b7">Haskell notes</h2>
-<div class="outline-text-2" id="text-org667b5b7">
+<div id="outline-container-orgbd2a845" class="outline-2">
+<h2 id="orgbd2a845">Notes on writing</h2>
+<div class="outline-text-2" id="text-orgbd2a845">
+</div>
+<div id="outline-container-org2eec7ee" class="outline-3">
+<h3 id="org2eec7ee">Advice from Andrew Gelman</h3>
+<div class="outline-text-3" id="text-org2eec7ee">
 <p>
-<a href="../resources/haskell-cheat-sheet.pdf">HASKELL CHEAT SHEET</a>
+The following is taken from one of Andrew Gelman's <a href="https://statmodeling.stat.columbia.edu/2009/07/30/advice_on_writi/">blogs</a> (which is replicated <a href="https://statmodeling.stat.columbia.edu/2014/01/14/advice-writing-research-articles/">here</a>).
 </p>
 </div>
 
-<div id="outline-container-org20d6260" class="outline-3">
-<h3 id="org20d6260"><span class="todo TODO">TODO</span> Debugging</h3>
-<div class="outline-text-3" id="text-org20d6260">
+<div id="outline-container-orga0a4a7f" class="outline-4">
+<h4 id="orga0a4a7f">General Advice</h4>
+<div class="outline-text-4" id="text-orga0a4a7f">
+<p>
+Both the papers sent to me appear to have strong research results. Now that the research has been done, I'd recommend rewriting both articles from scratch, using the following template:
+</p>
+
 <ol class="org-ol">
-<li>Load the relevant module: <code>λ&gt; :load &lt;module.hs&gt;</code></li>
-<li>Set a break point: <code>λ&gt; :break &lt;n&gt;</code></li>
-<li>Evaluate relevant expression</li>
+<li>Start with the conclusions. Write a couple pages on what you've found and what you recommend. In writing these conclusions, you should also be writing some of the introduction, in that you'll need to give enough background so that general readers can understand what you're talking about and why they should care. But you want to start with the conclusions, because that will determine what sort of background information you'll need to give.</li>
+<li>Now step back. What is the principal evidence for your conclusions? Make some graphs and pull out some key numbers that represent your research findings which back up your claims.</li>
+<li>Back one more step, now. What are the methods and data you used to obtain your research findings.</li>
+<li>Now go back and write the literature review and the introduction.</li>
+<li>Moving forward one last time: go to your results and conclusions and give alternative explanations. Why might you be wrong? What are the limits of applicability of your findings? What future research would be appropriate to follow up on these loose ends?</li>
+<li>Write the abstract. An easy way to start is to take the first sentence from each of the first five paragraphs of the article. This probably won't be quite right, but I bet it will be close to what you need.</li>
+<li>Give the article to a friend, ask him or her to spend 15 minutes looking at it, then ask what they think your message was, and what evidence you have for it. Your friend should read the article as a potential consumer, not as a critic. You can find typos on your own time, but you need somebody else's eyes to get a sense of the message you're sending.</li>
 </ol>
-
-<p>
-You can always use <code>:help</code> to get a listing, but here are some useful functions
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Command</th>
-<th scope="col" class="org-left">Function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>:list</code></td>
-<td class="org-left">See current line</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>:step</code></td>
-<td class="org-left">Step to next line</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>:continue</code></td>
-<td class="org-left">Run to next break</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>:show breaks</code></td>
-<td class="org-left">Show break points</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>:delete &lt;n&gt;</code></td>
-<td class="org-left">Delete break <code>n</code></td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-
-<div id="outline-container-org603200f" class="outline-3">
-<h3 id="org603200f"><code>stack</code></h3>
-<div class="outline-text-3" id="text-org603200f">
-</div>
-<div id="outline-container-orgb0cc4cf" class="outline-4">
-<h4 id="orgb0cc4cf">Starting a new project</h4>
-<div class="outline-text-4" id="text-orgb0cc4cf">
-<div class="org-src-container">
-<pre class="src src-sh">stack new my-project
-<span style="color: #3a81c3;">cd</span> my-project
-stack setup
-stack build
-stack exec my-project-exe
-</pre>
-</div>
-
-<p>
-Packages get added to <code>package.yaml</code> under <code>dependencies:</code> and you start the REPL with <code>stack ghci</code>.
-</p>
-</div>
-</div>
-<div id="outline-container-orgf42360c" class="outline-4">
-<h4 id="orgf42360c">Running tests</h4>
-<div class="outline-text-4" id="text-orgf42360c">
-<div class="org-src-container">
-<pre class="src src-sh">stack test
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org1fed3de" class="outline-4">
-<h4 id="org1fed3de">Haddock documentation</h4>
-<div class="outline-text-4" id="text-org1fed3de">
-<div class="org-src-container">
-<pre class="src src-sh">stack haddock
-stack haddock --open
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgadd64ef" class="outline-3">
-<h3 id="orgadd64ef">Syntax</h3>
-<div class="outline-text-3" id="text-orgadd64ef">
-<p>
-There is some basic syntax which is easy to forget.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #2aa1ae;">-- |wild card</span>
-<span style="color: #6c3163; font-weight: bold;">f</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> xs
-
-<span style="color: #2aa1ae;">-- |as-pattern</span>
-<span style="color: #6c3163; font-weight: bold;">f</span> l<span style="color: #715ab1;">@</span><span style="color: #3a81c3;">(</span>x<span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x<span style="color: #ba2f59; font-weight: bold;">:</span>l
-
-<span style="color: #2aa1ae;">-- |guards</span>
-<span style="color: #6c3163; font-weight: bold;">f</span> x
-  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;</span> <span style="color: #4e3163;">0</span>     <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">0</span>
-  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&gt;=</span> <span style="color: #4e3163;">0</span>    <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">1</span>
-  <span style="color: #715ab1;">|</span> otherwise <span style="color: #715ab1;">=</span> undefined
-
-<span style="color: #2aa1ae;">-- |case expression</span>
-<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> x <span style="color: #3a81c3; font-weight: bold;">of</span>
-  pattern1 <span style="color: #715ab1;">-&gt;</span> expression1
-  pattern2 <span style="color: #715ab1;">-&gt;</span> expression2
-  <span style="color: #3a81c3; font-weight: bold;">_</span>        <span style="color: #715ab1;">-&gt;</span> undefined
-
-<span style="color: #2aa1ae;">-- |where clause</span>
-<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> g z
-  <span style="color: #3a81c3; font-weight: bold;">where</span>
-    z <span style="color: #715ab1;">=</span> epxression
-
-<span style="color: #2aa1ae;">-- |letexpression</span>
-<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">let</span> z <span style="color: #715ab1;">=</span> expression
-      <span style="color: #3a81c3; font-weight: bold;">in</span> g z
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org7d102cf" class="outline-3">
-<h3 id="org7d102cf">Numbers</h3>
-<div class="outline-text-3" id="text-org7d102cf">
-
-<div class="figure">
-<p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org1ff72d6" class="outline-3">
-<h3 id="org1ff72d6"><code>hindent</code></h3>
-<div class="outline-text-3" id="text-org1ff72d6">
-<p>
-<code>hindent</code> is a pretty printer which can be used to lint Haskell code.
-Install it with <code>stack install hindent</code> and pay attention to where it installs because you need that on your path.
-There is an Emacs minor mode, <code>hindent-mode</code>, which exposes the functionality of this program: <code>hindent-reformat-*</code>.
-</p>
-</div>
-</div>
-<div id="outline-container-orgbdc9004" class="outline-3">
-<h3 id="orgbdc9004">Haskell layer in Spacemacs</h3>
-<div class="outline-text-3" id="text-orgbdc9004">
-<p>
-To enable the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/+lang/haskell">Haskell layer</a> add the following to <code>dotspacemacs-configuration-layers</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>haskell <span style="color: #3a81c3;">:variables</span>
-         haskell-enable-hindent-style <span style="color: #2d9574;">"johan-tibell"</span>
-         haskell-process-type 'stack-ghci<span style="color: #3a81c3;">)</span>
-</pre>
-</div>
-
-<p>
-If you want to make use of <code>hindent</code>, you'll need to make sure that the executable is on the path Emacs uses: <code>exec-path</code> or <code>eshell-path-env</code>.
-</p>
-</div>
-</div>
-<div id="outline-container-org6bd25d3" class="outline-3">
-<h3 id="org6bd25d3">Language extensions</h3>
-<div class="outline-text-3" id="text-org6bd25d3">
-</div>
-<div id="outline-container-orgf492c12" class="outline-4">
-<h4 id="orgf492c12"><a href="https://downloads.haskell.org/~ghc/8.2.1/docs/html/users_guide/glasgow_exts.html#overloaded-string-literals"><code>OverloadedStrings</code></a></h4>
-<div class="outline-text-4" id="text-orgf492c12">
-<p>
-Allows you to use string literals to mean other string-ey type things.
-For instance, this would be useful when working with <code>Text</code>.
-</p>
-</div>
-</div>
-<div id="outline-container-orgee27c89" class="outline-4">
-<h4 id="orgee27c89"><a href="https://gitlab.haskell.org/ghc/ghc/wikis/type-application"><code>TypeApplications</code></a></h4>
-<div class="outline-text-4" id="text-orgee27c89">
-<p>
-Allows for a neater way to specify the types using <code>@</code> syntax.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-haskell">read <span style="color: #6c3163; font-weight: bold;">@</span><span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #2d9574;">"1"</span>   <span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">read "1" would raise an exception.</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org447016e" class="outline-3">
-<h3 id="org447016e">Packages I like</h3>
-<div class="outline-text-3" id="text-org447016e">
-<ul class="org-ul">
-<li><a href="http://hackage.haskell.org/package/ad"><code>ad</code></a>: Automatic differentiation</li>
-</ul>
 </div>
 </div>
 </div>
