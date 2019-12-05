@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-26 Sat 11:16 -->
+<!-- 2019-12-05 Thu 13:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -252,15 +252,17 @@ for the JavaScript code in this tag.
 <li><a href="#org684775b">Emacs interface to Maxima</a></li>
 <li><a href="#orgd14cfca">Programming in Maxima</a>
 <ul>
+<li><a href="#orga7e5071">Getting help</a></li>
 <li><a href="#org156c5cf">Lists</a></li>
 <li><a href="#org55a5827">Evaluation</a></li>
+<li><a href="#org775fe6a">Packages</a></li>
+<li><a href="#org9ee0ba5">Expressions and the REPL</a></li>
 </ul>
 </li>
 <li><a href="#org5524f53">Quick reference for mathematics</a>
 <ul>
 <li><a href="#org06d235c">Algebra</a></li>
 <li><a href="#org2c401ac">Calculus</a></li>
-<li><a href="#orgbaee810">Probability</a></li>
 </ul>
 </li>
 </ul>
@@ -294,13 +296,13 @@ Add the following to your configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #2aa1ae;">"Maxima mode"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #2aa1ae;">"Frontend for maxima with Image support"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #2aa1ae;">"Maxima interaction"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #2aa1ae;">"Imath mode for math formula input"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>add-to-list 'auto-mode-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #2aa1ae;">"Maxima mode"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #2aa1ae;">"Frontend for maxima with Image support"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #2aa1ae;">"Maxima interaction"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #2aa1ae;">"Imath mode for math formula input"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>add-to-list 'auto-mode-alist '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -323,6 +325,16 @@ If you want to change the font size for the latex output, modify the (customisab
 <h3 id="orgd14cfca">Programming in Maxima</h3>
 <div class="outline-text-3" id="text-orgd14cfca">
 </div>
+<div id="outline-container-orga7e5071" class="outline-4">
+<h4 id="orga7e5071">Getting help</h4>
+<div class="outline-text-4" id="text-orga7e5071">
+<p>
+There is a the <code>example</code> function which can be used to get examples of the usage of a function.
+There is the <code>? &lt;function&gt;;</code> to get the documentation for a function.
+</p>
+</div>
+</div>
+
 <div id="outline-container-org156c5cf" class="outline-4">
 <h4 id="org156c5cf">Lists</h4>
 <div class="outline-text-4" id="text-org156c5cf">
@@ -378,9 +390,38 @@ To force the evaluation of an expression before binding it to the value of a fun
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(fdash(x), <span style="color: #4f97d7;">diff</span>(f(x), x));
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(fdash(x), <span style="color: #3a81c3;">diff</span>(f(x), x));
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org775fe6a" class="outline-4">
+<h4 id="org775fe6a">Packages</h4>
+<div class="outline-text-4" id="text-org775fe6a">
+<p>
+Use the <code>load</code> command to load packages.
+For example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #2d9574;">"distrib"</span>);
+</pre>
+</div>
+
+<p>
+to get some useful functions for working with distributions.
+The <code>f90</code> package exports the function <code>f90</code> which will convert an expression into valid Fortran90 which has syntax very close to most of the mainstream languages.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ee0ba5" class="outline-4">
+<h4 id="org9ee0ba5">Expressions and the REPL</h4>
+<div class="outline-text-4" id="text-org9ee0ba5">
+<p>
+You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>.
+</p>
 </div>
 </div>
 </div>
@@ -402,8 +443,8 @@ To force the evaluation of an expression before binding it to the value of a fun
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">Function</th>
-<th scope="col" class="org-left">Use</th>
+<th scope="col" class="org-left"><b>Function</b></th>
+<th scope="col" class="org-left"><b>Use</b></th>
 </tr>
 </thead>
 <tbody>
@@ -426,6 +467,11 @@ To force the evaluation of an expression before binding it to the value of a fun
 <td class="org-left"><code>factor</code></td>
 <td class="org-left">Factorise</td>
 </tr>
+
+<tr>
+<td class="org-left"><code>ratsimp</code></td>
+<td class="org-left">Simplify a rational function</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -444,8 +490,8 @@ To force the evaluation of an expression before binding it to the value of a fun
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">Function</th>
-<th scope="col" class="org-left">Use</th>
+<th scope="col" class="org-left"><b>Function</b></th>
+<th scope="col" class="org-left"><b>Use</b></th>
 </tr>
 </thead>
 <tbody>
@@ -482,21 +528,12 @@ To force the evaluation of an expression before binding it to the value of a fun
 </table>
 </div>
 </div>
-
-<div id="outline-container-orgbaee810" class="outline-4">
-<h4 id="orgbaee810">Probability</h4>
-<div class="outline-text-4" id="text-orgbaee810">
-<p>
-<a href="http://maxima.sourceforge.net/docs/manual/maxima_52.html#SEC249"><code>distrib</code></a> package
-</p>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-10-26 Sat 11:16</p>
+<p class="date">Created: 2019-12-05 Thu 13:29</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
