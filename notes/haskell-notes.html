@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-11 Wed 13:04 -->
+<!-- 2019-12-23 Mon 15:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -249,7 +249,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org667b5b7">Haskell notes</a>
 <ul>
-<li><a href="#org20d6260"><span class="todo TODO">TODO</span> Debugging</a></li>
+<li><a href="#org20d6260">Debugging</a></li>
 <li><a href="#org603200f"><code>stack</code></a>
 <ul>
 <li><a href="#orgb0cc4cf">Starting a new project</a></li>
@@ -265,9 +265,15 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgf492c12"><code>OverloadedStrings</code></a></li>
 <li><a href="#orgb3111b5"><code>RecordWildcards</code></a></li>
+<li><a href="#org6a663d0"><code>UnicodeSyntax</code></a></li>
 </ul>
 </li>
-<li><a href="#org447016e">Packages I like</a></li>
+<li><a href="#org447016e">Packages I like</a>
+<ul>
+<li><a href="#org7251c9d"><code>ad</code>: combinators for automatic differentiation</a></li>
+<li><a href="#orge8c6d4a"><code>monad-par</code> which makes use of combinators in <code>monad-par-extras</code></a></li>
+</ul>
+</li>
 <li><a href="#org657981f">Type theory</a></li>
 </ul>
 </li>
@@ -287,7 +293,7 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-org20d6260" class="outline-3">
-<h3 id="org20d6260"><span class="todo TODO">TODO</span> Debugging</h3>
+<h3 id="org20d6260">Debugging</h3>
 <div class="outline-text-3" id="text-org20d6260">
 <ol class="org-ol">
 <li>Load the relevant module: <code>λ&gt; :load &lt;module.hs&gt;</code></li>
@@ -486,13 +492,50 @@ Neat syntax for pattern matching a record based on its field names.
 </p>
 </div>
 </div>
+<div id="outline-container-org6a663d0" class="outline-4">
+<h4 id="org6a663d0"><a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#unicode-syntax"><code>UnicodeSyntax</code></a></h4>
+<div class="outline-text-4" id="text-org6a663d0">
+<p>
+This allows you to make use of Unicode characters in your code which is particularly nice if you are going a verbatim translation of some mathematics.
+Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Select-Input-Method.html">input Unicode</a> but to make it even easier, I've added the following bindings.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Set the input method to TeX so typing TeX defaults to the Unicode.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Use C-\ to escape this input method.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">MNEMONIC: owner-haskell-unicode</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ohu"</span> 'set-input-method<span style="color: #3a81c3;">)</span>
+</pre>
 </div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org447016e" class="outline-3">
 <h3 id="org447016e">Packages I like</h3>
 <div class="outline-text-3" id="text-org447016e">
-<ul class="org-ul">
-<li><a href="http://hackage.haskell.org/package/ad"><code>ad</code></a>: Automatic differentiation</li>
-</ul>
+</div>
+<div id="outline-container-org7251c9d" class="outline-4">
+<h4 id="org7251c9d"><a href="http://hackage.haskell.org/package/ad"><code>ad</code></a>: combinators for automatic differentiation</h4>
+</div>
+<div id="outline-container-orge8c6d4a" class="outline-4">
+<h4 id="orge8c6d4a"><a href="https://hackage.haskell.org/package/monad-par"><code>monad-par</code></a> which makes use of combinators in <a href="https://hackage.haskell.org/package/monad-par-extras"><code>monad-par-extras</code></a></h4>
+<div class="outline-text-4" id="text-orge8c6d4a">
+<p>
+Without knowing anything about how this works internally, the following functions should be sufficient for running a map type computation in parallel.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Par</span> <span style="color: #3a81c3;">(</span>runPar<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Par.Combinator</span> <span style="color: #3a81c3;">(</span>parMap<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Par</span> a
+
+<span style="color: #6c3163; font-weight: bold;">runPar</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Par</span> a <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">parMap</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Traversable</span> t <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">-&gt;</span> b<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-&gt;</span> t a <span style="color: #715ab1;">-&gt;</span> p <span style="color: #3a81c3;">(</span>t b<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 
@@ -508,7 +551,7 @@ See my <a href="./notes/type-theory-notes.html">type theory notes</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-12-11 Wed 13:04</p>
+<p class="date">Created: 2019-12-23 Mon 15:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

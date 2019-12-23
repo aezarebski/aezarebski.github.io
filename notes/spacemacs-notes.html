@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-11 Wed 13:04 -->
+<!-- 2019-12-23 Mon 15:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -255,9 +255,10 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgb3de980">Modes</a>
 <ul>
-<li><a href="#orge72450e">Emacs Speaks Statistics</a>
+<li><a href="#org7ec3f77">Emacs Speaks Statistics</a>
 <ul>
 <li><a href="#org3c0c1c6">Reference Sheet</a></li>
+<li><a href="#org3d664ec">A hacky pretty-printer</a></li>
 </ul>
 </li>
 <li><a href="#org580aadd">Gnuplot</a></li>
@@ -270,20 +271,22 @@ for the JavaScript code in this tag.
 <li><a href="#orge3ca8f1">Dired</a></li>
 <li><a href="#org8a7e9b9">Elfeed</a>
 <ul>
-<li><a href="#org0b4ca4f">Shortcuts</a></li>
+<li><a href="#orgeabc496">Shortcuts</a></li>
+<li><a href="#org3c0c159">Configuration</a></li>
+<li><a href="#org6680a59">Automatic tagging of entries</a></li>
 </ul>
 </li>
 <li><a href="#orgdf3b7e0">Eshell</a>
 <ul>
 <li><a href="#org579510f">IO</a></li>
 <li><a href="#org0b6dbf3">Alias</a></li>
-<li><a href="#org3c0c159">Configuration</a></li>
+<li><a href="#orgb2cf52d">Configuration</a></li>
 </ul>
 </li>
 <li><a href="#org8c52584">Spray</a></li>
 </ul>
 </li>
-<li><a href="#orgeabc496">Shortcuts</a>
+<li><a href="#org36b67cb">Shortcuts</a>
 <ul>
 <li><a href="#org3da171b">Spacemacs</a></li>
 <li><a href="#org8e9bc46">Personal configuration</a></li>
@@ -336,14 +339,51 @@ To open a new frame run <code>emacsclient -c</code>, or to open a specific file 
 <h2 id="orgb3de980">Modes</h2>
 <div class="outline-text-2" id="text-orgb3de980">
 </div>
-<div id="outline-container-orge72450e" class="outline-3">
-<h3 id="orge72450e">Emacs Speaks Statistics</h3>
-<div class="outline-text-3" id="text-orge72450e">
+<div id="outline-container-org7ec3f77" class="outline-3">
+<h3 id="org7ec3f77"><a id="org31d3018"></a> Emacs Speaks Statistics</h3>
+<div class="outline-text-3" id="text-org7ec3f77">
 <p>
 In spacemacs, if you are running an R process and you <code>?</code> a function in the REPL it opens the documentation in emacs mode rather than evil.
 To fix this you can <code>C-z</code> to get into vim.
 To close the documentation in emacs mode just use <code>q</code>, but to do this in vim use <code>:q</code>.
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Binding</b></th>
+<th scope="col" class="org-left"><b>Action</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>SPC o r s</code></td>
+<td class="org-left">Start a REPL</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC o r r</code></td>
+<td class="org-left">Evaluate the <i>region</i></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC o r b</code></td>
+<td class="org-left">Evaluate the <i>buffer</i></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC o r f</code></td>
+<td class="org-left">Reformat the buffer</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 <div id="outline-container-org3c0c1c6" class="outline-4">
@@ -352,6 +392,21 @@ To close the documentation in emacs mode just use <code>q</code>, but to do this
 <ul class="org-ul">
 <li><a href="../resources/ess-cheat-sheet.pdf">ESS</a></li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-org3d664ec" class="outline-4">
+<h4 id="org3d664ec">A hacky pretty-printer</h4>
+<div class="outline-text-4" id="text-org3d664ec">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">styler-reformat-buffer</span> <span style="color: #6c3163;">()</span>
+  <span style="color: #2aa1ae;">"Run styler on the current buffer."</span>
+  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
+  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>cmd-pattern <span style="color: #2d9574;">"R -q --vanilla -e </span><span style="color: #dc752f; background-color: #fbf8ef;">\</span><span style="color: #2d9574;">'options(warn=-1); styler::style_file(\"%s\")</span><span style="color: #dc752f; background-color: #fbf8ef;">\</span><span style="color: #2d9574;">'"</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>curr-buffer-path <span style="color: #b1951d;">(</span>buffer-file-name<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span>shell-command <span style="color: #67b11d;">(</span>format cmd-pattern curr-buffer-path<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -478,32 +533,15 @@ The following definition tells magit to open the status buffer in a full frame.
 <div class="outline-text-3" id="text-org8a7e9b9">
 <p>
 RSS reader for emacs.
-To enter elfeed use <code>SPC a f</code>.
+To start the elfeed application use <code>SPC a f</code>.
+<b>Mnemonic:</b> [a]pplication [f]eed.
 Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </p>
-
-<pre class="example">
-Documentation:
-List of all feeds that Elfeed should follow.
-You must add your feeds to this list.
-
-In its simplest form this will be a list of strings of feed URLs.
-Items in this list can also be list whose car is the feed URL
-and cdr is a list of symbols to be applied to all discovered
-entries as tags ("autotags"). For example,
-
-  (setq elfeed-feeds ’("http://foo/"
-                       "http://bar/"
-                       ("http://baz/" comic)))
-
-All entries from the "baz" feed will be tagged as "comic"
-when they are first discovered.
-</pre>
 </div>
 
-<div id="outline-container-org0b4ca4f" class="outline-4">
-<h4 id="org0b4ca4f">Shortcuts</h4>
-<div class="outline-text-4" id="text-org0b4ca4f">
+<div id="outline-container-orgeabc496" class="outline-4">
+<h4 id="orgeabc496">Shortcuts</h4>
+<div class="outline-text-4" id="text-orgeabc496">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -550,6 +588,66 @@ when they are first discovered.
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+
+<div id="outline-container-org3c0c159" class="outline-4">
+<h4 id="org3c0c159">Configuration</h4>
+<div class="outline-text-4" id="text-org3c0c159">
+<p>
+You can put the configuration of elfeed in a seperate file and then load it from your <code>init</code>.
+In Spacemacs, this means adding the following to your <code>dotspacemacs/user-config</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>load-file <span style="color: #2d9574;">"&lt;path/to/config.el&gt;"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+where the configuration file sets the <code>elfeed-feeds</code> quantity to be a list of URLs.
+<b>NOTE!</b> If you want to add tag specific faces for the entries, you need to include <code>(require 'elfeed-search)</code> at the top of the configuration file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6680a59" class="outline-4">
+<h4 id="org6680a59">Automatic tagging of entries</h4>
+<div class="outline-text-4" id="text-org6680a59">
+<p>
+The <code>elfeed-new-entry-hook</code> provides a way to automatically tag new entries, for example, by checking if the title and content contain particular words.
+The following snippet is taken from the <a href="http://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/">author's blog</a> demonstrating how to do this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">score-elfeed-entry</span> <span style="color: #6c3163;">(</span>entry<span style="color: #6c3163;">)</span>
+  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>title <span style="color: #b1951d;">(</span>elfeed-entry-title entry<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>content <span style="color: #b1951d;">(</span>elfeed-deref <span style="color: #3a81c3;">(</span>elfeed-entry-content entry<span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>score <span style="color: #4e3163;">0</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span><span style="color: #3a81c3; font-weight: bold;">loop</span> for <span style="color: #67b11d;">(</span>pattern n<span style="color: #67b11d;">)</span> in '<span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span><span style="color: #2d9574;">"alloy"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"machine learning</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">neural"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"database"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"reproducible"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"carbon dioxide</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">CO2"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"oxygen evolution</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">OER</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">electrolysis"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"perovskite</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">polymorph</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">epitax"</span> <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"kitchin"</span> <span style="color: #4e3163;">2</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+          if <span style="color: #67b11d;">(</span>string-match pattern title<span style="color: #67b11d;">)</span>
+          do <span style="color: #67b11d;">(</span><span style="color: #3a81c3; font-weight: bold;">incf</span> score n<span style="color: #67b11d;">)</span>
+          if <span style="color: #67b11d;">(</span>string-match pattern content<span style="color: #67b11d;">)</span>
+          do <span style="color: #67b11d;">(</span><span style="color: #3a81c3; font-weight: bold;">incf</span> score n<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span>message <span style="color: #2d9574;">"%s - %s"</span> title score<span style="color: #2d9574;">)</span>
+
+    <span style="color: #2d9574;">(</span><span style="color: #3a81c3; font-weight: bold;">cond</span>
+     <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>= score <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+      <span style="color: #b1951d;">(</span>elfeed-tag entry 'relevant<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+     <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>&gt; score <span style="color: #4e3163;">1</span><span style="color: #b1951d;">)</span>
+      <span style="color: #b1951d;">(</span>elfeed-tag entry 'important<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    entry<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3;">(</span>add-hook 'elfeed-new-entry-hook 'score-elfeed-entry<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -677,9 +775,9 @@ The following interactive command can simplify the task of checking what aliases
 </div>
 </div>
 
-<div id="outline-container-org3c0c159" class="outline-4">
-<h4 id="org3c0c159">Configuration</h4>
-<div class="outline-text-4" id="text-org3c0c159">
+<div id="outline-container-orgb2cf52d" class="outline-4">
+<h4 id="orgb2cf52d">Configuration</h4>
+<div class="outline-text-4" id="text-orgb2cf52d">
 <p>
 Add the following to <code>dotspacemacs-configuration-layers</code>.
 </p>
@@ -766,9 +864,9 @@ Enable this by adding <code>speed-reading</code> to your configuration.
 </div>
 </div>
 
-<div id="outline-container-orgeabc496" class="outline-2">
-<h2 id="orgeabc496">Shortcuts</h2>
-<div class="outline-text-2" id="text-orgeabc496">
+<div id="outline-container-org36b67cb" class="outline-2">
+<h2 id="org36b67cb">Shortcuts</h2>
+<div class="outline-text-2" id="text-org36b67cb">
 </div>
 <div id="outline-container-org3da171b" class="outline-3">
 <h3 id="org3da171b">Spacemacs</h3>
@@ -860,6 +958,11 @@ The "o" in the first position is for <i>owner</i>, the "o" in the second positio
 </thead>
 <tbody>
 <tr>
+<td class="org-left"><code>SPC t t</code></td>
+<td class="org-left">Toggle the theme</td>
+</tr>
+
+<tr>
 <td class="org-left"><code>SPC o o v</code></td>
 <td class="org-left">Visit the index page of my notes</td>
 </tr>
@@ -895,13 +998,18 @@ The "o" in the first position is for <i>owner</i>, the "o" in the second positio
 </tr>
 
 <tr>
-<td class="org-left"><code>SPC o g</code></td>
-<td class="org-left">Same as <code>C-g</code> for a hasty retreat</td>
+<td class="org-left"><code>SPC o f f</code></td>
+<td class="org-left">Find the file under the cursor</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>SPC o f</code></td>
-<td class="org-left">Find the file under the cursor</td>
+<td class="org-left"><code>SPC o f p</code></td>
+<td class="org-left">Find the file from current project</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC o f b</code></td>
+<td class="org-left">List current buffers in <code>ibuffer</code></td>
 </tr>
 
 <tr>
@@ -1012,7 +1120,7 @@ The "o" in the first position is for <i>owner</i>, the "o" in the second positio
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-12-11 Wed 13:04</p>
+<p class="date">Created: 2019-12-23 Mon 15:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
