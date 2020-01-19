@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-01 Wed 01:51 -->
+<!-- 2020-01-19 Sun 23:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -255,7 +255,7 @@ for the JavaScript code in this tag.
 <li><a href="#org738f78f">Using nautilus to browse files on a remote machine</a></li>
 </ul>
 </li>
-<li><a href="#org664f379">Screen resolution</a></li>
+<li><a href="#org70fa913">Monitor configuration</a></li>
 <li><a href="#orgdb40bf8">Keyboard configuration</a></li>
 <li><a href="#orge2995ac">Network connection Wi-Fi</a></li>
 </ul>
@@ -297,17 +297,22 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org664f379" class="outline-3">
-<h3 id="org664f379">Screen resolution</h3>
-<div class="outline-text-3" id="text-org664f379">
+<div id="outline-container-org70fa913" class="outline-3">
+<h3 id="org70fa913">Monitor configuration</h3>
+<div class="outline-text-3" id="text-org70fa913">
 <p>
-The <code>xrandr</code> command allows you to specify the resolution of the screen.
-When I first installed Ubuntu, the windows were all far too small. 
-Running <code>xrandr -s 1600x900</code> was much more suitable for a 14 inch laptop.
+The <code>xrandr</code> command allows you to specify the configuration of the monitor/s.
+There is a GUI for <code>xranrd</code> called <code>arandr</code> which may substantially simplify the process of configuring the monitor.
+Once you have a configuration you are happy with, you can use <code>arandr</code> to write it to file.
+By default these configurations will be stored in the <code>~/.screenlayout</code> directory.
 </p>
 
 <p>
+When I first installed Ubuntu, the windows were all far too small. 
+Running <code>xrandr -s 1440x900</code> was much more suitable for a 14 inch laptop.
 If you are using <code>i3</code> and <code>spacemacs</code> you might also need to adjust the font sizes for these software to make everything look right.
+By default, Ubuntu does not appear to recognise a second monitor, you can use <code>xrandr</code> to configure the use of both the primary and secondary monitor.
+I found it much easier to do this via <code>arandr</code>.
 </p>
 </div>
 </div>
@@ -315,15 +320,23 @@ If you are using <code>i3</code> and <code>spacemacs</code> you might also need 
 <h3 id="orgdb40bf8">Keyboard configuration</h3>
 <div class="outline-text-3" id="text-orgdb40bf8">
 <p>
-The caps lock key is solid real-estate but is wildly underutilised.
-Switch it and the escape key by adding the following to your <code>~/.xinitrc</code>
+The caps lock key is solid real-estate but is wildly underutilised, and control is more useful than alt a lot of the time.
+Adding the following to a file called <code>Xmodmap</code> and then run it with <code>xmodmap &lt;path/to/Xmodmap&gt;</code>.
+It will switch escape and caps lock and the right alt key will become another control key.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-conf">xmodmap -e <span style="color: #2d9574;">"clear lock"</span>
-xmodmap -3 <span style="color: #2d9574;">"keysym Caps_Lock = Escape"</span>
+<pre class="example">
+clear lock
+keycode 9 = Caps_Lock
+keycode 66 = Escape
+
+remove Control = Control_R
+remove Mod1 = Alt_R
+keycode 105 = Alt_R
+keycode 108 = Control_R
+add Control = Control_R
+add Mod1 = Alt_R
 </pre>
-</div>
 </div>
 </div>
 
@@ -345,7 +358,7 @@ Note the SSID of the network you want to connect to.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-01-01 Wed 01:51</p>
+<p class="date">Created: 2020-01-19 Sun 23:39</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

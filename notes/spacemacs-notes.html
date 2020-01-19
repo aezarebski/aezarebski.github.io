@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-01 Wed 01:51 -->
+<!-- 2020-01-19 Sun 23:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -252,6 +252,7 @@ for the JavaScript code in this tag.
 <li><a href="#org278cc73">The daemon and the client</a></li>
 <li><a href="#orgd3096ad">Build you an Emacs</a></li>
 <li><a href="#orgc648506">Keyboard macros</a></li>
+<li><a href="#orgf17ef2c">Layers</a></li>
 </ul>
 </li>
 <li><a href="#orga11d23d">Modes</a>
@@ -264,9 +265,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgf25b609">A hacky pretty-printer</a></li>
 </ul>
 </li>
-<li><a href="#org6a64cd9">Gnuplot</a></li>
 <li><a href="#org24383a7">Haskell</a></li>
-<li><a href="#org4d895aa">Magit</a></li>
 </ul>
 </li>
 <li><a href="#org86570f8">Applications</a>
@@ -274,8 +273,8 @@ for the JavaScript code in this tag.
 <li><a href="#org9a2dae0">Dired</a></li>
 <li><a href="#org24a083c">Elfeed</a>
 <ul>
-<li><a href="#orgf7822d2">Shortcuts</a></li>
-<li><a href="#org0c48fe9">Configuration</a></li>
+<li><a href="#orgeabc3a1">Shortcuts</a></li>
+<li><a href="#orgc2a2cba">Configuration</a></li>
 <li><a href="#org31fce06">Automatic tagging of entries</a></li>
 </ul>
 </li>
@@ -283,13 +282,24 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org078f43b">IO</a></li>
 <li><a href="#org3ad8ca8">Alias</a></li>
-<li><a href="#orgc2a2cba">Configuration</a></li>
+<li><a href="#org932bf51">Configuration</a></li>
 </ul>
 </li>
 <li><a href="#org3ca5fd7">Spray</a></li>
 </ul>
 </li>
-<li><a href="#orgeabc3a1">Shortcuts</a>
+<li><a href="#org973af5b">Tools</a>
+<ul>
+<li><a href="#org4d895aa">Magit</a></li>
+<li><a href="#org38339b1">Spell checking</a>
+<ul>
+<li><a href="#org722979c">Configuration</a></li>
+<li><a href="#org9490a60">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org654e598">Shortcuts</a>
 <ul>
 <li><a href="#org1383a34">Spacemacs</a></li>
 <li><a href="#orgce418f0">Personal configuration</a></li>
@@ -349,6 +359,39 @@ To open a new frame run <code>emacsclient -c</code>, or to open a specific file 
 <p>
 If you want to save a macro for later use, you can get a emacs-lisp definition of it with <code>insert-kbd-macro</code>.
 </p>
+</div>
+</div>
+<div id="outline-container-orgf17ef2c" class="outline-3">
+<h3 id="orgf17ef2c">Layers</h3>
+<div class="outline-text-3" id="text-orgf17ef2c">
+<p>
+The layers in my spacemacs configuration are shown below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">'<span style="color: #4f97d7;">(</span>
+  auto-completion
+  elfeed
+  emacs-lisp
+  ess
+  git
+  haskell
+  helm
+  html
+  markdown
+  org
+  <span style="color: #bc6ec5;">(</span>shell <span style="color: #4f97d7;">:variables</span>
+         shell-default-shell 'eshell
+         shell-default-position <span style="color: #2d9574;">"bottom"</span>
+         shell-default-height <span style="color: #a45bad;">50</span><span style="color: #bc6ec5;">)</span>
+  speed-reading
+  <span style="color: #bc6ec5;">(</span>spell-checking <span style="color: #4f97d7;">:variables</span>
+                  spell-checking-enable-by-default nil
+                  enable-flyspell-auto-completion t<span style="color: #bc6ec5;">)</span>
+  yaml
+  <span style="color: #4f97d7;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -442,14 +485,6 @@ To close the documentation in emacs mode just use <code>q</code>, but to do this
 </div>
 </div>
 
-<div id="outline-container-org6a64cd9" class="outline-3">
-<h3 id="org6a64cd9">Gnuplot</h3>
-<div class="outline-text-3" id="text-org6a64cd9">
-<p>
-There is a major mode for gnuplot called <a href="https://github.com/bruceravel/gnuplot-mode">gnuplot-mode</a> which provides a REPL.
-</p>
-</div>
-</div>
 <div id="outline-container-org24383a7" class="outline-3">
 <h3 id="org24383a7">Haskell</h3>
 <div class="outline-text-3" id="text-org24383a7">
@@ -458,94 +493,7 @@ The Haskell layer and related packages are described in the <a href="haskell-not
 </p>
 </div>
 </div>
-<div id="outline-container-org4d895aa" class="outline-3">
-<h3 id="org4d895aa">Magit</h3>
-<div class="outline-text-3" id="text-org4d895aa">
-<p>
-I have some <a href="../notes/git-notes.html">notes on git</a>, but this section is about the emacs package <code>magit</code> which is like a git client.
-To get to the magit status buffer use <code>SPC g s</code>.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Keys</th>
-<th scope="col" class="org-left">Command</th>
-<th scope="col" class="org-left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>SPC g s</code></td>
-<td class="org-left"><code>magit-status</code></td>
-<td class="org-left">Open the status buffer</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>F p</code></td>
-<td class="org-left"><code>magit-pull-from-pushremote</code></td>
-<td class="org-left">Pull commits from remote</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>s</code> and <code>u</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Stage and unstage files</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>c c</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Create commit</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>, k</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Kill (cancel) a commit</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-c C-c</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Confirm commit</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>p p</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Push commits to remote</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>l l</code></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Show commits graphically</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-The following definition tells magit to open the status buffer in a full frame.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1<span style="color: #4f97d7;">)</span>
-</pre>
 </div>
-</div>
-</div>
-</div>
-
 <div id="outline-container-org86570f8" class="outline-2">
 <h2 id="org86570f8">Applications</h2>
 <div class="outline-text-2" id="text-org86570f8">
@@ -570,9 +518,9 @@ Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </p>
 </div>
 
-<div id="outline-container-orgf7822d2" class="outline-4">
-<h4 id="orgf7822d2">Shortcuts</h4>
-<div class="outline-text-4" id="text-orgf7822d2">
+<div id="outline-container-orgeabc3a1" class="outline-4">
+<h4 id="orgeabc3a1">Shortcuts</h4>
+<div class="outline-text-4" id="text-orgeabc3a1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -622,9 +570,9 @@ Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </div>
 </div>
 
-<div id="outline-container-org0c48fe9" class="outline-4">
-<h4 id="org0c48fe9">Configuration</h4>
-<div class="outline-text-4" id="text-org0c48fe9">
+<div id="outline-container-orgc2a2cba" class="outline-4">
+<h4 id="orgc2a2cba">Configuration</h4>
+<div class="outline-text-4" id="text-orgc2a2cba">
 <p>
 You can put the configuration of elfeed in a seperate file and then load it from your <code>init</code>.
 In Spacemacs, this means adding the following to your <code>dotspacemacs/user-config</code>:
@@ -806,9 +754,9 @@ The following interactive command can simplify the task of checking what aliases
 </div>
 </div>
 
-<div id="outline-container-orgc2a2cba" class="outline-4">
-<h4 id="orgc2a2cba">Configuration</h4>
-<div class="outline-text-4" id="text-orgc2a2cba">
+<div id="outline-container-org932bf51" class="outline-4">
+<h4 id="org932bf51">Configuration</h4>
+<div class="outline-text-4" id="text-org932bf51">
 <p>
 Add the following to <code>dotspacemacs-configuration-layers</code>.
 </p>
@@ -895,9 +843,140 @@ Enable this by adding <code>speed-reading</code> to your configuration.
 </div>
 </div>
 
-<div id="outline-container-orgeabc3a1" class="outline-2">
-<h2 id="orgeabc3a1">Shortcuts</h2>
-<div class="outline-text-2" id="text-orgeabc3a1">
+<div id="outline-container-org973af5b" class="outline-2">
+<h2 id="org973af5b">Tools</h2>
+<div class="outline-text-2" id="text-org973af5b">
+</div>
+<div id="outline-container-org4d895aa" class="outline-3">
+<h3 id="org4d895aa">Magit</h3>
+<div class="outline-text-3" id="text-org4d895aa">
+<p>
+I have some <a href="../notes/git-notes.html">notes on git</a>, but this section is about the emacs package <code>magit</code> which is like a git client.
+To get to the magit status buffer use <code>SPC g s</code>.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Keys</th>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>SPC g s</code></td>
+<td class="org-left"><code>magit-status</code></td>
+<td class="org-left">Open the status buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F p</code></td>
+<td class="org-left"><code>magit-pull-from-pushremote</code></td>
+<td class="org-left">Pull commits from remote</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s</code> and <code>u</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Stage and unstage files</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c c</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Create commit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>, k</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Kill (cancel) a commit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-c</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Confirm commit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>p p</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Push commits to remote</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>l l</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Show commits graphically</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The following definition tells magit to open the status buffer in a full frame.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38339b1" class="outline-3">
+<h3 id="org38339b1">Spell checking</h3>
+<div class="outline-text-3" id="text-org38339b1">
+</div>
+<div id="outline-container-org722979c" class="outline-4">
+<h4 id="org722979c">Configuration</h4>
+<div class="outline-text-4" id="text-org722979c">
+<p>
+Add <code>spell-checking</code> to the layers list.
+By default it will look for <code>aspell</code> on the path (which is the GNU replacement for <code>ispell</code>.)
+The program that will be used is described by <code>ispell-program-name</code>.
+The dictionary that will be used is defined by <code>ispell-dictionary</code>.
+I have the following settings for spell checking
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>spell-checking <span style="color: #4f97d7;">:variables</span>
+                spell-checking-enable-by-default nil
+                enable-flyspell-auto-completion t<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9490a60" class="outline-4">
+<h4 id="org9490a60">Usage</h4>
+<div class="outline-text-4" id="text-org9490a60">
+<p>
+I need to explicitly use <code>SPC t S</code> to toggle on spell checking.
+To spell check the buffer I use <code>SPC S b</code>.
+Leaving the point over a misspelled word will bring up a list of potential corrections.
+</p>
+
+<p>
+To add a new word to a private dictionary use <code>M-$</code> to bring up the list of potential solutions and then press [i]nsert to add the word to a private dictionary.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org654e598" class="outline-2">
+<h2 id="org654e598">Shortcuts</h2>
+<div class="outline-text-2" id="text-org654e598">
 </div>
 <div id="outline-container-org1383a34" class="outline-3">
 <h3 id="org1383a34">Spacemacs</h3>
@@ -1151,7 +1230,7 @@ The "o" in the first position is for <i>owner</i>, the "o" in the second positio
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-01-01 Wed 01:51</p>
+<p class="date">Created: 2020-01-19 Sun 23:39</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
