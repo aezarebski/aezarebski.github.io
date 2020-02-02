@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-02 Sun 06:49 -->
+<!-- 2020-02-02 Sun 23:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -370,6 +370,15 @@ The executable is in <code>/usr/local/bin</code> by default.
 To upgrade <code>stack</code> there is the <code>stack upgrade</code> command.
 To uninstall, remove the stack executable and <code>~/.stack</code> and the <code>.stack-work</code> from any projects using <code>stack</code>.
 </p>
+
+<p>
+<code>stack</code> installs to <code>/home/&lt;username&gt;/.local/bin</code> by default, so you should add this to your path
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">PATH</span>=/home/&lt;username&gt;/.local/bin:$<span style="color: #715ab1;">PATH</span>
+</pre>
+</div>
 </div>
 </div>
 
@@ -378,7 +387,7 @@ To uninstall, remove the stack executable and <code>~/.stack</code> and the <cod
 <div class="outline-text-4" id="text-org958b05f">
 <div class="org-src-container">
 <pre class="src src-sh">stack new my-project
-<span style="color: #4f97d7;">cd</span> my-project
+<span style="color: #3a81c3;">cd</span> my-project
 stack setup
 stack build
 stack exec my-project-exe
@@ -437,31 +446,31 @@ There is some basic syntax which is easy to forget.
 
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #2aa1ae;">-- |wild card</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> xs
+<span style="color: #6c3163; font-weight: bold;">f</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> xs
 
 <span style="color: #2aa1ae;">-- |as-pattern</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> l<span style="color: #7590db;">@</span><span style="color: #4f97d7;">(</span>x<span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x<span style="color: #ce537a; font-weight: bold;">:</span>l
+<span style="color: #6c3163; font-weight: bold;">f</span> l<span style="color: #715ab1;">@</span><span style="color: #3a81c3;">(</span>x<span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x<span style="color: #ba2f59; font-weight: bold;">:</span>l
 
 <span style="color: #2aa1ae;">-- |guards</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x
-  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">0</span>     <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0</span>
-  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&gt;=</span> <span style="color: #a45bad;">0</span>    <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1</span>
-  <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">=</span> undefined
+<span style="color: #6c3163; font-weight: bold;">f</span> x
+  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;</span> <span style="color: #4e3163;">0</span>     <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">0</span>
+  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&gt;=</span> <span style="color: #4e3163;">0</span>    <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">1</span>
+  <span style="color: #715ab1;">|</span> otherwise <span style="color: #715ab1;">=</span> undefined
 
 <span style="color: #2aa1ae;">-- |case expression</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">case</span> x <span style="color: #4f97d7; font-weight: bold;">of</span>
-  pattern1 <span style="color: #7590db;">-&gt;</span> expression1
-  pattern2 <span style="color: #7590db;">-&gt;</span> expression2
-  <span style="color: #4f97d7; font-weight: bold;">_</span>        <span style="color: #7590db;">-&gt;</span> undefined
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> x <span style="color: #3a81c3; font-weight: bold;">of</span>
+  pattern1 <span style="color: #715ab1;">-&gt;</span> expression1
+  pattern2 <span style="color: #715ab1;">-&gt;</span> expression2
+  <span style="color: #3a81c3; font-weight: bold;">_</span>        <span style="color: #715ab1;">-&gt;</span> undefined
 
 <span style="color: #2aa1ae;">-- |where clause</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> g z
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    z <span style="color: #7590db;">=</span> epxression
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> g z
+  <span style="color: #3a81c3; font-weight: bold;">where</span>
+    z <span style="color: #715ab1;">=</span> epxression
 
 <span style="color: #2aa1ae;">-- |letexpression</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">let</span> z <span style="color: #7590db;">=</span> expression
-      <span style="color: #4f97d7; font-weight: bold;">in</span> g z
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">let</span> z <span style="color: #715ab1;">=</span> expression
+      <span style="color: #3a81c3; font-weight: bold;">in</span> g z
 </pre>
 </div>
 </div>
@@ -496,9 +505,9 @@ To enable the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>haskell <span style="color: #4f97d7;">:variables</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>haskell <span style="color: #3a81c3;">:variables</span>
          haskell-enable-hindent-style <span style="color: #2d9574;">"johan-tibell"</span>
-         haskell-process-type 'stack-ghci<span style="color: #4f97d7;">)</span>
+         haskell-process-type 'stack-ghci<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -537,10 +546,10 @@ Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/softwa
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">Set the input method to TeX so typing TeX defaults to the Unicode.</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">Use C-\ to escape this input method.</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">MNEMONIC: owner-haskell-unicode</span>
-<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ohu"</span> 'set-input-method<span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Set the input method to TeX so typing TeX defaults to the Unicode.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Use C-\ to escape this input method.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">MNEMONIC: owner-haskell-unicode</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ohu"</span> 'set-input-method<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -562,13 +571,13 @@ Without knowing anything about how this works internally, the following function
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.Par</span> <span style="color: #4f97d7;">(</span>runPar<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.Par.Combinator</span> <span style="color: #4f97d7;">(</span>parMap<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Par</span> <span style="color: #3a81c3;">(</span>runPar<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Par.Combinator</span> <span style="color: #3a81c3;">(</span>parMap<span style="color: #3a81c3;">)</span>
 
-<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Par</span> a
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Par</span> a
 
-<span style="color: #bc6ec5; font-weight: bold;">runPar</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Par</span> a <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">parMap</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Traversable</span> t <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> p <span style="color: #4f97d7;">(</span>t b<span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">runPar</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Par</span> a <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">parMap</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Traversable</span> t <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">-&gt;</span> b<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-&gt;</span> t a <span style="color: #715ab1;">-&gt;</span> p <span style="color: #3a81c3;">(</span>t b<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -587,7 +596,7 @@ See my <a href="./notes/type-theory-notes.html">type theory notes</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-02-02 Sun 06:49</p>
+<p class="date">Created: 2020-02-02 Sun 23:48</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
