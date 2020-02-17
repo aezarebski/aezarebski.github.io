@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-30 Sat 00:38 -->
+<!-- 2020-02-02 Sun 23:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -199,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -247,21 +247,22 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf315ae4">Bourne shell notes</a>
+<li><a href="#orgd7b275a">Bourne shell notes</a>
 <ul>
-<li><a href="#orgb78c4f1">Scripting</a>
+<li><a href="#org1aa4563">Start up and configuration</a></li>
+<li><a href="#orgc7dfcaa">Scripting</a>
 <ul>
-<li><a href="#orgf0db606">Control flow</a></li>
-<li><a href="#org953c55f">Arguments</a></li>
-<li><a href="#orgd38c2df">Functions</a></li>
+<li><a href="#org658b32b">Control flow</a></li>
+<li><a href="#orgba94785">Arguments</a></li>
+<li><a href="#org2b79021">Functions</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgddb7e76">Unix commands</a>
+<li><a href="#org8b7242c">Unix commands</a>
 <ul>
-<li><a href="#org3d2e22c">Disk usage <code>du</code></a></li>
-<li><a href="#org7d7e43f">Viewing hierarchy <code>tree</code></a></li>
+<li><a href="#org7e29ae1">Disk usage <code>du</code></a></li>
+<li><a href="#org318f93f">Viewing hierarchy <code>tree</code></a></li>
 </ul>
 </li>
 </ul>
@@ -271,20 +272,36 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgf315ae4" class="outline-2">
-<h2 id="orgf315ae4">Bourne shell notes</h2>
-<div class="outline-text-2" id="text-orgf315ae4">
+<div id="outline-container-orgd7b275a" class="outline-2">
+<h2 id="orgd7b275a">Bourne shell notes</h2>
+<div class="outline-text-2" id="text-orgd7b275a">
 <p>
 On my machine at uni this is <code>/bin/sh</code> which points to <code>/bin/dash</code> 
 </p>
 </div>
-<div id="outline-container-orgb78c4f1" class="outline-3">
-<h3 id="orgb78c4f1">Scripting</h3>
-<div class="outline-text-3" id="text-orgb78c4f1">
+<div id="outline-container-org1aa4563" class="outline-3">
+<h3 id="org1aa4563">Start up and configuration</h3>
+<div class="outline-text-3" id="text-org1aa4563">
+<p>
+To avoid confusion between the <code>.bashrc</code> and <code>.bash_profile</code> you can just add the following to <code>.bash_profile</code> and then you'll have the same script evaluated regardless.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">[</span> -f $<span style="color: #715ab1;">HOME</span>/.bashrc <span style="color: #3a81c3;">]</span>; <span style="color: #3a81c3; font-weight: bold;">then</span>
+    <span style="color: #3a81c3;">source</span> $<span style="color: #715ab1;">HOME</span>/.bashrc
+<span style="color: #3a81c3; font-weight: bold;">fi</span>
+</pre>
 </div>
-<div id="outline-container-orgf0db606" class="outline-4">
-<h4 id="orgf0db606">Control flow</h4>
-<div class="outline-text-4" id="text-orgf0db606">
+</div>
+</div>
+
+<div id="outline-container-orgc7dfcaa" class="outline-3">
+<h3 id="orgc7dfcaa">Scripting</h3>
+<div class="outline-text-3" id="text-orgc7dfcaa">
+</div>
+<div id="outline-container-org658b32b" class="outline-4">
+<h4 id="org658b32b">Control flow</h4>
+<div class="outline-text-4" id="text-org658b32b">
 <p>
 To run comands conditional upon the presence or absence of a directory, consider the following example
 </p>
@@ -304,9 +321,9 @@ To run comands conditional upon the presence or absence of a directory, consider
 </div>
 </div>
 
-<div id="outline-container-org953c55f" class="outline-4">
-<h4 id="org953c55f">Arguments</h4>
-<div class="outline-text-4" id="text-org953c55f">
+<div id="outline-container-orgba94785" class="outline-4">
+<h4 id="orgba94785">Arguments</h4>
+<div class="outline-text-4" id="text-orgba94785">
 <p>
 As an example, here is a simple shell script
 </p>
@@ -332,9 +349,9 @@ bar: hello
 </div>
 </div>
 
-<div id="outline-container-orgd38c2df" class="outline-4">
-<h4 id="orgd38c2df">Functions</h4>
-<div class="outline-text-4" id="text-orgd38c2df">
+<div id="outline-container-org2b79021" class="outline-4">
+<h4 id="org2b79021">Functions</h4>
+<div class="outline-text-4" id="text-org2b79021">
 <p>
 Here is an example of a function which converts an ODG to a PDF
 </p>
@@ -354,13 +371,13 @@ ConvertODG2PDF awesome-figure.odg
 </div>
 </div>
 
-<div id="outline-container-orgddb7e76" class="outline-2">
-<h2 id="orgddb7e76">Unix commands</h2>
-<div class="outline-text-2" id="text-orgddb7e76">
+<div id="outline-container-org8b7242c" class="outline-2">
+<h2 id="org8b7242c">Unix commands</h2>
+<div class="outline-text-2" id="text-org8b7242c">
 </div>
-<div id="outline-container-org3d2e22c" class="outline-3">
-<h3 id="org3d2e22c">Disk usage <code>du</code></h3>
-<div class="outline-text-3" id="text-org3d2e22c">
+<div id="outline-container-org7e29ae1" class="outline-3">
+<h3 id="org7e29ae1">Disk usage <code>du</code></h3>
+<div class="outline-text-3" id="text-org7e29ae1">
 <p>
 The following will print, in human readable form, the size of all sub-directories of <code>foobar</code> recursively up to 2 levels deep.
 </p>
@@ -372,9 +389,9 @@ The following will print, in human readable form, the size of all sub-directorie
 </div>
 </div>
 
-<div id="outline-container-org7d7e43f" class="outline-3">
-<h3 id="org7d7e43f">Viewing hierarchy <code>tree</code></h3>
-<div class="outline-text-3" id="text-org7d7e43f">
+<div id="outline-container-org318f93f" class="outline-3">
+<h3 id="org318f93f">Viewing hierarchy <code>tree</code></h3>
+<div class="outline-text-3" id="text-org318f93f">
 <p>
 Definitely want to use this with colour!
 </p>
@@ -388,8 +405,8 @@ Definitely want to use this with colour!
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-11-30 Sat 00:38</p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-02-02 Sun 23:48</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
