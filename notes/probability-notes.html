@@ -269,16 +269,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd57602b">Latex notes</a>
+<li><a href="#org97e1611">Probability notes</a>
 <ul>
-<li><a href="#orgf563e5d">Installation</a></li>
-<li><a href="#orgd1c62f0">Basic template</a></li>
-<li><a href="#orgbc5632f">Bibtex</a></li>
-<li><a href="#org417b3a6">Equations</a></li>
-<li><a href="#org3df0ec8">Figures</a></li>
-<li><a href="#orgb71d1e6">Linking</a></li>
-<li><a href="#org5978875">Tables</a></li>
-<li><a href="#orgba71554">Table of contents</a></li>
+<li><a href="#orgb9924cd">Poisson process</a></li>
+<li><a href="#org004bd88">Birth process</a></li>
+<li><a href="#orgf47d456">Birth-death process</a></li>
 </ul>
 </li>
 </ul>
@@ -288,165 +283,218 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgd57602b" class="outline-2">
-<h2 id="orgd57602b">Latex notes</h2>
-<div class="outline-text-2" id="text-orgd57602b">
-
-<div class="figure">
-<p><img src="../images/latex-logo.png" alt="latex-logo.png" />
-</p>
+<div id="outline-container-org97e1611" class="outline-2">
+<h2 id="org97e1611">Probability notes</h2>
+<div class="outline-text-2" id="text-org97e1611">
 </div>
-</div>
-
-<div id="outline-container-orgf563e5d" class="outline-3">
-<h3 id="orgf563e5d">Installation</h3>
-<div class="outline-text-3" id="text-orgf563e5d">
+<div id="outline-container-orgb9924cd" class="outline-3">
+<h3 id="orgb9924cd">Poisson process</h3>
+<div class="outline-text-3" id="text-orgb9924cd">
 <p>
-Don't forget to install all the extra stuff
+This is a continuous time process which counts the arrivals which occur at exponentially distributed times with rate \(\lambda\).
+The master equations for this process are
 </p>
-
-<div class="org-src-container">
-<pre class="src src-shell">sudo apt-get install texlive-full
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd1c62f0" class="outline-3">
-<h3 id="orgd1c62f0">Basic template</h3>
-<div class="outline-text-3" id="text-orgd1c62f0">
-<div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\documentclass</span>{<span style="color: #3a81c3;">article</span>}
-
-<span style="color: #3a81c3; font-weight: bold;">\title</span>{<span style="color: #6c3163; font-weight: bold;">Fleeb</span>}
-<span style="color: #3a81c3; font-weight: bold;">\date</span>{}
-<span style="color: #3a81c3; font-weight: bold;">\author</span>{Squanchy}
-
-<span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">document</span>}
-
-<span style="color: #3a81c3; font-weight: bold;">\maketitle</span>
-
-Here is some text
-
-<span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">document</span>}
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgbc5632f" class="outline-3">
-<h3 id="orgbc5632f">Bibtex</h3>
-<div class="outline-text-3" id="text-orgbc5632f">
-<p>
-If you are getting errors about there being non-ASCII characters in your <code>bibtex</code> file, the following command can help you to find them.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #715ab1;">LANG</span>=C grep --color=always <span style="color: #2d9574;">'[^ -~]\+'</span> &lt;path/to/bibliography.bib&gt;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org417b3a6" class="outline-3">
-<h3 id="org417b3a6">Equations</h3>
-<div class="outline-text-3" id="text-org417b3a6">
-<p>
-Remember to include \bverb|amsmath| in your preamble.
-The following example demonstrates how to align multiple equations.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">align*</span>}
-f(0) = f(1) &amp;= 1 <span style="color: #dc752f; background-color: #fbf8ef;">\\</span>
-f(n) &amp;= f(n-1) + f(n-2)
-<span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">align*</span>}
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org3df0ec8" class="outline-3">
-<h3 id="org3df0ec8">Figures</h3>
-<div class="outline-text-3" id="text-org3df0ec8">
-<p>
-Suppose your figures live in a directory <code>img</code>.
-To include these figures, add the following to the preamble
-</p>
-
-<div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\usepackage</span>{<span style="color: #3a81c3;">graphicx</span>}
-<span style="color: #3a81c3; font-weight: bold;">\graphicspath</span>{ {./images/} }
-</pre>
-</div>
 
 <p>
-then to actually include a figure in the document use the following 
+\[
+\frac{dp_0}{dt} = - \lambda p_0
+\]
+</p>
+
+<p>
+and for \(i>0\) 
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda p_{i-1} - \lambda p_{i}
+\]
+</p>
+
+<p>
+Note that the rate at which the population increases in independent of the size of the population.
+We can multiply through by \(z^{i}\) and sum over \(i\) to get the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = \lambda (z - 1) g
+\]
+</p>
+
+<p>
+which, considering the initial condition \(g(z,0)=1\) gives us the PGF
+</p>
+
+<p>
+\[
+g(z,t) = \exp\{ \lambda t (z - 1) \}
+\]
+</p>
+
+<p>
+which is the PGF for a Poisson distribution with rate \(\lambda t\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org004bd88" class="outline-3">
+<h3 id="org004bd88">Birth process</h3>
+<div class="outline-text-3" id="text-org004bd88">
+<p>
+Consider a process where individuals give birth with rate \(\lambda\).
+In this case the rate at which the population increases in size depends on the current population size.
+The master equation for this is
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda (i - 1) p_{i-1} - \lambda i p_i
+\]
+</p>
+
+<p>
+for \(i\geq n\) where the process starts with a population of size \(n\): \(p_{n}(0) = 1\).
+Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = \lambda (z^2 - z) \frac{\partial g}{\partial z}.
+\]
+</p>
+
+<p>
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) = z^n\).
+The method of characteristics looks suitable for solving this; the function, \(g\), will be constant along the curves satisfying
+</p>
+
+<p>
+\[
+\frac{dz}{dt} = \lambda (z - z^2).
+\]
+</p>
+
+<p>
+(Hopefully you remember how to do partial fractions!)
+This leads us to conclude that the function is constant upon curves where
+</p>
+
+<p>
+\[
+C = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
+\]
+</p>
+
+<p>
+So we know that \(g\) must be a function of the RHS of the previous equation.
+With the initial condition \(n=1\) &#x2014; which due to independence is usually sufficient to consider &#x2014; that function is the identity function so
+</p>
+
+<p>
+\[
+g(z,t) = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
+\]
+</p>
+
+<p>
+From this we can then see that 
+</p>
+
+<p>
+\[
+\lim _{z\to 1} g_{z}(z,t) = \exp\{\lambda t\}
+\]
+</p>
+
+<p>
+which agrees with the mean-field approximation.
+To check that this is actually a solution to the PDE, we can use the following little bit of Maxima
 </p>
 
 <div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">figure</span>}
-  <span style="color: #3a81c3; font-weight: bold;">\centering</span>
-  <span style="color: #3a81c3; font-weight: bold;">\includegraphics</span>[width=.7<span style="color: #3a81c3; font-weight: bold;">\linewidth</span>]{<span style="color: #3a81c3;">name-of-figure-file</span>}
-  <span style="color: #3a81c3; font-weight: bold;">\caption</span>{Here is a caption}
-  <span style="color: #3a81c3; font-weight: bold;">\label</span>{<span style="color: #4e3163;">fig:figure-label</span>}
-<span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">figure</span>}
+<pre class="src src-maxima">define(g(z,t), z * exp(-l * t) / (1 - z * ( 1- exp(-l * t))));
+
+is(equal(l * z * (z - 1) * diff(g(z,t), z), diff(g(z,t), t)));
+is(equal(g(z,0), z));
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf47d456" class="outline-3">
+<h3 id="orgf47d456">Birth-death process</h3>
+<div class="outline-text-3" id="text-orgf47d456">
+<p>
+Consider a process where individuals give birth at a rate \(\lambda\) and die at a rate \(\mu\).
+The master equation for this is
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda (i - 1) p_{i-1} - \lambda i p_{i} + \mu (i + 1) p_{i+1} - \mu i p_{i}.
+\]
+</p>
+
+<p>
+with the condition that \(p_i=0\) for \(i<0\).
+Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = (1 - z) ( \mu - \lambda z) \frac{\partial g}{\partial z}.
+\]
+</p>
+
+<p>
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) = z^n\).
+The method of characteristics looks suitable for solving this; the function, \(g\), will be constant along the curves satisfying
+</p>
+
+<p>
+\[
+\frac{dz}{dt} = (1 - z) ( \mu - \lambda z).
+\]
+</p>
+
+<p>
+(Hopefully you remember how to do partial fractions!)
+This leads us to conclude that the function is constant upon curves where
+</p>
+
+<p>
+\[
+C = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \lambda (z-1)}.
+\]
+</p>
+
+<p>
+So we know that the solution can only be a function of the RHS of the previous equation.
+Since this simplifies to \(z\) at \(t=0\) and assuming the initial condition \(n=1\) we get the solution
+</p>
+
+<p>
+\[
+g(z,t) = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \lambda (z-1)}.
+\]
+</p>
+
+<p>
+We can then test this in maxima with the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">define(g(z,t), ((b * z - a) * exp(- (b - a) * t) - a * ( z- 1)) / ((b * z - a) * exp(- (b - a) * t) - b * ( z- 1)));
+
+is(equal((1-z)*(b*z-a) * diff(g(z,t), z), -diff(g(z,t), t)));
+is(equal(g(z,0), z));
 </pre>
 </div>
 
 <p>
-The following arguments can be used to crop the imported graphic
+Taking the derivative and the limit we get that the expected population size is \(exp\{(&lambda;-&mu;)t\} which again agrees with the mean field approximation.
 </p>
-
-<div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\includegraphics</span>[trim=left bottom right top, clip]{<span style="color: #3a81c3;">file</span>}
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgb71d1e6" class="outline-3">
-<h3 id="orgb71d1e6">Linking</h3>
-<div class="outline-text-3" id="text-orgb71d1e6">
-<p>
-To label a section use <code>\label{sec:cool-name}</code> and to refer to link to it later use <code>\ref{sec:cool-name}</code>.
-The <code>sec:</code> prefix is not necessary, but it makes things clearer.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5978875" class="outline-3">
-<h3 id="org5978875">Tables</h3>
-<div class="outline-text-3" id="text-org5978875">
-<div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">table</span>}
-  <span style="color: #3a81c3; font-weight: bold;">\caption</span>{<span style="color: #3a81c3; font-weight: bold;">\label</span>{<span style="color: #4e3163;">tab:demo</span>}Go tabular data!}
-  <span style="color: #3a81c3; font-weight: bold;">\centering</span>
-  <span style="color: #3a81c3; font-weight: bold;">\fbox</span>{
-    <span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">tabular</span>}{lll}
-Sepal Length &amp; Sepal Width &amp; Species<span style="color: #dc752f; background-color: #fbf8ef;">\\</span>
-<span style="color: #3a81c3; font-weight: bold;">\hline</span>
-5.1 &amp; 3.5 &amp; setosa<span style="color: #dc752f; background-color: #fbf8ef;">\\</span>
-4.9 &amp; 3.0 &amp; setosa<span style="color: #dc752f; background-color: #fbf8ef;">\\</span>
-    <span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">tabular</span>}
-  }
-<span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">table</span>}
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgba71554" class="outline-3">
-<h3 id="orgba71554">Table of contents</h3>
-<div class="outline-text-3" id="text-orgba71554">
-<p>
-To adjust the depth to which sections are numbered, add the following to the preamble, adjusting the number to the desired level.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\setcounter</span>{<span style="color: #715ab1;">secnumdepth</span>}{1}
-</pre>
-</div>
 </div>
 </div>
 </div>
