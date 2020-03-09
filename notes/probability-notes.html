@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-17 Mon 14:21 -->
+<!-- 2020-02-25 Tue 13:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -240,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -247,7 +269,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd7a891b">Ubuntu notes</a></li>
+<li><a href="#org2708db2">Probability notes</a>
+<ul>
+<li><a href="#org384abfd">Poisson process</a></li>
+<li><a href="#orgec0f8e4">Birth process</a></li>
+<li><a href="#orge97bf02">Birth-death process</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -255,13 +283,225 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgd7a891b" class="outline-2">
-<h2 id="orgd7a891b">Ubuntu notes</h2>
+<div id="outline-container-org2708db2" class="outline-2">
+<h2 id="org2708db2">Probability notes</h2>
+<div class="outline-text-2" id="text-org2708db2">
+</div>
+<div id="outline-container-org384abfd" class="outline-3">
+<h3 id="org384abfd">Poisson process</h3>
+<div class="outline-text-3" id="text-org384abfd">
+<p>
+This is a continuous time process which counts the arrivals which occur at exponentially distributed times with rate \(\lambda\).
+The master equations for this process are
+</p>
+
+<p>
+\[
+\frac{dp_0}{dt} = - \lambda p_0
+\]
+</p>
+
+<p>
+and for \(i>0\) 
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda p_{i-1} - \lambda p_{i}
+\]
+</p>
+
+<p>
+Note that the rate at which the population increases in independent of the size of the population.
+We can multiply through by \(z^{i}\) and sum over \(i\) to get the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = \lambda (z - 1) g
+\]
+</p>
+
+<p>
+which, considering the initial condition \(g(z,0)=1\) gives us the PGF
+</p>
+
+<p>
+\[
+g(z,t) = \exp\{ \lambda t (z - 1) \}
+\]
+</p>
+
+<p>
+which is the PGF for a Poisson distribution with rate \(\lambda t\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec0f8e4" class="outline-3">
+<h3 id="orgec0f8e4">Birth process</h3>
+<div class="outline-text-3" id="text-orgec0f8e4">
+<p>
+Consider a process where individuals give birth with rate \(\lambda\).
+In this case the rate at which the population increases in size depends on the current population size.
+The master equation for this is
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda (i - 1) p_{i-1} - \lambda i p_i
+\]
+</p>
+
+<p>
+for \(i\geq n\) where the process starts with a population of size \(n\): \(p_{n}(0) = 1\).
+Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = \lambda (z^2 - z) \frac{\partial g}{\partial z}.
+\]
+</p>
+
+<p>
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) = z^n\).
+The method of characteristics looks suitable for solving this; the function, \(g\), will be constant along the curves satisfying
+</p>
+
+<p>
+\[
+\frac{dz}{dt} = \lambda (z - z^2).
+\]
+</p>
+
+<p>
+(Hopefully you remember how to do partial fractions!)
+This leads us to conclude that the function is constant upon curves where
+</p>
+
+<p>
+\[
+C = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
+\]
+</p>
+
+<p>
+So we know that \(g\) must be a function of the RHS of the previous equation.
+With the initial condition \(n=1\) &#x2014; which due to independence is usually sufficient to consider &#x2014; that function is the identity function so
+</p>
+
+<p>
+\[
+g(z,t) = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
+\]
+</p>
+
+<p>
+From this we can then see that 
+</p>
+
+<p>
+\[
+\lim _{z\to 1} g_{z}(z,t) = \exp\{\lambda t\}
+\]
+</p>
+
+<p>
+which agrees with the mean-field approximation.
+To check that this is actually a solution to the PDE, we can use the following little bit of Maxima
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(g(z,t), z <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>l <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">/</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">-</span> z <span style="color: #3a81c3; font-weight: bold;">*</span> ( <span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>l <span style="color: #3a81c3; font-weight: bold;">*</span> t))));
+
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(l <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">*</span> (z <span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">diff</span>(g(z,t), z), <span style="color: #3a81c3;">diff</span>(g(z,t), t)));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(g(z,<span style="color: #4e3163;">0</span>), z));
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge97bf02" class="outline-3">
+<h3 id="orge97bf02">Birth-death process</h3>
+<div class="outline-text-3" id="text-orge97bf02">
+<p>
+Consider a process where individuals give birth at a rate \(\lambda\) and die at a rate \(\mu\).
+The master equation for this is
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda (i - 1) p_{i-1} - \lambda i p_{i} + \mu (i + 1) p_{i+1} - \mu i p_{i}.
+\]
+</p>
+
+<p>
+with the condition that \(p_i=0\) for \(i<0\).
+Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = (1 - z) ( \mu - \lambda z) \frac{\partial g}{\partial z}.
+\]
+</p>
+
+<p>
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) = z^n\).
+The method of characteristics looks suitable for solving this; the function, \(g\), will be constant along the curves satisfying
+</p>
+
+<p>
+\[
+\frac{dz}{dt} = (1 - z) ( \mu - \lambda z).
+\]
+</p>
+
+<p>
+(Hopefully you remember how to do partial fractions!)
+This leads us to conclude that the function is constant upon curves where
+</p>
+
+<p>
+\[
+C = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \lambda (z-1)}.
+\]
+</p>
+
+<p>
+So we know that the solution can only be a function of the RHS of the previous equation.
+Since this simplifies to \(z\) at \(t=0\) and assuming the initial condition \(n=1\) we get the solution
+</p>
+
+<p>
+\[
+g(z,t) = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \lambda (z-1)}.
+\]
+</p>
+
+<p>
+We can then test this in maxima with the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(g(z,t), ((b <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span> (b <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">-</span> a <span style="color: #3a81c3; font-weight: bold;">*</span> ( z<span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>)) <span style="color: #3a81c3; font-weight: bold;">/</span> ((b <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span> (b <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">-</span> b <span style="color: #3a81c3; font-weight: bold;">*</span> ( z<span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>)));
+
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>((<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>z)<span style="color: #3a81c3; font-weight: bold;">*</span>(b<span style="color: #3a81c3; font-weight: bold;">*</span>z<span style="color: #3a81c3; font-weight: bold;">-</span>a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">diff</span>(g(z,t), z), <span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #3a81c3;">diff</span>(g(z,t), t)));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(g(z,<span style="color: #4e3163;">0</span>), z));
+</pre>
+</div>
+
+<p>
+Taking the derivative and the limit we get that the expected population size is \(exp\{(&lambda;-&mu;)t\} which again agrees with the mean field approximation.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-02-17 Mon 14:21</p>
+<p class="date">Created: 2020-02-25 Tue 13:38</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

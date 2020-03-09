@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-19 Tue 18:15 -->
+<!-- 2020-03-09 Mon 13:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -250,9 +250,31 @@ for the JavaScript code in this tag.
 <li><a href="#org3deb9f2">Linux notes</a>
 <ul>
 <li><a href="#orgd32ca0b">Mounting</a></li>
+<li><a href="#org92a0cd9">Compression with zip</a></li>
 <li><a href="#org95332f5"><code>i3</code> configuration</a></li>
-<li><a href="#org59800c6"><code>i3</code> and <code>nautilus</code></a></li>
-<li><a href="#org661a96c">Mouse settings</a></li>
+<li><a href="#org661a96c">Mouse settings</a>
+<ul>
+<li><a href="#org7bb78df">Method 1</a></li>
+<li><a href="#orgcc649dd">Method 2</a></li>
+</ul>
+</li>
+<li><a href="#org4885535">VPN and working remotely</a>
+<ul>
+<li><a href="#orgd9498ca"><code>screen</code></a></li>
+<li><a href="#org1d1401a">The Oxford VPN</a></li>
+<li><a href="#orgc523860"><code>ssh</code></a></li>
+<li><a href="#org36f9cc3"><code>rsync</code></a></li>
+</ul>
+</li>
+<li><a href="#orgcf18c79">Nautilus - A file manager for GNOME</a>
+<ul>
+<li><a href="#orgc689da9">Opening nautilus without the desktop (useful if you use <code>i3</code>)</a></li>
+<li><a href="#orgac632fc">Using nautilus to browse files on a remote machine</a></li>
+</ul>
+</li>
+<li><a href="#org26e6f6d">Monitor configuration</a></li>
+<li><a href="#orga815858">Keyboard configuration</a></li>
+<li><a href="#org5420331">Network connection Wi-Fi</a></li>
 </ul>
 </li>
 </ul>
@@ -286,6 +308,20 @@ Depending on how the drive is formatted you may need to install packages to work
 </div>
 </div>
 
+<div id="outline-container-org92a0cd9" class="outline-3">
+<h3 id="org92a0cd9">Compression with zip</h3>
+<div class="outline-text-3" id="text-org92a0cd9">
+<p>
+To zip the directory <code>foo</code> into a file called <code>foo.zip</code> run the following 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">zip -r foo.zip foo
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org95332f5" class="outline-3">
 <h3 id="org95332f5"><code>i3</code> configuration</h3>
 <div class="outline-text-3" id="text-org95332f5">
@@ -316,23 +352,13 @@ bindsym $mod+Shift+z exec i3lock
 </div>
 </div>
 
-<div id="outline-container-org59800c6" class="outline-3">
-<h3 id="org59800c6"><code>i3</code> and <code>nautilus</code></h3>
-<div class="outline-text-3" id="text-org59800c6">
-<p>
-To open the nautilus GUI without the desktop 
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">nautilus --no-desktop
-</pre>
-</div>
-</div>
-</div>
-
 <div id="outline-container-org661a96c" class="outline-3">
 <h3 id="org661a96c">Mouse settings</h3>
 <div class="outline-text-3" id="text-org661a96c">
+</div>
+<div id="outline-container-org7bb78df" class="outline-4">
+<h4 id="org7bb78df">Method 1</h4>
+<div class="outline-text-4" id="text-org7bb78df">
 <p>
 The following commands can be used to modify the sensitivity of a mouse from the command line.
 </p>
@@ -345,11 +371,192 @@ xinput set-props &lt;mouseID&gt; &lt;propID&gt; &lt;newValue&gt; <span style="co
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgcc649dd" class="outline-4">
+<h4 id="orgcc649dd">Method 2</h4>
+<div class="outline-text-4" id="text-orgcc649dd">
+<p>
+Switch the left and right buttons on the mouse by running the following command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">xmodmap -e <span style="color: #2d9574;">"pointer = 3 2 1"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4885535" class="outline-3">
+<h3 id="org4885535">VPN and working remotely</h3>
+<div class="outline-text-3" id="text-org4885535">
+</div>
+<div id="outline-container-orgd9498ca" class="outline-4">
+<h4 id="orgd9498ca"><code>screen</code></h4>
+<div class="outline-text-4" id="text-orgd9498ca">
+<ul class="org-ul">
+<li>You need to have <code>screen</code> installed.</li>
+<li>Start a new screen session with <code>screen</code>.</li>
+<li>Detach from a screen with <code>C-a d</code>.</li>
+<li>Re-attach to a screen with <code>screen -r</code> from the command line.</li>
+<li><code>screen -ls</code> will list existing screens.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1d1401a" class="outline-4">
+<h4 id="org1d1401a">The Oxford VPN</h4>
+<div class="outline-text-4" id="text-org1d1401a">
+<p>
+To run the VPN GUI in Ubuntu 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">/opt/cisco/anyconnect/bin/vpnui 
+</pre>
+</div>
+
+<p>
+Then you need to connect to <code>vpn.ox.ac.uk</code> with the <code>zool[0-9]{4}</code> username.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc523860" class="outline-4">
+<h4 id="orgc523860"><code>ssh</code></h4>
+<div class="outline-text-4" id="text-orgc523860">
+<p>
+Adding the following to your <code>~/.ssh/config</code> file will make ssh-ing a bit nicer.
+</p>
+
+<pre class="example">
+Host zool
+    HostName &lt;IP&gt;
+    User &lt;USERNAME&gt;
+</pre>
+
+<p>
+Then you only need to do <code>ssh foobar</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org36f9cc3" class="outline-4">
+<h4 id="org36f9cc3"><code>rsync</code></h4>
+<div class="outline-text-4" id="text-org36f9cc3">
+<p>
+The <code>rsync</code> utility provides a way to synchronise the files on two machines.
+</p>
+
+<pre class="example">
+rsync [OPTIONS] SRC DEST
+</pre>
+
+<p>
+My use case for this is keeping the same set of PDFs on multiple machines.
+The following command will make a copy of all the files on <code>zool</code> in the library to my local library.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #2d9574;">\</span>
+      --recursive --times --perms --links <span style="color: #2d9574;">\</span>
+      zool:/home/aez/Documents/library/* /home/aez/Documents/library/
+</pre>
+</div>
+
+<p>
+Here we have used <code>zool</code> which is a host described in <code>~/.ssh/config</code> .
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcf18c79" class="outline-3">
+<h3 id="orgcf18c79">Nautilus - A file manager for GNOME</h3>
+<div class="outline-text-3" id="text-orgcf18c79">
+</div>
+<div id="outline-container-orgc689da9" class="outline-4">
+<h4 id="orgc689da9">Opening nautilus without the desktop (useful if you use <code>i3</code>)</h4>
+<div class="outline-text-4" id="text-orgc689da9">
+<div class="org-src-container">
+<pre class="src src-sh">nautilus --no-desktop
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac632fc" class="outline-4">
+<h4 id="orgac632fc">Using nautilus to browse files on a remote machine</h4>
+<div class="outline-text-4" id="text-orgac632fc">
+<ol class="org-ol">
+<li>Open nautilus</li>
+<li>"Other Locations" &gt; "Connect to Server"</li>
+<li>SSH <i>not</i> FTP</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org26e6f6d" class="outline-3">
+<h3 id="org26e6f6d">Monitor configuration</h3>
+<div class="outline-text-3" id="text-org26e6f6d">
+<p>
+The <code>xrandr</code> command allows you to specify the configuration of the monitor/s.
+There is a GUI for <code>xranrd</code> called <code>arandr</code> which may substantially simplify the process of configuring the monitor.
+Once you have a configuration you are happy with, you can use <code>arandr</code> to write it to file.
+By default these configurations will be stored in the <code>~/.screenlayout</code> directory.
+</p>
+
+<p>
+When I first installed Ubuntu, the windows were all far too small. 
+Running <code>xrandr -s 1440x900</code> was much more suitable for a 14 inch laptop.
+If you are using <code>i3</code> and <code>spacemacs</code> you might also need to adjust the font sizes for these software to make everything look right.
+By default, Ubuntu does not appear to recognise a second monitor, you can use <code>xrandr</code> to configure the use of both the primary and secondary monitor.
+I found it much easier to do this via <code>arandr</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orga815858" class="outline-3">
+<h3 id="orga815858">Keyboard configuration</h3>
+<div class="outline-text-3" id="text-orga815858">
+<p>
+The caps lock key is solid real-estate but is wildly underutilised, and control is more useful than alt a lot of the time.
+Adding the following to a file called <code>Xmodmap</code> and then run it with <code>xmodmap &lt;path/to/Xmodmap&gt;</code>.
+It will switch escape and caps lock and the right alt key will become another control key.
+</p>
+
+<pre class="example">
+clear lock
+keycode 9 = Caps_Lock
+keycode 66 = Escape
+
+remove Control = Control_R
+remove Mod1 = Alt_R
+keycode 105 = Alt_R
+keycode 108 = Control_R
+add Control = Control_R
+add Mod1 = Alt_R
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5420331" class="outline-3">
+<h3 id="org5420331">Network connection Wi-Fi</h3>
+<div class="outline-text-3" id="text-org5420331">
+<p>
+Use <code>nmcli device wifi list</code> to get a list of all the available wifi networks.
+Note the SSID of the network you want to connect to.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nmcli device wifi connect &lt;SSID&gt; password &lt;password&gt;
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-11-19 Tue 18:15</p>
+<p class="date">Created: 2020-03-09 Mon 13:28</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

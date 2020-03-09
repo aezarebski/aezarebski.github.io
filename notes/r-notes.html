@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-23 Mon 15:21 -->
+<!-- 2020-03-06 Fri 11:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -272,6 +272,7 @@ for the JavaScript code in this tag.
 <li><a href="#orge847140">R notes</a>
 <ul>
 <li><a href="#org2f1afcd">Emacs Speaks Statistics</a></li>
+<li><a href="#org5ae5ce2">Updating R</a></li>
 <li><a href="#org4c05dc2">Error handling</a></li>
 <li><a href="#orgcea412f">R Packages by Wickham and Bryan</a>
 <ul>
@@ -286,7 +287,8 @@ for the JavaScript code in this tag.
 <li><a href="#org1c64269">Unit testing with <code>testthat</code></a></li>
 <li><a href="#org0e87877">Dependency management with <code>packrat</code></a>
 <ul>
-<li><a href="#orgb3d0997">Different R versions</a></li>
+<li><a href="#org382e168">Usage</a></li>
+<li><a href="#org9f5911f">Version control</a></li>
 </ul>
 </li>
 <li><a href="#orgd520b56">Package and project management with <code>usethis</code></a></li>
@@ -298,6 +300,7 @@ for the JavaScript code in this tag.
 <li><a href="#org065670b">SIR example with C implementation</a></li>
 </ul>
 </li>
+<li><a href="#org21a9416">Dates and times</a></li>
 <li><a href="#org93d7e8c">Cheat sheets</a></li>
 </ul>
 </li>
@@ -311,13 +314,40 @@ for the JavaScript code in this tag.
 <div id="outline-container-orge847140" class="outline-2">
 <h2 id="orge847140">R notes</h2>
 <div class="outline-text-2" id="text-orge847140">
+
+<div class="figure">
+<p><img src="../images/r-logo.png" alt="r-logo.png" />
+</p>
 </div>
+</div>
+
 <div id="outline-container-org2f1afcd" class="outline-3">
 <h3 id="org2f1afcd">Emacs Speaks Statistics</h3>
 <div class="outline-text-3" id="text-org2f1afcd">
 <p>
 <a href="./spacemacs-notes.html#org31d3018">MY ESS NOTES</a>
 </p>
+</div>
+</div>
+
+<div id="outline-container-org5ae5ce2" class="outline-3">
+<h3 id="org5ae5ce2">Updating R</h3>
+<div class="outline-text-3" id="text-org5ae5ce2">
+<p>
+R updates frequently and things break, so it is a good idea to keep your version of R reasonably up to date.
+You can obtain the source code for every version of R from <a href="https://cran.r-project.org/src/base/">CRAN</a>.
+The steps involved in getting a particular version of R are as follows.
+</p>
+
+<ol class="org-ol">
+<li>Ensure you have the nessessary dependencies with <code>sudo apt-get build-dep r-base</code>.</li>
+<li>Download the relevant source, e.g. <code>R-3.6.3.tar.gz</code>, and unzip it.</li>
+<li>Run <code>./configure</code> and then <code>make</code> and <code>make info</code> to compile R and the documentation.</li>
+<li>Check that the compilation has worked properly with <code>make check</code> and address any issues that arise.</li>
+<li>Install the executable with <code>make install</code> and <code>make install-info</code>, noting that this may require sudo rights.</li>
+<li>Check it worked with <code>R -e "sessionInfo()"</code>.</li>
+<li>Profit!</li>
+</ol>
 </div>
 </div>
 
@@ -527,6 +557,13 @@ eval<span style="color: #3a81c3;">(</span>parse<span style="color: #6c3163;">(</
 Packrat is developed by the team at RStudio.
 It relies on the notion of a <i>project</i>, which we might think of as a single analysis or collection of related analyses.
 A project should live in a single directory.
+</p>
+</div>
+
+<div id="outline-container-org382e168" class="outline-4">
+<h4 id="org382e168">Usage</h4>
+<div class="outline-text-4" id="text-org382e168">
+<p>
 To start a packrat project use
 </p>
 
@@ -571,14 +608,20 @@ However, the <code>packrat</code> directory stores copies of the source for each
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgb3d0997" class="outline-4">
-<h4 id="orgb3d0997">Different R versions</h4>
-<div class="outline-text-4" id="text-orgb3d0997">
+<div id="outline-container-org9f5911f" class="outline-4">
+<h4 id="org9f5911f">Version control</h4>
+<div class="outline-text-4" id="text-org9f5911f">
 <p>
-<code>packrat</code> complained when I tried to use a different version of R to work on a project.
-Different versions of R-3.x.x are available <a href="https://cran.r-project.org/src/base/R-3/">here</a>.
+The following files should be included into version control:
 </p>
+
+<ul class="org-ul">
+<li><code>.gitignore</code></li>
+<li><code>.Rprofile</code></li>
+<li><code>packrat/packrat.lock</code></li>
+</ul>
 </div>
 </div>
 </div>
@@ -768,6 +811,62 @@ out2 <span style="color: #4e3163;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 </div>
 
+<div id="outline-container-org21a9416" class="outline-3">
+<h3 id="org21a9416">Dates and times</h3>
+<div class="outline-text-3" id="text-org21a9416">
+<p>
+<code>as.Date</code> is your friend.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Code</th>
+<th scope="col" class="org-left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>%d</code></td>
+<td class="org-left">Day (integer)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%m</code></td>
+<td class="org-left">Month (integer)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%b</code></td>
+<td class="org-left">Abbreviated month (string)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%B</code></td>
+<td class="org-left">Month (string)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%y</code></td>
+<td class="org-left">Year (2 digits)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%Y</code></td>
+<td class="org-left">Year (4 digits)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
 <div id="outline-container-org93d7e8c" class="outline-3">
 <h3 id="org93d7e8c">Cheat sheets</h3>
 <div class="outline-text-3" id="text-org93d7e8c">
@@ -783,7 +882,7 @@ out2 <span style="color: #4e3163;">&lt;-</span> deSolve::ode<span style="color: 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-12-23 Mon 15:21</p>
+<p class="date">Created: 2020-03-06 Fri 11:19</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

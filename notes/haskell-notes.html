@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-23 Mon 15:21 -->
+<!-- 2020-02-21 Fri 10:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -252,14 +252,21 @@ for the JavaScript code in this tag.
 <li><a href="#org20d6260">Debugging</a></li>
 <li><a href="#org603200f"><code>stack</code></a>
 <ul>
+<li><a href="#orgfb5d8af">Installation, upgrading and uninstalling</a></li>
 <li><a href="#orgb0cc4cf">Starting a new project</a></li>
-<li><a href="#orgf42360c">Running tests</a></li>
-<li><a href="#org1fed3de">Haddock documentation</a></li>
+<li><a href="#org3f51ba1">Commands</a></li>
 </ul>
 </li>
-<li><a href="#orgadd64ef">Syntax</a></li>
+<li><a href="#orgadd64ef">Syntax</a>
+<ul>
+<li><a href="#orgfefc97b">Basic</a></li>
+<li><a href="#org637f9fb">Typeclasses</a></li>
+</ul>
+</li>
 <li><a href="#org7d102cf">Numbers</a></li>
+<li><a href="#org9abc739"><code>ST</code> monad</a></li>
 <li><a href="#org1ff72d6"><code>hindent</code></a></li>
+<li><a href="#org0adb688"><code>aeson</code></a></li>
 <li><a href="#orgbdc9004">Haskell layer in Spacemacs</a></li>
 <li><a href="#org6bd25d3">Language extensions</a>
 <ul>
@@ -287,6 +294,12 @@ for the JavaScript code in this tag.
 <div id="outline-container-org667b5b7" class="outline-2">
 <h2 id="org667b5b7">Haskell notes</h2>
 <div class="outline-text-2" id="text-org667b5b7">
+
+<div class="figure">
+<p><img src="../images/haskell-logo.png" alt="haskell-logo.png" /> 
+</p>
+</div>
+
 <p>
 <a href="../resources/haskell-cheat-sheet.pdf">HASKELL CHEAT SHEET</a>
 </p>
@@ -353,6 +366,35 @@ You can always use <code>:help</code> to get a listing, but here are some useful
 <h3 id="org603200f"><code>stack</code></h3>
 <div class="outline-text-3" id="text-org603200f">
 </div>
+<div id="outline-container-orgfb5d8af" class="outline-4">
+<h4 id="orgfb5d8af">Installation, upgrading and uninstalling</h4>
+<div class="outline-text-4" id="text-orgfb5d8af">
+<p>
+There is a script from <code>commercialhaskell</code> which installs <code>stack</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">curl -sSL https://get.haskellstack.org/ | sh
+</pre>
+</div>
+
+<p>
+The executable is in <code>/usr/local/bin</code> by default.
+To upgrade <code>stack</code> there is the <code>stack upgrade</code> command.
+To uninstall, remove the stack executable and <code>~/.stack</code> and the <code>.stack-work</code> from any projects using <code>stack</code>.
+</p>
+
+<p>
+<code>stack</code> installs to <code>/home/&lt;username&gt;/.local/bin</code> by default, so you should add this to your path
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">PATH</span>=/home/&lt;username&gt;/.local/bin:$<span style="color: #715ab1;">PATH</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgb0cc4cf" class="outline-4">
 <h4 id="orgb0cc4cf">Starting a new project</h4>
 <div class="outline-text-4" id="text-orgb0cc4cf">
@@ -367,22 +409,38 @@ stack exec my-project-exe
 
 <p>
 Packages get added to <code>package.yaml</code> under <code>dependencies:</code> and you start the REPL with <code>stack ghci</code>.
+Projects are configured by the <code>package.yaml</code> file.
+<code>stack</code> uses <code>hpack</code> to convert the <code>YAML</code> file to a <code>.cabal</code> file.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf42360c" class="outline-4">
-<h4 id="orgf42360c">Running tests</h4>
-<div class="outline-text-4" id="text-orgf42360c">
+
+<div id="outline-container-org3f51ba1" class="outline-4">
+<h4 id="org3f51ba1">Commands</h4>
+<div class="outline-text-4" id="text-org3f51ba1">
+<p>
+There are many commands within <code>stack</code> which are listed in the documentation.
+Run the executable with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">stack exec -- project-exe
+</pre>
+</div>
+
+<p>
+Run the tests.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-sh">stack test
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org1fed3de" class="outline-4">
-<h4 id="org1fed3de">Haddock documentation</h4>
-<div class="outline-text-4" id="text-org1fed3de">
+<p>
+Build and open documentation in the browser.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-sh">stack haddock
 stack haddock --open
@@ -395,6 +453,10 @@ stack haddock --open
 <div id="outline-container-orgadd64ef" class="outline-3">
 <h3 id="orgadd64ef">Syntax</h3>
 <div class="outline-text-3" id="text-orgadd64ef">
+</div>
+<div id="outline-container-orgfefc97b" class="outline-4">
+<h4 id="orgfefc97b">Basic</h4>
+<div class="outline-text-4" id="text-orgfefc97b">
 <p>
 There is some basic syntax which is easy to forget.
 </p>
@@ -423,10 +485,35 @@ There is some basic syntax which is easy to forget.
   <span style="color: #3a81c3; font-weight: bold;">where</span>
     z <span style="color: #715ab1;">=</span> epxression
 
-<span style="color: #2aa1ae;">-- |letexpression</span>
+<span style="color: #2aa1ae;">-- |let expression</span>
 <span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">let</span> z <span style="color: #715ab1;">=</span> expression
       <span style="color: #3a81c3; font-weight: bold;">in</span> g z
+
+<span style="color: #2aa1ae;">-- |list comprehension</span>
+<span style="color: #3a81c3;">[</span>sqrt x <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;-</span> <span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #715ab1;">..</span><span style="color: #4e3163;">9</span><span style="color: #6c3163;">]</span>, x <span style="color: #715ab1;">&gt;</span> <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">]</span>
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org637f9fb" class="outline-4">
+<h4 id="org637f9fb">Typeclasses</h4>
+<div class="outline-text-4" id="text-org637f9fb">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">class</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> a <span style="color: #3a81c3; font-weight: bold;">where</span>  
+    <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">==</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">::</span> a <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>  
+    <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">/=</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">::</span> a <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>  
+    x <span style="color: #715ab1;">==</span> y <span style="color: #715ab1;">=</span> not <span style="color: #3a81c3;">(</span>x <span style="color: #715ab1;">/=</span> y<span style="color: #3a81c3;">)</span>  
+    x <span style="color: #715ab1;">/=</span> y <span style="color: #715ab1;">=</span> not <span style="color: #3a81c3;">(</span>x <span style="color: #715ab1;">==</span> y<span style="color: #3a81c3;">)</span>  
+
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Foobar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span>
+
+<span style="color: #3a81c3; font-weight: bold;">instance</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> <span style="color: #ba2f59; font-weight: bold;">Foobar</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+    <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
+    <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
+    <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">==</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">False</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -442,6 +529,65 @@ There is some basic syntax which is easy to forget.
 </div>
 </div>
 
+<div id="outline-container-org9abc739" class="outline-3">
+<h3 id="org9abc739"><code>ST</code> monad</h3>
+<div class="outline-text-3" id="text-org9abc739">
+<p>
+A classic example of the <code>ST</code> monad is 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.ST</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.STRef</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Foldable</span>
+
+<span style="color: #6c3163; font-weight: bold;">sumST</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Num</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">[</span>a<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">sumST</span> xs <span style="color: #715ab1;">=</span> runST <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    n <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #4e3163;">0</span>
+    for_ xs <span style="color: #715ab1;">$</span> <span style="color: #715ab1;">\</span>x <span style="color: #715ab1;">-&gt;</span>
+        modifySTRef n <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">+</span>x<span style="color: #3a81c3;">)</span>
+    readSTRef n
+</pre>
+</div>
+
+<p>
+<del>in strange situations</del> sometimes a while loop would be nice as well.
+The following function can help with this
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">whileM_</span> <span style="color: #715ab1;">::</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Monad</span> m<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=&gt;</span> m <span style="color: #ba2f59; font-weight: bold;">Bool</span> <span style="color: #715ab1;">-&gt;</span> m a <span style="color: #715ab1;">-&gt;</span> m <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">whileM_</span> p f <span style="color: #715ab1;">=</span> go
+    <span style="color: #3a81c3; font-weight: bold;">where</span> go <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+            x <span style="color: #715ab1;">&lt;-</span> p
+            <span style="color: #3a81c3; font-weight: bold;">if</span> x
+                <span style="color: #3a81c3; font-weight: bold;">then</span> f <span style="color: #715ab1;">&gt;&gt;</span> go
+                <span style="color: #3a81c3; font-weight: bold;">else</span> return <span style="color: #3a81c3; font-weight: bold;">()</span>
+</pre>
+</div>
+
+<p>
+We can re-write the <code>sumST</code> function using this as follows.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">sumST'</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Num</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">[</span>a<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">sumST'</span> xs <span style="color: #715ab1;">=</span> runST <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  n <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #4e3163;">0</span>
+  p <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #3a81c3;">(</span>not <span style="color: #715ab1;">$</span> null xs<span style="color: #3a81c3;">)</span>
+  i <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #4e3163;">0</span>
+  m <span style="color: #715ab1;">&lt;-</span> pure <span style="color: #715ab1;">$</span> length xs
+  whileM_ <span style="color: #3a81c3;">(</span>readSTRef p<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    ix <span style="color: #715ab1;">&lt;-</span> readSTRef i
+    modifySTRef n <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">+</span> <span style="color: #6c3163;">(</span>xs <span style="color: #715ab1;">!!</span> ix<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+    modifySTRef i <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+    modifySTRef p <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #6c3163;">(</span>ix <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span> <span style="color: #715ab1;">&lt;</span> m<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+  readSTRef n
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org1ff72d6" class="outline-3">
 <h3 id="org1ff72d6"><code>hindent</code></h3>
 <div class="outline-text-3" id="text-org1ff72d6">
@@ -449,6 +595,26 @@ There is some basic syntax which is easy to forget.
 <code>hindent</code> is a pretty printer which can be used to lint Haskell code.
 Install it with <code>stack install hindent</code> and pay attention to where it installs because you need that on your path.
 There is an Emacs minor mode, <code>hindent-mode</code>, which exposes the functionality of this program: <code>hindent-reformat-*</code>.
+</p>
+
+<p>
+I have the following shortcuts:
+</p>
+
+<ul class="org-ul">
+<li><code>SPC o h h r</code> owner haskell hindent region</li>
+<li><code>SPC o h h b</code> owner haskell hindent buffer</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0adb688" class="outline-3">
+<h3 id="org0adb688"><code>aeson</code></h3>
+<div class="outline-text-3" id="text-org0adb688">
+<p>
+<code>aeson</code> is <i>the</i> package for JSON.
+To use <code>aeson</code>, make the relevant types members of <code>ToJson</code> and <code>FromJson</code> and deriving <code>Show</code> and <code>Generic</code>.
+The <code>OverloadedStrings</code> and <code>DeriveGeneric</code> language extensions are needed as is the <code>GHC.Generics</code> module.
 </p>
 </div>
 </div>
@@ -551,7 +717,7 @@ See my <a href="./notes/type-theory-notes.html">type theory notes</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-12-23 Mon 15:21</p>
+<p class="date">Created: 2020-02-21 Fri 10:23</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
