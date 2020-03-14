@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-21 Fri 09:08 -->
+<!-- 2020-03-14 Sat 07:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -199,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -250,6 +250,7 @@ for the JavaScript code in this tag.
 <li><a href="#org7b29e7a">Haskell notes</a>
 <ul>
 <li><a href="#org66b0774">Debugging</a></li>
+<li><a href="#org80ce78f">Testing</a></li>
 <li><a href="#org6fd062c"><code>stack</code></a>
 <ul>
 <li><a href="#orgc0bfa1f">Installation, upgrading and uninstalling</a></li>
@@ -261,6 +262,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org135df06">Basic</a></li>
 <li><a href="#org7fbd70c">Typeclasses</a></li>
+<li><a href="#orgf3a6e8b">Haddock Documentation</a></li>
 </ul>
 </li>
 <li><a href="#org54ae54a">Numbers</a></li>
@@ -359,6 +361,34 @@ You can always use <code>:help</code> to get a listing, but here are some useful
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+
+<div id="outline-container-org80ce78f" class="outline-3">
+<h3 id="org80ce78f">Testing</h3>
+<div class="outline-text-3" id="text-org80ce78f">
+<p>
+Add <code>hspec</code> to your dependencies and observe the following example 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Test.Hspec</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Exception</span> <span style="color: #3a81c3;">(</span>evaluate<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> hspec <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  describe <span style="color: #2d9574;">"Prelude.head"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    it <span style="color: #2d9574;">"returns the first element of a list"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      head <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">23</span> <span style="color: #715ab1;">..</span><span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">`shouldBe`</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">23</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span><span style="color: #3a81c3;">)</span>
+
+    it <span style="color: #2d9574;">"throws an exception if used with an empty list"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      evaluate <span style="color: #3a81c3;">(</span>head <span style="color: #6c3163; font-weight: bold;">[]</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">`shouldThrow`</span> anyException
+</pre>
+</div>
+
+<p>
+There is also integration with QuickCheck available.
+</p>
 </div>
 </div>
 
@@ -512,6 +542,24 @@ There is some basic syntax which is easy to forget.
     <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
     <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
     <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">==</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">False</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf3a6e8b" class="outline-4">
+<h4 id="orgf3a6e8b">Haddock Documentation</h4>
+<div class="outline-text-4" id="text-orgf3a6e8b">
+<p>
+<a href="https://hackage.haskell.org/package/statistics-0.15.2.0/docs/src/Statistics.Distribution.Normal.html#normalDistr">Example from statistics</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #2aa1ae;">-- | Create normal distribution from parameters.</span>
+<span style="color: #6c3163; font-weight: bold;">normalDistr</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Mean of distribution</span>
+            <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Standard deviation of distribution</span>
+            <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">NormalDistribution</span>
+<span style="color: #6c3163; font-weight: bold;">normalDistr</span> m sd <span style="color: #715ab1;">=</span> maybe <span style="color: #3a81c3;">(</span>error <span style="color: #715ab1;">$</span> errMsg m sd<span style="color: #3a81c3;">)</span> id <span style="color: #715ab1;">$</span> normalDistrE m sd
 </pre>
 </div>
 </div>
@@ -717,7 +765,7 @@ See my <a href="./notes/type-theory-notes.html">type theory notes</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-02-21 Fri 09:08</p>
+<p class="date">Created: 2020-03-14 Sat 07:58</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
