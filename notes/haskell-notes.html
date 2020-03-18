@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-21 Fri 10:23 -->
+<!-- 2020-03-17 Tue 16:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -250,6 +250,7 @@ for the JavaScript code in this tag.
 <li><a href="#org667b5b7">Haskell notes</a>
 <ul>
 <li><a href="#org20d6260">Debugging</a></li>
+<li><a href="#orgb03ba08">Testing</a></li>
 <li><a href="#org603200f"><code>stack</code></a>
 <ul>
 <li><a href="#orgfb5d8af">Installation, upgrading and uninstalling</a></li>
@@ -261,6 +262,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgfefc97b">Basic</a></li>
 <li><a href="#org637f9fb">Typeclasses</a></li>
+<li><a href="#org91b597c">Haddock Documentation</a></li>
 </ul>
 </li>
 <li><a href="#org7d102cf">Numbers</a></li>
@@ -278,7 +280,11 @@ for the JavaScript code in this tag.
 <li><a href="#org447016e">Packages I like</a>
 <ul>
 <li><a href="#org7251c9d"><code>ad</code>: combinators for automatic differentiation</a></li>
+<li><a href="#org738805e"><code>aeson</code>: a JSON parsing and encoding library</a></li>
+<li><a href="#org1a60f24"><code>cassava</code>: parsing and encoding RFC 4180 compliant CSV data</a></li>
+<li><a href="#orge88bf30"><code>math-functions</code>: various utilities for numerical computing</a></li>
 <li><a href="#orge8c6d4a"><code>monad-par</code> which makes use of combinators in <code>monad-par-extras</code></a></li>
+<li><a href="#orgcbe83d6"><code>statistics</code>: common functions and types useful in statistics</a></li>
 </ul>
 </li>
 <li><a href="#org657981f">Type theory</a></li>
@@ -359,6 +365,34 @@ You can always use <code>:help</code> to get a listing, but here are some useful
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+
+<div id="outline-container-orgb03ba08" class="outline-3">
+<h3 id="orgb03ba08">Testing</h3>
+<div class="outline-text-3" id="text-orgb03ba08">
+<p>
+Add <code>hspec</code> to your dependencies and observe the following example 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Test.Hspec</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Exception</span> <span style="color: #3a81c3;">(</span>evaluate<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> hspec <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  describe <span style="color: #2d9574;">"Prelude.head"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    it <span style="color: #2d9574;">"returns the first element of a list"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      head <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">23</span> <span style="color: #715ab1;">..</span><span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">`shouldBe`</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">23</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span><span style="color: #3a81c3;">)</span>
+
+    it <span style="color: #2d9574;">"throws an exception if used with an empty list"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      evaluate <span style="color: #3a81c3;">(</span>head <span style="color: #6c3163; font-weight: bold;">[]</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">`shouldThrow`</span> anyException
+</pre>
+</div>
+
+<p>
+There is also integration with QuickCheck available.
+</p>
 </div>
 </div>
 
@@ -512,6 +546,24 @@ There is some basic syntax which is easy to forget.
     <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
     <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
     <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">==</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">False</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org91b597c" class="outline-4">
+<h4 id="org91b597c">Haddock Documentation</h4>
+<div class="outline-text-4" id="text-org91b597c">
+<p>
+<a href="https://hackage.haskell.org/package/statistics-0.15.2.0/docs/src/Statistics.Distribution.Normal.html#normalDistr">Example from statistics</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #2aa1ae;">-- | Create normal distribution from parameters.</span>
+<span style="color: #6c3163; font-weight: bold;">normalDistr</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Mean of distribution</span>
+            <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Standard deviation of distribution</span>
+            <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">NormalDistribution</span>
+<span style="color: #6c3163; font-weight: bold;">normalDistr</span> m sd <span style="color: #715ab1;">=</span> maybe <span style="color: #3a81c3;">(</span>error <span style="color: #715ab1;">$</span> errMsg m sd<span style="color: #3a81c3;">)</span> id <span style="color: #715ab1;">$</span> normalDistrE m sd
 </pre>
 </div>
 </div>
@@ -684,6 +736,15 @@ Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/softwa
 <div id="outline-container-org7251c9d" class="outline-4">
 <h4 id="org7251c9d"><a href="http://hackage.haskell.org/package/ad"><code>ad</code></a>: combinators for automatic differentiation</h4>
 </div>
+<div id="outline-container-org738805e" class="outline-4">
+<h4 id="org738805e"><a href="https://hackage.haskell.org/package/aeson"><code>aeson</code></a>: a JSON parsing and encoding library</h4>
+</div>
+<div id="outline-container-org1a60f24" class="outline-4">
+<h4 id="org1a60f24"><a href="https://hackage.haskell.org/package/cassava"><code>cassava</code></a>: parsing and encoding RFC 4180 compliant CSV data</h4>
+</div>
+<div id="outline-container-orge88bf30" class="outline-4">
+<h4 id="orge88bf30"><a href="https://hackage.haskell.org/package/math-functions"><code>math-functions</code></a>: various utilities for numerical computing</h4>
+</div>
 <div id="outline-container-orge8c6d4a" class="outline-4">
 <h4 id="orge8c6d4a"><a href="https://hackage.haskell.org/package/monad-par"><code>monad-par</code></a> which makes use of combinators in <a href="https://hackage.haskell.org/package/monad-par-extras"><code>monad-par-extras</code></a></h4>
 <div class="outline-text-4" id="text-orge8c6d4a">
@@ -703,6 +764,10 @@ Without knowing anything about how this works internally, the following function
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgcbe83d6" class="outline-4">
+<h4 id="orgcbe83d6"><a href="https://hackage.haskell.org/package/statistics"><code>statistics</code></a>: common functions and types useful in statistics</h4>
+</div>
 </div>
 
 <div id="outline-container-org657981f" class="outline-3">
@@ -717,7 +782,7 @@ See my <a href="./notes/type-theory-notes.html">type theory notes</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-02-21 Fri 10:23</p>
+<p class="date">Created: 2020-03-17 Tue 16:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
