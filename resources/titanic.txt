@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# titanic.sh
+# ==========
+#
+# Sync up my library directories between computers and creates a text files
+# with all the current files listed in it.
+#
+# Usage
+# -----
+#
+# $ ./titanic.sh
+#
+# ChangeLog
+# ---------
+#
+# - 14-03-2020
+#   + Initial version.
+#
+
+rsync --verbose \
+      --progress \
+      --stats \
+      --compress \
+      --rsh=/usr/bin/ssh \
+      --recursive \
+      --times \
+      --perms \
+      --links \
+      zool:/home/aez/Documents/library/* /home/aez/Documents/library/
+
+rsync --verbose \
+      --progress \
+      --stats \
+      --compress \
+      --rsh=/usr/bin/ssh \
+      --recursive \
+      --times \
+      --perms \
+      --links \
+      /home/aez/Documents/library/* zool:/home/aez/Documents/library/
+
+DATE=`date +%d-%m-%y`
+ls > catalog-$DATE.txt
