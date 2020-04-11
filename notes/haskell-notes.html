@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-24 Tue 13:42 -->
+<!-- 2020-04-11 Sat 19:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -199,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -240,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -295,6 +317,8 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgb140f27">Optimisation</a></li>
 <li><a href="#orgaf64ec8">Root finding</a></li>
+<li><a href="#org2378bf5">Differential equations</a></li>
+<li><a href="#orga6232d5">Random number simulation</a></li>
 </ul>
 </li>
 </ul>
@@ -681,7 +705,7 @@ The <code>OverloadedStrings</code> and <code>DeriveGeneric</code> language exten
 <h3 id="orgbdc9004">Haskell layer in Spacemacs</h3>
 <div class="outline-text-3" id="text-orgbdc9004">
 <p>
-To enable the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/+lang/haskell">Haskell layer</a> add the following to <code>dotspacemacs-configuration-layers</code>.
+To enable the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/haskell">Haskell layer</a> add the following to <code>dotspacemacs-configuration-layers</code>.
 </p>
 
 <div class="org-src-container">
@@ -775,8 +799,8 @@ Without knowing anything about how this works internally, the following function
 </div>
 </div>
 
-<div id="outline-container-orgdbd6f1c" class="outline-4">
-<h4 id="orgdbd6f1c"><a href="https://hackage.haskell.org/package/statistics"><code>statistics</code></a>: common functions and types useful in statistics</h4>
+<div id="outline-container-orgcbe83d6" class="outline-4">
+<h4 id="orgcbe83d6"><a href="https://hackage.haskell.org/package/statistics"><code>statistics</code></a>: common functions and types useful in statistics</h4>
 </div>
 </div>
 
@@ -810,11 +834,80 @@ Use <code>statistics</code> for finding roots if you know a bounding interval, w
 </p>
 </div>
 </div>
+<div id="outline-container-org2378bf5" class="outline-3">
+<h3 id="org2378bf5">Differential equations</h3>
+<div class="outline-text-3" id="text-org2378bf5">
+<p>
+Consider
+</p>
+
+<p>
+\[
+\frac{dx}{dt} = \alpha x(t), \quad x(0) = x_0
+\]
+</p>
+
+<p>
+This example needs <code>hmatrix</code> and <code>hmatrix-gsl</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Numeric.GSL.ODE</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Numeric.LinearAlgebra</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Numeric.LinearAlgebra.Data</span>
+
+<span style="color: #6c3163; font-weight: bold;">alpha</span> <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">0.1</span>
+
+<span style="color: #6c3163; font-weight: bold;">xdash</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3;">[</span>x<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span>x <span style="color: #715ab1;">*</span> alpha<span style="color: #3a81c3;">]</span>
+
+<span style="color: #6c3163; font-weight: bold;">x0</span> <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">1.0</span>
+
+<span style="color: #6c3163; font-weight: bold;">ts</span> <span style="color: #715ab1;">=</span> linspace <span style="color: #4e3163;">100</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">numericSol</span> <span style="color: #715ab1;">=</span> odeSolve xdash <span style="color: #3a81c3;">[</span>x0<span style="color: #3a81c3;">]</span> ts
+
+<span style="color: #6c3163; font-weight: bold;">exactSol</span> <span style="color: #715ab1;">=</span> asColumn <span style="color: #715ab1;">$</span> x0' <span style="color: #715ab1;">*</span> exp <span style="color: #3a81c3;">(</span>alpha' <span style="color: #715ab1;">*</span> ts<span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span>
+    x0' <span style="color: #715ab1;">=</span> scalar x0
+    alpha' <span style="color: #715ab1;">=</span> scalar alpha
+
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> maxElement <span style="color: #3a81c3;">(</span>numericSol <span style="color: #715ab1;">-</span> exactSol<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">&lt;</span> <span style="color: #4e3163;">1e-10</span>
+    <span style="color: #3a81c3; font-weight: bold;">then</span> putStrLn <span style="color: #2d9574;">"They are equal!"</span>
+    <span style="color: #3a81c3; font-weight: bold;">else</span> putStrLn <span style="color: #2d9574;">"Huge error :("</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6232d5" class="outline-3">
+<h3 id="orga6232d5">Random number simulation</h3>
+<div class="outline-text-3" id="text-orga6232d5">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">System.Random.MWC</span>
+
+<span style="color: #6c3163; font-weight: bold;">foobar</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Double</span>,<span style="color: #ba2f59; font-weight: bold;">Double</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">foobar</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  gen <span style="color: #715ab1;">&lt;-</span> create
+  x1 <span style="color: #715ab1;">&lt;-</span> uniform gen
+  x2 <span style="color: #715ab1;">&lt;-</span> uniform gen
+  return <span style="color: #3a81c3;">(</span>x1,x2<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+This returns a pair of <i>different</i> numbers because it is working in an instance of <code>PrimMonad</code> and managing the state between uses of <code>gen</code>.
+Multiple calls to this function always return the same values because the <code>create</code> function starts with a hardcoded seed in the library.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-03-24 Tue 13:42</p>
+<p class="date">Created: 2020-04-11 Sat 19:10</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
