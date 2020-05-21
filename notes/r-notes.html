@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-21 Tue 15:14 -->
+<!-- 2020-05-21 Thu 10:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -303,6 +303,8 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org72a497a">MCMC (without <code>Stan</code>)</a></li>
 <li><a href="#org21a9416">Dates and times</a></li>
+<li><a href="#org5bb58d5"><code>Rmath.h</code></a></li>
+<li><a href="#org123fce2">Nifty utility functions</a></li>
 <li><a href="#org93d7e8c">Cheat sheets</a></li>
 </ul>
 </li>
@@ -917,6 +919,74 @@ The interface is designed for testing out tuning parameters to find something th
 </div>
 </div>
 
+<div id="outline-container-org5bb58d5" class="outline-3">
+<h3 id="org5bb58d5"><code>Rmath.h</code></h3>
+<div class="outline-text-3" id="text-org5bb58d5">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #ecf3ec;">/*</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  To compile and run this I used the following...</span>
+
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt update</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt install r-mathlib</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt install r-base-dev</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ gcc -o mathlibtest demo.c -lRmath -lm</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ ./mathlibtest</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+
+<span style="color: #6c3163;">#include</span> <span style="color: #3a81c3;">&lt;</span><span style="color: #2d9574;">stdio.h</span><span style="color: #3a81c3;">&gt;</span>
+
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">MATHLIB_STANDALONE</span> <span style="color: #4e3163;">1</span>
+<span style="color: #6c3163;">#include</span> <span style="color: #2d9574;">"Rmath.h"</span>
+
+
+<span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">fib</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>n &lt; <span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #2d9574;">(</span><span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>fib<span style="color: #67b11d;">(</span>n-<span style="color: #4e3163;">1</span><span style="color: #67b11d;">)</span> + fib<span style="color: #67b11d;">(</span>n-<span style="color: #4e3163;">2</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">main</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">ac</span>, <span style="color: #ba2f59; font-weight: bold;">char</span>** <span style="color: #715ab1;">av</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span>;
+  <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">foo</span>;
+
+  <span style="color: #3a81c3; font-weight: bold;">for</span> <span style="color: #6c3163;">(</span> n = <span style="color: #4e3163;">0</span>; n &lt; <span style="color: #4e3163;">10</span>; n = n + <span style="color: #4e3163;">1</span> <span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    printf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"%d\n"</span>, fib<span style="color: #67b11d;">(</span>n<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
+    foo = dnorm<span style="color: #2d9574;">(</span><span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">0.0</span>, <span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">0</span><span style="color: #2d9574;">)</span>;
+    printf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"%f\n"</span>, foo<span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span>
+
+  printf<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"hello, %s\n"</span>, <span style="color: #2d9574;">"world"</span><span style="color: #6c3163;">)</span>;
+  <span style="color: #3a81c3; font-weight: bold;">return</span> <span style="color: #4e3163;">0</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org123fce2" class="outline-3">
+<h3 id="org123fce2">Nifty utility functions</h3>
+<div class="outline-text-3" id="text-org123fce2">
+<p>
+The <code>num_lines_in_file</code> function returns the number of lines in a file which is
+useful to help guard against attempting to parse an empty file with <code>read.csv</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">num_lines_in_file</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>fp<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  wc_stdout <span style="color: #4e3163;">&lt;-</span> system2<span style="color: #6c3163;">(</span>command = <span style="color: #2d9574;">"wc"</span>, args = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"-l"</span>, fp<span style="color: #2d9574;">)</span>, stdout = <span style="color: #ba2f59; font-weight: bold;">TRUE</span><span style="color: #6c3163;">)</span>
+  as.numeric<span style="color: #6c3163;">(</span>head<span style="color: #2d9574;">(</span>unlist<span style="color: #67b11d;">(</span>strsplit<span style="color: #b1951d;">(</span>x = wc_stdout, split = <span style="color: #2d9574;">" "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>,<span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org93d7e8c" class="outline-3">
 <h3 id="org93d7e8c">Cheat sheets</h3>
 <div class="outline-text-3" id="text-org93d7e8c">
@@ -932,7 +1002,7 @@ The interface is designed for testing out tuning parameters to find something th
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-04-21 Tue 15:14</p>
+<p class="date">Created: 2020-05-21 Thu 10:02</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

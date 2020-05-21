@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-12 Sun 14:38 -->
+<!-- 2020-05-21 Thu 10:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -273,6 +273,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org82fd091">Guassian approximation to posterior</a></li>
 <li><a href="#orgf0603a7">Is it statistically significant</a></li>
+<li><a href="#orgebb0f89">MCMC parameter transformation</a></li>
 </ul>
 </li>
 </ul>
@@ -385,11 +386,88 @@ Here is a table of values for testing whether the a binomial sample differs from
 </table>
 </div>
 </div>
+
+<div id="outline-container-orgebb0f89" class="outline-3">
+<h3 id="orgebb0f89">MCMC parameter transformation</h3>
+<div class="outline-text-3" id="text-orgebb0f89">
+<p>
+You want to sample \(x\) which has density \(f\) but the MCMC samples are
+butting up against the edge of the support. For example, we have \(X\sim
+\text{Lognormal}(0,1)\). 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>mcmc<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)</span>
+set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">mcmc_samples</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>obj<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    as.mcmc<span style="color: #6c3163;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">posterior</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    dlnorm<span style="color: #6c3163;">(</span>x = x, meanlog = <span style="color: #4e3163;">0</span>, sdlog = <span style="color: #4e3163;">1</span>, log = <span style="color: #ba2f59; font-weight: bold;">TRUE</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+x_samples <span style="color: #4e3163;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>posterior<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+But the sampler keeps jumping into the negative numbers which is a problem. So
+you might consider \(Y = log(X)\) as this takes values on the whole real line.
+We need to derive the posterior distribution for this, \(g\). Note
+</p>
+
+<p>
+\[
+\left|g(y)dy\right| = \left|f(x)dx\right|,
+\]
+</p>
+
+<p>
+put another way,
+</p>
+
+<p>
+\[
+g(y) = f(x(y)) \left|\frac{dx(y)}{dy}\right|.
+\]
+</p>
+
+<p>
+So, if we let \(x = exp(y)\), then the Jacobian is just \(\exp(y)\), and when we
+take the logarithm to get the log-posterior this becomes just \(y\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">y_posterior</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>y<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    posterior<span style="color: #6c3163;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> + y
+<span style="color: #3a81c3;">}</span>
+
+y_samples <span style="color: #4e3163;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>y_posterior<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Then a Q-Q plot of the logarithm of the \(X\) samples and the \(Y\) samples
+suggests we have gotten this correct. The tails are slightly different because
+the second sampler has been able to explore smaller and larger values more
+efficiently.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-04-12 Sun 14:38</p>
+<p class="date">Created: 2020-05-21 Thu 10:02</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
