@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-25 Tue 13:38 -->
+<!-- 2020-03-29 Sun 21:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -199,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -269,11 +269,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2708db2">Probability notes</a>
+<li><a href="#org97ecd8c">Probability notes</a>
 <ul>
-<li><a href="#org384abfd">Poisson process</a></li>
-<li><a href="#orgec0f8e4">Birth process</a></li>
-<li><a href="#orge97bf02">Birth-death process</a></li>
+<li><a href="#org9a1cae1">Poisson process</a></li>
+<li><a href="#org07cc31e">Birth process</a></li>
+<li><a href="#orgfa9624e">Birth-death process</a></li>
 </ul>
 </li>
 </ul>
@@ -283,13 +283,13 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org2708db2" class="outline-2">
-<h2 id="org2708db2">Probability notes</h2>
-<div class="outline-text-2" id="text-org2708db2">
+<div id="outline-container-org97ecd8c" class="outline-2">
+<h2 id="org97ecd8c">Probability notes</h2>
+<div class="outline-text-2" id="text-org97ecd8c">
 </div>
-<div id="outline-container-org384abfd" class="outline-3">
-<h3 id="org384abfd">Poisson process</h3>
-<div class="outline-text-3" id="text-org384abfd">
+<div id="outline-container-org9a1cae1" class="outline-3">
+<h3 id="org9a1cae1">Poisson process</h3>
+<div class="outline-text-3" id="text-org9a1cae1">
 <p>
 This is a continuous time process which counts the arrivals which occur at exponentially distributed times with rate \(\lambda\).
 The master equations for this process are
@@ -338,9 +338,9 @@ which is the PGF for a Poisson distribution with rate \(\lambda t\).
 </div>
 </div>
 
-<div id="outline-container-orgec0f8e4" class="outline-3">
-<h3 id="orgec0f8e4">Birth process</h3>
-<div class="outline-text-3" id="text-orgec0f8e4">
+<div id="outline-container-org07cc31e" class="outline-3">
+<h3 id="org07cc31e">Birth process</h3>
+<div class="outline-text-3" id="text-org07cc31e">
 <p>
 Consider a process where individuals give birth with rate \(\lambda\).
 In this case the rate at which the population increases in size depends on the current population size.
@@ -413,18 +413,18 @@ To check that this is actually a solution to the PDE, we can use the following l
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(g(z,t), z <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>l <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">/</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">-</span> z <span style="color: #3a81c3; font-weight: bold;">*</span> ( <span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>l <span style="color: #3a81c3; font-weight: bold;">*</span> t))));
+<pre class="src src-maxima">define(g(z,t), z * exp(-l * t) / (1 - z * ( 1- exp(-l * t))));
 
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(l <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">*</span> (z <span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">diff</span>(g(z,t), z), <span style="color: #3a81c3;">diff</span>(g(z,t), t)));
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(g(z,<span style="color: #4e3163;">0</span>), z));
+is(equal(l * z * (z - 1) * diff(g(z,t), z), diff(g(z,t), t)));
+is(equal(g(z,0), z));
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge97bf02" class="outline-3">
-<h3 id="orge97bf02">Birth-death process</h3>
-<div class="outline-text-3" id="text-orge97bf02">
+<div id="outline-container-orgfa9624e" class="outline-3">
+<h3 id="orgfa9624e">Birth-death process</h3>
+<div class="outline-text-3" id="text-orgfa9624e">
 <p>
 Consider a process where individuals give birth at a rate \(\lambda\) and die at a rate \(\mu\).
 The master equation for this is
@@ -485,10 +485,10 @@ We can then test this in maxima with the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(g(z,t), ((b <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span> (b <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">-</span> a <span style="color: #3a81c3; font-weight: bold;">*</span> ( z<span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>)) <span style="color: #3a81c3; font-weight: bold;">/</span> ((b <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span> (b <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">-</span> b <span style="color: #3a81c3; font-weight: bold;">*</span> ( z<span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>)));
+<pre class="src src-maxima">define(g(z,t), ((b * z - a) * exp(- (b - a) * t) - a * ( z- 1)) / ((b * z - a) * exp(- (b - a) * t) - b * ( z- 1)));
 
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>((<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>z)<span style="color: #3a81c3; font-weight: bold;">*</span>(b<span style="color: #3a81c3; font-weight: bold;">*</span>z<span style="color: #3a81c3; font-weight: bold;">-</span>a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">diff</span>(g(z,t), z), <span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #3a81c3;">diff</span>(g(z,t), t)));
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(g(z,<span style="color: #4e3163;">0</span>), z));
+is(equal((1-z)*(b*z-a) * diff(g(z,t), z), -diff(g(z,t), t)));
+is(equal(g(z,0), z));
 </pre>
 </div>
 
@@ -500,8 +500,8 @@ Taking the derivative and the limit we get that the expected population size is 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-02-25 Tue 13:38</p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-03-29 Sun 21:51</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

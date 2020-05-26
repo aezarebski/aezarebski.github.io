@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-30 Sat 00:38 -->
+<!-- 2020-03-29 Sun 21:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -199,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -247,9 +247,9 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org246d8ca">Type theory</a>
+<li><a href="#org95f91b4">Type theory</a>
 <ul>
-<li><a href="#org566b894">Skolems constants causing trouble</a></li>
+<li><a href="#org9a8fd64">Skolems constants causing trouble</a></li>
 </ul>
 </li>
 </ul>
@@ -259,13 +259,13 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org246d8ca" class="outline-2">
-<h2 id="org246d8ca">Type theory</h2>
-<div class="outline-text-2" id="text-org246d8ca">
+<div id="outline-container-org95f91b4" class="outline-2">
+<h2 id="org95f91b4">Type theory</h2>
+<div class="outline-text-2" id="text-org95f91b4">
 </div>
-<div id="outline-container-org566b894" class="outline-3">
-<h3 id="org566b894">Skolems constants causing trouble</h3>
-<div class="outline-text-3" id="text-org566b894">
+<div id="outline-container-org9a8fd64" class="outline-3">
+<h3 id="org9a8fd64">Skolems constants causing trouble</h3>
+<div class="outline-text-3" id="text-org9a8fd64">
 <p>
 The names "skolem" and "rigid" are synonymous for Haskell.
 Based on this <a href="https://stackoverflow.com/a/12722877">stackoverflow answer</a> it appears that skolem constants (types) cause a error at compile time because they cannot be resolved.
@@ -273,9 +273,9 @@ Consider the following definition of a wrapper type
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE ExistentialQuantification #-}</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5;">{-# LANGUAGE ExistentialQuantification #-}</span>
 
-<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> <span style="color: #715ab1;">=</span> forall a<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> a
+<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">=</span> forall a<span style="color: #7590db;">.</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> a
 </pre>
 </div>
 
@@ -284,7 +284,7 @@ If we try and define a function which unwraps,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">getFoo</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> x<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">getFoo</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x
 </pre>
 </div>
 
@@ -294,8 +294,8 @@ However, we can still use the value in a <code>AnyFoo</code>, we just need to av
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">boring</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>
-<span style="color: #6c3163; font-weight: bold;">boring</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> x<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x <span style="color: #715ab1;">==</span> x
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>
+<span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x <span style="color: #7590db;">==</span> x
 </pre>
 </div>
 </div>
@@ -303,8 +303,8 @@ However, we can still use the value in a <code>AnyFoo</code>, we just need to av
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-11-30 Sat 00:38</p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-03-29 Sun 21:51</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

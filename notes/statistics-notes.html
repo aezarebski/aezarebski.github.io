@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-06 Wed 14:08 -->
+<!-- 2020-05-26 Tue 20:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -199,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -269,9 +269,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org48c957f">Statistics notes</a>
+<li><a href="#orgc73636b">Statistics notes</a>
 <ul>
-<li><a href="#org82fd091">Guassian approximation to posterior</a></li>
+<li><a href="#org942c668">Guassian approximation to posterior</a></li>
+<li><a href="#orge09fa1f">Is it statistically significant</a></li>
+<li><a href="#orga94fc34">MCMC parameter transformation</a></li>
 </ul>
 </li>
 </ul>
@@ -281,13 +283,13 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org48c957f" class="outline-2">
-<h2 id="org48c957f">Statistics notes</h2>
-<div class="outline-text-2" id="text-org48c957f">
+<div id="outline-container-orgc73636b" class="outline-2">
+<h2 id="orgc73636b">Statistics notes</h2>
+<div class="outline-text-2" id="text-orgc73636b">
 </div>
-<div id="outline-container-org82fd091" class="outline-3">
-<h3 id="org82fd091">Guassian approximation to posterior</h3>
-<div class="outline-text-3" id="text-org82fd091">
+<div id="outline-container-org942c668" class="outline-3">
+<h3 id="org942c668">Guassian approximation to posterior</h3>
+<div class="outline-text-3" id="text-org942c668">
 <p>
 Consider a posterior distribution where the mode is at \(\theta^{*}\) and the Hessian matrix at this point is \(h''(\theta^{*})\).
 If we consider a multivariate Gaussian density, we can see that it will have its mode at the mean, \(\mu\), and, assuming a covariance matrix, \(\Sigma\), the density will have a Hessian of \(-\Sigma^{-1}\) at the mode.
@@ -295,11 +297,177 @@ This motivates the Guassian approximation at the mode of the posterior.
 </p>
 </div>
 </div>
+
+<div id="outline-container-orge09fa1f" class="outline-3">
+<h3 id="orge09fa1f">Is it statistically significant</h3>
+<div class="outline-text-3" id="text-orge09fa1f">
+<p>
+Here is a table of values for testing whether the a binomial sample differs from fair trials at a significance level of 0.05.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Trials</th>
+<th scope="col" class="org-right">Lower</th>
+<th scope="col" class="org-right">Upper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">20</td>
+<td class="org-right">6</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-right">40</td>
+<td class="org-right">14</td>
+<td class="org-right">26</td>
+</tr>
+
+<tr>
+<td class="org-right">60</td>
+<td class="org-right">22</td>
+<td class="org-right">38</td>
+</tr>
+
+<tr>
+<td class="org-right">80</td>
+<td class="org-right">31</td>
+<td class="org-right">49</td>
+</tr>
+
+<tr>
+<td class="org-right">100</td>
+<td class="org-right">40</td>
+<td class="org-right">60</td>
+</tr>
+
+<tr>
+<td class="org-right">200</td>
+<td class="org-right">86</td>
+<td class="org-right">114</td>
+</tr>
+
+<tr>
+<td class="org-right">400</td>
+<td class="org-right">180</td>
+<td class="org-right">220</td>
+</tr>
+
+<tr>
+<td class="org-right">600</td>
+<td class="org-right">276</td>
+<td class="org-right">324</td>
+</tr>
+
+<tr>
+<td class="org-right">800</td>
+<td class="org-right">372</td>
+<td class="org-right">428</td>
+</tr>
+
+<tr>
+<td class="org-right">1000</td>
+<td class="org-right">469</td>
+<td class="org-right">531</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orga94fc34" class="outline-3">
+<h3 id="orga94fc34">MCMC parameter transformation</h3>
+<div class="outline-text-3" id="text-orga94fc34">
+<p>
+You want to sample \(x\) which has density \(f\) but the MCMC samples are
+butting up against the edge of the support. For example, we have \(X\sim
+\text{Lognormal}(0,1)\). 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>mcmc<span style="color: #4f97d7;">)</span>
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>coda<span style="color: #4f97d7;">)</span>
+set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #bc6ec5; font-weight: bold;">mcmc_samples</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>obj<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    as.mcmc<span style="color: #bc6ec5;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #bc6ec5; font-weight: bold;">posterior</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    dlnorm<span style="color: #bc6ec5;">(</span>x = x, meanlog = <span style="color: #a45bad;">0</span>, sdlog = <span style="color: #a45bad;">1</span>, log = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
+
+x_samples <span style="color: #a45bad;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>posterior<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+But the sampler keeps jumping into the negative numbers which is a problem. So
+you might consider \(Y = log(X)\) as this takes values on the whole real line.
+We need to derive the posterior distribution for this, \(g\). Note
+</p>
+
+<p>
+\[
+\left|g(y)dy\right| = \left|f(x)dx\right|,
+\]
+</p>
+
+<p>
+put another way,
+</p>
+
+<p>
+\[
+g(y) = f(x(y)) \left|\frac{dx(y)}{dy}\right|.
+\]
+</p>
+
+<p>
+So, if we let \(x = exp(y)\), then the Jacobian is just \(\exp(y)\), and when we
+take the logarithm to get the log-posterior this becomes just \(y\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">y_posterior</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    posterior<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> + y
+<span style="color: #4f97d7;">}</span>
+
+y_samples <span style="color: #a45bad;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>y_posterior<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+Then a Q-Q plot of the logarithm of the \(X\) samples and the \(Y\) samples
+suggests we have gotten this correct. The tails are slightly different because
+the second sampler has been able to explore smaller and larger values more
+efficiently.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2019-11-06 Wed 14:08</p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-05-26 Tue 20:07</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
