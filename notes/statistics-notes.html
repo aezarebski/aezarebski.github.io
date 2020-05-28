@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-21 Thu 10:02 -->
+<!-- 2020-05-26 Tue 20:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -269,11 +269,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org48c957f">Statistics notes</a>
+<li><a href="#orgc73636b">Statistics notes</a>
 <ul>
-<li><a href="#org82fd091">Guassian approximation to posterior</a></li>
-<li><a href="#orgf0603a7">Is it statistically significant</a></li>
-<li><a href="#orgebb0f89">MCMC parameter transformation</a></li>
+<li><a href="#org942c668">Guassian approximation to posterior</a></li>
+<li><a href="#orge09fa1f">Is it statistically significant</a></li>
+<li><a href="#orga94fc34">MCMC parameter transformation</a></li>
 </ul>
 </li>
 </ul>
@@ -283,13 +283,13 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org48c957f" class="outline-2">
-<h2 id="org48c957f">Statistics notes</h2>
-<div class="outline-text-2" id="text-org48c957f">
+<div id="outline-container-orgc73636b" class="outline-2">
+<h2 id="orgc73636b">Statistics notes</h2>
+<div class="outline-text-2" id="text-orgc73636b">
 </div>
-<div id="outline-container-org82fd091" class="outline-3">
-<h3 id="org82fd091">Guassian approximation to posterior</h3>
-<div class="outline-text-3" id="text-org82fd091">
+<div id="outline-container-org942c668" class="outline-3">
+<h3 id="org942c668">Guassian approximation to posterior</h3>
+<div class="outline-text-3" id="text-org942c668">
 <p>
 Consider a posterior distribution where the mode is at \(\theta^{*}\) and the Hessian matrix at this point is \(h''(\theta^{*})\).
 If we consider a multivariate Gaussian density, we can see that it will have its mode at the mean, \(\mu\), and, assuming a covariance matrix, \(\Sigma\), the density will have a Hessian of \(-\Sigma^{-1}\) at the mode.
@@ -298,9 +298,9 @@ This motivates the Guassian approximation at the mode of the posterior.
 </div>
 </div>
 
-<div id="outline-container-orgf0603a7" class="outline-3">
-<h3 id="orgf0603a7">Is it statistically significant</h3>
-<div class="outline-text-3" id="text-orgf0603a7">
+<div id="outline-container-orge09fa1f" class="outline-3">
+<h3 id="orge09fa1f">Is it statistically significant</h3>
+<div class="outline-text-3" id="text-orge09fa1f">
 <p>
 Here is a table of values for testing whether the a binomial sample differs from fair trials at a significance level of 0.05.
 </p>
@@ -387,9 +387,9 @@ Here is a table of values for testing whether the a binomial sample differs from
 </div>
 </div>
 
-<div id="outline-container-orgebb0f89" class="outline-3">
-<h3 id="orgebb0f89">MCMC parameter transformation</h3>
-<div class="outline-text-3" id="text-orgebb0f89">
+<div id="outline-container-orga94fc34" class="outline-3">
+<h3 id="orga94fc34">MCMC parameter transformation</h3>
+<div class="outline-text-3" id="text-orga94fc34">
 <p>
 You want to sample \(x\) which has density \(f\) but the MCMC samples are
 butting up against the edge of the support. For example, we have \(X\sim
@@ -397,19 +397,19 @@ butting up against the edge of the support. For example, we have \(X\sim
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>mcmc<span style="color: #3a81c3;">)</span>
-<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)</span>
-set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>mcmc<span style="color: #4f97d7;">)</span>
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>coda<span style="color: #4f97d7;">)</span>
+set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #6c3163; font-weight: bold;">mcmc_samples</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>obj<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    as.mcmc<span style="color: #6c3163;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
+<span style="color: #bc6ec5; font-weight: bold;">mcmc_samples</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>obj<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    as.mcmc<span style="color: #bc6ec5;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
 
-<span style="color: #6c3163; font-weight: bold;">posterior</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    dlnorm<span style="color: #6c3163;">(</span>x = x, meanlog = <span style="color: #4e3163;">0</span>, sdlog = <span style="color: #4e3163;">1</span>, log = <span style="color: #ba2f59; font-weight: bold;">TRUE</span><span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
+<span style="color: #bc6ec5; font-weight: bold;">posterior</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    dlnorm<span style="color: #bc6ec5;">(</span>x = x, meanlog = <span style="color: #a45bad;">0</span>, sdlog = <span style="color: #a45bad;">1</span>, log = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
 
-x_samples <span style="color: #4e3163;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>posterior<span style="color: #3a81c3;">)</span>
+x_samples <span style="color: #a45bad;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>posterior<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -441,11 +441,11 @@ take the logarithm to get the log-posterior this becomes just \(y\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">y_posterior</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>y<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    posterior<span style="color: #6c3163;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> + y
-<span style="color: #3a81c3;">}</span>
+<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">y_posterior</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    posterior<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> + y
+<span style="color: #4f97d7;">}</span>
 
-y_samples <span style="color: #4e3163;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>y_posterior<span style="color: #3a81c3;">)</span>
+y_samples <span style="color: #a45bad;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>y_posterior<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -466,8 +466,8 @@ efficiently.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-05-21 Thu 10:02</p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-05-26 Tue 20:07</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
