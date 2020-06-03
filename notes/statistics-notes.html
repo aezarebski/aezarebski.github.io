@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-26 Tue 20:07 -->
+<!-- 2020-06-04 Thu 00:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -273,6 +273,8 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org942c668">Guassian approximation to posterior</a></li>
 <li><a href="#orge09fa1f">Is it statistically significant</a></li>
+<li><a href="#org9faac42">Empirical Distribution Function</a></li>
+<li><a href="#org7c74d13">The bootstrap</a></li>
 <li><a href="#orga94fc34">MCMC parameter transformation</a></li>
 </ul>
 </li>
@@ -387,6 +389,76 @@ Here is a table of values for testing whether the a binomial sample differs from
 </div>
 </div>
 
+<div id="outline-container-org9faac42" class="outline-3">
+<h3 id="org9faac42">Empirical Distribution Function</h3>
+<div class="outline-text-3" id="text-org9faac42">
+<p>
+Let \(X_1,\dots,X_n\sim F\) IID on \(\mathbb{R}\), then the empirical
+distribution function (EDF) is
+</p>
+
+<p>
+\[
+\hat{F}_n(x) = \frac{1}{n}\sum I(X_i \leq x)
+\]
+</p>
+
+<p>
+where \(I\) is the indicator function. Linearity shows 
+</p>
+
+<p>
+\[
+\mathbb{E}\hat{F}_n(x) = F(x)
+\]
+</p>
+
+<p>
+and basic properties of variance and the Bernoulli distribution shows
+</p>
+
+<p>
+\[
+\mathbb{V}\hat{F}_n(x) = \frac{1}{n} F(x) (1 - F(x)).
+\]
+</p>
+
+<p>
+The EDF converges to the CDF in probability (which can be observed from Markov's
+inequality.) The DKW inequality bounds this convergence which allows for the
+construction of confidence bounds on the EDF. A functional \(T : F \mapsto
+\theta\) is called a statistical functional. The <i>plug-in estimator</i> of
+\(\theta\) is simply \(T(\hat{F}_n)\).
+</p>
+</div>
+</div>
+<div id="outline-container-org7c74d13" class="outline-3">
+<h3 id="org7c74d13">The bootstrap</h3>
+<div class="outline-text-3" id="text-org7c74d13">
+<p>
+The bootstrap is a simulation based method to estimate standard errors and
+confidence intervals. Consider a statistic \(T\) which is a function of a sample
+of \(X_i\sim F\); we want to compute \(\mathbb{V}_F(T)\). The subscript \(F\) is
+to indicate that this is with respect to the distribution \(F\). Let \(\hat{F}\)
+be the empirical distribution (EDF) of the \(X_i\). The bootstrap uses
+\(\mathbb{V}_F(T)\) to approximate \(\mathbb{V}_{\hat{F}}(T)\) which is then
+itself estimated via simulation.
+</p>
+
+<p>
+The simulation typically is just sampling from the EDF with replacement, and we
+can always run more simulation to get an arbitrarily good approximation of
+\(\mathbb{V}_{\hat{F}}(T)\). The real source of error is how well \(\hat{F}\)
+approximate \(F\).
+</p>
+
+<p>
+In the <i>parametric</i> bootstrap, rather than sampling from the EDF of the data, a
+sample is generated from the parametric distribution parameterised by the
+estimated parameter value.
+</p>
+</div>
+</div>
 <div id="outline-container-orga94fc34" class="outline-3">
 <h3 id="orga94fc34">MCMC parameter transformation</h3>
 <div class="outline-text-3" id="text-orga94fc34">
@@ -436,7 +508,7 @@ g(y) = f(x(y)) \left|\frac{dx(y)}{dy}\right|.
 </p>
 
 <p>
-So, if we let \(x = exp(y)\), then the Jacobian is just \(\exp(y)\), and when we
+So, if we let \(x = \exp(y)\), then the Jacobian is just \(\exp(y)\), and when we
 take the logarithm to get the log-posterior this becomes just \(y\).
 </p>
 
@@ -467,7 +539,7 @@ efficiently.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-05-26 Tue 20:07</p>
+<p class="date">Created: 2020-06-04 Thu 00:19</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
