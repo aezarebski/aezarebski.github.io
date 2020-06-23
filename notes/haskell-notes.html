@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-12 Fri 11:18 -->
+<!-- 2020-06-23 Tue 14:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -289,9 +289,15 @@ for the JavaScript code in this tag.
 <li><a href="#org91b597c">Haddock Documentation</a></li>
 </ul>
 </li>
+<li><a href="#orgcb2ef22">Data in <code>base</code></a>
+<ul>
 <li><a href="#org7d102cf">Numbers</a>
 <ul>
 <li><a href="#orgb640a74"><code>Int</code> and <code>Word</code></a></li>
+</ul>
+</li>
+<li><a href="#org94d1c3b">Semigroup</a></li>
+<li><a href="#org3996fd7">Monoid</a></li>
 </ul>
 </li>
 <li><a href="#orgda13fca">Data structures</a></li>
@@ -761,9 +767,13 @@ determined by <code>a</code> and <code>b</code>. The following snippet gives an 
 </div>
 </div>
 
-<div id="outline-container-org7d102cf" class="outline-3">
-<h3 id="org7d102cf">Numbers</h3>
-<div class="outline-text-3" id="text-org7d102cf">
+<div id="outline-container-orgcb2ef22" class="outline-3">
+<h3 id="orgcb2ef22">Data in <code>base</code></h3>
+<div class="outline-text-3" id="text-orgcb2ef22">
+</div>
+<div id="outline-container-org7d102cf" class="outline-4">
+<h4 id="org7d102cf">Numbers</h4>
+<div class="outline-text-4" id="text-org7d102cf">
 
 <div class="figure">
 <p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
@@ -771,13 +781,34 @@ determined by <code>a</code> and <code>b</code>. The following snippet gives an 
 </div>
 </div>
 
-<div id="outline-container-orgb640a74" class="outline-4">
-<h4 id="orgb640a74"><code>Int</code> and <code>Word</code></h4>
-<div class="outline-text-4" id="text-orgb640a74">
+<div id="outline-container-orgb640a74" class="outline-5">
+<h5 id="orgb640a74"><code>Int</code> and <code>Word</code></h5>
+<div class="outline-text-5" id="text-orgb640a74">
 <p>
 The package <code>Data.Int</code> provides signed integers and <code>Data.Word</code> provides
 unsigned integers. The latter may be useful to encode that the number has to be
 positive at the type level.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org94d1c3b" class="outline-4">
+<h4 id="org94d1c3b">Semigroup</h4>
+<div class="outline-text-4" id="text-org94d1c3b">
+<p>
+A <i>semigroup</i> is a set with an associative binary operation. In <code>base</code> this type
+class, <code>Data.Semigroup</code>, requires a function <code>&lt;&gt;</code>, and instances of this function must be
+associative.
+</p>
+</div>
+</div>
+<div id="outline-container-org3996fd7" class="outline-4">
+<h4 id="org3996fd7">Monoid</h4>
+<div class="outline-text-4" id="text-org3996fd7">
+<p>
+A <i>monoid</i> is a semigroup which has an identity element. In <code>base</code> this type
+class, <code>Data.Monoid</code>, requires the function <code>&lt;&gt;</code>, as in semigroup, and <code>mempty</code>
+for the identity element. The <code>mempty</code> must be both a left and right identity.
 </p>
 </div>
 </div>
@@ -979,7 +1010,30 @@ This will only work with the <code>OverloadedLists</code> extension.
 </div>
 <div id="outline-container-org1a60f24" class="outline-4">
 <h4 id="org1a60f24"><a href="https://hackage.haskell.org/package/cassava"><code>cassava</code></a>: parsing and encoding RFC 4180 compliant CSV data</h4>
+<div class="outline-text-4" id="text-org1a60f24">
+<p>
+One example of using <code>cassava</code> is to make the <code>Chain</code> type from <code>mcmc-types</code> an
+instance of <code>ToRecord</code> which makes it easier to write MCMC samples to a CSV. The
+following snippet demonstrates how you might do this with an orphan-instance.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Csv</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Maybe</span> <span style="color: #3a81c3;">(</span>fromMaybe<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #3a81c3; font-weight: bold;">qualified</span> <span style="color: #ba2f59; font-weight: bold;">Data.Vector</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">V</span>
+
+<span style="color: #3a81c3; font-weight: bold;">instance</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ToRecord</span> a, <span style="color: #ba2f59; font-weight: bold;">ToRecord</span> b<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">ToRecord</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Chain</span> a b<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+  toRecord <span style="color: #ba2f59; font-weight: bold;">Chain</span> <span style="color: #3a81c3;">{</span><span style="color: #715ab1;">..</span><span style="color: #3a81c3;">}</span> <span style="color: #715ab1;">=</span>
+    V.concat
+      <span style="color: #3a81c3;">[</span> <span style="color: #6c3163;">(</span>record <span style="color: #2d9574;">[</span>toField chainScore<span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>
+      , <span style="color: #6c3163;">(</span>toRecord chainPosition<span style="color: #6c3163;">)</span>
+      , fromMaybe V.empty <span style="color: #6c3163;">(</span>toRecord <span style="color: #715ab1;">&lt;$&gt;</span> chainTunables<span style="color: #6c3163;">)</span>
+      <span style="color: #3a81c3;">]</span>
+</pre>
 </div>
+</div>
+</div>
+
 <div id="outline-container-orge88bf30" class="outline-4">
 <h4 id="orge88bf30"><a href="https://hackage.haskell.org/package/math-functions"><code>math-functions</code></a>: various utilities for numerical computing</h4>
 </div>
@@ -1114,7 +1168,7 @@ Multiple calls to this function always return the same values because the <code>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-06-12 Fri 11:18</p>
+<p class="date">Created: 2020-06-23 Tue 14:55</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
