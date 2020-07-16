@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-08 Mon 19:08 -->
+<!-- 2020-07-15 Wed 17:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -276,6 +276,11 @@ for the JavaScript code in this tag.
 <li><a href="#org20b8fde">Empirical Distribution Function</a></li>
 <li><a href="#org53c6872">The bootstrap</a></li>
 <li><a href="#orgebb0f89">MCMC parameter transformation</a></li>
+<li><a href="#org142fd7e">Linear regression</a>
+<ul>
+<li><a href="#org4afc037">Linear regression with <code>lm</code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -535,11 +540,48 @@ efficiently.
 </div>
 </div>
 </div>
+
+<div id="outline-container-org142fd7e" class="outline-3">
+<h3 id="org142fd7e">Linear regression</h3>
+<div class="outline-text-3" id="text-org142fd7e">
+</div>
+<div id="outline-container-org4afc037" class="outline-4">
+<h4 id="org4afc037">Linear regression with <code>lm</code></h4>
+<div class="outline-text-4" id="text-org4afc037">
+<p>
+The formulas used to specify a model in R use Wilkinson-Rogers notation.
+Consider \(y = \alpha + \beta x + \epsilon\). Often estimators will assume that
+the \(\epsilon\) are IID normal random variables. To test whether the
+\(\epsilon\) are homoscedastic one might use the <a href="https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test">Breusch-Pagan test</a>. This is
+available in R via <code>lmtest::bptest</code>. To test whether the errors follow a normal
+distribution, a sensible first pass would be to generate a QQ-plot. But if a
+formal method is required there is the <code>stats::shapiro.test</code> function for
+normality.
+</p>
+
+<p>
+Assuming that for the most part the assumptions appear to be valid, we might
+dive deeper into the data. The <i>leverage</i> of a datum can be thought of as the
+potential to influence parameters and can be calculated with <code>stats::hatvalues</code>.
+However, high leverage is not necessarily a bad thing unless it is also an
+outlier. One way to measure how plausible a measurement is to have arisen from
+the model is by considering its standardised residual, <code>rstandard</code>. 
+</p>
+
+<p>
+Combining leverage and residual into a single measure, is the goal of the Cook's
+distance which is one of the summaries produced by <code>plot.lm</code>. A rule of thumb is
+that you want the Cook's distance to be not greater than \(4 N^{-1}\) for a
+dataset of size \(N\).
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-06-08 Mon 19:08</p>
+<p class="date">Created: 2020-07-15 Wed 17:20</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

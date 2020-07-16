@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-01 Wed 18:50 -->
+<!-- 2020-07-16 Thu 17:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -300,6 +300,11 @@ for the JavaScript code in this tag.
 <li><a href="#org3996fd7">Monoid</a></li>
 </ul>
 </li>
+<li><a href="#orgee75f8d">Monad transformers with <code>mtl</code></a>
+<ul>
+<li><a href="#org2d81802"><code>ReaderT</code></a></li>
+</ul>
+</li>
 <li><a href="#orgda13fca">Data structures</a></li>
 <li><a href="#org9abc739"><code>ST</code> monad</a></li>
 <li><a href="#orga79116a">Linting <code>hindent</code></a></li>
@@ -360,7 +365,23 @@ for the JavaScript code in this tag.
 <h3 id="org31947ce">CLI</h3>
 <div class="outline-text-3" id="text-org31947ce">
 <p>
-The following example demonstrates how you might get some data from a user at the command line.
+The function <code>getArgs</code> from <code>System.Environment</code> in <code>base</code> is how you get
+command line arguments. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">System.Environment</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  a <span style="color: #715ab1;">&lt;-</span> getArgs
+  print a
+  return <span style="color: #3a81c3; font-weight: bold;">()</span>
+</pre>
+</div>
+
+<p>
+The following example demonstrates how you might get some data from a user at
+the command line at run time rather than data about how the program was called.
 </p>
 
 <div class="org-src-container">
@@ -818,6 +839,61 @@ for the identity element. The <code>mempty</code> must be both a left and right 
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgee75f8d" class="outline-3">
+<h3 id="orgee75f8d">Monad transformers with <code>mtl</code></h3>
+<div class="outline-text-3" id="text-orgee75f8d">
+</div>
+<div id="outline-container-org2d81802" class="outline-4">
+<h4 id="org2d81802"><code>ReaderT</code></h4>
+<div class="outline-text-4" id="text-org2d81802">
+<p>
+To avoid explicitly passing environment data around, one can use the <code>ReaderT</code>
+monad transformer to add read-only environment. The following example shows the
+reader monad transformer in action. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Reader</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ReaderT</span>, ask, liftIO, runReaderT<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #3a81c3;">{</span> envInput <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">FilePath</span> <span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> putStrLn <span style="color: #2d9574;">"Greetings from Step 1."</span>
+  return <span style="color: #4e3163;">0</span>
+
+<span style="color: #6c3163; font-weight: bold;">step2</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">step2</span> n <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> putStrLn <span style="color: #3a81c3;">(</span>show n<span style="color: #3a81c3;">)</span>
+  fp <span style="color: #715ab1;">&lt;-</span> envInput <span style="color: #715ab1;">&lt;$&gt;</span> ask
+  line <span style="color: #715ab1;">&lt;-</span> liftIO <span style="color: #715ab1;">$</span> readFile fp
+  liftIO <span style="color: #715ab1;">$</span> putStr <span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Autobots, "</span> <span style="color: #715ab1;">++</span> line<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  runReaderT <span style="color: #3a81c3;">(</span>step1 <span style="color: #715ab1;">&gt;&gt;=</span> step2<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #2d9574;">"autobot.txt"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+The <code>main</code> function sets up an environment which is passes to Step 1 which puts
+a value of 0 in the monad. Then in the second function the value is printed and
+the contents of the file referenced in the environment is printed out, i.e., the
+file <code>autobot.txt</code> which just contains a single line with "roll out". Running
+this in the REPL gives the following output.
+</p>
+
+<pre class="example">
+λ&gt; main
+Greetings from Step 1.
+0
+Autobots, roll out
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgda13fca" class="outline-3">
 <h3 id="orgda13fca">Data structures</h3>
 <div class="outline-text-3" id="text-orgda13fca">
@@ -1173,7 +1249,7 @@ Multiple calls to this function always return the same values because the <code>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-07-01 Wed 18:50</p>
+<p class="date">Created: 2020-07-16 Thu 17:41</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
