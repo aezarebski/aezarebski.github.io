@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-18 Thu 12:07 -->
+<!-- 2020-07-23 Thu 21:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -300,6 +300,12 @@ for the JavaScript code in this tag.
 <li><a href="#org0e8a08b">Monoid</a></li>
 </ul>
 </li>
+<li><a href="#orgb894a92">Monad transformers with <code>mtl</code></a>
+<ul>
+<li><a href="#orgfc9562b"><code>ReaderT</code></a></li>
+<li><a href="#org528fb36"><code>ReaderT</code> on <code>ExceptT</code></a></li>
+</ul>
+</li>
 <li><a href="#org8e117ad">Data structures</a></li>
 <li><a href="#org63e9576"><code>ST</code> monad</a></li>
 <li><a href="#orgb79d585">Linting <code>hindent</code></a></li>
@@ -360,29 +366,45 @@ for the JavaScript code in this tag.
 <h3 id="org63924f3">CLI</h3>
 <div class="outline-text-3" id="text-org63924f3">
 <p>
-The following example demonstrates how you might get some data from a user at the command line.
+The function <code>getArgs</code> from <code>System.Environment</code> in <code>base</code> is how you get
+command line arguments. 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
-<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">System.Environment</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  a <span style="color: #715ab1;">&lt;-</span> getArgs
+  print a
+  return <span style="color: #3a81c3; font-weight: bold;">()</span>
+</pre>
+</div>
+
+<p>
+The following example demonstrates how you might get some data from a user at
+the command line at run time rather than data about how the program was called.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
   putStrLn <span style="color: #2d9574;">"Do you want to continue? [y/n]"</span>
-  response <span style="color: #7590db;">&lt;-</span> getChar
-  <span style="color: #4f97d7; font-weight: bold;">if</span> response <span style="color: #7590db;">==</span> <span style="color: #2d9574;">'n'</span>
-    <span style="color: #4f97d7; font-weight: bold;">then</span>
-      <span style="color: #4f97d7; font-weight: bold;">do</span>
+  response <span style="color: #715ab1;">&lt;-</span> getChar
+  <span style="color: #3a81c3; font-weight: bold;">if</span> response <span style="color: #715ab1;">==</span> <span style="color: #2d9574;">'n'</span>
+    <span style="color: #3a81c3; font-weight: bold;">then</span>
+      <span style="color: #3a81c3; font-weight: bold;">do</span>
         putStrLn <span style="color: #2d9574;">"\nmaybe next time :)"</span>
-        return <span style="color: #4f97d7; font-weight: bold;">()</span>
-    <span style="color: #4f97d7; font-weight: bold;">else</span>
-      <span style="color: #4f97d7; font-weight: bold;">if</span> response <span style="color: #7590db;">/=</span> <span style="color: #2d9574;">'y'</span>
-        <span style="color: #4f97d7; font-weight: bold;">then</span>
-          <span style="color: #4f97d7; font-weight: bold;">do</span>
+        return <span style="color: #3a81c3; font-weight: bold;">()</span>
+    <span style="color: #3a81c3; font-weight: bold;">else</span>
+      <span style="color: #3a81c3; font-weight: bold;">if</span> response <span style="color: #715ab1;">/=</span> <span style="color: #2d9574;">'y'</span>
+        <span style="color: #3a81c3; font-weight: bold;">then</span>
+          <span style="color: #3a81c3; font-weight: bold;">do</span>
             putStrLn <span style="color: #2d9574;">"\n\nI doughnut understand..."</span>
             main
-        <span style="color: #4f97d7; font-weight: bold;">else</span>
-          <span style="color: #4f97d7; font-weight: bold;">do</span>
+        <span style="color: #3a81c3; font-weight: bold;">else</span>
+          <span style="color: #3a81c3; font-weight: bold;">do</span>
             putStrLn <span style="color: #2d9574;">"\nwoohoo!"</span>
-            return <span style="color: #4f97d7; font-weight: bold;">()</span>
+            return <span style="color: #3a81c3; font-weight: bold;">()</span>
 </pre>
 </div>
 </div>
@@ -453,17 +475,17 @@ Add <code>hspec</code> to your dependencies and observe the following example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Test.Hspec</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Exception</span> <span style="color: #4f97d7;">(</span>evaluate<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Test.Hspec</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Exception</span> <span style="color: #3a81c3;">(</span>evaluate<span style="color: #3a81c3;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
-<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">=</span> hspec <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-  describe <span style="color: #2d9574;">"Prelude.head"</span> <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-    it <span style="color: #2d9574;">"returns the first element of a list"</span> <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-      head <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">23</span> <span style="color: #7590db;">..</span><span style="color: #4f97d7;">]</span> <span style="color: #7590db;">`shouldBe`</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">23</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span><span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> hspec <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  describe <span style="color: #2d9574;">"Prelude.head"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    it <span style="color: #2d9574;">"returns the first element of a list"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      head <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">23</span> <span style="color: #715ab1;">..</span><span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">`shouldBe`</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">23</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span><span style="color: #3a81c3;">)</span>
 
-    it <span style="color: #2d9574;">"throws an exception if used with an empty list"</span> <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-      evaluate <span style="color: #4f97d7;">(</span>head <span style="color: #bc6ec5; font-weight: bold;">[]</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">`shouldThrow`</span> anyException
+    it <span style="color: #2d9574;">"throws an exception if used with an empty list"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      evaluate <span style="color: #3a81c3;">(</span>head <span style="color: #6c3163; font-weight: bold;">[]</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">`shouldThrow`</span> anyException
 </pre>
 </div>
 
@@ -500,7 +522,7 @@ To uninstall, remove the stack executable and <code>~/.stack</code> and the <cod
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7;">export</span> <span style="color: #7590db;">PATH</span>=/home/&lt;username&gt;/.local/bin:$<span style="color: #7590db;">PATH</span>
+<pre class="src src-sh"><span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">PATH</span>=/home/&lt;username&gt;/.local/bin:$<span style="color: #715ab1;">PATH</span>
 </pre>
 </div>
 </div>
@@ -511,7 +533,7 @@ To uninstall, remove the stack executable and <code>~/.stack</code> and the <cod
 <div class="outline-text-4" id="text-orgd100ab8">
 <div class="org-src-container">
 <pre class="src src-sh">stack new &lt;project-name&gt; &lt;template-name&gt;
-<span style="color: #4f97d7;">cd</span> my-project
+<span style="color: #3a81c3;">cd</span> my-project
 stack setup
 stack build
 stack exec my-project-exe
@@ -545,8 +567,8 @@ There are few ways to initialise a project.
 
 <div class="org-src-container">
 <pre class="src src-sh">stack new &lt;package-name&gt;
-stack new &lt;package-name&gt; &lt;template-name&gt;        <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Use a particular template</span>
-stack new &lt;package-name&gt; --bare &lt;template-name&gt; <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Without subdirectory</span>
+stack new &lt;package-name&gt; &lt;template-name&gt;        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Use a particular template</span>
+stack new &lt;package-name&gt; --bare &lt;template-name&gt; <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Without subdirectory</span>
 </pre>
 </div>
 
@@ -600,39 +622,39 @@ function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">module</span> <span style="color: #ce537a; font-weight: bold;">Main</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">module</span> <span style="color: #ba2f59; font-weight: bold;">Main</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
 
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Criterion.Main</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #4f97d7; font-weight: bold;">qualified</span> <span style="color: #ce537a; font-weight: bold;">Data.Vector</span> <span style="color: #4f97d7; font-weight: bold;">as</span> <span style="color: #ce537a; font-weight: bold;">V</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Statistics.Sample</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #4f97d7; font-weight: bold;">qualified</span> <span style="color: #ce537a; font-weight: bold;">System.Random.MWC</span> <span style="color: #4f97d7; font-weight: bold;">as</span> <span style="color: #ce537a; font-weight: bold;">MWC</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Criterion.Main</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #3a81c3; font-weight: bold;">qualified</span> <span style="color: #ba2f59; font-weight: bold;">Data.Vector</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">V</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Statistics.Sample</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #3a81c3; font-weight: bold;">qualified</span> <span style="color: #ba2f59; font-weight: bold;">System.Random.MWC</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">MWC</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">sampleMeanBench</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">String</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Benchmark</span>
-<span style="color: #bc6ec5; font-weight: bold;">sampleMeanBench</span> name xs <span style="color: #7590db;">=</span> bench name <span style="color: #7590db;">$</span> nf <span style="color: #4f97d7;">(</span>mean <span style="color: #7590db;">.</span> V.fromList<span style="color: #4f97d7;">)</span> xs
+<span style="color: #6c3163; font-weight: bold;">sampleMeanBench</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">String</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">Double</span><span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Benchmark</span>
+<span style="color: #6c3163; font-weight: bold;">sampleMeanBench</span> name xs <span style="color: #715ab1;">=</span> bench name <span style="color: #715ab1;">$</span> nf <span style="color: #3a81c3;">(</span>mean <span style="color: #715ab1;">.</span> V.fromList<span style="color: #3a81c3;">)</span> xs
 
-<span style="color: #bc6ec5; font-weight: bold;">getRandomList</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">]</span>
-<span style="color: #bc6ec5; font-weight: bold;">getRandomList</span> n <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-  gen <span style="color: #7590db;">&lt;-</span> MWC.create
-  foo <span style="color: #7590db;">&lt;-</span> replicateM n <span style="color: #4f97d7;">(</span>MWC.uniform gen<span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">getRandomList</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">Double</span><span style="color: #3a81c3;">]</span>
+<span style="color: #6c3163; font-weight: bold;">getRandomList</span> n <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  gen <span style="color: #715ab1;">&lt;-</span> MWC.create
+  foo <span style="color: #715ab1;">&lt;-</span> replicateM n <span style="color: #3a81c3;">(</span>MWC.uniform gen<span style="color: #3a81c3;">)</span>
   return foo
 
-<span style="color: #2aa1ae; background-color: #292e34;">-- </span><span style="color: #2aa1ae; background-color: #292e34;">Our benchmark harness.</span>
-<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">=</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Our benchmark harness.</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span>
   defaultMain
-    <span style="color: #4f97d7;">[</span> bgroup
+    <span style="color: #3a81c3;">[</span> bgroup
         <span style="color: #2d9574;">"meanPure"</span>
-        <span style="color: #bc6ec5;">[</span> sampleMeanBench <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">[</span><span style="color: #a45bad;">1</span> <span style="color: #7590db;">..</span> <span style="color: #a45bad;">10</span><span style="color: #2d9574;">]</span>
-        , sampleMeanBench <span style="color: #2d9574;">"medium"</span> <span style="color: #2d9574;">[</span><span style="color: #a45bad;">1</span> <span style="color: #7590db;">..</span> <span style="color: #a45bad;">100</span><span style="color: #2d9574;">]</span>
-        , sampleMeanBench <span style="color: #2d9574;">"large"</span> <span style="color: #2d9574;">[</span><span style="color: #a45bad;">1</span> <span style="color: #7590db;">..</span> <span style="color: #a45bad;">1000</span><span style="color: #2d9574;">]</span>
-        <span style="color: #bc6ec5;">]</span>
+        <span style="color: #6c3163;">[</span> sampleMeanBench <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span> <span style="color: #715ab1;">..</span> <span style="color: #4e3163;">10</span><span style="color: #2d9574;">]</span>
+        , sampleMeanBench <span style="color: #2d9574;">"medium"</span> <span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span> <span style="color: #715ab1;">..</span> <span style="color: #4e3163;">100</span><span style="color: #2d9574;">]</span>
+        , sampleMeanBench <span style="color: #2d9574;">"large"</span> <span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span> <span style="color: #715ab1;">..</span> <span style="color: #4e3163;">1000</span><span style="color: #2d9574;">]</span>
+        <span style="color: #6c3163;">]</span>
     , bgroup
         <span style="color: #2d9574;">"meanEnv"</span>
-        <span style="color: #bc6ec5;">[</span> env <span style="color: #2d9574;">(</span>getRandomList <span style="color: #a45bad;">10</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #7590db;">\</span>xs <span style="color: #7590db;">-&gt;</span> sampleMeanBench <span style="color: #2d9574;">"small"</span> xs<span style="color: #2d9574;">)</span>
-        , env <span style="color: #2d9574;">(</span>getRandomList <span style="color: #a45bad;">100</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #7590db;">\</span>xs <span style="color: #7590db;">-&gt;</span> sampleMeanBench <span style="color: #2d9574;">"medium"</span> xs<span style="color: #2d9574;">)</span>
-        , env <span style="color: #2d9574;">(</span>getRandomList <span style="color: #a45bad;">1000</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #7590db;">\</span>xs <span style="color: #7590db;">-&gt;</span> sampleMeanBench <span style="color: #2d9574;">"large"</span> xs<span style="color: #2d9574;">)</span>
-        <span style="color: #bc6ec5;">]</span>
-    <span style="color: #4f97d7;">]</span>
+        <span style="color: #6c3163;">[</span> env <span style="color: #2d9574;">(</span>getRandomList <span style="color: #4e3163;">10</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #715ab1;">\</span>xs <span style="color: #715ab1;">-&gt;</span> sampleMeanBench <span style="color: #2d9574;">"small"</span> xs<span style="color: #2d9574;">)</span>
+        , env <span style="color: #2d9574;">(</span>getRandomList <span style="color: #4e3163;">100</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #715ab1;">\</span>xs <span style="color: #715ab1;">-&gt;</span> sampleMeanBench <span style="color: #2d9574;">"medium"</span> xs<span style="color: #2d9574;">)</span>
+        , env <span style="color: #2d9574;">(</span>getRandomList <span style="color: #4e3163;">1000</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #715ab1;">\</span>xs <span style="color: #715ab1;">-&gt;</span> sampleMeanBench <span style="color: #2d9574;">"large"</span> xs<span style="color: #2d9574;">)</span>
+        <span style="color: #6c3163;">]</span>
+    <span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 
@@ -664,34 +686,34 @@ There is some basic syntax which is easy to forget.
 
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #2aa1ae;">-- |wild card</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> xs
+<span style="color: #6c3163; font-weight: bold;">f</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">_</span><span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> xs
 
 <span style="color: #2aa1ae;">-- |as-pattern</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> l<span style="color: #7590db;">@</span><span style="color: #4f97d7;">(</span>x<span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x<span style="color: #ce537a; font-weight: bold;">:</span>l
+<span style="color: #6c3163; font-weight: bold;">f</span> l<span style="color: #715ab1;">@</span><span style="color: #3a81c3;">(</span>x<span style="color: #ba2f59; font-weight: bold;">:</span>xs<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x<span style="color: #ba2f59; font-weight: bold;">:</span>l
 
 <span style="color: #2aa1ae;">-- |guards</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x
-  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">0</span>     <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0</span>
-  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&gt;=</span> <span style="color: #a45bad;">0</span>    <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1</span>
-  <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">=</span> undefined
+<span style="color: #6c3163; font-weight: bold;">f</span> x
+  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;</span> <span style="color: #4e3163;">0</span>     <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">0</span>
+  <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&gt;=</span> <span style="color: #4e3163;">0</span>    <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">1</span>
+  <span style="color: #715ab1;">|</span> otherwise <span style="color: #715ab1;">=</span> undefined
 
 <span style="color: #2aa1ae;">-- |case expression</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">case</span> x <span style="color: #4f97d7; font-weight: bold;">of</span>
-  pattern1 <span style="color: #7590db;">-&gt;</span> expression1
-  pattern2 <span style="color: #7590db;">-&gt;</span> expression2
-  <span style="color: #4f97d7; font-weight: bold;">_</span>        <span style="color: #7590db;">-&gt;</span> undefined
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">case</span> x <span style="color: #3a81c3; font-weight: bold;">of</span>
+  pattern1 <span style="color: #715ab1;">-&gt;</span> expression1
+  pattern2 <span style="color: #715ab1;">-&gt;</span> expression2
+  <span style="color: #3a81c3; font-weight: bold;">_</span>        <span style="color: #715ab1;">-&gt;</span> undefined
 
 <span style="color: #2aa1ae;">-- |where clause</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> g z
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    z <span style="color: #7590db;">=</span> epxression
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> g z
+  <span style="color: #3a81c3; font-weight: bold;">where</span>
+    z <span style="color: #715ab1;">=</span> epxression
 
 <span style="color: #2aa1ae;">-- |let expression</span>
-<span style="color: #bc6ec5; font-weight: bold;">f</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">let</span> z <span style="color: #7590db;">=</span> expression
-      <span style="color: #4f97d7; font-weight: bold;">in</span> g z
+<span style="color: #6c3163; font-weight: bold;">f</span> x <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">let</span> z <span style="color: #715ab1;">=</span> expression
+      <span style="color: #3a81c3; font-weight: bold;">in</span> g z
 
 <span style="color: #2aa1ae;">-- |list comprehension</span>
-<span style="color: #4f97d7;">[</span>sqrt x <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;-</span> <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">..</span><span style="color: #a45bad;">9</span><span style="color: #bc6ec5;">]</span>, x <span style="color: #7590db;">&gt;</span> <span style="color: #a45bad;">3</span><span style="color: #4f97d7;">]</span>
+<span style="color: #3a81c3;">[</span>sqrt x <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;-</span> <span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #715ab1;">..</span><span style="color: #4e3163;">9</span><span style="color: #6c3163;">]</span>, x <span style="color: #715ab1;">&gt;</span> <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 
@@ -700,11 +722,11 @@ You can use pattern matching to filter in a list comprehension as the following 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Foobar</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Foo</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Bar</span> <span style="color: #ce537a; font-weight: bold;">Char</span> <span style="color: #4f97d7; font-weight: bold;">deriving</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Show</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Foobar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #ba2f59; font-weight: bold;">Char</span> <span style="color: #3a81c3; font-weight: bold;">deriving</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Show</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">x</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Foo</span> <span style="color: #a45bad;">1</span>, <span style="color: #ce537a; font-weight: bold;">Bar</span> <span style="color: #2d9574;">'a'</span>, <span style="color: #ce537a; font-weight: bold;">Foo</span> <span style="color: #a45bad;">2</span>, <span style="color: #ce537a; font-weight: bold;">Bar</span> <span style="color: #2d9574;">'b'</span><span style="color: #4f97d7;">]</span>
+<span style="color: #6c3163; font-weight: bold;">x</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #4e3163;">1</span>, <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #2d9574;">'a'</span>, <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #4e3163;">2</span>, <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #2d9574;">'b'</span><span style="color: #3a81c3;">]</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">y</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span>n <span style="color: #7590db;">|</span> <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">Foo</span> n<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">&lt;-</span> x<span style="color: #4f97d7;">]</span>
+<span style="color: #6c3163; font-weight: bold;">y</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span>n <span style="color: #715ab1;">|</span> <span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">Foo</span> n<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">&lt;-</span> x<span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 
@@ -717,18 +739,18 @@ In this snippet the variable <code>y</code> has the value <code>[1,2]</code>.
 <h4 id="org1636c10">Typeclasses</h4>
 <div class="outline-text-4" id="text-org1636c10">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> a <span style="color: #4f97d7; font-weight: bold;">where</span>  
-    <span style="color: #4f97d7;">(</span><span style="color: #7590db;">==</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>  
-    <span style="color: #4f97d7;">(</span><span style="color: #7590db;">/=</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>  
-    x <span style="color: #7590db;">==</span> y <span style="color: #7590db;">=</span> not <span style="color: #4f97d7;">(</span>x <span style="color: #7590db;">/=</span> y<span style="color: #4f97d7;">)</span>  
-    x <span style="color: #7590db;">/=</span> y <span style="color: #7590db;">=</span> not <span style="color: #4f97d7;">(</span>x <span style="color: #7590db;">==</span> y<span style="color: #4f97d7;">)</span>  
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">class</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> a <span style="color: #3a81c3; font-weight: bold;">where</span>  
+    <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">==</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">::</span> a <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>  
+    <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">/=</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">::</span> a <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>  
+    x <span style="color: #715ab1;">==</span> y <span style="color: #715ab1;">=</span> not <span style="color: #3a81c3;">(</span>x <span style="color: #715ab1;">/=</span> y<span style="color: #3a81c3;">)</span>  
+    x <span style="color: #715ab1;">/=</span> y <span style="color: #715ab1;">=</span> not <span style="color: #3a81c3;">(</span>x <span style="color: #715ab1;">==</span> y<span style="color: #3a81c3;">)</span>  
 
-<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Foobar</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Foo</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Bar</span>
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Foobar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span>
 
-<span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> <span style="color: #ce537a; font-weight: bold;">Foobar</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
-    <span style="color: #ce537a; font-weight: bold;">Foo</span> <span style="color: #7590db;">==</span> <span style="color: #ce537a; font-weight: bold;">Foo</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">True</span>
-    <span style="color: #ce537a; font-weight: bold;">Bar</span> <span style="color: #7590db;">==</span> <span style="color: #ce537a; font-weight: bold;">Bar</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">True</span>
-    <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">==</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">False</span>
+<span style="color: #3a81c3; font-weight: bold;">instance</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> <span style="color: #ba2f59; font-weight: bold;">Foobar</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+    <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
+    <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">==</span> <span style="color: #ba2f59; font-weight: bold;">Bar</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">True</span>
+    <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">==</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">False</span>
 </pre>
 </div>
 
@@ -742,7 +764,7 @@ determined by <code>a</code> and <code>b</code>. The following snippet gives an 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Foo</span> a b c <span style="color: #7590db;">|</span> a b <span style="color: #7590db;">-&gt;</span> c <span style="color: #4f97d7; font-weight: bold;">where</span> <span style="color: #7590db;">...</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">class</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span> a b c <span style="color: #715ab1;">|</span> a b <span style="color: #715ab1;">-&gt;</span> c <span style="color: #3a81c3; font-weight: bold;">where</span> <span style="color: #715ab1;">...</span>
 </pre>
 </div>
 </div>
@@ -757,12 +779,17 @@ determined by <code>a</code> and <code>b</code>. The following snippet gives an 
 
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #2aa1ae;">-- | Create normal distribution from parameters.</span>
-<span style="color: #bc6ec5; font-weight: bold;">normalDistr</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Mean of distribution</span>
-            <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Standard deviation of distribution</span>
-            <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">NormalDistribution</span>
-<span style="color: #bc6ec5; font-weight: bold;">normalDistr</span> m sd <span style="color: #7590db;">=</span> maybe <span style="color: #4f97d7;">(</span>error <span style="color: #7590db;">$</span> errMsg m sd<span style="color: #4f97d7;">)</span> id <span style="color: #7590db;">$</span> normalDistrE m sd
+<span style="color: #6c3163; font-weight: bold;">normalDistr</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Mean of distribution</span>
+            <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Double</span>            <span style="color: #2aa1ae;">-- ^ Standard deviation of distribution</span>
+            <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">NormalDistribution</span>
+<span style="color: #6c3163; font-weight: bold;">normalDistr</span> m sd <span style="color: #715ab1;">=</span> maybe <span style="color: #3a81c3;">(</span>error <span style="color: #715ab1;">$</span> errMsg m sd<span style="color: #3a81c3;">)</span> id <span style="color: #715ab1;">$</span> normalDistrE m sd
 </pre>
 </div>
+
+<p>
+<b>Bold</b> comes from surrounding the text with double underscore: <code>__bold__</code>.
+ <i>Emphasis</i> is the same as in org-mode: <code>/emphasis/</code>.
+</p>
 </div>
 </div>
 </div>
@@ -813,6 +840,119 @@ for the identity element. The <code>mempty</code> must be both a left and right 
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgb894a92" class="outline-3">
+<h3 id="orgb894a92">Monad transformers with <code>mtl</code></h3>
+<div class="outline-text-3" id="text-orgb894a92">
+</div>
+<div id="outline-container-orgfc9562b" class="outline-4">
+<h4 id="orgfc9562b"><code>ReaderT</code></h4>
+<div class="outline-text-4" id="text-orgfc9562b">
+<p>
+To avoid explicitly passing environment data around, one can use the <code>ReaderT</code>
+monad transformer to add read-only environment. The following example shows the
+reader monad transformer in action. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Reader</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ReaderT</span>, ask, liftIO, runReaderT<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #3a81c3;">{</span> envInput <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">FilePath</span> <span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> putStrLn <span style="color: #2d9574;">"Greetings from Step 1."</span>
+  return <span style="color: #4e3163;">0</span>
+
+<span style="color: #6c3163; font-weight: bold;">step2</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">step2</span> n <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> putStrLn <span style="color: #3a81c3;">(</span>show n<span style="color: #3a81c3;">)</span>
+  fp <span style="color: #715ab1;">&lt;-</span> envInput <span style="color: #715ab1;">&lt;$&gt;</span> ask
+  line <span style="color: #715ab1;">&lt;-</span> liftIO <span style="color: #715ab1;">$</span> readFile fp
+  liftIO <span style="color: #715ab1;">$</span> putStr <span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Autobots, "</span> <span style="color: #715ab1;">++</span> line<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  runReaderT <span style="color: #3a81c3;">(</span>step1 <span style="color: #715ab1;">&gt;&gt;=</span> step2<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #2d9574;">"autobots.txt"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+The <code>main</code> function sets up an environment which is passes to Step 1 which puts
+a value of 0 in the monad. Then in the second function the value is printed and
+the contents of the file referenced in the environment is printed out, i.e., the
+file <code>autobots.txt</code> which just contains a single line with "roll out". Running
+this in the REPL gives the following output.
+</p>
+
+<pre class="example">
+λ&gt; main
+Greetings from Step 1.
+0
+Autobots, roll out
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org528fb36" class="outline-4">
+<h4 id="org528fb36"><code>ReaderT</code> on <code>ExceptT</code></h4>
+<div class="outline-text-4" id="text-org528fb36">
+<p>
+The example above using the reader monad transformer can be extended to improve
+the error handling in the case where the file path in the environment does not
+exist.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Except</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ExceptT</span>, runExceptT, throwError<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Reader</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ReaderT</span>, asks, liftIO, runReaderT<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">System.Directory</span> <span style="color: #3a81c3;">(</span>doesFileExist<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">newtype</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #3a81c3;">{</span> envInput <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">FilePath</span> <span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> a <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ExceptT</span> <span style="color: #ba2f59; font-weight: bold;">String</span> <span style="color: #ba2f59; font-weight: bold;">IO</span><span style="color: #3a81c3;">)</span> a
+
+<span style="color: #6c3163; font-weight: bold;">runRobot</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Either</span> <span style="color: #ba2f59; font-weight: bold;">String</span> a<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">runRobot</span> robot env <span style="color: #715ab1;">=</span> runExceptT <span style="color: #3a81c3;">(</span>runReaderT robot env<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> putStrLn <span style="color: #2d9574;">"Greetings from Step 1."</span>
+  return <span style="color: #4e3163;">0</span>
+
+<span style="color: #6c3163; font-weight: bold;">step2</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">step2</span> n <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> print n
+  fp <span style="color: #715ab1;">&lt;-</span> asks envInput
+  exists <span style="color: #715ab1;">&lt;-</span> liftIO <span style="color: #715ab1;">$</span> doesFileExist fp
+  <span style="color: #3a81c3; font-weight: bold;">if</span> exists
+  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #3a81c3; font-weight: bold;">do</span> line <span style="color: #715ab1;">&lt;-</span> liftIO <span style="color: #715ab1;">$</span> readFile fp
+          liftIO <span style="color: #715ab1;">$</span> putStr <span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Autobots, "</span> <span style="color: #715ab1;">++</span> line<span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">else</span> throwError <span style="color: #2d9574;">"Could not find file in step 2"</span>
+</pre>
+</div>
+
+<p>
+The <code>main</code> function has been remove but there is not much added code here.
+Running the <code>runRobot</code> function in the REPL we get the following results which
+demonstrate how the failure path evaluates.
+</p>
+
+<pre class="example">
+λ&gt; runRobot (step1 &gt;&gt;= step2) (Env "autobots.txt")
+Greetings from Step 1.
+0
+Autobots, roll out
+Right ()
+λ&gt; runRobot (step1 &gt;&gt;= step2) (Env "autobats.txt")
+Greetings from Step 1.
+0
+Left "Could not find file in step 2"
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org8e117ad" class="outline-3">
 <h3 id="org8e117ad">Data structures</h3>
 <div class="outline-text-3" id="text-org8e117ad">
@@ -839,15 +979,15 @@ A classic example of the <code>ST</code> monad is
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.ST</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.STRef</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Foldable</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.ST</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.STRef</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Foldable</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">sumST</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Num</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">sumST</span> xs <span style="color: #7590db;">=</span> runST <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-    n <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #a45bad;">0</span>
-    for_ xs <span style="color: #7590db;">$</span> <span style="color: #7590db;">\</span>x <span style="color: #7590db;">-&gt;</span>
-        modifySTRef n <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span>x<span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">sumST</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Num</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">[</span>a<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">sumST</span> xs <span style="color: #715ab1;">=</span> runST <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    n <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #4e3163;">0</span>
+    for_ xs <span style="color: #715ab1;">$</span> <span style="color: #715ab1;">\</span>x <span style="color: #715ab1;">-&gt;</span>
+        modifySTRef n <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">+</span>x<span style="color: #3a81c3;">)</span>
     readSTRef n
 </pre>
 </div>
@@ -858,13 +998,13 @@ The following function can help with this
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">whileM_</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Monad</span> m<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> m <span style="color: #ce537a; font-weight: bold;">Bool</span> <span style="color: #7590db;">-&gt;</span> m a <span style="color: #7590db;">-&gt;</span> m <span style="color: #4f97d7; font-weight: bold;">()</span>
-<span style="color: #bc6ec5; font-weight: bold;">whileM_</span> p f <span style="color: #7590db;">=</span> go
-    <span style="color: #4f97d7; font-weight: bold;">where</span> go <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-            x <span style="color: #7590db;">&lt;-</span> p
-            <span style="color: #4f97d7; font-weight: bold;">if</span> x
-                <span style="color: #4f97d7; font-weight: bold;">then</span> f <span style="color: #7590db;">&gt;&gt;</span> go
-                <span style="color: #4f97d7; font-weight: bold;">else</span> return <span style="color: #4f97d7; font-weight: bold;">()</span>
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">whileM_</span> <span style="color: #715ab1;">::</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Monad</span> m<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=&gt;</span> m <span style="color: #ba2f59; font-weight: bold;">Bool</span> <span style="color: #715ab1;">-&gt;</span> m a <span style="color: #715ab1;">-&gt;</span> m <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">whileM_</span> p f <span style="color: #715ab1;">=</span> go
+    <span style="color: #3a81c3; font-weight: bold;">where</span> go <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+            x <span style="color: #715ab1;">&lt;-</span> p
+            <span style="color: #3a81c3; font-weight: bold;">if</span> x
+                <span style="color: #3a81c3; font-weight: bold;">then</span> f <span style="color: #715ab1;">&gt;&gt;</span> go
+                <span style="color: #3a81c3; font-weight: bold;">else</span> return <span style="color: #3a81c3; font-weight: bold;">()</span>
 </pre>
 </div>
 
@@ -873,17 +1013,17 @@ We can re-write the <code>sumST</code> function using this as follows.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">sumST'</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Num</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">sumST'</span> xs <span style="color: #7590db;">=</span> runST <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-  n <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #a45bad;">0</span>
-  p <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #4f97d7;">(</span>not <span style="color: #7590db;">$</span> null xs<span style="color: #4f97d7;">)</span>
-  i <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #a45bad;">0</span>
-  m <span style="color: #7590db;">&lt;-</span> pure <span style="color: #7590db;">$</span> length xs
-  whileM_ <span style="color: #4f97d7;">(</span>readSTRef p<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-    ix <span style="color: #7590db;">&lt;-</span> readSTRef i
-    modifySTRef n <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span> <span style="color: #bc6ec5;">(</span>xs <span style="color: #7590db;">!!</span> ix<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-    modifySTRef i <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
-    modifySTRef p <span style="color: #4f97d7;">(</span><span style="color: #7590db;">\</span><span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>ix <span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span> <span style="color: #7590db;">&lt;</span> m<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">sumST'</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Num</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">[</span>a<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">sumST'</span> xs <span style="color: #715ab1;">=</span> runST <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  n <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #4e3163;">0</span>
+  p <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #3a81c3;">(</span>not <span style="color: #715ab1;">$</span> null xs<span style="color: #3a81c3;">)</span>
+  i <span style="color: #715ab1;">&lt;-</span> newSTRef <span style="color: #4e3163;">0</span>
+  m <span style="color: #715ab1;">&lt;-</span> pure <span style="color: #715ab1;">$</span> length xs
+  whileM_ <span style="color: #3a81c3;">(</span>readSTRef p<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    ix <span style="color: #715ab1;">&lt;-</span> readSTRef i
+    modifySTRef n <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">+</span> <span style="color: #6c3163;">(</span>xs <span style="color: #715ab1;">!!</span> ix<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+    modifySTRef i <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+    modifySTRef p <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">\</span><span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #6c3163;">(</span>ix <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">1</span> <span style="color: #715ab1;">&lt;</span> m<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
   readSTRef n
 </pre>
 </div>
@@ -928,9 +1068,9 @@ To enable the <a href="https://github.com/syl20bnr/spacemacs/tree/master/layers/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>haskell <span style="color: #4f97d7;">:variables</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>haskell <span style="color: #3a81c3;">:variables</span>
          haskell-enable-hindent-style <span style="color: #2d9574;">"johan-tibell"</span>
-         haskell-process-type 'stack-ghci<span style="color: #4f97d7;">)</span>
+         haskell-process-type 'stack-ghci<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -969,10 +1109,10 @@ Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/softwa
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">Set the input method to TeX so typing TeX defaults to the Unicode.</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">Use C-\ to escape this input method.</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">MNEMONIC: owner-haskell-unicode</span>
-<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ohu"</span> 'set-input-method<span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Set the input method to TeX so typing TeX defaults to the Unicode.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Use C-\ to escape this input method.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">MNEMONIC: owner-haskell-unicode</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ohu"</span> 'set-input-method<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -986,9 +1126,9 @@ This desugars list syntax to make it easier to use list syntax to construct thin
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5;">{-# LANGUAGE OverloadedLists #-}</span>
+<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE OverloadedLists #-}</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">foo</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span>,<span style="color: #a45bad;">2</span><span style="color: #bc6ec5;">)</span>,<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span>,<span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Map</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+<span style="color: #6c3163; font-weight: bold;">foo</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span><span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span>,<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>,<span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Map</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>
 </pre>
 </div>
 
@@ -1018,17 +1158,17 @@ following snippet demonstrates how you might do this with an orphan-instance.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Csv</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Maybe</span> <span style="color: #4f97d7;">(</span>fromMaybe<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #4f97d7; font-weight: bold;">qualified</span> <span style="color: #ce537a; font-weight: bold;">Data.Vector</span> <span style="color: #4f97d7; font-weight: bold;">as</span> <span style="color: #ce537a; font-weight: bold;">V</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Csv</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Data.Maybe</span> <span style="color: #3a81c3;">(</span>fromMaybe<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #3a81c3; font-weight: bold;">qualified</span> <span style="color: #ba2f59; font-weight: bold;">Data.Vector</span> <span style="color: #3a81c3; font-weight: bold;">as</span> <span style="color: #ba2f59; font-weight: bold;">V</span>
 
-<span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">ToRecord</span> a, <span style="color: #ce537a; font-weight: bold;">ToRecord</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">ToRecord</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Chain</span> a b<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
-  toRecord <span style="color: #ce537a; font-weight: bold;">Chain</span> <span style="color: #4f97d7;">{</span><span style="color: #7590db;">..</span><span style="color: #4f97d7;">}</span> <span style="color: #7590db;">=</span>
+<span style="color: #3a81c3; font-weight: bold;">instance</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ToRecord</span> a, <span style="color: #ba2f59; font-weight: bold;">ToRecord</span> b<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">ToRecord</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Chain</span> a b<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+  toRecord <span style="color: #ba2f59; font-weight: bold;">Chain</span> <span style="color: #3a81c3;">{</span><span style="color: #715ab1;">..</span><span style="color: #3a81c3;">}</span> <span style="color: #715ab1;">=</span>
     V.concat
-      <span style="color: #4f97d7;">[</span> <span style="color: #bc6ec5;">(</span>record <span style="color: #2d9574;">[</span>toField chainScore<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span>
-      , <span style="color: #bc6ec5;">(</span>toRecord chainPosition<span style="color: #bc6ec5;">)</span>
-      , fromMaybe V.empty <span style="color: #bc6ec5;">(</span>toRecord <span style="color: #7590db;">&lt;$&gt;</span> chainTunables<span style="color: #bc6ec5;">)</span>
-      <span style="color: #4f97d7;">]</span>
+      <span style="color: #3a81c3;">[</span> <span style="color: #6c3163;">(</span>record <span style="color: #2d9574;">[</span>toField chainScore<span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>
+      , <span style="color: #6c3163;">(</span>toRecord chainPosition<span style="color: #6c3163;">)</span>
+      , fromMaybe V.empty <span style="color: #6c3163;">(</span>toRecord <span style="color: #715ab1;">&lt;$&gt;</span> chainTunables<span style="color: #6c3163;">)</span>
+      <span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 </div>
@@ -1048,13 +1188,13 @@ Without knowing anything about how this works internally, the following function
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.Par</span> <span style="color: #4f97d7;">(</span>runPar<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.Par.Combinator</span> <span style="color: #4f97d7;">(</span>parMap<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Par</span> <span style="color: #3a81c3;">(</span>runPar<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Par.Combinator</span> <span style="color: #3a81c3;">(</span>parMap<span style="color: #3a81c3;">)</span>
 
-<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Par</span> a
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">Par</span> a
 
-<span style="color: #bc6ec5; font-weight: bold;">runPar</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Par</span> a <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">parMap</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Traversable</span> t <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> p <span style="color: #4f97d7;">(</span>t b<span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">runPar</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Par</span> a <span style="color: #715ab1;">-&gt;</span> a
+<span style="color: #6c3163; font-weight: bold;">parMap</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Traversable</span> t <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">-&gt;</span> b<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-&gt;</span> t a <span style="color: #715ab1;">-&gt;</span> p <span style="color: #3a81c3;">(</span>t b<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1113,31 +1253,31 @@ This example needs <code>hmatrix</code> and <code>hmatrix-gsl</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Numeric.GSL.ODE</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Numeric.LinearAlgebra</span>
-<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Numeric.LinearAlgebra.Data</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Numeric.GSL.ODE</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Numeric.LinearAlgebra</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Numeric.LinearAlgebra.Data</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">alpha</span> <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0.1</span>
+<span style="color: #6c3163; font-weight: bold;">alpha</span> <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">0.1</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">xdash</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #4f97d7;">[</span>x<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span>x <span style="color: #7590db;">*</span> alpha<span style="color: #4f97d7;">]</span>
+<span style="color: #6c3163; font-weight: bold;">xdash</span> <span style="color: #3a81c3; font-weight: bold;">_</span> <span style="color: #3a81c3;">[</span>x<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span>x <span style="color: #715ab1;">*</span> alpha<span style="color: #3a81c3;">]</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">x0</span> <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1.0</span>
+<span style="color: #6c3163; font-weight: bold;">x0</span> <span style="color: #715ab1;">=</span> <span style="color: #4e3163;">1.0</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">ts</span> <span style="color: #7590db;">=</span> linspace <span style="color: #a45bad;">100</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">3</span><span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">ts</span> <span style="color: #715ab1;">=</span> linspace <span style="color: #4e3163;">100</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">numericSol</span> <span style="color: #7590db;">=</span> odeSolve xdash <span style="color: #4f97d7;">[</span>x0<span style="color: #4f97d7;">]</span> ts
+<span style="color: #6c3163; font-weight: bold;">numericSol</span> <span style="color: #715ab1;">=</span> odeSolve xdash <span style="color: #3a81c3;">[</span>x0<span style="color: #3a81c3;">]</span> ts
 
-<span style="color: #bc6ec5; font-weight: bold;">exactSol</span> <span style="color: #7590db;">=</span> asColumn <span style="color: #7590db;">$</span> x0' <span style="color: #7590db;">*</span> exp <span style="color: #4f97d7;">(</span>alpha' <span style="color: #7590db;">*</span> ts<span style="color: #4f97d7;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    x0' <span style="color: #7590db;">=</span> scalar x0
-    alpha' <span style="color: #7590db;">=</span> scalar alpha
+<span style="color: #6c3163; font-weight: bold;">exactSol</span> <span style="color: #715ab1;">=</span> asColumn <span style="color: #715ab1;">$</span> x0' <span style="color: #715ab1;">*</span> exp <span style="color: #3a81c3;">(</span>alpha' <span style="color: #715ab1;">*</span> ts<span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">where</span>
+    x0' <span style="color: #715ab1;">=</span> scalar x0
+    alpha' <span style="color: #715ab1;">=</span> scalar alpha
 
 
-<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
-<span style="color: #bc6ec5; font-weight: bold;">main</span> <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> maxElement <span style="color: #4f97d7;">(</span>numericSol <span style="color: #7590db;">-</span> exactSol<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">1e-10</span>
-    <span style="color: #4f97d7; font-weight: bold;">then</span> putStrLn <span style="color: #2d9574;">"They are equal!"</span>
-    <span style="color: #4f97d7; font-weight: bold;">else</span> putStrLn <span style="color: #2d9574;">"Huge error :("</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> maxElement <span style="color: #3a81c3;">(</span>numericSol <span style="color: #715ab1;">-</span> exactSol<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">&lt;</span> <span style="color: #4e3163;">1e-10</span>
+    <span style="color: #3a81c3; font-weight: bold;">then</span> putStrLn <span style="color: #2d9574;">"They are equal!"</span>
+    <span style="color: #3a81c3; font-weight: bold;">else</span> putStrLn <span style="color: #2d9574;">"Huge error :("</span>
 </pre>
 </div>
 </div>
@@ -1147,14 +1287,14 @@ This example needs <code>hmatrix</code> and <code>hmatrix-gsl</code>.
 <h3 id="org594d937">Random number simulation</h3>
 <div class="outline-text-3" id="text-org594d937">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">System.Random.MWC</span>
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">System.Random.MWC</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">foobar</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-<span style="color: #bc6ec5; font-weight: bold;">foobar</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-  gen <span style="color: #7590db;">&lt;-</span> create
-  x1 <span style="color: #7590db;">&lt;-</span> uniform gen
-  x2 <span style="color: #7590db;">&lt;-</span> uniform gen
-  return <span style="color: #4f97d7;">(</span>x1,x2<span style="color: #4f97d7;">)</span>
+<span style="color: #6c3163; font-weight: bold;">foobar</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Double</span>,<span style="color: #ba2f59; font-weight: bold;">Double</span><span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">foobar</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  gen <span style="color: #715ab1;">&lt;-</span> create
+  x1 <span style="color: #715ab1;">&lt;-</span> uniform gen
+  x2 <span style="color: #715ab1;">&lt;-</span> uniform gen
+  return <span style="color: #3a81c3;">(</span>x1,x2<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1168,7 +1308,7 @@ Multiple calls to this function always return the same values because the <code>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-06-18 Thu 12:07</p>
+<p class="date">Created: 2020-07-23 Thu 21:20</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
