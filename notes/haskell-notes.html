@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-16 Thu 17:41 -->
+<!-- 2020-07-25 Sat 13:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -289,28 +289,27 @@ for the JavaScript code in this tag.
 <li><a href="#org91b597c">Haddock Documentation</a></li>
 </ul>
 </li>
-<li><a href="#orgcb2ef22">Data in <code>base</code></a>
-<ul>
-<li><a href="#org7d102cf">Numbers</a>
-<ul>
-<li><a href="#orgb640a74"><code>Int</code> and <code>Word</code></a></li>
-</ul>
-</li>
-<li><a href="#org94d1c3b">Semigroup</a></li>
-<li><a href="#org3996fd7">Monoid</a></li>
-</ul>
-</li>
 <li><a href="#orgee75f8d">Monad transformers with <code>mtl</code></a>
 <ul>
 <li><a href="#org2d81802"><code>ReaderT</code></a></li>
+<li><a href="#orgf4ce313"><code>ReaderT</code> on <code>ExceptT</code></a></li>
 </ul>
 </li>
-<li><a href="#orgda13fca">Data structures</a></li>
+<li><a href="#orgda13fca">Data structures</a>
+<ul>
+<li><a href="#org7d102cf">Numbers</a></li>
+<li><a href="#orgb640a74"><code>Int</code> and <code>Word</code></a></li>
+<li><a href="#org94d1c3b">Semigroup</a></li>
+<li><a href="#org3996fd7">Monoid</a></li>
+<li><a href="#org7899406">Foldable</a></li>
+<li><a href="#org84f3cab">Traversable</a></li>
+</ul>
+</li>
 <li><a href="#org9abc739"><code>ST</code> monad</a></li>
 <li><a href="#orga79116a">Linting <code>hindent</code></a></li>
 <li><a href="#org568f93e">JSON <code>aeson</code></a></li>
 <li><a href="#orgbdc9004">Haskell layer in Spacemacs</a></li>
-<li><a href="#org6bd25d3">Language extensions</a>
+<li><a href="#orgbc15a80">GHC extensions</a>
 <ul>
 <li><a href="#orgf492c12"><code>OverloadedStrings</code></a></li>
 <li><a href="#orgb3111b5"><code>RecordWildcards</code></a></li>
@@ -318,6 +317,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgc033725"><code>OverloadedLists</code></a></li>
 </ul>
 </li>
+<li><a href="#org8436955">GHC extensions: <code>DeriveX</code></a></li>
 <li><a href="#org447016e">Packages I like</a>
 <ul>
 <li><a href="#org7251c9d"><code>ad</code>: combinators for automatic differentiation</a></li>
@@ -793,53 +793,6 @@ determined by <code>a</code> and <code>b</code>. The following snippet gives an 
 </div>
 </div>
 
-<div id="outline-container-orgcb2ef22" class="outline-3">
-<h3 id="orgcb2ef22">Data in <code>base</code></h3>
-<div class="outline-text-3" id="text-orgcb2ef22">
-</div>
-<div id="outline-container-org7d102cf" class="outline-4">
-<h4 id="org7d102cf">Numbers</h4>
-<div class="outline-text-4" id="text-org7d102cf">
-
-<div class="figure">
-<p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgb640a74" class="outline-5">
-<h5 id="orgb640a74"><code>Int</code> and <code>Word</code></h5>
-<div class="outline-text-5" id="text-orgb640a74">
-<p>
-The package <code>Data.Int</code> provides signed integers and <code>Data.Word</code> provides
-unsigned integers. The latter may be useful to encode that the number has to be
-positive at the type level.
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-org94d1c3b" class="outline-4">
-<h4 id="org94d1c3b">Semigroup</h4>
-<div class="outline-text-4" id="text-org94d1c3b">
-<p>
-A <i>semigroup</i> is a set with an associative binary operation. In <code>base</code> this type
-class, <code>Data.Semigroup</code>, requires a function <code>&lt;&gt;</code>, and instances of this function must be
-associative.
-</p>
-</div>
-</div>
-<div id="outline-container-org3996fd7" class="outline-4">
-<h4 id="org3996fd7">Monoid</h4>
-<div class="outline-text-4" id="text-org3996fd7">
-<p>
-A <i>monoid</i> is a semigroup which has an identity element. In <code>base</code> this type
-class, <code>Data.Monoid</code>, requires the function <code>&lt;&gt;</code>, as in semigroup, and <code>mempty</code>
-for the identity element. The <code>mempty</code> must be both a left and right identity.
-</p>
-</div>
-</div>
-</div>
-
 <div id="outline-container-orgee75f8d" class="outline-3">
 <h3 id="orgee75f8d">Monad transformers with <code>mtl</code></h3>
 <div class="outline-text-3" id="text-orgee75f8d">
@@ -872,7 +825,7 @@ reader monad transformer in action.
 
 <span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
 <span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
-  runReaderT <span style="color: #3a81c3;">(</span>step1 <span style="color: #715ab1;">&gt;&gt;=</span> step2<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #2d9574;">"autobot.txt"</span><span style="color: #3a81c3;">)</span>
+  runReaderT <span style="color: #3a81c3;">(</span>step1 <span style="color: #715ab1;">&gt;&gt;=</span> step2<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #2d9574;">"autobots.txt"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -880,7 +833,7 @@ reader monad transformer in action.
 The <code>main</code> function sets up an environment which is passes to Step 1 which puts
 a value of 0 in the monad. Then in the second function the value is printed and
 the contents of the file referenced in the environment is printed out, i.e., the
-file <code>autobot.txt</code> which just contains a single line with "roll out". Running
+file <code>autobots.txt</code> which just contains a single line with "roll out". Running
 this in the REPL gives the following output.
 </p>
 
@@ -892,11 +845,109 @@ Autobots, roll out
 </pre>
 </div>
 </div>
+
+<div id="outline-container-orgf4ce313" class="outline-4">
+<h4 id="orgf4ce313"><code>ReaderT</code> on <code>ExceptT</code></h4>
+<div class="outline-text-4" id="text-orgf4ce313">
+<p>
+The example above using the reader monad transformer can be extended to improve
+the error handling in the case where the file path in the environment does not
+exist.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Except</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ExceptT</span>, runExceptT, throwError<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.Reader</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ReaderT</span>, asks, liftIO, runReaderT<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">System.Directory</span> <span style="color: #3a81c3;">(</span>doesFileExist<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">newtype</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #3a81c3;">{</span> envInput <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">FilePath</span> <span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3; font-weight: bold;">type</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> a <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">ReaderT</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">ExceptT</span> <span style="color: #ba2f59; font-weight: bold;">String</span> <span style="color: #ba2f59; font-weight: bold;">IO</span><span style="color: #3a81c3;">)</span> a
+
+<span style="color: #6c3163; font-weight: bold;">runRobot</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Env</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Either</span> <span style="color: #ba2f59; font-weight: bold;">String</span> a<span style="color: #3a81c3;">)</span>
+<span style="color: #6c3163; font-weight: bold;">runRobot</span> robot env <span style="color: #715ab1;">=</span> runExceptT <span style="color: #3a81c3;">(</span>runReaderT robot env<span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> <span style="color: #ba2f59; font-weight: bold;">Int</span>
+<span style="color: #6c3163; font-weight: bold;">step1</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> putStrLn <span style="color: #2d9574;">"Greetings from Step 1."</span>
+  return <span style="color: #4e3163;">0</span>
+
+<span style="color: #6c3163; font-weight: bold;">step2</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Robot</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">step2</span> n <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+  liftIO <span style="color: #715ab1;">$</span> print n
+  fp <span style="color: #715ab1;">&lt;-</span> asks envInput
+  exists <span style="color: #715ab1;">&lt;-</span> liftIO <span style="color: #715ab1;">$</span> doesFileExist fp
+  <span style="color: #3a81c3; font-weight: bold;">if</span> exists
+  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #3a81c3; font-weight: bold;">do</span> line <span style="color: #715ab1;">&lt;-</span> liftIO <span style="color: #715ab1;">$</span> readFile fp
+          liftIO <span style="color: #715ab1;">$</span> putStr <span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Autobots, "</span> <span style="color: #715ab1;">++</span> line<span style="color: #3a81c3;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">else</span> throwError <span style="color: #2d9574;">"Could not find file in step 2"</span>
+</pre>
+</div>
+
+<p>
+The <code>main</code> function has been remove but there is not much added code here.
+Running the <code>runRobot</code> function in the REPL we get the following results which
+demonstrate how the failure path evaluates.
+</p>
+
+<pre class="example">
+λ&gt; runRobot (step1 &gt;&gt;= step2) (Env "autobots.txt")
+Greetings from Step 1.
+0
+Autobots, roll out
+Right ()
+λ&gt; runRobot (step1 &gt;&gt;= step2) (Env "autobats.txt")
+Greetings from Step 1.
+0
+Left "Could not find file in step 2"
+</pre>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgda13fca" class="outline-3">
 <h3 id="orgda13fca">Data structures</h3>
 <div class="outline-text-3" id="text-orgda13fca">
+</div>
+<div id="outline-container-org7d102cf" class="outline-4">
+<h4 id="org7d102cf">Numbers</h4>
+<div class="outline-text-4" id="text-org7d102cf">
+
+<div class="figure">
+<p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb640a74" class="outline-4">
+<h4 id="orgb640a74"><code>Int</code> and <code>Word</code></h4>
+<div class="outline-text-4" id="text-orgb640a74">
+<p>
+The package <code>Data.Int</code> provides signed integers and <code>Data.Word</code> provides
+unsigned integers. The latter may be useful to encode that the number has to be
+positive at the type level.
+</p>
+</div>
+</div>
+<div id="outline-container-org94d1c3b" class="outline-4">
+<h4 id="org94d1c3b">Semigroup</h4>
+<div class="outline-text-4" id="text-org94d1c3b">
+<p>
+A <i>semigroup</i> is a set with an associative binary operation. In <code>base</code> this type
+class, <code>Data.Semigroup</code>, requires a function <code>&lt;&gt;</code>, and instances of this function must be
+associative.
+</p>
+</div>
+</div>
+<div id="outline-container-org3996fd7" class="outline-4">
+<h4 id="org3996fd7">Monoid</h4>
+<div class="outline-text-4" id="text-org3996fd7">
+<p>
+A <i>monoid</i> is a semigroup which has an identity element. In <code>base</code> this type
+class, <code>Data.Monoid</code>, requires the function <code>&lt;&gt;</code>, as in semigroup, and <code>mempty</code>
+for the identity element. The <code>mempty</code> must be both a left and right identity.
+</p>
 <ul class="org-ul">
 <li><code>Data.List.NonEmpty</code> (in <code>base</code>) for non-empty lists to avoid run time errors
 due to bad calls to <code>head</code> or <code>tail</code>.</li>
@@ -909,6 +960,27 @@ alternative to lists.
 </ul></li>
 <li><code>vector</code> has vectors.</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-org7899406" class="outline-4">
+<h4 id="org7899406">Foldable</h4>
+<div class="outline-text-4" id="text-org7899406">
+<p>
+A data structure that reduced to a single summary value: <code>foldr :: (a -&gt; b -&gt; b)
+-&gt; b -&gt; t a -&gt; b</code>. For example, you might add up all the values on a tree where
+each node has a value. When the data form a monoid <code>foldMap</code> can be implemented
+instead which just uses the monoid's addition.
+</p>
+</div>
+</div>
+<div id="outline-container-org84f3cab" class="outline-4">
+<h4 id="org84f3cab">Traversable</h4>
+<div class="outline-text-4" id="text-org84f3cab">
+<p>
+Like a more powerful functor: <code>traverse :: Applicative f =&gt; (a -&gt; f b) -&gt; t a -&gt;
+f (t b)</code>
+</p>
+</div>
 </div>
 </div>
 
@@ -1020,9 +1092,10 @@ If you want to make use of <code>hindent</code>, you'll need to make sure that t
 </p>
 </div>
 </div>
-<div id="outline-container-org6bd25d3" class="outline-3">
-<h3 id="org6bd25d3">Language extensions</h3>
-<div class="outline-text-3" id="text-org6bd25d3">
+
+<div id="outline-container-orgbc15a80" class="outline-3">
+<h3 id="orgbc15a80">GHC extensions</h3>
+<div class="outline-text-3" id="text-orgbc15a80">
 </div>
 <div id="outline-container-orgf492c12" class="outline-4">
 <h4 id="orgf492c12"><a href="https://downloads.haskell.org/~ghc/8.2.1/docs/html/users_guide/glasgow_exts.html#overloaded-string-literals"><code>OverloadedStrings</code></a></h4>
@@ -1045,8 +1118,10 @@ Neat syntax for pattern matching a record based on its field names.
 <h4 id="org6a663d0"><a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#unicode-syntax"><code>UnicodeSyntax</code></a></h4>
 <div class="outline-text-4" id="text-org6a663d0">
 <p>
-This allows you to make use of Unicode characters in your code which is particularly nice if you are going a verbatim translation of some mathematics.
-Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Select-Input-Method.html">input Unicode</a> but to make it even easier, I've added the following bindings.
+This allows you to make use of Unicode characters in your code which is
+particularly nice if you are going a verbatim translation of some mathematics.
+Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Select-Input-Method.html">input Unicode</a> but to make it even
+easier, I've added the following bindings.
 </p>
 
 <div class="org-src-container">
@@ -1063,7 +1138,8 @@ Emacs provides a nice way to make it easy to <a href="https://www.gnu.org/softwa
 <h4 id="orgc033725"><a href="https://gitlab.haskell.org/ghc/ghc/-/wikis/overloaded-lists"><code>OverloadedLists</code></a></h4>
 <div class="outline-text-4" id="text-orgc033725">
 <p>
-This desugars list syntax to make it easier to use list syntax to construct things.
+This desugars list syntax to make it easier to use list syntax to construct
+things.
 </p>
 
 <div class="org-src-container">
@@ -1079,6 +1155,18 @@ This will only work with the <code>OverloadedLists</code> extension.
 </div>
 </div>
 </div>
+<div id="outline-container-org8436955" class="outline-3">
+<h3 id="org8436955">GHC extensions: <code>DeriveX</code></h3>
+<div class="outline-text-3" id="text-org8436955">
+<ul class="org-ul">
+<li><code>DeriveFunctor</code></li>
+<li><code>DeriveFoldable</code></li>
+<li><code>DeriveTraversable</code></li>
+<li><code>GeneralizedNewtypeDeriving</code> to make better use of <code>newtype</code>.</li>
+</ul>
+</div>
+</div>
+
 <div id="outline-container-org447016e" class="outline-3">
 <h3 id="org447016e">Packages I like</h3>
 <div class="outline-text-3" id="text-org447016e">
@@ -1249,7 +1337,7 @@ Multiple calls to this function always return the same values because the <code>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-07-16 Thu 17:41</p>
+<p class="date">Created: 2020-07-25 Sat 13:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
