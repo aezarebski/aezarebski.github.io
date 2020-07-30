@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-10 Fri 08:05 -->
+<!-- 2020-07-29 Wed 13:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="alex" />
+<meta name="author" content="Alex Zarebski" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -247,9 +247,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf0a01fd">ggplot2 notes</a>
+<li><a href="#org5a5897f">ggplot2 notes</a>
 <ul>
-<li><a href="#org0eaafdb">Examples</a></li>
+<li><a href="#org874a969">Examples</a>
+<ul>
+<li><a href="#org1410a55">Using <code>cowplot</code> to get a grid of figures</a></li>
+<li><a href="#org5474b43">Map of Italy using spatial data</a></li>
+<li><a href="#orgae458aa">Moving the legend around</a></li>
+<li><a href="#org508e5d6">Plotting mathematical functions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -259,9 +266,9 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgf0a01fd" class="outline-2">
-<h2 id="orgf0a01fd">ggplot2 notes</h2>
-<div class="outline-text-2" id="text-orgf0a01fd">
+<div id="outline-container-org5a5897f" class="outline-2">
+<h2 id="org5a5897f">ggplot2 notes</h2>
+<div class="outline-text-2" id="text-org5a5897f">
 
 <div class="figure">
 <p><img src="../images/ggplot2-logo.png" alt="ggplot2-logo.png" />
@@ -282,43 +289,47 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0eaafdb" class="outline-3">
-<h3 id="org0eaafdb">Examples</h3>
-<div class="outline-text-3" id="text-org0eaafdb">
+<div id="outline-container-org874a969" class="outline-3">
+<h3 id="org874a969">Examples</h3>
+<div class="outline-text-3" id="text-org874a969">
+</div>
+<div id="outline-container-org1410a55" class="outline-4">
+<h4 id="org1410a55">Using <code>cowplot</code> to get a grid of figures</h4>
+<div class="outline-text-4" id="text-org1410a55">
 <div class="figure">
 <p><img width=600px src="../resources/ggplot2-example-01.png">
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggplot2<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>cowplot<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
 
-a <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">()</span> +
-    geom_point<span style="color: #4f97d7;">(</span>data = iris,
-               mapping = aes<span style="color: #bc6ec5;">(</span>x = Sepal.Length,
+a <span style="color: #4e3163;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+    geom_point<span style="color: #3a81c3;">(</span>data = iris,
+               mapping = aes<span style="color: #6c3163;">(</span>x = Sepal.Length,
                              y = Sepal.Width,
-                             colour = Species<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                             colour = Species<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-b <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">()</span> +
-    geom_point<span style="color: #4f97d7;">(</span>data = iris,
-               mapping = aes<span style="color: #bc6ec5;">(</span>x = Petal.Length,
+b <span style="color: #4e3163;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+    geom_point<span style="color: #3a81c3;">(</span>data = iris,
+               mapping = aes<span style="color: #6c3163;">(</span>x = Petal.Length,
                              y = Petal.Width,
-                             colour = Species<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                             colour = Species<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-legend <span style="color: #a45bad;">&lt;-</span> get_legend<span style="color: #4f97d7;">(</span>b + theme<span style="color: #bc6ec5;">(</span>legend.box.margin = margin<span style="color: #2d9574;">(</span><span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">12</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+legend <span style="color: #4e3163;">&lt;-</span> get_legend<span style="color: #3a81c3;">(</span>b + theme<span style="color: #6c3163;">(</span>legend.box.margin = margin<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">12</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-example_plot <span style="color: #a45bad;">&lt;-</span> plot_grid<span style="color: #4f97d7;">(</span>a + theme<span style="color: #bc6ec5;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #bc6ec5;">)</span>,
-                          b + theme<span style="color: #bc6ec5;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #bc6ec5;">)</span>,
+example_plot <span style="color: #4e3163;">&lt;-</span> plot_grid<span style="color: #3a81c3;">(</span>a + theme<span style="color: #6c3163;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #6c3163;">)</span>,
+                          b + theme<span style="color: #6c3163;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #6c3163;">)</span>,
                           legend,
-                          ncol = <span style="color: #a45bad;">3</span>,
-                          rel_widths = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span>,<span style="color: #a45bad;">1</span>,<span style="color: #a45bad;">0.25</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                          ncol = <span style="color: #4e3163;">3</span>,
+                          rel_widths = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">0.25</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-ggsave<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-01.png"</span>,
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-01.png"</span>,
        example_plot,
-       width = <span style="color: #a45bad;">14.8</span>,
-       height = <span style="color: #a45bad;">10.5</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #4f97d7;">)</span>
+       width = <span style="color: #4e3163;">14.8</span>,
+       height = <span style="color: #4e3163;">10.5</span>,
+       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -328,7 +339,12 @@ package on CRAN which provides the <code>TeX</code> function. You can wrap most 
 this before passing to plotting code. The <a href="https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html">vignette</a> for this package describes
 the expressions supported and has multiple examples.
 </p>
+</div>
+</div>
 
+<div id="outline-container-org5474b43" class="outline-4">
+<h4 id="org5474b43">Map of Italy using spatial data</h4>
+<div class="outline-text-4" id="text-org5474b43">
 <div class="figure">
 <p><img width=600px src="../resources/ggplot2-example-02.png">
 </p>
@@ -340,63 +356,68 @@ this map to a PNG.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggplot2<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggspatial<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>GADMTools<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>purrr<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>dplyr<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>reshape2<span style="color: #4f97d7;">)</span>
-<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggmap<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>ggspatial<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>GADMTools<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>reshape2<span style="color: #3a81c3;">)</span>
+<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>ggmap<span style="color: #3a81c3;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Define some parameters for how to draw and colour the figure</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Define some parameters for how to draw and colour the figure</span>
 
-my_breaks <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">5</span>,<span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span>
+my_breaks <span style="color: #4e3163;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">5</span>,<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span>
 
-my_cols <span style="color: #a45bad;">&lt;-</span> hcl.colors<span style="color: #4f97d7;">(</span>n = length<span style="color: #bc6ec5;">(</span>my_breaks<span style="color: #bc6ec5;">)</span> - <span style="color: #a45bad;">1</span>,
+my_cols <span style="color: #4e3163;">&lt;-</span> hcl.colors<span style="color: #3a81c3;">(</span>n = length<span style="color: #6c3163;">(</span>my_breaks<span style="color: #6c3163;">)</span> - <span style="color: #4e3163;">1</span>,
                       palette = <span style="color: #2d9574;">"reds 3"</span>,
-                      alpha = <span style="color: #ce537a; font-weight: bold;">NULL</span>,
-                      rev = <span style="color: #ce537a; font-weight: bold;">TRUE</span>,
-                      fixup = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #4f97d7;">)</span>
+                      alpha = <span style="color: #ba2f59; font-weight: bold;">NULL</span>,
+                      rev = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>,
+                      fixup = <span style="color: #ba2f59; font-weight: bold;">TRUE</span><span style="color: #3a81c3;">)</span>
 
-map_country_line_colour <span style="color: #a45bad;">&lt;-</span> <span style="color: #2d9574;">"#252525"</span>
-map_inline_thickness <span style="color: #a45bad;">&lt;-</span> <span style="color: #a45bad;">0.1</span>
-map_outline_thickness <span style="color: #a45bad;">&lt;-</span> <span style="color: #a45bad;">0.5</span>
+map_country_line_colour <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"#252525"</span>
+map_inline_thickness <span style="color: #4e3163;">&lt;-</span> <span style="color: #4e3163;">0.1</span>
+map_outline_thickness <span style="color: #4e3163;">&lt;-</span> <span style="color: #4e3163;">0.5</span>
 
-map_plot_background <span style="color: #a45bad;">&lt;-</span> element_rect<span style="color: #4f97d7;">(</span>colour = <span style="color: #2d9574;">"#252525"</span>,
-                                    fill = <span style="color: #2d9574;">"#FFFFFF"</span><span style="color: #4f97d7;">)</span>
-
-
-<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Load the map data from GADM</span>
-italy_sf <span style="color: #a45bad;">&lt;-</span> gadm_sf_loadCountries<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>$sf
-italy_sf$foobar <span style="color: #a45bad;">&lt;-</span> rpois<span style="color: #4f97d7;">(</span>n = nrow<span style="color: #bc6ec5;">(</span>italy_sf<span style="color: #bc6ec5;">)</span>, lambda = <span style="color: #a45bad;">3</span><span style="color: #4f97d7;">)</span>
-
-<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Include an additional level zero object for the country outline.</span>
-italy_outline_sf <span style="color: #a45bad;">&lt;-</span> gadm_sf_loadCountries<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span>$sf
+map_plot_background <span style="color: #4e3163;">&lt;-</span> element_rect<span style="color: #3a81c3;">(</span>colour = <span style="color: #2d9574;">"#252525"</span>,
+                                    fill = <span style="color: #2d9574;">"#FFFFFF"</span><span style="color: #3a81c3;">)</span>
 
 
+<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Load the map data from GADM</span>
+italy_sf <span style="color: #4e3163;">&lt;-</span> gadm_sf_loadCountries<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>$sf
+italy_sf$foobar <span style="color: #4e3163;">&lt;-</span> rpois<span style="color: #3a81c3;">(</span>n = nrow<span style="color: #6c3163;">(</span>italy_sf<span style="color: #6c3163;">)</span>, lambda = <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>
 
-g <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">()</span> +
-    geom_sf<span style="color: #4f97d7;">(</span>data = italy_sf,
-            mapping = aes<span style="color: #bc6ec5;">(</span>fill = foobar<span style="color: #bc6ec5;">)</span>,
+<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Include an additional level zero object for the country outline.</span>
+italy_outline_sf <span style="color: #4e3163;">&lt;-</span> gadm_sf_loadCountries<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #4e3163;">0</span><span style="color: #3a81c3;">)</span>$sf
+
+
+
+g <span style="color: #4e3163;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+    geom_sf<span style="color: #3a81c3;">(</span>data = italy_sf,
+            mapping = aes<span style="color: #6c3163;">(</span>fill = foobar<span style="color: #6c3163;">)</span>,
             colour = map_country_line_colour,
-            size = map_inline_thickness<span style="color: #4f97d7;">)</span> +
-    geom_sf<span style="color: #4f97d7;">(</span>data = italy_outline_sf,
-            fill = <span style="color: #ce537a; font-weight: bold;">NA</span>,
+            size = map_inline_thickness<span style="color: #3a81c3;">)</span> +
+    geom_sf<span style="color: #3a81c3;">(</span>data = italy_outline_sf,
+            fill = <span style="color: #ba2f59; font-weight: bold;">NA</span>,
             colour = map_country_line_colour,
-            size = map_outline_thickness<span style="color: #4f97d7;">)</span> +
-    scale_fill_gradientn<span style="color: #4f97d7;">(</span>breaks = my_breaks,
+            size = map_outline_thickness<span style="color: #3a81c3;">)</span> +
+    scale_fill_gradientn<span style="color: #3a81c3;">(</span>breaks = my_breaks,
                          colors = my_cols,
-                         limits = range<span style="color: #bc6ec5;">(</span>my_breaks<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
-    theme<span style="color: #4f97d7;">(</span>plot.background = map_plot_background<span style="color: #4f97d7;">)</span> +
-    labs<span style="color: #4f97d7;">(</span>fill = <span style="color: #2d9574;">"Foobar"</span><span style="color: #4f97d7;">)</span> +
-    theme_void<span style="color: #4f97d7;">()</span> +
-    theme<span style="color: #4f97d7;">(</span>legend.position = <span style="color: #2d9574;">"left"</span><span style="color: #4f97d7;">)</span>
+                         limits = range<span style="color: #6c3163;">(</span>my_breaks<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+    theme<span style="color: #3a81c3;">(</span>plot.background = map_plot_background<span style="color: #3a81c3;">)</span> +
+    labs<span style="color: #3a81c3;">(</span>fill = <span style="color: #2d9574;">"Foobar"</span><span style="color: #3a81c3;">)</span> +
+    theme_void<span style="color: #3a81c3;">()</span> +
+    theme<span style="color: #3a81c3;">(</span>legend.position = <span style="color: #2d9574;">"left"</span><span style="color: #3a81c3;">)</span>
 
-ggsave<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-02.pdf"</span>,
-       g<span style="color: #4f97d7;">)</span>
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-02.pdf"</span>,
+       g<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgae458aa" class="outline-4">
+<h4 id="orgae458aa">Moving the legend around</h4>
+<div class="outline-text-4" id="text-orgae458aa">
 <p>
 To move the legend you use the <code>legend.position</code> in the <code>theme</code>.
 </p>
@@ -407,26 +428,75 @@ To move the legend you use the <code>legend.position</code> in the <code>theme</
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggplot2<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
 
-g <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>data = iris,
-            mapping = aes<span style="color: #bc6ec5;">(</span>x = Sepal.Length,
+g <span style="color: #4e3163;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>data = iris,
+            mapping = aes<span style="color: #6c3163;">(</span>x = Sepal.Length,
                           y = Petal.Length,
-                          colour = Species<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
-  geom_point<span style="color: #4f97d7;">()</span> +
-  theme<span style="color: #4f97d7;">(</span>legend.position = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">0.8</span>,<span style="color: #a45bad;">0.2</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                          colour = Species<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  geom_point<span style="color: #3a81c3;">()</span> +
+  theme<span style="color: #3a81c3;">(</span>legend.position = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0.8</span>,<span style="color: #4e3163;">0.2</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-ggsave<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-03.png"</span>,
-       g<span style="color: #4f97d7;">)</span>
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-03.png"</span>,
+       g<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org508e5d6" class="outline-4">
+<h4 id="org508e5d6">Plotting mathematical functions</h4>
+<div class="outline-text-4" id="text-org508e5d6">
+<div class="figure">
+<p><img width=600px src="../resources/ggplot2-example-04.png">
+</p>
+</div>
+
+<p>
+It's useful to be able to plot a function without having to set up a data frame
+first. The solution is to use <code>stat_function</code> with the <code>fun</code> argument and <code>geom
+= "line"</code>. Note that the range of the independent variable is implicitly set
+viat the data frame passed to <code>ggplot()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+
+g <span style="color: #4e3163;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>data.frame<span style="color: #6c3163;">(</span>x = c<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">2</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>, aes<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = identity,
+    geom = <span style="color: #2d9574;">"line"</span>,
+    mapping = aes<span style="color: #6c3163;">(</span>colour = <span style="color: #2d9574;">"Foo"</span><span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> exp<span style="color: #6c3163;">(</span>-<span style="color: #2d9574;">(</span>x - <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>^<span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span> * sin<span style="color: #6c3163;">(</span>x * <span style="color: #4e3163;">8</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>,
+    mapping = aes<span style="color: #6c3163;">(</span>colour = <span style="color: #2d9574;">"Bar"</span><span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_point<span style="color: #3a81c3;">(</span>
+    data = data.frame<span style="color: #6c3163;">(</span>
+      x = seq<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">2</span>, length = <span style="color: #4e3163;">10</span><span style="color: #2d9574;">)</span>,
+      y = rnorm<span style="color: #2d9574;">(</span><span style="color: #4e3163;">10</span><span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">)</span>,
+    mapping = aes<span style="color: #6c3163;">(</span>colour = <span style="color: #2d9574;">"Baz"</span>, y = y<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  scale_colour_manual<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Function"</span>,
+    values = c<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"blue"</span>, <span style="color: #2d9574;">"red"</span>, <span style="color: #2d9574;">"green"</span><span style="color: #6c3163;">)</span>,
+    breaks = c<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Foo"</span>, <span style="color: #2d9574;">"Bar"</span>, <span style="color: #2d9574;">"Baz"</span><span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span>
+
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-04.png"</span>,
+       g<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 </div>
+</div>
 <div id="postamble" class="status">
-<p class="author">Author: alex</p>
-<p class="date">Created: 2020-07-10 Fri 08:05</p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2020-07-29 Wed 13:58</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
