@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-10 Fri 08:05 -->
+<!-- 2020-08-02 Sun 19:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -279,22 +279,19 @@ for the JavaScript code in this tag.
 <li><a href="#orgce3195d">Monitor configuration</a></li>
 <li><a href="#org6968ddc">Keyboard configuration</a></li>
 <li><a href="#org8d11d37">Network connection Wi-Fi</a></li>
-<li><a href="#org9680e15">shell notes</a>
-<ul>
-<li><a href="#orgdbd61db">Start up and configuration</a></li>
-<li><a href="#orgbcaeec7">Scripting</a>
-<ul>
-<li><a href="#org0491958">Control flow</a></li>
-<li><a href="#orge6b4c37">Arguments</a></li>
-<li><a href="#org0cafa5e">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a href="#orge700a5a">Disk usage <code>du</code></a></li>
 <li><a href="#org28884b7">Viewing hierarchy <code>tree</code></a></li>
 <li><a href="#orgf5d4013"><code>rsync</code></a></li>
 <li><a href="#org1700cfa">Getting help</a></li>
+<li><a href="#orgdbd61db">Start up and configuration</a></li>
+</ul>
+</li>
+<li><a href="#org274999d">Shell scripting</a>
+<ul>
+<li><a href="#org0491958">Control flow</a></li>
+<li><a href="#orge6b4c37">Arguments</a></li>
+<li><a href="#org0cafa5e">Functions</a></li>
+<li><a href="#org9bed514">Loops</a></li>
 </ul>
 </li>
 </ul>
@@ -336,28 +333,28 @@ sudo apt upgrade
 
 sudo apt install git
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">sudo add-apt-repository ppa:kelleyk/emacs </span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">sudo add-apt-repository ppa:kelleyk/emacs </span>
 sudo apt install emacs26
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 git clone https://azarebski@bitbucket.org/azarebski/dotfiles.git
-<span style="color: #4f97d7;">cd</span> ~/dotfiles
+<span style="color: #3a81c3;">cd</span> ~/dotfiles
 ./install-source-code-pro.sh
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">include nicemacs.el and the correct layers</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">include nicemacs.el and the correct layers</span>
 
-<span style="color: #4f97d7;">cd</span> ~/Documents
+<span style="color: #3a81c3;">cd</span> ~/Documents
 git clone https://azarebski@bitbucket.org/azarebski/public-site.git
 git clone https://azarebski@bitbucket.org/azarebski/journal.git
 git clone https://azarebski@bitbucket.org/azarebski/bibliography.git
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">alias ff 'find-file $1'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">alias ff 'find-file $1'</span>
 ff ~/.ssh/config
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">install the vpn client from the Oxford website</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">install the vpn client from the Oxford website</span>
 
 mkdir library
-<span style="color: #4f97d7;">cd</span> library
+<span style="color: #3a81c3;">cd</span> library
 wget https://aezarebski.github.io/resources/titanic.txt
 mv titanic.txt titanic.sh
 sudo chmod +x titanic.sh
@@ -411,7 +408,7 @@ This will convert the input PDF to a PNG with 300 DPI.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">convert -density <span style="color: #a45bad;">300</span> input.pdf output.png
+<pre class="src src-shell">convert -density <span style="color: #4e3163;">300</span> input.pdf output.png
 </pre>
 </div>
 
@@ -445,7 +442,7 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">chmod <span style="color: #a45bad;">750</span> foo.sh  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">makes foo.sh rwxr-x---</span>
+<pre class="src src-shell">chmod <span style="color: #4e3163;">750</span> foo.sh  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">makes foo.sh rwxr-x---</span>
 </pre>
 </div>
 
@@ -516,22 +513,22 @@ Here are some nifty shortcuts you might want to add to your <code>~/.config/i3/c
 </p>
 
 <div class="org-src-container">
-<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start libre office</span>
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">start libre office</span>
 bindsym $mod+o exec libreoffice
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start a browser</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">start a browser</span>
 bindsym $mod+b exec google-chrome
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start a mail client</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">start a mail client</span>
 bindsym $mod+m exec thunderbird
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start a document viewer</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">start a document viewer</span>
 bindsym $mod+v exec evince
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start a file manager GUI</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">start a file manager GUI</span>
 bindsym $mod+g exec nautilus --no-desktop
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">lock the screen</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">lock the screen</span>
 bindsym $mod+Shift+z exec i3lock
 </pre>
 </div>
@@ -550,9 +547,9 @@ The following commands can be used to modify the sensitivity of a mouse from the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">xinput list                     <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to find the ID of the mouse</span>
-xinput list-props &lt;mouseID&gt;     <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to get the current properties of the mouse</span>
-xinput set-props &lt;mouseID&gt; &lt;propID&gt; &lt;newValue&gt; <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">update the property value</span>
+<pre class="src src-shell">xinput list                     <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">to find the ID of the mouse</span>
+xinput list-props &lt;mouseID&gt;     <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">to get the current properties of the mouse</span>
+xinput set-props &lt;mouseID&gt; &lt;propID&gt; &lt;newValue&gt; <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">update the property value</span>
 </pre>
 </div>
 </div>
@@ -720,116 +717,6 @@ Note the SSID of the network you want to connect to.
 </div>
 </div>
 
-<div id="outline-container-org9680e15" class="outline-3">
-<h3 id="org9680e15">shell notes</h3>
-<div class="outline-text-3" id="text-org9680e15">
-<p>
-On my machine at uni this is <code>/bin/sh</code> which points to <code>/bin/dash</code> 
-</p>
-</div>
-<div id="outline-container-orgdbd61db" class="outline-4">
-<h4 id="orgdbd61db">Start up and configuration</h4>
-<div class="outline-text-4" id="text-orgdbd61db">
-<p>
-To avoid confusion between the <code>.bashrc</code> and <code>.bash_profile</code> you can just add
-the following to <code>.bash_profile</code> and then you'll have the same script evaluated
-regardless.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> -f $<span style="color: #7590db;">HOME</span>/.bashrc <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #4f97d7;">source</span> $<span style="color: #7590db;">HOME</span>/.bashrc
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
-</pre>
-</div>
-
-<p>
-By default, tab completion is case sensitive, to fix this add the following line
-to the file <code>/etc/inputrc</code>.
-</p>
-
-<pre class="example">
-set completion-ignore-case on 
-</pre>
-</div>
-</div>
-
-<div id="outline-container-orgbcaeec7" class="outline-4">
-<h4 id="orgbcaeec7">Scripting</h4>
-<div class="outline-text-4" id="text-orgbcaeec7">
-</div>
-<div id="outline-container-org0491958" class="outline-5">
-<h5 id="org0491958">Control flow</h5>
-<div class="outline-text-5" id="text-org0491958">
-<p>
-To run comands conditional upon the presence or absence of a directory, consider the following example
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> -d <span style="color: #2d9574;">"foobar"</span> <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"There is a directory called foobar"</span>
-    <span style="color: #4f97d7; font-weight: bold;">exit</span> <span style="color: #a45bad;">0</span>
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
-
-<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> <span style="color: #a45bad;">!</span> -d <span style="color: #2d9574;">"foobar"</span> <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"Could not find directory: foobar"</span>
-    <span style="color: #4f97d7; font-weight: bold;">exit</span> <span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orge6b4c37" class="outline-5">
-<h5 id="orge6b4c37">Arguments</h5>
-<div class="outline-text-5" id="text-orge6b4c37">
-<p>
-As an example, here is a simple shell script
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">!/bin/</span><span style="color: #4f97d7; font-weight: bold;">sh</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">demo.sh</span>
-<span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"foo: $2"</span>
-<span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"bar: $1"</span>
-</pre>
-</div>
-
-<p>
-Running it we get the following
-</p>
-
-<div class="org-src-container">
-<pre class="src src-text">$ ./demo.sh hello world
-foo: world
-bar: hello
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0cafa5e" class="outline-5">
-<h5 id="org0cafa5e">Functions</h5>
-<div class="outline-text-5" id="text-org0cafa5e">
-<p>
-Here is an example of a function which converts an ODG to a PDF
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">!/bin/</span><span style="color: #4f97d7; font-weight: bold;">sh</span>
-
-<span style="color: #bc6ec5; font-weight: bold;">ConvertODG2PDF</span> <span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-    libreoffice --headless --convert-to pdf $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">}</span>
-
-ConvertODG2PDF awesome-figure.odg
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
 <div id="outline-container-orge700a5a" class="outline-3">
 <h3 id="orge700a5a">Disk usage <code>du</code></h3>
 <div class="outline-text-3" id="text-orge700a5a">
@@ -838,7 +725,7 @@ The following will print, in human readable form, the size of all sub-directorie
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">du -h --max-depth=<span style="color: #a45bad;">2</span> foobar
+<pre class="src src-sh">du -h --max-depth=<span style="color: #4e3163;">2</span> foobar
 </pre>
 </div>
 </div>
@@ -902,11 +789,139 @@ Sometimes you can find error messages in the following log file.
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgdbd61db" class="outline-3">
+<h3 id="orgdbd61db">Start up and configuration</h3>
+<div class="outline-text-3" id="text-orgdbd61db">
+<p>
+To avoid confusion between the <code>.bashrc</code> and <code>.bash_profile</code> you can just add
+the following to <code>.bash_profile</code> and then you'll have the same script evaluated
+regardless.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">[</span> -f $<span style="color: #715ab1;">HOME</span>/.bashrc <span style="color: #3a81c3;">]</span>; <span style="color: #3a81c3; font-weight: bold;">then</span>
+    <span style="color: #3a81c3;">source</span> $<span style="color: #715ab1;">HOME</span>/.bashrc
+<span style="color: #3a81c3; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<p>
+By default, tab completion is case sensitive, to fix this add the following line
+to the file <code>/etc/inputrc</code>.
+</p>
+
+<pre class="example">
+set completion-ignore-case on 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org274999d" class="outline-2">
+<h2 id="org274999d">Shell scripting</h2>
+<div class="outline-text-2" id="text-org274999d">
+<p>
+On my machine at uni this is <code>/bin/sh</code> which points to <code>/bin/dash</code> 
+</p>
+</div>
+<div id="outline-container-org0491958" class="outline-3">
+<h3 id="org0491958">Control flow</h3>
+<div class="outline-text-3" id="text-org0491958">
+<p>
+To run comands conditional upon the presence or absence of a directory, consider the following example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">[</span> -d <span style="color: #2d9574;">"foobar"</span> <span style="color: #3a81c3;">]</span>; <span style="color: #3a81c3; font-weight: bold;">then</span>
+    <span style="color: #3a81c3;">echo</span> <span style="color: #2d9574;">"There is a directory called foobar"</span>
+    <span style="color: #3a81c3; font-weight: bold;">exit</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3; font-weight: bold;">fi</span>
+
+<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">[</span> <span style="color: #4e3163;">!</span> -d <span style="color: #2d9574;">"foobar"</span> <span style="color: #3a81c3;">]</span>; <span style="color: #3a81c3; font-weight: bold;">then</span>
+    <span style="color: #3a81c3;">echo</span> <span style="color: #2d9574;">"Could not find directory: foobar"</span>
+    <span style="color: #3a81c3; font-weight: bold;">exit</span> <span style="color: #4e3163;">1</span>
+<span style="color: #3a81c3; font-weight: bold;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge6b4c37" class="outline-3">
+<h3 id="orge6b4c37">Arguments</h3>
+<div class="outline-text-3" id="text-orge6b4c37">
+<p>
+As an example, here is a simple shell script
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">!/bin/</span><span style="color: #3a81c3; font-weight: bold;">sh</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">demo.sh</span>
+<span style="color: #3a81c3;">echo</span> <span style="color: #2d9574;">"foo: $2"</span>
+<span style="color: #3a81c3;">echo</span> <span style="color: #2d9574;">"bar: $1"</span>
+</pre>
+</div>
+
+<p>
+Running it we get the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">$ ./demo.sh hello world
+foo: world
+bar: hello
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cafa5e" class="outline-3">
+<h3 id="org0cafa5e">Functions</h3>
+<div class="outline-text-3" id="text-org0cafa5e">
+<p>
+Here is an example of a function which converts an ODG to a PDF
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">!/bin/</span><span style="color: #3a81c3; font-weight: bold;">sh</span>
+
+<span style="color: #6c3163; font-weight: bold;">ConvertODG2PDF</span> <span style="color: #3a81c3;">()</span> <span style="color: #3a81c3;">{</span>
+    libreoffice --headless --convert-to pdf $<span style="color: #4e3163;">1</span>
+<span style="color: #3a81c3;">}</span>
+
+ConvertODG2PDF awesome-figure.odg
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bed514" class="outline-3">
+<h3 id="org9bed514">Loops</h3>
+<div class="outline-text-3" id="text-org9bed514">
+<p>
+Here is a silly little example of how to loop over an explicity list of strings.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3; font-weight: bold;">for</span> month<span style="color: #3a81c3; font-weight: bold;"> in</span> jan feb mar;
+<span style="color: #3a81c3; font-weight: bold;">do</span>
+    cat foo-$<span style="color: #715ab1;">month</span>.csv
+<span style="color: #3a81c3; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<p>
+Alternatively, one can construct the list programmatically for example with <code>for
+x in *</code> which would be used to iterate over all files in the current directory
+or <code>for x in $*</code> which would iterate over all the command line arguments.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-07-10 Fri 08:05</p>
+<p class="date">Created: 2020-08-02 Sun 19:40</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
