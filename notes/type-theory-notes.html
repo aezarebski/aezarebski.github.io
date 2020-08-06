@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-29 Sun 21:51 -->
+<!-- 2020-08-06 Thu 20:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -250,6 +250,7 @@ for the JavaScript code in this tag.
 <li><a href="#org95f91b4">Type theory</a>
 <ul>
 <li><a href="#org9a8fd64">Skolems constants causing trouble</a></li>
+<li><a href="#org50bd69d">Existential types</a></li>
 </ul>
 </li>
 </ul>
@@ -267,15 +268,16 @@ for the JavaScript code in this tag.
 <h3 id="org9a8fd64">Skolems constants causing trouble</h3>
 <div class="outline-text-3" id="text-org9a8fd64">
 <p>
-The names "skolem" and "rigid" are synonymous for Haskell.
-Based on this <a href="https://stackoverflow.com/a/12722877">stackoverflow answer</a> it appears that skolem constants (types) cause a error at compile time because they cannot be resolved.
-Consider the following definition of a wrapper type
+The names "skolem" and "rigid" are synonymous for Haskell. Based on this
+<a href="https://stackoverflow.com/a/12722877">stackoverflow answer</a> it appears that skolem constants (types) cause a error at
+compile time because they cannot be resolved. Consider the following definition
+of a wrapper type
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5;">{-# LANGUAGE ExistentialQuantification #-}</span>
+<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE ExistentialQuantification #-}</span>
 
-<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">=</span> forall a<span style="color: #7590db;">.</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> a
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> <span style="color: #715ab1;">=</span> forall a<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Eq</span> a <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> a
 </pre>
 </div>
 
@@ -284,18 +286,43 @@ If we try and define a function which unwraps,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">getFoo</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">getFoo</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> x<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x
 </pre>
 </div>
 
 <p>
-it will not lead to a type error because it is unclear what the return type of <code>getFoo</code> should be.
-However, we can still use the value in a <code>AnyFoo</code>, we just need to avoid it appearing in the type of the function.
+it will not lead to a type error because it is unclear what the return type of
+<code>getFoo</code> should be. However, we can still use the value in a <code>AnyFoo</code>, we just
+need to avoid it appearing in the type of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>
-<span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x <span style="color: #7590db;">==</span> x
+<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">boring</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>
+<span style="color: #6c3163; font-weight: bold;">boring</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">AnyFoo</span> x<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> x <span style="color: #715ab1;">==</span> x
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org50bd69d" class="outline-3">
+<h3 id="org50bd69d">Existential types</h3>
+<div class="outline-text-3" id="text-org50bd69d">
+<p>
+To make use of existential types in Haskell, you need to include the
+<code>ExistentialQuantification</code> extension. Then you can implement a class such as
+<code>ShowBox</code> which allows you to wrap up multiple types in a shared wrapper. The
+significance of this is that it lets you write code such as the following and
+have it type check.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">ShowBox</span> <span style="color: #715ab1;">=</span> forall s<span style="color: #715ab1;">.</span> <span style="color: #ba2f59; font-weight: bold;">Show</span> s <span style="color: #715ab1;">=&gt;</span> <span style="color: #ba2f59; font-weight: bold;">SB</span> s
+
+<span style="color: #3a81c3; font-weight: bold;">instance</span> <span style="color: #ba2f59; font-weight: bold;">Show</span> <span style="color: #ba2f59; font-weight: bold;">ShowBox</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+  show <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">SB</span> s<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=</span> show s 
+
+<span style="color: #6c3163; font-weight: bold;">heteroList</span> <span style="color: #715ab1;">::</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">ShowBox</span><span style="color: #3a81c3;">]</span>
+<span style="color: #6c3163; font-weight: bold;">heteroList</span> <span style="color: #715ab1;">=</span> <span style="color: #3a81c3;">[</span><span style="color: #ba2f59; font-weight: bold;">SB</span> <span style="color: #6c3163; font-weight: bold;">()</span>, <span style="color: #ba2f59; font-weight: bold;">SB</span> <span style="color: #4e3163;">5</span>, <span style="color: #ba2f59; font-weight: bold;">SB</span> <span style="color: #ba2f59; font-weight: bold;">True</span><span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 </div>
@@ -304,7 +331,7 @@ However, we can still use the value in a <code>AnyFoo</code>, we just need to av
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2020-03-29 Sun 21:51</p>
+<p class="date">Created: 2020-08-06 Thu 20:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
