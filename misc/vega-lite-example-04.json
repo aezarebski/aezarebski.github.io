@@ -1,0 +1,41 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {"url": "https://aezarebski.github.io/misc/vega-lite-data-02.csv"},
+    "encoding": {
+        "x": {"field": "demoX", "type": "quantitative"},
+        "y": {"field": "demoY", "type": "quantitative"},
+        "color": {
+            "condition": {
+                "selection": "hover",
+                "field": "demoColour",
+                "type": "nominal",
+                "legend": null
+            },
+            "value": "lightgrey"
+        },
+        "tooltip": {"field": "demoColour", "type": "nominal"}
+    },
+    "layer": [{
+        "selection": {
+            "hover": {
+                "type": "single",
+                "on": "mouseover",
+                "empty": "all",
+                "fields": ["demoColour"]
+            }
+        },
+        "mark": {"type": "point",
+                 "strokeWidth": 8,
+                 "stroke": "transparent"}
+    }, {
+        "mark": "point"
+    }, {
+        "encoding": {
+            "x": {"field": "demoX", "type": "quantitative"},
+            "y": {"field": "demoY", "type": "quantitative"}
+        },
+        "layer": [{
+            "mark": {"type": "point"}
+        }]
+    }]
+}
