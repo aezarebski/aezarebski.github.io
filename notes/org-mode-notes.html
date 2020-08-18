@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-12 Fri 11:18 -->
+<!-- 2020-08-18 Tue 17:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -249,6 +249,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org3470931">Org mode notes</a>
 <ul>
+<li><a href="#org4072bd2">Syntax</a></li>
 <li><a href="#orgd211bc5">Source code</a></li>
 <li><a href="#org351996b">Literate programming and notebooks</a></li>
 <li><a href="#org6b594a0">Beamer</a></li>
@@ -273,6 +274,20 @@ for the JavaScript code in this tag.
 <p>
 <a href="../resources/orgcard.pdf">ORG CHEAT SHEET</a>
 </p>
+</div>
+
+<div id="outline-container-org4072bd2" class="outline-3">
+<h3 id="org4072bd2">Syntax</h3>
+<div class="outline-text-3" id="text-org4072bd2">
+<ul class="org-ul">
+<li><code>_foo_</code> will underline the text: e.g. <span class="underline">foo</span></li>
+</ul>
+
+<p>
+To have a literal underscore use <code>\under</code> or <code>\under{}</code> since "_" is used
+as the syntax for underlining text.
+</p>
+</div>
 </div>
 
 <div id="outline-container-orgd211bc5" class="outline-3">
@@ -445,30 +460,43 @@ Use it with <code>{{{name(arg1, arg2)}}}</code>.
 <h3 id="org1e303f0">Agenda</h3>
 <div class="outline-text-3" id="text-org1e303f0">
 <p>
-The agenda files are used to track <code>TODO</code> items.
-Use <code>org-agenda-file-to-front</code> to add an org-mode file to the list of agenda files.
-If you are ever in doubt about which files are in the adgenda, use <code>SPC h d v</code> and request <code>org-agenda-files</code>.
+The agenda files are used to track <code>TODO</code> items. Use <code>org-agenda-file-to-front</code>
+to add an org-mode file to the list of agenda files. If you are ever in doubt
+about which files are in the adgenda, use <code>SPC h d v</code> and request
+<code>org-agenda-files</code>.
 </p>
 
 <p>
-Items in a <code>TODO</code> list can be prioritised by adding an annotation of <code>[#&lt;A|B|C&gt;]</code>.
-There are only three levels available by default, and if no annotation is used it is assumed to be level B.
+Items in a <code>TODO</code> list can be prioritised by adding an annotation of
+<code>[#&lt;A|B|C&gt;]</code>. There are only three levels available by default, and if no
+annotation is used it is assumed to be level B.
 </p>
 
 <p>
-To make it easier to schedule items, bind <code>org-schedule</code> to <code>SPC o o s</code> ([o]wner-[o]rg-[s]chedule) which will bring up a calendar to select the date.
-You can hold <code>S</code> and then use the arrow keys to navigate the calendar.
-Times can be added in 24-hour format to the end of the date.
-</p>
-
-<p>
-The following settings ensure that a sensible amount of material is shown in the agenda: items from up to 3 days ago and over a 30 day span in total.
+To make it easier to schedule items, bind <code>org-schedule</code> to <code>SPC o o s</code>
+([o]wner-[o]rg-[s]chedule) which will bring up a calendar to select the date.
+You can hold <code>S</code> and then use the arrow keys to navigate the calendar. Times can
+be added in 24-hour format to the end of the date. The following settings ensure
+that a sensible amount of material is shown in the agenda: items from up to 3
+days ago and over a 30 day span in total.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #2d9574;">"-3d"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-span <span style="color: #4e3163;">30</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+The <code>org-todo-keywords</code> variable is used to specify the different TODO types.
+The pipe, <code>|</code>, in the following example is used to designate that <code>"DONE"</code> is
+the only keyword which indicates that a task is finished. It is probably easiest
+to use customise to set these variables.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-todo-keywords '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #cc9393;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #afd8af;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -478,7 +506,11 @@ The following settings ensure that a sensible amount of material is shown in the
 <h3 id="org9b2f10e">Links</h3>
 <div class="outline-text-3" id="text-org9b2f10e">
 <p>
-To link items within a document, create a tag with <code>&lt;&lt;my-tag-id&gt;&gt;</code> and then reference it with <code>[[my-tag-id][what gets shown]]</code>.
+To link items within a document, create a tag with <code>&lt;&lt;my-tag-id&gt;&gt;</code> and then
+reference it with <code>[[my-tag-id][what gets shown]]</code>. By default, when you follow
+a link in an org file to another org file it will open the file in a new window.
+This behaviour is specified by the variable <code>org-link-frame-setup</code> and can be
+customized to visit the file in the current window.
 </p>
 </div>
 </div>
@@ -565,7 +597,7 @@ To link items within a document, create a tag with <code>&lt;&lt;my-tag-id&gt;&g
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-06-12 Fri 11:18</p>
+<p class="date">Created: 2020-08-18 Tue 17:07</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

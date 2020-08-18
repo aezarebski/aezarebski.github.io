@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-18 Tue 17:07 -->
+<!-- 2020-08-13 Thu 13:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -247,10 +247,10 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org85fb659">Python notes</a>
+<li><a href="#orgb774625">Docker notes</a>
 <ul>
-<li><a href="#orgd2141cd">Virtual environment</a></li>
-<li><a href="#orga179590"><span class="todo TODO">TODO</span> Debugging</a></li>
+<li><a href="#orge4527e4"><code>rocker/geospatial</code></a></li>
+<li><a href="#orge518ca2">Silly little notes</a></li>
 </ul>
 </li>
 </ul>
@@ -260,31 +260,120 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org85fb659" class="outline-2">
-<h2 id="org85fb659">Python notes</h2>
-<div class="outline-text-2" id="text-org85fb659">
+<div id="outline-container-orgb774625" class="outline-2">
+<h2 id="orgb774625">Docker notes</h2>
+<div class="outline-text-2" id="text-orgb774625">
 </div>
-<div id="outline-container-orgd2141cd" class="outline-3">
-<h3 id="orgd2141cd">Virtual environment</h3>
-<div class="outline-text-3" id="text-orgd2141cd">
+<div id="outline-container-orge4527e4" class="outline-3">
+<h3 id="orge4527e4"><code>rocker/geospatial</code></h3>
+<div class="outline-text-3" id="text-orge4527e4">
+<p>
+You can pull the following image from docker hub which has a lot of geospatial
+libraries included in it.
+</p>
+
 <div class="org-src-container">
-<pre class="src src-sh">python3 -m venv venv
-<span style="color: #3a81c3;">source</span> venv/bin/activate
-pip install -r requirements.txt
-deactivate
+<pre class="src src-sh">docker pull rocker/geospatial
+</pre>
+</div>
+
+<p>
+then you can connect to a bash shell inside that container and bind mount a
+volume which is shared between the container and the host machine. This provides
+a way to share data between your machine and the docker container. In the
+following example a directory, <code>demo-directory</code> will be shared between the host
+and the container. By default there is a directory <code>/home/rstudio</code> in the rocker
+images.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker run -v /home/morty/demo-directory:/home/rstudio/demo-directory -it rocker/geospatial bash
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga179590" class="outline-3">
-<h3 id="orga179590"><span class="todo TODO">TODO</span> Debugging</h3>
+<div id="outline-container-orge518ca2" class="outline-3">
+<h3 id="orge518ca2">Silly little notes</h3>
+<div class="outline-text-3" id="text-orge518ca2">
+<p>
+Here are some notes I took while listening to a tutorial on docker:
+</p>
+
+<p>
+<a href="https://youtu.be/fqMOX6JJhGo">Docker Tutorial for Beginners - A Full DevOps Course on How to Run Applications in Containers</a>
+</p>
+
+<ul class="org-ul">
+<li>Lots of containerised programs available on <a href="https://hub.docker.com/">Docker Hub</a>.</li>
+<li>An <i>image</i> is the template and a <i>container</i> is a running instance of an
+image.</li>
+<li>There is a <i>Docker Desktop for Mac</i> product for those not using Linux.</li>
+<li>Installation is a bit finky but <code>docs.docker.com</code> has detailed instructions to
+help you with this.
+<ul class="org-ul">
+<li>Remove any existing installed versions of docker and friends</li>
+<li>Use the convenience script to install docker correctly.</li>
+</ul></li>
+<li>Once you have installed docker <code>docker run docker/whalesay cowsay "hello
+  world"</code> which is the docker version of <code>cowsay</code> which uses a whale</li>
+<li><code>docker ps</code> to see what docker containers are running.</li>
+<li><code>docker stop &lt;container-name&gt;</code> to stop a container.</li>
+<li><code>docker rm &lt;container-name&gt;</code> to remove a container.</li>
+<li><code>docker images</code> to print the available images on the machine.</li>
+<li><code>docker rmi &lt;image-name&gt;</code> to remove an image</li>
+<li><code>docker pull &lt;image-name&gt;</code> to download an image without running a container
+based off of it.</li>
+<li>containers are designed to run a process and after that finishes they exit.</li>
+<li>the <code>exec</code> command can be used to run a command in a running container.</li>
+<li>a container can be run in <i>detached</i> mode by adding the <code>-d</code> flag to the run
+command, it is possible to attach to that container later with <code>attach</code>.</li>
+<li><code>docker run &lt;image&gt;:&lt;tag&gt;</code> the <i>tag</i> allows you to specify a particular
+version of the image to run a container off of.</li>
+<li>by default, docker does not connect to the terminal for either input or
+output, you need <code>-it</code> for it to accept input and to output to the terminal.</li>
+<li>to access ports in the docker container, you need to map these across.</li>
+<li>to save container data to files outside of the container you need to use
+<code>docker run -v &lt;host/path&gt;:&lt;container/path&gt; &lt;container-name&gt;</code></li>
+<li><code>docker ps</code> will provide a highlevel description of a container, but <code>docker
+  inspect &lt;container-name&gt;</code> will provide more details.</li>
+<li>environment variables are a way to pass information into a docker container
+and are set using the <code>-e</code> flag when the container is run.</li>
+<li>creating your image
+<ul class="org-ul">
+<li>list of all the commands that you would want to run to set things up</li>
+<li>write a docker file which has these commands with a <code>RUN</code> prefix</li>
+<li>add <code>COPY</code> commands to copy source code into the container</li>
+<li>have an <code>ENTRYPOINT</code> for actually running the process</li>
+<li><i>build</i> the image by pointing at the dockerfile and giving it a name</li>
+</ul></li>
+<li>a <code>Dockerfile</code> has an <code>&lt;instruction&gt; &lt;argument&gt;</code> format.</li>
+<li>the dogma is that everything will be containerised.</li>
+<li>using <code>CMD</code> you specify the whole command to run, wither as a single line of
+text or as a list of strings. If you use <code>ENTRYPOINT</code> then any additional
+variables to <code>docker run...</code> will be added to the command.</li>
+<li>you can use a combination of <code>CMD</code> and <code>ENTRYPOINT</code> to set default variables.</li>
+<li>when a container is run a <i>container layer</i> is added to the existing <i>image
+layers</i> to store the data specific to that process.</li>
+<li>there is <i>volume mounting</i> which mounts volumes from
+<code>/var/lib/docker/volumes</code>, for example with <code>docker run -v
+  my_vol:/var/lib/mysql</code> but you can also <i>bind mount</i> which us used to mount an
+arbitrary directory by giving the full path of that directory.</li>
+<li>there is a more verbose <code>--mount</code> command which makes it clearer what is
+actually going on when you mount a volume.</li>
+<li><code>docker run &lt;user&gt;/&lt;image&gt;</code> or if the username and the image name are the same
+you can just specify it once.</li>
+<li>you can limit the resources available to the docker container by using
+<code>--cpus=0.5</code> to allow up to half the CPUs and <code>--memory=100m</code> to allow up to
+100Mb of memory to be used.</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-18 Tue 17:07</p>
+<p class="date">Created: 2020-08-13 Thu 13:50</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
