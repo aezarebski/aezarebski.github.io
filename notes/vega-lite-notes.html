@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-20 Thu 12:37 -->
+<!-- 2020-08-21 Fri 11:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -262,6 +262,8 @@ for the JavaScript code in this tag.
 <li><a href="#org551ac89">Interactive scatter plot</a></li>
 <li><a href="#org9495c4b">JavaScript usage</a></li>
 <li><a href="#orgd3e5a29">A more detailed example with javascript</a></li>
+<li><a href="#org7a6164c">Histogram with javascript</a></li>
+<li><a href="#orgfd0d30d">Heatmap with javascript</a></li>
 </ul>
 </li>
 </ul>
@@ -648,11 +650,68 @@ vegaEmbed<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'#v
 </div>
 </div>
 </div>
+
+<div id="outline-container-org7a6164c" class="outline-3">
+<h3 id="org7a6164c">Histogram with javascript</h3>
+<div class="outline-text-3" id="text-org7a6164c">
+<div id="vis07"></div>
+
+<script type="text/javascript" src="http://localhost:8000/misc/vega-lite-example-07.js"></script>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3; font-weight: bold;">const</span> <span style="color: #715ab1;">dataUrl07</span> = <span style="color: #2d9574;">"https://aezarebski.github.io/misc/cars.json"</span>;
+
+<span style="color: #3a81c3; font-weight: bold;">const</span> <span style="color: #715ab1;">chartSpec07</span> = vl
+      .markBar<span style="color: #3a81c3;">()</span>
+      .data<span style="color: #3a81c3;">(</span>dataUrl07<span style="color: #3a81c3;">)</span>
+      .encode<span style="color: #3a81c3;">(</span>
+          vl.x<span style="color: #6c3163;">()</span>.fieldN<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Origin"</span><span style="color: #6c3163;">)</span>.axis<span style="color: #6c3163;">(</span><span style="color: #2d9574;">{</span><span style="color: #2d9574;">"title"</span>: <span style="color: #2d9574;">""</span><span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>,
+          vl.y<span style="color: #6c3163;">()</span>.aggregate<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"count"</span><span style="color: #6c3163;">)</span>.axis<span style="color: #6c3163;">(</span><span style="color: #2d9574;">{</span><span style="color: #2d9574;">"grid"</span>: <span style="color: #4e3163;">false</span><span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>.title<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Frequency"</span><span style="color: #6c3163;">)</span>,
+          vl.column<span style="color: #6c3163;">()</span>.fieldO<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Cylinders"</span><span style="color: #6c3163;">)</span>,
+          vl.color<span style="color: #6c3163;">()</span>.fieldN<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Origin"</span><span style="color: #6c3163;">)</span>
+      <span style="color: #3a81c3;">)</span>
+      .config<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">{}</span><span style="color: #3a81c3;">)</span>
+      .toJSON<span style="color: #3a81c3;">()</span>;
+
+vegaEmbed<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'#vis07'</span>, chartSpec07<span style="color: #3a81c3;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfd0d30d" class="outline-3">
+<h3 id="orgfd0d30d">Heatmap with javascript</h3>
+<div class="outline-text-3" id="text-orgfd0d30d">
+<div id="vis08"></div>
+
+<script type="text/javascript" src="http://localhost:8000/misc/vega-lite-example-08.js"></script>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3; font-weight: bold;">const</span> <span style="color: #715ab1;">weatherCsv</span> = <span style="color: #2d9574;">"http://localhost:8000/misc/seattle-weather.csv"</span>
+
+<span style="color: #3a81c3; font-weight: bold;">const</span> <span style="color: #715ab1;">weatherHeatmap</span> = vl
+      .markRect<span style="color: #3a81c3;">()</span>
+      .data<span style="color: #3a81c3;">(</span>weatherCsv<span style="color: #3a81c3;">)</span>
+      .encode<span style="color: #3a81c3;">(</span>
+          vl.x<span style="color: #6c3163;">()</span>.timeUnit<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"date"</span><span style="color: #6c3163;">)</span>.fieldO<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"date"</span><span style="color: #6c3163;">)</span>.title<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Day"</span><span style="color: #6c3163;">)</span>.axis<span style="color: #6c3163;">(</span><span style="color: #2d9574;">{</span><span style="color: #2d9574;">"format"</span>: <span style="color: #2d9574;">"%e"</span><span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>,
+          vl.y<span style="color: #6c3163;">()</span>.timeUnit<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"month"</span><span style="color: #6c3163;">)</span>.fieldO<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"date"</span><span style="color: #6c3163;">)</span>.title<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Month"</span><span style="color: #6c3163;">)</span>,
+          vl.color<span style="color: #6c3163;">()</span>.max<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"temp_max"</span><span style="color: #6c3163;">)</span>.fieldQ<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"temp_max"</span><span style="color: #6c3163;">)</span>.legend<span style="color: #6c3163;">(</span><span style="color: #2d9574;">{</span><span style="color: #2d9574;">"title"</span>: <span style="color: #4e3163;">null</span><span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>
+      <span style="color: #3a81c3;">)</span>
+      .width<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">500</span><span style="color: #3a81c3;">)</span>
+      .height<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">400</span><span style="color: #3a81c3;">)</span>
+      .title<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Daily Max Temperatures (C) in Seattle, WA"</span><span style="color: #3a81c3;">)</span>
+      .toJSON<span style="color: #3a81c3;">()</span>;
+
+vegaEmbed<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"#vis08"</span>, weatherHeatmap<span style="color: #3a81c3;">)</span>;
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-20 Thu 12:37</p>
+<p class="date">Created: 2020-08-21 Fri 11:24</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
