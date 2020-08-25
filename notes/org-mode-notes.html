@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-21 Fri 14:39 -->
+<!-- 2020-08-25 Tue 22:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -243,42 +243,22 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org3470931">Org mode notes</a>
-<ul>
-<li><a href="#org4072bd2">Syntax</a></li>
-<li><a href="#orgd211bc5">Source code</a></li>
-<li><a href="#org351996b">Literate programming and notebooks</a></li>
-<li><a href="#org6b594a0">Beamer</a></li>
-<li><a href="#org5b20bad">Quotation</a></li>
-<li><a href="#orgf1b5410">Tables</a></li>
-<li><a href="#org6e6202f">Macros</a></li>
-<li><a href="#org1e303f0">Agenda</a></li>
-<li><a href="#org9b2f10e">Links</a></li>
-</ul>
-</li>
-<li><a href="#org3a2616e">Short cuts</a></li>
-</ul>
-</div>
-</div>
+<h1 class="title">aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org3470931" class="outline-2">
-<h2 id="org3470931">Org mode notes</h2>
-<div class="outline-text-2" id="text-org3470931">
+<div id="outline-container-org99a51df" class="outline-2">
+<h2 id="org99a51df">Org mode notes</h2>
+<div class="outline-text-2" id="text-org99a51df">
 <p>
 <a href="../resources/orgcard.pdf">ORG CHEAT SHEET</a>
 </p>
 </div>
 
-<div id="outline-container-org4072bd2" class="outline-3">
-<h3 id="org4072bd2">Syntax</h3>
-<div class="outline-text-3" id="text-org4072bd2">
+<div id="outline-container-orgb10caf0" class="outline-3">
+<h3 id="orgb10caf0">Syntax</h3>
+<div class="outline-text-3" id="text-orgb10caf0">
 <ul class="org-ul">
 <li><code>_foo_</code> will underline the text: e.g. <span class="underline">foo</span></li>
 </ul>
@@ -290,9 +270,9 @@ as the syntax for underlining text.
 </div>
 </div>
 
-<div id="outline-container-orgd211bc5" class="outline-3">
-<h3 id="orgd211bc5">Source code</h3>
-<div class="outline-text-3" id="text-orgd211bc5">
+<div id="outline-container-orgc150e42" class="outline-3">
+<h3 id="orgc150e42">Source code</h3>
+<div class="outline-text-3" id="text-orgc150e42">
 <p>
 The following table is derived from <a href="https://orgmode.org/manual/Languages.html">this documentation</a>.
 </p>
@@ -361,11 +341,12 @@ The following table is derived from <a href="https://orgmode.org/manual/Language
 </div>
 </div>
 
-<div id="outline-container-org351996b" class="outline-3">
-<h3 id="org351996b">Literate programming and notebooks</h3>
-<div class="outline-text-3" id="text-org351996b">
+<div id="outline-container-org49b63b0" class="outline-3">
+<h3 id="org49b63b0">Literate programming and notebooks</h3>
+<div class="outline-text-3" id="text-org49b63b0">
 <p>
-The following demonstrates how org-mode can be used as a notebook for R. Note that 
+The following demonstrates how org-mode can be used as a notebook for R. Note
+that
 </p>
 
 <div class="org-src-container">
@@ -390,11 +371,85 @@ print(x)
 </pre>
 </div>
 </div>
+
+<div id="outline-container-org00520cc" class="outline-4">
+<h4 id="org00520cc">Literate programming with noweb</h4>
+<div class="outline-text-4" id="text-org00520cc">
+<p>
+The default behaviour when using noweb syntax is that it will be expanded when
+tangling and exporting. If you want to keep expansion on tangle but not on
+export set <code>:noweb no-export</code> as shown in the following example.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript" id="org236ba37"><span style="color: #3a81c3;">{</span>
+    <span style="color: #2d9574;">"foo"</span>: <span style="color: #2d9574;">"bar"</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
 </div>
 
-<div id="outline-container-org6b594a0" class="outline-3">
-<h3 id="org6b594a0">Beamer</h3>
-<div class="outline-text-3" id="text-org6b594a0">
+<p>
+which is produced by the following orgmode 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-orgmode">#+name: foobar
+#+begin_src javascript :noweb yes
+  {
+      "foo": "bar"
+  }
+\#+end_src
+</pre>
+</div>
+
+<p>
+Note that the block gets the name <code>foobar</code> which we can then reference in the
+following block
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript" id="orga3c964f"><span style="color: #3a81c3;">{</span>
+    <span style="color: #2d9574;">"fleeb"</span>: 
+        &lt;&lt;foobar&gt;&gt;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+This was itself produced by the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-orgmode">\#+name: mainjs
+\#+begin_src javascript :noweb no-export :tangle ../misc/silly-example.json
+   {
+       "fleeb": 
+           &lt;&lt;foobar&gt;&gt;
+   }
+\#+end_src
+</pre>
+</div>
+
+<p>
+Tangling this produces the following JSON
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">{</span>
+    <span style="color: #2d9574;">"fleeb"</span>: 
+        <span style="color: #6c3163;">{</span>
+            <span style="color: #2d9574;">"foo"</span>: <span style="color: #2d9574;">"bar"</span>
+        <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75f8a9f" class="outline-3">
+<h3 id="org75f8a9f">Beamer</h3>
+<div class="outline-text-3" id="text-org75f8a9f">
 <p>
 The command <code>org-beamer-export-to-latex</code> produces a TEX file from your ORG file.
 So, given your presentation is in <code>slides.org</code> use the following to create a PDF
@@ -413,9 +468,9 @@ There are slightly shorter ways to do this, but having the intermediate TEX is g
 </div>
 </div>
 
-<div id="outline-container-org5b20bad" class="outline-3">
-<h3 id="org5b20bad">Quotation</h3>
-<div class="outline-text-3" id="text-org5b20bad">
+<div id="outline-container-org4ce9065" class="outline-3">
+<h3 id="org4ce9065">Quotation</h3>
+<div class="outline-text-3" id="text-org4ce9065">
 <p>
 This is achieved with <code>#+begin_quote</code> and <code>#+end_quote</code>
 </p>
@@ -429,18 +484,18 @@ but not any simpler &#x2014;Albert Einstein
 </div>
 </div>
 
-<div id="outline-container-orgf1b5410" class="outline-3">
-<h3 id="orgf1b5410">Tables</h3>
-<div class="outline-text-3" id="text-orgf1b5410">
+<div id="outline-container-orgccf6018" class="outline-3">
+<h3 id="orgccf6018">Tables</h3>
+<div class="outline-text-3" id="text-orgccf6018">
 <p>
 <code>org-table-create</code>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6e6202f" class="outline-3">
-<h3 id="org6e6202f">Macros</h3>
-<div class="outline-text-3" id="text-org6e6202f">
+<div id="outline-container-orgf9d0990" class="outline-3">
+<h3 id="orgf9d0990">Macros</h3>
+<div class="outline-text-3" id="text-orgf9d0990">
 <p>
 Define a macro at the top of the file
 </p>
@@ -456,9 +511,9 @@ Use it with <code>{{{name(arg1, arg2)}}}</code>.
 </div>
 </div>
 
-<div id="outline-container-org1e303f0" class="outline-3">
-<h3 id="org1e303f0">Agenda</h3>
-<div class="outline-text-3" id="text-org1e303f0">
+<div id="outline-container-org46debd9" class="outline-3">
+<h3 id="org46debd9">Agenda</h3>
+<div class="outline-text-3" id="text-org46debd9">
 <p>
 The agenda files are used to track <code>TODO</code> items. Use <code>org-agenda-file-to-front</code>
 to add an org-mode file to the list of agenda files. If you are ever in doubt
@@ -496,15 +551,15 @@ to use customise to set these variables.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-todo-keywords '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #cc9393;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #afd8af;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-todo-keywords '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #dc752f;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #42ae2c;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9b2f10e" class="outline-3">
-<h3 id="org9b2f10e">Links</h3>
-<div class="outline-text-3" id="text-org9b2f10e">
+<div id="outline-container-org09181b0" class="outline-3">
+<h3 id="org09181b0">Links</h3>
+<div class="outline-text-3" id="text-org09181b0">
 <p>
 To link items within a document, create a tag with <code>&lt;&lt;my-tag-id&gt;&gt;</code> and then
 reference it with <code>[[my-tag-id][what gets shown]]</code>. By default, when you follow
@@ -533,9 +588,9 @@ There is good documentation for this variable, I use the following setting
 </div>
 </div>
 
-<div id="outline-container-org3a2616e" class="outline-2">
-<h2 id="org3a2616e">Short cuts</h2>
-<div class="outline-text-2" id="text-org3a2616e">
+<div id="outline-container-org12ed014" class="outline-2">
+<h2 id="org12ed014">Short cuts</h2>
+<div class="outline-text-2" id="text-org12ed014">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -613,8 +668,8 @@ There is good documentation for this variable, I use the following setting
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-21 Fri 14:39</p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-08-25 Tue 22:48</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
