@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "width": 400,
+  "height": 100,
+    "data": {
+        "url": "data/parameter-estimate-asymptomatic-ratio.json"
+    },
+    "encoding": {
+        "y": {
+            "field": "title",
+            "type": "ordinal",
+            "title": "Article"
+        },
+        "color": {
+            "value": "black"
+        }
+    },
+    "layer": [
+        {
+            "mark": {
+                "type": "point",
+                "filled": true
+            },
+            "encoding": {
+                "x": {
+                    "field": "pointEstimate",
+                    "type": "quantitative",
+                    "scale": {"domain": [0,100]},
+                    "title": "Asymptomatic ratio (as a percentage)"
+                }
+            }
+        } ,
+        {
+            "mark": {
+                "type": "rule"
+            },
+            "encoding": {
+                "x": {
+                    "field": "lowerBound",
+                    "type": "quantitative"
+                },
+                "x2": {
+                    "field": "upperBound",
+                    "type": "quantitative"
+                }
+          }
+      }
+  ]
+}
