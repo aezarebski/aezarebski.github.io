@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-29 Sat 16:22 -->
+<!-- 2020-09-08 Tue 12:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -328,113 +328,13 @@ in the past.
   </a>
 </div>
 
-</div>
-</div>
-
-<div id="outline-container-orgdb59417" class="outline-3">
-<h3 id="orgdb59417">Reading in CSV</h3>
-<div class="outline-text-3" id="text-orgdb59417">
-<div id="vis02"></div>
-
-<script type="text/javascript">
-  var spec = "https://aezarebski.github.io/misc/vega-lite-example-02.json";
-  vegaEmbed('#vis02', spec).then(function(result) {
-  }).catch(console.error);
-</script>
-
-<div class="org-src-container">
-<pre class="src src-csv">demoX<span style="color: #a52a2a;">,</span>demoY<span style="color: #a52a2a;">,</span>demoColour
-1<span style="color: #a52a2a;">,</span>3<span style="color: #a52a2a;">,</span>a
-2<span style="color: #a52a2a;">,</span>2<span style="color: #a52a2a;">,</span>a
-1<span style="color: #a52a2a;">,</span>1<span style="color: #a52a2a;">,</span>b
-</pre>
+<div class="figure grid-figure">
+  <a href="./vega-lite/regression-and-smoothing.html">
+    <img width=200px src="../images/vega-lite/regression-and-smoothing.png">
+    <p>Regression and smoothing</p>
+  </a>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-json"><span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3; font-weight: bold;">"$schema"</span>: <span style="color: #2d9574;">"https://vega.github.io/schema/vega-lite/v4.json"</span>,
-  <span style="color: #3a81c3; font-weight: bold;">"description"</span>: <span style="color: #2d9574;">"A scatterplot of three points"</span>,
-  <span style="color: #3a81c3; font-weight: bold;">"data"</span>: <span style="color: #6c3163;">{</span><span style="color: #3a81c3; font-weight: bold;">"url"</span>: "https://aezarebski.github.io/misc/vega-lite-data-<span style="color: #4e3163;">02</span>.csv"<span style="color: #6c3163;">}</span>,
-  <span style="color: #3a81c3; font-weight: bold;">"mark"</span>: <span style="color: #2d9574;">"point"</span>,
-  <span style="color: #3a81c3; font-weight: bold;">"encoding"</span>: <span style="color: #6c3163;">{</span>
-      <span style="color: #3a81c3; font-weight: bold;">"x"</span>: <span style="color: #2d9574;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"demoX"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #2d9574;">}</span>,
-      <span style="color: #3a81c3; font-weight: bold;">"y"</span>: <span style="color: #2d9574;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"demoY"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #2d9574;">}</span>,
-      <span style="color: #3a81c3; font-weight: bold;">"color"</span>: <span style="color: #2d9574;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"demoColour"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"nominal"</span><span style="color: #2d9574;">}</span>
-  <span style="color: #6c3163;">}</span>
-<span style="color: #3a81c3;">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org4c81811" class="outline-3">
-<h3 id="org4c81811">Regression models</h3>
-<div class="outline-text-3" id="text-org4c81811">
-<div id="vis03"></div>
-
-<script type="text/javascript">
-  var spec = "https://aezarebski.github.io/misc/vega-lite-example-03.json";
-  vegaEmbed('#vis03', spec).then(function(result) {
-  }).catch(console.error);
-</script>
-
-
-<div class="org-src-container">
-<pre class="src src-json"><span style="color: #3a81c3;">{</span>
-    <span style="color: #3a81c3; font-weight: bold;">"$schema"</span>: <span style="color: #2d9574;">"https://vega.github.io/schema/vega-lite/v4.json"</span>,
-    <span style="color: #3a81c3; font-weight: bold;">"description"</span>: <span style="color: #2d9574;">"A scatterplot of three points"</span>,
-    <span style="color: #3a81c3; font-weight: bold;">"data"</span>: <span style="color: #6c3163;">{</span><span style="color: #3a81c3; font-weight: bold;">"url"</span>: <span style="color: #2d9574;">"https://aezarebski.github.io/misc/cars.json"</span><span style="color: #6c3163;">}</span>,
-    <span style="color: #3a81c3; font-weight: bold;">"layer"</span>: <span style="color: #6c3163;">[</span>
-        <span style="color: #2d9574;">{</span>
-            <span style="color: #3a81c3; font-weight: bold;">"mark"</span>: <span style="color: #2d9574;">"point"</span>,
-            <span style="color: #3a81c3; font-weight: bold;">"encoding"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3; font-weight: bold;">"x"</span>: <span style="color: #b1951d;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"Horsepower"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #b1951d;">}</span>,
-                <span style="color: #3a81c3; font-weight: bold;">"y"</span>: <span style="color: #b1951d;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"Miles_per_Gallon"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #b1951d;">}</span>
-            <span style="color: #67b11d;">}</span>
-        <span style="color: #2d9574;">}</span>,
-        <span style="color: #2d9574;">{</span>
-            <span style="color: #3a81c3; font-weight: bold;">"mark"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"line"</span>,
-                <span style="color: #3a81c3; font-weight: bold;">"color"</span>: <span style="color: #2d9574;">"red"</span>
-            <span style="color: #67b11d;">}</span>,
-            <span style="color: #3a81c3; font-weight: bold;">"transform"</span>: <span style="color: #67b11d;">[</span>
-                <span style="color: #b1951d;">{</span>
-                    <span style="color: #3a81c3; font-weight: bold;">"regression"</span>: <span style="color: #2d9574;">"Miles_per_Gallon"</span>,
-                    <span style="color: #3a81c3; font-weight: bold;">"on"</span>: <span style="color: #2d9574;">"Horsepower"</span>,
-                    <span style="color: #3a81c3; font-weight: bold;">"method"</span>: <span style="color: #2d9574;">"linear"</span>,
-                    <span style="color: #3a81c3; font-weight: bold;">"extent"</span>: <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">30</span>,<span style="color: #4e3163;">230</span><span style="color: #3a81c3;">]</span>
-                <span style="color: #b1951d;">}</span>
-            <span style="color: #67b11d;">]</span>,
-            <span style="color: #3a81c3; font-weight: bold;">"encoding"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3; font-weight: bold;">"x"</span>: <span style="color: #b1951d;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"Horsepower"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #b1951d;">}</span>,
-                <span style="color: #3a81c3; font-weight: bold;">"y"</span>: <span style="color: #b1951d;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"Miles_per_Gallon"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #b1951d;">}</span>
-            <span style="color: #67b11d;">}</span>
-
-        <span style="color: #2d9574;">}</span>,
-        <span style="color: #2d9574;">{</span>
-            <span style="color: #3a81c3; font-weight: bold;">"mark"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"line"</span>,
-                <span style="color: #3a81c3; font-weight: bold;">"color"</span>: <span style="color: #2d9574;">"red"</span>,
-                <span style="color: #3a81c3; font-weight: bold;">"strokeDash"</span>: <span style="color: #b1951d;">[</span><span style="color: #4e3163;">6</span>,<span style="color: #4e3163;">4</span><span style="color: #b1951d;">]</span>
-            <span style="color: #67b11d;">}</span>,
-            <span style="color: #3a81c3; font-weight: bold;">"transform"</span>: <span style="color: #67b11d;">[</span>
-                <span style="color: #b1951d;">{</span>
-                    <span style="color: #3a81c3; font-weight: bold;">"regression"</span>: <span style="color: #2d9574;">"Miles_per_Gallon"</span>,
-                    <span style="color: #3a81c3; font-weight: bold;">"on"</span>: <span style="color: #2d9574;">"Horsepower"</span>,
-                    <span style="color: #3a81c3; font-weight: bold;">"method"</span>: <span style="color: #2d9574;">"pow"</span>,
-                    <span style="color: #3a81c3; font-weight: bold;">"extent"</span>: <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">40</span>,<span style="color: #4e3163;">240</span><span style="color: #3a81c3;">]</span>
-                <span style="color: #b1951d;">}</span>
-            <span style="color: #67b11d;">]</span>,
-            <span style="color: #3a81c3; font-weight: bold;">"encoding"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3; font-weight: bold;">"x"</span>: <span style="color: #b1951d;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"Horsepower"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #b1951d;">}</span>,
-                <span style="color: #3a81c3; font-weight: bold;">"y"</span>: <span style="color: #b1951d;">{</span><span style="color: #3a81c3; font-weight: bold;">"field"</span>: <span style="color: #2d9574;">"Miles_per_Gallon"</span>, <span style="color: #3a81c3; font-weight: bold;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span><span style="color: #b1951d;">}</span>
-            <span style="color: #67b11d;">}</span>
-
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #6c3163;">]</span>
-<span style="color: #3a81c3;">}</span>
-</pre>
-</div>
 </div>
 </div>
 
@@ -662,7 +562,7 @@ vegaEmbed<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"#v
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-29 Sat 16:22</p>
+<p class="date">Created: 2020-09-08 Tue 12:02</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
