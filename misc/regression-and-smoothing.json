@@ -1,0 +1,53 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "description": "A scatterplot of three points",
+    "data": {"url": "https://aezarebski.github.io/misc/cars.json"},
+    "layer": [
+        {
+            "mark": "point",
+            "encoding": {
+                "x": {"field": "Horsepower", "type": "quantitative"},
+                "y": {"field": "Miles_per_Gallon", "type": "quantitative"}
+            }
+        },
+        {
+            "mark": {
+                "type": "line",
+                "color": "red"
+            },
+            "transform": [
+                {
+                    "regression": "Miles_per_Gallon",
+                    "on": "Horsepower",
+                    "method": "linear",
+                    "extent": [30,230]
+                }
+            ],
+            "encoding": {
+                "x": {"field": "Horsepower", "type": "quantitative"},
+                "y": {"field": "Miles_per_Gallon", "type": "quantitative"}
+            }
+
+        },
+        {
+            "mark": {
+                "type": "line",
+                "color": "red",
+                "strokeDash": [6,4]
+            },
+            "transform": [
+                {
+                    "regression": "Miles_per_Gallon",
+                    "on": "Horsepower",
+                    "method": "pow",
+                    "extent": [40,240]
+                }
+            ],
+            "encoding": {
+                "x": {"field": "Horsepower", "type": "quantitative"},
+                "y": {"field": "Miles_per_Gallon", "type": "quantitative"}
+            }
+
+        }
+    ]
+}
