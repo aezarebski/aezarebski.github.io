@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-25 Tue 09:43 -->
+<!-- 2020-09-25 Fri 16:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -250,6 +226,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgb82815a">Git notes</a>
 <ul>
 <li><a href="#orge20c392"><span class="underline">UNDO A COMMIT</span></a></li>
+<li><a href="#org1f5ddfe">Repository and file sizes</a></li>
 <li><a href="#orgcb28f35">Bringing fork up to date</a></li>
 <li><a href="#org2406909">Branches</a>
 <ul>
@@ -257,6 +234,7 @@ for the JavaScript code in this tag.
 <li><a href="#org4eed918">Cautious merging</a></li>
 <li><a href="#orgd3183bd">Squashing commits</a></li>
 <li><a href="#orgc4607f5">Updating a feature branch</a></li>
+<li><a href="#orga83c397">Checking out edits to single files</a></li>
 </ul>
 </li>
 <li><a href="#org072e7e1">Magit via spacemacs</a></li>
@@ -278,8 +256,8 @@ for the JavaScript code in this tag.
 <h3 id="orge20c392"><span class="underline">UNDO A COMMIT</span></h3>
 <div class="outline-text-3" id="text-orge20c392">
 <p>
-There is an <code>amend</code> function for modifying an existing commit.
-If you want to completely undo the last commit though, issue the following command 
+There is an <code>amend</code> function for modifying an existing commit. If you want to
+completely undo the last commit though, issue the following command
 </p>
 
 <div class="org-src-container">
@@ -288,7 +266,7 @@ If you want to completely undo the last commit though, issue the following comma
 </div>
 
 <p>
-Or if you want to go back to a particular commit, issue the following command 
+Or if you want to go back to a particular commit, issue the following command
 </p>
 
 <div class="org-src-container">
@@ -297,7 +275,19 @@ Or if you want to go back to a particular commit, issue the following command
 </div>
 
 <p>
-The <code>--hard</code> part is so that the changes made are removed, if you wanted to keep the changes it would be <code>--soft</code>.
+The <code>--hard</code> part is so that the changes made are removed, if you wanted to keep
+the changes it would be <code>--soft</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f5ddfe" class="outline-3">
+<h3 id="org1f5ddfe">Repository and file sizes</h3>
+<div class="outline-text-3" id="text-org1f5ddfe">
+<p>
+GitHub <a href="https://docs.github.com/en/github/managing-large-files/what-is-my-disk-quota">recommends</a> that repositories are kept below 1GB and that individual files
+are all kept below 100MB. There are ways around this, but this sensible to keep
+things running smoothly.
 </p>
 </div>
 </div>
@@ -338,7 +328,8 @@ The following shows a visualisation of the commits among all the branches.
 </div>
 
 <p>
-To get a list of the filenames of the files that differ between commits use the following
+To get a list of the filenames of the files that differ between commits use the
+following
 </p>
 
 <div class="org-src-container">
@@ -352,7 +343,8 @@ To get a list of the filenames of the files that differ between commits use the 
 <h4 id="org4eed918">Cautious merging</h4>
 <div class="outline-text-4" id="text-org4eed918">
 <p>
-You can merge a branch without committing the results and squashing the commits in the branch with the following
+You can merge a branch without committing the results and squashing the commits
+in the branch with the following
 </p>
 
 <div class="org-src-container">
@@ -366,9 +358,11 @@ You can merge a branch without committing the results and squashing the commits 
 <h4 id="orgd3183bd">Squashing commits</h4>
 <div class="outline-text-4" id="text-orgd3183bd">
 <p>
-Suppose you have a <code>master</code> branch and a <code>feature-messy</code> branch.
-The <code>feature-messy</code> branch has a bunch of messy commits.
-The following steps allow you to include all the work from <code>feature-messy</code> into a single commit in a new branch, <code>feature-neat</code>, which can then be merged into master without looking messy.
+Suppose you have a <code>master</code> branch and a <code>feature-messy</code> branch. The
+<code>feature-messy</code> branch has a bunch of messy commits. The following steps allow
+you to include all the work from <code>feature-messy</code> into a single commit in a new
+branch, <code>feature-neat</code>, which can then be merged into master without looking
+messy.
 </p>
 
 <div class="org-src-container">
@@ -388,8 +382,9 @@ git merge feature-neat
 <h4 id="orgc4607f5">Updating a feature branch</h4>
 <div class="outline-text-4" id="text-orgc4607f5">
 <p>
-Suppose after working on <code>feature-branch</code> for a while you want to bring it up to date with changes that have happened on <code>master</code>.
-The following is taken for a <a href="https://gist.github.com/santisbon/a1a60db1fb8eecd1beeacd986ae5d3ca#file-update-branch-md">gist</a> explaining how to do just that!
+Suppose after working on <code>feature-branch</code> for a while you want to bring it up to
+date with changes that have happened on <code>master</code>. The following is taken for a
+<a href="https://gist.github.com/santisbon/a1a60db1fb8eecd1beeacd986ae5d3ca#file-update-branch-md">gist</a> explaining how to do just that!
 </p>
 
 <div class="org-src-container">
@@ -403,7 +398,25 @@ git push origin &lt;feature-branch&gt;
 </div>
 </div>
 </div>
+
+<div id="outline-container-orga83c397" class="outline-4">
+<h4 id="orga83c397">Checking out edits to single files</h4>
+<div class="outline-text-4" id="text-orga83c397">
+<p>
+Suppose you are on branch <code>X</code> and there are edits to files <code>f1</code> and <code>f2</code> that
+you want from branch <code>Y</code>. To pull those edits over you can do the following.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git checkout X                  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">we need to be on X</span>
+git checkout Y f1 f2            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">checkout out the edited files</span>
+git commit -m <span style="color: #2d9574;">"Pull edits over"</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Profit!</span>
+</pre>
 </div>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-org072e7e1" class="outline-3">
 <h3 id="org072e7e1">Magit via spacemacs</h3>
@@ -430,8 +443,8 @@ The following command should set vim as the default editor on a machine.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-25 Tue 09:43</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-09-25 Fri 16:31</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
