@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-13 Thu 13:50 -->
+<!-- 2020-09-26 Sat 22:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="alex" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,10 +223,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb774625">Docker notes</a>
+<li><a href="#orgd86ed12">Docker notes</a>
 <ul>
-<li><a href="#orge4527e4"><code>rocker/geospatial</code></a></li>
-<li><a href="#orge518ca2">Silly little notes</a></li>
+<li><a href="#orgc034d15">Permissions</a></li>
+<li><a href="#orgcfe77ef"><code>gibiansky/ihaskell</code></a></li>
+<li><a href="#orgba5c417">Jupyter docker stacks</a></li>
+<li><a href="#orgd1136c8"><code>rocker/geospatial</code></a></li>
+<li><a href="#org86ef504">Silly little notes</a></li>
 </ul>
 </li>
 </ul>
@@ -260,13 +239,71 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgb774625" class="outline-2">
-<h2 id="orgb774625">Docker notes</h2>
-<div class="outline-text-2" id="text-orgb774625">
+<div id="outline-container-orgd86ed12" class="outline-2">
+<h2 id="orgd86ed12">Docker notes</h2>
+<div class="outline-text-2" id="text-orgd86ed12">
 </div>
-<div id="outline-container-orge4527e4" class="outline-3">
-<h3 id="orge4527e4"><code>rocker/geospatial</code></h3>
-<div class="outline-text-3" id="text-orge4527e4">
+<div id="outline-container-orgc034d15" class="outline-3">
+<h3 id="orgc034d15">Permissions</h3>
+<div class="outline-text-3" id="text-orgc034d15">
+<p>
+The docker deamon is owned by root, so by default you will need to run every
+command with <code>sudo</code>. Members of the <code>docker</code> group do not need to do this. To
+set up the docker group and add yourself as a member there are the following
+commands
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sudo groupadd docker            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">create docker group</span>
+sudo usermod -aG docker $<span style="color: #715ab1;">USER</span>     <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">add yourself as a member</span>
+</pre>
+</div>
+
+<p>
+At this point you may need to restart your terminal or run <code>newgrp docker</code> to
+refresh the group settings. To list the groups you are included in use <code>groups</code>
+and to test that this actually worked you can run the hello world example.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker run hello-world
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcfe77ef" class="outline-3">
+<h3 id="orgcfe77ef"><code>gibiansky/ihaskell</code></h3>
+<div class="outline-text-3" id="text-orgcfe77ef">
+<p>
+The developer of IHaskell has a docker image available which provides IHaskell
+notesbooks
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker pull gibiansky/ihaskell 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba5c417" class="outline-3">
+<h3 id="orgba5c417">Jupyter docker stacks</h3>
+<div class="outline-text-3" id="text-orgba5c417">
+<p>
+<a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/">https://jupyter-docker-stacks.readthedocs.io/en/latest/</a>
+</p>
+
+<p>
+The jupyter team maintain several docker images which have jupyter notebooks
+configured for basic datascience with julia, python and R.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd1136c8" class="outline-3">
+<h3 id="orgd1136c8"><code>rocker/geospatial</code></h3>
+<div class="outline-text-3" id="text-orgd1136c8">
 <p>
 You can pull the following image from docker hub which has a lot of geospatial
 libraries included in it.
@@ -293,9 +330,9 @@ images.
 </div>
 </div>
 
-<div id="outline-container-orge518ca2" class="outline-3">
-<h3 id="orge518ca2">Silly little notes</h3>
-<div class="outline-text-3" id="text-orge518ca2">
+<div id="outline-container-org86ef504" class="outline-3">
+<h3 id="org86ef504">Silly little notes</h3>
+<div class="outline-text-3" id="text-org86ef504">
 <p>
 Here are some notes I took while listening to a tutorial on docker:
 </p>
@@ -372,9 +409,9 @@ you can just specify it once.</li>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-13 Thu 13:50</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Author: alex</p>
+<p class="date">Created: 2020-09-26 Sat 22:16</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
