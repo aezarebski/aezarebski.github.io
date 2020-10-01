@@ -1,37 +1,50 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "height": 200,
+    "width": 600,
     "data": {
         "url": "data/parameter-estimate-x-fatality-ratio.json"
     },
+    "transform": [{
+        "calculate": "{'estimate': datum.pointEstimate, 'ci': [datum.lowerBound,datum.upperBound]}",
+        "as": "estimate"
+    }],
     "encoding": {
         "y": {
             "field": "title",
             "type": "ordinal",
-            "title": "Article"
+            "title": null
         },
         "color": {
             "field": "infectionOrCase",
-            "type": "nominal"
+            "type": "nominal",
+            "title": "Estimate"
         }
     },
-    "layer": [
-        {
+    "layer": [{
             "mark": {
                 "type": "point",
-                "filled": true
+                "filled": true,
+                "size": 120
             },
             "encoding": {
                 "x": {
                     "field": "pointEstimate",
                     "type": "quantitative",
-                    "scale": {"zero": false},
-                    "title": "Mean duration symptom onset to death (days)"
+                    "scale": {
+                        "zero": false
+                    },
+                    "title": "Case fatality percentage"
+                },
+                "tooltip": {
+                    "field": "estimate"
                 }
             }
-        } ,
+        },
         {
             "mark": {
-                "type": "rule"
+                "type": "rule",
+                "size": 2
             },
             "encoding": {
                 "x": {
@@ -42,7 +55,7 @@
                     "field": "upperBound",
                     "type": "quantitative"
                 }
-          }
-      }
-  ]
+            }
+        }
+    ]
 }
