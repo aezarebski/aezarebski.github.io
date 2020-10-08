@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-15 Wed 17:20 -->
+<!-- 2020-10-08 Thu 17:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -265,6 +241,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<h1 class="title">aez-notes</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -281,6 +258,7 @@ for the JavaScript code in this tag.
 <li><a href="#org4afc037">Linear regression with <code>lm</code></a></li>
 </ul>
 </li>
+<li><a href="#org1d495fd">Profile likelihood function</a></li>
 </ul>
 </li>
 </ul>
@@ -474,19 +452,19 @@ butting up against the edge of the support. For example, we have \(X\sim
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>mcmc<span style="color: #3a81c3;">)</span>
-<span style="color: #4e3163;">library</span><span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>mcmc<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)</span>
 set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #6c3163; font-weight: bold;">mcmc_samples</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>obj<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+<span style="color: #6c3163; font-weight: bold;">mcmc_samples</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>obj<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
     as.mcmc<span style="color: #6c3163;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #6c3163;">)</span>
 <span style="color: #3a81c3;">}</span>
 
-<span style="color: #6c3163; font-weight: bold;">posterior</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    dlnorm<span style="color: #6c3163;">(</span>x = x, meanlog = <span style="color: #4e3163;">0</span>, sdlog = <span style="color: #4e3163;">1</span>, log = <span style="color: #ba2f59; font-weight: bold;">TRUE</span><span style="color: #6c3163;">)</span>
+<span style="color: #6c3163; font-weight: bold;">posterior</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    dlnorm<span style="color: #6c3163;">(</span>x = x, meanlog = <span style="color: #4e3163;">0</span>, sdlog = <span style="color: #4e3163;">1</span>, log = <span style="color: #4e3163;">TRUE</span><span style="color: #6c3163;">)</span>
 <span style="color: #3a81c3;">}</span>
 
-x_samples <span style="color: #4e3163;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>posterior<span style="color: #3a81c3;">)</span>
+x_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>posterior<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -518,11 +496,11 @@ take the logarithm to get the log-posterior this becomes just \(y\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">y_posterior</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>y<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">y_posterior</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>y<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
     posterior<span style="color: #6c3163;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> + y
 <span style="color: #3a81c3;">}</span>
 
-y_samples <span style="color: #4e3163;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>y_posterior<span style="color: #3a81c3;">)</span>
+y_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>y_posterior<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -534,7 +512,7 @@ efficiently.
 </p>
 
 
-<div class="figure">
+<div id="org5e0a18a" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -577,12 +555,30 @@ dataset of size \(N\).
 </div>
 </div>
 </div>
+
+<div id="outline-container-org1d495fd" class="outline-3">
+<h3 id="org1d495fd">Profile likelihood function</h3>
+<div class="outline-text-3" id="text-org1d495fd">
+<p>
+The profile likelihood is a lower dimensional version of the likelihood
+function. Consider a likelihood function \(\mathcal{L}(\theta)\) where \(\theta
+= (\psi,\lambda)\) where \(\lambda\) are nuisance parameters. The <i>profile
+likelihood</i> is
+</p>
+
+<p>
+\[
+\mathcal{L}_{\text{profile}}(\psi) := \max_{\lambda} \mathcal{L}(\psi,\lambda).
+\]
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-07-15 Wed 17:20</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-10-08 Thu 17:07</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
