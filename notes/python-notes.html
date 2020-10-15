@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-08 Thu 17:07 -->
+<!-- 2020-10-15 Thu 16:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -273,7 +273,12 @@ jupyter lab server.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #3a81c3; font-weight: bold;">let</span>
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">This provides a shell running a jupyter lab server. To start the server run</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">the following command</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">$ nix-shell --command "jupyter lab"</span>
+
+<span style="color: #3a81c3; font-weight: bold;">let</span>
   <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
     <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
     <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">"10d64ee254050de69d0dc51c9c39fdadf1398c38"</span>;
@@ -281,7 +286,9 @@ jupyter lab server.
 
   <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
     <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy 
+    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy
+                            altair
+                            scipy
                             pandas
                             matplotlib <span style="color: #6c3163;">]</span>;
   <span style="color: #3a81c3;">}</span>;
@@ -310,9 +317,13 @@ provide some information about the class of the object.
 <h3 id="orga58d3f4">Pandas</h3>
 <div class="outline-text-3" id="text-orga58d3f4">
 <ul class="org-ul">
-<li>The <code>.describe</code> method is the same as <code>summary</code> function from R.</li>
+<li>A combination of the <code>describe</code>, <code>info</code> and <code>dtypes</code> method provide an
+acceptable replacement for the <code>str</code> and <code>summary</code> functions from R.</li>
 <li>The <code>.value_count</code> method is the same as the <code>table</code> function from R. If you
-just want the unique values there is the <code>unique</code> method.</li>
+just want the unique values there is the <code>unique</code> method. A notable extension
+of <code>value_count</code> is the <code>crosstab</code> function which returns a table with the
+value count across multiple variables. Both the cross and regular tables are
+data frames themselves and can be used in subsequent calculations.</li>
 <li>Most base R statistical functions are available as methods on <code>DataFrame</code>
 objects.
 <ul class="org-ul">
@@ -340,6 +351,8 @@ axis to apply them to.</li>
 </ul></li>
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
+<li><b>Beware</b> the difference between views and copies of data when using pandas.
+There is the <code>copy</code> method to help you a lot of the time.</li>
 </ul>
 </div>
 </div>
@@ -373,7 +386,7 @@ hist. Legends need to be added seperately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-08 Thu 17:07</p>
+<p class="date">Created: 2020-10-15 Thu 16:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
