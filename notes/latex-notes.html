@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-25 Tue 09:43 -->
+<!-- 2020-10-15 Thu 17:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -265,27 +241,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org6539763">Latex notes</a>
-<ul>
-<li><a href="#org79fa801">Basic styling</a></li>
-<li><a href="#orgcc51194">Installation</a></li>
-<li><a href="#org4f3aaef">Basic template</a></li>
-<li><a href="#org1e3229f">Bibtex</a></li>
-<li><a href="#orge561043">Equations</a></li>
-<li><a href="#org1adf3b9">Figures</a></li>
-<li><a href="#orgbf7770c">Linking</a></li>
-<li><a href="#org81dfe66">Tables</a></li>
-<li><a href="#org9695ec3">Table of contents</a></li>
-<li><a href="#org3551b29"><span class="todo TODO">TODO</span> Table of special characters</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+<h1 class="title">aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
@@ -294,7 +250,7 @@ for the JavaScript code in this tag.
 <h2 id="org6539763">Latex notes</h2>
 <div class="outline-text-2" id="text-org6539763">
 
-<div class="figure">
+<div id="orga8e0d8f" class="figure">
 <p><img src="../images/latex-logo.png" alt="latex-logo.png" />
 </p>
 </div>
@@ -323,6 +279,24 @@ Don't forget to install all the extra stuff
 <pre class="src src-shell">sudo apt-get install texlive-full
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgd12c8e8" class="outline-3">
+<h3 id="orgd12c8e8">Basic usage</h3>
+<div class="outline-text-3" id="text-orgd12c8e8">
+<p>
+You can compile a PDF from a TeX file with <code>pdflatex</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-org7204369" class="outline-3">
+<h3 id="org7204369">Intermediate usage</h3>
+<div class="outline-text-3" id="text-org7204369">
+<p>
+You can recompile a PDF whenever a TeX file is updated using <code>inotifywait</code> as
+described in my <a href="./linux-notes.html">linux notes</a>.
+</p>
 </div>
 </div>
 
@@ -367,8 +341,8 @@ The following example demonstrates how to align multiple equations.
 
 <div class="org-src-container">
 <pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">align*</span>}
-f(0) = f(1) <span style="color: #dc752f;">&amp;</span>= 1 <span style="color: #dc752f;">\\</span>
-f(n) <span style="color: #dc752f;">&amp;</span>= f(n-1) + f(n-2)
+<span style="color: #8b4513;">f(0) = f(1) </span><span style="color: #dc752f;">&amp;</span><span style="color: #8b4513;">= 1 </span><span style="color: #dc752f;">\\</span>
+<span style="color: #8b4513;">f(n) </span><span style="color: #dc752f;">&amp;</span><span style="color: #8b4513;">= f(n-1) + f(n-2)</span>
 <span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">align*</span>}
 </pre>
 </div>
@@ -418,8 +392,9 @@ The following arguments can be used to crop the imported graphic
 <h3 id="orgbf7770c">Linking</h3>
 <div class="outline-text-3" id="text-orgbf7770c">
 <p>
-To label a section use <code>\label{sec:cool-name}</code> and to refer to link to it later use <code>\ref{sec:cool-name}</code>.
-The <code>sec:</code> prefix is not necessary, but it makes things clearer.
+To label a section use <code>\label{sec:cool-name}</code> and to refer to link to it later
+use <code>\ref{sec:cool-name}</code>. The <code>sec:</code> prefix is not necessary, but it makes
+things clearer.
 </p>
 </div>
 </div>
@@ -449,7 +424,8 @@ The <code>sec:</code> prefix is not necessary, but it makes things clearer.
 <h3 id="org9695ec3">Table of contents</h3>
 <div class="outline-text-3" id="text-org9695ec3">
 <p>
-To adjust the depth to which sections are numbered, add the following to the preamble, adjusting the number to the desired level.
+To adjust the depth to which sections are numbered, add the following to the
+preamble, adjusting the number to the desired level.
 </p>
 
 <div class="org-src-container">
@@ -462,12 +438,44 @@ To adjust the depth to which sections are numbered, add the following to the pre
 <div id="outline-container-org3551b29" class="outline-3">
 <h3 id="org3551b29"><span class="todo TODO">TODO</span> Table of special characters</h3>
 </div>
+
+<div id="outline-container-org3227317" class="outline-3">
+<h3 id="org3227317">Authors and affiliations</h3>
+<div class="outline-text-3" id="text-org3227317">
+<p>
+This is a minimal example demonstrating how to include multiple authors with
+their own affiliations.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span style="color: #3a81c3; font-weight: bold;">\documentclass</span>{<span style="color: #6c3163; font-weight: bold;">article</span>}
+
+<span style="color: #3a81c3; font-weight: bold;">\usepackage</span>{<span style="color: #6c3163; font-weight: bold;">authblk</span>}            <span style="color: #2aa1ae; background-color: #ecf3ec;">% provides author affiliations.</span>
+
+<span style="color: #3a81c3; font-weight: bold;">\title</span>{<span style="color: #ba2f59; font-weight: bold;">Fleeb</span>}
+<span style="color: #3a81c3; font-weight: bold;">\date</span>{}
+<span style="color: #dc752f; font-weight: bold;">\</span><span style="color: #3a81c3; font-weight: bold;">author</span>[1]{Morty Smith<span style="color: #3a81c3; font-weight: bold;">\thanks</span>{<span style="color: #ba2f59; font-weight: bold;">For correspondence email: yolo@hotmail.com</span>}}
+<span style="color: #dc752f; font-weight: bold;">\</span><span style="color: #3a81c3; font-weight: bold;">author</span>[2]{Rick Sanchez}
+<span style="color: #696969;">\affil</span>[1]{Princeton University}
+<span style="color: #696969;">\affil</span>[2]{School of Hard Knocks}
+
+<span style="color: #3a81c3; font-weight: bold;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">document</span>}
+
+<span style="color: #696969;">\maketitle</span>
+
+Here is some text
+
+<span style="color: #3a81c3; font-weight: bold;">\end</span>{<span style="color: #6c3163; font-weight: bold;">document</span>}
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-08-25 Tue 09:43</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-10-15 Thu 17:20</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
