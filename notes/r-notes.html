@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-01 Thu 14:02 -->
+<!-- 2020-10-26 Mon 12:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -241,14 +241,18 @@
 </head>
 <body>
 <div id="content">
+<h1 class="title">aez-notes</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orge847140">R notes</a>
 <ul>
-<li><a href="#org2f1afcd">Emacs Speaks Statistics</a></li>
-<li><a href="#org5ae5ce2">Updating R</a></li>
+<li><a href="#org5ae5ce2">Updating R</a>
+<ul>
+<li><a href="#orgfcf31c2">Notes</a></li>
+</ul>
+</li>
 <li><a href="#orgc0b6e53">Linear regression <code>lm</code></a></li>
 <li><a href="#orgf3756a6"><span class="todo TODO">TODO</span> Mathematical optimisation</a></li>
 <li><a href="#org4c05dc2">Error handling</a></li>
@@ -274,6 +278,7 @@
 <li><a href="#orgafdca9f">truncnorm Truncated Normal Distribution</a></li>
 </ul>
 </li>
+<li><a href="#orgcd778e0">Computational geography and cartography</a></li>
 <li><a href="#orga15b41c">TIDYDATA and the <code>tidyverse</code></a></li>
 <li><a href="#orgf82d9a8">Command line arguments</a></li>
 <li><a href="#org1c64269">Unit testing with <code>testthat</code></a></li>
@@ -311,17 +316,8 @@
 <h2 id="orge847140">R notes</h2>
 <div class="outline-text-2" id="text-orge847140">
 
-<div id="org78dcce8" class="figure">
+<div id="orgd0cc050" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
-</p>
-</div>
-</div>
-
-<div id="outline-container-org2f1afcd" class="outline-3">
-<h3 id="org2f1afcd">Emacs Speaks Statistics</h3>
-<div class="outline-text-3" id="text-org2f1afcd">
-<p>
-<a href="./spacemacs-notes.html#org31d3018">MY ESS NOTES</a>
 </p>
 </div>
 </div>
@@ -329,6 +325,10 @@
 <div id="outline-container-org5ae5ce2" class="outline-3">
 <h3 id="org5ae5ce2">Updating R</h3>
 <div class="outline-text-3" id="text-org5ae5ce2">
+<p>
+<b>Last update was to 4.0.2</b>
+</p>
+
 <p>
 R updates frequently and things break, so it is a good idea to keep your version
 of R reasonably up to date. You can obtain the source code for every version of
@@ -339,36 +339,53 @@ follows.
 <ol class="org-ol">
 <li>Ensure you have the nessessary dependencies with <code>sudo apt-get build-dep
    r-base</code>.</li>
-<li>Download the relevant source, e.g. <code>R-3.6.3.tar.gz</code>, and unzip it: <code>tar -xvf
+<li>Download the relevant source, e.g. <code>R-4.0.2.tar.gz</code>, and unzip it: <code>tar -xvf
    R-X.Y.Z.tar.gz</code>.</li>
 <li>Run <code>./configure</code> and then <code>make</code> and <code>make info</code> to compile R and the
 documentation.</li>
 <li>Check that the compilation has worked properly with <code>make check</code> and address
 any issues that arise.</li>
-<li>Install the executable with <code>make install</code> and <code>make install-info</code>, noting
-that this may require sudo rights.</li>
+<li>Install the executable with <code>sudo make install</code> and <code>sudo make install-info</code>.</li>
 <li>Check it worked with <code>R -e "sessionInfo()"</code>.</li>
 <li>Profit!</li>
 </ol>
 
 <p>
 Note that step 3 takes the longest, but this still took less than 10 minutes on
-my machine for <code>R-4.0.2</code>.
-</p>
-
-<p>
-After updating R some of your packages may break, you can update them with 
+my machine for <code>R-4.0.2</code>. After updating, you'll probably have lost all your
+packages, the following command can help with this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">update.packages<span style="color: #3a81c3;">(</span>ask = <span style="color: #4e3163;">FALSE</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-R">my_pkgs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"dplyr"</span>, 
+             <span style="color: #2d9574;">"purrr"</span>,
+             <span style="color: #2d9574;">"magrittr"</span>,
+             <span style="color: #2d9574;">"ggplot2"</span>,
+             <span style="color: #2d9574;">"reshape2"</span>,
+             <span style="color: #2d9574;">"stringr"</span><span style="color: #3a81c3;">)</span>
+install.packages<span style="color: #3a81c3;">(</span>my_pkgs<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
 <p>
-Although if you have old package versions hanging around they can case you can
-find where they are with <code>.libPaths()</code> and remove them before starting fresh.
+Last time when I updated the packages it said the default library was not
+writable so I used a personal library instead. Although if you have old package
+versions hanging around they can case you can find where they are with
+<code>.libPaths()</code> and remove them before starting fresh.
 </p>
+</div>
+
+<div id="outline-container-orgfcf31c2" class="outline-4">
+<h4 id="orgfcf31c2">Notes</h4>
+<div class="outline-text-4" id="text-orgfcf31c2">
+<ul class="org-ul">
+<li><code>R-4.0.2</code> needed me to install <code>libpcre2-dev</code> to get the configuration step to
+work. I also had to use <code>sudo make install</code> to install the executable where as
+previously it had not needed this level of permission. The <code>update.packages</code>
+command didn't work as expected this time, which prompted the installation
+list.</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -650,6 +667,15 @@ There are many useful aliases exported by <code>magrittr</code>, the table below
 </div>
 </div>
 
+<div id="outline-container-orgcd778e0" class="outline-3">
+<h3 id="orgcd778e0">Computational geography and cartography</h3>
+<div class="outline-text-3" id="text-orgcd778e0">
+<p>
+See <a href="./computational-geography-notes.html">my other notes on this</a>.
+</p>
+</div>
+</div>
+
 <div id="outline-container-orga15b41c" class="outline-3">
 <h3 id="orga15b41c">TIDYDATA and the <code>tidyverse</code></h3>
 <div class="outline-text-3" id="text-orga15b41c">
@@ -750,9 +776,9 @@ Be careful when passing in numbers because they are read in as strings.
 <h3 id="org0e87877">Dependency management with <code>packrat</code></h3>
 <div class="outline-text-3" id="text-org0e87877">
 <p>
-Packrat is developed by the team at RStudio.
-It relies on the notion of a <i>project</i>, which we might think of as a single analysis or collection of related analyses.
-A project should live in a single directory.
+Packrat is developed by the team at RStudio. It relies on the notion of a
+<i>project</i>, which we might think of as a single analysis or collection of related
+analyses. A project should live in a single directory.
 </p>
 </div>
 
@@ -769,14 +795,15 @@ To start a packrat project use
 </div>
 
 <p>
-This creates a directory <code>packrat</code> and a <code>.Rprofile</code> file.
-The profile file is how R knows to use the private library rather than the shared one.
-There is a file <code>packrat/packrat.lock</code> which contains the package details.
+This creates a directory <code>packrat</code> and a <code>.Rprofile</code> file. The profile file is
+how R knows to use the private library rather than the shared one. There is a
+file <code>packrat/packrat.lock</code> which contains the package details.
 </p>
 
 <p>
-Packages are installed as usual with <code>install.packages</code>, but now they will be stored in the private packrat library.
-Packages are not added to the <code>packrat.lock</code> file until a <i>snapshot</i> of the current packages is made
+Packages are installed as usual with <code>install.packages</code>, but now they will be
+stored in the private packrat library. Packages are not added to the
+<code>packrat.lock</code> file until a <i>snapshot</i> of the current packages is made
 </p>
 
 <div class="org-src-container">
@@ -785,8 +812,9 @@ Packages are not added to the <code>packrat.lock</code> file until a <i>snapshot
 </div>
 
 <p>
-If you want a status report from packrat about how the packages there is <code>packrat::status</code>.
-To install local packages, packrat needs to be told where they live
+If you want a status report from packrat about how the packages there is
+<code>packrat::status</code>. To install local packages, packrat needs to be told where
+they live
 </p>
 
 <div class="org-src-container">
@@ -795,8 +823,9 @@ To install local packages, packrat needs to be told where they live
 </div>
 
 <p>
-When moving a project between machines the installed packages will probably break.
-However, the <code>packrat</code> directory stores copies of the source for each of the packages so they can be <i>restored</i>.
+When moving a project between machines the installed packages will probably
+break. However, the <code>packrat</code> directory stores copies of the source for each of
+the packages so they can be <i>restored</i>.
 </p>
 
 <div class="org-src-container">
@@ -814,13 +843,41 @@ The following files should be included into version control:
 </p>
 
 <ul class="org-ul">
-<li><code>.gitignore</code></li>
+<li><code>.gitignore</code> can contain <code>packrat/lib</code> and <code>packrat/src</code>.</li>
 <li><code>.Rprofile</code></li>
+<li><code>packrat/packrat.opts</code></li>
 <li><code>packrat/packrat.lock</code></li>
 </ul>
+
+<p>
+The following explaination of the directory structure is given in the
+<a href="https://rstudio.github.io/packrat/walkthrough.html">walkthrough</a>
+</p>
+
+<blockquote>
+<p>
+A packrat project contains a few extra files and directories. The <code>init()</code>
+function creates these files for you, if they don’t already exist.
+</p>
+
+<ul class="org-ul">
+<li><code>packrat/packrat.lock</code>: Lists the precise package versions that were used to
+satisfy dependencies, including dependencies of dependencies. (This file
+should never be edited by hand!)</li>
+<li><code>packrat/packrat.opts</code>: Project-specific packrat options. These can be queried
+and set with <code>get_opts</code> and <code>set_opts</code>; see <code>?"packrat-options"</code> for more
+information.</li>
+<li><code>packrat/lib/</code>: Private package library for this project.</li>
+<li><code>packrat/src/</code>: Source packages of all the dependencies that packrat has been
+made aware of.</li>
+<li><code>.Rprofile</code>: Directs R to use the private package library (when it is started
+from the project directory).</li>
+</ul>
+</blockquote>
 </div>
 </div>
 </div>
+
 
 <div id="outline-container-orgd520b56" class="outline-3">
 <h3 id="orgd520b56">Package and project management with <code>usethis</code></h3>
@@ -879,6 +936,11 @@ The following files should be included into version control:
 <tr>
 <td class="org-left"><code>str_subset</code></td>
 <td class="org-left"><b>filters</b> strings like <code>grep</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>str_to_lower</code></td>
+<td class="org-left">converts to lower case</td>
 </tr>
 </tbody>
 </table>
@@ -1224,7 +1286,7 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-01 Thu 14:02</p>
+<p class="date">Created: 2020-10-26 Mon 12:34</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

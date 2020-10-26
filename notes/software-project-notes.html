@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-28 Tue 09:46 -->
+<!-- 2020-10-26 Mon 12:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="alex" />
+<meta name="author" content="Alex Zarebski" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,11 +223,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc8c6d41">Software projects</a>
+<li><a href="#org20ba76a">Software projects</a>
 <ul>
-<li><a href="#org2ae7b62">Minimal generic structure (WIP)</a></li>
-<li><a href="#org626f828">Tools</a></li>
-<li><a href="#org2eb2a18">Links</a></li>
+<li><a href="#org8aa1ef9">Minimal generic structure (WIP)</a></li>
+<li><a href="#org0571fb6">Tools</a></li>
+<li><a href="#org56b1541">Links</a></li>
 </ul>
 </li>
 </ul>
@@ -261,41 +237,54 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgc8c6d41" class="outline-2">
-<h2 id="orgc8c6d41">Software projects</h2>
-<div class="outline-text-2" id="text-orgc8c6d41">
+<div id="outline-container-org20ba76a" class="outline-2">
+<h2 id="org20ba76a">Software projects</h2>
+<div class="outline-text-2" id="text-org20ba76a">
 </div>
-<div id="outline-container-org2ae7b62" class="outline-3">
-<h3 id="org2ae7b62">Minimal generic structure (WIP)</h3>
-<div class="outline-text-3" id="text-org2ae7b62">
+<div id="outline-container-org8aa1ef9" class="outline-3">
+<h3 id="org8aa1ef9">Minimal generic structure (WIP)</h3>
+<div class="outline-text-3" id="text-org8aa1ef9">
 <pre class="example">
 .
-├── ChangeLog.md
+├── ChangeLog.md (optional)
 ├── data
-├── LICENSE
+|   ├── processed
+|   └── raw
+├── LICENSE (essential)
 ├── out
-├── README.md
+|   └── plots
+├── README.md (essential)
 ├── requirements.txt
 ├── src
-└── test
+└── test (optional)
 </pre>
 
 <ul class="org-ul">
-<li><code>Changelog.md</code> seems like overkill but is a nice way to keep track of what has actually been done.</li>
-<li><code>data</code> is a directory for the raw data that is needed by the project</li>
-<li><code>LICENSE</code> seems like overkill but could be useful in the long run&#x2026; <a href="https://choosealicense.com/">advice from github</a></li>
-<li><code>out</code> is a place to write output to.</li>
+<li><code>Changelog.md</code> seems like overkill but is a nice way to keep track of what has
+actually been done.</li>
+<li><code>data</code> is a directory for the raw data that is needed by the project
+<ul class="org-ul">
+<li>The <code>raw</code> subdirectory is for the original data set and <code>processed</code> is for
+tidy data</li>
+</ul></li>
+<li><code>LICENSE</code> seems like overkill but could be useful in the long run&#x2026; <a href="https://choosealicense.com/">advice
+from github</a> <b>ESSENTIAL</b></li>
+<li><code>out</code> is a place to write output to
+<ul class="org-ul">
+<li>The <code>plots</code> subdirectory is for plot output as opposed to other results</li>
+</ul></li>
 <li><code>README.md</code> <b>ESSENTIAL</b>.</li>
-<li><code>requirements.txt</code> or some way of recording the dependencies of the project: <code>stack</code>, <code>packrat</code>, <code>virtualenv</code>, &#x2026;</li>
+<li><code>requirements.txt</code> or some way of recording the dependencies of the project:
+<code>stack</code>, <code>packrat</code>, <code>virtualenv</code>, &#x2026;</li>
 <li><code>src</code> so the project can actually do something.</li>
 <li><code>test</code> so you can be confident that it does that thing properly.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org626f828" class="outline-3">
-<h3 id="org626f828">Tools</h3>
-<div class="outline-text-3" id="text-org626f828">
+<div id="outline-container-org0571fb6" class="outline-3">
+<h3 id="org0571fb6">Tools</h3>
+<div class="outline-text-3" id="text-org0571fb6">
 <ul class="org-ul">
 <li><a href="https://hspec.github.io/">hspec</a> for unit tests in Haskell</li>
 <li><a href="https://rstudio.github.io/packrat/">packrat</a> for dependency management in R</li>
@@ -306,10 +295,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2eb2a18" class="outline-3">
-<h3 id="org2eb2a18">Links</h3>
-<div class="outline-text-3" id="text-org2eb2a18">
+<div id="outline-container-org56b1541" class="outline-3">
+<h3 id="org56b1541">Links</h3>
+<div class="outline-text-3" id="text-org56b1541">
 <ul class="org-ul">
+<li><a href="https://rstudio.github.io/packrat/walkthrough.html">Walkthrough</a> for <code>packrat</code></li>
 <li><a href="https://choosealicense.com/">Choose an open source license</a>: Advice for choosing a licence from github.</li>
 <li><a href="https://docs.python-guide.org/writing/structure/">Structuring Your Project</a>: A guide for python projects but much of it is language agnostic.</li>
 </ul>
@@ -318,9 +308,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: alex</p>
-<p class="date">Created: 2020-04-28 Tue 09:46</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2020-10-26 Mon 12:34</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
