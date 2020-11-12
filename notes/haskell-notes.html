@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-30 Fri 16:29 -->
+<!-- 2020-11-12 Thu 17:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -247,7 +247,7 @@
 
 
 
-<div id="org760c71f" class="figure">
+<div id="org0b3434d" class="figure">
 <p><img src="../images/haskell-logo.png" alt="haskell-logo.png" /> 
 </p>
 </div>
@@ -391,9 +391,56 @@ Add <code>hspec</code> to your dependencies and observe the following example
       evaluate <span style="color: #3a81c3;">(</span>head <span style="color: #6c3163; font-weight: bold;">[]</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">`shouldThrow`</span> anyException
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org19e1df1" class="outline-3">
+<h3 id="org19e1df1">Testing <code>hspec</code> and <code>QuickCheck</code></h3>
+<div class="outline-text-3" id="text-org19e1df1">
+<p>
+You can use <a href="https://hspec.github.io/quickcheck.html">QuickCheck in your Hspec tests</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE DeriveGeneric #-}</span>
+
+<span style="color: #3a81c3; font-weight: bold;">module</span> <span style="color: #ba2f59; font-weight: bold;">Main</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">GHC.Generics</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Generic.Random</span> <span style="color: #3a81c3;">(</span>genericArbitraryU<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Test.Hspec</span>
+<span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Test.QuickCheck</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Gen</span><span style="color: #6c3163;">(</span><span style="color: #715ab1;">..</span><span style="color: #6c3163;">)</span>, forAll, property, choose<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3; font-weight: bold;">data</span> <span style="color: #ba2f59; font-weight: bold;">RickMorty</span>
+  <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Fleeb</span>
+  <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Squanch</span>
+  <span style="color: #715ab1;">|</span> <span style="color: #ba2f59; font-weight: bold;">Plumbus</span>
+  <span style="color: #3a81c3; font-weight: bold;">deriving</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Show</span>, <span style="color: #ba2f59; font-weight: bold;">Generic</span>, <span style="color: #ba2f59; font-weight: bold;">Eq</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">IO</span> <span style="color: #3a81c3; font-weight: bold;">()</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span>
+  hspec <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+    describe <span style="color: #2d9574;">"read"</span> <span style="color: #715ab1;">$</span> <span style="color: #3a81c3; font-weight: bold;">do</span>
+      it <span style="color: #2d9574;">"fooo"</span> <span style="color: #715ab1;">$</span> property <span style="color: #715ab1;">$</span> foo
+      it <span style="color: #2d9574;">"baar"</span> <span style="color: #715ab1;">$</span> forAll <span style="color: #3a81c3;">(</span>genericArbitraryU <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Gen</span> <span style="color: #ba2f59; font-weight: bold;">RickMorty</span><span style="color: #3a81c3;">)</span> bar
+      it <span style="color: #2d9574;">"baaz"</span> <span style="color: #715ab1;">$</span> forAll <span style="color: #3a81c3;">(</span>choose <span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Gen</span> <span style="color: #ba2f59; font-weight: bold;">Int</span><span style="color: #3a81c3;">)</span> foo
+
+<span style="color: #6c3163; font-weight: bold;">foo</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>
+<span style="color: #6c3163; font-weight: bold;">foo</span> x <span style="color: #715ab1;">=</span> x <span style="color: #715ab1;">==</span> x
+
+<span style="color: #6c3163; font-weight: bold;">bar</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">RickMorty</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Bool</span>
+<span style="color: #6c3163; font-weight: bold;">bar</span> x <span style="color: #715ab1;">=</span> x <span style="color: #715ab1;">==</span> x
+</pre>
+</div>
 
 <p>
-There is <a href="https://hspec.github.io/quickcheck.html">also integration with QuickCheck available</a>.
+The simplest way to use QuickCheck is via the <code>property</code> function which just
+takes a predicate based on some standard types. If you want to provide your own
+generator you need to use the <code>forAll</code> function, but once this has happened you
+are free to use a wider range of generators. In the example above we just sample
+uniformly from our <code>RickMorty</code> type. This is further demonstrated by the example
+with <code>choose</code> which will generate integers from \(1\) to \(3\) inclusive as test
+cases.
 </p>
 </div>
 </div>
@@ -878,7 +925,7 @@ Left "Could not find file in step 2"
 <h4 id="org7d102cf">Numbers</h4>
 <div class="outline-text-4" id="text-org7d102cf">
 
-<div id="orgb2774f9" class="figure">
+<div id="orga8221f1" class="figure">
 <p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
 </p>
 </div>
@@ -1348,7 +1395,7 @@ Multiple calls to this function always return the same values because the <code>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-30 Fri 16:29</p>
+<p class="date">Created: 2020-11-12 Thu 17:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

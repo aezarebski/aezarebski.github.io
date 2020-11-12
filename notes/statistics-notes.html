@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-08 Thu 17:07 -->
+<!-- 2020-11-12 Thu 17:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -259,6 +259,12 @@
 </ul>
 </li>
 <li><a href="#org1d495fd">Profile likelihood function</a></li>
+<li><a href="#org95d720b">Contingency tables</a>
+<ul>
+<li><a href="#org468fe20">An example in R</a></li>
+<li><a href="#orge00bb31">What actually happens</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -512,7 +518,7 @@ efficiently.
 </p>
 
 
-<div id="org5e0a18a" class="figure">
+<div id="orga7cd2e5" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -573,11 +579,100 @@ likelihood</i> is
 </p>
 </div>
 </div>
+
+<div id="outline-container-org95d720b" class="outline-3">
+<h3 id="org95d720b">Contingency tables</h3>
+<div class="outline-text-3" id="text-org95d720b">
+</div>
+<div id="outline-container-org468fe20" class="outline-4">
+<h4 id="org468fe20">An example in R</h4>
+<div class="outline-text-4" id="text-org468fe20">
+<p>
+A contingency table counts the number of times that a particular combination of
+catagorical variables occur. For example, we can simulate a data set of
+catagorical variables as follows
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">1000</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span>letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #6c3163;">]</span>, <span style="color: #4e3163;">1000</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x, y<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Then we can create a contingency table from this with the <code>xtabs</code> function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">tab <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> xtabs<span style="color: #3a81c3;">(</span>~ x + y, data = df<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R">&gt; print<span style="color: #3a81c3;">(</span>tab<span style="color: #3a81c3;">)</span>
+   y
+x     a   b   c
+  <span style="color: #4e3163;">1</span> <span style="color: #4e3163;">131</span> <span style="color: #4e3163;">109</span> <span style="color: #4e3163;">111</span>
+  <span style="color: #4e3163;">2</span> <span style="color: #4e3163;">100</span> <span style="color: #4e3163;">122</span> <span style="color: #4e3163;">117</span>
+  <span style="color: #4e3163;">3</span> <span style="color: #4e3163;">100</span>  <span style="color: #4e3163;">99</span> <span style="color: #4e3163;">111</span>
+</pre>
+</div>
+
+<p>
+The null hypothesis test that we are interested in is that there is no
+association between the catagorical variables <code>x</code> and <code>y</code>. If each variable was
+binary we could use Fisher's exact test, but since there are more, and there are
+\(\geq 10\) observations in each catagory a $&chi;<sup>2</sup>$-test is acceptable.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">&gt; print<span style="color: #3a81c3;">(</span>chisq.test<span style="color: #6c3163;">(</span>tab<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+  Pearson<span style="color: #2d9574;">'s Chi-squared test</span>
+
+<span style="color: #2d9574;">data:  tab</span>
+<span style="color: #2d9574;">X-squared = 5.6178, df = 4, p-value = 0.2296</span>
+
+</pre>
+</div>
+
+<p>
+Since the variables were simulated independently the $p$-value is, not
+surprisingly, large enough that it would not be considered significant.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge00bb31" class="outline-4">
+<h4 id="orge00bb31">What actually happens</h4>
+<div class="outline-text-4" id="text-orge00bb31">
+<p>
+Let \(f_{ij}\) be the value in the $ij$-th cell of the contingency table and
+\(e_{ij}\) the expected value assuming that the observations are distributed such
+that the catagorical variables are independent. Consider the following
+statistic:
+</p>
+
+<p>
+\[
+\sum_{i,j} \frac{(f_{ij} - e_{ij})^2}{e_{ij}.
+\]
+</p>
+
+<p>
+This statistic has a $&chi;<sup>2</sup>$-distribution with \((I-1)(J-1)\) degrees of freedom
+where \(I\) and \(J\) are the number of distinct values each variable takes.
+</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-08 Thu 17:07</p>
+<p class="date">Created: 2020-11-12 Thu 17:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

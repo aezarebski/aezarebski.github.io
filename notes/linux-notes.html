@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-19 Mon 09:37 -->
+<!-- 2020-11-12 Thu 17:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -579,15 +579,17 @@ command after an event relating to a file occurs.
 <h4 id="org23a61ee">Example</h4>
 <div class="outline-text-4" id="text-org23a61ee">
 <p>
-You have a file <code>demo.tex</code> that you want to compile every time it is modified.
-The following shell script &#x2014; modified from <a href="https://superuser.com/a/181543">this stackoverflow answer</a> &#x2014; will
-achieve this.
+You want to compile a PDF every time the file <code>demo.tex</code> gets modified. The
+following shell script &#x2014; modified from <a href="https://superuser.com/a/181543">this stackoverflow answer</a> &#x2014; will
+achieve this using <code>inotifywait</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">inotifywait -q -m -e close_write demo.tex |
+<pre class="src src-sh"><span style="color: #715ab1;">WATCH_FILE</span>=demo.tex
+
+inotifywait -q -m -e close_write $<span style="color: #715ab1;">WATCH_FILE</span> |
     <span style="color: #3a81c3; font-weight: bold;">while </span><span style="color: #3a81c3;">read</span> -r filename event; <span style="color: #3a81c3; font-weight: bold;">do</span>
-        pdflatex demo
+        pdflatex $<span style="color: #715ab1;">WATCH_FILE</span>
     <span style="color: #3a81c3; font-weight: bold;">done</span>
 </pre>
 </div>
@@ -921,7 +923,7 @@ or <code>for x in $*</code> which would iterate over all the command line argume
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-19 Mon 09:37</p>
+<p class="date">Created: 2020-11-12 Thu 17:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
