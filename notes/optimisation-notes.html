@@ -6,7 +6,7 @@
 <!-- 2020-11-18 Wed 11:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -219,16 +219,12 @@
 </head>
 <body>
 <div id="content">
+<h1 class="title">aez-notes</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7524ab8">Nix notes</a>
-<ul>
-<li><a href="#org7d1da85">Jupyter Lab</a></li>
-<li><a href="#orgb2fa62d">Rough notes</a></li>
-</ul>
-</li>
+<li><a href="#org03a377e">Optimisation notes</a></li>
 </ul>
 </div>
 </div>
@@ -236,98 +232,16 @@
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org7524ab8" class="outline-2">
-<h2 id="org7524ab8">Nix notes</h2>
-<div class="outline-text-2" id="text-org7524ab8">
-
-<div id="orgc8ab18c" class="figure">
-<p><img src="../images/nix-logo.png" alt="nix-logo.png" />
-</p>
-</div>
-</div>
-
-<div id="outline-container-org7d1da85" class="outline-3">
-<h3 id="org7d1da85">Jupyter Lab</h3>
-<div class="outline-text-3" id="text-org7d1da85">
-<p>
-The following <code>shell.nix</code> provides a shell which has jupyter lab with several
-useful kernels. It uses the functionality developed by Tweag. To start the
-server run the following command:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">nix-shell --command <span style="color: #2d9574;">"jupyter lab"</span>
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-nix"><span style="color: #3a81c3; font-weight: bold;">let</span>
-  <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
-    <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
-    <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">""</span>;
-  <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
-
-  <span style="color: #715ab1;">irkernel</span> = jupyter.kernels.iRWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"r"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> p.ggplot2 <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
-
-  <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy
-                            altair
-                            statsmodels
-                            pandas
-                            matplotlib <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
-
-  <span style="color: #715ab1;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">kernels</span> = <span style="color: #6c3163;">[</span> ipython
-                irkernel <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
-<span style="color: #3a81c3; font-weight: bold;">in</span>
-  jupyterEnvironment.env
-</pre>
-</div>
+<div id="outline-container-org03a377e" class="outline-2">
+<h2 id="org03a377e">Optimisation notes</h2>
+<div class="outline-text-2" id="text-org03a377e">
+<img src="https://imgs.xkcd.com/comics/is_it_worth_the_time.png" class="centered-figure">
 
 <ul class="org-ul">
-<li>There is no <code>rev</code> specified when fetching from git so this is not very
-reproducible. If you want to make this safer you can add the commit hash
-there.</li>
-<li>The <code>irkernel</code> provides an R kernel with ggplot installed.</li>
+<li>Hadley Wickham has some sage wisdom on optimising R programs which should
+generalise to other languages in the chapters on <a href="https://adv-r.hadley.nz/perf-measure.html">measuring performance</a> and
+<a href="https://adv-r.hadley.nz/perf-improve.html">improving performance</a>.</li>
 </ul>
-</div>
-</div>
-
-<div id="outline-container-orgb2fa62d" class="outline-3">
-<h3 id="orgb2fa62d">Rough notes</h3>
-<div class="outline-text-3" id="text-orgb2fa62d">
-<ul class="org-ul">
-<li>All Haskell related material is stored in packages prefixed with the name
-<code>haskellPackage.</code>. For example, <code>ghc</code> is <code>haskellPackage.ghc</code>.</li>
-<li>Adding the following to your <code>stack.yaml</code> appears to enable development within
-the specified <code>nix-shell</code>.</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #715ab1;">nix</span>:
-  <span style="color: #715ab1;">enable</span>: <span style="color: #4e3163;">true</span>
-  <span style="color: #715ab1;">shell-file</span>: shell.nix
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-nix"><span style="color: #3a81c3;">{</span>ghc<span style="color: #3a81c3;">}</span>:
-<span style="color: #3a81c3; font-weight: bold;">with</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">import</span> <span style="color: #4e3163;">&lt;nixpkgs&gt;</span> <span style="color: #6c3163;">{}</span><span style="color: #3a81c3;">)</span>;
-
-haskell.lib.buildStackProject <span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3; font-weight: bold;">inherit</span> ghc;
-  <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"myEnv"</span>;
-  <span style="color: #715ab1;">buildInputs</span> = <span style="color: #6c3163;">[</span> glpk pcre <span style="color: #6c3163;">]</span>;
-<span style="color: #3a81c3;">}</span>
-</pre>
-</div>
-</div>
 </div>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-19 Mon 09:37 -->
+<!-- 2020-11-18 Wed 11:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -230,7 +230,12 @@
 <li><a href="#orgbb32632">Jupyter via Nix</a></li>
 <li><a href="#org84715c4">Spacemacs layer</a></li>
 <li><a href="#org8e51aee">Help</a></li>
-<li><a href="#orga58d3f4">Pandas</a></li>
+<li><a href="#orga58d3f4">Pandas</a>
+<ul>
+<li><a href="#org15a9e04">Cross tabulation</a></li>
+<li><a href="#org1f28616">Filtering by column values</a></li>
+</ul>
+</li>
 <li><a href="#orgd8ec963">Matplotlib</a></li>
 <li><a href="#orga179590"><span class="todo TODO">TODO</span> Debugging</a></li>
 </ul>
@@ -362,9 +367,9 @@ provide some information about the class of the object.
 <ul class="org-ul">
 <li>A combination of the <code>describe</code>, <code>info</code> and <code>dtypes</code> method provide an
 acceptable replacement for the <code>str</code> and <code>summary</code> functions from R.</li>
-<li>The <code>.value_count</code> method is the same as the <code>table</code> function from R. If you
+<li>The <code>.value_counts</code> method is the same as the <code>table</code> function from R. If you
 just want the unique values there is the <code>unique</code> method. A notable extension
-of <code>value_count</code> is the <code>crosstab</code> function which returns a table with the
+of <code>value_counts</code> is the <code>crosstab</code> function which returns a table with the
 value count across multiple variables. Both the cross and regular tables are
 data frames themselves and can be used in subsequent calculations.</li>
 <li>Most base R statistical functions are available as methods on <code>DataFrame</code>
@@ -398,6 +403,41 @@ method. There are similar methods for <code>_json</code> in newer versions of pa
 There is the <code>copy</code> method to help you a lot of the time.</li>
 </ul>
 </div>
+
+<div id="outline-container-org15a9e04" class="outline-4">
+<h4 id="org15a9e04">Cross tabulation</h4>
+<div class="outline-text-4" id="text-org15a9e04">
+<p>
+Assume `df` has columns `discrete<sub>a</sub>` and `discrete<sub>b</sub>`, then the following will
+cross tabulate the number of each pair.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">pd.crosstab<span style="color: #3a81c3;">(</span>df.discrete_a, df.discrete_b<span style="color: #3a81c3;">)</span>  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f28616" class="outline-4">
+<h4 id="org1f28616">Filtering by column values</h4>
+<div class="outline-text-4" id="text-org1f28616">
+<p>
+Given a data frame, `gapminder`, with a column called `year` the following will
+select only the rows corresponding to the year 2002.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #715ab1;">gapminder_not_2002</span> = gapminder<span style="color: #3a81c3;">[</span>gapminder.year != <span style="color: #4e3163;">2002</span><span style="color: #3a81c3;">]</span>
+</pre>
+</div>
+
+<p>
+Note that you might want to use a copy of `gapminder` here as this appears to
+only return a view of the data.
+</p>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgd8ec963" class="outline-3">
@@ -429,7 +469,7 @@ hist. Legends need to be added seperately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-19 Mon 09:37</p>
+<p class="date">Created: 2020-11-18 Wed 11:35</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
