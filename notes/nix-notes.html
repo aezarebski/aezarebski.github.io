@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-18 Wed 11:35 -->
+<!-- 2020-11-19 Thu 15:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -240,7 +240,7 @@
 <h2 id="org7524ab8">Nix notes</h2>
 <div class="outline-text-2" id="text-org7524ab8">
 
-<div id="orgc8ab18c" class="figure">
+<div id="org0098f3d" class="figure">
 <p><img src="../images/nix-logo.png" alt="nix-logo.png" />
 </p>
 </div>
@@ -302,7 +302,36 @@ there.</li>
 <div id="outline-container-orgb2fa62d" class="outline-3">
 <h3 id="orgb2fa62d">Rough notes</h3>
 <div class="outline-text-3" id="text-orgb2fa62d">
+<p>
+The following script when run will drop you into an R session which in this case
+uses R version 4.0.2 but by changing the commit you can get into several other
+versions of R
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! /usr/bin/</span><span style="color: #3a81c3; font-weight: bold;">env</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> nix-shell</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! nix-shell --pure -i R -p R</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/14cf906f33c39d38741062df2cca0b0575b210ff.tar.gz</span>
+</pre>
+</div>
+
+<p>
+Try replacing the commit with these values and see what version of R you find.
+</p>
+
+<pre class="example">
+14cf906f33c39d38741062df2cca0b0575b210ff
+75f4ba05c63be3f147bcc2f7bd4ba1f029cedcb1
+f05c380a51daee53ac2edb0bac2fd5f1774e977a
+</pre>
+
 <ul class="org-ul">
+<li>The <code>--pure</code> flag means that a shell will not inherit the bash environment
+which makes things far more reproducible, at the cost of not having all of the
+stuff you usually use. The <code>-I</code> flag is used to <i>pin</i> the nixpkgs revision so
+that you get the same package versions each time.</li>
+<li>Use <code>nix-shell</code> to create a shell with the specified packages available (and
+at the front of the path).</li>
 <li>All Haskell related material is stored in packages prefixed with the name
 <code>haskellPackage.</code>. For example, <code>ghc</code> is <code>haskellPackage.ghc</code>.</li>
 <li>Adding the following to your <code>stack.yaml</code> appears to enable development within
@@ -333,7 +362,7 @@ haskell.lib.buildStackProject <span style="color: #3a81c3;">{</span>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-11-18 Wed 11:35</p>
+<p class="date">Created: 2020-11-19 Thu 15:14</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
