@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-12 Thu 17:29 -->
+<!-- 2020-11-30 Mon 13:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -265,6 +265,12 @@
 <li><a href="#orge00bb31">What actually happens</a></li>
 </ul>
 </li>
+<li><a href="#orgbd5724f">Linear Mixed-effects Models</a>
+<ul>
+<li><a href="#org8208f20">Model derivation</a></li>
+<li><a href="#org59b6b0e">Model notation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -518,7 +524,7 @@ efficiently.
 </p>
 
 
-<div id="orga7cd2e5" class="figure">
+<div id="org01ce6cd" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -649,7 +655,7 @@ surprisingly, large enough that it would not be considered significant.
 <h4 id="orge00bb31">What actually happens</h4>
 <div class="outline-text-4" id="text-orge00bb31">
 <p>
-Let \(f_{ij}\) be the value in the $ij$-th cell of the contingency table and
+Let \(f_{ij}\) be the value in the \(ij\)-th cell of the contingency table and
 \(e_{ij}\) the expected value assuming that the observations are distributed such
 that the catagorical variables are independent. Consider the following
 statistic:
@@ -657,14 +663,76 @@ statistic:
 
 <p>
 \[
-\sum_{i,j} \frac{(f_{ij} - e_{ij})^2}{e_{ij}.
+\sum_{(i,j)} \frac{ (f_{ij} - e_{ij})^2 }{ e_{ij} }
 \]
 </p>
 
 <p>
-This statistic has a $&chi;<sup>2</sup>$-distribution with \((I-1)(J-1)\) degrees of freedom
-where \(I\) and \(J\) are the number of distinct values each variable takes.
+This statistic has a \(\chi^2\)-distribution with \((I-1)(J-1)\) degrees of
+freedom where \(I\) and \(J\) are the number of distinct values each variable
+takes.
 </p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbd5724f" class="outline-3">
+<h3 id="orgbd5724f">Linear Mixed-effects Models</h3>
+<div class="outline-text-3" id="text-orgbd5724f">
+<p>
+The Laird-Ware form of a linear mixed effect model (LMM) for the \(j\)th
+observation in the \(i\)th group of measurements is as follows:
+</p>
+
+<p>
+\[
+Y_{ij} = \beta_1 + \sum_k \beta_k X_{kij} + \sum_{k} \delta_{ki} Z_{kij} + \epsilon_{ij}.
+\]
+</p>
+
+<ul class="org-ul">
+<li>the \(\beta_k\) are the <i>fixed effect</i> coefficients and the \(X_{kij}\) the
+fixed effect covariates,</li>
+<li>the \(\delta_k\) are the <i>random effect</i> coefficients and the \(Z_{kij}\) the
+random effect covariates, it is important to note that while the \(beta_k\)
+are treated as parameters to be estimated, the \(\delta_k\) are treated as
+random variables and it is their distribution that is estimated.</li>
+<li>the \(\epsilon_{ij}\) is a random variable.</li>
+<li>the distribution of the random effect coefficients is a (zero-mean)
+multivariate normal distribution parameterised by \(\psi\) and the random
+noise \(\epsilon\) comes from a zero-mean normal distribution with variance
+parameterised by \(\sigma^2\).</li>
+</ul>
+</div>
+
+<div id="outline-container-org8208f20" class="outline-4">
+<h4 id="org8208f20">Model derivation</h4>
+<div class="outline-text-4" id="text-org8208f20">
+<p>
+One way to go about deriving a LMM for a particular data set is to consider a
+model at the individual level and then assume some random structure on the
+parameters which varies at the group level. Expanding this out will lead to a
+model in the Laird-Ware form. The random variables in the model at the group
+level creates the random effects terms in the Laird-Ware form where the constant
+parts of the parameters form the fixed effects.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org59b6b0e" class="outline-4">
+<h4 id="org59b6b0e">Model notation</h4>
+<div class="outline-text-4" id="text-org59b6b0e">
+<p>
+The <code>lme4</code> package in R introduces some syntax for describing these models. 
+</p>
+
+<ul class="org-ul">
+<li><code>(expr | factor)</code> is used to indicate that the expression <code>expr</code> represents
+random effects and that these values should be common across <code>factor</code>. By
+default, this assumes that there are correlations between the random effects.</li>
+<li><code>(expr || factor)</code> is another way to specify that the <code>expr</code> are random
+effects, but assumes that they are uncorrelated.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -672,7 +740,7 @@ where \(I\) and \(J\) are the number of distinct values each variable takes.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-11-12 Thu 17:29</p>
+<p class="date">Created: 2020-11-30 Mon 13:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
