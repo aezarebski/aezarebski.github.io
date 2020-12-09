@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-08 Tue 18:24 -->
+<!-- 2020-12-09 Wed 18:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -236,6 +236,7 @@
 <li><a href="#orgcf34c3d">A reproducible R environment</a></li>
 </ul>
 </li>
+<li><a href="#org2daf160">Nix as a language</a></li>
 <li><a href="#orgb2fa62d">Rough notes</a></li>
 </ul>
 </div>
@@ -245,7 +246,7 @@
 <h2 id="org7524ab8">Nix notes</h2>
 <div class="outline-text-2" id="text-org7524ab8">
 
-<div id="org58332ea" class="figure">
+<div id="org634eff6" class="figure">
 <p><img src="../images/nix-logo.png" alt="nix-logo.png" />
 </p>
 </div>
@@ -337,10 +338,6 @@ the shell it will be gone.
 <div id="outline-container-orgcf34c3d" class="outline-3">
 <h3 id="orgcf34c3d">A reproducible R environment</h3>
 <div class="outline-text-3" id="text-orgcf34c3d">
-</div>
-<div id="outline-container-org680467f" class="outline-4">
-<h4 id="org680467f"><span class="todo TODO">TODO</span> Fix the missing fonts in this environment!</h4>
-<div class="outline-text-4" id="text-org680467f">
 <p>
 The following provides a shell with a pinned version of R and the packages
 <code>dplyr</code> and <code>ggplot2</code>, other packages can be found at <code>search.nixos.org</code>. A
@@ -352,24 +349,56 @@ choosing a commit, see the listed versions <a href="https://status.nixos.org/">s
 <div class="org-src-container">
 <pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">shell.nix</span>
 <span style="color: #3a81c3; font-weight: bold;">let</span>
-  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/c92939889627636e62f7c8c01d29b2a2e462f56f.tar.gz"</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
-<span style="color: #3a81c3; font-weight: bold;">in</span>
-  pkgs.mkShell <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
+  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
+<span style="color: #3a81c3; font-weight: bold;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
     <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"example-r-env"</span>;
-    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3; font-weight: bold;">with</span> pkgs; <span style="color: #6c3163;">[</span>
+    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3; font-weight: bold;">else</span> nix;
+
+    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
       R
-      rPackages.dplyr
-      rPackages.purrr
-      rPackages.magrittr
-      rPackages.ggplot2
-    <span style="color: #6c3163;">]</span>;
+      dplyr
+      purrr
+      magrittr
+      ggplot2
+    <span style="color: #2d9574;">]</span>;
    <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
 <span style="color: #2d9574;">             printf "\n\nWelcome to a reproducible R shell :)\n\n"</span>
 <span style="color: #2d9574;">      ''</span>;
-  <span style="color: #3a81c3;">}</span>
+  <span style="color: #6c3163;">}</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org413d4ca" class="outline-4">
+<h4 id="org413d4ca">Testing fonts work</h4>
+<div class="outline-text-4" id="text-org413d4ca">
+<p>
+I have had some trouble getting fonts to work properly with nix, if the
+following produces sensible output then you are probably in the clear.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"foo.png"</span><span style="color: #3a81c3;">)</span>; plot<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span>; dev.off<span style="color: #3a81c3;">()</span>
 </pre>
 </div>
 
+<p>
+The missing fonts appear to be an issue with <code>R-3.6.2</code> but not with <code>R-4.0.2</code>,
+so it might just be that I was using an older version when I hit the missing
+font problem. Recall that you can see the latest commits at <a href="https://status.nixos.org/">status.nixos.org</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3aaa485" class="outline-4">
+<h4 id="org3aaa485">Using this with ESS</h4>
+<div class="outline-text-4" id="text-org3aaa485">
 <p>
 If you want to use ESS with nix, you'll need to let it know that you want to use
 the R that comes with the nix shell. To do this open a shell with <code>M-x shell</code>
@@ -379,6 +408,16 @@ select the R dialect.
 </p>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org2daf160" class="outline-2">
+<h2 id="org2daf160">Nix as a language</h2>
+<div class="outline-text-2" id="text-org2daf160">
+<p>
+There is a repl which you can start with <code>nix repl</code> to play around with
+expressions to see if they behave as expected.
+</p>
 </div>
 </div>
 
@@ -448,7 +487,7 @@ haskell.lib.buildStackProject <span style="color: #3a81c3;">{</span>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-12-08 Tue 18:24</p>
+<p class="date">Created: 2020-12-09 Wed 18:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

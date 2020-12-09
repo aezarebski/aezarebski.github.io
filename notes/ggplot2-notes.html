@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-19 Mon 09:37 -->
+<!-- 2020-12-09 Wed 18:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -232,6 +232,7 @@
 <li><a href="#orgae458aa">Moving the legend around</a></li>
 <li><a href="#org508e5d6">Plotting mathematical functions</a></li>
 <li><a href="#org49fd561">Annotation for a linear model</a></li>
+<li><a href="#orgafe04d3">Fun with facet labels</a></li>
 </ul>
 </li>
 <li><a href="#org9008f8a">Installation and usage</a>
@@ -252,7 +253,7 @@
 <h2 id="org5a5897f">ggplot2 notes</h2>
 <div class="outline-text-2" id="text-org5a5897f">
 
-<div id="org145f67a" class="figure">
+<div id="org4fbc91a" class="figure">
 <p><img src="../images/ggplot2-logo.png" alt="ggplot2-logo.png" />
 </p>
 </div>
@@ -514,6 +515,44 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../re
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgafe04d3" class="outline-4">
+<h4 id="orgafe04d3">Fun with facet labels</h4>
+<div class="outline-text-4" id="text-orgafe04d3">
+<div class="figure">
+<p><img width=600px src="../resources/ggplot2-example-06.png">
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+
+plot_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> iris <span style="color: #715ab1;">%&gt;%</span> select<span style="color: #3a81c3;">(</span>Petal.Length, Species<span style="color: #3a81c3;">)</span>
+
+facet_labels <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span>
+  setosa = <span style="color: #2d9574;">"Setosa"</span>,
+  versicolor = <span style="color: #2d9574;">"Versicolor"</span>,
+  virginica = <span style="color: #2d9574;">"Verginica"</span>
+<span style="color: #3a81c3;">)</span>
+
+g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>plot_df, aes<span style="color: #6c3163;">(</span>x = Petal.Length<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
+    mapping = aes<span style="color: #6c3163;">(</span>y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">7</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_density<span style="color: #3a81c3;">()</span> +
+  facet_wrap<span style="color: #3a81c3;">(</span>~Species,
+    scales = <span style="color: #2d9574;">"free"</span>,
+    labeller = labeller<span style="color: #6c3163;">(</span>Species = facet_labels<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span>
+
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-06.png"</span>,
+       g<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org9008f8a" class="outline-3">
@@ -535,7 +574,7 @@ Ubuntu, this requred me to install <code>libcairo2-dev</code>.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-19 Mon 09:37</p>
+<p class="date">Created: 2020-12-09 Wed 18:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
