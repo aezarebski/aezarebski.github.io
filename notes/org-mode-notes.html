@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-25 Wed 17:53 -->
+<!-- 2020-12-17 Thu 10:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -328,13 +328,54 @@ file.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #da8b55;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../css/stylesheet.css" /&gt;</span>
+<pre class="src src-org"><span style="color: #9f8766;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../css/stylesheet.css" /&gt;</span>
 </pre>
 </div>
 
 <p>
 If you were to use a different CSS file you would need to change the <code>href</code>.
 </p>
+</div>
+</div>
+
+<div id="outline-container-org7145e20" class="outline-3">
+<h3 id="org7145e20">Publishing this site</h3>
+<div class="outline-text-3" id="text-org7145e20">
+<p>
+The following script can be used to generate this site. For some reason though
+this seems to break the syntax highlighting sometimes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">emacs --no-init-file --script demo.el</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> '<span style="color: #a45bad;">ox-publish</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-publish-project-alist
+      '<span style="color: #bc6ec5;">(</span>
+        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org-notes"</span>
+         <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
+         <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"org"</span>
+         <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
+         <span style="color: #4f97d7;">:recursive</span> t
+         <span style="color: #4f97d7;">:publishing-function</span> org-html-publish-to-html
+         <span style="color: #4f97d7;">:headline-levels</span> <span style="color: #a45bad;">4</span>
+         <span style="color: #4f97d7;">:auto-preamble</span> t
+         <span style="color: #2d9574;">)</span>
+        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org-static"</span>
+         <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
+         <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"css</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">js</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">png</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">jpg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">gif</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">pdf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">mp3</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">ogg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">swf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">txt</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">cur</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">svg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">csv</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">json"</span>
+         <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
+         <span style="color: #4f97d7;">:recursive</span> t
+         <span style="color: #4f97d7;">:publishing-function</span> org-publish-attachment
+         <span style="color: #2d9574;">)</span>
+        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org"</span>
+         <span style="color: #4f97d7;">:components</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"org-notes"</span> <span style="color: #2d9574;">"org-static"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span>message <span style="color: #2d9574;">"hello"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>org-publish <span style="color: #2d9574;">"org"</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
 </div>
 </div>
 
@@ -347,24 +388,24 @@ that
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org">Evaluate an expression and cache the values as <span style="color: #3a81c3;">=x=</span>.
+<pre class="src src-org">Evaluate an expression and cache the values as <span style="color: #4f97d7;">=x=</span>.
 
-<span style="color: #da8b55;">#+name: x</span>
+<span style="color: #9f8766;">#+name: x</span>
 \#+begin_src R :cache yes
 mean(1:10)
 \#+end_src
 
-<span style="color: #da8b55;">#+RESULTS[57c60ad6be3794c58f0a94dc3c107a692489cb2b]: x</span>
-<span style="color: #21b8c7;">: 5.5</span>
+<span style="color: #9f8766;">#+RESULTS[57c60ad6be3794c58f0a94dc3c107a692489cb2b]: x</span>
+<span style="color: #28def0;">: 5.5</span>
 
-Carry out an action using the variable <span style="color: #3a81c3;">=x=</span>
+Carry out an action using the variable <span style="color: #4f97d7;">=x=</span>
 
 \#+begin_src R :var x = x
 print(x)
 \#+end_src
 
-<span style="color: #da8b55;">#+RESULTS:</span>
-<span style="color: #21b8c7;">: 5.5</span>
+<span style="color: #9f8766;">#+RESULTS:</span>
+<span style="color: #28def0;">: 5.5</span>
 </pre>
 </div>
 </div>
@@ -432,12 +473,12 @@ Tangling this produces the following JSON
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #3a81c3;">{</span>
+<pre class="src src-javascript"><span style="color: #4f97d7;">{</span>
     <span style="color: #2d9574;">"fleeb"</span>: 
-        <span style="color: #6c3163;">{</span>
+        <span style="color: #bc6ec5;">{</span>
             <span style="color: #2d9574;">"foo"</span>: <span style="color: #2d9574;">"bar"</span>
-        <span style="color: #6c3163;">}</span>
-<span style="color: #3a81c3;">}</span>
+        <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
 </pre>
 </div>
 </div>
@@ -498,7 +539,7 @@ Define a macro at the top of the file
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #da8b55;">#+MACRO: name   replacement text $1, $2 are arguments</span>
+<pre class="src src-org"><span style="color: #9f8766;">#+MACRO: name   replacement text $1, $2 are arguments</span>
 </pre>
 </div>
 
@@ -534,9 +575,9 @@ days ago and over a 30 day span in total.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #2d9574;">"-3d"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-span <span style="color: #4e3163;">30</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil<span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #2d9574;">"-3d"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-agenda-span <span style="color: #a45bad;">30</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -548,7 +589,7 @@ to use customise to set these variables.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-todo-keywords '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #dc752f;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #42ae2c;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp">'<span style="color: #4f97d7;">(</span>org-todo-keywords '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #dc752f;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #86dc2f;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -573,12 +614,12 @@ There is good documentation for this variable, I use the following setting
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-link-frame-setup
-  '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>vm . vm-visit-folder-other-frame<span style="color: #2d9574;">)</span>
+<pre class="src src-emacs-lisp">'<span style="color: #4f97d7;">(</span>org-link-frame-setup
+  '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>vm . vm-visit-folder-other-frame<span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span>vm-imap . vm-visit-imap-folder-other-frame<span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span>gnus . org-gnus-no-new-news<span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span>file . find-file<span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>wl . wl-other-frame<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+    <span style="color: #2d9574;">(</span>wl . wl-other-frame<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -587,7 +628,7 @@ There is good documentation for this variable, I use the following setting
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-11-25 Wed 17:53</p>
+<p class="date">Created: 2020-12-17 Thu 10:11</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
