@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-18 Fri 14:45 -->
+<!-- 2020-12-23 Wed 16:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -216,6 +216,28 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -271,8 +293,7 @@
 
 <p>
 Use <code>rlineage</code> to simulate the complete tree. To get the sub-tree consisting of
-just those that made it to the present use <code>drop.fossils</code>. To get the depth of
-each of the nodes in the tree use <code>node.depth.edgelength</code>. If you want to filter
+just those that made it to the present use <code>drop.fossils</code>. If you want to filter
 for particular nodes, there is <code>keep.tip</code> and <code>drop.tip</code>.
 </p>
 
@@ -281,6 +302,34 @@ There is a <code>plot.phylo</code> method and <code>ltt.plot</code> which can be
 visualisations of a phylogeny, but for publication quality figures you probably
 want to use Ggtree.
 </p>
+</div>
+
+<div id="outline-container-orgbeefa03" class="outline-4">
+<h4 id="orgbeefa03">The <code>phylo</code> class</h4>
+<div class="outline-text-4" id="text-orgbeefa03">
+<p>
+The <code>phylo</code> class is pretty much the defacto standard for representing
+phylogenies in R. A phylogeny with \(n\) tips is represented as a <code>phylo</code> which
+has the following attributes:
+</p>
+
+<ul class="org-ul">
+<li><code>Nnode</code> is the number of internal nodes in the tree,</li>
+<li><code>tip.label</code> is a string indicating the name of each tip,</li>
+<li><code>edge</code> is a matrix with two columns where a row, \([i,j]\), indicates an edge
+from node \(i\) to node \(j\),</li>
+<li><code>edge.length</code> is an array where element is the length of an edge in the
+corresponding row of the <code>edge</code> matrix.</li>
+</ul>
+
+<p>
+<b>Note</b> that the indexing of the nodes of the tree is \(1\) to \(n\) for the tips
+and the internal nodes get allocated the integers \(n+1,n+2,\dots\). You do not
+want to reconstruct the tree from this information yourself though so <code>ape</code>
+offers convenience functions such as <code>node.depth.edgelength</code> which gives you the
+depths from the TMRCA down to each node.
+</p>
+</div>
 </div>
 </div>
 
@@ -312,7 +361,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-12-18 Fri 14:45</p>
+<p class="date">Created: 2020-12-23 Wed 16:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
