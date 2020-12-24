@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-09 Wed 18:39 -->
+<!-- 2020-12-24 Thu 13:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -219,57 +219,50 @@
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org5a5897f">ggplot2 notes</a>
-<ul>
-<li><a href="#org874a969">Examples</a>
-<ul>
-<li><a href="#org1410a55">Using <code>cowplot</code> to get a grid of figures</a></li>
-<li><a href="#org5474b43">Map of Italy using spatial data</a></li>
-<li><a href="#orgae458aa">Moving the legend around</a></li>
-<li><a href="#org508e5d6">Plotting mathematical functions</a></li>
-<li><a href="#org49fd561">Annotation for a linear model</a></li>
-<li><a href="#orgafe04d3">Fun with facet labels</a></li>
-</ul>
-</li>
-<li><a href="#org9008f8a">Installation and usage</a>
-<ul>
-<li><a href="#org883dd76">Saving figures to SVG</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+<h1 class="title">aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org5a5897f" class="outline-2">
-<h2 id="org5a5897f">ggplot2 notes</h2>
-<div class="outline-text-2" id="text-org5a5897f">
+<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
+<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
 
-<div id="org4fbc91a" class="figure">
+<script>
+    function setStyleSheet(url){
+       var stylesheet = document.getElementById("stylesheet");
+       stylesheet.setAttribute('href', url);
+    }
+</script>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcab3a5d"><code>ggplot2</code> and friends&#x2026;</a>
+<ul>
+<li><a href="#org874a969">Examples</a></li>
+<li><a href="#org9008f8a">Installation and usage</a></li>
+<li><a href="#org7b6bd01">Resources/references</a></li>
+<li><a href="#orgcd88255">Colophon</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="org3617a6f" class="figure">
 <p><img src="../images/ggplot2-logo.png" alt="ggplot2-logo.png" />
 </p>
 </div>
 
-
-<div class="grid-container">
-
-<div class="figure grid-figure">
-<img width=400px src="../images/ggplot-line-styles.png">
-</div>
-
-<div class="figure grid-figure">
-<img width=400px src="../images/ggplot-point-shapes.png">
-</div>
-
-</div>
+<div id="outline-container-orgcab3a5d" class="outline-2">
+<h2 id="orgcab3a5d"><code>ggplot2</code> and friends&#x2026;</h2>
+<div class="outline-text-2" id="text-orgcab3a5d">
+<p>
+The friends include <code>ggmap</code> and <code>ggtree</code> and <code>cowplot</code> and <code>ggspatial</code> and
+<code>latex2exp</code>
+</p>
 </div>
 
 <div id="outline-container-org874a969" class="outline-3">
@@ -306,12 +299,12 @@ example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_
                           b + theme<span style="color: #6c3163;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #6c3163;">)</span>,
                           legend,
                           ncol = <span style="color: #4e3163;">3</span>,
-                          rel_widths = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">0.25</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+                          rel_widths = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">0.35</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
 ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-01.png"</span>,
        example_plot,
-       width = <span style="color: #4e3163;">14.8</span>,
-       height = <span style="color: #4e3163;">10.5</span>,
+       width = <span style="color: #4e3163;">20</span>,
+       height = <span style="color: #4e3163;">10</span>,
        units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
@@ -570,11 +563,82 @@ Ubuntu, this requred me to install <code>libcairo2-dev</code>.
 </div>
 </div>
 </div>
+
+<div id="outline-container-org7b6bd01" class="outline-3">
+<h3 id="org7b6bd01">Resources/references</h3>
+<div class="outline-text-3" id="text-org7b6bd01">
+<div class="grid-container">
+
+<div class="figure grid-figure">
+<img width=400px src="../images/ggplot-line-styles.png">
+</div>
+
+<div class="figure grid-figure">
+<img width=400px src="../images/ggplot-point-shapes.png">
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd88255" class="outline-3">
+<h3 id="orgcd88255">Colophon</h3>
+<div class="outline-text-3" id="text-orgcd88255">
+<p>
+The R scripts shown in this document can be tangled out and where run to
+generate the figures shown. This is done by running the following script in the
+following <a href="./nix-notes.html">nix shell</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">run-ggplot2-examples.sh</span>
+
+<span style="color: #3a81c3; font-weight: bold;">for</span> ix<span style="color: #3a81c3; font-weight: bold;"> in</span> <span style="color: #ff00ff;">`seq 1 6`</span>;
+<span style="color: #3a81c3; font-weight: bold;">do</span>
+    Rscript ggplot2-example-0$<span style="color: #715ab1;">ix</span>.R
+<span style="color: #3a81c3; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">ggplot2-shell.nix </span>
+<span style="color: #3a81c3; font-weight: bold;">let</span>
+  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
+  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
+<span style="color: #3a81c3; font-weight: bold;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"ggplot2-env"</span>;
+    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3; font-weight: bold;">else</span> nix;
+
+    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
+      R
+      rPackages.cowplot
+      rPackages.dplyr
+      rPackages.ggplot2
+      rPackages.ggspatial
+      rPackages.latex2exp
+      rPackages.magrittr
+      rPackages.purrr
+      rPackages.stringi
+      rPackages.udunits2
+    <span style="color: #2d9574;">]</span>;
+   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
+<span style="color: #2d9574;">             printf "\n\nWelcome to the ggplot2 shell :)\n\n"</span>
+<span style="color: #2d9574;">      ''</span>;
+  <span style="color: #6c3163;">}</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-12-09 Wed 18:39</p>
+<p class="date">Created: 2020-12-24 Thu 13:00</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
