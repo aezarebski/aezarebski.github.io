@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-29 Sun 21:51 -->
+<!-- 2020-12-28 Mon 12:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="alex" />
+<meta name="author" content="Alex Zarebski" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,25 +223,25 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc0eb832">Maxima notes</a>
+<li><a href="#org34a1f50">Maxima notes</a>
 <ul>
-<li><a href="#orgfb53d74">Emacs interface to Maxima</a></li>
-<li><a href="#orgeda82a5">Plotting</a></li>
-<li><a href="#orgae38f3c">Programming in Maxima</a>
+<li><a href="#org684775b">Emacs interface to Maxima</a></li>
+<li><a href="#orga7f6f18">Plotting</a></li>
+<li><a href="#orgd14cfca">Programming in Maxima</a>
 <ul>
-<li><a href="#orgb686f3d">Getting help</a></li>
-<li><a href="#orga650f59">Removing existing definitions</a></li>
-<li><a href="#org99bdcb7">Lists</a></li>
-<li><a href="#orgd4f5ec1">Evaluation</a></li>
-<li><a href="#org0387c81">Packages</a></li>
-<li><a href="#orga7c730b">Expressions and the REPL</a></li>
+<li><a href="#orga7e5071">Getting help</a></li>
+<li><a href="#org355cf96">Removing existing definitions</a></li>
+<li><a href="#org156c5cf">Lists</a></li>
+<li><a href="#org55a5827">Evaluation</a></li>
+<li><a href="#org775fe6a">Packages</a></li>
+<li><a href="#org9ee0ba5">Expressions and the REPL</a></li>
 </ul>
 </li>
-<li><a href="#orgce5d97f">Quick reference for mathematics</a>
+<li><a href="#org5524f53">Quick reference for mathematics</a>
 <ul>
-<li><a href="#orgd284b96">Algebra</a></li>
-<li><a href="#orgabfb8f7">Series</a></li>
-<li><a href="#org4ab494d">Differential equations</a></li>
+<li><a href="#org06d235c">Algebra</a></li>
+<li><a href="#orga9d9b67">Series</a></li>
+<li><a href="#orgc1b716a">Differential equations</a></li>
 </ul>
 </li>
 </ul>
@@ -277,11 +253,11 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgc0eb832" class="outline-2">
-<h2 id="orgc0eb832">Maxima notes</h2>
-<div class="outline-text-2" id="text-orgc0eb832">
+<div id="outline-container-org34a1f50" class="outline-2">
+<h2 id="org34a1f50">Maxima notes</h2>
+<div class="outline-text-2" id="text-org34a1f50">
 
-<div class="figure">
+<div id="org7d4749c" class="figure">
 <p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
 </p>
 </div>
@@ -291,21 +267,21 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-orgfb53d74" class="outline-3">
-<h3 id="orgfb53d74">Emacs interface to Maxima</h3>
-<div class="outline-text-3" id="text-orgfb53d74">
+<div id="outline-container-org684775b" class="outline-3">
+<h3 id="org684775b">Emacs interface to Maxima</h3>
+<div class="outline-text-3" id="text-org684775b">
 <p>
 Add the following to your configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #2aa1ae;">"Maxima mode"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #2aa1ae;">"Frontend for maxima with Image support"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #2aa1ae;">"Maxima interaction"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #2aa1ae;">"Imath mode for math formula input"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>add-to-list 'auto-mode-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima mode"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #da8b55;">"Frontend for maxima with Image support"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima interaction"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #da8b55;">"Imath mode for math formula input"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>add-to-list 'auto-mode-alist '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -322,7 +298,7 @@ The output type is determined by the value of the <code>display2d</code> variabl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">display2d: true;
+<pre class="src src-maxima"><span style="color: #3a81c3; font-weight: bold;">display2d:</span> <span style="color: #4e3163;">true</span>;
 </pre>
 </div>
 
@@ -332,33 +308,33 @@ If you want to change the font size for the latex output, modify the (customisab
 </div>
 </div>
 
-<div id="outline-container-orgeda82a5" class="outline-3">
-<h3 id="orgeda82a5">Plotting</h3>
-<div class="outline-text-3" id="text-orgeda82a5">
+<div id="outline-container-orga7f6f18" class="outline-3">
+<h3 id="orga7f6f18">Plotting</h3>
+<div class="outline-text-3" id="text-orga7f6f18">
 <p>
 Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plot!
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">plot2d(sin(x), [x,0,2%pi])$ 
+<pre class="src src-maxima"><span style="color: #3a81c3;">plot2d</span>(<span style="color: #3a81c3;">sin</span>(x), [x,<span style="color: #4e3163;">0</span>,2%pi])$ 
 </pre>
 </div>
 
 
-<div class="figure">
+<div id="org819f312" class="figure">
 <p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgae38f3c" class="outline-3">
-<h3 id="orgae38f3c">Programming in Maxima</h3>
-<div class="outline-text-3" id="text-orgae38f3c">
+<div id="outline-container-orgd14cfca" class="outline-3">
+<h3 id="orgd14cfca">Programming in Maxima</h3>
+<div class="outline-text-3" id="text-orgd14cfca">
 </div>
-<div id="outline-container-orgb686f3d" class="outline-4">
-<h4 id="orgb686f3d">Getting help</h4>
-<div class="outline-text-4" id="text-orgb686f3d">
+<div id="outline-container-orga7e5071" class="outline-4">
+<h4 id="orga7e5071">Getting help</h4>
+<div class="outline-text-4" id="text-orga7e5071">
 <p>
 There is a the <code>example</code> function which can be used to get examples of the usage of a function.
 There is the <code>? &lt;function&gt;;</code> to get the documentation for a function.
@@ -366,20 +342,20 @@ There is the <code>? &lt;function&gt;;</code> to get the documentation for a fun
 </div>
 </div>
 
-<div id="outline-container-orga650f59" class="outline-4">
-<h4 id="orga650f59">Removing existing definitions</h4>
-<div class="outline-text-4" id="text-orga650f59">
+<div id="outline-container-org355cf96" class="outline-4">
+<h4 id="org355cf96">Removing existing definitions</h4>
+<div class="outline-text-4" id="text-org355cf96">
 <div class="org-src-container">
-<pre class="src src-maxima">restart();
-kill(all);
+<pre class="src src-maxima"><span style="color: #3a81c3;">restart</span>();
+<span style="color: #3a81c3;">kill</span>(<span style="color: #3a81c3; font-weight: bold;">all</span>);
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org99bdcb7" class="outline-4">
-<h4 id="org99bdcb7">Lists</h4>
-<div class="outline-text-4" id="text-org99bdcb7">
+<div id="outline-container-org156c5cf" class="outline-4">
+<h4 id="org156c5cf">Lists</h4>
+<div class="outline-text-4" id="text-org156c5cf">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -424,30 +400,30 @@ kill(all);
 </div>
 </div>
 
-<div id="outline-container-orgd4f5ec1" class="outline-4">
-<h4 id="orgd4f5ec1">Evaluation</h4>
-<div class="outline-text-4" id="text-orgd4f5ec1">
+<div id="outline-container-org55a5827" class="outline-4">
+<h4 id="org55a5827">Evaluation</h4>
+<div class="outline-text-4" id="text-org55a5827">
 <p>
 To force the evaluation of an expression before binding it to the value of a function use the <code>define</code> function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">define(fdash(x), diff(f(x), x));
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(fdash(x), <span style="color: #3a81c3;">diff</span>(f(x), x));
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0387c81" class="outline-4">
-<h4 id="org0387c81">Packages</h4>
-<div class="outline-text-4" id="text-org0387c81">
+<div id="outline-container-org775fe6a" class="outline-4">
+<h4 id="org775fe6a">Packages</h4>
+<div class="outline-text-4" id="text-org775fe6a">
 <p>
 Use the <code>load</code> command to load packages.
 For example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">load("distrib");
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #2d9574;">"distrib"</span>);
 </pre>
 </div>
 
@@ -458,9 +434,9 @@ The <code>f90</code> package exports the function <code>f90</code> which will co
 </div>
 </div>
 
-<div id="outline-container-orga7c730b" class="outline-4">
-<h4 id="orga7c730b">Expressions and the REPL</h4>
-<div class="outline-text-4" id="text-orga7c730b">
+<div id="outline-container-org9ee0ba5" class="outline-4">
+<h4 id="org9ee0ba5">Expressions and the REPL</h4>
+<div class="outline-text-4" id="text-org9ee0ba5">
 <p>
 You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>.
 </p>
@@ -468,13 +444,13 @@ You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>
 </div>
 </div>
 
-<div id="outline-container-orgce5d97f" class="outline-3">
-<h3 id="orgce5d97f">Quick reference for mathematics</h3>
-<div class="outline-text-3" id="text-orgce5d97f">
+<div id="outline-container-org5524f53" class="outline-3">
+<h3 id="org5524f53">Quick reference for mathematics</h3>
+<div class="outline-text-3" id="text-org5524f53">
 </div>
-<div id="outline-container-orgd284b96" class="outline-4">
-<h4 id="orgd284b96">Algebra</h4>
-<div class="outline-text-4" id="text-orgd284b96">
+<div id="outline-container-org06d235c" class="outline-4">
+<h4 id="org06d235c">Algebra</h4>
+<div class="outline-text-4" id="text-org06d235c">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -533,9 +509,9 @@ You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>
 </div>
 </div>
 
-<div id="outline-container-orgabfb8f7" class="outline-4">
-<h4 id="orgabfb8f7">Series</h4>
-<div class="outline-text-4" id="text-orgabfb8f7">
+<div id="outline-container-orga9d9b67" class="outline-4">
+<h4 id="orga9d9b67">Series</h4>
+<div class="outline-text-4" id="text-orga9d9b67">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -564,9 +540,9 @@ You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>
 </div>
 </div>
 
-<div id="outline-container-org4ab494d" class="outline-4">
-<h4 id="org4ab494d">Differential equations</h4>
-<div class="outline-text-4" id="text-org4ab494d">
+<div id="outline-container-orgc1b716a" class="outline-4">
+<h4 id="orgc1b716a">Differential equations</h4>
+<div class="outline-text-4" id="text-orgc1b716a">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -628,9 +604,9 @@ You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: alex</p>
-<p class="date">Created: 2020-03-29 Sun 21:51</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2020-12-28 Mon 12:00</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
