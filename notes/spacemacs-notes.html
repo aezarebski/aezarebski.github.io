@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-28 Mon 12:00 -->
+<!-- 2021-01-05 Tue 19:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -220,6 +220,20 @@
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
+<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
+
+<script>
+    function setStyleSheet(url){
+       var stylesheet = document.getElementById("stylesheet");
+       stylesheet.setAttribute('href', url);
+    }
+</script>
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -230,19 +244,19 @@
 <li><a href="#org671ec82">Keyboard macros</a></li>
 <li><a href="#orga07b0c2">Jargon</a></li>
 <li><a href="#org0ac6a8a">The daemon and the client</a></li>
-<li><a href="#orgc4e6835">Documentation</a>
+<li><a href="#orgc4e6835">Documentation</a></li>
+</ul>
+</li>
+<li><a href="#orgaa0e481">Emacs Lisp</a>
 <ul>
-<li><a href="#org257c9d1">Documentation on debugging</a></li>
+<li><a href="#orgf7d6766">JSON</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#orgaa0e481">Emacs Lisp</a></li>
 <li><a href="#org9c2ca18">Spacemacs</a>
 <ul>
-<li><a href="#orge67b8a8">Configuration</a></li>
+<li><a href="#org074082a">Configuration</a></li>
 <li><a href="#orgad804d2">Startup</a></li>
-<li><a href="#org59d275a">Shortcuts</a></li>
+<li><a href="#org239fb72">Shortcuts</a></li>
 </ul>
 </li>
 <li><a href="#orgace1377">Miscellaneous</a>
@@ -251,27 +265,10 @@
 <li><a href="#orgcb3748e">Change Logs</a></li>
 <li><a href="#orge3ca8f1">Dired</a></li>
 <li><a href="#org159ca49">iBuffer</a></li>
-<li><a href="#org8a7e9b9">Elfeed</a>
-<ul>
-<li><a href="#org239fb72">Shortcuts</a></li>
-<li><a href="#org062260b">Configuration</a></li>
-<li><a href="#org6680a59">Automatic tagging of entries</a></li>
-</ul>
-</li>
-<li><a href="#orgdf3b7e0">Eshell</a>
-<ul>
-<li><a href="#org579510f">IO</a></li>
-<li><a href="#org0b6dbf3">Alias</a></li>
-<li><a href="#orgcf06248">Configuration</a></li>
-</ul>
-</li>
+<li><a href="#org8a7e9b9">Elfeed</a></li>
+<li><a href="#orgdf3b7e0">Eshell</a></li>
 <li><a href="#orgcba9c32">Magit</a></li>
-<li><a href="#org6f6e13e">Spell checking</a>
-<ul>
-<li><a href="#org074082a">Configuration</a></li>
-<li><a href="#orgf80a400">Usage</a></li>
-</ul>
-</li>
+<li><a href="#org6f6e13e">Spell checking</a></li>
 <li><a href="#org8c52584">Spray</a></li>
 <li><a href="#org02cfc99">Yasnippet</a></li>
 </ul>
@@ -279,12 +276,9 @@
 </ul>
 </div>
 </div>
-<p>
-<a href="../index.html">Home</a>
-</p>
 
 
-<div id="org5db1b6c" class="figure">
+<div id="org6212fff" class="figure">
 <p><img src="../images/emacs-logo.png" alt="emacs-logo.png" />
 </p>
 </div>
@@ -372,15 +366,40 @@ the use of the built-in debugging facilities.
 
 <div id="outline-container-orgaa0e481" class="outline-2">
 <h2 id="orgaa0e481">Emacs Lisp</h2>
+<div class="outline-text-2" id="text-orgaa0e481">
+</div>
+<div id="outline-container-orgf7d6766" class="outline-3">
+<h3 id="orgf7d6766">JSON</h3>
+<div class="outline-text-3" id="text-orgf7d6766">
+<p>
+For parsing and encoding to JSON there is the <a href="https://github.com/emacs-mirror/emacs/blob/master/lisp/json.el"><code>json.el</code></a> package.
+</p>
+</div>
+
+<div id="outline-container-orgd79e224" class="outline-4">
+<h4 id="orgd79e224">Examples</h4>
+<div class="outline-text-4" id="text-orgd79e224">
+<p>
+Open up a REPL in emacs and try the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>json-encode '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"a"</span> . <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"b"</span> . <span style="color: #2d9574;">"c"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>json-read-from-string <span style="color: #2d9574;">"{\"a\":1,\"b\":\"c\"}"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org9c2ca18" class="outline-2">
 <h2 id="org9c2ca18">Spacemacs</h2>
 <div class="outline-text-2" id="text-org9c2ca18">
 </div>
-<div id="outline-container-orge67b8a8" class="outline-3">
-<h3 id="orge67b8a8">Configuration</h3>
-<div class="outline-text-3" id="text-orge67b8a8">
+<div id="outline-container-org074082a" class="outline-3">
+<h3 id="org074082a">Configuration</h3>
+<div class="outline-text-3" id="text-org074082a">
 <p>
 My configuration for spacemacs is available as an org-mode file <a href="https://github.com/aezarebski/nicemacs">here</a>.
 </p>
@@ -409,9 +428,9 @@ Here is the <a href="../images/skull.png">image</a> I use.
 </div>
 </div>
 
-<div id="outline-container-org59d275a" class="outline-3">
-<h3 id="org59d275a">Shortcuts</h3>
-<div class="outline-text-3" id="text-org59d275a">
+<div id="outline-container-org239fb72" class="outline-3">
+<h3 id="org239fb72">Shortcuts</h3>
+<div class="outline-text-3" id="text-org239fb72">
 <p>
 To open your <code>.spacemacs</code> file use <code>SPC f e d</code> and to reload the dot file <code>SPC f
 e R</code>. For somethings you need a full restart though, <code>SPC q r</code>.
@@ -602,9 +621,9 @@ Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </p>
 </div>
 
-<div id="outline-container-org239fb72" class="outline-4">
-<h4 id="org239fb72">Shortcuts</h4>
-<div class="outline-text-4" id="text-org239fb72">
+<div id="outline-container-orgb2fedaf" class="outline-4">
+<h4 id="orgb2fedaf">Shortcuts</h4>
+<div class="outline-text-4" id="text-orgb2fedaf">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -654,9 +673,9 @@ Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </div>
 </div>
 
-<div id="outline-container-org062260b" class="outline-4">
-<h4 id="org062260b">Configuration</h4>
-<div class="outline-text-4" id="text-org062260b">
+<div id="outline-container-org98dfad8" class="outline-4">
+<h4 id="org98dfad8">Configuration</h4>
+<div class="outline-text-4" id="text-org98dfad8">
 <p>
 You can put the configuration of elfeed in a seperate file and then load it from your <code>init</code>.
 In Spacemacs, this means adding the following to your <code>dotspacemacs/user-config</code>:
@@ -849,9 +868,9 @@ The following interactive command can simplify the task of checking what aliases
 </div>
 </div>
 
-<div id="outline-container-orgcf06248" class="outline-4">
-<h4 id="orgcf06248">Configuration</h4>
-<div class="outline-text-4" id="text-orgcf06248">
+<div id="outline-container-org6b800d8" class="outline-4">
+<h4 id="org6b800d8">Configuration</h4>
+<div class="outline-text-4" id="text-org6b800d8">
 <p>
 Add the following to <code>dotspacemacs-configuration-layers</code>.
 </p>
@@ -966,9 +985,9 @@ The following definition tells magit to open the status buffer in a full frame.
 <h3 id="org6f6e13e">Spell checking</h3>
 <div class="outline-text-3" id="text-org6f6e13e">
 </div>
-<div id="outline-container-org074082a" class="outline-4">
-<h4 id="org074082a">Configuration</h4>
-<div class="outline-text-4" id="text-org074082a">
+<div id="outline-container-orgf396630" class="outline-4">
+<h4 id="orgf396630">Configuration</h4>
+<div class="outline-text-4" id="text-orgf396630">
 <p>
 Add <code>spell-checking</code> to the layers list.
 By default it will look for <code>aspell</code> on the path (which is the GNU replacement for <code>ispell</code>.)
@@ -1088,7 +1107,7 @@ option.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-12-28 Mon 12:00</p>
+<p class="date">Created: 2021-01-05 Tue 19:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
