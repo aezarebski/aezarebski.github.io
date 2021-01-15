@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-03 Thu 18:53 -->
+<!-- 2021-01-15 Fri 18:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -261,6 +261,7 @@
 <li><a href="#org1d495fd">Profile likelihood function</a></li>
 <li><a href="#org95d720b">Contingency tables</a></li>
 <li><a href="#orgbd5724f">Linear Mixed-effects Models</a></li>
+<li><a href="#org5b5ba53">Moment closure for CTMC processes</a></li>
 </ul>
 </li>
 </ul>
@@ -511,7 +512,7 @@ efficiently.
 </p>
 
 
-<div id="orgc84bcad" class="figure">
+<div id="org78a660c" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -723,11 +724,82 @@ effects, but assumes that they are uncorrelated.</li>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org5b5ba53" class="outline-3">
+<h3 id="org5b5ba53">Moment closure for CTMC processes</h3>
+<div class="outline-text-3" id="text-org5b5ba53">
+<p>
+Consider a random process, \(X_t\) which is a CTMC on \(\mathbb{N}_0\) where the
+only possible transitions from \(n\) are to \(n\pm 1\), potentially with an
+absorbing state at zero. Supposing from state \(n\) the process moves to state
+\(n+1\) at rate \(a_n\) and to state \(n-1\) at rate \(b_n\) the forward
+equations for the distribution are
+</p>
+
+<p>
+\[
+\frac{d}{dt} p_n(t) = p_{n-1}(t)a_{n-1} - p_{n}(t)a_n + p_{n+1}(t)b_{n+1} - p_{n}(t)b_{n}.
+\]
+</p>
+
+<p>
+We multiple both sides of the equation through by \(n\) and sum in \(n\) over
+\(\mathbb{N}_0\) to get everything in terms of expected values of functions of
+\(X_t\). 
+</p>
+
+<p>
+\[
+\frac{d}{dt} \mathbb{E}[X_t] = \mathbb{E}[((X_t + 1) - X_t) a_{X_t}] + \mathbb{E}[((X_t - 1) - X_t) b_{X_t}] 
+\]
+</p>
+
+<p>
+The "trick" is to note that you can write the first and third sums as \(\sum
+(n+1) p_{n}(t) a_{n}\) and \(\sum (n-1) p_n b_n\). Similarly, for higher order
+moments this generalises as
+</p>
+
+<p>
+\[
+\frac{d}{dt} \mathbb{E}[X_t^k] = \mathbb{E}[((X_t + 1)^k - X_t^k) a_{X_t}] + \mathbb{E}[((X_t - 1)^k - X_t^k) b_{X_t}].
+\]
+</p>
+
+<p>
+Recall the binomial formula, 
+</p>
+
+<p>
+\[
+(x+y)^k = \sum_{i = 0}^{k} \binom{k}{i} x^i y^{k-i}.
+\]
+</p>
+
+<p>
+This can then be used to derive the differential equations for the moments.
+</p>
+
+<p>
+\[
+\frac{d}{dt} \mathbb{E}[X_t^k] = \sum_{i = 0}^{k-1} \binom{k}{i} \left(  \mathbb{E}[ X_t^i a_{X_t} ]  + (-1)^{k-i} \mathbb{E}[ X_t^i b_{X_t} ] \right)
+\]
+</p>
+
+<p>
+Note that the sums are from \(0\) to \(k-1\) but the binomial coefficients use
+the full \(k\). Given this expression, any polynomial \(a_n\) and \(b_n\) are
+candidates for the application of a moment closure, which essentially just
+entails either truncating the cumulants, or assuming a distributional form which
+expresses higher moments in terms of lower ones.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-12-03 Thu 18:53</p>
+<p class="date">Created: 2021-01-15 Fri 18:49</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

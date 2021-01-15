@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-24 Thu 15:10 -->
+<!-- 2021-01-15 Fri 17:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -265,6 +265,7 @@
 <li><a href="#org384abfd">Poisson process</a></li>
 <li><a href="#orgec0f8e4">Birth process</a></li>
 <li><a href="#orge97bf02">Birth-death process</a></li>
+<li><a href="#org813cb53">Moment closure</a></li>
 </ul>
 </li>
 <li><a href="#org00fb6dc">Distributions</a>
@@ -406,10 +407,10 @@ To check that this is actually a solution to the PDE, we can use the following l
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">define(g(z,t), z * exp(-l * t) / (1 - z * ( 1- exp(-l * t))));
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(g(z,t), z <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>l <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">/</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">-</span> z <span style="color: #3a81c3; font-weight: bold;">*</span> ( <span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>l <span style="color: #3a81c3; font-weight: bold;">*</span> t))));
 
-is(equal(l * z * (z - 1) * diff(g(z,t), z), diff(g(z,t), t)));
-is(equal(g(z,0), z));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(l <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">*</span> (z <span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">diff</span>(g(z,t), z), <span style="color: #3a81c3;">diff</span>(g(z,t), t)));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(g(z,<span style="color: #4e3163;">0</span>), z));
 </pre>
 </div>
 </div>
@@ -478,15 +479,24 @@ We can then test this in maxima with the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">define(g(z,t), ((b * z - a) * exp(- (b - a) * t) - a * ( z- 1)) / ((b * z - a) * exp(- (b - a) * t) - b * ( z- 1)));
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(g(z,t), ((b <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span> (b <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">-</span> a <span style="color: #3a81c3; font-weight: bold;">*</span> ( z<span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>)) <span style="color: #3a81c3; font-weight: bold;">/</span> ((b <span style="color: #3a81c3; font-weight: bold;">*</span> z <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span> (b <span style="color: #3a81c3; font-weight: bold;">-</span> a) <span style="color: #3a81c3; font-weight: bold;">*</span> t) <span style="color: #3a81c3; font-weight: bold;">-</span> b <span style="color: #3a81c3; font-weight: bold;">*</span> ( z<span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>)));
 
-is(equal((1-z)*(b*z-a) * diff(g(z,t), z), -diff(g(z,t), t)));
-is(equal(g(z,0), z));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>((<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>z)<span style="color: #3a81c3; font-weight: bold;">*</span>(b<span style="color: #3a81c3; font-weight: bold;">*</span>z<span style="color: #3a81c3; font-weight: bold;">-</span>a) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">diff</span>(g(z,t), z), <span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #3a81c3;">diff</span>(g(z,t), t)));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(g(z,<span style="color: #4e3163;">0</span>), z));
 </pre>
 </div>
 
 <p>
 Taking the derivative and the limit we get that the expected population size is \(exp\{(&lambda;-&mu;)t\} which again agrees with the mean field approximation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org813cb53" class="outline-3">
+<h3 id="org813cb53">Moment closure</h3>
+<div class="outline-text-3" id="text-org813cb53">
+<p>
+For notes on moment closure, see my <a href="./statistics-notes.html">statistics notes</a>.
 </p>
 </div>
 </div>
@@ -566,7 +576,7 @@ distribution, it uses \(1-p\) where above we use \(p\).
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-12-24 Thu 15:10</p>
+<p class="date">Created: 2021-01-15 Fri 17:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
