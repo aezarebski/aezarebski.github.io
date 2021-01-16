@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-16 Sat 17:22 -->
+<!-- 2021-01-16 Sat 17:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -256,131 +256,46 @@
     }
 </script>
 
-<div id="outline-container-org014255a" class="outline-2">
-<h2 id="org014255a">The Flippant Juror</h2>
-<div class="outline-text-2" id="text-org014255a">
+<div id="outline-container-orgb7b72dd" class="outline-2">
+<h2 id="orgb7b72dd">Curing the Compulsive Gambler</h2>
+<div class="outline-text-2" id="text-orgb7b72dd">
 <blockquote>
 <p>
-A three-man jury has two members each of whom independently has probability <i>p</i>
-of making the correct decision and a third member who flips a coin for each
-decision (majority rules). A one-man jury has a probability <i>p</i> of making a
-correct decision. Which jury has the better probability of making the correct
-decision?
+Mr. Brown always bets a dollar on the number 13 at roulette against the advice
+of Kind Friend. To help cure Mr. Brown of playing roulette, Kind Friend always
+bets Brown \$20 at even money that Brown will be behind at the need of 36 plays.
+How is the cure working?
+</p>
+
+<p>
+(Most American roulette wheels have 38 equally likely numbers. If the player's
+number comes up, he is paid 35 times his stake and gets his original stake back;
+otherwise he loses his stake)
 </p>
 </blockquote>
 
 <p>
-The possible outcomes can be enumerated as follows
+First consider the roulette, the probability of losing the stake is \(37/38\)
+otherwise, \(35\) is won. This allows us to compute the average result. Since
+the friendly bet is won so long as Brown gets at least one spin, this allows us
+to compute the expected result. Putting these together we find that the cure is
+not working because on average Brown will win.
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Juror 1</th>
-<th scope="col" class="org-right">Juror 2</th>
-<th scope="col" class="org-right">Juror 3</th>
-<th scope="col" class="org-right">Correct decision</th>
-<th scope="col" class="org-left">Probability</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\((1-p) p (1/2)\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)p\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)(1-p)\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)p\)</td>
-</tr>
-</tbody>
-</table>
 
 <div class="org-src-container">
-<pre class="src src-maxima">prob_three_correct<span style="color: #3a81c3; font-weight: bold;">:</span> p<span style="color: #3a81c3; font-weight: bold;">^</span><span style="color: #4e3163;">2</span> <span style="color: #3a81c3; font-weight: bold;">+</span> p<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>p);
-prob_one_correct<span style="color: #3a81c3; font-weight: bold;">:</span> p;
-
-<span style="color: #3a81c3;">print</span>(<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(prob_three_correct, prob_one_correct)));
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #3a81c3;">distrib</span>)$
+roulette_expected_outcome <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #4e3163;">36</span><span style="color: #3a81c3; font-weight: bold;">*</span>((<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>) <span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">37</span><span style="color: #3a81c3; font-weight: bold;">/</span><span style="color: #4e3163;">38</span>) <span style="color: #3a81c3; font-weight: bold;">+</span> (<span style="color: #4e3163;">35</span>)<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">/</span><span style="color: #4e3163;">38</span>)), <span style="color: #3a81c3; font-weight: bold;">numer</span>;
+<span style="color: #6c3163; font-weight: bold;">f</span>(<span style="color: #715ab1;">x</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span> pdf_binomial(x,<span style="color: #4e3163;">36</span>,<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">/</span><span style="color: #4e3163;">38</span>);
+friendly_expected_outcome <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #4e3163;">20</span> <span style="color: #3a81c3; font-weight: bold;">*</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">-</span> f(<span style="color: #4e3163;">0</span>)) <span style="color: #3a81c3; font-weight: bold;">+</span> (<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">20</span>) <span style="color: #3a81c3; font-weight: bold;">*</span> f(<span style="color: #4e3163;">0</span>), <span style="color: #3a81c3; font-weight: bold;">numer</span>;
+<span style="color: #3a81c3;">print</span>(friendly_expected_outcome <span style="color: #3a81c3; font-weight: bold;">+</span> roulette_expected_outcome);
 </pre>
 </div>
-
-<p>
-This prints out "true", telling us that the juries have an equal probability of
-making the correct decision.
-</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-01-16 Sat 17:22</p>
+<p class="date">Created: 2021-01-16 Sat 17:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

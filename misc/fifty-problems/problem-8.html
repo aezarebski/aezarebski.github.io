@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-16 Sat 17:22 -->
+<!-- 2021-01-16 Sat 17:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -256,131 +256,42 @@
     }
 </script>
 
-<div id="outline-container-org014255a" class="outline-2">
-<h2 id="org014255a">The Flippant Juror</h2>
-<div class="outline-text-2" id="text-org014255a">
+<div id="outline-container-orgd298a3c" class="outline-2">
+<h2 id="orgd298a3c">Perfect Bridge Hand</h2>
+<div class="outline-text-2" id="text-orgd298a3c">
 <blockquote>
 <p>
-A three-man jury has two members each of whom independently has probability <i>p</i>
-of making the correct decision and a third member who flips a coin for each
-decision (majority rules). A one-man jury has a probability <i>p</i> of making a
-correct decision. Which jury has the better probability of making the correct
-decision?
+We often read of someone who has been dealt 13 spades at bridge. With a
+well-shuffled pack of cards, what is the chance that you are dealt a perfect
+hand (13 of one suit)? (Bridge is played with an ordinary pack of 52 cards, 13
+in each of 4 suits, and each of 4 players is dealt 13)
 </p>
 </blockquote>
 
 <p>
-The possible outcomes can be enumerated as follows
+For a particular suit this is
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Juror 1</th>
-<th scope="col" class="org-right">Juror 2</th>
-<th scope="col" class="org-right">Juror 3</th>
-<th scope="col" class="org-right">Correct decision</th>
-<th scope="col" class="org-left">Probability</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\((1-p) p (1/2)\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)p\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)(1-p)\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)p\)</td>
-</tr>
-</tbody>
-</table>
-
-<div class="org-src-container">
-<pre class="src src-maxima">prob_three_correct<span style="color: #3a81c3; font-weight: bold;">:</span> p<span style="color: #3a81c3; font-weight: bold;">^</span><span style="color: #4e3163;">2</span> <span style="color: #3a81c3; font-weight: bold;">+</span> p<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>p);
-prob_one_correct<span style="color: #3a81c3; font-weight: bold;">:</span> p;
-
-<span style="color: #3a81c3;">print</span>(<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(prob_three_correct, prob_one_correct)));
-</pre>
-</div>
 
 <p>
-This prints out "true", telling us that the juries have an equal probability of
-making the correct decision.
+\[
+\prod_{i=0}^{12} \frac{13 - i}{52 - i}
+\]
 </p>
+
+<p>
+and then there are four suits in which this can be achieved.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #4e3163;">4</span> <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">product</span>((<span style="color: #4e3163;">13</span> <span style="color: #3a81c3; font-weight: bold;">-</span> i) <span style="color: #3a81c3; font-weight: bold;">/</span> (<span style="color: #4e3163;">52</span> <span style="color: #3a81c3; font-weight: bold;">-</span> i), i, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">12</span>);
+</pre>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-01-16 Sat 17:22</p>
+<p class="date">Created: 2021-01-16 Sat 17:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
