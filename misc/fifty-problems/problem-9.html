@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -243,11 +243,11 @@
 <div id="content">
 <h1 class="title">aez-notes</h1>
 <p>
-<a href="../index.html">Home</a>
+<a href="../../index.html">Home</a>
 </p>
 
-<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
+<button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button>
+<button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button>
 
 <script>
     function setStyleSheet(url){
@@ -256,141 +256,97 @@
     }
 </script>
 
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org2be4fa8">Coalescent theory</a>
-<ul>
-<li><a href="#orgf455ad4">Notes from <code>nordborg2000coalescent</code></a></li>
-</ul>
-</li>
-<li><a href="#orgc2095b5">Software</a>
-<ul>
-<li><a href="#org2d20b41">Beast2</a></li>
-<li><a href="#org317730c">APE in R</a></li>
-<li><a href="#orgb9ad2c5">Ggtree and friends</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org2be4fa8" class="outline-2">
-<h2 id="org2be4fa8">Coalescent theory</h2>
-<div class="outline-text-2" id="text-org2be4fa8">
-</div>
-<div id="outline-container-orgf455ad4" class="outline-3">
-<h3 id="orgf455ad4">Notes from <code>nordborg2000coalescent</code></h3>
-<div class="outline-text-3" id="text-orgf455ad4">
-<ul class="org-ul">
-<li>Wright-Fisher considers a population of \(N\) asexually reproducing
-individuals.</li>
-<li>Each individual selects a parent from the previous generation independently
-sampling uniformly at random.</li>
-<li>The probability that two individuals have a common ancestor longer than \(t\)
-generations ago is \((1-1/N)^t\) which can be seen by observing that they
-probability that the probability of sharing an ancestor is \(1/N\) in each
-generation.</li>
-<li>Time can be rescaled into \(\tau = t / N\) in which case \(\tau N = t\) and
-the expression before limits to \(e^{-\tau}\) in the limit as \(N\to\infty\).
-Hence the time between coalescent events follows an exponential distribution
-(in the limit).</li>
-<li>If there are \(k\) lineages we care about there are \(k\) choose \(2\) ways
-for a coalescence to occur hence the global coalescence rate is \(k(k-1)/2\).</li>
-<li>There is a similar set up for a structured coalescent in which migration
-events and coalescent events occur following a Poisson process. This is
-possible because of a particular scaling of time.</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgc2095b5" class="outline-2">
-<h2 id="orgc2095b5">Software</h2>
-<div class="outline-text-2" id="text-orgc2095b5">
-</div>
-<div id="outline-container-org2d20b41" class="outline-3">
-<h3 id="org2d20b41">Beast2</h3>
-<div class="outline-text-3" id="text-org2d20b41">
-<ul class="org-ul">
-<li><code>nix-shell -p jdk11</code> gives you a shell with java installed.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org317730c" class="outline-3">
-<h3 id="org317730c">APE in R</h3>
-<div class="outline-text-3" id="text-org317730c">
+<div id="outline-container-org136a9f0" class="outline-2">
+<h2 id="org136a9f0">Craps</h2>
+<div class="outline-text-2" id="text-org136a9f0">
+<blockquote>
 <p>
-<a href="https://cran.r-project.org/web/packages/ape/ape.pdf">FULL DOCUMENTATION</a>
+The game of craps, played with two dice, is one of America's fastest and most
+popular gambling games. Calculating the odds associated with it is an
+instructive exercise.
 </p>
 
 <p>
-Use <code>rlineage</code> to simulate the complete tree. To get the sub-tree consisting of
-just those that made it to the present use <code>drop.fossils</code>. If you want to filter
-for particular nodes, there is <code>keep.tip</code> and <code>drop.tip</code>.
+The rules are these. Only totals of for the two dice count. The player throws
+the dice and wins at once if the total for the first throw is 7 or 11, loses at
+once if it is 2, 3, or 12. Any other throw is called his "point." If the first
+throw is a point, the player throws the dice repeatedly until he either wins by
+throwing his point again or loses by throwing 7. What is the player's chance to win?
 </p>
+</blockquote>
 
 <p>
-There is a <code>plot.phylo</code> method and <code>ltt.plot</code> which can be used to get quick
-visualisations of a phylogeny, but for publication quality figures you probably
-want to use Ggtree.
-</p>
-</div>
-
-<div id="outline-container-orgbeefa03" class="outline-4">
-<h4 id="orgbeefa03">The <code>phylo</code> class</h4>
-<div class="outline-text-4" id="text-orgbeefa03">
-<p>
-The <code>phylo</code> class is pretty much the defacto standard for representing
-phylogenies in R. A phylogeny with \(n\) tips is represented as a <code>phylo</code> which
-has the following attributes:
-</p>
-
-<ul class="org-ul">
-<li><code>Nnode</code> is the number of internal nodes in the tree,</li>
-<li><code>tip.label</code> is a string indicating the name of each tip,</li>
-<li><code>edge</code> is a matrix with two columns where a row, \([i,j]\), indicates an edge
-from node \(i\) to node \(j\),</li>
-<li><code>edge.length</code> is an array where element is the length of an edge in the
-corresponding row of the <code>edge</code> matrix.</li>
-</ul>
-
-<p>
-<b>Note</b> that the indexing of the nodes of the tree is \(1\) to \(n\) for the tips
-and the internal nodes get allocated the integers \(n+1,n+2,\dots\). You do not
-want to reconstruct the tree from this information yourself though so <code>ape</code>
-offers convenience functions such as <code>node.depth.edgelength</code> which gives you the
-depths from the TMRCA down to each node.
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgb9ad2c5" class="outline-3">
-<h3 id="orgb9ad2c5">Ggtree and friends</h3>
-<div class="outline-text-3" id="text-orgb9ad2c5">
-<p>
-To parse the various tree formats there is the <code>treeio</code> package which has
-functions such as <code>read.beast</code> and <code>read.nhx</code>. This will produce a value of the
-<code>treedata</code> class which is defined in the <code>tidytree</code> package. The <code>treedata</code> is
-an S4 class, so it has <i>slots</i>. So to get the <code>phylo</code> object storing the
-topology you would use <code>mytreedata@phylo</code> and to get associated data there is a
-<code>data</code> slot.
-</p>
-
-<p>
-To actually visualise these objects there is the <code>ggtree</code> package which provides
-geometries in the style of Ggplot2. Note that to install these packages you will
-likely want to use Bioconductor.
+We start by defining a PDF for a single die.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">BiocManager::install<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ggtree"</span><span style="color: #3a81c3;">)</span> 
+<pre class="src src-dicePdfmaxima" id="org100c6a8">pdf_dice(x) :=
+pdf_discrete_uniform(x, 6);
 </pre>
 </div>
+
+<p>
+Then we convolve this with itself to get the sum of two dice.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rollPdfmaxima" id="org2539b17">pdf_roll(x) :=
+sum(pdf_dice(x - i) * pdf_dice(i), i, 1, 6);
+</pre>
 </div>
+
+<p>
+Given <code>pdf_roll</code> we can compute the probability of winning on the first roll
+easily, the difficulty is getting the probability of winning if the first roll
+is a point. Here we can break the event down into two independent events: roll a
+point initially, and win given that point.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-pointWinProbmaxima" id="orgfe1914a">point_vals : [4,5,6,8,9,10];
+prob_point_game : apply("+", map(pdf_roll, point_vals));
+
+pdf_point_given_point(x) :=
+pdf_roll(x) / prob_point_game;
+
+pdf_win_given_point(x) :=
+pdf_roll(x) / (pdf_roll(x) + pdf_roll(7));
+
+prob_point_game_win : prob_point_game *
+apply("+",
+  map(lambda([x],
+      pdf_point_given_point(x) * pdf_win_given_point(x)),
+    point_vals)
+  );
+</pre>
+</div>
+
+<p>
+Putting this all together and remembering to load <code>distrib</code> we get the following
+program.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #3a81c3;">distrib</span>)$
+
+<span style="color: #3a81c3; font-weight: bold;">&lt;&lt;</span>dicePdf<span style="color: #3a81c3; font-weight: bold;">&gt;&gt;</span>
+
+<span style="color: #3a81c3; font-weight: bold;">&lt;&lt;</span>rollPdf<span style="color: #3a81c3; font-weight: bold;">&gt;&gt;</span>
+
+prob_first_roll_win <span style="color: #3a81c3; font-weight: bold;">:</span> pdf_roll(<span style="color: #4e3163;">7</span>) <span style="color: #3a81c3; font-weight: bold;">+</span> pdf_roll(<span style="color: #4e3163;">11</span>);
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">about 0.222 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+
+<span style="color: #3a81c3; font-weight: bold;">&lt;&lt;</span>pointWinProb<span style="color: #3a81c3; font-weight: bold;">&gt;&gt;</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">about 0.271 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+
+prob_first_roll_win <span style="color: #3a81c3; font-weight: bold;">+</span> prob_point_game_win, <span style="color: #3a81c3; font-weight: bold;">numer</span>;
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">about 0.493 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+</pre>
+</div>
+
+<p>
+This gives the chance of winning at \(0.493\).
+</p>
 </div>
 </div>
 </div>
