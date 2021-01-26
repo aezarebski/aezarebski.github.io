@@ -216,36 +216,14 @@
     /*]]>*///-->
 // @license-end
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
 <ul class="nav-menu">
-    <li class="nav-menu"><a href="./problem-1.html">Previous</a></li>
+    <li class="nav-menu"><a href="./problem-14.html">Previous</a></li>
     <li class="nav-menu"><a href="./index.html">Problem list</a></li>
-    <li class="nav-menu"><a href="./problem-3.html">Next</a></li>
+    <li class="nav-menu"><a href="./problem-16.html">Next</a></li>
     <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
     <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button></li>
     <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button></li>
@@ -258,122 +236,55 @@ function setStyleSheet(url){
 }
 </script>
 
-<h2 style="margin-top: 100px">Successive Wins</h2>
+<h2 style="margin-top: 100px">The Theatre Row</h2>
 
 <blockquote>
 <p>
-To encourage Elmer's promising tennis career, his father offers him a prize if
-he wins (at least) two tennis sets in a row in a three-set series to be played
-with his father and the club champion alternatively; father-champion-father or
-champion-father-champion, according to Elmer's choice. The champion is a better
-player than Elmer's father. Which series should Elmer choose?
+Eight eligible bachelors and seven beautiful models happen randomly to have
+purchased single seats in the same 15-seat row of a theatre. On the average, how
+many pairs of adjacent seats are ticketed for marriagable couples?
 </p>
 </blockquote>
 
 <p>
-The possible outcomes of the game series are shown in the following table.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Game 1</th>
-<th scope="col" class="org-right">Game 2</th>
-<th scope="col" class="org-right">Game 3</th>
-<th scope="col" class="org-right">Wins series</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-Since the champion is better than father, we assume that the probability of the
-beating the champion, \(c\), is less than that of beating father, \(f\). The
-number of outcomes is small enough that we can write this out explicitly and
-just ask maxima to check if the statement is true.
+Assuming only heterosexual couples are marriagable&#x2026; this is an old book.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">assume</span>(f <span style="color: #3a81c3; font-weight: bold;">&gt;</span> c, c <span style="color: #3a81c3; font-weight: bold;">&gt;</span> <span style="color: #4e3163;">0</span>);
+<pre class="src src-maxima"><span style="color: #6c3163; font-weight: bold;">mean_matches</span>(<span style="color: #715ab1;">m,f</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span>
+<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(<span style="color: #3a81c3;">min</span>(m,f), <span style="color: #4e3163;">0</span>))
+<span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3; font-weight: bold;">else</span> (
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(m <span style="color: #3a81c3; font-weight: bold;">+</span> f, <span style="color: #4e3163;">2</span>))
+  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">1</span>
+  <span style="color: #3a81c3; font-weight: bold;">else</span> (m <span style="color: #3a81c3; font-weight: bold;">*</span> n_m(m<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>,f) <span style="color: #3a81c3; font-weight: bold;">/</span> (m<span style="color: #3a81c3; font-weight: bold;">+</span>f) <span style="color: #3a81c3; font-weight: bold;">+</span> f <span style="color: #3a81c3; font-weight: bold;">*</span> n_f(m,f<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>) <span style="color: #3a81c3; font-weight: bold;">/</span> (m<span style="color: #3a81c3; font-weight: bold;">+</span>f)));
 
-cfc_win_prob<span style="color: #3a81c3; font-weight: bold;">:</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>c)<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>c <span style="color: #3a81c3; font-weight: bold;">+</span> c<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>c) <span style="color: #3a81c3; font-weight: bold;">+</span> c<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>c;
-fcf_win_prob<span style="color: #3a81c3; font-weight: bold;">:</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>f)<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>f <span style="color: #3a81c3; font-weight: bold;">+</span> f<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>f) <span style="color: #3a81c3; font-weight: bold;">+</span> f<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>f;
 
-<span style="color: #3a81c3;">print</span>(<span style="color: #3a81c3;">is</span>(cfc_win_prob <span style="color: #3a81c3; font-weight: bold;">&gt;</span> fcf_win_prob));
+<span style="color: #6c3163; font-weight: bold;">n_m</span>(<span style="color: #715ab1;">m, f</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span>
+<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(f, <span style="color: #4e3163;">0</span>))
+<span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3; font-weight: bold;">else</span> (
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(m, <span style="color: #4e3163;">0</span>))
+  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">1</span>
+  <span style="color: #3a81c3; font-weight: bold;">else</span> m <span style="color: #3a81c3; font-weight: bold;">*</span> n_m(m<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>,f) <span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f) <span style="color: #3a81c3; font-weight: bold;">+</span> f <span style="color: #3a81c3; font-weight: bold;">*</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">+</span> n_f(m, f<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>) )<span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f));
+
+<span style="color: #6c3163; font-weight: bold;">n_f</span>(<span style="color: #715ab1;">m, f</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span>
+<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(m, <span style="color: #4e3163;">0</span>))
+<span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3; font-weight: bold;">else</span> (
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(f, <span style="color: #4e3163;">0</span>))
+  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">1</span>
+  <span style="color: #3a81c3; font-weight: bold;">else</span> m <span style="color: #3a81c3; font-weight: bold;">*</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">+</span> n_m(m<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>,f)) <span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f) <span style="color: #3a81c3; font-weight: bold;">+</span> f <span style="color: #3a81c3; font-weight: bold;">*</span> n_f(m, f<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>)<span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f));
+
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">0</span>), <span style="color: #4e3163;">0</span>));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">1</span>), <span style="color: #4e3163;">0</span>));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">0</span>), <span style="color: #4e3163;">0</span>));
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">1</span>), <span style="color: #4e3163;">1</span>));
+
+mean_matches(<span style="color: #4e3163;">8</span>,<span style="color: #4e3163;">7</span>), <span style="color: #3a81c3; font-weight: bold;">numer</span>;
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">approx 7.467 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
 </pre>
 </div>
-
-<p>
-This prints out "true", telling us that the better series for Elmer to choose is
-CFC.
-</p>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>

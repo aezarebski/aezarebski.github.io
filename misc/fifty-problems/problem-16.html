@@ -216,36 +216,14 @@
     /*]]>*///-->
 // @license-end
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
 <ul class="nav-menu">
-    <li class="nav-menu"><a href="./problem-1.html">Previous</a></li>
+    <li class="nav-menu"><a href="./problem-15.html">Previous</a></li>
     <li class="nav-menu"><a href="./index.html">Problem list</a></li>
-    <li class="nav-menu"><a href="./problem-3.html">Next</a></li>
+    <li class="nav-menu"><a href="./problem-17.html">Next</a></li>
     <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
     <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button></li>
     <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button></li>
@@ -258,121 +236,31 @@ function setStyleSheet(url){
 }
 </script>
 
-<h2 style="margin-top: 100px">Successive Wins</h2>
+<h2 style="margin-top: 100px">Will Second-Best Be Runner-Up?</h2>
 
 <blockquote>
 <p>
-To encourage Elmer's promising tennis career, his father offers him a prize if
-he wins (at least) two tennis sets in a row in a three-set series to be played
-with his father and the club champion alternatively; father-champion-father or
-champion-father-champion, according to Elmer's choice. The champion is a better
-player than Elmer's father. Which series should Elmer choose?
+A tennis tournament has 8 players. The number a player draws from a hat decides
+his first-round rung in the tournament ladder. See diagram.
+</p>
+
+<p>
+Suppose that the best player always defeats the next best and that the latter
+always defeats all the rest. The loser of the finals gets the runner-up cup.
+What is the chance that the second-best player wins the runner-up cup?
 </p>
 </blockquote>
 
 <p>
-The possible outcomes of the game series are shown in the following table.
+The diagram makes it clear that the event will occur if one draws a rung from
+1&#x2013;4 and the other one draws a rung from 5&#x2013;8, but it does not matter which one
+gets the larger or smaller rung.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Game 1</th>
-<th scope="col" class="org-right">Game 2</th>
-<th scope="col" class="org-right">Game 3</th>
-<th scope="col" class="org-right">Wins series</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-</tr>
-</tbody>
-</table>
-
 <p>
-Since the champion is better than father, we assume that the probability of the
-beating the champion, \(c\), is less than that of beating father, \(f\). The
-number of outcomes is small enough that we can write this out explicitly and
-just ask maxima to check if the statement is true.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">assume</span>(f <span style="color: #3a81c3; font-weight: bold;">&gt;</span> c, c <span style="color: #3a81c3; font-weight: bold;">&gt;</span> <span style="color: #4e3163;">0</span>);
-
-cfc_win_prob<span style="color: #3a81c3; font-weight: bold;">:</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>c)<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>c <span style="color: #3a81c3; font-weight: bold;">+</span> c<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>c) <span style="color: #3a81c3; font-weight: bold;">+</span> c<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>c;
-fcf_win_prob<span style="color: #3a81c3; font-weight: bold;">:</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>f)<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>f <span style="color: #3a81c3; font-weight: bold;">+</span> f<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>f) <span style="color: #3a81c3; font-weight: bold;">+</span> f<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>f;
-
-<span style="color: #3a81c3;">print</span>(<span style="color: #3a81c3;">is</span>(cfc_win_prob <span style="color: #3a81c3; font-weight: bold;">&gt;</span> fcf_win_prob));
-</pre>
-</div>
-
-<p>
-This prints out "true", telling us that the better series for Elmer to choose is
-CFC.
+Without loss of generality we can consider the case where the best player draws
+a number from 1&#x2013;4. Then there are 7 remaining rungs and 4 of them fall in 5&#x2013;8.
+Hence the probability is 4/7.
 </p>
 </div>
 <div id="postamble" class="status">

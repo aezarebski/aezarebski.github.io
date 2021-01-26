@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -216,164 +216,51 @@
     /*]]>*///-->
 // @license-end
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<ul class="nav-menu">
-    <li class="nav-menu"><a href="./problem-1.html">Previous</a></li>
-    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
-    <li class="nav-menu"><a href="./problem-3.html">Next</a></li>
-    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
-    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button></li>
-    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button></li>
-</ul>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
+<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
 
 <script>
-function setStyleSheet(url){
-   var stylesheet = document.getElementById("stylesheet");
-   stylesheet.setAttribute('href', url);
-}
+    function setStyleSheet(url){
+       var stylesheet = document.getElementById("stylesheet");
+       stylesheet.setAttribute('href', url);
+    }
 </script>
 
-<h2 style="margin-top: 100px">Successive Wins</h2>
-
-<blockquote>
-<p>
-To encourage Elmer's promising tennis career, his father offers him a prize if
-he wins (at least) two tennis sets in a row in a three-set series to be played
-with his father and the club champion alternatively; father-champion-father or
-champion-father-champion, according to Elmer's choice. The champion is a better
-player than Elmer's father. Which series should Elmer choose?
-</p>
-</blockquote>
-
-<p>
-The possible outcomes of the game series are shown in the following table.
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Game 1</th>
-<th scope="col" class="org-right">Game 2</th>
-<th scope="col" class="org-right">Game 3</th>
-<th scope="col" class="org-right">Wins series</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-Since the champion is better than father, we assume that the probability of the
-beating the champion, \(c\), is less than that of beating father, \(f\). The
-number of outcomes is small enough that we can write this out explicitly and
-just ask maxima to check if the statement is true.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">assume</span>(f <span style="color: #3a81c3; font-weight: bold;">&gt;</span> c, c <span style="color: #3a81c3; font-weight: bold;">&gt;</span> <span style="color: #4e3163;">0</span>);
-
-cfc_win_prob<span style="color: #3a81c3; font-weight: bold;">:</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>c)<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>c <span style="color: #3a81c3; font-weight: bold;">+</span> c<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>c) <span style="color: #3a81c3; font-weight: bold;">+</span> c<span style="color: #3a81c3; font-weight: bold;">*</span>f<span style="color: #3a81c3; font-weight: bold;">*</span>c;
-fcf_win_prob<span style="color: #3a81c3; font-weight: bold;">:</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>f)<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>f <span style="color: #3a81c3; font-weight: bold;">+</span> f<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>(<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>f) <span style="color: #3a81c3; font-weight: bold;">+</span> f<span style="color: #3a81c3; font-weight: bold;">*</span>c<span style="color: #3a81c3; font-weight: bold;">*</span>f;
-
-<span style="color: #3a81c3;">print</span>(<span style="color: #3a81c3;">is</span>(cfc_win_prob <span style="color: #3a81c3; font-weight: bold;">&gt;</span> fcf_win_prob));
-</pre>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org171b29a">References</a>
+<ul>
+<li><a href="#orgd0361be">Blogs and articles</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 
-<p>
-This prints out "true", telling us that the better series for Elmer to choose is
-CFC.
-</p>
+<div id="outline-container-org171b29a" class="outline-2">
+<h2 id="org171b29a">References</h2>
+<div class="outline-text-2" id="text-org171b29a">
+</div>
+<div id="outline-container-orgd0361be" class="outline-3">
+<h3 id="orgd0361be">Blogs and articles</h3>
+<div class="outline-text-3" id="text-orgd0361be">
+<ul class="org-ul">
+<li><a href="https://solar.lowtechmagazine.com/2020/12/how-and-why-i-stopped-buying-new-laptops.html">How and why I stopped buying new laptops</a> contains useful information for
+reviving old laptops.</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
