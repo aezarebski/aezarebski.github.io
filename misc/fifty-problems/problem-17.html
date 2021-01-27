@@ -216,51 +216,99 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../../index.html">Home</a>
-</p>
-
-<button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button>
+<ul class="nav-menu">
+    <li class="nav-menu"><a href="./problem-16.html">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a href="./problem-18.html">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button></li>
+    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button></li>
+</ul>
 
 <script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
+function setStyleSheet(url){
+   var stylesheet = document.getElementById("stylesheet");
+   stylesheet.setAttribute('href', url);
+}
 </script>
 
-<div id="outline-container-orgc292858" class="outline-2">
-<h2 id="orgc292858">Fifty Challenging Problems in Probability</h2>
-<div class="outline-text-2" id="text-orgc292858">
-<ol class="org-ol">
-<li><a href="./problem-1.html">The Sock Drawer</a></li>
-<li><a href="./problem-2.html">Successive Wins</a></li>
-<li><a href="./problem-3.html">The Flippant Juror</a></li>
-<li><a href="./problem-4.html">Trials until First Success</a></li>
-<li><a href="./problem-5.html">Coin in Square</a></li>
-<li><a href="./problem-6.html">Chuck-a-Luck</a></li>
-<li><a href="./problem-7.html">Curing the Compulsive Gambler</a></li>
-<li><a href="./problem-8.html">Perfect Bridge Hand</a></li>
-<li><a href="./problem-9.html">Craps</a></li>
-<li><a href="./problem-10.html">An Experiment in Personal Taste for Money</a></li>
-<li></li>
+<h2 style="margin-top: 100px">Twin Knights</h2>
 
-<li></li>
+<blockquote>
+<p>
+(a) Suppose King Arthur holds a jousting tournament where the jousts are in
+pairs as in a tennis tournament. See Problem 16 for tournament ladder. The \(8\)
+knights in the tournament are evenly matched, and they include the twin knights
+Balin and Balan. What is the chance that the twins meet in a match during the
+tournament?
+</p>
 
-<li><a href="./problem-13.html">The Prisoner's Dilemma</a></li>
-<li><a href="./problem-14.html">Collecting Coupons</a></li>
-<li><a href="./problem-15.html">The Theatre Row</a></li>
-<li><a href="./problem-16.html">Will Second-Best Be Runner-Up?</a></li>
-<li><a href="./problem-17.html">Twin Knights</a></li>
-<li><a href="./problem-18.html">An Even Split at Coin Tossing</a></li>
-</ol>
+<p>
+(b) Replace \(8\) by \(2^n\) in the above problem. Now what is the chance that
+they meet?
+</p>
+</blockquote>
+
+<p>
+We are asked the probability that they meet given they have 0.5 probability of
+winning any matches and they are uniformly distributed across the initial runs
+of the tournament ladder. We will use the law of total probability to solve
+this, partitioning on how many matches until they could possibly meet.
+</p>
+
+<p>
+If there are \(2^n\) jousters, then the probability that they could meed after
+\(i\) matches is \(2^{i-1} / (2^n - 1)\). The probability that they survive the
+\(i\) matches in order to meet up is \((1/2^{i-1})^2\).
+</p>
+
+<p>
+The probability is then just a simple evaluation of a sum to find that the
+probabilit y is \(2^{1-n}\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(simplify_sum);
+
+<span style="color: #6c3163; font-weight: bold;">f</span>(<span style="color: #715ab1;">n</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span> <span style="color: #3a81c3;">sum</span>(<span style="color: #4e3163;">2</span> <span style="color: #3a81c3; font-weight: bold;">^</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>i) <span style="color: #3a81c3; font-weight: bold;">/</span> (<span style="color: #4e3163;">2</span><span style="color: #3a81c3; font-weight: bold;">^</span>n <span style="color: #3a81c3; font-weight: bold;">-</span> <span style="color: #4e3163;">1</span>), i, <span style="color: #4e3163;">1</span>, n);
+
+<span style="color: #3a81c3;">assume</span>(n <span style="color: #3a81c3; font-weight: bold;">&gt;</span> <span style="color: #4e3163;">1</span>);
+<span style="color: #3a81c3;">declare</span>(n, integer);
+<span style="color: #3a81c3;">facts</span>();
+<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(simplify_sum(f(n)), <span style="color: #4e3163;">2</span> <span style="color: #3a81c3; font-weight: bold;">^</span> (<span style="color: #4e3163;">1</span><span style="color: #3a81c3; font-weight: bold;">-</span>n)));
+</pre>
 </div>
-</div>
+
+<p>
+Note the use of <code>assume</code> and <code>declare</code> allows the <code>simplify_sum</code> function to
+confirm that the expressions are equal.
+</p>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>

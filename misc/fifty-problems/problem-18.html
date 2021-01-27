@@ -220,46 +220,42 @@
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../../index.html">Home</a>
-</p>
-
-<button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button>
+<ul class="nav-menu">
+    <li class="nav-menu"><a href="./problem-17.html">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a href="./problem-19.html">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button></li>
+    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button></li>
+</ul>
 
 <script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
+function setStyleSheet(url){
+   var stylesheet = document.getElementById("stylesheet");
+   stylesheet.setAttribute('href', url);
+}
 </script>
 
-<div id="outline-container-orgc292858" class="outline-2">
-<h2 id="orgc292858">Fifty Challenging Problems in Probability</h2>
-<div class="outline-text-2" id="text-orgc292858">
-<ol class="org-ol">
-<li><a href="./problem-1.html">The Sock Drawer</a></li>
-<li><a href="./problem-2.html">Successive Wins</a></li>
-<li><a href="./problem-3.html">The Flippant Juror</a></li>
-<li><a href="./problem-4.html">Trials until First Success</a></li>
-<li><a href="./problem-5.html">Coin in Square</a></li>
-<li><a href="./problem-6.html">Chuck-a-Luck</a></li>
-<li><a href="./problem-7.html">Curing the Compulsive Gambler</a></li>
-<li><a href="./problem-8.html">Perfect Bridge Hand</a></li>
-<li><a href="./problem-9.html">Craps</a></li>
-<li><a href="./problem-10.html">An Experiment in Personal Taste for Money</a></li>
-<li></li>
+<h2 style="margin-top: 100px">An Even Split at Coin Tossing</h2>
 
-<li></li>
+<blockquote>
+<p>
+When 100 coins are tossed, what is the probability that exactly 50 are heads?
+</p>
+</blockquote>
 
-<li><a href="./problem-13.html">The Prisoner's Dilemma</a></li>
-<li><a href="./problem-14.html">Collecting Coupons</a></li>
-<li><a href="./problem-15.html">The Theatre Row</a></li>
-<li><a href="./problem-16.html">Will Second-Best Be Runner-Up?</a></li>
-<li><a href="./problem-17.html">Twin Knights</a></li>
-<li><a href="./problem-18.html">An Even Split at Coin Tossing</a></li>
-</ol>
-</div>
+<p>
+This is just evaluating the binomial PMF, but we can also do it using the normal
+approximation since this the distribution is approximately normal.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #3a81c3;">distrib</span>);
+
+pdf_binomial(<span style="color: #4e3163;">50</span>, <span style="color: #4e3163;">100</span>, 0<span style="color: #3a81c3; font-weight: bold;">.</span>5), <span style="color: #3a81c3; font-weight: bold;">numer</span>;
+pdf_normal(<span style="color: #4e3163;">50</span>, <span style="color: #4e3163;">50</span>, <span style="color: #3a81c3;">sqrt</span>(<span style="color: #4e3163;">25</span>)), <span style="color: #3a81c3; font-weight: bold;">numer</span>;
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">approx 0.080 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span> 
+</pre>
 </div>
 </div>
 <div id="postamble" class="status">
