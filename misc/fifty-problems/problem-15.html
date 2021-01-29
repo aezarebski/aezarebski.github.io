@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-26 Tue 14:18 -->
+<!-- 2021-01-29 Fri 18:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -216,6 +216,28 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -247,48 +269,72 @@ many pairs of adjacent seats are ticketed for marriagable couples?
 </blockquote>
 
 <p>
-Assuming only heterosexual couples are marriagable&#x2026; this is an old book.
+Assuming only heterosexual couples are marriagable &#x2014; this is an old book &#x2014;
+we can solve this with recursion where the <code>n_m</code> function indicates the number
+of pairs if there is a male added to the rightmost end and <code>n_f</code> the number if a
+female is added to the rightmost end.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #6c3163; font-weight: bold;">mean_matches</span>(<span style="color: #715ab1;">m,f</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span>
-<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(<span style="color: #3a81c3;">min</span>(m,f), <span style="color: #4e3163;">0</span>))
-<span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">0</span>
-<span style="color: #3a81c3; font-weight: bold;">else</span> (
-  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(m <span style="color: #3a81c3; font-weight: bold;">+</span> f, <span style="color: #4e3163;">2</span>))
-  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">1</span>
-  <span style="color: #3a81c3; font-weight: bold;">else</span> (m <span style="color: #3a81c3; font-weight: bold;">*</span> n_m(m<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>,f) <span style="color: #3a81c3; font-weight: bold;">/</span> (m<span style="color: #3a81c3; font-weight: bold;">+</span>f) <span style="color: #3a81c3; font-weight: bold;">+</span> f <span style="color: #3a81c3; font-weight: bold;">*</span> n_f(m,f<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>) <span style="color: #3a81c3; font-weight: bold;">/</span> (m<span style="color: #3a81c3; font-weight: bold;">+</span>f)));
+<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">mean_matches</span>(<span style="color: #7590db;">m,f</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(<span style="color: #4f97d7;">min</span>(m,f), <span style="color: #a45bad;">0</span>))
+<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">0</span>
+<span style="color: #4f97d7; font-weight: bold;">else</span> (
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(m <span style="color: #4f97d7; font-weight: bold;">+</span> f, <span style="color: #a45bad;">2</span>))
+  <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">1</span>
+  <span style="color: #4f97d7; font-weight: bold;">else</span> (m <span style="color: #4f97d7; font-weight: bold;">*</span> n_m(m<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>,f) <span style="color: #4f97d7; font-weight: bold;">/</span> (m<span style="color: #4f97d7; font-weight: bold;">+</span>f) <span style="color: #4f97d7; font-weight: bold;">+</span> f <span style="color: #4f97d7; font-weight: bold;">*</span> n_f(m,f<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">/</span> (m<span style="color: #4f97d7; font-weight: bold;">+</span>f)));
 
 
-<span style="color: #6c3163; font-weight: bold;">n_m</span>(<span style="color: #715ab1;">m, f</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span>
-<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(f, <span style="color: #4e3163;">0</span>))
-<span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">0</span>
-<span style="color: #3a81c3; font-weight: bold;">else</span> (
-  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(m, <span style="color: #4e3163;">0</span>))
-  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">1</span>
-  <span style="color: #3a81c3; font-weight: bold;">else</span> m <span style="color: #3a81c3; font-weight: bold;">*</span> n_m(m<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>,f) <span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f) <span style="color: #3a81c3; font-weight: bold;">+</span> f <span style="color: #3a81c3; font-weight: bold;">*</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">+</span> n_f(m, f<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>) )<span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f));
+<span style="color: #bc6ec5; font-weight: bold;">n_m</span>(<span style="color: #7590db;">m, f</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(f, <span style="color: #a45bad;">0</span>))
+<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">0</span>
+<span style="color: #4f97d7; font-weight: bold;">else</span> (
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(m, <span style="color: #a45bad;">0</span>))
+  <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">1</span>
+  <span style="color: #4f97d7; font-weight: bold;">else</span> m <span style="color: #4f97d7; font-weight: bold;">*</span> n_m(m<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>,f) <span style="color: #4f97d7; font-weight: bold;">/</span> (m <span style="color: #4f97d7; font-weight: bold;">+</span> f) <span style="color: #4f97d7; font-weight: bold;">+</span> f <span style="color: #4f97d7; font-weight: bold;">*</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">+</span> n_f(m, f<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>) )<span style="color: #4f97d7; font-weight: bold;">/</span> (m <span style="color: #4f97d7; font-weight: bold;">+</span> f));
 
-<span style="color: #6c3163; font-weight: bold;">n_f</span>(<span style="color: #715ab1;">m, f</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span>
-<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(m, <span style="color: #4e3163;">0</span>))
-<span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">0</span>
-<span style="color: #3a81c3; font-weight: bold;">else</span> (
-  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(f, <span style="color: #4e3163;">0</span>))
-  <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #4e3163;">1</span>
-  <span style="color: #3a81c3; font-weight: bold;">else</span> m <span style="color: #3a81c3; font-weight: bold;">*</span> (<span style="color: #4e3163;">1</span> <span style="color: #3a81c3; font-weight: bold;">+</span> n_m(m<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>,f)) <span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f) <span style="color: #3a81c3; font-weight: bold;">+</span> f <span style="color: #3a81c3; font-weight: bold;">*</span> n_f(m, f<span style="color: #3a81c3; font-weight: bold;">-</span><span style="color: #4e3163;">1</span>)<span style="color: #3a81c3; font-weight: bold;">/</span> (m <span style="color: #3a81c3; font-weight: bold;">+</span> f));
+<span style="color: #bc6ec5; font-weight: bold;">n_f</span>(<span style="color: #7590db;">m, f</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(m, <span style="color: #a45bad;">0</span>))
+<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">0</span>
+<span style="color: #4f97d7; font-weight: bold;">else</span> (
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(f, <span style="color: #a45bad;">0</span>))
+  <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">1</span>
+  <span style="color: #4f97d7; font-weight: bold;">else</span> m <span style="color: #4f97d7; font-weight: bold;">*</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">+</span> n_m(m<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>,f)) <span style="color: #4f97d7; font-weight: bold;">/</span> (m <span style="color: #4f97d7; font-weight: bold;">+</span> f) <span style="color: #4f97d7; font-weight: bold;">+</span> f <span style="color: #4f97d7; font-weight: bold;">*</span> n_f(m, f<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>)<span style="color: #4f97d7; font-weight: bold;">/</span> (m <span style="color: #4f97d7; font-weight: bold;">+</span> f));
 
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">0</span>), <span style="color: #4e3163;">0</span>));
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">1</span>), <span style="color: #4e3163;">0</span>));
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">0</span>), <span style="color: #4e3163;">0</span>));
-<span style="color: #3a81c3;">is</span>(<span style="color: #3a81c3;">equal</span>(mean_matches(<span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">1</span>), <span style="color: #4e3163;">1</span>));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(mean_matches(<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">0</span>), <span style="color: #a45bad;">0</span>));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(mean_matches(<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">1</span>), <span style="color: #a45bad;">0</span>));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(mean_matches(<span style="color: #a45bad;">1</span>,<span style="color: #a45bad;">0</span>), <span style="color: #a45bad;">0</span>));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(mean_matches(<span style="color: #a45bad;">1</span>,<span style="color: #a45bad;">1</span>), <span style="color: #a45bad;">1</span>));
 
-mean_matches(<span style="color: #4e3163;">8</span>,<span style="color: #4e3163;">7</span>), <span style="color: #3a81c3; font-weight: bold;">numer</span>;
-<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">approx 7.467 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+mean_matches(<span style="color: #a45bad;">8</span>,<span style="color: #a45bad;">7</span>), <span style="color: #4f97d7; font-weight: bold;">numer</span>;
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">approx 7.467 </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+</pre>
+</div>
+
+<p>
+Consider the random variable, \(I_i\), which is the indicator of a marriagable
+pair sitting in the \(i\)-th pair of seats. The total number of marriagable
+pairs is the sum of these indicator variables. These random variables are
+correlated, but this does not influence the expected value since it is a linear
+operator. This suggests and alternative solution. The probability that \(I_i=1\)
+is \(2 m f / ((m+f)(m+f-1)) \).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">expected_matches</span>(<span style="color: #7590db;">m,f</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> (m<span style="color: #4f97d7; font-weight: bold;">+</span>f<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">*</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> m <span style="color: #4f97d7; font-weight: bold;">*</span> f <span style="color: #4f97d7; font-weight: bold;">/</span> ((m <span style="color: #4f97d7; font-weight: bold;">+</span> f)<span style="color: #4f97d7; font-weight: bold;">*</span>(m <span style="color: #4f97d7; font-weight: bold;">+</span> f <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>));
+
+<span style="color: #4f97d7; font-weight: bold;">for</span> m <span style="color: #4f97d7; font-weight: bold;">thru</span> <span style="color: #a45bad;">8</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+ (<span style="color: #4f97d7; font-weight: bold;">for</span> f <span style="color: #4f97d7; font-weight: bold;">thru</span> <span style="color: #a45bad;">8</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+   (
+     <span style="color: #4f97d7;">print</span>(<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(expected_matches(m,f),mean_matches(m,f))))
+   )
+ )
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-01-26 Tue 14:18</p>
+<p class="date">Created: 2021-01-29 Fri 18:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
