@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-26 Tue 14:18 -->
+<!-- 2021-02-08 Mon 16:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -247,16 +247,10 @@
     <li class="nav-menu"><a href="./index.html">Problem list</a></li>
     <li class="nav-menu"><a href="./problem-10.html">Next</a></li>
     <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
-    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet.css')">Light</button></li>
-    <li class="nav-menu" style="float:right"><button type="button" onclick="setStyleSheet('../../css/stylesheet-dark.css')">Dark</button></li>
+    <li class="nav-menu" style="float:right"><a onclick="toggleStyle()">Light/Dark</a></li>
 </ul>
 
-<script>
-function setStyleSheet(url){
-   var stylesheet = document.getElementById("stylesheet");
-   stylesheet.setAttribute('href', url);
-}
-</script>
+<script src="./main.js"></script>
 
 <h2 style="margin-top: 100px">Craps</h2>
 
@@ -281,8 +275,8 @@ We start by defining a PDF for a single die.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dicePdfmaxima" id="org100c6a8">pdf_dice(x) :=
-pdf_discrete_uniform(x, 6);
+<pre class="src src-maxima" id="org89be9ba"><span style="color: #bc6ec5; font-weight: bold;">pdf_dice</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+pdf_discrete_uniform(x, <span style="color: #a45bad;">6</span>);
 </pre>
 </div>
 
@@ -291,8 +285,8 @@ Then we convolve this with itself to get the sum of two dice.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-rollPdfmaxima" id="org2539b17">pdf_roll(x) :=
-sum(pdf_dice(x - i) * pdf_dice(i), i, 1, 6);
+<pre class="src src-maxima" id="org3a9460e"><span style="color: #bc6ec5; font-weight: bold;">pdf_roll</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7;">sum</span>(pdf_dice(x <span style="color: #4f97d7; font-weight: bold;">-</span> i) <span style="color: #4f97d7; font-weight: bold;">*</span> pdf_dice(i), i, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">6</span>);
 </pre>
 </div>
 
@@ -304,19 +298,19 @@ point initially, and win given that point.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-pointWinProbmaxima" id="orgfe1914a">point_vals : [4,5,6,8,9,10];
-prob_point_game : apply("+", map(pdf_roll, point_vals));
+<pre class="src src-maxima" id="org8fe2b9d">point_vals <span style="color: #4f97d7; font-weight: bold;">:</span> [<span style="color: #a45bad;">4</span>,<span style="color: #a45bad;">5</span>,<span style="color: #a45bad;">6</span>,<span style="color: #a45bad;">8</span>,<span style="color: #a45bad;">9</span>,<span style="color: #a45bad;">10</span>];
+prob_point_game <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">apply</span>(<span style="color: #2d9574;">"+"</span>, <span style="color: #4f97d7;">map</span>(pdf_roll, point_vals));
 
-pdf_point_given_point(x) :=
-pdf_roll(x) / prob_point_game;
+<span style="color: #bc6ec5; font-weight: bold;">pdf_point_given_point</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+pdf_roll(x) <span style="color: #4f97d7; font-weight: bold;">/</span> prob_point_game;
 
-pdf_win_given_point(x) :=
-pdf_roll(x) / (pdf_roll(x) + pdf_roll(7));
+<span style="color: #bc6ec5; font-weight: bold;">pdf_win_given_point</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+pdf_roll(x) <span style="color: #4f97d7; font-weight: bold;">/</span> (pdf_roll(x) <span style="color: #4f97d7; font-weight: bold;">+</span> pdf_roll(<span style="color: #a45bad;">7</span>));
 
-prob_point_game_win : prob_point_game *
-apply("+",
-  map(lambda([x],
-      pdf_point_given_point(x) * pdf_win_given_point(x)),
+prob_point_game_win <span style="color: #4f97d7; font-weight: bold;">:</span> prob_point_game <span style="color: #4f97d7; font-weight: bold;">*</span>
+<span style="color: #4f97d7;">apply</span>(<span style="color: #2d9574;">"+"</span>,
+  <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7;">lambda</span>([x],
+      pdf_point_given_point(x) <span style="color: #4f97d7; font-weight: bold;">*</span> pdf_win_given_point(x)),
     point_vals)
   );
 </pre>
@@ -328,20 +322,20 @@ program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #3a81c3;">distrib</span>)$
+<pre class="src src-maxima"><span style="color: #4f97d7;">load</span>(<span style="color: #4f97d7;">distrib</span>)$
 
-<span style="color: #3a81c3; font-weight: bold;">&lt;&lt;</span>dicePdf<span style="color: #3a81c3; font-weight: bold;">&gt;&gt;</span>
+<span style="color: #4f97d7; font-weight: bold;">&lt;&lt;</span>dicePdf<span style="color: #4f97d7; font-weight: bold;">&gt;&gt;</span>
 
-<span style="color: #3a81c3; font-weight: bold;">&lt;&lt;</span>rollPdf<span style="color: #3a81c3; font-weight: bold;">&gt;&gt;</span>
+<span style="color: #4f97d7; font-weight: bold;">&lt;&lt;</span>rollPdf<span style="color: #4f97d7; font-weight: bold;">&gt;&gt;</span>
 
-prob_first_roll_win <span style="color: #3a81c3; font-weight: bold;">:</span> pdf_roll(<span style="color: #4e3163;">7</span>) <span style="color: #3a81c3; font-weight: bold;">+</span> pdf_roll(<span style="color: #4e3163;">11</span>);
-<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">about 0.222 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+prob_first_roll_win <span style="color: #4f97d7; font-weight: bold;">:</span> pdf_roll(<span style="color: #a45bad;">7</span>) <span style="color: #4f97d7; font-weight: bold;">+</span> pdf_roll(<span style="color: #a45bad;">11</span>);
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">about 0.222 </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
 
-<span style="color: #3a81c3; font-weight: bold;">&lt;&lt;</span>pointWinProb<span style="color: #3a81c3; font-weight: bold;">&gt;&gt;</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">about 0.271 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+<span style="color: #4f97d7; font-weight: bold;">&lt;&lt;</span>pointWinProb<span style="color: #4f97d7; font-weight: bold;">&gt;&gt;</span>
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">about 0.271 </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
 
-prob_first_roll_win <span style="color: #3a81c3; font-weight: bold;">+</span> prob_point_game_win, <span style="color: #3a81c3; font-weight: bold;">numer</span>;
-<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">about 0.493 </span><span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
+prob_first_roll_win <span style="color: #4f97d7; font-weight: bold;">+</span> prob_point_game_win, <span style="color: #4f97d7; font-weight: bold;">numer</span>;
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">about 0.493 </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
 </pre>
 </div>
 
@@ -351,7 +345,7 @@ This gives the chance of winning at \(0.493\).
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-01-26 Tue 14:18</p>
+<p class="date">Created: 2021-02-08 Mon 16:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
