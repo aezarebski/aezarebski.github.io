@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-01 Thu 14:02 -->
+<!-- 2021-02-08 Mon 16:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -223,13 +223,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb774625">Docker notes</a>
+<li><a href="#org47583b2">Docker notes</a>
 <ul>
-<li><a href="#org46ce242">Permissions</a></li>
-<li><a href="#org4726b48"><code>gibiansky/ihaskell</code></a></li>
-<li><a href="#org679da7b">Jupyter docker stacks</a></li>
-<li><a href="#orge4527e4"><code>rocker/geospatial</code></a></li>
-<li><a href="#orge518ca2">Silly little notes</a></li>
+<li><a href="#org7f351ba">Permissions</a></li>
+<li><a href="#org1fed5b9"><code>gibiansky/ihaskell</code></a></li>
+<li><a href="#org6ae528c">Jupyter docker stacks</a></li>
+<li><a href="#orga1321bf"><code>rocker/geospatial</code></a></li>
+<li><a href="#org8664abe">Silly little notes</a></li>
 </ul>
 </li>
 </ul>
@@ -239,13 +239,13 @@
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgb774625" class="outline-2">
-<h2 id="orgb774625">Docker notes</h2>
-<div class="outline-text-2" id="text-orgb774625">
+<div id="outline-container-org47583b2" class="outline-2">
+<h2 id="org47583b2">Docker notes</h2>
+<div class="outline-text-2" id="text-org47583b2">
 </div>
-<div id="outline-container-org46ce242" class="outline-3">
-<h3 id="org46ce242">Permissions</h3>
-<div class="outline-text-3" id="text-org46ce242">
+<div id="outline-container-org7f351ba" class="outline-3">
+<h3 id="org7f351ba">Permissions</h3>
+<div class="outline-text-3" id="text-org7f351ba">
 <p>
 The docker deamon is owned by root, so by default you will need to run every
 command with <code>sudo</code>. Members of the <code>docker</code> group do not need to do this. To
@@ -254,8 +254,8 @@ commands
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sudo groupadd docker            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">create docker group</span>
-sudo usermod -aG docker $<span style="color: #715ab1;">USER</span>     <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">add yourself as a member</span>
+<pre class="src src-sh">sudo groupadd docker            <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">create docker group</span>
+sudo usermod -aG docker $<span style="color: #7590db;">USER</span>     <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">add yourself as a member</span>
 </pre>
 </div>
 
@@ -272,9 +272,9 @@ and to test that this actually worked you can run the hello world example.
 </div>
 </div>
 
-<div id="outline-container-org4726b48" class="outline-3">
-<h3 id="org4726b48"><code>gibiansky/ihaskell</code></h3>
-<div class="outline-text-3" id="text-org4726b48">
+<div id="outline-container-org1fed5b9" class="outline-3">
+<h3 id="org1fed5b9"><code>gibiansky/ihaskell</code></h3>
+<div class="outline-text-3" id="text-org1fed5b9">
 <p>
 The developer of IHaskell has a docker image available which provides IHaskell
 notesbooks
@@ -287,9 +287,9 @@ notesbooks
 </div>
 </div>
 
-<div id="outline-container-org679da7b" class="outline-3">
-<h3 id="org679da7b">Jupyter docker stacks</h3>
-<div class="outline-text-3" id="text-org679da7b">
+<div id="outline-container-org6ae528c" class="outline-3">
+<h3 id="org6ae528c">Jupyter docker stacks</h3>
+<div class="outline-text-3" id="text-org6ae528c">
 <p>
 <a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/">https://jupyter-docker-stacks.readthedocs.io/en/latest/</a>
 </p>
@@ -298,12 +298,29 @@ notesbooks
 The jupyter team maintain several docker images which have jupyter notebooks
 configured for basic datascience with julia, python and R.
 </p>
+
+<p>
+For example, the following command will start a Docker container running
+JupyterLab.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker run --rm -p <span style="color: #a45bad;">8888:8888</span> -e <span style="color: #7590db;">JUPYTER_ENABLE_LAB</span>=yes -v <span style="color: #2d9574;">"$PWD"</span>:/home/jovyan/work jupyter/datascience-notebook:9b06df75e445
+</pre>
+</div>
+
+<p>
+When the image has downloaded and the container is running a <code>&lt;TOKEN&gt;</code> should be
+printed, you will need this to access the lab via your browser at
+<code>127.0.0.1::8888/?token=&lt;TOKEN&gt;</code>. The data in the current working directory will
+be made available in this container.
+</p>
 </div>
 </div>
 
-<div id="outline-container-orge4527e4" class="outline-3">
-<h3 id="orge4527e4"><code>rocker/geospatial</code></h3>
-<div class="outline-text-3" id="text-orge4527e4">
+<div id="outline-container-orga1321bf" class="outline-3">
+<h3 id="orga1321bf"><code>rocker/geospatial</code></h3>
+<div class="outline-text-3" id="text-orga1321bf">
 <p>
 You can pull the following image from docker hub which has a lot of geospatial
 libraries included in it.
@@ -330,9 +347,9 @@ images.
 </div>
 </div>
 
-<div id="outline-container-orge518ca2" class="outline-3">
-<h3 id="orge518ca2">Silly little notes</h3>
-<div class="outline-text-3" id="text-orge518ca2">
+<div id="outline-container-org8664abe" class="outline-3">
+<h3 id="org8664abe">Silly little notes</h3>
+<div class="outline-text-3" id="text-org8664abe">
 <p>
 Here are some notes I took while listening to a tutorial on docker:
 </p>
@@ -410,7 +427,7 @@ you can just specify it once.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-01 Thu 14:02</p>
+<p class="date">Created: 2021-02-08 Mon 16:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
