@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-08 Fri 14:40 -->
+<!-- 2021-02-08 Mon 16:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -223,28 +223,28 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org34a1f50">Maxima notes</a>
+<li><a href="#org50fcb25">Maxima notes</a>
 <ul>
-<li><a href="#org684775b">Emacs interface to Maxima</a></li>
-<li><a href="#orga7f6f18">Plotting</a></li>
-<li><a href="#orgd14cfca">Programming in Maxima</a>
+<li><a href="#org95d1ead">Emacs interface to Maxima</a></li>
+<li><a href="#orgc38e065">Plotting</a></li>
+<li><a href="#org493d21a">Programming in Maxima</a>
 <ul>
-<li><a href="#orga7e5071">Getting help</a></li>
-<li><a href="#org355cf96">Removing existing definitions</a></li>
-<li><a href="#org6b6e1bb">Assignment</a></li>
-<li><a href="#org8b75bed">Program flow</a></li>
-<li><a href="#org156c5cf">Lists</a></li>
-<li><a href="#org55a5827">Evaluation</a></li>
-<li><a href="#org775fe6a">Packages</a></li>
-<li><a href="#org9ee0ba5">Expressions and the REPL</a></li>
-<li><a href="#orgeccccc0">Batchmode</a></li>
+<li><a href="#org31eac0a">Getting help</a></li>
+<li><a href="#orgca42974">Removing existing definitions</a></li>
+<li><a href="#org5d0d954">Assignment</a></li>
+<li><a href="#org7164733">Program flow</a></li>
+<li><a href="#org60c7679">Lists</a></li>
+<li><a href="#org717700f">Evaluation</a></li>
+<li><a href="#org93d1d0f">Packages</a></li>
+<li><a href="#orgaabafe9">Expressions and the REPL</a></li>
+<li><a href="#orgb3f1344">Batchmode</a></li>
 </ul>
 </li>
-<li><a href="#org5524f53">Quick reference for mathematics</a>
+<li><a href="#org764d931">Quick reference for mathematics</a>
 <ul>
-<li><a href="#org06d235c">Algebra</a></li>
-<li><a href="#orga9d9b67">Series</a></li>
-<li><a href="#orgc1b716a">Differential equations</a></li>
+<li><a href="#org530ec2d">Algebra</a></li>
+<li><a href="#orgf7805a8">Series</a></li>
+<li><a href="#org96a7f98">Differential equations</a></li>
 </ul>
 </li>
 </ul>
@@ -256,11 +256,11 @@
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org34a1f50" class="outline-2">
-<h2 id="org34a1f50">Maxima notes</h2>
-<div class="outline-text-2" id="text-org34a1f50">
+<div id="outline-container-org50fcb25" class="outline-2">
+<h2 id="org50fcb25">Maxima notes</h2>
+<div class="outline-text-2" id="text-org50fcb25">
 
-<div id="org735574c" class="figure">
+<div id="org49a4909" class="figure">
 <p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
 </p>
 </div>
@@ -270,21 +270,21 @@
 </p>
 </div>
 
-<div id="outline-container-org684775b" class="outline-3">
-<h3 id="org684775b">Emacs interface to Maxima</h3>
-<div class="outline-text-3" id="text-org684775b">
+<div id="outline-container-org95d1ead" class="outline-3">
+<h3 id="org95d1ead">Emacs interface to Maxima</h3>
+<div class="outline-text-3" id="text-org95d1ead">
 <p>
 Add the following to your configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima mode"</span> t<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #da8b55;">"Frontend for maxima with Image support"</span> t<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima interaction"</span> t<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #da8b55;">"Imath mode for math formula input"</span> t<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>add-to-list 'auto-mode-alist '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima mode"</span> t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #9f8766;">"Frontend for maxima with Image support"</span> t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima interaction"</span> t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #9f8766;">"Imath mode for math formula input"</span> t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>add-to-list 'auto-mode-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -301,7 +301,7 @@ The output type is determined by the value of the <code>display2d</code> variabl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3; font-weight: bold;">display2d:</span> <span style="color: #4e3163;">true</span>;
+<pre class="src src-maxima"><span style="color: #4f97d7; font-weight: bold;">display2d:</span> <span style="color: #a45bad;">true</span>;
 </pre>
 </div>
 
@@ -311,33 +311,33 @@ If you want to change the font size for the latex output, modify the (customisab
 </div>
 </div>
 
-<div id="outline-container-orga7f6f18" class="outline-3">
-<h3 id="orga7f6f18">Plotting</h3>
-<div class="outline-text-3" id="text-orga7f6f18">
+<div id="outline-container-orgc38e065" class="outline-3">
+<h3 id="orgc38e065">Plotting</h3>
+<div class="outline-text-3" id="text-orgc38e065">
 <p>
 Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plot!
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">plot2d</span>(<span style="color: #3a81c3;">sin</span>(x), [x,<span style="color: #4e3163;">0</span>,2%pi])$ 
+<pre class="src src-maxima"><span style="color: #4f97d7;">plot2d</span>(<span style="color: #4f97d7;">sin</span>(x), [x,<span style="color: #a45bad;">0</span>,2%pi])$ 
 </pre>
 </div>
 
 
-<div id="orga558f11" class="figure">
+<div id="org375c220" class="figure">
 <p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd14cfca" class="outline-3">
-<h3 id="orgd14cfca">Programming in Maxima</h3>
-<div class="outline-text-3" id="text-orgd14cfca">
+<div id="outline-container-org493d21a" class="outline-3">
+<h3 id="org493d21a">Programming in Maxima</h3>
+<div class="outline-text-3" id="text-org493d21a">
 </div>
-<div id="outline-container-orga7e5071" class="outline-4">
-<h4 id="orga7e5071">Getting help</h4>
-<div class="outline-text-4" id="text-orga7e5071">
+<div id="outline-container-org31eac0a" class="outline-4">
+<h4 id="org31eac0a">Getting help</h4>
+<div class="outline-text-4" id="text-org31eac0a">
 <p>
 There is a the <code>example</code> function which can be used to get examples of the usage of a function.
 There is the <code>? &lt;function&gt;;</code> to get the documentation for a function.
@@ -345,41 +345,41 @@ There is the <code>? &lt;function&gt;;</code> to get the documentation for a fun
 </div>
 </div>
 
-<div id="outline-container-org355cf96" class="outline-4">
-<h4 id="org355cf96">Removing existing definitions</h4>
-<div class="outline-text-4" id="text-org355cf96">
+<div id="outline-container-orgca42974" class="outline-4">
+<h4 id="orgca42974">Removing existing definitions</h4>
+<div class="outline-text-4" id="text-orgca42974">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">restart</span>();
-<span style="color: #3a81c3;">kill</span>(<span style="color: #3a81c3; font-weight: bold;">all</span>);
+<pre class="src src-maxima"><span style="color: #4f97d7;">restart</span>();
+<span style="color: #4f97d7;">kill</span>(<span style="color: #4f97d7; font-weight: bold;">all</span>);
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6b6e1bb" class="outline-4">
-<h4 id="org6b6e1bb">Assignment</h4>
-<div class="outline-text-4" id="text-org6b6e1bb">
+<div id="outline-container-org5d0d954" class="outline-4">
+<h4 id="org5d0d954">Assignment</h4>
+<div class="outline-text-4" id="text-org5d0d954">
 <div class="org-src-container">
-<pre class="src src-maxima">y <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #4e3163;">10</span>;
-<span style="color: #6c3163; font-weight: bold;">f</span>(<span style="color: #715ab1;">x</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span> x <span style="color: #3a81c3; font-weight: bold;">+</span> <span style="color: #4e3163;">1</span>;  
+<pre class="src src-maxima">y <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #a45bad;">10</span>;
+<span style="color: #bc6ec5; font-weight: bold;">f</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> x <span style="color: #4f97d7; font-weight: bold;">+</span> <span style="color: #a45bad;">1</span>;  
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8b75bed" class="outline-4">
-<h4 id="org8b75bed">Program flow</h4>
-<div class="outline-text-4" id="text-org8b75bed">
+<div id="outline-container-org7164733" class="outline-4">
+<h4 id="org7164733">Program flow</h4>
+<div class="outline-text-4" id="text-org7164733">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3; font-weight: bold;">if</span> cond_1 <span style="color: #3a81c3; font-weight: bold;">then</span> expr_1 <span style="color: #3a81c3; font-weight: bold;">elseif</span> cond_2 <span style="color: #3a81c3; font-weight: bold;">then</span> expr_2 <span style="color: #3a81c3; font-weight: bold;">else</span> expr_3; 
+<pre class="src src-maxima"><span style="color: #4f97d7; font-weight: bold;">if</span> cond_1 <span style="color: #4f97d7; font-weight: bold;">then</span> expr_1 <span style="color: #4f97d7; font-weight: bold;">elseif</span> cond_2 <span style="color: #4f97d7; font-weight: bold;">then</span> expr_2 <span style="color: #4f97d7; font-weight: bold;">else</span> expr_3; 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org156c5cf" class="outline-4">
-<h4 id="org156c5cf">Lists</h4>
-<div class="outline-text-4" id="text-org156c5cf">
+<div id="outline-container-org60c7679" class="outline-4">
+<h4 id="org60c7679">Lists</h4>
+<div class="outline-text-4" id="text-org60c7679">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -424,30 +424,30 @@ There is the <code>? &lt;function&gt;;</code> to get the documentation for a fun
 </div>
 </div>
 
-<div id="outline-container-org55a5827" class="outline-4">
-<h4 id="org55a5827">Evaluation</h4>
-<div class="outline-text-4" id="text-org55a5827">
+<div id="outline-container-org717700f" class="outline-4">
+<h4 id="org717700f">Evaluation</h4>
+<div class="outline-text-4" id="text-org717700f">
 <p>
 To force the evaluation of an expression before binding it to the value of a function use the <code>define</code> function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(fdash(x), <span style="color: #3a81c3;">diff</span>(f(x), x));
+<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(fdash(x), <span style="color: #4f97d7;">diff</span>(f(x), x));
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org775fe6a" class="outline-4">
-<h4 id="org775fe6a">Packages</h4>
-<div class="outline-text-4" id="text-org775fe6a">
+<div id="outline-container-org93d1d0f" class="outline-4">
+<h4 id="org93d1d0f">Packages</h4>
+<div class="outline-text-4" id="text-org93d1d0f">
 <p>
 Use the <code>load</code> command to load packages.
 For example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #2d9574;">"distrib"</span>);
+<pre class="src src-maxima"><span style="color: #4f97d7;">load</span>(<span style="color: #2d9574;">"distrib"</span>);
 </pre>
 </div>
 
@@ -459,18 +459,18 @@ which has syntax very close to most of the mainstream languages.
 </div>
 </div>
 
-<div id="outline-container-org9ee0ba5" class="outline-4">
-<h4 id="org9ee0ba5">Expressions and the REPL</h4>
-<div class="outline-text-4" id="text-org9ee0ba5">
+<div id="outline-container-orgaabafe9" class="outline-4">
+<h4 id="orgaabafe9">Expressions and the REPL</h4>
+<div class="outline-text-4" id="text-orgaabafe9">
 <p>
 You can use <code>%o&lt;n&gt;</code> to refer to the output named <code>n</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgeccccc0" class="outline-4">
-<h4 id="orgeccccc0">Batchmode</h4>
-<div class="outline-text-4" id="text-orgeccccc0">
+<div id="outline-container-orgb3f1344" class="outline-4">
+<h4 id="orgb3f1344">Batchmode</h4>
+<div class="outline-text-4" id="text-orgb3f1344">
 <p>
 To save sessions there is the <code>stringout</code> function which can take as a mode one
 of several options: <code>all</code>, <code>input</code> for a verbatim copy of the session, and
@@ -481,13 +481,13 @@ there is <code>batch</code> and <code>batchload</code>, the latter being a silen
 </div>
 </div>
 
-<div id="outline-container-org5524f53" class="outline-3">
-<h3 id="org5524f53">Quick reference for mathematics</h3>
-<div class="outline-text-3" id="text-org5524f53">
+<div id="outline-container-org764d931" class="outline-3">
+<h3 id="org764d931">Quick reference for mathematics</h3>
+<div class="outline-text-3" id="text-org764d931">
 </div>
-<div id="outline-container-org06d235c" class="outline-4">
-<h4 id="org06d235c">Algebra</h4>
-<div class="outline-text-4" id="text-org06d235c">
+<div id="outline-container-org530ec2d" class="outline-4">
+<h4 id="org530ec2d">Algebra</h4>
+<div class="outline-text-4" id="text-org530ec2d">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -558,9 +558,9 @@ there is <code>batch</code> and <code>batchload</code>, the latter being a silen
 </div>
 </div>
 
-<div id="outline-container-orga9d9b67" class="outline-4">
-<h4 id="orga9d9b67">Series</h4>
-<div class="outline-text-4" id="text-orga9d9b67">
+<div id="outline-container-orgf7805a8" class="outline-4">
+<h4 id="orgf7805a8">Series</h4>
+<div class="outline-text-4" id="text-orgf7805a8">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -589,9 +589,9 @@ there is <code>batch</code> and <code>batchload</code>, the latter being a silen
 </div>
 </div>
 
-<div id="outline-container-orgc1b716a" class="outline-4">
-<h4 id="orgc1b716a">Differential equations</h4>
-<div class="outline-text-4" id="text-orgc1b716a">
+<div id="outline-container-org96a7f98" class="outline-4">
+<h4 id="org96a7f98">Differential equations</h4>
+<div class="outline-text-4" id="text-org96a7f98">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -654,7 +654,7 @@ there is <code>batch</code> and <code>batchload</code>, the latter being a silen
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-01-08 Fri 14:40</p>
+<p class="date">Created: 2021-02-08 Mon 16:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

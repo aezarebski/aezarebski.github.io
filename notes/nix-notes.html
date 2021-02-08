@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-15 Fri 17:32 -->
+<!-- 2021-02-08 Mon 16:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -228,35 +228,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7524ab8">Nix notes</a></li>
-<li><a href="#org2daf160">Nix as a language</a></li>
-<li><a href="#org72f8557">Examples</a>
+<li><a href="#org76c4cd6">Nix notes</a></li>
+<li><a href="#orgbbd3cfa">Nix as a language</a></li>
+<li><a href="#orgad8c63d">Examples</a>
 <ul>
-<li><a href="#org7d1da85">Jupyter Lab</a></li>
-<li><a href="#orge29c7ce">DOOM</a></li>
-<li><a href="#orgcf34c3d">A reproducible R environment</a></li>
+<li><a href="#org17fb0aa">Jupyter Lab</a></li>
+<li><a href="#org8c758a6">DOOM</a></li>
+<li><a href="#org6c4966e">A reproducible R environment</a></li>
 </ul>
 </li>
-<li><a href="#orgcc7416f">Resources</a></li>
-<li><a href="#orgb2fa62d">Rough notes</a></li>
+<li><a href="#org076669d">Resources</a></li>
+<li><a href="#orge652c21">Rough notes</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7524ab8" class="outline-2">
-<h2 id="org7524ab8">Nix notes</h2>
-<div class="outline-text-2" id="text-org7524ab8">
+<div id="outline-container-org76c4cd6" class="outline-2">
+<h2 id="org76c4cd6">Nix notes</h2>
+<div class="outline-text-2" id="text-org76c4cd6">
 
-<div id="orgecdef72" class="figure">
+<div id="org70c940a" class="figure">
 <p><img src="../images/nix-logo.png" alt="nix-logo.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2daf160" class="outline-2">
-<h2 id="org2daf160">Nix as a language</h2>
-<div class="outline-text-2" id="text-org2daf160">
+<div id="outline-container-orgbbd3cfa" class="outline-2">
+<h2 id="orgbbd3cfa">Nix as a language</h2>
+<div class="outline-text-2" id="text-orgbbd3cfa">
 <p>
 There is a repl which you can start with <code>nix repl</code> to play around with
 expressions to see if they behave as expected.
@@ -264,13 +264,13 @@ expressions to see if they behave as expected.
 </div>
 </div>
 
-<div id="outline-container-org72f8557" class="outline-2">
-<h2 id="org72f8557">Examples</h2>
-<div class="outline-text-2" id="text-org72f8557">
+<div id="outline-container-orgad8c63d" class="outline-2">
+<h2 id="orgad8c63d">Examples</h2>
+<div class="outline-text-2" id="text-orgad8c63d">
 </div>
-<div id="outline-container-org7d1da85" class="outline-3">
-<h3 id="org7d1da85">Jupyter Lab</h3>
-<div class="outline-text-3" id="text-org7d1da85">
+<div id="outline-container-org17fb0aa" class="outline-3">
+<h3 id="org17fb0aa">Jupyter Lab</h3>
+<div class="outline-text-3" id="text-org17fb0aa">
 <p>
 The following <code>shell.nix</code> provides a shell which has jupyter lab with several
 useful kernels. It uses the functionality developed by Tweag. To start the
@@ -283,32 +283,32 @@ server run the following command:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">shell.nix</span>
-<span style="color: #3a81c3; font-weight: bold;">let</span>
-  <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
-    <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
-    <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">""</span>;
-  <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">shell.nix</span>
+<span style="color: #4f97d7; font-weight: bold;">let</span>
+  <span style="color: #7590db;">jupyter</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span>builtins.fetchGit <span style="color: #bc6ec5;">{</span>
+    <span style="color: #7590db;">url</span> = <span style="color: #a45bad;">https://github.com/tweag/jupyterWith</span>;
+    <span style="color: #7590db;">rev</span> = <span style="color: #2d9574;">""</span>;
+  <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
 
-  <span style="color: #715ab1;">irkernel</span> = jupyter.kernels.iRWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"r"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> p.ggplot2 <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
+  <span style="color: #7590db;">irkernel</span> = jupyter.kernels.iRWith <span style="color: #4f97d7;">{</span>
+    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"r"</span>;
+    <span style="color: #7590db;">packages</span> = p: <span style="color: #4f97d7; font-weight: bold;">with</span> p; <span style="color: #bc6ec5;">[</span> p.ggplot2 <span style="color: #bc6ec5;">]</span>;
+  <span style="color: #4f97d7;">}</span>;
 
-  <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy
+  <span style="color: #7590db;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #4f97d7;">{</span>
+    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"python"</span>;
+    <span style="color: #7590db;">packages</span> = p: <span style="color: #4f97d7; font-weight: bold;">with</span> p; <span style="color: #bc6ec5;">[</span> numpy
                             altair
                             statsmodels
                             pandas
-                            matplotlib <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
+                            matplotlib <span style="color: #bc6ec5;">]</span>;
+  <span style="color: #4f97d7;">}</span>;
 
-  <span style="color: #715ab1;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">kernels</span> = <span style="color: #6c3163;">[</span> ipython
-                irkernel <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
-<span style="color: #3a81c3; font-weight: bold;">in</span>
+  <span style="color: #7590db;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #4f97d7;">{</span>
+    <span style="color: #7590db;">kernels</span> = <span style="color: #bc6ec5;">[</span> ipython
+                irkernel <span style="color: #bc6ec5;">]</span>;
+  <span style="color: #4f97d7;">}</span>;
+<span style="color: #4f97d7; font-weight: bold;">in</span>
   jupyterEnvironment.env
 </pre>
 </div>
@@ -322,9 +322,9 @@ there.</li>
 </div>
 </div>
 
-<div id="outline-container-orge29c7ce" class="outline-3">
-<h3 id="orge29c7ce">DOOM</h3>
-<div class="outline-text-3" id="text-orge29c7ce">
+<div id="outline-container-org8c758a6" class="outline-3">
+<h3 id="org8c758a6">DOOM</h3>
+<div class="outline-text-3" id="text-org8c758a6">
 <p>
 Much of the value of Nix comes from being about to try out a package without
 needing to properly install it on your system. For example, suppose you want to
@@ -346,9 +346,9 @@ the shell it will be gone.
 </div>
 </div>
 
-<div id="outline-container-orgcf34c3d" class="outline-3">
-<h3 id="orgcf34c3d">A reproducible R environment</h3>
-<div class="outline-text-3" id="text-orgcf34c3d">
+<div id="outline-container-org6c4966e" class="outline-3">
+<h3 id="org6c4966e">A reproducible R environment</h3>
+<div class="outline-text-3" id="text-org6c4966e">
 <p>
 The following provides a shell with a pinned version of R and the packages
 <code>dplyr</code> and <code>ggplot2</code>, other packages can be found at <code>search.nixos.org</code>. A
@@ -358,44 +358,44 @@ choosing a commit, see the listed versions <a href="https://status.nixos.org/">s
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">shell.nix</span>
-<span style="color: #3a81c3; font-weight: bold;">let</span>
-  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
-  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
-  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
-  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
-<span style="color: #3a81c3; font-weight: bold;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
-  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"example-r-env"</span>;
-    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
-    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3; font-weight: bold;">else</span> nix;
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">shell.nix</span>
+<span style="color: #4f97d7; font-weight: bold;">let</span>
+  <span style="color: #7590db;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
+  <span style="color: #7590db;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #bc6ec5;">$</span><span style="color: #4f97d7;">{</span>commitHash<span style="color: #4f97d7;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #7590db;">pkgs</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">fetchTarball</span> tarballUrl<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
+  <span style="color: #7590db;">stdenv</span> = pkgs.stdenv;
+<span style="color: #4f97d7; font-weight: bold;">in</span> with pkgs; <span style="color: #4f97d7;">{</span>
+  <span style="color: #7590db;">myProject</span> = stdenv.mkDerivation <span style="color: #bc6ec5;">{</span>
+    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"example-r-env"</span>;
+    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #7590db;">src</span> = <span style="color: #4f97d7; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">null</span> <span style="color: #4f97d7; font-weight: bold;">else</span> nix;
 
-    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
+    <span style="color: #7590db;">buildInputs</span> = <span style="color: #4f97d7; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
       R
       dplyr
       purrr
       magrittr
       ggplot2
     <span style="color: #2d9574;">]</span>;
-   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
+   <span style="color: #7590db;">shellHook</span> = <span style="color: #2d9574;">''</span>
 <span style="color: #2d9574;">             printf "\n\nWelcome to a reproducible R shell :)\n\n"</span>
 <span style="color: #2d9574;">      ''</span>;
-  <span style="color: #6c3163;">}</span>;
-<span style="color: #3a81c3;">}</span>
+  <span style="color: #bc6ec5;">}</span>;
+<span style="color: #4f97d7;">}</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org413d4ca" class="outline-4">
-<h4 id="org413d4ca">Testing fonts work</h4>
-<div class="outline-text-4" id="text-org413d4ca">
+<div id="outline-container-org2b88d60" class="outline-4">
+<h4 id="org2b88d60">Testing fonts work</h4>
+<div class="outline-text-4" id="text-org2b88d60">
 <p>
 I have had some trouble getting fonts to work properly with nix, if the
 following produces sensible output then you are probably in the clear.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"foo.png"</span><span style="color: #3a81c3;">)</span>; plot<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span>; dev.off<span style="color: #3a81c3;">()</span>
+<pre class="src src-R">png<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"foo.png"</span><span style="color: #4f97d7;">)</span>; plot<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span>; dev.off<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -407,9 +407,9 @@ font problem. Recall that you can see the latest commits at <a href="https://sta
 </div>
 </div>
 
-<div id="outline-container-org3aaa485" class="outline-4">
-<h4 id="org3aaa485">Using this with ESS</h4>
-<div class="outline-text-4" id="text-org3aaa485">
+<div id="outline-container-orgecc89ea" class="outline-4">
+<h4 id="orgecc89ea">Using this with ESS</h4>
+<div class="outline-text-4" id="text-orgecc89ea">
 <p>
 If you want to use ESS with nix, you'll need to let it know that you want to use
 the R that comes with the nix shell. To do this open a shell with <code>M-x shell</code>
@@ -422,18 +422,18 @@ select the R dialect.
 </div>
 </div>
 
-<div id="outline-container-orgcc7416f" class="outline-2">
-<h2 id="orgcc7416f">Resources</h2>
-<div class="outline-text-2" id="text-orgcc7416f">
+<div id="outline-container-org076669d" class="outline-2">
+<h2 id="org076669d">Resources</h2>
+<div class="outline-text-2" id="text-org076669d">
 <ul class="org-ul">
 <li><a href="https://scrive.github.io/nix-workshop/">Nix Workshop</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb2fa62d" class="outline-2">
-<h2 id="orgb2fa62d">Rough notes</h2>
-<div class="outline-text-2" id="text-orgb2fa62d">
+<div id="outline-container-orge652c21" class="outline-2">
+<h2 id="orge652c21">Rough notes</h2>
+<div class="outline-text-2" id="text-orge652c21">
 <ul class="org-ul">
 <li>When choosing a commit, see the listed versions <a href="https://status.nixos.org/">status.nixos.org</a>.</li>
 </ul>
@@ -445,9 +445,9 @@ versions of R
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! /usr/bin/</span><span style="color: #3a81c3; font-weight: bold;">env</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> nix-shell</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! nix-shell --pure -i R -p R</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/14cf906f33c39d38741062df2cca0b0575b210ff.tar.gz</span>
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">! /usr/bin/</span><span style="color: #4f97d7; font-weight: bold;">env</span><span style="color: #2aa1ae; background-color: #292e34;"> nix-shell</span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">! nix-shell --pure -i R -p R</span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/14cf906f33c39d38741062df2cca0b0575b210ff.tar.gz</span>
 </pre>
 </div>
 
@@ -475,21 +475,21 @@ the specified <code>nix-shell</code>.</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #715ab1;">nix</span>:
-  <span style="color: #715ab1;">enable</span>: <span style="color: #4e3163;">true</span>
-  <span style="color: #715ab1;">shell-file</span>: shell.nix
+<pre class="src src-yaml"><span style="color: #7590db;">nix</span>:
+  <span style="color: #7590db;">enable</span>: <span style="color: #a45bad;">true</span>
+  <span style="color: #7590db;">shell-file</span>: shell.nix
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #3a81c3;">{</span>ghc<span style="color: #3a81c3;">}</span>:
-<span style="color: #3a81c3; font-weight: bold;">with</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">import</span> <span style="color: #4e3163;">&lt;nixpkgs&gt;</span> <span style="color: #6c3163;">{}</span><span style="color: #3a81c3;">)</span>;
+<pre class="src src-nix"><span style="color: #4f97d7;">{</span>ghc<span style="color: #4f97d7;">}</span>:
+<span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">import</span> <span style="color: #a45bad;">&lt;nixpkgs&gt;</span> <span style="color: #bc6ec5;">{}</span><span style="color: #4f97d7;">)</span>;
 
-haskell.lib.buildStackProject <span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3; font-weight: bold;">inherit</span> ghc;
-  <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"myEnv"</span>;
-  <span style="color: #715ab1;">buildInputs</span> = <span style="color: #6c3163;">[</span> glpk pcre <span style="color: #6c3163;">]</span>;
-<span style="color: #3a81c3;">}</span>
+haskell.lib.buildStackProject <span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">inherit</span> ghc;
+  <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"myEnv"</span>;
+  <span style="color: #7590db;">buildInputs</span> = <span style="color: #bc6ec5;">[</span> glpk pcre <span style="color: #bc6ec5;">]</span>;
+<span style="color: #4f97d7;">}</span>
 </pre>
 </div>
 </div>
@@ -497,7 +497,7 @@ haskell.lib.buildStackProject <span style="color: #3a81c3;">{</span>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-01-15 Fri 17:32</p>
+<p class="date">Created: 2021-02-08 Mon 16:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

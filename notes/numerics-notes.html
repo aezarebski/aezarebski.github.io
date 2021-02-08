@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-30 Fri 16:29 -->
+<!-- 2021-02-08 Mon 16:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -245,10 +245,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org379b5e3">Numerics notes</a>
+<li><a href="#org2b5cdef">Numerics notes</a>
 <ul>
-<li><a href="#org89d75df">Numeric differentiation</a></li>
-<li><a href="#orgd45c1b3">LogSumExp function</a></li>
+<li><a href="#org36043bb">Numeric differentiation</a></li>
+<li><a href="#org2a42913">LogSumExp function</a></li>
 </ul>
 </li>
 </ul>
@@ -258,34 +258,34 @@
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-org379b5e3" class="outline-2">
-<h2 id="org379b5e3">Numerics notes</h2>
-<div class="outline-text-2" id="text-org379b5e3">
+<div id="outline-container-org2b5cdef" class="outline-2">
+<h2 id="org2b5cdef">Numerics notes</h2>
+<div class="outline-text-2" id="text-org2b5cdef">
 </div>
-<div id="outline-container-org89d75df" class="outline-3">
-<h3 id="org89d75df">Numeric differentiation</h3>
-<div class="outline-text-3" id="text-org89d75df">
+<div id="outline-container-org36043bb" class="outline-3">
+<h3 id="org36043bb">Numeric differentiation</h3>
+<div class="outline-text-3" id="text-org36043bb">
 <p>
 The following functions use a five-point stencil to compute first and second
 derivatives and have an error of order \(h^4\)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">firstDerivative</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Floating</span> a <span style="color: #715ab1;">=&gt;</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">-&gt;</span> a<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> a
-<span style="color: #6c3163; font-weight: bold;">firstDerivative</span> h f x <span style="color: #715ab1;">=</span>
-  <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">-</span>f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">2</span> <span style="color: #715ab1;">*</span> h<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">8</span> <span style="color: #715ab1;">*</span> f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">+</span> h<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">-</span> <span style="color: #4e3163;">8</span> <span style="color: #715ab1;">*</span> f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">-</span> h<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">+</span> f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">-</span> <span style="color: #4e3163;">2</span> <span style="color: #715ab1;">*</span> h<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">/</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">12</span> <span style="color: #715ab1;">*</span> h<span style="color: #3a81c3;">)</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">firstDerivative</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a
+<span style="color: #bc6ec5; font-weight: bold;">firstDerivative</span> h f x <span style="color: #7590db;">=</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span>f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> <span style="color: #a45bad;">8</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> <span style="color: #a45bad;">8</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">12</span> <span style="color: #7590db;">*</span> h<span style="color: #4f97d7;">)</span>
 
-<span style="color: #6c3163; font-weight: bold;">secondDerivative</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Floating</span> a <span style="color: #715ab1;">=&gt;</span> a <span style="color: #715ab1;">-&gt;</span> <span style="color: #3a81c3;">(</span>a <span style="color: #715ab1;">-&gt;</span> a<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">-&gt;</span> a <span style="color: #715ab1;">-&gt;</span> a
-<span style="color: #6c3163; font-weight: bold;">secondDerivative</span> h f x <span style="color: #715ab1;">=</span>
-  <span style="color: #3a81c3;">(</span><span style="color: #715ab1;">-</span>f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">2</span> <span style="color: #715ab1;">*</span> h<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">16</span> <span style="color: #715ab1;">*</span> f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">+</span> h<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">-</span> <span style="color: #4e3163;">30</span> <span style="color: #715ab1;">*</span> f x <span style="color: #715ab1;">+</span> <span style="color: #4e3163;">16</span> <span style="color: #715ab1;">*</span> f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">-</span> h<span style="color: #6c3163;">)</span> <span style="color: #715ab1;">-</span> f <span style="color: #6c3163;">(</span>x <span style="color: #715ab1;">-</span> <span style="color: #4e3163;">2</span> <span style="color: #715ab1;">*</span> h<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">/</span> <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">12</span> <span style="color: #715ab1;">*</span> h <span style="color: #715ab1;">**</span> <span style="color: #4e3163;">2</span><span style="color: #3a81c3;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">secondDerivative</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a
+<span style="color: #bc6ec5; font-weight: bold;">secondDerivative</span> h f x <span style="color: #7590db;">=</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span>f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> <span style="color: #a45bad;">16</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> <span style="color: #a45bad;">30</span> <span style="color: #7590db;">*</span> f x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">16</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">12</span> <span style="color: #7590db;">*</span> h <span style="color: #7590db;">**</span> <span style="color: #a45bad;">2</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd45c1b3" class="outline-3">
-<h3 id="orgd45c1b3">LogSumExp function</h3>
-<div class="outline-text-3" id="text-orgd45c1b3">
+<div id="outline-container-org2a42913" class="outline-3">
+<h3 id="org2a42913">LogSumExp function</h3>
+<div class="outline-text-3" id="text-org2a42913">
 <p>
 Consider the LogSumExp (LSE) function
 </p>
@@ -312,9 +312,9 @@ overflow or underflow as easily.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #6c3163; font-weight: bold;">logSumExp</span> <span style="color: #715ab1;">::</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Floating</span> a, <span style="color: #ba2f59; font-weight: bold;">Ord</span> a<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">=&gt;</span> <span style="color: #3a81c3;">[</span>a<span style="color: #3a81c3;">]</span> <span style="color: #715ab1;">-&gt;</span> a
-<span style="color: #6c3163; font-weight: bold;">logSumExp</span> xs <span style="color: #715ab1;">=</span> x' <span style="color: #715ab1;">+</span> log <span style="color: #3a81c3;">(</span>sum <span style="color: #6c3163;">[</span>exp <span style="color: #2d9574;">(</span>x <span style="color: #715ab1;">-</span> x'<span style="color: #2d9574;">)</span> <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">&lt;-</span> xs<span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
-               <span style="color: #3a81c3; font-weight: bold;">where</span> x' <span style="color: #715ab1;">=</span> maximum xs
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">logSumExp</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Floating</span> a, <span style="color: #ce537a; font-weight: bold;">Ord</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> a
+<span style="color: #bc6ec5; font-weight: bold;">logSumExp</span> xs <span style="color: #7590db;">=</span> x' <span style="color: #7590db;">+</span> log <span style="color: #4f97d7;">(</span>sum <span style="color: #bc6ec5;">[</span>exp <span style="color: #2d9574;">(</span>x <span style="color: #7590db;">-</span> x'<span style="color: #2d9574;">)</span> <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;-</span> xs<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+               <span style="color: #4f97d7; font-weight: bold;">where</span> x' <span style="color: #7590db;">=</span> maximum xs
 </pre>
 </div>
 </div>
@@ -323,7 +323,7 @@ overflow or underflow as easily.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2020-10-30 Fri 16:29</p>
+<p class="date">Created: 2021-02-08 Mon 16:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
