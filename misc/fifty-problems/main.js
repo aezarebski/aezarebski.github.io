@@ -36,4 +36,24 @@ function updateStyle() {
     return (null);
 }
 
+function problemFile(n) {
+    return("./problem-" + n + ".html");
+}
+
 updateStyle();
+
+// We add the links to the buttons after loading the page so that we can compute
+// which problems to link to from the current URL.
+var problemNumber = window
+    .location
+    .href
+    .split("/")
+    .pop()
+    .match(/[0-9]+/)
+    .toString();
+document
+    .getElementById("prevProblem")
+    .setAttribute("href", problemFile(Number(problemNumber) - 1));
+document
+    .getElementById("nextProblem")
+    .setAttribute("href", problemFile(Number(problemNumber) + 1));

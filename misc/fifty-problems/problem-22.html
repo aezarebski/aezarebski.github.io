@@ -253,124 +253,35 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org1b09b64" class="outline-2">
-<h2 id="org1b09b64">The Flippant Juror</h2>
-<div class="outline-text-2" id="text-org1b09b64">
+<div id="outline-container-org163e08c" class="outline-2">
+<h2 id="org163e08c">The Ballot Box</h2>
+<div class="outline-text-2" id="text-org163e08c">
 <blockquote>
 <p>
-A three-man jury has two members each of whom independently has probability <i>p</i>
-of making the correct decision and a third member who flips a coin for each
-decision (majority rules). A one-man jury has a probability <i>p</i> of making a
-correct decision. Which jury has the better probability of making the correct
-decision?
+In an election, two candidates, Albert and Benjamin, have in a ballot box \(a\)
+and \(b\) votes respectively, \(a > b\), for example, 3 and 2. If ballots are
+randomly drawn and tallied, what is the chance that at least once after the
+first tally the candidates have the same number of tallies?
 </p>
 </blockquote>
 
 <p>
-The possible outcomes can be enumerated as follows
+Observe first that if the first vote drawn is a \(B\), which occurs with
+probability \(b / (a + b)\), then they will definitely have the same number of
+votes at some point in the future.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-right" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Juror 1</th>
-<th scope="col" class="org-right">Juror 2</th>
-<th scope="col" class="org-right">Juror 3</th>
-<th scope="col" class="org-right">Correct decision</th>
-<th scope="col" class="org-left">Probability</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\((1-p) p (1/2)\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-right">0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)p\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">0</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)(1-p)\)</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-right">1</td>
-<td class="org-left">\(p(1/2)p\)</td>
-</tr>
-</tbody>
-</table>
-
-<div class="org-src-container">
-<pre class="src src-maxima">prob_three_correct<span style="color: #4f97d7; font-weight: bold;">:</span> p<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">+</span> p<span style="color: #4f97d7; font-weight: bold;">*</span>(<span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span>p);
-prob_one_correct<span style="color: #4f97d7; font-weight: bold;">:</span> p;
-
-<span style="color: #4f97d7;">print</span>(<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(prob_three_correct, prob_one_correct)));
-</pre>
-</div>
+<p>
+There are the same number of trajectories starting from that first vote that
+reach parity as there are trajectories that reach partity if the first ballot
+drawn is an \(A\). Since all trajectories are equiprobable, the probability of
+getting back to parity after a first \(A\) is the same as the probability of
+getting a \(B\) first and then getting back to parity (since the trajectories
+are in bijection).
+</p>
 
 <p>
-This prints out "true", telling us that the juries have an equal probability of
-making the correct decision.
+Therefore, the probabilility is \(2b / (a + b)\).
 </p>
 </div>
 </div>

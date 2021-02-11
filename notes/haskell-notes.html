@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-08 Mon 16:29 -->
+<!-- 2021-02-11 Thu 16:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -287,7 +287,8 @@
 </li>
 <li><a href="#org48998d7">Hackage</a>
 <ul>
-<li><a href="#orgbd2da81">Notes about uploading a package to hackage</a></li>
+<li><a href="#org0754f39">Development shell</a></li>
+<li><a href="#orgd15d8fc">Notes about uploading a package to hackage</a></li>
 </ul>
 </li>
 <li><a href="#orgd945df3">Haskell for science</a>
@@ -296,7 +297,7 @@
 <li><a href="#orgcb33cde">Root finding</a></li>
 <li><a href="#orge93410e">Differential equations</a></li>
 <li><a href="#org63e7575">Random number simulation</a></li>
-<li><a href="#org951520a">Numbers</a></li>
+<li><a href="#orgeb82e8c">Numbers</a></li>
 </ul>
 </li>
 </ul>
@@ -304,7 +305,7 @@
 </div>
 
 
-<div id="org997a0c7" class="figure">
+<div id="org05f5373" class="figure">
 <p><img src="../images/haskell-logo.png" alt="haskell-logo.png" /> 
 </p>
 </div>
@@ -1200,11 +1201,11 @@ Left "Could not find file in step 2"
 <h3 id="org5a7f4df">Data structures</h3>
 <div class="outline-text-3" id="text-org5a7f4df">
 </div>
-<div id="outline-container-orgc8d6f0e" class="outline-4">
-<h4 id="orgc8d6f0e">Numbers</h4>
-<div class="outline-text-4" id="text-orgc8d6f0e">
+<div id="outline-container-org41c7c50" class="outline-4">
+<h4 id="org41c7c50">Numbers</h4>
+<div class="outline-text-4" id="text-org41c7c50">
 
-<div id="orgba8c38f" class="figure">
+<div id="org8380afb" class="figure">
 <p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
 </p>
 </div>
@@ -1304,10 +1305,66 @@ f (t b)</code>
 <div id="outline-container-org4c36bc1" class="outline-3">
 <h3 id="org4c36bc1"><code>ST</code> monad</h3>
 <div class="outline-text-3" id="text-org4c36bc1">
+</div>
+<div id="outline-container-org029d81c" class="outline-4">
+<h4 id="org029d81c">Example</h4>
+<div class="outline-text-4" id="text-org029d81c">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad</span> <span style="color: #4f97d7;">(</span>replicateM_,liftM<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.ST</span> <span style="color: #4f97d7;">(</span>runST<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.STRef</span>
+
+<span style="color: #bc6ec5; font-weight: bold;">foo</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">String</span>
+<span style="color: #bc6ec5; font-weight: bold;">foo</span> <span style="color: #7590db;">=</span> runST <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+  ref <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #2d9574;">"hello "</span>
+  x <span style="color: #7590db;">&lt;-</span> readSTRef ref
+  writeSTRef ref <span style="color: #4f97d7;">(</span>x <span style="color: #7590db;">++</span> <span style="color: #2d9574;">"world"</span><span style="color: #4f97d7;">)</span>
+  readSTRef ref
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org79919e2" class="outline-4">
+<h4 id="org79919e2">Another example</h4>
+<div class="outline-text-4" id="text-org79919e2">
 <p>
-A classic example of the <code>ST</code> monad is 
+Next time you have tricky fold, the following might be useful. Note that we use
+the <code>modifySTRef'</code> with the apostrophe, which is the strick version of the
+function to avoid the build up of thunks which might otherwise be a problem.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad</span> <span style="color: #4f97d7;">(</span>replicateM_,liftM<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.ST</span> <span style="color: #4f97d7;">(</span>runST<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.STRef</span>
+
+<span style="color: #bc6ec5; font-weight: bold;">fib</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+<span style="color: #bc6ec5; font-weight: bold;">fib</span> n <span style="color: #7590db;">=</span> runST <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+  ref <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+  replicateM_ n <span style="color: #7590db;">$</span> modifySTRef' ref <span style="color: #4f97d7;">(</span><span style="color: #7590db;">\</span><span style="color: #bc6ec5;">(</span>a,b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>b,a<span style="color: #7590db;">+</span>b<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  liftM snd <span style="color: #7590db;">$</span> readSTRef ref
+</pre>
+</div>
+
+<p>
+Moreover, this appears to be faster than the following non-tail recursive
+implementation
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">fib2</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+<span style="color: #bc6ec5; font-weight: bold;">fib2</span> n
+  <span style="color: #7590db;">|</span> n <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1</span>
+  <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">=</span> fib <span style="color: #4f97d7;">(</span>n<span style="color: #7590db;">-</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">+</span> fib <span style="color: #4f97d7;">(</span>n<span style="color: #7590db;">-</span><span style="color: #a45bad;">2</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb80a13b" class="outline-4">
+<h4 id="orgb80a13b">Another example again</h4>
+<div class="outline-text-4" id="text-orgb80a13b">
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.ST</span>
 <span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.STRef</span>
@@ -1321,41 +1378,6 @@ A classic example of the <code>ST</code> monad is
     readSTRef n
 </pre>
 </div>
-
-<p>
-<del>in strange situations</del> sometimes a while loop would be nice as well.
-The following function can help with this
-</p>
-
-<div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">whileM_</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Monad</span> m<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> m <span style="color: #ce537a; font-weight: bold;">Bool</span> <span style="color: #7590db;">-&gt;</span> m a <span style="color: #7590db;">-&gt;</span> m <span style="color: #4f97d7; font-weight: bold;">()</span>
-<span style="color: #bc6ec5; font-weight: bold;">whileM_</span> p f <span style="color: #7590db;">=</span> go
-    <span style="color: #4f97d7; font-weight: bold;">where</span> go <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-            x <span style="color: #7590db;">&lt;-</span> p
-            <span style="color: #4f97d7; font-weight: bold;">if</span> x
-                <span style="color: #4f97d7; font-weight: bold;">then</span> f <span style="color: #7590db;">&gt;&gt;</span> go
-                <span style="color: #4f97d7; font-weight: bold;">else</span> return <span style="color: #4f97d7; font-weight: bold;">()</span>
-</pre>
-</div>
-
-<p>
-We can re-write the <code>sumST</code> function using this as follows.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">sumST'</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Num</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">sumST'</span> xs <span style="color: #7590db;">=</span> runST <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-  n <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #a45bad;">0</span>
-  p <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #4f97d7;">(</span>not <span style="color: #7590db;">$</span> null xs<span style="color: #4f97d7;">)</span>
-  i <span style="color: #7590db;">&lt;-</span> newSTRef <span style="color: #a45bad;">0</span>
-  m <span style="color: #7590db;">&lt;-</span> pure <span style="color: #7590db;">$</span> length xs
-  whileM_ <span style="color: #4f97d7;">(</span>readSTRef p<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">$</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
-    ix <span style="color: #7590db;">&lt;-</span> readSTRef i
-    modifySTRef n <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span> <span style="color: #bc6ec5;">(</span>xs <span style="color: #7590db;">!!</span> ix<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-    modifySTRef i <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
-    modifySTRef p <span style="color: #4f97d7;">(</span><span style="color: #7590db;">\</span><span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>ix <span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span> <span style="color: #7590db;">&lt;</span> m<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-  readSTRef n
-</pre>
 </div>
 </div>
 </div>
@@ -1583,15 +1605,26 @@ See my <a href="./type-theory-notes.html">type theory notes</a>
 <h2 id="org48998d7">Hackage</h2>
 <div class="outline-text-2" id="text-org48998d7">
 </div>
-<div id="outline-container-orgbd2da81" class="outline-3">
-<h3 id="orgbd2da81">Notes about uploading a package to hackage</h3>
-<div class="outline-text-3" id="text-orgbd2da81">
+<div id="outline-container-org0754f39" class="outline-3">
+<h3 id="org0754f39">Development shell</h3>
+<div class="outline-text-3" id="text-org0754f39">
+<ul class="org-ul">
+<li>There is a nix-shell to assist in testing your package in a reproducible
+environment described in <a href="./nix-notes.html">my nix notes</a>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd15d8fc" class="outline-3">
+<h3 id="orgd15d8fc">Notes about uploading a package to hackage</h3>
+<div class="outline-text-3" id="text-orgd15d8fc">
 <ul class="org-ul">
 <li>Once a package is uploaded, it is there forever so make sure it is correct,
 that is why there is the package candidate system.</li>
 <li>The utility <code>cabal gen-bounds</code> makes it easy to generate suitable bounds on
 dependency versions. To keep the version bounds DRY you only need to specify
-them on their first occurrence in the cabal file.</li>
+them on their first occurrence in the cabal file. This will only work with an
+up to date version of cabal.</li>
 <li>There is a cabal <code>sdist</code> utility to zip up a package prior to submission.</li>
 <li>When a package is updated the <i>package versioning policy</i> should be used to
 update the package version. There is a useful <a href="https://pvp.haskell.org/#decision-tree">decision tree</a> to help you apply
@@ -1602,6 +1635,8 @@ produce a tarball ready for uploading. When a package is uploaded, it may take
 a while for the documentation to be build and uploaded.</li>
 <li>To use the uploaded package before it has made it onto stackage you can copy
 the link for the tarball into <code>extra-deps</code> in the stack YAML file.</li>
+<li>There is the <code>cabal-fmt</code> package which you can use to format your cabal file,
+eg <code>cabal-fmt --inplace demo.cabal</code>.</li>
 </ul>
 </div>
 </div>
@@ -1700,9 +1735,9 @@ with a hardcoded seed in the library.
 </div>
 </div>
 
-<div id="outline-container-org951520a" class="outline-3">
-<h3 id="org951520a">Numbers</h3>
-<div class="outline-text-3" id="text-org951520a">
+<div id="outline-container-orgeb82e8c" class="outline-3">
+<h3 id="orgeb82e8c">Numbers</h3>
+<div class="outline-text-3" id="text-orgeb82e8c">
 <p>
 To learn about how Haskell handles numbers &#x2014; although we only really care
 about <code>Integer</code> and <code>Double</code> &#x2014; there is the <a href="https://www.haskell.org/onlinereport/basic.html">report</a> and a <a href="https://www.haskell.org/tutorial/numbers.html">gentle introduction</a>
@@ -1715,7 +1750,7 @@ working with this too.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-08 Mon 16:29</p>
+<p class="date">Created: 2021-02-11 Thu 16:24</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
