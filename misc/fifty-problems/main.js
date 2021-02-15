@@ -37,23 +37,37 @@ function updateStyle() {
 }
 
 function problemFile(n) {
-    return("./problem-" + n + ".html");
+    return ("./problem-" + n + ".html");
 }
 
 updateStyle();
 
+// Predicate for whether this is a page which presents the solution to one of
+// the problems. This is used because we have slightly different setup required
+// if it is a problem page vs the index or some other page.
+function isProblemPage() {
+    return (window.location.href.split("/").pop().includes("problem"));
+}
+
 // We add the links to the buttons after loading the page so that we can compute
 // which problems to link to from the current URL.
-var problemNumber = window
-    .location
-    .href
-    .split("/")
-    .pop()
-    .match(/[0-9]+/)
-    .toString();
-document
-    .getElementById("prevProblem")
-    .setAttribute("href", problemFile(Number(problemNumber) - 1));
-document
-    .getElementById("nextProblem")
-    .setAttribute("href", problemFile(Number(problemNumber) + 1));
+function setUpPageLinks() {
+    console.log("setting up page links");
+    var problemNumber = window
+        .location
+        .href
+        .split("/")
+        .pop()
+        .match(/[0-9]+/)
+        .toString();
+
+    document
+        .getElementById("prevProblem")
+        .setAttribute("href", problemFile(Number(problemNumber) - 1));
+    document
+        .getElementById("nextProblem")
+        .setAttribute("href", problemFile(Number(problemNumber) + 1));
+}
+
+// If it is a problem page then set up the links to the other problems.
+isProblemPage() ? setUpPageLinks() : console.log("not setting up page links");
