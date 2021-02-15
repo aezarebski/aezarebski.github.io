@@ -216,52 +216,131 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../../index.html">Home</a>
-</p>
-
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<ul class="nav-menu">
+    <li class="nav-menu"><a id="prevProblem">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a id="nextProblem">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><a onclick="toggleStyle()">Light/Dark</a></li>
+</ul>
 
 <script src="./main.js"></script>
+<p style="margin-top: 100px"> </p>
 
-<div id="outline-container-orgd0f3c21" class="outline-2">
-<h2 id="orgd0f3c21">Fifty Challenging Problems in Probability</h2>
-<div class="outline-text-2" id="text-orgd0f3c21">
-<ol class="org-ol">
-<li><a href="./problem-1.html">The Sock Drawer</a></li>
-<li><a href="./problem-2.html">Successive Wins</a></li>
-<li><a href="./problem-3.html">The Flippant Juror</a></li>
-<li><a href="./problem-4.html">Trials until First Success</a></li>
-<li><a href="./problem-5.html">Coin in Square</a></li>
-<li><a href="./problem-6.html">Chuck-a-Luck</a></li>
-<li><a href="./problem-7.html">Curing the Compulsive Gambler</a></li>
-<li><a href="./problem-8.html">Perfect Bridge Hand</a></li>
-<li><a href="./problem-9.html">Craps</a></li>
-<li><a href="./problem-10.html">An Experiment in Personal Taste for Money</a></li>
-<li></li>
+<div id="outline-container-orgb9c9c8e" class="outline-2">
+<h2 id="orgb9c9c8e">Ties in Matching Pennies</h2>
+<div class="outline-text-2" id="text-orgb9c9c8e">
+<blockquote>
+<p>
+Players <i>A</i> and <i>B</i> match pennies \(N\) times. They keep a tally of their gains
+and losses. After the first toss, what is the chance that at no time during the
+game will they be even?
+</p>
+</blockquote>
 
-<li></li>
+<p>
+<b>Note that matching pennies appears to just calling heads and tail multiple
+times.</b>
+</p>
 
-<li><a href="./problem-13.html">The Prisoner's Dilemma</a></li>
-<li><a href="./problem-14.html">Collecting Coupons</a></li>
-<li><a href="./problem-15.html">The Theatre Row</a></li>
-<li><a href="./problem-16.html">Will Second-Best Be Runner-Up?</a></li>
-<li><a href="./problem-17.html">Twin Knights</a></li>
-<li><a href="./problem-18.html">An Even Split at Coin Tossing</a></li>
-<li><a href="./problem-19.html">Isaac Netwon Helps Samuel Pepys</a></li>
-<li><a href="./problem-20.html">The Three-Cornered Duel</a></li>
-<li><a href="./problem-21.html">Should You Sample with or without Replacement?</a></li>
-<li><a href="./problem-22.html">The Ballot Box</a></li>
-<li><a href="./problem-23.html">Ties in Matching Pennies</a></li>
-<li></li>
+<p>
+Consider the case where <i>A</i> wins \(x\) of the flips, then the probability that
+they have an even number of wins at some point can be calculated using the
+result from the <a href="./problem-22.html">Ballot Box</a> problem:
+</p>
 
-<li><a href="./problem-25.html">Lengths of Random Chords</a></li>
-<li><a href="./problem-26.html">The Hurried Duelers</a></li>
-</ol>
+<p>
+\[
+\frac{2\min\{x,N-x\}}{N}
+\]
+</p>
+
+<p>
+Since the distribution of \(x\) is known to follow a binomial distribution in
+this problem we can use the law of total expectation to compute the probability
+that there is an equal number of wins at some point.
+</p>
+
+<p>
+\[
+\sum_{x=0}^{N} \frac{2\min\{x,N-x\}}{N} \binom{N}{x} 2^{-N}
+\]
+</p>
+
+<p>
+which we can decompose into the following into the first \(a\) terms, a single
+term and the remaining terms, where \(a\) is either the middle term or one off
+of it. This being decided so as to ensure that the probability of a pair is
+never greater than one.
+</p>
+
+<p>
+\[
+\sum_{x=0}^{a-1} \frac{2x}{N} \binom{N}{x} 2^{-N} + \frac{2a}{N} \binom{N}{a} 2^{-N} + \sum_{x=a+1}^{N} \frac{2(N-x)}{N} \binom{N}{x} 2^{-N}
+\]
+</p>
+
+<p>
+We can then observe that over the values we are considering \(\binom{N}{x}\) is
+equal to \(\binom{N}{N-x}\) so the second sum can be expressed as the following.
+</p>
+
+<p>
+\[
+\sum_{x=a+1}^{N} \frac{2(N-x)}{N} \binom{N}{N-x} 2^{-N}
+\]
+</p>
+
+<p>
+In each sum we can then take the numerator and denominator into the binomial
+coefficient and cancel one factor of 2 and the resulting expressions look like
+the values of the binomial distribution with \(N-1\) trials. There is a left
+over term, but it is equal to zero anyway.
+</p>
+
+<p>
+So the final probability of there being <i>no</i> tie at any point is the complement
+of this,
+</p>
+
+<p>
+\[
+\frac{2a}{N} \binom{N}{a} 2^{-N}.
+\]
+</p>
+
+<p>
+If \(N\) is even, then \(N = 2n\) then \(a=n\) and this simplifies to
+\(\binom{N}{n}2^{-N}\) and if it is odd, then \(N = 2n + 1\) and \(a=n+1\) and
+it simplifies to \(\binom{N-1}{a-1}2^{-N-1}\), which after replacing \(a\) with
+\(n+1\) is \(\binom{N-1}{n}2^{-N}\).
+</p>
 </div>
 </div>
 </div>
