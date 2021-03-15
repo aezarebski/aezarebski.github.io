@@ -220,67 +220,69 @@
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../../index.html">Home</a>
-</p>
-
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<ul class="nav-menu">
+    <li class="nav-menu"><a id="prevProblem">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a id="nextProblem">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><a onclick="toggleStyle()">Light/Dark</a></li>
+</ul>
 
 <script src="./main.js"></script>
+<p style="margin-top: 100px"> </p>
 
-<div id="outline-container-orgd0f3c21" class="outline-2">
-<h2 id="orgd0f3c21">Fifty Challenging Problems in Probability</h2>
-<div class="outline-text-2" id="text-orgd0f3c21">
-<ol class="org-ol">
-<li><a href="./problem-1.html">The Sock Drawer</a></li>
-<li><a href="./problem-2.html">Successive Wins</a></li>
-<li><a href="./problem-3.html">The Flippant Juror</a></li>
-<li><a href="./problem-4.html">Trials until First Success</a></li>
-<li><a href="./problem-5.html">Coin in Square</a></li>
-<li><a href="./problem-6.html">Chuck-a-Luck</a></li>
-<li><a href="./problem-7.html">Curing the Compulsive Gambler</a></li>
-<li><a href="./problem-8.html">Perfect Bridge Hand</a></li>
-<li><a href="./problem-9.html">Craps</a></li>
-<li><a href="./problem-10.html">An Experiment in Personal Taste for Money</a></li>
-<li></li>
+<div id="outline-container-org9225414" class="outline-2">
+<h2 id="org9225414">Moldy Gelatin</h2>
+<div class="outline-text-2" id="text-org9225414">
+<blockquote>
+<p>
+Airborne spores produce tiny mold colonies on gelatin plates in a laboratory.
+The many plates average 3 colonies per plate. What fraction of plates has
+exactly 3 colonies? If the average is a large integer <i>m</i>, what fraction of
+plates has exactly <i>m</i> colonies?
+</p>
+</blockquote>
 
-<li></li>
+<p>
+Since the colonies are tiny and there are many plates we can safely use a
+Poisson distribution for the number of colonies per plate. To consider the large
+<i>m</i> behaviour we can use Stirling's approximation.
+</p>
 
-<li><a href="./problem-13.html">The Prisoner's Dilemma</a></li>
-<li><a href="./problem-14.html">Collecting Coupons</a></li>
-<li><a href="./problem-15.html">The Theatre Row</a></li>
-<li><a href="./problem-16.html">Will Second-Best Be Runner-Up?</a></li>
-<li><a href="./problem-17.html">Twin Knights</a></li>
-<li><a href="./problem-18.html">An Even Split at Coin Tossing</a></li>
-<li><a href="./problem-19.html">Isaac Netwon Helps Samuel Pepys</a></li>
-<li><a href="./problem-20.html">The Three-Cornered Duel</a></li>
-<li><a href="./problem-21.html">Should You Sample with or without Replacement?</a></li>
-<li><a href="./problem-22.html">The Ballot Box</a></li>
-<li><a href="./problem-23.html">Ties in Matching Pennies</a></li>
-<li></li>
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #d75fd7; font-weight: bold;">f</span>(<span style="color: #8787d7;">x</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> pdf_poisson(x,x);
+<span style="color: #268bd2;">print</span>(f(x));
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;"> x   - x</span>
+<span style="color: #008787; background-color: #262626;">x  %e</span>
+<span style="color: #008787; background-color: #262626;">-------- </span>
+<span style="color: #008787; background-color: #262626;">   x!</span>
+<span style="color: #008787; background-color: #262626;">*/</span>
 
-<li><a href="./problem-25.html">Lengths of Random Chords</a></li>
-<li><a href="./problem-26.html">The Hurried Duelers</a></li>
-<li><a href="./problem-27.html">Catching the Cautious Counterfeiter</a></li>
-<li><a href="./problem-28.html">Catching the Greedy Counterfeiter</a></li>
-<li><a href="./problem-29.html">Moldy Gelatin</a></li>
-<li><a href="./problem-30.html">Evening the Sales</a></li>
-<li><a href="./problem-31.html">Birthday Pairings</a></li>
-<li><a href="./problem-32.html">Finding Your Birthmate</a></li>
-<li><a href="./problem-33.html">Relating the birthday pairings and birthmate problems</a></li>
-<li><a href="./problem-34.html">Birthday holidays</a></li>
-<li><a href="./problem-35.html">The Cliff-Hanger</a></li>
-<li><a href="./problem-36.html">Gambler's Ruin</a></li>
-<li><a href="./problem-37.html">Bold Play vs. Cautious Play</a></li>
-<li></li>
+<span style="color: #d75fd7; font-weight: bold;">stirling</span>(<span style="color: #8787d7;">n</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> n <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">log</span>(n) <span style="color: #268bd2; font-weight: bold;">-</span> n <span style="color: #268bd2; font-weight: bold;">+</span> <span style="color: #268bd2;">log</span>(<span style="color: #d75fd7;">2</span> <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #d75fd7;">%pi</span> <span style="color: #268bd2; font-weight: bold;">*</span> n) <span style="color: #268bd2; font-weight: bold;">/</span> <span style="color: #d75fd7;">2</span>;
 
-<li><a href="./problem-39.html">The Clumsy Chemist</a></li>
-<li><a href="./problem-40.html">The First Ace</a></li>
-<li><a href="./problem-41.html">The Locomotive Problem</a></li>
-<li><a href="./problem-42.html">The Little End of the Stick</a></li>
-<li><a href="./problem-43.html">The Broken Bar</a></li>
-<li>INCOMPLETE <a href="./problem-44.html">Winning an Unfair Game</a></li>
-</ol>
+<span style="color: #d75fd7; font-weight: bold;">approxLogF</span>(<span style="color: #8787d7;">x</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> (x <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">log</span>(x) <span style="color: #268bd2; font-weight: bold;">-</span> x) <span style="color: #268bd2; font-weight: bold;">-</span> stirling(x);
+
+<span style="color: #d75fd7; font-weight: bold;">approxLogF2</span>(<span style="color: #8787d7;">x</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> <span style="color: #d75fd7;">1</span> <span style="color: #268bd2; font-weight: bold;">/</span> <span style="color: #268bd2;">sqrt</span>(<span style="color: #d75fd7;">2</span> <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #d75fd7;">%pi</span> <span style="color: #268bd2; font-weight: bold;">*</span> x);
+<span style="color: #268bd2;">print</span>(<span style="color: #268bd2;">float</span>(approxLogF2(x)));
+
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;">0.3989422804014326</span>
+<span style="color: #008787; background-color: #262626;">------------------ </span>
+<span style="color: #008787; background-color: #262626;">     sqrt(x)</span>
+<span style="color: #008787; background-color: #262626;">*/</span>
+
+
+<span style="color: #d75fd7; font-weight: bold;">vals</span>(<span style="color: #8787d7;">x</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> [x, <span style="color: #268bd2;">float</span>(f(x)), <span style="color: #268bd2;">float</span>(approxLogF2(x))];
+<span style="color: #268bd2;">print</span>(vals(<span style="color: #d75fd7;">2</span><span style="color: #268bd2; font-weight: bold;">^</span><span style="color: #d75fd7;">1</span>), vals(<span style="color: #d75fd7;">2</span><span style="color: #268bd2; font-weight: bold;">^</span><span style="color: #d75fd7;">2</span>), vals(<span style="color: #d75fd7;">2</span><span style="color: #268bd2; font-weight: bold;">^</span><span style="color: #d75fd7;">3</span>), vals(<span style="color: #d75fd7;">2</span><span style="color: #268bd2; font-weight: bold;">^</span><span style="color: #d75fd7;">4</span>));
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;">[2, 0.2706705664732254, 0.2820947917738781] </span>
+<span style="color: #008787; background-color: #262626;">[4, 0.1953668148131645, 0.1994711402007163] </span>
+<span style="color: #008787; background-color: #262626;">[8, 0.1395865319505969, 0.141047395886939] </span>
+<span style="color: #008787; background-color: #262626;">[16, 0.09921753162215583, 0.0997355701003581] </span>
+<span style="color: #008787; background-color: #262626;">*/</span>
+</pre>
+</div>
 </div>
 </div>
 </div>

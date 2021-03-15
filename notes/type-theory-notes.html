@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-08 Mon 16:29 -->
+<!-- 2021-03-15 Mon 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -224,15 +224,8 @@
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
-
-<script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
-</script>
+<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<script src="./main.js"></script>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -242,6 +235,15 @@
 <ul>
 <li><a href="#org0fb2248">Skolems constants causing trouble</a></li>
 <li><a href="#orgb67fbf5">Existential types</a></li>
+</ul>
+</li>
+<li><a href="#org227e979">Functional programming</a>
+<ul>
+<li><a href="#orgac93b68">Functor</a></li>
+<li><a href="#org4fdf441">Applicative</a></li>
+<li><a href="#org0993ebb">Foldable</a></li>
+<li><a href="#org3c0ea98">Traversable</a></li>
+<li><a href="#org26117b8">Fold and friends</a></li>
 </ul>
 </li>
 </ul>
@@ -263,9 +265,9 @@ of a wrapper type
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5;">{-# LANGUAGE ExistentialQuantification #-}</span>
+<pre class="src src-haskell"><span style="color: #d75fd7;">{-# LANGUAGE ExistentialQuantification #-}</span>
 
-<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">=</span> forall a<span style="color: #7590db;">.</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> a
+<span style="color: #268bd2; font-weight: bold;">data</span> <span style="color: #df005f; font-weight: bold;">AnyFoo</span> <span style="color: #8787d7;">=</span> forall a<span style="color: #8787d7;">.</span> <span style="color: #df005f; font-weight: bold;">Eq</span> a <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">AnyFoo</span> a
 </pre>
 </div>
 
@@ -274,7 +276,7 @@ If we try and define a function which unwraps,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">getFoo</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x
+<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">getFoo</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">AnyFoo</span> x<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> x
 </pre>
 </div>
 
@@ -285,8 +287,8 @@ need to avoid it appearing in the type of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>
-<span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x <span style="color: #7590db;">==</span> x
+<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">boring</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">AnyFoo</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Bool</span>
+<span style="color: #d75fd7; font-weight: bold;">boring</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">AnyFoo</span> x<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> x <span style="color: #8787d7;">==</span> x
 </pre>
 </div>
 </div>
@@ -304,14 +306,133 @@ have it type check.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">ShowBox</span> <span style="color: #7590db;">=</span> forall s<span style="color: #7590db;">.</span> <span style="color: #ce537a; font-weight: bold;">Show</span> s <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">SB</span> s
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">data</span> <span style="color: #df005f; font-weight: bold;">ShowBox</span> <span style="color: #8787d7;">=</span> forall s<span style="color: #8787d7;">.</span> <span style="color: #df005f; font-weight: bold;">Show</span> s <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">SB</span> s
 
-<span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">Show</span> <span style="color: #ce537a; font-weight: bold;">ShowBox</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
-  show <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">SB</span> s<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> show s 
+<span style="color: #268bd2; font-weight: bold;">instance</span> <span style="color: #df005f; font-weight: bold;">Show</span> <span style="color: #df005f; font-weight: bold;">ShowBox</span> <span style="color: #268bd2; font-weight: bold;">where</span>
+  show <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">SB</span> s<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> show s 
 
-<span style="color: #bc6ec5; font-weight: bold;">heteroList</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">ShowBox</span><span style="color: #4f97d7;">]</span>
-<span style="color: #bc6ec5; font-weight: bold;">heteroList</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">SB</span> <span style="color: #bc6ec5; font-weight: bold;">()</span>, <span style="color: #ce537a; font-weight: bold;">SB</span> <span style="color: #a45bad;">5</span>, <span style="color: #ce537a; font-weight: bold;">SB</span> <span style="color: #ce537a; font-weight: bold;">True</span><span style="color: #4f97d7;">]</span>
+<span style="color: #d75fd7; font-weight: bold;">heteroList</span> <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">[</span><span style="color: #df005f; font-weight: bold;">ShowBox</span><span style="color: #268bd2;">]</span>
+<span style="color: #d75fd7; font-weight: bold;">heteroList</span> <span style="color: #8787d7;">=</span> <span style="color: #268bd2;">[</span><span style="color: #df005f; font-weight: bold;">SB</span> <span style="color: #d75fd7; font-weight: bold;">()</span>, <span style="color: #df005f; font-weight: bold;">SB</span> <span style="color: #d75fd7;">5</span>, <span style="color: #df005f; font-weight: bold;">SB</span> <span style="color: #df005f; font-weight: bold;">True</span><span style="color: #268bd2;">]</span>
 </pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org227e979" class="outline-2">
+<h2 id="org227e979">Functional programming</h2>
+<div class="outline-text-2" id="text-org227e979">
+<ul class="org-ul">
+<li><code>&lt;$&gt;</code> is infix for <code>fmap</code></li>
+<li><code>&lt;*&gt;</code> is infix the "apply" function when working with applicatives.</li>
+</ul>
+</div>
+
+<div id="outline-container-orgac93b68" class="outline-3">
+<h3 id="orgac93b68">Functor</h3>
+<div class="outline-text-3" id="text-orgac93b68">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Functor</span> f <span style="color: #268bd2; font-weight: bold;">where</span>
+  fmap <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> f a <span style="color: #8787d7;">-&gt;</span> f b
+</pre>
+</div>
+
+<p>
+The functor laws are <code>fmap id = id</code> and <code>fmap (f . g) == fmap f . fmap g</code>. The
+intuition behind this type class is that it should act as a container and the
+<code>fmap</code> should not disrupt the structure in the container.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4fdf441" class="outline-3">
+<h3 id="org4fdf441">Applicative</h3>
+<div class="outline-text-3" id="text-org4fdf441">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Functor</span> f <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> f <span style="color: #268bd2; font-weight: bold;">where</span>
+  pure  <span style="color: #8787d7;">::</span> a <span style="color: #8787d7;">-&gt;</span> f a
+  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">&lt;*&gt;</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">::</span> f <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> f a <span style="color: #8787d7;">-&gt;</span> f b
+</pre>
+</div>
+
+<p>
+This is like a stronger version of functor where the function being applied can
+also live in the <i>computational context</i> of the container.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0993ebb" class="outline-3">
+<h3 id="org0993ebb">Foldable</h3>
+<div class="outline-text-3" id="text-org0993ebb">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Foldable</span> t <span style="color: #268bd2; font-weight: bold;">where</span>
+  foldMap <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Monoid</span> m <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> m<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> m
+  foldr   <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> b
+</pre>
+</div>
+
+<p>
+The intuition behind this type class is that it should act as a container that
+can be collapsed down to a single value.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3c0ea98" class="outline-3">
+<h3 id="org3c0ea98">Traversable</h3>
+<div class="outline-text-3" id="text-org3c0ea98">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">Functor</span> t, <span style="color: #df005f; font-weight: bold;">Foldable</span> t<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">Traversable</span> t <span style="color: #268bd2; font-weight: bold;">where</span>
+  traverse  <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> f <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> f b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> f <span style="color: #268bd2;">(</span>t b<span style="color: #268bd2;">)</span>
+  sequenceA <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> f <span style="color: #8787d7;">=&gt;</span> t <span style="color: #268bd2;">(</span>f a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> f <span style="color: #268bd2;">(</span>t a<span style="color: #268bd2;">)</span>
+</pre>
+</div>
+
+<p>
+This is a bit like a functor where the function returns values in a context.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org26117b8" class="outline-3">
+<h3 id="org26117b8">Fold and friends</h3>
+<div class="outline-text-3" id="text-org26117b8">
+<p>
+The friends include: scan, accumulate, and reduce.
+</p>
+</div>
+
+<div id="outline-container-org7c54a7c" class="outline-4">
+<h4 id="org7c54a7c">Left fold</h4>
+<div class="outline-text-4" id="text-org7c54a7c">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">foldl</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Foldable</span> t <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>b <span style="color: #8787d7;">-&gt;</span> a <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> b 
+
+<span style="color: #d75fd7; font-weight: bold;">foldl</span> f z <span style="color: #268bd2;">[</span>x1, x2, <span style="color: #8787d7;">...</span>, xn<span style="color: #268bd2;">]</span> <span style="color: #8787d7;">==</span> <span style="color: #268bd2;">(</span><span style="color: #8787d7;">...</span><span style="color: #d75fd7;">(</span><span style="color: #2aa198;">(</span>z <span style="color: #8787d7;">`f`</span> x1<span style="color: #2aa198;">)</span> <span style="color: #8787d7;">`f`</span> x2<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">`f`...</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">`f`</span> xn
+</pre>
+</div>
+
+<p>
+This will build a collections of thunks, to it is probably better to use the
+strict version <code>foldl'</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc62a890" class="outline-4">
+<h4 id="orgc62a890">Right fold</h4>
+<div class="outline-text-4" id="text-orgc62a890">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">foldr</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Foldable</span> t <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> b
+
+<span style="color: #d75fd7; font-weight: bold;">foldr</span> f z <span style="color: #268bd2;">[</span>x1, x2, <span style="color: #8787d7;">...</span>, xn<span style="color: #268bd2;">]</span> <span style="color: #8787d7;">==</span> x1 <span style="color: #8787d7;">`f`</span> <span style="color: #268bd2;">(</span>x2 <span style="color: #8787d7;">`f`</span> <span style="color: #8787d7;">...</span> <span style="color: #d75fd7;">(</span>xn <span style="color: #8787d7;">`f`</span> z<span style="color: #d75fd7;">)</span><span style="color: #8787d7;">...</span><span style="color: #268bd2;">)</span>
+</pre>
+</div>
+
+<p>
+This one can be applied to infinte lists and still terminate.
+</p>
 </div>
 </div>
 </div>
@@ -319,7 +440,7 @@ have it type check.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-08 Mon 16:29</p>
+<p class="date">Created: 2021-03-15 Mon 19:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-08 Mon 16:29 -->
+<!-- 2021-03-15 Mon 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -245,6 +245,9 @@
 <p>
 <a href="../index.html">Home</a>
 </p>
+
+<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<script src="./main.js"></script>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -452,19 +455,19 @@ butting up against the edge of the support. For example, we have \(X\sim
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>mcmc<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>coda<span style="color: #4f97d7;">)</span>
-set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #268bd2;">library</span><span style="color: #268bd2;">(</span>mcmc<span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">library</span><span style="color: #268bd2;">(</span>coda<span style="color: #268bd2;">)</span>
+set.seed<span style="color: #268bd2;">(</span><span style="color: #d75fd7;">1</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">mcmc_samples</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>obj<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    as.mcmc<span style="color: #bc6ec5;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #d75fd7; font-weight: bold;">mcmc_samples</span> <span style="color: #df005f; font-weight: bold;">&lt;-</span> <span style="color: #268bd2; font-weight: bold;">function</span><span style="color: #268bd2;">(</span>obj<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+    as.mcmc<span style="color: #d75fd7;">(</span>metrop<span style="color: #2aa198;">(</span>obj, <span style="color: #d75fd7;">1</span>, <span style="color: #d75fd7;">10000</span><span style="color: #2aa198;">)</span>$batch<span style="color: #d75fd7;">)</span>
+<span style="color: #268bd2;">}</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">posterior</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    dlnorm<span style="color: #bc6ec5;">(</span>x = x, meanlog = <span style="color: #a45bad;">0</span>, sdlog = <span style="color: #a45bad;">1</span>, log = <span style="color: #a45bad;">TRUE</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #d75fd7; font-weight: bold;">posterior</span> <span style="color: #df005f; font-weight: bold;">&lt;-</span> <span style="color: #268bd2; font-weight: bold;">function</span><span style="color: #268bd2;">(</span>x<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+    dlnorm<span style="color: #d75fd7;">(</span>x = x, meanlog = <span style="color: #d75fd7;">0</span>, sdlog = <span style="color: #d75fd7;">1</span>, log = <span style="color: #d75fd7;">TRUE</span><span style="color: #d75fd7;">)</span>
+<span style="color: #268bd2;">}</span>
 
-x_samples <span style="color: #ce537a; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>posterior<span style="color: #4f97d7;">)</span>
+x_samples <span style="color: #df005f; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #268bd2;">(</span>posterior<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
@@ -496,11 +499,11 @@ take the logarithm to get the log-posterior this becomes just \(y\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">y_posterior</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    posterior<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> + y
-<span style="color: #4f97d7;">}</span>
+<pre class="src src-R"><span style="color: #d75fd7; font-weight: bold;">y_posterior</span> <span style="color: #df005f; font-weight: bold;">&lt;-</span> <span style="color: #268bd2; font-weight: bold;">function</span><span style="color: #268bd2;">(</span>y<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+    posterior<span style="color: #d75fd7;">(</span>exp<span style="color: #2aa198;">(</span>y<span style="color: #2aa198;">)</span><span style="color: #d75fd7;">)</span> + y
+<span style="color: #268bd2;">}</span>
 
-y_samples <span style="color: #ce537a; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>y_posterior<span style="color: #4f97d7;">)</span>
+y_samples <span style="color: #df005f; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #268bd2;">(</span>y_posterior<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
@@ -512,7 +515,7 @@ efficiently.
 </p>
 
 
-<div id="orgba96f32" class="figure">
+<div id="org0833f6b" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -588,10 +591,10 @@ catagorical variables as follows
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
-x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> sample<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">1000</span>, replace = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
-y <span style="color: #ce537a; font-weight: bold;">&lt;-</span> sample<span style="color: #4f97d7;">(</span>letters<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">]</span>, <span style="color: #a45bad;">1000</span>, replace = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
-df <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x, y<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">set.seed<span style="color: #268bd2;">(</span><span style="color: #d75fd7;">1</span><span style="color: #268bd2;">)</span>
+x <span style="color: #df005f; font-weight: bold;">&lt;-</span> sample<span style="color: #268bd2;">(</span><span style="color: #d75fd7;">1</span>:<span style="color: #d75fd7;">3</span>, <span style="color: #d75fd7;">1000</span>, replace = <span style="color: #d75fd7;">TRUE</span><span style="color: #268bd2;">)</span>
+y <span style="color: #df005f; font-weight: bold;">&lt;-</span> sample<span style="color: #268bd2;">(</span>letters<span style="color: #d75fd7;">[</span><span style="color: #d75fd7;">1</span>:<span style="color: #d75fd7;">3</span><span style="color: #d75fd7;">]</span>, <span style="color: #d75fd7;">1000</span>, replace = <span style="color: #d75fd7;">TRUE</span><span style="color: #268bd2;">)</span>
+df <span style="color: #df005f; font-weight: bold;">&lt;-</span> data.frame<span style="color: #268bd2;">(</span>x, y<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
@@ -600,17 +603,17 @@ Then we can create a contingency table from this with the <code>xtabs</code> fun
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">tab <span style="color: #ce537a; font-weight: bold;">&lt;-</span> xtabs<span style="color: #4f97d7;">(</span>~ x + y, data = df<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">tab <span style="color: #df005f; font-weight: bold;">&lt;-</span> xtabs<span style="color: #268bd2;">(</span>~ x + y, data = df<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R">&gt; print<span style="color: #4f97d7;">(</span>tab<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">&gt; print<span style="color: #268bd2;">(</span>tab<span style="color: #268bd2;">)</span>
    y
 x     a   b   c
-  <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">131</span> <span style="color: #a45bad;">109</span> <span style="color: #a45bad;">111</span>
-  <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">100</span> <span style="color: #a45bad;">122</span> <span style="color: #a45bad;">117</span>
-  <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">100</span>  <span style="color: #a45bad;">99</span> <span style="color: #a45bad;">111</span>
+  <span style="color: #d75fd7;">1</span> <span style="color: #d75fd7;">131</span> <span style="color: #d75fd7;">109</span> <span style="color: #d75fd7;">111</span>
+  <span style="color: #d75fd7;">2</span> <span style="color: #d75fd7;">100</span> <span style="color: #d75fd7;">122</span> <span style="color: #d75fd7;">117</span>
+  <span style="color: #d75fd7;">3</span> <span style="color: #d75fd7;">100</span>  <span style="color: #d75fd7;">99</span> <span style="color: #d75fd7;">111</span>
 </pre>
 </div>
 
@@ -622,12 +625,12 @@ binary we could use Fisher's exact test, but since there are more, and there are
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">&gt; print<span style="color: #4f97d7;">(</span>chisq.test<span style="color: #bc6ec5;">(</span>tab<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">&gt; print<span style="color: #268bd2;">(</span>chisq.test<span style="color: #d75fd7;">(</span>tab<span style="color: #d75fd7;">)</span><span style="color: #268bd2;">)</span>
 
-  Pearson<span style="color: #2d9574;">'s Chi-squared test</span>
+  Pearson<span style="color: #2aa198;">'s Chi-squared test</span>
 
-<span style="color: #2d9574;">data:  tab</span>
-<span style="color: #2d9574;">X-squared = 5.6178, df = 4, p-value = 0.2296</span>
+<span style="color: #2aa198;">data:  tab</span>
+<span style="color: #2aa198;">X-squared = 5.6178, df = 4, p-value = 0.2296</span>
 
 </pre>
 </div>
@@ -799,7 +802,7 @@ expresses higher moments in terms of lower ones.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-08 Mon 16:29</p>
+<p class="date">Created: 2021-03-15 Mon 19:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -216,71 +216,91 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../../index.html">Home</a>
-</p>
-
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<ul class="nav-menu">
+    <li class="nav-menu"><a id="prevProblem">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a id="nextProblem">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><a onclick="toggleStyle()">Light/Dark</a></li>
+</ul>
 
 <script src="./main.js"></script>
+<p style="margin-top: 100px"> </p>
 
-<div id="outline-container-orgd0f3c21" class="outline-2">
-<h2 id="orgd0f3c21">Fifty Challenging Problems in Probability</h2>
-<div class="outline-text-2" id="text-orgd0f3c21">
-<ol class="org-ol">
-<li><a href="./problem-1.html">The Sock Drawer</a></li>
-<li><a href="./problem-2.html">Successive Wins</a></li>
-<li><a href="./problem-3.html">The Flippant Juror</a></li>
-<li><a href="./problem-4.html">Trials until First Success</a></li>
-<li><a href="./problem-5.html">Coin in Square</a></li>
-<li><a href="./problem-6.html">Chuck-a-Luck</a></li>
-<li><a href="./problem-7.html">Curing the Compulsive Gambler</a></li>
-<li><a href="./problem-8.html">Perfect Bridge Hand</a></li>
-<li><a href="./problem-9.html">Craps</a></li>
-<li><a href="./problem-10.html">An Experiment in Personal Taste for Money</a></li>
-<li></li>
+<div id="outline-container-orgbed647b" class="outline-2">
+<h2 id="orgbed647b">Birthday holidays</h2>
+<div class="outline-text-2" id="text-orgbed647b">
+<blockquote>
+<p>
+Labor laws in Erewhon require factory owners to give every worker a holiday
+whenever one of them has a birthday and to hire without discrimination on
+grounds of birthdays. Except for these holidays they work a 365-day year. The
+owners want to maximise the expected total number of man-days worked per year in
+a factory. How many workers do factories have in Erewhon?
+</p>
+</blockquote>
 
-<li></li>
+<p>
+The number of man days worked is \(\sum_{i} i W_{i}\) where \(W_{i}\) is the
+indicator for working on day \(i\). Expectation is linear so the expected number
+of days worked by a factory employing \(n\) people is \(365 n P(W=1)\).
+</p>
 
-<li><a href="./problem-13.html">The Prisoner's Dilemma</a></li>
-<li><a href="./problem-14.html">Collecting Coupons</a></li>
-<li><a href="./problem-15.html">The Theatre Row</a></li>
-<li><a href="./problem-16.html">Will Second-Best Be Runner-Up?</a></li>
-<li><a href="./problem-17.html">Twin Knights</a></li>
-<li><a href="./problem-18.html">An Even Split at Coin Tossing</a></li>
-<li><a href="./problem-19.html">Isaac Netwon Helps Samuel Pepys</a></li>
-<li><a href="./problem-20.html">The Three-Cornered Duel</a></li>
-<li><a href="./problem-21.html">Should You Sample with or without Replacement?</a></li>
-<li><a href="./problem-22.html">The Ballot Box</a></li>
-<li><a href="./problem-23.html">Ties in Matching Pennies</a></li>
-<li></li>
+<p>
+The probability \(W=1\) is the probability that no one has a birthday on that
+day which is just \((1-1/365)^{n}\). We can then use calculus to narrow in on
+the correct value and do two evaluations to work out the best integer value.
+</p>
 
-<li><a href="./problem-25.html">Lengths of Random Chords</a></li>
-<li><a href="./problem-26.html">The Hurried Duelers</a></li>
-<li><a href="./problem-27.html">Catching the Cautious Counterfeiter</a></li>
-<li><a href="./problem-28.html">Catching the Greedy Counterfeiter</a></li>
-<li><a href="./problem-29.html">Moldy Gelatin</a></li>
-<li><a href="./problem-30.html">Evening the Sales</a></li>
-<li><a href="./problem-31.html">Birthday Pairings</a></li>
-<li><a href="./problem-32.html">Finding Your Birthmate</a></li>
-<li><a href="./problem-33.html">Relating the birthday pairings and birthmate problems</a></li>
-<li><a href="./problem-34.html">Birthday holidays</a></li>
-<li><a href="./problem-35.html">The Cliff-Hanger</a></li>
-<li><a href="./problem-36.html">Gambler's Ruin</a></li>
-<li><a href="./problem-37.html">Bold Play vs. Cautious Play</a></li>
-<li></li>
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #d75fd7; font-weight: bold;">mean_days_worked</span>(<span style="color: #8787d7;">n</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> n <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #d75fd7;">365</span> <span style="color: #268bd2; font-weight: bold;">*</span> (<span style="color: #d75fd7;">1</span> <span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span><span style="color: #268bd2; font-weight: bold;">/</span><span style="color: #d75fd7;">365</span>)<span style="color: #268bd2; font-weight: bold;">^</span>n;
+sol <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">subst</span>(<span style="color: #268bd2;">solve</span>(<span style="color: #268bd2;">diff</span>(mean_days_worked(n), n), n), n);
 
-<li><a href="./problem-39.html">The Clumsy Chemist</a></li>
-<li><a href="./problem-40.html">The First Ace</a></li>
-<li><a href="./problem-41.html">The Locomotive Problem</a></li>
-<li><a href="./problem-42.html">The Little End of the Stick</a></li>
-<li><a href="./problem-43.html">The Broken Bar</a></li>
-<li>INCOMPLETE <a href="./problem-44.html">Winning an Unfair Game</a></li>
-</ol>
+<span style="color: #268bd2;">print</span>(sol);
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;">         1</span>
+<span style="color: #008787; background-color: #262626;">------------------- </span>
+<span style="color: #008787; background-color: #262626;">log(365) - log(364)</span>
+<span style="color: #008787; background-color: #262626;">*/</span>
+
+<span style="color: #268bd2; font-weight: bold;">for</span> n<span style="color: #268bd2; font-weight: bold;">:</span><span style="color: #d75fd7;">363</span> <span style="color: #268bd2; font-weight: bold;">step</span> <span style="color: #d75fd7;">1</span> <span style="color: #268bd2; font-weight: bold;">thru</span> <span style="color: #d75fd7;">366</span> <span style="color: #268bd2; font-weight: bold;">do</span> {
+  <span style="color: #268bd2;">print</span>([n,<span style="color: #268bd2;">float</span>(mean_days_worked(n))])
+};
+
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;">[363, 48943.1544091142] </span>
+<span style="color: #008787; background-color: #262626;">[364, 48943.52380535112] </span>
+<span style="color: #008787; background-color: #262626;">[365, 48943.52380535112] </span>
+<span style="color: #008787; background-color: #262626;">[366, 48943.15643043045] </span>
+<span style="color: #008787; background-color: #262626;">*/</span>
+</pre>
+</div>
 </div>
 </div>
 </div>

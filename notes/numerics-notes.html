@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-08 Mon 16:29 -->
+<!-- 2021-03-15 Mon 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>aez-notes</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -241,6 +241,14 @@
 </head>
 <body>
 <div id="content">
+<h1 class="title">aez-notes</h1>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<script src="./main.js"></script>
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -249,14 +257,14 @@
 <ul>
 <li><a href="#org36043bb">Numeric differentiation</a></li>
 <li><a href="#org2a42913">LogSumExp function</a></li>
+<li><a href="#org136dafe">Combinatoric functions</a></li>
+<li><a href="#orgf9b7a59">Factorial</a></li>
+<li><a href="#org18af1f4">Pochhammer</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<p>
-<a href="../index.html">Home</a>
-</p>
 
 <div id="outline-container-org2b5cdef" class="outline-2">
 <h2 id="org2b5cdef">Numerics notes</h2>
@@ -271,13 +279,13 @@ derivatives and have an error of order \(h^4\)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">firstDerivative</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">firstDerivative</span> h f x <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span>f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> <span style="color: #a45bad;">8</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> <span style="color: #a45bad;">8</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">12</span> <span style="color: #7590db;">*</span> h<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">firstDerivative</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Floating</span> a <span style="color: #8787d7;">=&gt;</span> a <span style="color: #8787d7;">-&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> a <span style="color: #8787d7;">-&gt;</span> a
+<span style="color: #d75fd7; font-weight: bold;">firstDerivative</span> h f x <span style="color: #8787d7;">=</span>
+  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">-</span>f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">2</span> <span style="color: #8787d7;">*</span> h<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">8</span> <span style="color: #8787d7;">*</span> f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">+</span> h<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">-</span> <span style="color: #d75fd7;">8</span> <span style="color: #8787d7;">*</span> f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">-</span> h<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">+</span> f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">-</span> <span style="color: #d75fd7;">2</span> <span style="color: #8787d7;">*</span> h<span style="color: #d75fd7;">)</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">/</span> <span style="color: #268bd2;">(</span><span style="color: #d75fd7;">12</span> <span style="color: #8787d7;">*</span> h<span style="color: #268bd2;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">secondDerivative</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">secondDerivative</span> h f x <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span>f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> <span style="color: #a45bad;">16</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> <span style="color: #a45bad;">30</span> <span style="color: #7590db;">*</span> f x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">16</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">12</span> <span style="color: #7590db;">*</span> h <span style="color: #7590db;">**</span> <span style="color: #a45bad;">2</span><span style="color: #4f97d7;">)</span>
+<span style="color: #d75fd7; font-weight: bold;">secondDerivative</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Floating</span> a <span style="color: #8787d7;">=&gt;</span> a <span style="color: #8787d7;">-&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> a <span style="color: #8787d7;">-&gt;</span> a
+<span style="color: #d75fd7; font-weight: bold;">secondDerivative</span> h f x <span style="color: #8787d7;">=</span>
+  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">-</span>f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">2</span> <span style="color: #8787d7;">*</span> h<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">16</span> <span style="color: #8787d7;">*</span> f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">+</span> h<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">-</span> <span style="color: #d75fd7;">30</span> <span style="color: #8787d7;">*</span> f x <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">16</span> <span style="color: #8787d7;">*</span> f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">-</span> h<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">-</span> f <span style="color: #d75fd7;">(</span>x <span style="color: #8787d7;">-</span> <span style="color: #d75fd7;">2</span> <span style="color: #8787d7;">*</span> h<span style="color: #d75fd7;">)</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">/</span> <span style="color: #268bd2;">(</span><span style="color: #d75fd7;">12</span> <span style="color: #8787d7;">*</span> h <span style="color: #8787d7;">**</span> <span style="color: #d75fd7;">2</span><span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
@@ -312,18 +320,138 @@ overflow or underflow as easily.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">logSumExp</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Floating</span> a, <span style="color: #ce537a; font-weight: bold;">Ord</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">logSumExp</span> xs <span style="color: #7590db;">=</span> x' <span style="color: #7590db;">+</span> log <span style="color: #4f97d7;">(</span>sum <span style="color: #bc6ec5;">[</span>exp <span style="color: #2d9574;">(</span>x <span style="color: #7590db;">-</span> x'<span style="color: #2d9574;">)</span> <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;-</span> xs<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-               <span style="color: #4f97d7; font-weight: bold;">where</span> x' <span style="color: #7590db;">=</span> maximum xs
+<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">logSumExp</span> <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">Floating</span> a, <span style="color: #df005f; font-weight: bold;">Ord</span> a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">[</span>a<span style="color: #268bd2;">]</span> <span style="color: #8787d7;">-&gt;</span> a
+<span style="color: #d75fd7; font-weight: bold;">logSumExp</span> xs <span style="color: #8787d7;">=</span> x' <span style="color: #8787d7;">+</span> log <span style="color: #268bd2;">(</span>sum <span style="color: #d75fd7;">[</span>exp <span style="color: #2aa198;">(</span>x <span style="color: #8787d7;">-</span> x'<span style="color: #2aa198;">)</span> <span style="color: #8787d7;">|</span> x <span style="color: #8787d7;">&lt;-</span> xs<span style="color: #d75fd7;">]</span><span style="color: #268bd2;">)</span>
+               <span style="color: #268bd2; font-weight: bold;">where</span> x' <span style="color: #8787d7;">=</span> maximum xs
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org136dafe" class="outline-3">
+<h3 id="org136dafe">Combinatoric functions</h3>
+<div class="outline-text-3" id="text-org136dafe">
+<p>
+The following is taken from the <code>math-functions</code> haskell package which
+demonstrates some useful implementations of functions for working with binomial
+coefficients.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #008787; background-color: #262626;">--</span><span style="color: #008787; background-color: #262626;">--------------------------------------------------------------</span>
+<span style="color: #008787; background-color: #262626;">-- </span><span style="color: #008787; background-color: #262626;">Combinatorics</span>
+<span style="color: #008787; background-color: #262626;">--</span><span style="color: #008787; background-color: #262626;">--------------------------------------------------------------</span>
+
+<span style="color: #af875f;">-- |</span>
+<span style="color: #af875f;">-- Quickly compute the natural logarithm of </span><span style="color: #af875f; font-style: italic;">/n/</span><span style="color: #af875f;"> @`choose`@ </span><span style="color: #af875f; font-style: italic;">/k/</span><span style="color: #af875f;">, with</span>
+<span style="color: #af875f;">-- no checking.</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">-- Less numerically stable:</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">-- &gt; exp $ lg (n+1) - lg (k+1) - lg (n-k+1)</span>
+<span style="color: #af875f;">-- &gt;   where lg = logGamma . fromIntegral</span>
+<span style="color: #d75fd7; font-weight: bold;">logChooseFast</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Double</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Double</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Double</span>
+<span style="color: #d75fd7; font-weight: bold;">logChooseFast</span> n k <span style="color: #8787d7;">=</span> <span style="color: #8787d7;">-</span>log <span style="color: #268bd2;">(</span>n <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">1</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-</span> logBeta <span style="color: #268bd2;">(</span>n <span style="color: #8787d7;">-</span> k <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">1</span><span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span>k <span style="color: #8787d7;">+</span> <span style="color: #d75fd7;">1</span><span style="color: #268bd2;">)</span>
+
+<span style="color: #af875f;">-- | Calculate binomial coefficient using exact formula</span>
+<span style="color: #d75fd7; font-weight: bold;">chooseExact</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Int</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Int</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Double</span>
+n <span style="color: #8787d7;">`</span><span style="color: #d75fd7; font-weight: bold;">chooseExact</span><span style="color: #8787d7;">`</span> k
+  <span style="color: #8787d7;">=</span> U.foldl' go <span style="color: #d75fd7;">1</span> <span style="color: #8787d7;">$</span> U.enumFromTo <span style="color: #d75fd7;">1</span> k
+  <span style="color: #268bd2; font-weight: bold;">where</span>
+    go a i      <span style="color: #8787d7;">=</span> a <span style="color: #8787d7;">*</span> <span style="color: #268bd2;">(</span>nk <span style="color: #8787d7;">+</span> j<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">/</span> j
+        <span style="color: #268bd2; font-weight: bold;">where</span> j <span style="color: #8787d7;">=</span> fromIntegral i <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Double</span>
+    nk <span style="color: #8787d7;">=</span> fromIntegral <span style="color: #268bd2;">(</span>n <span style="color: #8787d7;">-</span> k<span style="color: #268bd2;">)</span>
+
+<span style="color: #af875f;">-- | Compute logarithm of the binomial coefficient.</span>
+<span style="color: #d75fd7; font-weight: bold;">logChoose</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Int</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Int</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Double</span>
+n <span style="color: #8787d7;">`</span><span style="color: #d75fd7; font-weight: bold;">logChoose</span><span style="color: #8787d7;">`</span> k
+    <span style="color: #8787d7;">|</span> k  <span style="color: #8787d7;">&gt;</span> n    <span style="color: #8787d7;">=</span> <span style="color: #268bd2;">(</span><span style="color: #8787d7;">-</span><span style="color: #d75fd7;">1</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">/</span> <span style="color: #d75fd7;">0</span>
+      <span style="color: #008787; background-color: #262626;">-- </span><span style="color: #008787; background-color: #262626;">For very large N exact algorithm overflows double so we</span>
+      <span style="color: #008787; background-color: #262626;">-- </span><span style="color: #008787; background-color: #262626;">switch to beta-function based one</span>
+    <span style="color: #8787d7;">|</span> k' <span style="color: #8787d7;">&lt;</span> <span style="color: #d75fd7;">50</span> <span style="color: #8787d7;">&amp;&amp;</span> <span style="color: #268bd2;">(</span>n <span style="color: #8787d7;">&lt;</span> <span style="color: #d75fd7;">20000000</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> log <span style="color: #8787d7;">$</span> chooseExact n k'
+    <span style="color: #8787d7;">|</span> otherwise                 <span style="color: #8787d7;">=</span> logChooseFast <span style="color: #268bd2;">(</span>fromIntegral n<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span>fromIntegral k<span style="color: #268bd2;">)</span>
+  <span style="color: #268bd2; font-weight: bold;">where</span>
+    k' <span style="color: #8787d7;">=</span> min k <span style="color: #268bd2;">(</span>n<span style="color: #8787d7;">-</span>k<span style="color: #268bd2;">)</span>
+
+<span style="color: #af875f;">-- | Compute the binomial coefficient </span><span style="color: #af875f; font-style: italic;">/n/</span><span style="color: #af875f;"> @\``choose`\`@ </span><span style="color: #af875f; font-style: italic;">/k/</span><span style="color: #af875f;">. For</span>
+<span style="color: #af875f;">-- values of </span><span style="color: #af875f; font-style: italic;">/k/</span><span style="color: #af875f;"> &gt; 50, this uses an approximation for performance</span>
+<span style="color: #af875f;">-- reasons.  The approximation is accurate to 12 decimal places in the</span>
+<span style="color: #af875f;">-- worst case</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">-- Example:</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">-- &gt; 7 `choose` 3 == 35</span>
+<span style="color: #d75fd7; font-weight: bold;">choose</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Int</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Int</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Double</span>
+n <span style="color: #8787d7;">`</span><span style="color: #d75fd7; font-weight: bold;">choose</span><span style="color: #8787d7;">`</span> k
+    <span style="color: #8787d7;">|</span> k  <span style="color: #8787d7;">&gt;</span> n         <span style="color: #8787d7;">=</span> <span style="color: #d75fd7;">0</span>
+    <span style="color: #8787d7;">|</span> k' <span style="color: #8787d7;">&lt;</span> <span style="color: #d75fd7;">50</span>        <span style="color: #8787d7;">=</span> chooseExact n k'
+    <span style="color: #8787d7;">|</span> approx <span style="color: #8787d7;">&lt;</span> max64 <span style="color: #8787d7;">=</span> fromIntegral <span style="color: #8787d7;">.</span> round64 <span style="color: #8787d7;">$</span> approx
+    <span style="color: #8787d7;">|</span> otherwise      <span style="color: #8787d7;">=</span> approx
+  <span style="color: #268bd2; font-weight: bold;">where</span>
+    k'             <span style="color: #8787d7;">=</span> min k <span style="color: #268bd2;">(</span>n<span style="color: #8787d7;">-</span>k<span style="color: #268bd2;">)</span>
+    approx         <span style="color: #8787d7;">=</span> exp <span style="color: #8787d7;">$</span> logChooseFast <span style="color: #268bd2;">(</span>fromIntegral n<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span>fromIntegral k'<span style="color: #268bd2;">)</span>
+    max64          <span style="color: #8787d7;">=</span> fromIntegral <span style="color: #268bd2;">(</span>maxBound <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Int64</span><span style="color: #268bd2;">)</span>
+    round64 x      <span style="color: #8787d7;">=</span> round x <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Int64</span> 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf9b7a59" class="outline-3">
+<h3 id="orgf9b7a59">Factorial</h3>
+<div class="outline-text-3" id="text-orgf9b7a59">
+<p>
+The factorial function has the following definition for positive integers
+</p>
+
+<p>
+\[
+n! = n \cdot (n-1) \cdot (n-2) \cdot \dots \cdot 2 \cdot 1
+\]
+</p>
+
+<p>
+It is related to the gamma function by \(x! = \Gamma ( x + 1)\). So you only
+need a safe implementation of the gamma function to work with factorials.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org18af1f4" class="outline-3">
+<h3 id="org18af1f4">Pochhammer</h3>
+<div class="outline-text-3" id="text-org18af1f4">
+<p>
+For a positive integer, \(n\), the Pochhammer function, rising factorial, is
+given by
+</p>
+
+<p>
+\[
+x^{(n)} = x \cdot (x+1) \cdot \dots \cdot (x+n-1) = \prod_{i=0}^{n-1} (x+i)
+\]
+</p>
+
+<p>
+with \(x^{(0)} = 1\). It is related to the factorial function and gamma function
+</p>
+
+<p>
+\[
+x^{(n)} = \frac{(x + n - 1)!}{(x-1)!} = \frac{\Gamma(x+n)}{\Gamma(x)}
+\]
+</p>
+
+<p>
+So you only need a safe implementation of the gamma function to work with the
+Pochhammer function.
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-08 Mon 16:29</p>
+<p class="date">Created: 2021-03-15 Mon 19:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

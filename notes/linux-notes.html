@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-08 Mon 16:29 -->
+<!-- 2021-03-15 Mon 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -224,15 +224,8 @@
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
-
-<script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
-</script>
+<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<script src="./main.js"></script>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -241,6 +234,7 @@
 <li><a href="#org9de09c5">Linux and Ubuntu notes</a>
 <ul>
 <li><a href="#org45b6764">Getting started</a></li>
+<li><a href="#org23d4a97">Updating Ubuntu</a></li>
 <li><a href="#org2a7eca1">Mounting</a></li>
 <li><a href="#orge30f61b">Compression with zip</a></li>
 <li><a href="#orgf9718e1">Graphics</a></li>
@@ -250,6 +244,7 @@
 <li><a href="#org4babce1">VPN and working remotely</a></li>
 <li><a href="#orgd2d9723">Finding files with <code>find</code></a></li>
 <li><a href="#org2527174">Watching files with <code>inotifywait</code></a></li>
+<li><a href="#org2d59ec6">Workspaces in Ubuntu</a></li>
 <li><a href="#orge5b6066">Monitor configuration</a></li>
 <li><a href="#org0c250e9">Keyboard configuration</a></li>
 <li><a href="#orgef5cc1a">Network connection Wi-Fi</a></li>
@@ -309,28 +304,23 @@ sudo apt upgrade
 
 sudo apt install git
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">sudo add-apt-repository ppa:kelleyk/emacs </span>
+<span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">sudo add-apt-repository ppa:kelleyk/emacs </span>
 sudo apt install emacs26
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
-git clone https://azarebski@bitbucket.org/azarebski/dotfiles.git
-<span style="color: #4f97d7;">cd</span> ~/dotfiles
 ./install-source-code-pro.sh
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">include nicemacs.el and the correct layers</span>
+<span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">include nicemacs.el and the correct layers</span>
 
-<span style="color: #4f97d7;">cd</span> ~/Documents
+<span style="color: #268bd2;">cd</span> ~/Documents
 git clone https://azarebski@bitbucket.org/azarebski/public-site.git
 git clone https://azarebski@bitbucket.org/azarebski/journal.git
 git clone https://azarebski@bitbucket.org/azarebski/bibliography.git
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">alias ff 'find-file $1'</span>
-ff ~/.ssh/config
-
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">install the vpn client from the Oxford website</span>
+<span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">install the vpn client from the Oxford website</span>
 
 mkdir library
-<span style="color: #4f97d7;">cd</span> library
+<span style="color: #268bd2;">cd</span> library
 wget https://aezarebski.github.io/resources/titanic.txt
 mv titanic.txt titanic.sh
 sudo chmod +x titanic.sh
@@ -339,6 +329,16 @@ sudo chmod +x titanic.sh
 
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org23d4a97" class="outline-3">
+<h3 id="org23d4a97">Updating Ubuntu</h3>
+<div class="outline-text-3" id="text-org23d4a97">
+<p>
+The <code>do-release-upgrade</code> command can be used to run an update. First run
+<code>do-release-upgrade -c</code> to check if there is an available upgrade.
+</p>
 </div>
 </div>
 
@@ -397,7 +397,7 @@ This will convert the input PDF to a PNG with 300 DPI.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">convert -density <span style="color: #a45bad;">300</span> input.pdf output.png
+<pre class="src src-shell">convert -density <span style="color: #d75fd7;">300</span> input.pdf output.png
 </pre>
 </div>
 
@@ -454,7 +454,7 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">chmod <span style="color: #a45bad;">750</span> foo.sh  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">makes foo.sh rwxr-x---</span>
+<pre class="src src-shell">chmod <span style="color: #d75fd7;">750</span> foo.sh  <span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">makes foo.sh rwxr-x---</span>
 </pre>
 </div>
 
@@ -529,9 +529,9 @@ The following commands can be used to modify the sensitivity of a mouse from the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">xinput list                     <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to find the ID of the mouse</span>
-xinput list-props &lt;mouseID&gt;     <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to get the current properties of the mouse</span>
-xinput set-props &lt;mouseID&gt; &lt;propID&gt; &lt;newValue&gt; <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">update the property value</span>
+<pre class="src src-shell">xinput list                     <span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">to find the ID of the mouse</span>
+xinput list-props &lt;mouseID&gt;     <span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">to get the current properties of the mouse</span>
+xinput set-props &lt;mouseID&gt; &lt;propID&gt; &lt;newValue&gt; <span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">update the property value</span>
 </pre>
 </div>
 </div>
@@ -545,7 +545,7 @@ Switch the left and right buttons on the mouse by running the following command:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">xmodmap -e <span style="color: #2d9574;">"pointer = 3 2 1"</span>
+<pre class="src src-shell">xmodmap -e <span style="color: #2aa198;">"pointer = 3 2 1"</span>
 </pre>
 </div>
 </div>
@@ -613,7 +613,7 @@ To find all the PNG files down from the current directory.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find . -regex <span style="color: #2d9574;">".*png$"</span>
+<pre class="src src-shell">find . -regex <span style="color: #2aa198;">".*png$"</span>
 </pre>
 </div>
 </div>
@@ -638,15 +638,27 @@ achieve this using <code>inotifywait</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #7590db;">WATCH_FILE</span>=demo.tex
+<pre class="src src-sh"><span style="color: #8787d7;">WATCH_FILE</span>=demo.tex
 
-inotifywait -q -m -e close_write $<span style="color: #7590db;">WATCH_FILE</span> |
-    <span style="color: #4f97d7; font-weight: bold;">while </span><span style="color: #4f97d7;">read</span> -r filename event; <span style="color: #4f97d7; font-weight: bold;">do</span>
-        pdflatex $<span style="color: #7590db;">WATCH_FILE</span>
-    <span style="color: #4f97d7; font-weight: bold;">done</span>
+inotifywait -q -m -e close_write $<span style="color: #8787d7;">WATCH_FILE</span> |
+    <span style="color: #268bd2; font-weight: bold;">while </span><span style="color: #268bd2;">read</span> -r filename event; <span style="color: #268bd2; font-weight: bold;">do</span>
+        pdflatex $<span style="color: #8787d7;">WATCH_FILE</span>
+    <span style="color: #268bd2; font-weight: bold;">done</span>
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org2d59ec6" class="outline-3">
+<h3 id="org2d59ec6">Workspaces in Ubuntu</h3>
+<div class="outline-text-3" id="text-org2d59ec6">
+<p>
+You can have multiple workspaces in Ubuntu 20.04 to hold different collections
+of applications. To move between the workspaces use <code>CRTL + ALT + up/down</code>. I've
+noticied this plays up sometimes if you press the keys too quickly so slow it
+down if you notice that.
+</p>
 </div>
 </div>
 
@@ -741,7 +753,7 @@ sub-directories of <code>foobar</code> recursively up to 2 levels deep.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">du -h --max-depth=<span style="color: #a45bad;">2</span> foobar
+<pre class="src src-sh">du -h --max-depth=<span style="color: #d75fd7;">2</span> foobar
 </pre>
 </div>
 </div>
@@ -789,8 +801,8 @@ my local library.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #2d9574;">\</span>
-      --recursive --times --perms --links <span style="color: #2d9574;">\</span>
+<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #2aa198;">\</span>
+      --recursive --times --perms --links <span style="color: #2aa198;">\</span>
       zool:/home/aez/Documents/library/* /home/aez/Documents/library/
 </pre>
 </div>
@@ -826,9 +838,9 @@ regardless.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> -f $<span style="color: #7590db;">HOME</span>/.bashrc <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #4f97d7;">source</span> $<span style="color: #7590db;">HOME</span>/.bashrc
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #268bd2; font-weight: bold;">if</span> <span style="color: #268bd2;">[</span> -f $<span style="color: #8787d7;">HOME</span>/.bashrc <span style="color: #268bd2;">]</span>; <span style="color: #268bd2; font-weight: bold;">then</span>
+    <span style="color: #268bd2;">source</span> $<span style="color: #8787d7;">HOME</span>/.bashrc
+<span style="color: #268bd2; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -899,15 +911,15 @@ To run comands conditional upon the presence or absence of a directory, consider
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> -d <span style="color: #2d9574;">"foobar"</span> <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"There is a directory called foobar"</span>
-    <span style="color: #4f97d7; font-weight: bold;">exit</span> <span style="color: #a45bad;">0</span>
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #268bd2; font-weight: bold;">if</span> <span style="color: #268bd2;">[</span> -d <span style="color: #2aa198;">"foobar"</span> <span style="color: #268bd2;">]</span>; <span style="color: #268bd2; font-weight: bold;">then</span>
+    <span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"There is a directory called foobar"</span>
+    <span style="color: #268bd2; font-weight: bold;">exit</span> <span style="color: #d75fd7;">0</span>
+<span style="color: #268bd2; font-weight: bold;">fi</span>
 
-<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> <span style="color: #a45bad;">!</span> -d <span style="color: #2d9574;">"foobar"</span> <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"Could not find directory: foobar"</span>
-    <span style="color: #4f97d7; font-weight: bold;">exit</span> <span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
+<span style="color: #268bd2; font-weight: bold;">if</span> <span style="color: #268bd2;">[</span> <span style="color: #d75fd7;">!</span> -d <span style="color: #2aa198;">"foobar"</span> <span style="color: #268bd2;">]</span>; <span style="color: #268bd2; font-weight: bold;">then</span>
+    <span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"Could not find directory: foobar"</span>
+    <span style="color: #268bd2; font-weight: bold;">exit</span> <span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2; font-weight: bold;">fi</span>
 </pre>
 </div>
 </div>
@@ -923,18 +935,18 @@ map-reduce style computations correctly via bash. Note that this actually needs
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">waiter.sh</span>
-<span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"Starting"</span>
+<pre class="src src-sh"><span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">waiter.sh</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"Starting"</span>
 
-<span style="color: #7590db;">pids</span>=<span style="color: #4f97d7;">()</span>
+<span style="color: #8787d7;">pids</span>=<span style="color: #268bd2;">()</span>
 
-<span style="color: #4f97d7; font-weight: bold;">for</span> i<span style="color: #4f97d7; font-weight: bold;"> in</span> $<span style="color: #4f97d7;">(</span><span style="color: #fa8072;">seq</span> <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">do</span>
-  sleep <span style="color: #a45bad;">4</span> &amp;&amp; <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"Done part $i"</span> &amp; <span style="color: #7590db;">pids</span>+=<span style="color: #4f97d7;">(</span>$<span style="color: #7590db;">!</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">done</span>
+<span style="color: #268bd2; font-weight: bold;">for</span> i<span style="color: #268bd2; font-weight: bold;"> in</span> $<span style="color: #268bd2;">(</span><span style="color: #fa8072;">seq</span> <span style="color: #d75fd7;">1</span> <span style="color: #d75fd7;">5</span><span style="color: #268bd2;">)</span>
+<span style="color: #268bd2; font-weight: bold;">do</span>
+  sleep <span style="color: #d75fd7;">4</span> &amp;&amp; <span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"Done part $i"</span> &amp; <span style="color: #8787d7;">pids</span>+=<span style="color: #268bd2;">(</span>$<span style="color: #8787d7;">!</span><span style="color: #268bd2;">)</span>
+<span style="color: #268bd2; font-weight: bold;">done</span>
 
-<span style="color: #4f97d7;">wait</span> <span style="color: #2d9574;">"${pids[@]}"</span>
-<span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"Finished :)"</span>
+<span style="color: #268bd2;">wait</span> <span style="color: #2aa198;">"${pids[@]}"</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"Finished :)"</span>
 </pre>
 </div>
 
@@ -962,10 +974,10 @@ As an example, here is a simple shell script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">!/bin/</span><span style="color: #4f97d7; font-weight: bold;">sh</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">demo.sh</span>
-<span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"foo: $2"</span>
-<span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"bar: $1"</span>
+<pre class="src src-sh"><span style="color: #008787; background-color: #262626;">#</span><span style="color: #008787; background-color: #262626;">!/bin/</span><span style="color: #268bd2; font-weight: bold;">sh</span>
+<span style="color: #008787; background-color: #262626;"># </span><span style="color: #008787; background-color: #262626;">demo.sh</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"foo: $2"</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"bar: $1"</span>
 </pre>
 </div>
 
@@ -990,11 +1002,11 @@ Here is an example of a function which converts an ODG to a PDF
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">!/bin/</span><span style="color: #4f97d7; font-weight: bold;">sh</span>
+<pre class="src src-sh"><span style="color: #008787; background-color: #262626;">#</span><span style="color: #008787; background-color: #262626;">!/bin/</span><span style="color: #268bd2; font-weight: bold;">sh</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">ConvertODG2PDF</span> <span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-    libreoffice --headless --convert-to pdf $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #d75fd7; font-weight: bold;">ConvertODG2PDF</span> <span style="color: #268bd2;">()</span> <span style="color: #268bd2;">{</span>
+    libreoffice --headless --convert-to pdf $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">}</span>
 
 ConvertODG2PDF awesome-figure.odg
 </pre>
@@ -1010,10 +1022,10 @@ Here is a silly little example of how to loop over an explicity list of strings.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7; font-weight: bold;">for</span> month<span style="color: #4f97d7; font-weight: bold;"> in</span> jan feb mar;
-<span style="color: #4f97d7; font-weight: bold;">do</span>
-    cat foo-$<span style="color: #7590db;">month</span>.csv
-<span style="color: #4f97d7; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #268bd2; font-weight: bold;">for</span> month<span style="color: #268bd2; font-weight: bold;"> in</span> jan feb mar;
+<span style="color: #268bd2; font-weight: bold;">do</span>
+    cat foo-$<span style="color: #8787d7;">month</span>.csv
+<span style="color: #268bd2; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -1029,10 +1041,10 @@ standard out.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7; font-weight: bold;">for</span> ix<span style="color: #4f97d7; font-weight: bold;"> in</span> <span style="color: #fa8072;">`seq 1 3`</span>;
-<span style="color: #4f97d7; font-weight: bold;">do</span>
-    <span style="color: #4f97d7;">echo</span> $<span style="color: #7590db;">ix</span>
-<span style="color: #4f97d7; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #268bd2; font-weight: bold;">for</span> ix<span style="color: #268bd2; font-weight: bold;"> in</span> <span style="color: #fa8072;">`seq 1 3`</span>;
+<span style="color: #268bd2; font-weight: bold;">do</span>
+    <span style="color: #268bd2;">echo</span> $<span style="color: #8787d7;">ix</span>
+<span style="color: #268bd2; font-weight: bold;">done</span>
 </pre>
 </div>
 </div>
@@ -1041,7 +1053,7 @@ standard out.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-08 Mon 16:29</p>
+<p class="date">Created: 2021-03-15 Mon 19:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

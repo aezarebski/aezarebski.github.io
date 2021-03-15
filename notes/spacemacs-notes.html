@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-08 Mon 16:29 -->
+<!-- 2021-03-15 Mon 19:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -224,15 +224,8 @@
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
-
-<script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
-</script>
+<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<script src="./main.js"></script>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -250,9 +243,9 @@
 <li><a href="#org2bf1693">Emacs Lisp</a></li>
 <li><a href="#org8739138">Spacemacs</a>
 <ul>
-<li><a href="#org358673a">Configuration</a></li>
+<li><a href="#org7d2212f">Configuration</a></li>
 <li><a href="#org6c6530b">Startup</a></li>
-<li><a href="#orgfd9c62c">Shortcuts</a></li>
+<li><a href="#org08a672d">Shortcuts</a></li>
 </ul>
 </li>
 <li><a href="#orge43972e">Miscellaneous</a>
@@ -262,11 +255,13 @@
 <li><a href="#org83e2cd2">Dired</a></li>
 <li><a href="#orgfaa3b8b">iBuffer</a></li>
 <li><a href="#orgae2967f">Elfeed</a></li>
+<li><a href="#org2c63e44">Epub reader</a></li>
 <li><a href="#orga6c5464">Eshell</a></li>
 <li><a href="#orgdbf2819">Magit</a></li>
 <li><a href="#orgf2de7da">Spell checking</a></li>
 <li><a href="#orga953dea">Spray</a></li>
 <li><a href="#orgbc5be8a">Yasnippet</a></li>
+<li><a href="#org9c9d4a4">Word count</a></li>
 </ul>
 </li>
 </ul>
@@ -274,7 +269,7 @@
 </div>
 
 
-<div id="orgb722763" class="figure">
+<div id="org1ed990e" class="figure">
 <p><img src="../images/emacs-logo.png" alt="emacs-logo.png" />
 </p>
 </div>
@@ -394,9 +389,9 @@ See my <a href="./emacs-lisp-notes.html">Emacs Lisp notes</a>.
 <h2 id="org8739138">Spacemacs</h2>
 <div class="outline-text-2" id="text-org8739138">
 </div>
-<div id="outline-container-org358673a" class="outline-3">
-<h3 id="org358673a">Configuration</h3>
-<div class="outline-text-3" id="text-org358673a">
+<div id="outline-container-org7d2212f" class="outline-3">
+<h3 id="org7d2212f">Configuration</h3>
+<div class="outline-text-3" id="text-org7d2212f">
 <p>
 My configuration for spacemacs is available as an org-mode file <a href="https://github.com/aezarebski/nicemacs">here</a>.
 </p>
@@ -415,7 +410,7 @@ reduce the size of PNG to get a better fit with the following command.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">convert -resize <span style="color: #a45bad;">50%</span> foo.png bar.png
+<pre class="src src-sh">convert -resize <span style="color: #d75fd7;">50%</span> foo.png bar.png
 </pre>
 </div>
 
@@ -425,9 +420,9 @@ Here is the <a href="../images/skull.png">image</a> I use.
 </div>
 </div>
 
-<div id="outline-container-orgfd9c62c" class="outline-3">
-<h3 id="orgfd9c62c">Shortcuts</h3>
-<div class="outline-text-3" id="text-orgfd9c62c">
+<div id="outline-container-org08a672d" class="outline-3">
+<h3 id="org08a672d">Shortcuts</h3>
+<div class="outline-text-3" id="text-org08a672d">
 <p>
 To open your <code>.spacemacs</code> file use <code>SPC f e d</code> and to reload the dot file <code>SPC f
 e R</code>. For somethings you need a full restart though, <code>SPC q r</code>.
@@ -634,9 +629,9 @@ Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </p>
 </div>
 
-<div id="outline-container-org08a672d" class="outline-4">
-<h4 id="org08a672d">Shortcuts</h4>
-<div class="outline-text-4" id="text-org08a672d">
+<div id="outline-container-org2e79696" class="outline-4">
+<h4 id="org2e79696">Shortcuts</h4>
+<div class="outline-text-4" id="text-org2e79696">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -686,16 +681,16 @@ Set up a list of feeds by setting the <code>elfeed-feeds</code> variable.
 </div>
 </div>
 
-<div id="outline-container-orgf90454b" class="outline-4">
-<h4 id="orgf90454b">Configuration</h4>
-<div class="outline-text-4" id="text-orgf90454b">
+<div id="outline-container-org82903b9" class="outline-4">
+<h4 id="org82903b9">Configuration</h4>
+<div class="outline-text-4" id="text-org82903b9">
 <p>
 You can put the configuration of elfeed in a seperate file and then load it from your <code>init</code>.
 In Spacemacs, this means adding the following to your <code>dotspacemacs/user-config</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>load-file <span style="color: #2d9574;">"&lt;path/to/config.el&gt;"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #268bd2;">(</span>load-file <span style="color: #2aa198;">"&lt;path/to/config.el&gt;"</span><span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
@@ -715,35 +710,47 @@ The following snippet is taken from the <a href="http://kitchingroup.cheme.cmu.e
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">score-elfeed-entry</span> <span style="color: #bc6ec5;">(</span>entry<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>title <span style="color: #b1951d;">(</span>elfeed-entry-title entry<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span>content <span style="color: #b1951d;">(</span>elfeed-deref <span style="color: #4f97d7;">(</span>elfeed-entry-content entry<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span>score <span style="color: #a45bad;">0</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">loop</span> for <span style="color: #67b11d;">(</span>pattern n<span style="color: #67b11d;">)</span> in '<span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span><span style="color: #2d9574;">"alloy"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"machine learning</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">neural"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"database"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"reproducible"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"carbon dioxide</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">CO2"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"oxygen evolution</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">OER</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">electrolysis"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"perovskite</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">polymorph</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">epitax"</span> <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-                               <span style="color: #b1951d;">(</span><span style="color: #2d9574;">"kitchin"</span> <span style="color: #a45bad;">2</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #268bd2;">(</span><span style="color: #268bd2; font-weight: bold;">defun</span> <span style="color: #d75fd7; font-weight: bold;">score-elfeed-entry</span> <span style="color: #d75fd7;">(</span>entry<span style="color: #d75fd7;">)</span>
+  <span style="color: #d75fd7;">(</span><span style="color: #268bd2; font-weight: bold;">let</span> <span style="color: #2aa198;">(</span><span style="color: #67b11d;">(</span>title <span style="color: #875f00;">(</span>elfeed-entry-title entry<span style="color: #875f00;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>content <span style="color: #875f00;">(</span>elfeed-deref <span style="color: #268bd2;">(</span>elfeed-entry-content entry<span style="color: #268bd2;">)</span><span style="color: #875f00;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>score <span style="color: #d75fd7;">0</span><span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>
+    <span style="color: #2aa198;">(</span><span style="color: #268bd2; font-weight: bold;">loop</span> for <span style="color: #67b11d;">(</span>pattern n<span style="color: #67b11d;">)</span> in '<span style="color: #67b11d;">(</span><span style="color: #875f00;">(</span><span style="color: #2aa198;">"alloy"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"machine learning</span><span style="color: #2aa198; font-weight: bold;">\\</span><span style="color: #2aa198; font-weight: bold;">|</span><span style="color: #2aa198;">neural"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"database"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"reproducible"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"carbon dioxide</span><span style="color: #2aa198; font-weight: bold;">\\</span><span style="color: #2aa198; font-weight: bold;">|</span><span style="color: #2aa198;">CO2"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"oxygen evolution</span><span style="color: #2aa198; font-weight: bold;">\\</span><span style="color: #2aa198; font-weight: bold;">|</span><span style="color: #2aa198;">OER</span><span style="color: #2aa198; font-weight: bold;">\\</span><span style="color: #2aa198; font-weight: bold;">|</span><span style="color: #2aa198;">electrolysis"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"perovskite</span><span style="color: #2aa198; font-weight: bold;">\\</span><span style="color: #2aa198; font-weight: bold;">|</span><span style="color: #2aa198;">polymorph</span><span style="color: #2aa198; font-weight: bold;">\\</span><span style="color: #2aa198; font-weight: bold;">|</span><span style="color: #2aa198;">epitax"</span> <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+                               <span style="color: #875f00;">(</span><span style="color: #2aa198;">"kitchin"</span> <span style="color: #d75fd7;">2</span><span style="color: #875f00;">)</span><span style="color: #67b11d;">)</span>
           if <span style="color: #67b11d;">(</span>string-match pattern title<span style="color: #67b11d;">)</span>
-          do <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">incf</span> score n<span style="color: #67b11d;">)</span>
+          do <span style="color: #67b11d;">(</span><span style="color: #268bd2; font-weight: bold;">incf</span> score n<span style="color: #67b11d;">)</span>
           if <span style="color: #67b11d;">(</span>string-match pattern content<span style="color: #67b11d;">)</span>
-          do <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">incf</span> score n<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>message <span style="color: #2d9574;">"%s - %s"</span> title score<span style="color: #2d9574;">)</span>
+          do <span style="color: #67b11d;">(</span><span style="color: #268bd2; font-weight: bold;">incf</span> score n<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>
+    <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"%s - %s"</span> title score<span style="color: #2aa198;">)</span>
 
-    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span>
-     <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>= score <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-      <span style="color: #b1951d;">(</span>elfeed-tag entry 'relevant<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-     <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>&gt; score <span style="color: #a45bad;">1</span><span style="color: #b1951d;">)</span>
-      <span style="color: #b1951d;">(</span>elfeed-tag entry 'important<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    entry<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #2aa198;">(</span><span style="color: #268bd2; font-weight: bold;">cond</span>
+     <span style="color: #67b11d;">(</span><span style="color: #875f00;">(</span>= score <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+      <span style="color: #875f00;">(</span>elfeed-tag entry 'relevant<span style="color: #875f00;">)</span><span style="color: #67b11d;">)</span>
+     <span style="color: #67b11d;">(</span><span style="color: #875f00;">(</span>&gt; score <span style="color: #d75fd7;">1</span><span style="color: #875f00;">)</span>
+      <span style="color: #875f00;">(</span>elfeed-tag entry 'important<span style="color: #875f00;">)</span><span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>
+    entry<span style="color: #d75fd7;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #4f97d7;">(</span>add-hook 'elfeed-new-entry-hook 'score-elfeed-entry<span style="color: #4f97d7;">)</span>
+<span style="color: #268bd2;">(</span>add-hook 'elfeed-new-entry-hook 'score-elfeed-entry<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org2c63e44" class="outline-3">
+<h3 id="org2c63e44">Epub reader</h3>
+<div class="outline-text-3" id="text-org2c63e44">
+<p>
+Add <code>epub</code> to your configuration layers in spacemacs to use this. It's a bit
+fincky but works well with the <a href="#orga953dea">Spray</a> reader. It looks like you need to make
+sure you're not in command mode, and then there is <code>p</code> for a previous page and
+<code>d</code> for down to the next one.
+</p>
 </div>
 </div>
 
@@ -843,7 +850,7 @@ Example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7;">alias</span> ff <span style="color: #2d9574;">'find-file $1'</span>
+<pre class="src src-sh"><span style="color: #268bd2;">alias</span> ff <span style="color: #2aa198;">'find-file $1'</span>
 </pre>
 </div>
 
@@ -852,17 +859,17 @@ Currently, this is what my alias file looks like
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #4f97d7;">alias</span> bib cd ~/Documents/bibliography/review
-<span style="color: #4f97d7;">alias</span> browser firefox $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">alias</span> cdk cd ..
-<span style="color: #4f97d7;">alias</span> cdkk cd ../..
-<span style="color: #4f97d7;">alias</span> ff find-file $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">alias</span> open-review evince review.pdf &amp;
-<span style="color: #4f97d7;">alias</span> st stack test $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">alias</span> se stack exec -- $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">alias</span> sb stack build $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">alias</span> sbf stack build --fast $<span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">alias</span> tree tree -C $<span style="color: #a45bad;">1</span>
+<pre class="src src-sh"><span style="color: #268bd2;">alias</span> bib cd ~/Documents/bibliography/review
+<span style="color: #268bd2;">alias</span> browser firefox $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">alias</span> cdk cd ..
+<span style="color: #268bd2;">alias</span> cdkk cd ../..
+<span style="color: #268bd2;">alias</span> ff find-file $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">alias</span> open-review evince review.pdf &amp;
+<span style="color: #268bd2;">alias</span> st stack test $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">alias</span> se stack exec -- $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">alias</span> sb stack build $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">alias</span> sbf stack build --fast $<span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">alias</span> tree tree -C $<span style="color: #d75fd7;">1</span>
 </pre>
 </div>
 
@@ -872,27 +879,27 @@ The following interactive command can simplify the task of checking what aliases
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">eshell-aliases</span> <span style="color: #bc6ec5;">()</span>
-  <span style="color: #9f8766;">"Visit the file containing the eshell aliases."</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>find-file-other-window eshell-aliases-file<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #268bd2;">(</span><span style="color: #268bd2; font-weight: bold;">defun</span> <span style="color: #d75fd7; font-weight: bold;">eshell-aliases</span> <span style="color: #d75fd7;">()</span>
+  <span style="color: #af875f;">"Visit the file containing the eshell aliases."</span>
+  <span style="color: #d75fd7;">(</span><span style="color: #268bd2; font-weight: bold;">interactive</span><span style="color: #d75fd7;">)</span>
+  <span style="color: #d75fd7;">(</span>find-file-other-window eshell-aliases-file<span style="color: #d75fd7;">)</span><span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org97ca433" class="outline-4">
-<h4 id="org97ca433">Configuration</h4>
-<div class="outline-text-4" id="text-org97ca433">
+<div id="outline-container-orgc2afa48" class="outline-4">
+<h4 id="orgc2afa48">Configuration</h4>
+<div class="outline-text-4" id="text-orgc2afa48">
 <p>
 Add the following to <code>dotspacemacs-configuration-layers</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>shell <span style="color: #4f97d7;">:variables</span>
+<pre class="src src-emacs-lisp"><span style="color: #268bd2;">(</span>shell <span style="color: #268bd2;">:variables</span>
        shell-default-shell 'eshell
-       shell-default-position <span style="color: #2d9574;">"bottom"</span>
-       shell-default-height <span style="color: #a45bad;">50</span><span style="color: #4f97d7;">)</span>
+       shell-default-position <span style="color: #2aa198;">"bottom"</span>
+       shell-default-height <span style="color: #d75fd7;">50</span><span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
@@ -994,7 +1001,7 @@ The following definition tells magit to open the status buffer in a full frame.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1<span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #268bd2;">(</span><span style="color: #268bd2; font-weight: bold;">setq</span> magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
@@ -1004,9 +1011,9 @@ The following definition tells magit to open the status buffer in a full frame.
 <h3 id="orgf2de7da">Spell checking</h3>
 <div class="outline-text-3" id="text-orgf2de7da">
 </div>
-<div id="outline-container-org7d2212f" class="outline-4">
-<h4 id="org7d2212f">Configuration</h4>
-<div class="outline-text-4" id="text-org7d2212f">
+<div id="outline-container-org20ac89c" class="outline-4">
+<h4 id="org20ac89c">Configuration</h4>
+<div class="outline-text-4" id="text-org20ac89c">
 <p>
 Add <code>spell-checking</code> to the layers list.
 By default it will look for <code>aspell</code> on the path (which is the GNU replacement for <code>ispell</code>.)
@@ -1016,9 +1023,9 @@ I have the following settings for spell checking
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>spell-checking <span style="color: #4f97d7;">:variables</span>
+<pre class="src src-emacs-lisp"><span style="color: #268bd2;">(</span>spell-checking <span style="color: #268bd2;">:variables</span>
                 spell-checking-enable-by-default nil
-                enable-flyspell-auto-completion t<span style="color: #4f97d7;">)</span>
+                enable-flyspell-auto-completion t<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
@@ -1122,11 +1129,20 @@ option.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org9c9d4a4" class="outline-3">
+<h3 id="org9c9d4a4">Word count</h3>
+<div class="outline-text-3" id="text-org9c9d4a4">
+<p>
+To count the words in a selected region use <code>M =</code>
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-08 Mon 16:29</p>
+<p class="date">Created: 2021-03-15 Mon 19:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
