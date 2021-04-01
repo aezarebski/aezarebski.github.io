@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-11 Thu 16:24 -->
+<!-- 2021-04-01 Thu 09:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -266,6 +266,7 @@
 <li><a href="#org8014341">Birth process</a></li>
 <li><a href="#org91e533f">Birth-death process</a></li>
 <li><a href="#org225cc6a">Moment closure</a></li>
+<li><a href="#orga3266e5">Change/Transformation of variable</a></li>
 </ul>
 </li>
 <li><a href="#org4ad3c8a">Distributions</a>
@@ -408,10 +409,10 @@ To check that this is actually a solution to the PDE, we can use the following l
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(g(z,t), z <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>l <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> z <span style="color: #4f97d7; font-weight: bold;">*</span> ( <span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>l <span style="color: #4f97d7; font-weight: bold;">*</span> t))));
+<pre class="src src-maxima"><span style="color: #268bd2;">define</span>(g(z,t), z <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span>l <span style="color: #268bd2; font-weight: bold;">*</span> t) <span style="color: #268bd2; font-weight: bold;">/</span> (<span style="color: #d75fd7;">1</span> <span style="color: #268bd2; font-weight: bold;">-</span> z <span style="color: #268bd2; font-weight: bold;">*</span> ( <span style="color: #d75fd7;">1</span><span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span>l <span style="color: #268bd2; font-weight: bold;">*</span> t))));
 
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(l <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">*</span> (z <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">diff</span>(g(z,t), z), <span style="color: #4f97d7;">diff</span>(g(z,t), t)));
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(g(z,<span style="color: #a45bad;">0</span>), z));
+<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>(l <span style="color: #268bd2; font-weight: bold;">*</span> z <span style="color: #268bd2; font-weight: bold;">*</span> (z <span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span>) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">diff</span>(g(z,t), z), <span style="color: #268bd2;">diff</span>(g(z,t), t)));
+<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>(g(z,<span style="color: #d75fd7;">0</span>), z));
 </pre>
 </div>
 </div>
@@ -480,10 +481,10 @@ We can then test this in maxima with the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(g(z,t), ((b <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> (b <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">-</span> a <span style="color: #4f97d7; font-weight: bold;">*</span> ( z<span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>)) <span style="color: #4f97d7; font-weight: bold;">/</span> ((b <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> (b <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">-</span> b <span style="color: #4f97d7; font-weight: bold;">*</span> ( z<span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>)));
+<pre class="src src-maxima"><span style="color: #268bd2;">define</span>(g(z,t), ((b <span style="color: #268bd2; font-weight: bold;">*</span> z <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span> (b <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> t) <span style="color: #268bd2; font-weight: bold;">-</span> a <span style="color: #268bd2; font-weight: bold;">*</span> ( z<span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span>)) <span style="color: #268bd2; font-weight: bold;">/</span> ((b <span style="color: #268bd2; font-weight: bold;">*</span> z <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span> (b <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> t) <span style="color: #268bd2; font-weight: bold;">-</span> b <span style="color: #268bd2; font-weight: bold;">*</span> ( z<span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span>)));
 
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>((<span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span>z)<span style="color: #4f97d7; font-weight: bold;">*</span>(b<span style="color: #4f97d7; font-weight: bold;">*</span>z<span style="color: #4f97d7; font-weight: bold;">-</span>a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">diff</span>(g(z,t), z), <span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">diff</span>(g(z,t), t)));
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(g(z,<span style="color: #a45bad;">0</span>), z));
+<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>((<span style="color: #d75fd7;">1</span><span style="color: #268bd2; font-weight: bold;">-</span>z)<span style="color: #268bd2; font-weight: bold;">*</span>(b<span style="color: #268bd2; font-weight: bold;">*</span>z<span style="color: #268bd2; font-weight: bold;">-</span>a) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">diff</span>(g(z,t), z), <span style="color: #268bd2; font-weight: bold;">-</span><span style="color: #268bd2;">diff</span>(g(z,t), t)));
+<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>(g(z,<span style="color: #d75fd7;">0</span>), z));
 </pre>
 </div>
 
@@ -501,6 +502,16 @@ For notes on moment closure, see my <a href="./statistics-notes.html">statistics
 </p>
 </div>
 </div>
+
+<div id="outline-container-orga3266e5" class="outline-3">
+<h3 id="orga3266e5">Change/Transformation of variable</h3>
+<div class="outline-text-3" id="text-orga3266e5">
+<p>
+This is a particularly nifty trick when dealing with tricky MCMC problems, see
+my <a href="./statistics-notes.html">statistics notes</a>.
+</p>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org4ad3c8a" class="outline-2">
@@ -511,9 +522,9 @@ For notes on moment closure, see my <a href="./statistics-notes.html">statistics
 <h3 id="orge4c6939">Negative binomial</h3>
 <div class="outline-text-3" id="text-orge4c6939">
 </div>
-<div id="outline-container-orgd171abd" class="outline-4">
-<h4 id="orgd171abd">Notation</h4>
-<div class="outline-text-4" id="text-orgd171abd">
+<div id="outline-container-orgb1bc5f3" class="outline-4">
+<h4 id="orgb1bc5f3">Notation</h4>
+<div class="outline-text-4" id="text-orgb1bc5f3">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -526,9 +537,9 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-org4e481ae" class="outline-4">
-<h4 id="org4e481ae">Properties</h4>
-<div class="outline-text-4" id="text-org4e481ae">
+<div id="outline-container-org5a8a8eb" class="outline-4">
+<h4 id="org5a8a8eb">Properties</h4>
+<div class="outline-text-4" id="text-org5a8a8eb">
 <p>
 \[
 \mathbb{E}X = \frac{pr}{1-p}
@@ -588,9 +599,9 @@ distribution, it uses \(1-p\) where above we use \(p\).
 <h3 id="orgfc47440">Poisson</h3>
 <div class="outline-text-3" id="text-orgfc47440">
 </div>
-<div id="outline-container-orgb1bc5f3" class="outline-4">
-<h4 id="orgb1bc5f3">Notation</h4>
-<div class="outline-text-4" id="text-orgb1bc5f3">
+<div id="outline-container-orgd9479d0" class="outline-4">
+<h4 id="orgd9479d0">Notation</h4>
+<div class="outline-text-4" id="text-orgd9479d0">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -603,9 +614,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-org5a8a8eb" class="outline-4">
-<h4 id="org5a8a8eb">Properties</h4>
-<div class="outline-text-4" id="text-org5a8a8eb">
+<div id="outline-container-orgb55940b" class="outline-4">
+<h4 id="orgb55940b">Properties</h4>
+<div class="outline-text-4" id="text-orgb55940b">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -634,7 +645,7 @@ G_{x}(z) = \exp[ \lambda (e^z - 1) ]
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-02-11 Thu 16:24</p>
+<p class="date">Created: 2021-04-01 Thu 09:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

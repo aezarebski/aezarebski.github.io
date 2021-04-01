@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-15 Mon 19:31 -->
+<!-- 2021-04-01 Thu 09:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -263,6 +263,7 @@
 </li>
 <li><a href="#orgd1b2ffa">Programming in R (software development)</a>
 <ul>
+<li><a href="#org8cc33bd">Scripting with R</a></li>
 <li><a href="#orgae20ca2">Error handling</a></li>
 <li><a href="#org2f1e5bf">R Packages by Wickham and Bryan</a></li>
 <li><a href="#orgbdec2f1">High performance computing</a></li>
@@ -270,6 +271,7 @@
 <li><a href="#org1343312">TIDYDATA and the <code>tidyverse</code></a></li>
 <li><a href="#org1043f3a">Command line arguments</a></li>
 <li><a href="#org2442dc9">Working with JSON</a></li>
+<li><a href="#orgfaa7a14">Working with Mustache templates</a></li>
 <li><a href="#orgfa61402">Unit testing with <code>testthat</code></a></li>
 <li><a href="#org501853f">Dependency management with <code>packrat</code></a></li>
 <li><a href="#org778ce80">Package and project management with <code>usethis</code></a></li>
@@ -306,7 +308,7 @@
 </div>
 
 
-<div id="orgfbd8448" class="figure">
+<div id="org457128e" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -406,6 +408,78 @@ list. I also needed to install a package <code>build-dep</code> before building 
 <h2 id="orgd1b2ffa">Programming in R (software development)</h2>
 <div class="outline-text-2" id="text-orgd1b2ffa">
 </div>
+<div id="outline-container-org8cc33bd" class="outline-3">
+<h3 id="org8cc33bd">Scripting with R</h3>
+<div class="outline-text-3" id="text-org8cc33bd">
+</div>
+<div id="outline-container-org26414e9" class="outline-4">
+<h4 id="org26414e9">Running system commands</h4>
+<div class="outline-text-4" id="text-org26414e9">
+<div class="org-src-container">
+<pre class="src src-R">system2<span style="color: #268bd2;">(</span>command, args = character<span style="color: #d75fd7;">()</span>,
+        wait = <span style="color: #d75fd7;">TRUE</span>,
+        timeout = <span style="color: #d75fd7;">0</span><span style="color: #268bd2;">)</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>if <code>wait</code> is set to <code>FALSE</code> then this will run asynchronously</li>
+<li>if <code>timeout</code> is set to a value greater than zero it will kill the process
+after that amount of time if it has not finished.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-R">system2<span style="color: #268bd2;">(</span><span style="color: #2aa198;">"ls"</span>, args = <span style="color: #2aa198;">"/home/aez/Documents"</span><span style="color: #268bd2;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb867871" class="outline-4">
+<h4 id="orgb867871">Helper function for system commands</h4>
+<div class="outline-text-4" id="text-orgb867871">
+<p>
+The following can be saved to a file and imported if you just need that one
+function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #268bd2;">message</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">"loading the run_command function."</span><span style="color: #268bd2;">)</span>
+
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> Helper function for running system commands.</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> Example</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> &gt; run_command("stack build")</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> &gt; run_command("Rscript R/make-simulation-configuration-1.R")</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span>
+<span style="color: #d75fd7; font-weight: bold;">run_command</span> <span style="color: #df005f; font-weight: bold;">&lt;-</span> <span style="color: #268bd2; font-weight: bold;">function</span><span style="color: #268bd2;">(</span>cmd, silent = <span style="color: #d75fd7;">TRUE</span>, ...<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+  <span style="color: #268bd2;">message</span><span style="color: #d75fd7;">(</span>sprintf<span style="color: #2aa198;">(</span><span style="color: #2aa198;">"\nRunning command:\n\t%s"</span>, cmd<span style="color: #2aa198;">)</span><span style="color: #d75fd7;">)</span>
+  tmp <span style="color: #df005f; font-weight: bold;">&lt;-</span> unlist<span style="color: #d75fd7;">(</span>strsplit<span style="color: #2aa198;">(</span>cmd, <span style="color: #2aa198;">" "</span><span style="color: #2aa198;">)</span><span style="color: #d75fd7;">)</span>
+  cmd_name <span style="color: #df005f; font-weight: bold;">&lt;-</span> head<span style="color: #d75fd7;">(</span>tmp, <span style="color: #d75fd7;">1</span><span style="color: #d75fd7;">)</span>
+  cmd_args <span style="color: #df005f; font-weight: bold;">&lt;-</span> tail<span style="color: #d75fd7;">(</span>tmp, -<span style="color: #d75fd7;">1</span><span style="color: #d75fd7;">)</span>
+  std_val <span style="color: #df005f; font-weight: bold;">&lt;-</span> <span style="color: #268bd2; font-weight: bold;">if</span> <span style="color: #d75fd7;">(</span>silent<span style="color: #d75fd7;">)</span> <span style="color: #d75fd7;">{</span>
+    <span style="color: #d75fd7;">FALSE</span>
+  <span style="color: #d75fd7;">}</span> <span style="color: #268bd2; font-weight: bold;">else</span> <span style="color: #d75fd7;">{</span>
+    <span style="color: #2aa198;">""</span>
+  <span style="color: #d75fd7;">}</span>
+  result <span style="color: #df005f; font-weight: bold;">&lt;-</span> system2<span style="color: #d75fd7;">(</span>
+    cmd_name,
+    args = cmd_args,
+    stdout = std_val,
+    stderr = std_val,
+    ...
+  <span style="color: #d75fd7;">)</span>
+  <span style="color: #268bd2; font-weight: bold;">if</span> <span style="color: #d75fd7;">(</span>result != <span style="color: #d75fd7;">0</span><span style="color: #d75fd7;">)</span> <span style="color: #d75fd7;">{</span>
+    <span style="color: #268bd2; font-weight: bold;">stop</span><span style="color: #2aa198;">(</span>sprintf<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"command %s failed!"</span>, cmd<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #d75fd7;">}</span>
+  <span style="color: #268bd2; font-weight: bold;">return</span><span style="color: #d75fd7;">(</span><span style="color: #d75fd7;">NULL</span><span style="color: #d75fd7;">)</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgae20ca2" class="outline-3">
 <h3 id="orgae20ca2">Error handling</h3>
 <div class="outline-text-3" id="text-orgae20ca2">
@@ -534,7 +608,6 @@ any IO. It's a good way to force the use of pure functions.
 </p>
 </div>
 </div>
-
 
 <div id="outline-container-orgbd9774f" class="outline-3">
 <h3 id="orgbd9774f">Packages I like</h3>
@@ -706,6 +779,42 @@ write_json<span style="color: #268bd2;">(</span>&lt;object&gt;, &lt;filepath&gt;
 There are the <code>toJSON</code> and <code>fromJSON</code> functions but they are not needed most of
 the time.
 </p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfaa7a14" class="outline-3">
+<h3 id="orgfaa7a14">Working with Mustache templates</h3>
+<div class="outline-text-3" id="text-orgfaa7a14">
+</div>
+<div id="outline-container-orgdea2a4a" class="outline-4">
+<h4 id="orgdea2a4a">Example</h4>
+<div class="outline-text-4" id="text-orgdea2a4a">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #268bd2;">library</span><span style="color: #268bd2;">(</span>whisker<span style="color: #268bd2;">)</span>
+
+template <span style="color: #df005f; font-weight: bold;">&lt;-</span> readLines<span style="color: #268bd2;">(</span><span style="color: #2aa198;">"./template.html"</span><span style="color: #268bd2;">)</span>
+data <span style="color: #df005f; font-weight: bold;">&lt;-</span> list<span style="color: #268bd2;">(</span> name = <span style="color: #2aa198;">"Chris"</span>
+            , value = <span style="color: #d75fd7;">10000</span>
+            , taxed_value = <span style="color: #d75fd7;">10000</span> - <span style="color: #d75fd7;">(</span><span style="color: #d75fd7;">10000</span> * <span style="color: #d75fd7;">0.4</span><span style="color: #d75fd7;">)</span>
+            , in_ca = <span style="color: #d75fd7;">TRUE</span>
+            <span style="color: #268bd2;">)</span>
+
+writeLines<span style="color: #268bd2;">(</span>whisker.render<span style="color: #d75fd7;">(</span>template, data<span style="color: #d75fd7;">)</span>, <span style="color: #2aa198;">"./output.html"</span><span style="color: #268bd2;">)</span>
+</pre>
+</div>
+
+<p>
+where <code>template.html</code> might look like the following
+</p>
+
+<pre class="example">
+Hello {{name}}
+You have just won ${{value}}!
+{{#in_ca}}
+Well, ${{taxed_value}}, after taxes.
+{{/in_ca}}
+</pre>
 </div>
 </div>
 </div>
@@ -1066,6 +1175,10 @@ from the project directory).</li>
 <div id="outline-container-org26cb5ab" class="outline-3">
 <h3 id="org26cb5ab">Nifty utility functions</h3>
 <div class="outline-text-3" id="text-org26cb5ab">
+</div>
+<div id="outline-container-orgd05a522" class="outline-4">
+<h4 id="orgd05a522">Number of lines in a file</h4>
+<div class="outline-text-4" id="text-orgd05a522">
 <p>
 The <code>num_lines_in_file</code> function returns the number of lines in a file which is
 useful to help guard against attempting to parse an empty file with <code>read.csv</code>.
@@ -1077,6 +1190,23 @@ useful to help guard against attempting to parse an empty file with <code>read.c
   as.numeric<span style="color: #d75fd7;">(</span>head<span style="color: #2aa198;">(</span>unlist<span style="color: #67b11d;">(</span>strsplit<span style="color: #875f00;">(</span>x = wc_stdout, split = <span style="color: #2aa198;">" "</span><span style="color: #875f00;">)</span><span style="color: #67b11d;">)</span>,<span style="color: #d75fd7;">1</span><span style="color: #2aa198;">)</span><span style="color: #d75fd7;">)</span>
 <span style="color: #268bd2;">}</span>
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8f5edf4" class="outline-4">
+<h4 id="org8f5edf4">Julian day of the year</h4>
+<div class="outline-text-4" id="text-org8f5edf4">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> Julian day of the year</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> &gt; j_day("2014-01-03", "2014-01-01")</span>
+<span style="color: #008787; background-color: #262626; font-weight: bold;">#</span><span style="color: #008787; background-color: #262626; font-weight: bold;">'</span><span style="color: #008787; background-color: #262626;"> 3</span>
+<span style="color: #d75fd7; font-weight: bold;">j_day</span> <span style="color: #df005f; font-weight: bold;">&lt;-</span> <span style="color: #268bd2; font-weight: bold;">function</span><span style="color: #268bd2;">(</span>date_string, first_day_of_year_string<span style="color: #268bd2;">)</span> <span style="color: #268bd2;">{</span>
+  as.integer<span style="color: #d75fd7;">(</span>as.Date<span style="color: #2aa198;">(</span>date_string<span style="color: #2aa198;">)</span> - as.Date<span style="color: #2aa198;">(</span>first_day_of_year_string<span style="color: #2aa198;">)</span><span style="color: #d75fd7;">)</span> + <span style="color: #d75fd7;">1</span>
+<span style="color: #268bd2;">}</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1385,13 +1515,16 @@ out2 <span style="color: #df005f; font-weight: bold;">&lt;-</span> deSolve::ode<
 <h3 id="org624d115">MCMC (without <code>Stan</code>)</h3>
 <div class="outline-text-3" id="text-org624d115">
 <p>
-There is the package <code>mcmc</code> which looks like it does a solid job of the basics, although it takes an opinionated stance on how this should be done. 
-Be careful with how you interpret the <code>batch</code> arguments.
-The interface is designed for testing out tuning parameters to find something that works; make the most of this design.
+There is the package <code>mcmc</code> which looks like it does a solid job of the basics,
+although it takes an opinionated stance on how this should be done. Be careful
+with how you interpret the <code>batch</code> arguments. The interface is designed for
+testing out tuning parameters to find something that works; make the most of
+this design.
 </p>
 
 <p>
-<code>coda</code> is probably what you want to use to check the output beyond basic diagnostic plots.
+<a href="https://cran.r-project.org/web/packages/coda/coda.pdf"><code>coda</code></a> is probably what you want to use to check the output beyond basic
+diagnostic plots.
 </p>
 </div>
 </div>
@@ -1453,7 +1586,7 @@ ggplot<span style="color: #268bd2;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-03-15 Mon 19:31</p>
+<p class="date">Created: 2021-04-01 Thu 09:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

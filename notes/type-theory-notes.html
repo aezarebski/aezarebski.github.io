@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-15 Mon 19:31 -->
+<!-- 2021-04-01 Thu 09:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -241,6 +241,7 @@
 <ul>
 <li><a href="#orgac93b68">Functor</a></li>
 <li><a href="#org4fdf441">Applicative</a></li>
+<li><a href="#orge8e42f6">Monad</a></li>
 <li><a href="#org0993ebb">Foldable</a></li>
 <li><a href="#org3c0ea98">Traversable</a></li>
 <li><a href="#org26117b8">Fold and friends</a></li>
@@ -362,6 +363,21 @@ also live in the <i>computational context</i> of the container.
 </div>
 </div>
 
+<div id="outline-container-orge8e42f6" class="outline-3">
+<h3 id="orge8e42f6">Monad</h3>
+<div class="outline-text-3" id="text-orge8e42f6">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> m <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">Monad</span> m <span style="color: #268bd2; font-weight: bold;">where</span>
+  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">&gt;&gt;=</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">::</span> m a <span style="color: #8787d7;">-&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> m b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> m b
+  return <span style="color: #8787d7;">::</span> a <span style="color: #8787d7;">-&gt;</span> m a 
+  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">&gt;&gt;</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">::</span> m a <span style="color: #8787d7;">-&gt;</span> m b <span style="color: #8787d7;">-&gt;</span> m b 
+
+<span style="color: #d75fd7; font-weight: bold;">join</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Monad</span> m <span style="color: #8787d7;">=&gt;</span> m <span style="color: #268bd2;">(</span>m a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> m a 
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org0993ebb" class="outline-3">
 <h3 id="org0993ebb">Foldable</h3>
 <div class="outline-text-3" id="text-org0993ebb">
@@ -440,7 +456,7 @@ This one can be applied to infinte lists and still terminate.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-03-15 Mon 19:31</p>
+<p class="date">Created: 2021-04-01 Thu 09:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

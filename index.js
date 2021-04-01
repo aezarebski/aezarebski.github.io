@@ -53,7 +53,8 @@ var imageFilePaths = [
     "skull.png",
     "moe.gif",
     "whale-hello.gif",
-    "blueberry.jpg"
+    "blueberry.jpg",
+    "lockdown-graffiti.jpg"
 ].map((x) => "./resources/" + x);
 
 var fileNumber = Math.floor(Math.random() * imageFilePaths.length);

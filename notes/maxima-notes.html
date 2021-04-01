@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-15 Mon 19:31 -->
+<!-- 2021-04-01 Thu 09:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -255,12 +255,17 @@
 <li><a href="#orgcefb87a">Trigonometry</a></li>
 </ul>
 </li>
+<li><a href="#org8d48e77">Examples</a>
+<ul>
+<li><a href="#org1d66d7e">Change of coordinates</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
 
-<div id="org28d0e39" class="figure">
+<div id="org7c8b431" class="figure">
 <p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
 </p>
 </div>
@@ -325,7 +330,7 @@ Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plo
 </div>
 
 
-<div id="org82432d8" class="figure">
+<div id="org906fd41" class="figure">
 <p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
 </p>
 </div>
@@ -404,47 +409,57 @@ There are several ways to express for loops.
 <col  class="org-left" />
 
 <col  class="org-left" />
+
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
 <th scope="col" class="org-left">Function</th>
 <th scope="col" class="org-left">Use</th>
+<th scope="col" class="org-left">Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left"><code>makelist</code></td>
 <td class="org-left">List creation</td>
+<td class="org-left"><code>makelist(f(x), x, 1,4)</code></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>some</code> and <code>every</code></td>
 <td class="org-left">Fold predicate over list</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>cons</code></td>
 <td class="org-left">cons</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>rest</code></td>
 <td class="org-left">Works as head or tail</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>append</code></td>
 <td class="org-left">Concatenation</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>map</code></td>
 <td class="org-left">Map function over list</td>
+<td class="org-left"><code>map(lambda([x], f(x)), [1,2])</code></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>apply</code></td>
 <td class="org-left">Uncurried application</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
@@ -733,10 +748,55 @@ expressions consisting of exponentials.
 </div>
 </div>
 </div>
+
+<div id="outline-container-org8d48e77" class="outline-2">
+<h2 id="org8d48e77">Examples</h2>
+<div class="outline-text-2" id="text-org8d48e77">
+</div>
+<div id="outline-container-org1d66d7e" class="outline-3">
+<h3 id="org1d66d7e">Change of coordinates</h3>
+<div class="outline-text-3" id="text-org1d66d7e">
+<p>
+Suppose you are doing an integral and you want to change from Cartesian to polar
+coordinates. What was for Jacobian in this case again? The following
+demonstrates how to compute it with Maxima.
+</p>
+</div>
+
+<div id="outline-container-orgda3262a" class="outline-4">
+<h4 id="orgda3262a">Cartesian to polar</h4>
+<div class="outline-text-4" id="text-orgda3262a">
+<div class="org-src-container">
+<pre class="src src-maxima">[x,y] <span style="color: #268bd2; font-weight: bold;">:</span> [r <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">cos</span>(p), r <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">sin</span>(p)];
+<span style="color: #268bd2;">trigsimp</span>(<span style="color: #268bd2;">determinant</span>(jacobian([x,y], [r,p])));
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;">r</span>
+<span style="color: #008787; background-color: #262626;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4fb1f76" class="outline-4">
+<h4 id="org4fb1f76">Cartesian to spherical</h4>
+<div class="outline-text-4" id="text-org4fb1f76">
+<div class="org-src-container">
+<pre class="src src-maxima">[x,y,z] <span style="color: #268bd2; font-weight: bold;">:</span> [r <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">sin</span>(p) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">cos</span>(t), r <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">sin</span>(p) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">sin</span>(t), r <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">cos</span>(p)];
+<span style="color: #268bd2;">trigsimp</span>(<span style="color: #268bd2;">determinant</span>(jacobian([x,y,z], [r,p,t])));
+<span style="color: #008787; background-color: #262626;">/*</span>
+<span style="color: #008787; background-color: #262626;">            2</span>
+<span style="color: #008787; background-color: #262626;">    sin(p) r</span>
+<span style="color: #008787; background-color: #262626;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-03-15 Mon 19:31</p>
+<p class="date">Created: 2021-04-01 Thu 09:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

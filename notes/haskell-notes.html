@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-15 Mon 19:31 -->
+<!-- 2021-04-01 Thu 09:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -290,7 +290,7 @@
 <li><a href="#orgcb33cde">Root finding</a></li>
 <li><a href="#orge93410e">Differential equations</a></li>
 <li><a href="#org63e7575">Random number simulation</a></li>
-<li><a href="#org330e47c">Numbers</a></li>
+<li><a href="#org21ae918">Numbers</a></li>
 <li><a href="#orgcf47c91">Special functions</a></li>
 </ul>
 </li>
@@ -299,7 +299,7 @@
 </div>
 
 
-<div id="org5a9151b" class="figure">
+<div id="org724392b" class="figure">
 <p><img src="../images/haskell-logo.png" alt="haskell-logo.png" /> 
 </p>
 </div>
@@ -413,6 +413,12 @@ the command line at run time rather than data about how the program was called.
 </ol>
 
 <p>
+The <code>break</code> command can also be used to set breakpoints in other modules with
+<code>:break &lt;module&gt; &lt;n&gt;</code>, although you have to be a little bit careful in this
+situation, since some functions may go out of scope as you move between modules.
+</p>
+
+<p>
 You can always use <code>:help</code> to get a listing, but here are some useful functions
 </p>
 
@@ -460,8 +466,24 @@ You can always use <code>:help</code> to get a listing, but here are some useful
 
 <p>
 The <code>trace</code> function provided by <code>Debug.Trace</code> from the standard library is a
-good way to inspect the values of variables from pure code while debugging.
+good way to inspect the values of variables from pure code while debugging. The
+following function is nifty way to get a print out of particular values through
+the computation.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">import</span> <span style="color: #df005f; font-weight: bold;">Debug.Trace</span> <span style="color: #268bd2;">(</span>trace, traceShow<span style="color: #268bd2;">)</span>
+
+<span style="color: #af875f;">-- | Helper function while debugging.</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">-- &gt;&gt;&gt; showAndTell "foo: " 1</span>
+<span style="color: #af875f;">-- foo: 1</span>
+<span style="color: #af875f;">-- 1</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #d75fd7; font-weight: bold;">showAndTell</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Show</span> a <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">String</span> <span style="color: #8787d7;">-&gt;</span> a <span style="color: #8787d7;">-&gt;</span> a
+<span style="color: #d75fd7; font-weight: bold;">showAndTell</span> msg x <span style="color: #8787d7;">=</span> trace <span style="color: #268bd2;">(</span>msg <span style="color: #8787d7;">++</span> show x<span style="color: #268bd2;">)</span> x
+</pre>
+</div>
 
 <p>
 The GHC user guide has a section on <a href="https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/ghci-debugger.html">the GHCI debugger</a>.
@@ -842,6 +864,19 @@ delimiters are \[...\] for displayed mathematics and \(...\) for in-line
 mathematics.
 </p>
 </blockquote>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #af875f;">-- | This is an enumerated list:</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">--     (1) first item</span>
+<span style="color: #af875f;">--     2. second item</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">-- This is a bulleted list:</span>
+<span style="color: #af875f;">--</span>
+<span style="color: #af875f;">--     * first item</span>
+<span style="color: #af875f;">--     * second item</span>
+</pre>
+</div>
 </div>
 </div>
 
@@ -1044,8 +1079,22 @@ and <code>-Werror</code> for production.
 
 <p>
 The <code>RecordWildcards</code> extension provides some additional sugar for pattern
-working with records.
+working with records. It makes the fields available in the local scope under the
+name of their accessors. The same is true for record construction. For example
 </p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #d75fd7;">{-# LANGUAGE RecordWildCards #-}</span>
+
+<span style="color: #268bd2; font-weight: bold;">data</span> <span style="color: #df005f; font-weight: bold;">Person</span> <span style="color: #8787d7;">=</span> <span style="color: #df005f; font-weight: bold;">Person</span> <span style="color: #268bd2;">{</span> name <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">String</span> , admin <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Bool</span> <span style="color: #268bd2;">}</span>
+
+<span style="color: #d75fd7; font-weight: bold;">example</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Person</span>
+<span style="color: #d75fd7; font-weight: bold;">example</span> <span style="color: #8787d7;">=</span> <span style="color: #df005f; font-weight: bold;">Person</span><span style="color: #268bd2;">{</span><span style="color: #8787d7;">..</span><span style="color: #268bd2;">}</span>
+  <span style="color: #268bd2; font-weight: bold;">where</span>
+    name <span style="color: #8787d7;">=</span> <span style="color: #2aa198;">"John Doe"</span>
+    admin <span style="color: #8787d7;">=</span> <span style="color: #df005f; font-weight: bold;">True</span>
+</pre>
+</div>
 </div>
 </div>
 
@@ -1112,6 +1161,21 @@ reserved identifier, used as wild card in patterns. Compilers that offer
 warnings for unused identifiers are encouraged to suppress such warnings for
 identifiers beginning with underscore. This allows programmers to use
 "_foo" for a parameter that they expect to be unused.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org713857a" class="outline-4">
+<h4 id="org713857a">Module names</h4>
+<div class="outline-text-4" id="text-org713857a">
+<p>
+<a href="https://www.haskell.org/onlinereport/"><i>The Haskell 98 Report</i></a> says
+</p>
+
+<blockquote>
+<p>
+Module names are alphanumeric and must begin with an uppercase letter.
 </p>
 </blockquote>
 </div>
@@ -1269,11 +1333,11 @@ Left "Could not find file in step 2"
 <h3 id="org5a7f4df">Data structures</h3>
 <div class="outline-text-3" id="text-org5a7f4df">
 </div>
-<div id="outline-container-org21ae918" class="outline-4">
-<h4 id="org21ae918">Numbers</h4>
-<div class="outline-text-4" id="text-org21ae918">
+<div id="outline-container-orgd9ee1f6" class="outline-4">
+<h4 id="orgd9ee1f6">Numbers</h4>
+<div class="outline-text-4" id="text-orgd9ee1f6">
 
-<div id="orgc18e468" class="figure">
+<div id="org9960b45" class="figure">
 <p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
 </p>
 </div>
@@ -1831,9 +1895,9 @@ with a hardcoded seed in the library.
 </div>
 </div>
 
-<div id="outline-container-org330e47c" class="outline-3">
-<h3 id="org330e47c">Numbers</h3>
-<div class="outline-text-3" id="text-org330e47c">
+<div id="outline-container-org21ae918" class="outline-3">
+<h3 id="org21ae918">Numbers</h3>
+<div class="outline-text-3" id="text-org21ae918">
 <p>
 To learn about how Haskell handles numbers &#x2014; although we only really care
 about <code>Integer</code> and <code>Double</code> &#x2014; there is the <a href="https://www.haskell.org/onlinereport/basic.html">report</a> and a <a href="https://www.haskell.org/tutorial/numbers.html">gentle introduction</a>
@@ -1857,7 +1921,7 @@ binomial coefficients.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-03-15 Mon 19:31</p>
+<p class="date">Created: 2021-04-01 Thu 09:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
