@@ -253,26 +253,49 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org135ad71" class="outline-2">
-<h2 id="org135ad71">An Experiment in Personal Taste for Money</h2>
-<div class="outline-text-2" id="text-org135ad71">
+<div id="outline-container-orgc2a9d21" class="outline-2">
+<h2 id="orgc2a9d21">Buffon's Needle with Horizontal and Vertical Rulings</h2>
+<div class="outline-text-2" id="text-orgc2a9d21">
 <blockquote>
 <p>
-An urn contains 10 black balls and 10 white balls, identical expect for color.
-You choose "black" or "white." One ball is drawn at random, and if its color
-matches your choice, you get $10, otherwise nothing. Write down the maximum
-amount you are willing to pay to play the game. THe game will be played just
-once.
+Suppose we toss a needle of length \(2l\) (less than 1\) on a grid with both
+horizontal and vertical rulings spaced one unit apart. What is the mean number
+of lines the needle crosses? (I have dropped the \(2a\) for the spacing because
+we might as well thing of the length of the needle as measured in units of
+spacing.)
 </p>
 </blockquote>
 
 <p>
-THe trick here is to realise that you won't get the amount you paid back, so a
-win gets you \(10-x\) if you paid \(x\).
+This is very similar to the previous problem, but now we must consider the
+horizontal and vertical position of the pin's midpoint. There is also the
+possibility of zero, one or two crossings were previously it was only binary.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">solve</span>((<span style="color: #a45bad;">10</span> <span style="color: #4f97d7; font-weight: bold;">-</span> x) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> x <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">0</span>, x);
+<pre class="src src-maxima">t1 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #a45bad;">2</span>, y, a <span style="color: #4f97d7; font-weight: bold;">-</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(th), a), x, a<span style="color: #4f97d7; font-weight: bold;">-</span>l<span style="color: #4f97d7; font-weight: bold;">*</span><span style="color: #4f97d7;">sin</span>(th), a), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span><span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>);
+
+t2 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #a45bad;">1</span>, y, a <span style="color: #4f97d7; font-weight: bold;">-</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(th), a), x, <span style="color: #a45bad;">0</span>, a<span style="color: #4f97d7; font-weight: bold;">-</span>l<span style="color: #4f97d7; font-weight: bold;">*</span><span style="color: #4f97d7;">sin</span>(th)), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span><span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>);
+
+t3 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #a45bad;">1</span>, y, <span style="color: #a45bad;">0</span>, a <span style="color: #4f97d7; font-weight: bold;">-</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(th)), x, a<span style="color: #4f97d7; font-weight: bold;">-</span>l<span style="color: #4f97d7; font-weight: bold;">*</span><span style="color: #4f97d7;">sin</span>(th), a), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span><span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>);
+
+t4 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">integrate</span>(<span style="color: #a45bad;">0</span>, y, <span style="color: #a45bad;">0</span>, a <span style="color: #4f97d7; font-weight: bold;">-</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(th)), x, <span style="color: #a45bad;">0</span>, a<span style="color: #4f97d7; font-weight: bold;">-</span>l<span style="color: #4f97d7; font-weight: bold;">*</span><span style="color: #4f97d7;">sin</span>(th)), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span><span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>);
+
+sol <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">expand</span>((t1 <span style="color: #4f97d7; font-weight: bold;">+</span> t2 <span style="color: #4f97d7; font-weight: bold;">+</span> t3 <span style="color: #4f97d7; font-weight: bold;">+</span> t4) <span style="color: #4f97d7; font-weight: bold;">/</span> (a<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #a45bad;">%pi</span> <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span>));
+
+<span style="color: #4f97d7;">print</span>(sol);
+<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
+<span style="color: #2aa1ae; background-color: #292e34;"> 4 l</span>
+<span style="color: #2aa1ae; background-color: #292e34;">----- </span>
+<span style="color: #2aa1ae; background-color: #292e34;">%pi a</span>
+<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+
+<span style="color: #4f97d7;">print</span>(<span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>, a, sol));
+<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
+<span style="color: #2aa1ae; background-color: #292e34;">8 l</span>
+<span style="color: #2aa1ae; background-color: #292e34;">--- </span>
+<span style="color: #2aa1ae; background-color: #292e34;">%pi</span>
+<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
 </pre>
 </div>
 </div>

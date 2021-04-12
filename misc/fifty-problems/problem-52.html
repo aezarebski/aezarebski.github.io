@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-06 Tue 18:53 -->
+<!-- 2021-04-12 Mon 17:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -253,26 +253,67 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org135ad71" class="outline-2">
-<h2 id="org135ad71">An Experiment in Personal Taste for Money</h2>
-<div class="outline-text-2" id="text-org135ad71">
+<div id="outline-container-org64c3d12" class="outline-2">
+<h2 id="org64c3d12">Three-Dimensional Random Walk</h2>
+<div class="outline-text-2" id="text-org64c3d12">
 <blockquote>
 <p>
-An urn contains 10 black balls and 10 white balls, identical expect for color.
-You choose "black" or "white." One ball is drawn at random, and if its color
-matches your choice, you get $10, otherwise nothing. Write down the maximum
-amount you are willing to pay to play the game. THe game will be played just
-once.
+What is the chance the simple random walk on \(\mathbb{Z}^{3}\) returns to its
+initial position?
 </p>
 </blockquote>
 
 <p>
-THe trick here is to realise that you won't get the amount you paid back, so a
-win gets you \(10-x\) if you paid \(x\).
+Polya's Random Walk Theorem tells us that the probability of return in
+\(\mathbb{Z}^{2}\) is 1, however in higher dimensions it is not certain. In
+three dimensions it is approximately \(0.34\).
+</p>
+
+<p>
+We can do a very rough calculation to get the return probabilities for 3 and 4
+dimensions with the following script. It runs too slow to get more than the
+first digit correct though, even when compiled and with memoization.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">solve</span>((<span style="color: #a45bad;">10</span> <span style="color: #4f97d7; font-weight: bold;">-</span> x) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> x <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">0</span>, x);
+<pre class="src src-maxima"><span style="color: #4f97d7;">restart</span>();
+<span style="color: #4f97d7;">kill</span>(<span style="color: #4f97d7; font-weight: bold;">all</span>);
+
+<span style="color: #bc6ec5; font-weight: bold;">foldl</span>(<span style="color: #7590db;">f, x0, xs</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7; font-weight: bold;">if</span> emptyp(xs)
+<span style="color: #4f97d7; font-weight: bold;">then</span> x0
+<span style="color: #4f97d7; font-weight: bold;">else</span> foldl(f, f(x0, <span style="color: #4f97d7;">first</span>(xs)), <span style="color: #4f97d7;">rest</span>(xs));
+
+<span style="color: #bc6ec5; font-weight: bold;">prod</span>(<span style="color: #7590db;">xs</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7; font-weight: bold;">if</span> emptyp(xs)
+<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">0</span>
+<span style="color: #4f97d7; font-weight: bold;">else</span> foldl(<span style="color: #2d9574;">"*"</span>, <span style="color: #4f97d7;">first</span>(xs), <span style="color: #4f97d7;">rest</span>(xs));
+
+<span style="color: #bc6ec5; font-weight: bold;">arraymap</span>(<span style="color: #7590db;">a, xs</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7;">lambda</span>([x], a[x]), xs);
+
+<span style="color: #bc6ec5; font-weight: bold;">l_1</span>[<span style="color: #7590db;">n</span>] <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">evenp</span>(n) <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">binomial</span>(n, n<span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>) <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #a45bad;">0</span>;
+
+<span style="color: #bc6ec5; font-weight: bold;">l_coeff</span>(<span style="color: #7590db;">n, d</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
+<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(n, <span style="color: #a45bad;">0</span>))
+<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">1</span>
+<span style="color: #4f97d7; font-weight: bold;">else</span> lsum(i, i,
+  <span style="color: #4f97d7;">map</span>(
+    <span style="color: #4f97d7;">lambda</span>([p], <span style="color: #4f97d7;">apply</span>(multinomial_coeff, p) <span style="color: #4f97d7; font-weight: bold;">*</span> prod(arraymap(l_1, p))),
+    listify(flatten(<span style="color: #4f97d7;">map</span>(permutations, integer_partitions(n, d))))));
+
+<span style="color: #bc6ec5; font-weight: bold;">L</span>(<span style="color: #7590db;">z, d, N</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">sum</span>(l_coeff(<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> n, d) <span style="color: #4f97d7; font-weight: bold;">*</span> z<span style="color: #4f97d7; font-weight: bold;">^</span>(<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> n), n, <span style="color: #a45bad;">0</span>, N);
+<span style="color: #bc6ec5; font-weight: bold;">prob_return</span>(<span style="color: #7590db;">d, N</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">float</span>(<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">/</span> L(<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> d), d, N));
+
+<span style="color: #4f97d7;">compile</span>(l_coeff);
+
+<span style="color: #4f97d7;">print</span>(prob_return(<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">50</span>));
+<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
+<span style="color: #2aa1ae; background-color: #292e34;">0.3107687252064985</span>
+<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #4f97d7;">print</span>(prob_return(<span style="color: #a45bad;">4</span>, <span style="color: #a45bad;">10</span>));
+<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
+<span style="color: #2aa1ae; background-color: #292e34;">0.1807480265784589</span>
+<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
 </pre>
 </div>
 </div>
@@ -280,7 +321,7 @@ win gets you \(10-x\) if you paid \(x\).
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-06 Tue 18:53</p>
+<p class="date">Created: 2021-04-12 Mon 17:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

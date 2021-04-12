@@ -253,26 +253,124 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org135ad71" class="outline-2">
-<h2 id="org135ad71">An Experiment in Personal Taste for Money</h2>
-<div class="outline-text-2" id="text-org135ad71">
+<div id="outline-container-org35b95d9" class="outline-2">
+<h2 id="org35b95d9">Buffon's Needle</h2>
+<div class="outline-text-2" id="text-org35b95d9">
 <blockquote>
 <p>
-An urn contains 10 black balls and 10 white balls, identical expect for color.
-You choose "black" or "white." One ball is drawn at random, and if its color
-matches your choice, you get $10, otherwise nothing. Write down the maximum
-amount you are willing to pay to play the game. THe game will be played just
-once.
+A table of infinite expanse has inscribed on it a set of parallel lines spaced
+\(2a\) units apart. A needle of length \(2l\) (smaller than \(2a\)) is twirled
+and tossed on the table. What is the probability that when it comes to rest it
+crosses a line?
 </p>
 </blockquote>
 
 <p>
-THe trick here is to realise that you won't get the amount you paid back, so a
-win gets you \(10-x\) if you paid \(x\).
+We describe the position of the needle by the height of the midpoint and the
+angle. Let 0 height be between two lines and the midpoint be at height \(x\). It
+is sufficient to consider positions of the midpoint \(x \in [0,a]\) and angle
+\(\theta \in [0,\pi/2]\). We assume \(x\) and \(\theta\) have a uniform
+distributions over their domain. Under this setting, the highest point of the
+needle is at \(x + l \cos \theta\). The following figure illustrates the set up
+of the problem
+</p>
+
+
+<div id="org9d3a2d7" class="figure">
+<p><img src="./problem-53-a.png" alt="problem-53-a.png" />
+</p>
+</div>
+
+<p>
+and region of parameter space that corresponds to the needle crossing the line.
+</p>
+
+
+<div id="orgd93af19" class="figure">
+<p><img src="./problem-53-b.png" alt="problem-53-b.png" />
+</p>
+</div>
+
+<p>
+Then a simple integral shows the solution
+</p>
+
+<p>
+\[
+\frac{2l}{a\pi}
+\]
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">solve</span>((<span style="color: #a45bad;">10</span> <span style="color: #4f97d7; font-weight: bold;">-</span> x) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> x <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">0</span>, x);
+<pre class="src src-maxima"><span style="color: #4f97d7;">load</span>(draw)$
+
+a <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #a45bad;">1</span>;
+l <span style="color: #4f97d7; font-weight: bold;">:</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>8;
+x <span style="color: #4f97d7; font-weight: bold;">:</span> a <span style="color: #4f97d7; font-weight: bold;">-</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>5;
+th <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #a45bad;">%pi</span> <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">4</span>;
+
+h <span style="color: #4f97d7; font-weight: bold;">:</span> 1<span style="color: #4f97d7; font-weight: bold;">.</span>3;
+
+draw(
+  gr2d(
+    border <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">false</span>,
+    color <span style="color: #4f97d7; font-weight: bold;">=</span> black,
+    line_width <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">2</span>,
+    points_joined <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">true</span>,
+    line_type <span style="color: #4f97d7; font-weight: bold;">=</span> dashes,
+    points([<span style="color: #a45bad;">0</span>,h],[<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">0</span>]),
+    line_type <span style="color: #4f97d7; font-weight: bold;">=</span> solid,
+    points([<span style="color: #a45bad;">0</span>,h],[a,a]),
+    points([0<span style="color: #4f97d7; font-weight: bold;">.</span>3,0<span style="color: #4f97d7; font-weight: bold;">.</span>3 <span style="color: #4f97d7; font-weight: bold;">+</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(th)],[x,x <span style="color: #4f97d7; font-weight: bold;">+</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(th)]),
+    line_type <span style="color: #4f97d7; font-weight: bold;">=</span> dots,
+    points([<span style="color: #a45bad;">0</span>,h],[x,x]),
+    font <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #2d9574;">"Arial"</span>, 
+    font_size <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">25</span>,
+    label([<span style="color: #2d9574;">"height x"</span>, 0<span style="color: #4f97d7; font-weight: bold;">.</span>3, x <span style="color: #4f97d7; font-weight: bold;">-</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>1]),
+    label([<span style="color: #2d9574;">"angle theta"</span>, 0<span style="color: #4f97d7; font-weight: bold;">.</span>6, x <span style="color: #4f97d7; font-weight: bold;">+</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>1]),
+    xrange      <span style="color: #4f97d7; font-weight: bold;">=</span> [<span style="color: #4f97d7; font-weight: bold;">-</span>0<span style="color: #4f97d7; font-weight: bold;">.</span>1,h <span style="color: #4f97d7; font-weight: bold;">+</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>1],
+    yrange      <span style="color: #4f97d7; font-weight: bold;">=</span> [<span style="color: #4f97d7; font-weight: bold;">-</span>0<span style="color: #4f97d7; font-weight: bold;">.</span>1,a <span style="color: #4f97d7; font-weight: bold;">+</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>1]
+    )
+  )$
+
+draw_file(
+  terminal <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7; font-weight: bold;">'</span>png,
+  file_name <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #2d9574;">"problem-53-a"</span>,
+  dimensions <span style="color: #4f97d7; font-weight: bold;">=</span> [<span style="color: #a45bad;">1000</span>,<span style="color: #a45bad;">700</span>])$
+
+<span style="color: #4f97d7;">kill</span>(x, th, h);
+
+draw(
+  gr2d(
+    border <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">false</span>,
+    fill_color <span style="color: #4f97d7; font-weight: bold;">=</span> grey80,
+    x_voxel <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">20</span>, y_voxel <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">20</span>,
+    region(a <span style="color: #4f97d7; font-weight: bold;">&lt;</span> x <span style="color: #4f97d7; font-weight: bold;">+</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(th), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span> <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span>, x, <span style="color: #a45bad;">0</span>, a),
+    color <span style="color: #4f97d7; font-weight: bold;">=</span> black,
+    line_width <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">2</span>,
+    explicit(a <span style="color: #4f97d7; font-weight: bold;">-</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(th), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span> <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span>),
+    font <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #2d9574;">"Arial"</span>, 
+    font_size <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">25</span>,
+    label([<span style="color: #2d9574;">"a &lt; x + l \sin(\theta)"</span>, 1<span style="color: #4f97d7; font-weight: bold;">.</span>0, 0<span style="color: #4f97d7; font-weight: bold;">.</span>7])
+    )
+  )$
+
+draw_file(
+  terminal <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7; font-weight: bold;">'</span>png,
+  file_name <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #2d9574;">"problem-53-b"</span>,
+  dimensions <span style="color: #4f97d7; font-weight: bold;">=</span> [<span style="color: #a45bad;">1000</span>,<span style="color: #a45bad;">700</span>])$
+
+<span style="color: #4f97d7;">kill</span>(<span style="color: #4f97d7; font-weight: bold;">all</span>);
+
+total_area <span style="color: #4f97d7; font-weight: bold;">:</span> a <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #a45bad;">%pi</span> <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span>;
+sol <span style="color: #4f97d7; font-weight: bold;">:</span> l <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">integrate</span>(<span style="color: #4f97d7;">sin</span>(th), th, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">%pi</span> <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">2</span>) <span style="color: #4f97d7; font-weight: bold;">/</span> total_area;
+
+<span style="color: #4f97d7;">print</span>(sol);
+<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
+<span style="color: #2aa1ae; background-color: #292e34;"> 2 l</span>
+<span style="color: #2aa1ae; background-color: #292e34;">----- </span>
+<span style="color: #2aa1ae; background-color: #292e34;">%pi a</span>
+<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
 </pre>
 </div>
 </div>
