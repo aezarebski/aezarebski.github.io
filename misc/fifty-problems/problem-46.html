@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-01 Thu 09:08 -->
+<!-- 2021-04-06 Tue 18:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -253,9 +253,9 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org38fb87e" class="outline-2">
-<h2 id="org38fb87e">Probabilities of Matches</h2>
-<div class="outline-text-2" id="text-org38fb87e">
+<div id="outline-container-org7be5a34" class="outline-2">
+<h2 id="org7be5a34">Probabilities of Matches</h2>
+<div class="outline-text-2" id="text-org7be5a34">
 <blockquote>
 <p>
 Under the conditions of the previous matching problem, what is the probability
@@ -272,13 +272,13 @@ in its original position is the \(j\)-th number of derangments.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #268bd2;">load</span>(<span style="color: #268bd2;">distrib</span>)$
+<pre class="src src-maxima"><span style="color: #4f97d7;">load</span>(<span style="color: #4f97d7;">distrib</span>)$
 
-<span style="color: #d75fd7; font-weight: bold;">derangement</span>(<span style="color: #8787d7;">n</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> round(<span style="color: #268bd2;">factorial</span>(n) <span style="color: #268bd2; font-weight: bold;">/</span> <span style="color: #d75fd7;">%e</span>);
+<span style="color: #bc6ec5; font-weight: bold;">derangement</span>(<span style="color: #7590db;">n</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> round(<span style="color: #4f97d7;">factorial</span>(n) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #a45bad;">%e</span>);
 
-<span style="color: #d75fd7; font-weight: bold;">f</span>(<span style="color: #8787d7;">r, n</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> <span style="color: #268bd2;">binomial</span>(n, r) <span style="color: #268bd2; font-weight: bold;">*</span> derangement(n <span style="color: #268bd2; font-weight: bold;">-</span> r) <span style="color: #268bd2; font-weight: bold;">/</span> <span style="color: #268bd2;">factorial</span>(n);
+<span style="color: #bc6ec5; font-weight: bold;">f</span>(<span style="color: #7590db;">r, n</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">binomial</span>(n, r) <span style="color: #4f97d7; font-weight: bold;">*</span> derangement(n <span style="color: #4f97d7; font-weight: bold;">-</span> r) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #4f97d7;">factorial</span>(n);
 
-<span style="color: #d75fd7; font-weight: bold;">f_approx</span>(<span style="color: #8787d7;">r</span>) <span style="color: #268bd2; font-weight: bold;">:=</span> pdf_poisson(r, <span style="color: #d75fd7;">1</span>);
+<span style="color: #bc6ec5; font-weight: bold;">f_approx</span>(<span style="color: #7590db;">r</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> pdf_poisson(r, <span style="color: #a45bad;">1</span>);
 </pre>
 </div>
 
@@ -288,30 +288,30 @@ the following figure.
 </p>
 
 
-<div id="org910dc8c" class="figure">
+<div id="orgac12f89" class="figure">
 <p><img src="./problem-46.png" alt="problem-46.png" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-maxima">p_x <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">makelist</span>(r, r, <span style="color: #d75fd7;">3</span>, <span style="color: #d75fd7;">10</span>);
-p_x_1 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">makelist</span>(r<span style="color: #268bd2; font-weight: bold;">-</span>0<span style="color: #268bd2; font-weight: bold;">.</span>2,r,<span style="color: #d75fd7;">3</span>,<span style="color: #d75fd7;">10</span>);
-p_y_1 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">map</span>(<span style="color: #268bd2;">lambda</span>([x], f(x, <span style="color: #d75fd7;">20</span>)), p_x);
-p_x_2 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">makelist</span>(r,r,<span style="color: #d75fd7;">3</span>,<span style="color: #d75fd7;">10</span>);
-p_y_2 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">map</span>(<span style="color: #268bd2;">lambda</span>([x], f(x, <span style="color: #d75fd7;">52</span>)), p_x);
-p_x_3 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">makelist</span>(r<span style="color: #268bd2; font-weight: bold;">+</span>0<span style="color: #268bd2; font-weight: bold;">.</span>2,r,<span style="color: #d75fd7;">3</span>,<span style="color: #d75fd7;">10</span>);
-p_y_3 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="color: #268bd2;">map</span>(<span style="color: #268bd2;">lambda</span>([x], f_approx(x)), p_x);
+<pre class="src src-maxima">p_x <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">makelist</span>(r, r, <span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">10</span>);
+p_x_1 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">makelist</span>(r<span style="color: #4f97d7; font-weight: bold;">-</span>0<span style="color: #4f97d7; font-weight: bold;">.</span>2,r,<span style="color: #a45bad;">3</span>,<span style="color: #a45bad;">10</span>);
+p_y_1 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7;">lambda</span>([x], f(x, <span style="color: #a45bad;">20</span>)), p_x);
+p_x_2 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">makelist</span>(r,r,<span style="color: #a45bad;">3</span>,<span style="color: #a45bad;">10</span>);
+p_y_2 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7;">lambda</span>([x], f(x, <span style="color: #a45bad;">52</span>)), p_x);
+p_x_3 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">makelist</span>(r<span style="color: #4f97d7; font-weight: bold;">+</span>0<span style="color: #4f97d7; font-weight: bold;">.</span>2,r,<span style="color: #a45bad;">3</span>,<span style="color: #a45bad;">10</span>);
+p_y_3 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7;">lambda</span>([x], f_approx(x)), p_x);
 
-<span style="color: #268bd2;">plot2d</span>([[discrete, p_x_1, p_y_1],
+<span style="color: #4f97d7;">plot2d</span>([[discrete, p_x_1, p_y_1],
         [discrete, p_x_2, p_y_2],
         [discrete, p_x_3, p_y_3]],
   [style, points],
   [color, red, blue, green],
-  [legend, <span style="color: #2aa198;">"n = 20"</span>, <span style="color: #2aa198;">"n = 52"</span>, <span style="color: #2aa198;">"Poisson"</span>],
-  [xlabel, <span style="color: #2aa198;">"r"</span>],
-  [ylabel, <span style="color: #2aa198;">"probability"</span>],
+  [legend, <span style="color: #2d9574;">"n = 20"</span>, <span style="color: #2d9574;">"n = 52"</span>, <span style="color: #2d9574;">"Poisson"</span>],
+  [xlabel, <span style="color: #2d9574;">"r"</span>],
+  [ylabel, <span style="color: #2d9574;">"probability"</span>],
   logy,
-  [png_file, <span style="color: #2aa198;">"./problem-46.png"</span>]
+  [png_file, <span style="color: #2d9574;">"./problem-46.png"</span>]
 );
 </pre>
 </div>
@@ -320,7 +320,7 @@ p_y_3 <span style="color: #268bd2; font-weight: bold;">:</span> <span style="col
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-01 Thu 09:08</p>
+<p class="date">Created: 2021-04-06 Tue 18:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
