@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-01 Thu 09:08 -->
+<!-- 2021-04-06 Tue 18:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -260,32 +260,33 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7f090d7">Probability notes</a>
+<li><a href="#org13a18fe">Probability notes</a>
 <ul>
-<li><a href="#orga653f97">Poisson process</a></li>
-<li><a href="#org8014341">Birth process</a></li>
-<li><a href="#org91e533f">Birth-death process</a></li>
-<li><a href="#org225cc6a">Moment closure</a></li>
-<li><a href="#orga3266e5">Change/Transformation of variable</a></li>
+<li><a href="#orgead8db6">Poisson process</a></li>
+<li><a href="#orgd10420f">Birth process</a></li>
+<li><a href="#orgffcdf35">Birth-death process</a></li>
+<li><a href="#org14f1789">Moment closure</a></li>
+<li><a href="#org12c3861">Change/Transformation of variable</a></li>
+<li><a href="#org53ad437">Random walk</a></li>
 </ul>
 </li>
-<li><a href="#org4ad3c8a">Distributions</a>
+<li><a href="#orgdb2ecba">Distributions</a>
 <ul>
-<li><a href="#orge4c6939">Negative binomial</a></li>
-<li><a href="#orgfc47440">Poisson</a></li>
+<li><a href="#org057451d">Negative binomial</a></li>
+<li><a href="#org4e617bf">Poisson</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7f090d7" class="outline-2">
-<h2 id="org7f090d7">Probability notes</h2>
-<div class="outline-text-2" id="text-org7f090d7">
+<div id="outline-container-org13a18fe" class="outline-2">
+<h2 id="org13a18fe">Probability notes</h2>
+<div class="outline-text-2" id="text-org13a18fe">
 </div>
-<div id="outline-container-orga653f97" class="outline-3">
-<h3 id="orga653f97">Poisson process</h3>
-<div class="outline-text-3" id="text-orga653f97">
+<div id="outline-container-orgead8db6" class="outline-3">
+<h3 id="orgead8db6">Poisson process</h3>
+<div class="outline-text-3" id="text-orgead8db6">
 <p>
 This is a continuous time process which counts the arrivals which occur at exponentially distributed times with rate \(\lambda\).
 The master equations for this process are
@@ -334,9 +335,9 @@ which is the PGF for a Poisson distribution with rate \(\lambda t\).
 </div>
 </div>
 
-<div id="outline-container-org8014341" class="outline-3">
-<h3 id="org8014341">Birth process</h3>
-<div class="outline-text-3" id="text-org8014341">
+<div id="outline-container-orgd10420f" class="outline-3">
+<h3 id="orgd10420f">Birth process</h3>
+<div class="outline-text-3" id="text-orgd10420f">
 <p>
 Consider a process where individuals give birth with rate \(\lambda\).
 In this case the rate at which the population increases in size depends on the current population size.
@@ -409,18 +410,18 @@ To check that this is actually a solution to the PDE, we can use the following l
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #268bd2;">define</span>(g(z,t), z <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span>l <span style="color: #268bd2; font-weight: bold;">*</span> t) <span style="color: #268bd2; font-weight: bold;">/</span> (<span style="color: #d75fd7;">1</span> <span style="color: #268bd2; font-weight: bold;">-</span> z <span style="color: #268bd2; font-weight: bold;">*</span> ( <span style="color: #d75fd7;">1</span><span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span>l <span style="color: #268bd2; font-weight: bold;">*</span> t))));
+<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(g(z,t), z <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>l <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> z <span style="color: #4f97d7; font-weight: bold;">*</span> ( <span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>l <span style="color: #4f97d7; font-weight: bold;">*</span> t))));
 
-<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>(l <span style="color: #268bd2; font-weight: bold;">*</span> z <span style="color: #268bd2; font-weight: bold;">*</span> (z <span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span>) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">diff</span>(g(z,t), z), <span style="color: #268bd2;">diff</span>(g(z,t), t)));
-<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>(g(z,<span style="color: #d75fd7;">0</span>), z));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(l <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">*</span> (z <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">diff</span>(g(z,t), z), <span style="color: #4f97d7;">diff</span>(g(z,t), t)));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(g(z,<span style="color: #a45bad;">0</span>), z));
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org91e533f" class="outline-3">
-<h3 id="org91e533f">Birth-death process</h3>
-<div class="outline-text-3" id="text-org91e533f">
+<div id="outline-container-orgffcdf35" class="outline-3">
+<h3 id="orgffcdf35">Birth-death process</h3>
+<div class="outline-text-3" id="text-orgffcdf35">
 <p>
 Consider a process where individuals give birth at a rate \(\lambda\) and die at a rate \(\mu\).
 The master equation for this is
@@ -481,10 +482,10 @@ We can then test this in maxima with the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #268bd2;">define</span>(g(z,t), ((b <span style="color: #268bd2; font-weight: bold;">*</span> z <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span> (b <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> t) <span style="color: #268bd2; font-weight: bold;">-</span> a <span style="color: #268bd2; font-weight: bold;">*</span> ( z<span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span>)) <span style="color: #268bd2; font-weight: bold;">/</span> ((b <span style="color: #268bd2; font-weight: bold;">*</span> z <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">exp</span>(<span style="color: #268bd2; font-weight: bold;">-</span> (b <span style="color: #268bd2; font-weight: bold;">-</span> a) <span style="color: #268bd2; font-weight: bold;">*</span> t) <span style="color: #268bd2; font-weight: bold;">-</span> b <span style="color: #268bd2; font-weight: bold;">*</span> ( z<span style="color: #268bd2; font-weight: bold;">-</span> <span style="color: #d75fd7;">1</span>)));
+<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(g(z,t), ((b <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> (b <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">-</span> a <span style="color: #4f97d7; font-weight: bold;">*</span> ( z<span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>)) <span style="color: #4f97d7; font-weight: bold;">/</span> ((b <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> (b <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">-</span> b <span style="color: #4f97d7; font-weight: bold;">*</span> ( z<span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>)));
 
-<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>((<span style="color: #d75fd7;">1</span><span style="color: #268bd2; font-weight: bold;">-</span>z)<span style="color: #268bd2; font-weight: bold;">*</span>(b<span style="color: #268bd2; font-weight: bold;">*</span>z<span style="color: #268bd2; font-weight: bold;">-</span>a) <span style="color: #268bd2; font-weight: bold;">*</span> <span style="color: #268bd2;">diff</span>(g(z,t), z), <span style="color: #268bd2; font-weight: bold;">-</span><span style="color: #268bd2;">diff</span>(g(z,t), t)));
-<span style="color: #268bd2;">is</span>(<span style="color: #268bd2;">equal</span>(g(z,<span style="color: #d75fd7;">0</span>), z));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>((<span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span>z)<span style="color: #4f97d7; font-weight: bold;">*</span>(b<span style="color: #4f97d7; font-weight: bold;">*</span>z<span style="color: #4f97d7; font-weight: bold;">-</span>a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">diff</span>(g(z,t), z), <span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">diff</span>(g(z,t), t)));
+<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(g(z,<span style="color: #a45bad;">0</span>), z));
 </pre>
 </div>
 
@@ -494,37 +495,58 @@ Taking the derivative and the limit we get that the expected population size is 
 </div>
 </div>
 
-<div id="outline-container-org225cc6a" class="outline-3">
-<h3 id="org225cc6a">Moment closure</h3>
-<div class="outline-text-3" id="text-org225cc6a">
+<div id="outline-container-org14f1789" class="outline-3">
+<h3 id="org14f1789">Moment closure</h3>
+<div class="outline-text-3" id="text-org14f1789">
 <p>
 For notes on moment closure, see my <a href="./statistics-notes.html">statistics notes</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga3266e5" class="outline-3">
-<h3 id="orga3266e5">Change/Transformation of variable</h3>
-<div class="outline-text-3" id="text-orga3266e5">
+<div id="outline-container-org12c3861" class="outline-3">
+<h3 id="org12c3861">Change/Transformation of variable</h3>
+<div class="outline-text-3" id="text-org12c3861">
 <p>
 This is a particularly nifty trick when dealing with tricky MCMC problems, see
 my <a href="./statistics-notes.html">statistics notes</a>.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org53ad437" class="outline-3">
+<h3 id="org53ad437">Random walk</h3>
+<div class="outline-text-3" id="text-org53ad437">
+</div>
+<div id="outline-container-orge88a1a0" class="outline-4">
+<h4 id="orge88a1a0">Polya's Random Walk Theorem</h4>
+<div class="outline-text-4" id="text-orge88a1a0">
+<blockquote>
+<p>
+<b>Theorem</b> The simple random walk on \(\mathbb{Z}^{d}\) is recurrent in
+ dimensions \(d=1,2\) and transient in dimensions \(d\geq 3\).
+</p>
+</blockquote>
+
+<p>
+Jonathon Novak has a particularly clear <a href="https://doi.org/10.4169/amer.math.monthly.121.08.711">proof</a> of this result.
+</p>
+</div>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org4ad3c8a" class="outline-2">
-<h2 id="org4ad3c8a">Distributions</h2>
-<div class="outline-text-2" id="text-org4ad3c8a">
+<div id="outline-container-orgdb2ecba" class="outline-2">
+<h2 id="orgdb2ecba">Distributions</h2>
+<div class="outline-text-2" id="text-orgdb2ecba">
 </div>
-<div id="outline-container-orge4c6939" class="outline-3">
-<h3 id="orge4c6939">Negative binomial</h3>
-<div class="outline-text-3" id="text-orge4c6939">
+<div id="outline-container-org057451d" class="outline-3">
+<h3 id="org057451d">Negative binomial</h3>
+<div class="outline-text-3" id="text-org057451d">
 </div>
-<div id="outline-container-orgb1bc5f3" class="outline-4">
-<h4 id="orgb1bc5f3">Notation</h4>
-<div class="outline-text-4" id="text-orgb1bc5f3">
+<div id="outline-container-org2d5f6fa" class="outline-4">
+<h4 id="org2d5f6fa">Notation</h4>
+<div class="outline-text-4" id="text-org2d5f6fa">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -537,9 +559,9 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-org5a8a8eb" class="outline-4">
-<h4 id="org5a8a8eb">Properties</h4>
-<div class="outline-text-4" id="text-org5a8a8eb">
+<div id="outline-container-org1291510" class="outline-4">
+<h4 id="org1291510">Properties</h4>
+<div class="outline-text-4" id="text-org1291510">
 <p>
 \[
 \mathbb{E}X = \frac{pr}{1-p}
@@ -584,9 +606,9 @@ M_{X}(t) = \left(\frac{1-p}{1-p e^{t}}\right)^r
 </div>
 </div>
 
-<div id="outline-container-org58a7b02" class="outline-4">
-<h4 id="org58a7b02">Computation</h4>
-<div class="outline-text-4" id="text-org58a7b02">
+<div id="outline-container-orgcb64814" class="outline-4">
+<h4 id="orgcb64814">Computation</h4>
+<div class="outline-text-4" id="text-orgcb64814">
 <p>
 R uses a slightly different parameterisation of the negative binomial
 distribution, it uses \(1-p\) where above we use \(p\).
@@ -595,13 +617,13 @@ distribution, it uses \(1-p\) where above we use \(p\).
 </div>
 </div>
 
-<div id="outline-container-orgfc47440" class="outline-3">
-<h3 id="orgfc47440">Poisson</h3>
-<div class="outline-text-3" id="text-orgfc47440">
+<div id="outline-container-org4e617bf" class="outline-3">
+<h3 id="org4e617bf">Poisson</h3>
+<div class="outline-text-3" id="text-org4e617bf">
 </div>
-<div id="outline-container-orgd9479d0" class="outline-4">
-<h4 id="orgd9479d0">Notation</h4>
-<div class="outline-text-4" id="text-orgd9479d0">
+<div id="outline-container-org9c7ebbc" class="outline-4">
+<h4 id="org9c7ebbc">Notation</h4>
+<div class="outline-text-4" id="text-org9c7ebbc">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -614,9 +636,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-orgb55940b" class="outline-4">
-<h4 id="orgb55940b">Properties</h4>
-<div class="outline-text-4" id="text-orgb55940b">
+<div id="outline-container-org942d84f" class="outline-4">
+<h4 id="org942d84f">Properties</h4>
+<div class="outline-text-4" id="text-org942d84f">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -645,7 +667,7 @@ G_{x}(z) = \exp[ \lambda (e^z - 1) ]
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-01 Thu 09:08</p>
+<p class="date">Created: 2021-04-06 Tue 18:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-01 Thu 09:08 -->
+<!-- 2021-04-12 Mon 17:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -231,33 +231,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb2a5ffa">Type theory</a>
+<li><a href="#org2901040">Type theory</a>
 <ul>
-<li><a href="#org0fb2248">Skolems constants causing trouble</a></li>
-<li><a href="#orgb67fbf5">Existential types</a></li>
+<li><a href="#orge1a7444">Skolems constants causing trouble</a></li>
+<li><a href="#orgb6b61d2">Existential types</a></li>
 </ul>
 </li>
-<li><a href="#org227e979">Functional programming</a>
+<li><a href="#org5f53cf9">Functional programming</a>
 <ul>
-<li><a href="#orgac93b68">Functor</a></li>
-<li><a href="#org4fdf441">Applicative</a></li>
-<li><a href="#orge8e42f6">Monad</a></li>
-<li><a href="#org0993ebb">Foldable</a></li>
-<li><a href="#org3c0ea98">Traversable</a></li>
-<li><a href="#org26117b8">Fold and friends</a></li>
+<li><a href="#org3dc1ec9">Functor</a></li>
+<li><a href="#org78e7b3e">Applicative</a></li>
+<li><a href="#orge17e399">Monad</a></li>
+<li><a href="#orgd7d54eb">Foldable</a></li>
+<li><a href="#orgd2e1905">Traversable</a></li>
+<li><a href="#org3de53f5">Fold and friends</a></li>
+<li><a href="#org5d51135">Combinators</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb2a5ffa" class="outline-2">
-<h2 id="orgb2a5ffa">Type theory</h2>
-<div class="outline-text-2" id="text-orgb2a5ffa">
+<div id="outline-container-org2901040" class="outline-2">
+<h2 id="org2901040">Type theory</h2>
+<div class="outline-text-2" id="text-org2901040">
 </div>
-<div id="outline-container-org0fb2248" class="outline-3">
-<h3 id="org0fb2248">Skolems constants causing trouble</h3>
-<div class="outline-text-3" id="text-org0fb2248">
+<div id="outline-container-orge1a7444" class="outline-3">
+<h3 id="orge1a7444">Skolems constants causing trouble</h3>
+<div class="outline-text-3" id="text-orge1a7444">
 <p>
 The names "skolem" and "rigid" are synonymous for Haskell. Based on this
 <a href="https://stackoverflow.com/a/12722877">stackoverflow answer</a> it appears that skolem constants (types) cause a error at
@@ -266,9 +267,9 @@ of a wrapper type
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #d75fd7;">{-# LANGUAGE ExistentialQuantification #-}</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5;">{-# LANGUAGE ExistentialQuantification #-}</span>
 
-<span style="color: #268bd2; font-weight: bold;">data</span> <span style="color: #df005f; font-weight: bold;">AnyFoo</span> <span style="color: #8787d7;">=</span> forall a<span style="color: #8787d7;">.</span> <span style="color: #df005f; font-weight: bold;">Eq</span> a <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">AnyFoo</span> a
+<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">=</span> forall a<span style="color: #7590db;">.</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> a <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> a
 </pre>
 </div>
 
@@ -277,7 +278,7 @@ If we try and define a function which unwraps,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">getFoo</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">AnyFoo</span> x<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> x
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">getFoo</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x
 </pre>
 </div>
 
@@ -288,16 +289,16 @@ need to avoid it appearing in the type of the function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">boring</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">AnyFoo</span> <span style="color: #8787d7;">-&gt;</span> <span style="color: #df005f; font-weight: bold;">Bool</span>
-<span style="color: #d75fd7; font-weight: bold;">boring</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">AnyFoo</span> x<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> x <span style="color: #8787d7;">==</span> x
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">AnyFoo</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>
+<span style="color: #bc6ec5; font-weight: bold;">boring</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">AnyFoo</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> x <span style="color: #7590db;">==</span> x
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb67fbf5" class="outline-3">
-<h3 id="orgb67fbf5">Existential types</h3>
-<div class="outline-text-3" id="text-orgb67fbf5">
+<div id="outline-container-orgb6b61d2" class="outline-3">
+<h3 id="orgb6b61d2">Existential types</h3>
+<div class="outline-text-3" id="text-orgb6b61d2">
 <p>
 To make use of existential types in Haskell, you need to include the
 <code>ExistentialQuantification</code> extension. Then you can implement a class such as
@@ -307,34 +308,34 @@ have it type check.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">data</span> <span style="color: #df005f; font-weight: bold;">ShowBox</span> <span style="color: #8787d7;">=</span> forall s<span style="color: #8787d7;">.</span> <span style="color: #df005f; font-weight: bold;">Show</span> s <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">SB</span> s
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">ShowBox</span> <span style="color: #7590db;">=</span> forall s<span style="color: #7590db;">.</span> <span style="color: #ce537a; font-weight: bold;">Show</span> s <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">SB</span> s
 
-<span style="color: #268bd2; font-weight: bold;">instance</span> <span style="color: #df005f; font-weight: bold;">Show</span> <span style="color: #df005f; font-weight: bold;">ShowBox</span> <span style="color: #268bd2; font-weight: bold;">where</span>
-  show <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">SB</span> s<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=</span> show s 
+<span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">Show</span> <span style="color: #ce537a; font-weight: bold;">ShowBox</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+  show <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">SB</span> s<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> show s 
 
-<span style="color: #d75fd7; font-weight: bold;">heteroList</span> <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">[</span><span style="color: #df005f; font-weight: bold;">ShowBox</span><span style="color: #268bd2;">]</span>
-<span style="color: #d75fd7; font-weight: bold;">heteroList</span> <span style="color: #8787d7;">=</span> <span style="color: #268bd2;">[</span><span style="color: #df005f; font-weight: bold;">SB</span> <span style="color: #d75fd7; font-weight: bold;">()</span>, <span style="color: #df005f; font-weight: bold;">SB</span> <span style="color: #d75fd7;">5</span>, <span style="color: #df005f; font-weight: bold;">SB</span> <span style="color: #df005f; font-weight: bold;">True</span><span style="color: #268bd2;">]</span>
+<span style="color: #bc6ec5; font-weight: bold;">heteroList</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">ShowBox</span><span style="color: #4f97d7;">]</span>
+<span style="color: #bc6ec5; font-weight: bold;">heteroList</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">SB</span> <span style="color: #bc6ec5; font-weight: bold;">()</span>, <span style="color: #ce537a; font-weight: bold;">SB</span> <span style="color: #a45bad;">5</span>, <span style="color: #ce537a; font-weight: bold;">SB</span> <span style="color: #ce537a; font-weight: bold;">True</span><span style="color: #4f97d7;">]</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org227e979" class="outline-2">
-<h2 id="org227e979">Functional programming</h2>
-<div class="outline-text-2" id="text-org227e979">
+<div id="outline-container-org5f53cf9" class="outline-2">
+<h2 id="org5f53cf9">Functional programming</h2>
+<div class="outline-text-2" id="text-org5f53cf9">
 <ul class="org-ul">
 <li><code>&lt;$&gt;</code> is infix for <code>fmap</code></li>
 <li><code>&lt;*&gt;</code> is infix the "apply" function when working with applicatives.</li>
 </ul>
 </div>
 
-<div id="outline-container-orgac93b68" class="outline-3">
-<h3 id="orgac93b68">Functor</h3>
-<div class="outline-text-3" id="text-orgac93b68">
+<div id="outline-container-org3dc1ec9" class="outline-3">
+<h3 id="org3dc1ec9">Functor</h3>
+<div class="outline-text-3" id="text-org3dc1ec9">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Functor</span> f <span style="color: #268bd2; font-weight: bold;">where</span>
-  fmap <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> f a <span style="color: #8787d7;">-&gt;</span> f b
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Functor</span> f <span style="color: #4f97d7; font-weight: bold;">where</span>
+  fmap <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> f a <span style="color: #7590db;">-&gt;</span> f b
 </pre>
 </div>
 
@@ -346,13 +347,13 @@ intuition behind this type class is that it should act as a container and the
 </div>
 </div>
 
-<div id="outline-container-org4fdf441" class="outline-3">
-<h3 id="org4fdf441">Applicative</h3>
-<div class="outline-text-3" id="text-org4fdf441">
+<div id="outline-container-org78e7b3e" class="outline-3">
+<h3 id="org78e7b3e">Applicative</h3>
+<div class="outline-text-3" id="text-org78e7b3e">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Functor</span> f <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> f <span style="color: #268bd2; font-weight: bold;">where</span>
-  pure  <span style="color: #8787d7;">::</span> a <span style="color: #8787d7;">-&gt;</span> f a
-  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">&lt;*&gt;</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">::</span> f <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> f a <span style="color: #8787d7;">-&gt;</span> f b
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Functor</span> f <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">Applicative</span> f <span style="color: #4f97d7; font-weight: bold;">where</span>
+  pure  <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> f a
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&lt;*&gt;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> f <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> f a <span style="color: #7590db;">-&gt;</span> f b
 </pre>
 </div>
 
@@ -363,28 +364,28 @@ also live in the <i>computational context</i> of the container.
 </div>
 </div>
 
-<div id="outline-container-orge8e42f6" class="outline-3">
-<h3 id="orge8e42f6">Monad</h3>
-<div class="outline-text-3" id="text-orge8e42f6">
+<div id="outline-container-orge17e399" class="outline-3">
+<h3 id="orge17e399">Monad</h3>
+<div class="outline-text-3" id="text-orge17e399">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> m <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">Monad</span> m <span style="color: #268bd2; font-weight: bold;">where</span>
-  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">&gt;&gt;=</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">::</span> m a <span style="color: #8787d7;">-&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> m b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> m b
-  return <span style="color: #8787d7;">::</span> a <span style="color: #8787d7;">-&gt;</span> m a 
-  <span style="color: #268bd2;">(</span><span style="color: #8787d7;">&gt;&gt;</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">::</span> m a <span style="color: #8787d7;">-&gt;</span> m b <span style="color: #8787d7;">-&gt;</span> m b 
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Applicative</span> m <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">Monad</span> m <span style="color: #4f97d7; font-weight: bold;">where</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&gt;&gt;=</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> m a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> m b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> m b
+  return <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> m a 
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&gt;&gt;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> m a <span style="color: #7590db;">-&gt;</span> m b <span style="color: #7590db;">-&gt;</span> m b 
 
-<span style="color: #d75fd7; font-weight: bold;">join</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Monad</span> m <span style="color: #8787d7;">=&gt;</span> m <span style="color: #268bd2;">(</span>m a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> m a 
+<span style="color: #bc6ec5; font-weight: bold;">join</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Monad</span> m <span style="color: #7590db;">=&gt;</span> m <span style="color: #4f97d7;">(</span>m a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> m a 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0993ebb" class="outline-3">
-<h3 id="org0993ebb">Foldable</h3>
-<div class="outline-text-3" id="text-org0993ebb">
+<div id="outline-container-orgd7d54eb" class="outline-3">
+<h3 id="orgd7d54eb">Foldable</h3>
+<div class="outline-text-3" id="text-orgd7d54eb">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #df005f; font-weight: bold;">Foldable</span> t <span style="color: #268bd2; font-weight: bold;">where</span>
-  foldMap <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Monoid</span> m <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> m<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> m
-  foldr   <span style="color: #8787d7;">::</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> b
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Foldable</span> t <span style="color: #4f97d7; font-weight: bold;">where</span>
+  foldMap <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Monoid</span> m <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> m<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> m
+  foldr   <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> b
 </pre>
 </div>
 
@@ -395,13 +396,13 @@ can be collapsed down to a single value.
 </div>
 </div>
 
-<div id="outline-container-org3c0ea98" class="outline-3">
-<h3 id="org3c0ea98">Traversable</h3>
-<div class="outline-text-3" id="text-org3c0ea98">
+<div id="outline-container-orgd2e1905" class="outline-3">
+<h3 id="orgd2e1905">Traversable</h3>
+<div class="outline-text-3" id="text-orgd2e1905">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #268bd2; font-weight: bold;">class</span> <span style="color: #268bd2;">(</span><span style="color: #df005f; font-weight: bold;">Functor</span> t, <span style="color: #df005f; font-weight: bold;">Foldable</span> t<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">=&gt;</span> <span style="color: #df005f; font-weight: bold;">Traversable</span> t <span style="color: #268bd2; font-weight: bold;">where</span>
-  traverse  <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> f <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> f b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> f <span style="color: #268bd2;">(</span>t b<span style="color: #268bd2;">)</span>
-  sequenceA <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Applicative</span> f <span style="color: #8787d7;">=&gt;</span> t <span style="color: #268bd2;">(</span>f a<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> f <span style="color: #268bd2;">(</span>t a<span style="color: #268bd2;">)</span>
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Functor</span> t, <span style="color: #ce537a; font-weight: bold;">Foldable</span> t<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> <span style="color: #ce537a; font-weight: bold;">Traversable</span> t <span style="color: #4f97d7; font-weight: bold;">where</span>
+  traverse  <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Applicative</span> f <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> f b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> f <span style="color: #4f97d7;">(</span>t b<span style="color: #4f97d7;">)</span>
+  sequenceA <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Applicative</span> f <span style="color: #7590db;">=&gt;</span> t <span style="color: #4f97d7;">(</span>f a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> f <span style="color: #4f97d7;">(</span>t a<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -411,21 +412,21 @@ This is a bit like a functor where the function returns values in a context.
 </div>
 </div>
 
-<div id="outline-container-org26117b8" class="outline-3">
-<h3 id="org26117b8">Fold and friends</h3>
-<div class="outline-text-3" id="text-org26117b8">
+<div id="outline-container-org3de53f5" class="outline-3">
+<h3 id="org3de53f5">Fold and friends</h3>
+<div class="outline-text-3" id="text-org3de53f5">
 <p>
 The friends include: scan, accumulate, and reduce.
 </p>
 </div>
 
-<div id="outline-container-org7c54a7c" class="outline-4">
-<h4 id="org7c54a7c">Left fold</h4>
-<div class="outline-text-4" id="text-org7c54a7c">
+<div id="outline-container-org2450a05" class="outline-4">
+<h4 id="org2450a05">Left fold</h4>
+<div class="outline-text-4" id="text-org2450a05">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">foldl</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Foldable</span> t <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>b <span style="color: #8787d7;">-&gt;</span> a <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> b 
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">foldl</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Foldable</span> t <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">(</span>b <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> b 
 
-<span style="color: #d75fd7; font-weight: bold;">foldl</span> f z <span style="color: #268bd2;">[</span>x1, x2, <span style="color: #8787d7;">...</span>, xn<span style="color: #268bd2;">]</span> <span style="color: #8787d7;">==</span> <span style="color: #268bd2;">(</span><span style="color: #8787d7;">...</span><span style="color: #d75fd7;">(</span><span style="color: #2aa198;">(</span>z <span style="color: #8787d7;">`f`</span> x1<span style="color: #2aa198;">)</span> <span style="color: #8787d7;">`f`</span> x2<span style="color: #d75fd7;">)</span> <span style="color: #8787d7;">`f`...</span><span style="color: #268bd2;">)</span> <span style="color: #8787d7;">`f`</span> xn
+<span style="color: #bc6ec5; font-weight: bold;">foldl</span> f z <span style="color: #4f97d7;">[</span>x1, x2, <span style="color: #7590db;">...</span>, xn<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">==</span> <span style="color: #4f97d7;">(</span><span style="color: #7590db;">...</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>z <span style="color: #7590db;">`f`</span> x1<span style="color: #2d9574;">)</span> <span style="color: #7590db;">`f`</span> x2<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">`f`...</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">`f`</span> xn
 </pre>
 </div>
 
@@ -436,13 +437,13 @@ strict version <code>foldl'</code>.
 </div>
 </div>
 
-<div id="outline-container-orgc62a890" class="outline-4">
-<h4 id="orgc62a890">Right fold</h4>
-<div class="outline-text-4" id="text-orgc62a890">
+<div id="outline-container-orgc0d6b60" class="outline-4">
+<h4 id="orgc0d6b60">Right fold</h4>
+<div class="outline-text-4" id="text-orgc0d6b60">
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #d75fd7; font-weight: bold;">foldr</span> <span style="color: #8787d7;">::</span> <span style="color: #df005f; font-weight: bold;">Foldable</span> t <span style="color: #8787d7;">=&gt;</span> <span style="color: #268bd2;">(</span>a <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> b<span style="color: #268bd2;">)</span> <span style="color: #8787d7;">-&gt;</span> b <span style="color: #8787d7;">-&gt;</span> t a <span style="color: #8787d7;">-&gt;</span> b
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">foldr</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Foldable</span> t <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t a <span style="color: #7590db;">-&gt;</span> b
 
-<span style="color: #d75fd7; font-weight: bold;">foldr</span> f z <span style="color: #268bd2;">[</span>x1, x2, <span style="color: #8787d7;">...</span>, xn<span style="color: #268bd2;">]</span> <span style="color: #8787d7;">==</span> x1 <span style="color: #8787d7;">`f`</span> <span style="color: #268bd2;">(</span>x2 <span style="color: #8787d7;">`f`</span> <span style="color: #8787d7;">...</span> <span style="color: #d75fd7;">(</span>xn <span style="color: #8787d7;">`f`</span> z<span style="color: #d75fd7;">)</span><span style="color: #8787d7;">...</span><span style="color: #268bd2;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">foldr</span> f z <span style="color: #4f97d7;">[</span>x1, x2, <span style="color: #7590db;">...</span>, xn<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">==</span> x1 <span style="color: #7590db;">`f`</span> <span style="color: #4f97d7;">(</span>x2 <span style="color: #7590db;">`f`</span> <span style="color: #7590db;">...</span> <span style="color: #bc6ec5;">(</span>xn <span style="color: #7590db;">`f`</span> z<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">...</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -452,11 +453,45 @@ This one can be applied to infinte lists and still terminate.
 </div>
 </div>
 </div>
+
+<div id="outline-container-org5d51135" class="outline-3">
+<h3 id="org5d51135">Combinators</h3>
+<div class="outline-text-3" id="text-org5d51135">
+</div>
+<div id="outline-container-org5adc024" class="outline-4">
+<h4 id="org5adc024">on</h4>
+<div class="outline-text-4" id="text-org5adc024">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #9f8766;">-- | @'on' b u x y@ runs the binary function @b@ </span><span style="color: #9f8766; font-style: italic;">/on/</span><span style="color: #9f8766;"> the results of applying</span>
+<span style="color: #9f8766;">-- unary function @u@ to two arguments @x@ and @y@. From the opposite</span>
+<span style="color: #9f8766;">-- perspective, it transforms two inputs and combines the outputs.</span>
+<span style="color: #bc6ec5; font-weight: bold;">on</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span>b <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> c
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org568eb9e" class="outline-4">
+<h4 id="org568eb9e">&amp;</h4>
+<div class="outline-text-4" id="text-org568eb9e">
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #9f8766;">-- | '&amp;' is a reverse application operator.  This provides notational</span>
+<span style="color: #9f8766;">-- convenience.  Its precedence is one higher than that of the forward</span>
+<span style="color: #9f8766;">-- application operator '$', which allows '&amp;' to be nested in '$'.</span>
+<span style="color: #9f8766;">--</span>
+<span style="color: #9f8766;">-- &gt;&gt;&gt; 5 &amp; (+1) &amp; show</span>
+<span style="color: #9f8766;">-- "6"</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">&amp;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> b
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-01 Thu 09:08</p>
+<p class="date">Created: 2021-04-12 Mon 17:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
