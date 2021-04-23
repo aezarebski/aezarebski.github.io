@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-21 Wed 13:43 -->
+<!-- 2021-04-23 Fri 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -216,6 +216,28 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -224,28 +246,301 @@
 <a href="../../index.html">Home</a>
 </p>
 
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org38c54e3">Introduction</a></li>
+<li><a href="#org00cb26c">Model and notation</a>
+<ul>
+<li><a href="#org33c8345">Parameters of the process</a></li>
+</ul>
+</li>
+<li><a href="#orgc66f995">Introduction</a></li>
+<li><a href="#org801deb1">Model and notation</a>
+<ul>
+<li><a href="#org159c3ed">Parameters of the process</a></li>
+<li><a href="#org63ce9b5">Introducing useful probabilities</a></li>
+<li><a href="#org4fea9fc">Strategy of the paper</a></li>
+</ul>
+</li>
+<li><a href="#org7158061">Calculation of \(L_t\) &#x2014; The density of observations below \(t\) conditioned on past population size</a>
+<ul>
+<li><a href="#orgffbd992">Set of ODEs satisfied by \(L_t\)</a></li>
+<li><a href="#org31f51dc">Special case \(\omega = 0\)</a></li>
+<li><a href="#orgfd9373f">Special case \(r = 1\)</a></li>
+</ul>
+</li>
+<li><a href="#org7c78f23">Calculation of \(M_t\) &#x2014; the join density of observations above \(t\) and past population size</a>
+<ul>
+<li><a href="#org0f066b5">Set of ODEs satisfied by \(M_t\)</a></li>
+<li><a href="#orgeabb4e9">The corresponding generating function</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<p>
+<a href="https://doi.org/10.1016/j.jtbi.2020.110400"><b>Click here for the webpage</b></a>
+</p>
+
 <div class="org-src-container">
-<pre class="src src-bibtex"><span style="color: #6c3163; font-weight: bold;">@article</span>{<span style="color: #4e3163;">manceau2020probability</span>,
-  <span style="color: #715ab1;">title</span> =        "The probability distribution of the ancestral population size
+<pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">manceau2020probability</span>,
+  <span style="color: #7590db;">title</span> =        "The probability distribution of the ancestral population size
                   conditioned on the reconstructed phylogenetic tree with
                   occurrence data",
-  <span style="color: #715ab1;">journal</span> =      "Journal of Theoretical Biology",
-  <span style="color: #715ab1;">pages</span> =        110400,
-  <span style="color: #715ab1;">year</span> =         2020,
-  <span style="color: #715ab1;">issn</span> =         "0022-5193",
-  <span style="color: #715ab1;">doi</span> =          "https://doi.org/<span style="color: #2aa1ae; text-decoration: underline;">10.1016/j.jtbi.2020.110400</span>",
-  <span style="color: #715ab1;">author</span> =       "Marc Manceau and Ankit Gupta and Timothy Vaughan and Tanja
+  <span style="color: #7590db;">journal</span> =      "Journal of Theoretical Biology",
+  <span style="color: #7590db;">pages</span> =        110400,
+  <span style="color: #7590db;">year</span> =         2020,
+  <span style="color: #7590db;">issn</span> =         "0022-5193",
+  <span style="color: #7590db;">doi</span> =          "https://doi.org/<span style="color: #2aa1ae; text-decoration: underline;">10.1016/j.jtbi.2020.110400</span>",
+  <span style="color: #7590db;">author</span> =       "Marc Manceau and Ankit Gupta and Timothy Vaughan and Tanja
                   Stadler"
 }
 </pre>
 </div>
 
+<div id="outline-container-org38c54e3" class="outline-2">
+<h2 id="org38c54e3">Introduction</h2>
+</div>
+
+<div id="outline-container-org00cb26c" class="outline-2">
+<h2 id="org00cb26c">Model and notation</h2>
+<div class="outline-text-2" id="text-org00cb26c">
+</div>
+<div id="outline-container-org33c8345" class="outline-3">
+<h3 id="org33c8345">Parameters of the process</h3>
+<div class="outline-text-3" id="text-org33c8345">
+<ul class="org-ul">
+<li>Birth rate \(\lambda\) and death rate \(\mu\) and the process starts at time
+\(t_{or} > 0\) with a single individual, the present has time \(t=0\), ie this
+uses backwards time.</li>
+<li>Individuals \(\psi\)-sampled continuous and included in reconstructed tree,
+\(\omega\)-sampled continuously and <i>not</i> included in the tree and there is a
+\(\rho\) sample at the present. The net per-capita event rate is \(\gamma =
+  \lambda + \mu + \psi + \omega\).</li>
+<li>Sampled individuals are removed from the infectious population with
+probability \(r\).</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc66f995" class="outline-2">
+<h2 id="orgc66f995">Introduction</h2>
+</div>
+
+<div id="outline-container-org801deb1" class="outline-2">
+<h2 id="org801deb1">Model and notation</h2>
+<div class="outline-text-2" id="text-org801deb1">
+</div>
+<div id="outline-container-org159c3ed" class="outline-3">
+<h3 id="org159c3ed">Parameters of the process</h3>
+<div class="outline-text-3" id="text-org159c3ed">
+<ul class="org-ul">
+<li>Birth rate \(\lambda\) and death rate \(\mu\) and the process starts at time
+\(t_{or} > 0\) with a single individual, the present has time \(t=0\), ie this
+uses backwards time.</li>
+<li>Individuals \(\psi\)-sampled continuous and included in reconstructed tree,
+\(\omega\)-sampled continuously and <i>not</i> included in the tree and there is a
+\(\rho\) sample at the present. The net per-capita event rate is \(\gamma =
+  \lambda + \mu + \psi + \omega\).</li>
+<li>Sampled individuals are removed from the infectious population with
+probability \(r\).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org63ce9b5" class="outline-3">
+<h3 id="org63ce9b5">Introducing useful probabilities</h3>
+<div class="outline-text-3" id="text-org63ce9b5">
+<ul class="org-ul">
+<li>\(u_t\) is the probability that a process started at time \(t\) remains
+unsampled up to and including the present \(t=0\).</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-maxima" id="orgc04185e">    eq<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #4f97d7;">diff</span>(u, t) <span style="color: #4f97d7; font-weight: bold;">=</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> u<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> &#947; <span style="color: #4f97d7; font-weight: bold;">*</span> u <span style="color: #4f97d7; font-weight: bold;">+</span> &#956;;
+    <span style="color: #4f97d7;">assume</span>(&#947;<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">4</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> &#956; <span style="color: #4f97d7; font-weight: bold;">&gt;</span> <span style="color: #a45bad;">0</span>);
+    sol1<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">ode2</span>(eq, u, t);
+    sol2<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #4f97d7;">sqrt</span>(&#916;), <span style="color: #4f97d7;">sqrt</span>(&#947;<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">4</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> &#956;), sol1);
+    sol3<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> (x2 <span style="color: #4f97d7; font-weight: bold;">-</span> u), <span style="color: #4f97d7;">sqrt</span>(&#916;) <span style="color: #4f97d7; font-weight: bold;">+</span> &#947; <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> u <span style="color: #4f97d7; font-weight: bold;">*</span> &#955;, sol2);
+    sol4<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> (u <span style="color: #4f97d7; font-weight: bold;">-</span> x1), <span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> u <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">-</span> &#947; <span style="color: #4f97d7; font-weight: bold;">+</span> <span style="color: #4f97d7;">sqrt</span>(&#916;), sol3);
+    c<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">lhs</span>(<span style="color: #4f97d7;">ev</span>(sol4, t <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">0</span>, u <span style="color: #4f97d7; font-weight: bold;">=</span> z));
+    sol5<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">first</span>(<span style="color: #4f97d7;">solve</span>(<span style="color: #4f97d7;">subst</span>(c, %c, sol4), u));
+
+    sol6numerator<span style="color: #4f97d7; font-weight: bold;">:</span>
+    collectterms(
+      <span style="color: #4f97d7;">expand</span>(<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> t <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sqrt</span>(&#916;)) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">num</span>(<span style="color: #4f97d7;">rhs</span>(sol5))), <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> t <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sqrt</span>(&#916;))
+      );
+    sol6denominator<span style="color: #4f97d7; font-weight: bold;">:</span>
+    collectterms(
+      <span style="color: #4f97d7;">expand</span>(<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> t <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sqrt</span>(&#916;)) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">denom</span>(<span style="color: #4f97d7;">rhs</span>(sol5))), <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> t <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sqrt</span>(&#916;))
+      );
+    sol6<span style="color: #4f97d7; font-weight: bold;">:</span> sol6numerator <span style="color: #4f97d7; font-weight: bold;">/</span> sol6denominator;
+
+<span style="color: #4f97d7;">print</span>(<span style="color: #2d9574;">"The solution is"</span>);
+<span style="color: #4f97d7;">print</span>(sol6);
+<span style="color: #4f97d7; font-weight: bold;">display2d:</span> <span style="color: #a45bad;">false</span>;
+<span style="color: #4f97d7;">print</span>(<span style="color: #4f97d7;">rhs</span>(sol5));
+</pre>
+</div>
+
+<pre class="example">
+The solution is 
+                                - t sqrt(Δ)
+x1 x2 - x1 z + (x2 z - x1 x2) %e
+-------------------------------------------- 
+                 - t sqrt(Δ)
+      (z - x1) %e             - z + x2
+((x1*z-x1*x2)*%e^(t*sqrt(Δ))-x2*z+x1*x2)/(x1-z+(z-x2)*%e^(t*sqrt(Δ))) 
+</pre>
+
+
+<p>
+Here is some code to plot that across time for a particular set of parameters
+with different values of the boundary condition. The solution behaves as
+expected, very close to the boundary condition and then asymptoting to what
+should essentially be the probability that the process went extinct.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">p0Expression<span style="color: #4f97d7; font-weight: bold;">:</span>
+<span style="color: #4f97d7;">subst</span>(
+  [
+  x1 <span style="color: #4f97d7; font-weight: bold;">=</span> (&#947; <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #4f97d7;">sqrt</span>(&#916;)) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955;),
+  x2 <span style="color: #4f97d7; font-weight: bold;">=</span> (&#947; <span style="color: #4f97d7; font-weight: bold;">+</span> <span style="color: #4f97d7;">sqrt</span>(&#916;)) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955;),
+  &#916; <span style="color: #4f97d7; font-weight: bold;">=</span> &#947;<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">4</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> &#956;,
+  &#947; <span style="color: #4f97d7; font-weight: bold;">=</span> &#955; <span style="color: #4f97d7; font-weight: bold;">+</span> &#956; <span style="color: #4f97d7; font-weight: bold;">+</span> &#968; <span style="color: #4f97d7; font-weight: bold;">+</span> &#969;,
+  &#955; <span style="color: #4f97d7; font-weight: bold;">=</span> 1<span style="color: #4f97d7; font-weight: bold;">.</span>5,
+  &#956; <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">1</span>,
+  &#968; <span style="color: #4f97d7; font-weight: bold;">=</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>1,
+  &#969; <span style="color: #4f97d7; font-weight: bold;">=</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>2
+  ],
+  sol6
+  );
+
+<span style="color: #bc6ec5; font-weight: bold;">plottingFunc</span>(<span style="color: #7590db;">z2, t2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ev</span>(p0Expression, z <span style="color: #4f97d7; font-weight: bold;">=</span> z2, t <span style="color: #4f97d7; font-weight: bold;">=</span> t2);
+
+<span style="color: #4f97d7;">plot2d</span>(
+  <span style="color: #4f97d7;">makelist</span>(plottingFunc(z,t), z, [0<span style="color: #4f97d7; font-weight: bold;">.</span>3, 0<span style="color: #4f97d7; font-weight: bold;">.</span>6, 0<span style="color: #4f97d7; font-weight: bold;">.</span>9]),
+  [t, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">10</span>],
+  [legend, <span style="color: #2d9574;">"z=0.3"</span>, <span style="color: #2d9574;">"z=0.6"</span>, <span style="color: #2d9574;">"z=0.9"</span>]
+  );
+</pre>
+</div>
+
+<p>
+\(p_t\) is the probability that starting with a single individual at time \(t\)
+there is exactly one sampled individual at the present. Solving for this in
+Maxima is difficult, but the result is established enough that I don't feel it
+is necessary to derive it here. That result is
+</p>
+
+<p>
+\[
+p(t,z) = (1 - z) \frac{\Delta}{\lambda ^2} ((x_2 - z) - (x_1 - z) e^{-\sqrt{\Delta}t})^{-2} e^{-\sqrt{\Delta}t}
+\]
+</p>
+
+<p>
+The important think to note there is that again, the boundary condition is at
+time zero, with time being measured backwards, so time here corresponds to a
+duration and must be a non-negative number.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">p1</span>(<span style="color: #7590db;">t,z</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> z) <span style="color: #4f97d7; font-weight: bold;">*</span> &#916; <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">sqrt</span>(&#916;)<span style="color: #4f97d7; font-weight: bold;">*</span>t) <span style="color: #4f97d7; font-weight: bold;">/</span> (&#955; <span style="color: #4f97d7; font-weight: bold;">*</span> ((x2 <span style="color: #4f97d7; font-weight: bold;">-</span> z) <span style="color: #4f97d7; font-weight: bold;">-</span> (x1 <span style="color: #4f97d7; font-weight: bold;">-</span> z) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">sqrt</span>(&#916;)<span style="color: #4f97d7; font-weight: bold;">*</span>t)))<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span>;
+
+p1Expression<span style="color: #4f97d7; font-weight: bold;">:</span>
+<span style="color: #4f97d7;">subst</span>(
+  [
+  x1 <span style="color: #4f97d7; font-weight: bold;">=</span> (&#947; <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #4f97d7;">sqrt</span>(&#916;)) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955;),
+  x2 <span style="color: #4f97d7; font-weight: bold;">=</span> (&#947; <span style="color: #4f97d7; font-weight: bold;">+</span> <span style="color: #4f97d7;">sqrt</span>(&#916;)) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955;),
+  &#916; <span style="color: #4f97d7; font-weight: bold;">=</span> &#947;<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">4</span> <span style="color: #4f97d7; font-weight: bold;">*</span> &#955; <span style="color: #4f97d7; font-weight: bold;">*</span> &#956;,
+  &#947; <span style="color: #4f97d7; font-weight: bold;">=</span> &#955; <span style="color: #4f97d7; font-weight: bold;">+</span> &#956; <span style="color: #4f97d7; font-weight: bold;">+</span> &#968; <span style="color: #4f97d7; font-weight: bold;">+</span> &#969;,
+  &#955; <span style="color: #4f97d7; font-weight: bold;">=</span> 1<span style="color: #4f97d7; font-weight: bold;">.</span>5,
+  &#956; <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">1</span>,
+  &#968; <span style="color: #4f97d7; font-weight: bold;">=</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>1,
+  &#969; <span style="color: #4f97d7; font-weight: bold;">=</span> 0<span style="color: #4f97d7; font-weight: bold;">.</span>2
+  ],
+  p1(t,z)
+  );
+
+<span style="color: #bc6ec5; font-weight: bold;">plottingFunc</span>(<span style="color: #7590db;">z2, t2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ev</span>(p1Expression, z <span style="color: #4f97d7; font-weight: bold;">=</span> z2, t <span style="color: #4f97d7; font-weight: bold;">=</span> t2);
+
+<span style="color: #4f97d7;">plot2d</span>(
+  <span style="color: #4f97d7;">makelist</span>(plottingFunc(z,t), z, [0<span style="color: #4f97d7; font-weight: bold;">.</span>3, 0<span style="color: #4f97d7; font-weight: bold;">.</span>6, 0<span style="color: #4f97d7; font-weight: bold;">.</span>9]),
+  [t, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">10</span>],
+  [legend, <span style="color: #2d9574;">"z=0.3"</span>, <span style="color: #2d9574;">"z=0.6"</span>, <span style="color: #2d9574;">"z=0.9"</span>]
+  );
+
+</pre>
+</div>
+
+<p>
+Again, looking at plots of this it behaves as expected, near the boundary it
+matches \(1-z\) in this case and then asymptotes to zero because the chance of
+only observing a single case is such a rare event over a long time. Again, we
+can interpret the argument to this function \(p_1\) as the duration of time
+until the \(\rho\) sample.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4fea9fc" class="outline-3">
+<h3 id="org4fea9fc">Strategy of the paper</h3>
+</div>
+</div>
+
+<div id="outline-container-org7158061" class="outline-2">
+<h2 id="org7158061">Calculation of \(L_t\) &#x2014; The density of observations below \(t\) conditioned on past population size</h2>
+<div class="outline-text-2" id="text-org7158061">
+</div>
+<div id="outline-container-orgffbd992" class="outline-3">
+<h3 id="orgffbd992">Set of ODEs satisfied by \(L_t\)</h3>
+</div>
+
+<div id="outline-container-org31f51dc" class="outline-3">
+<h3 id="org31f51dc">Special case \(\omega = 0\)</h3>
+</div>
+
+<div id="outline-container-orgfd9373f" class="outline-3">
+<h3 id="orgfd9373f">Special case \(r = 1\)</h3>
+</div>
+</div>
+
+<div id="outline-container-org7c78f23" class="outline-2">
+<h2 id="org7c78f23">Calculation of \(M_t\) &#x2014; the join density of observations above \(t\) and past population size</h2>
+<div class="outline-text-2" id="text-org7c78f23">
+</div>
+<div id="outline-container-org0f066b5" class="outline-3">
+<h3 id="org0f066b5">Set of ODEs satisfied by \(M_t\)</h3>
+</div>
+
+<div id="outline-container-orgeabb4e9" class="outline-3">
+<h3 id="orgeabb4e9">The corresponding generating function</h3>
+<div class="outline-text-3" id="text-orgeabb4e9">
+</div>
+<div id="outline-container-org051fca5" class="outline-4">
+<h4 id="org051fca5">Proposition 4.1</h4>
+<div class="outline-text-4" id="text-org051fca5">
+<ul class="org-ul">
+<li>The <a href="#org63ce9b5">solution above</a> for \(p(t,z)\) becomes important in <b>Proposition 4.1</b> where
+it is used in the definition of \(R(t,z)\).</li>
+</ul>
+
 <button type="button" onclick="toggleStyle()">Light/Dark</button>
 <script src="./main.js"></script>
 </div>
+</div>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-21 Wed 13:43</p>
+<p class="date">Created: 2021-04-23 Fri 18:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
