@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-23 Fri 16:52 -->
+<!-- 2021-04-30 Fri 18:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -231,7 +231,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org39f6091">Emacs interface to Maxima</a></li>
+<li><a href="#org39f6091">Emacs interface to Maxima</a>
+<ul>
+<li><a href="#org2464a26">REPL display configuration</a></li>
+</ul>
+</li>
 <li><a href="#org982cd18">Plotting</a></li>
 <li><a href="#orgdf219c4">Programming in Maxima</a>
 <ul>
@@ -243,7 +247,7 @@
 <li><a href="#orgb6b14da">Program flow</a></li>
 <li><a href="#orgc337350">Lists</a></li>
 <li><a href="#org040ce89">Evaluation</a></li>
-<li><a href="#org630fbac">Simplification</a></li>
+<li><a href="#org4666397">Simplification</a></li>
 <li><a href="#orgad68a3f">Packages</a></li>
 <li><a href="#orgd07bd2b">REPL</a></li>
 <li><a href="#orgd5c8862">Batchmode</a></li>
@@ -261,7 +265,7 @@
 <ul>
 <li><a href="#org711cac8">Change of coordinates</a></li>
 <li><a href="#orgc52b385">Differential equations: simple</a></li>
-<li><a href="#org4666397">Simplification</a></li>
+<li><a href="#orge09f709">Simplification</a></li>
 </ul>
 </li>
 </ul>
@@ -269,7 +273,7 @@
 </div>
 
 
-<div id="org6b990b3" class="figure">
+<div id="org9d34cf9" class="figure">
 <p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
 </p>
 </div>
@@ -286,13 +290,13 @@ Add the following to your configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima mode"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #9f8766;">"Frontend for maxima with Image support"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima interaction"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #9f8766;">"Imath mode for math formula input"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>add-to-list 'auto-mode-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima mode"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #da8b55;">"Frontend for maxima with Image support"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima interaction"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #da8b55;">"Imath mode for math formula input"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>add-to-list 'auto-mode-alist '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -301,7 +305,11 @@ Start a Maxima session with <code>M-x imaxima</code>. To send a buffer to the RE
 C-b</code>. To send a region <code>C-c C-r</code> or just a single line <code>C-c C-c</code>. To get the
 potential completions for a variable name <code>M-TAB</code>.
 </p>
+</div>
 
+<div id="outline-container-org2464a26" class="outline-3">
+<h3 id="org2464a26">REPL display configuration</h3>
+<div class="outline-text-3" id="text-org2464a26">
 <p>
 The output of Maxima can be displayed in three ways: single line of ascii,
 multiple lines of ascii or rendered with <code>imaxima</code>. The output type is
@@ -310,7 +318,7 @@ determined by the value of the <code>display2d</code> variable (in Maxima) which
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7; font-weight: bold;">display2d:</span> <span style="color: #a45bad;">true</span>;
+<pre class="src src-maxima"><span style="color: #3a81c3; font-weight: bold;">display2d:</span> <span style="color: #4e3163;">true</span>;
 </pre>
 </div>
 
@@ -318,6 +326,14 @@ determined by the value of the <code>display2d</code> variable (in Maxima) which
 If you want to change the font size for the latex output, modify the
 (customisable) variable <code>imaxima-fnt-size</code>.
 </p>
+
+<p>
+If you want to change the number of significant figures to which floating point
+numbers are displayed there is the variable <code>fpprintprec</code> (floating point print
+precision?). The default value is <code>0</code>, for larger integers it is that number of
+digits.
+</p>
+</div>
 </div>
 </div>
 
@@ -329,12 +345,12 @@ Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plo
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">plot2d</span>(<span style="color: #4f97d7;">sin</span>(x), [x,<span style="color: #a45bad;">0</span>,2%pi])$ 
+<pre class="src src-maxima"><span style="color: #3a81c3;">plot2d</span>(<span style="color: #3a81c3;">sin</span>(x), [x,<span style="color: #4e3163;">0</span>,2%pi])$ 
 </pre>
 </div>
 
 
-<div id="orgc0c79c6" class="figure">
+<div id="org1b54165" class="figure">
 <p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
 </p>
 </div>
@@ -387,8 +403,8 @@ function.
 <h3 id="org141a7f0">Removing existing definitions</h3>
 <div class="outline-text-3" id="text-org141a7f0">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">restart</span>();
-<span style="color: #4f97d7;">kill</span>(<span style="color: #4f97d7; font-weight: bold;">all</span>);
+<pre class="src src-maxima"><span style="color: #3a81c3;">restart</span>();
+<span style="color: #3a81c3;">kill</span>(<span style="color: #3a81c3; font-weight: bold;">all</span>);
 </pre>
 </div>
 </div>
@@ -398,8 +414,8 @@ function.
 <h3 id="org1798800">Assignment</h3>
 <div class="outline-text-3" id="text-org1798800">
 <div class="org-src-container">
-<pre class="src src-maxima">y <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #a45bad;">10</span>;
-<span style="color: #bc6ec5; font-weight: bold;">f</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> x <span style="color: #4f97d7; font-weight: bold;">+</span> <span style="color: #a45bad;">1</span>;  
+<pre class="src src-maxima">y <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #4e3163;">10</span>;
+<span style="color: #6c3163; font-weight: bold;">f</span>(<span style="color: #715ab1;">x</span>) <span style="color: #3a81c3; font-weight: bold;">:=</span> x <span style="color: #3a81c3; font-weight: bold;">+</span> <span style="color: #4e3163;">1</span>;  
 </pre>
 </div>
 </div>
@@ -409,7 +425,7 @@ function.
 <h3 id="orgb6b14da">Program flow</h3>
 <div class="outline-text-3" id="text-orgb6b14da">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7; font-weight: bold;">if</span> cond_1 <span style="color: #4f97d7; font-weight: bold;">then</span> expr_1 <span style="color: #4f97d7; font-weight: bold;">elseif</span> cond_2 <span style="color: #4f97d7; font-weight: bold;">then</span> expr_2 <span style="color: #4f97d7; font-weight: bold;">else</span> expr_3; 
+<pre class="src src-maxima"><span style="color: #3a81c3; font-weight: bold;">if</span> cond_1 <span style="color: #3a81c3; font-weight: bold;">then</span> expr_1 <span style="color: #3a81c3; font-weight: bold;">elseif</span> cond_2 <span style="color: #3a81c3; font-weight: bold;">then</span> expr_2 <span style="color: #3a81c3; font-weight: bold;">else</span> expr_3; 
 </pre>
 </div>
 
@@ -418,13 +434,13 @@ There are several ways to express for loops.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7; font-weight: bold;">for</span> variable<span style="color: #4f97d7; font-weight: bold;">:</span> initial_value <span style="color: #4f97d7; font-weight: bold;">step</span> increment <span style="color: #4f97d7; font-weight: bold;">thru</span> <span style="color: #4f97d7;">limit</span> <span style="color: #4f97d7; font-weight: bold;">do</span> body
+<pre class="src src-maxima"><span style="color: #3a81c3; font-weight: bold;">for</span> variable<span style="color: #3a81c3; font-weight: bold;">:</span> initial_value <span style="color: #3a81c3; font-weight: bold;">step</span> increment <span style="color: #3a81c3; font-weight: bold;">thru</span> <span style="color: #3a81c3;">limit</span> <span style="color: #3a81c3; font-weight: bold;">do</span> body
 
-<span style="color: #4f97d7; font-weight: bold;">for</span> variable<span style="color: #4f97d7; font-weight: bold;">:</span> initial_value <span style="color: #4f97d7; font-weight: bold;">step</span> increment <span style="color: #4f97d7; font-weight: bold;">while</span> condition <span style="color: #4f97d7; font-weight: bold;">do</span> body
+<span style="color: #3a81c3; font-weight: bold;">for</span> variable<span style="color: #3a81c3; font-weight: bold;">:</span> initial_value <span style="color: #3a81c3; font-weight: bold;">step</span> increment <span style="color: #3a81c3; font-weight: bold;">while</span> condition <span style="color: #3a81c3; font-weight: bold;">do</span> body
 
-<span style="color: #4f97d7; font-weight: bold;">for</span> variable<span style="color: #4f97d7; font-weight: bold;">:</span> initial_value <span style="color: #4f97d7; font-weight: bold;">step</span> increment <span style="color: #4f97d7; font-weight: bold;">unless</span> condition <span style="color: #4f97d7; font-weight: bold;">do</span> body
+<span style="color: #3a81c3; font-weight: bold;">for</span> variable<span style="color: #3a81c3; font-weight: bold;">:</span> initial_value <span style="color: #3a81c3; font-weight: bold;">step</span> increment <span style="color: #3a81c3; font-weight: bold;">unless</span> condition <span style="color: #3a81c3; font-weight: bold;">do</span> body
 
-<span style="color: #4f97d7; font-weight: bold;">for</span> variable <span style="color: #4f97d7; font-weight: bold;">in</span> list <span style="color: #4f97d7; font-weight: bold;">do</span> body  
+<span style="color: #3a81c3; font-weight: bold;">for</span> variable <span style="color: #3a81c3; font-weight: bold;">in</span> list <span style="color: #3a81c3; font-weight: bold;">do</span> body  
 </pre>
 </div>
 </div>
@@ -440,57 +456,52 @@ There are several ways to express for loops.
 <col  class="org-left" />
 
 <col  class="org-left" />
-
-<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
 <th scope="col" class="org-left">Function</th>
 <th scope="col" class="org-left">Use</th>
-<th scope="col" class="org-left">Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left"><code>makelist</code></td>
-<td class="org-left">List creation</td>
-<td class="org-left"><code>makelist(f(x), x, 1,4)</code></td>
+<td class="org-left">Map and sequence style list creation</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>some</code> and <code>every</code></td>
 <td class="org-left">Fold predicate over list</td>
-<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>cons</code></td>
 <td class="org-left">cons</td>
-<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>first</code></td>
+<td class="org-left">First element of a list</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>rest</code></td>
 <td class="org-left">Works as head or tail</td>
-<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>append</code></td>
-<td class="org-left">Concatenation</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">Concatenation (not <code>join</code>)</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>map</code></td>
-<td class="org-left">Map function over list</td>
-<td class="org-left"><code>map(lambda([x], f(x)), [1,2])</code></td>
+<td class="org-left">Map function over list; also see <code>makelist</code></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>apply</code></td>
 <td class="org-left">Uncurried application</td>
-<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
@@ -506,27 +517,27 @@ function use the <code>define</code> function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(fdash(x), <span style="color: #4f97d7;">diff</span>(f(x), x));
+<pre class="src src-maxima"><span style="color: #3a81c3;">define</span>(fdash(x), <span style="color: #3a81c3;">diff</span>(f(x), x));
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org630fbac" class="outline-3">
-<h3 id="org630fbac">Simplification</h3>
-<div class="outline-text-3" id="text-org630fbac">
+<div id="outline-container-org4666397" class="outline-3">
+<h3 id="org4666397">Simplification</h3>
+<div class="outline-text-3" id="text-org4666397">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">restart</span>();
-<span style="color: #4f97d7;">kill</span>(<span style="color: #4f97d7; font-weight: bold;">all</span>);
+<pre class="src src-maxima"><span style="color: #3a81c3;">restart</span>();
+<span style="color: #3a81c3;">kill</span>(<span style="color: #3a81c3; font-weight: bold;">all</span>);
 
-<span style="color: #4f97d7;">matchdeclare</span>([xx,yy,aa],<span style="color: #a45bad;">true</span>)$
-<span style="color: #4f97d7;">tellsimpafter</span>(xx<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">*</span>yy<span style="color: #4f97d7; font-weight: bold;">^</span>a,(xx<span style="color: #4f97d7; font-weight: bold;">*</span>yy)<span style="color: #4f97d7; font-weight: bold;">^</span>a)$
-<span style="color: #4f97d7;">tellsimpafter</span>(xx<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">/</span>yy<span style="color: #4f97d7; font-weight: bold;">^</span>a,(xx<span style="color: #4f97d7; font-weight: bold;">/</span>yy)<span style="color: #4f97d7; font-weight: bold;">^</span>a)$
+<span style="color: #3a81c3;">matchdeclare</span>([xx,yy,aa],<span style="color: #4e3163;">true</span>)$
+<span style="color: #3a81c3;">tellsimpafter</span>(xx<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">*</span>yy<span style="color: #3a81c3; font-weight: bold;">^</span>a,(xx<span style="color: #3a81c3; font-weight: bold;">*</span>yy)<span style="color: #3a81c3; font-weight: bold;">^</span>a)$
+<span style="color: #3a81c3;">tellsimpafter</span>(xx<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">/</span>yy<span style="color: #3a81c3; font-weight: bold;">^</span>a,(xx<span style="color: #3a81c3; font-weight: bold;">/</span>yy)<span style="color: #3a81c3; font-weight: bold;">^</span>a)$
 
-x<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">*</span>y<span style="color: #4f97d7; font-weight: bold;">^</span>a;
-x<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">/</span>y<span style="color: #4f97d7; font-weight: bold;">^</span>a;
-x<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">*</span>y<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">*</span>z<span style="color: #4f97d7; font-weight: bold;">^</span>a;
-x<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">*</span>(y<span style="color: #4f97d7; font-weight: bold;">^</span>a<span style="color: #4f97d7; font-weight: bold;">*</span>z<span style="color: #4f97d7; font-weight: bold;">^</span>a);
+x<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">*</span>y<span style="color: #3a81c3; font-weight: bold;">^</span>a;
+x<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">/</span>y<span style="color: #3a81c3; font-weight: bold;">^</span>a;
+x<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">*</span>y<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">*</span>z<span style="color: #3a81c3; font-weight: bold;">^</span>a;
+x<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">*</span>(y<span style="color: #3a81c3; font-weight: bold;">^</span>a<span style="color: #3a81c3; font-weight: bold;">*</span>z<span style="color: #3a81c3; font-weight: bold;">^</span>a);
 </pre>
 </div>
 
@@ -566,7 +577,7 @@ For example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">load</span>(<span style="color: #2d9574;">"distrib"</span>);
+<pre class="src src-maxima"><span style="color: #3a81c3;">load</span>(<span style="color: #2d9574;">"distrib"</span>);
 </pre>
 </div>
 
@@ -798,11 +809,11 @@ demonstrates how to compute it with Maxima.
 <h4 id="org4f49130">Cartesian to polar</h4>
 <div class="outline-text-4" id="text-org4f49130">
 <div class="org-src-container">
-<pre class="src src-maxima">[x,y] <span style="color: #4f97d7; font-weight: bold;">:</span> [r <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(p), r <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(p)];
-<span style="color: #4f97d7;">trigsimp</span>(<span style="color: #4f97d7;">determinant</span>(jacobian([x,y], [r,p])));
-<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
-<span style="color: #2aa1ae; background-color: #292e34;">r</span>
-<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<pre class="src src-maxima">[x,y] <span style="color: #3a81c3; font-weight: bold;">:</span> [r <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">cos</span>(p), r <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">sin</span>(p)];
+<span style="color: #3a81c3;">trigsimp</span>(<span style="color: #3a81c3;">determinant</span>(jacobian([x,y], [r,p])));
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/*</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">r</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
 </pre>
 </div>
 </div>
@@ -812,12 +823,12 @@ demonstrates how to compute it with Maxima.
 <h4 id="org672f51f">Cartesian to spherical</h4>
 <div class="outline-text-4" id="text-org672f51f">
 <div class="org-src-container">
-<pre class="src src-maxima">[x,y,z] <span style="color: #4f97d7; font-weight: bold;">:</span> [r <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(p) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(t), r <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(p) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">sin</span>(t), r <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">cos</span>(p)];
-<span style="color: #4f97d7;">trigsimp</span>(<span style="color: #4f97d7;">determinant</span>(jacobian([x,y,z], [r,p,t])));
-<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
-<span style="color: #2aa1ae; background-color: #292e34;">            2</span>
-<span style="color: #2aa1ae; background-color: #292e34;">    sin(p) r</span>
-<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<pre class="src src-maxima">[x,y,z] <span style="color: #3a81c3; font-weight: bold;">:</span> [r <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">sin</span>(p) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">cos</span>(t), r <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">sin</span>(p) <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">sin</span>(t), r <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">cos</span>(p)];
+<span style="color: #3a81c3;">trigsimp</span>(<span style="color: #3a81c3;">determinant</span>(jacobian([x,y,z], [r,p,t])));
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/*</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">            2</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">    sin(p) r</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">*/</span>
 </pre>
 </div>
 </div>
@@ -833,21 +844,21 @@ evaluated as we are defining the ODE here.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">eq <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #4f97d7;">diff</span>(y,x) <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7; font-weight: bold;">-</span>y;
+<pre class="src src-maxima">eq <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #3a81c3; font-weight: bold;">'</span><span style="color: #3a81c3;">diff</span>(y,x) <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #3a81c3; font-weight: bold;">-</span>y;
 
-<span style="color: #4f97d7;">ode2</span>(eq, y, x);
+<span style="color: #3a81c3;">ode2</span>(eq, y, x);
 
-sol <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">ic1</span>(<span style="color: #4f97d7; font-weight: bold;">%</span>, x <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">1</span>, y <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #a45bad;">8</span>);
+sol <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #3a81c3;">ic1</span>(<span style="color: #3a81c3; font-weight: bold;">%</span>, x <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">1</span>, y <span style="color: #3a81c3; font-weight: bold;">=</span> <span style="color: #4e3163;">8</span>);
 
-<span style="color: #4f97d7;">plot2d</span>(<span style="color: #4f97d7;">rhs</span> (sol), [x, <span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">4</span>], [y, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">10</span>]);
+<span style="color: #3a81c3;">plot2d</span>(<span style="color: #3a81c3;">rhs</span> (sol), [x, <span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">4</span>], [y, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">10</span>]);
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4666397" class="outline-3">
-<h3 id="org4666397">Simplification</h3>
-<div class="outline-text-3" id="text-org4666397">
+<div id="outline-container-orge09f709" class="outline-3">
+<h3 id="orge09f709">Simplification</h3>
+<div class="outline-text-3" id="text-orge09f709">
 <p>
 This snippet demonstrates some ways to get different expressions for the same
 quantity. Note how the numerator and denominator can be separated to have
@@ -855,18 +866,18 @@ different simplification steps applied as in the definition of <code>d</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">a <span style="color: #4f97d7; font-weight: bold;">:</span> (x<span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>aa) <span style="color: #4f97d7; font-weight: bold;">+</span> y <span style="color: #4f97d7; font-weight: bold;">+</span> y <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>aa))<span style="color: #4f97d7; font-weight: bold;">/</span> (y<span style="color: #4f97d7; font-weight: bold;">*</span><span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>aa) <span style="color: #4f97d7; font-weight: bold;">+</span> x);
-b <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">ratsimp</span>(a);
-c <span style="color: #4f97d7; font-weight: bold;">:</span> collectterms(<span style="color: #4f97d7;">expand</span>(<span style="color: #4f97d7;">num</span>(b)), <span style="color: #4f97d7;">exp</span>(aa)) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #4f97d7;">denom</span>(b);
-d <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">block</span>(
-  [ea<span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>aa)],
-  collectterms(<span style="color: #4f97d7;">expand</span>(ea <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">num</span>(b)), ea) <span style="color: #4f97d7; font-weight: bold;">/</span> <span style="color: #4f97d7;">expand</span>(ea <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">denom</span>(b))
+<pre class="src src-maxima">a <span style="color: #3a81c3; font-weight: bold;">:</span> (x<span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>aa) <span style="color: #3a81c3; font-weight: bold;">+</span> y <span style="color: #3a81c3; font-weight: bold;">+</span> y <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>aa))<span style="color: #3a81c3; font-weight: bold;">/</span> (y<span style="color: #3a81c3; font-weight: bold;">*</span><span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>aa) <span style="color: #3a81c3; font-weight: bold;">+</span> x);
+b <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #3a81c3;">ratsimp</span>(a);
+c <span style="color: #3a81c3; font-weight: bold;">:</span> collectterms(<span style="color: #3a81c3;">expand</span>(<span style="color: #3a81c3;">num</span>(b)), <span style="color: #3a81c3;">exp</span>(aa)) <span style="color: #3a81c3; font-weight: bold;">/</span> <span style="color: #3a81c3;">denom</span>(b);
+d <span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #3a81c3;">block</span>(
+  [ea<span style="color: #3a81c3; font-weight: bold;">:</span> <span style="color: #3a81c3;">exp</span>(<span style="color: #3a81c3; font-weight: bold;">-</span>aa)],
+  collectterms(<span style="color: #3a81c3;">expand</span>(ea <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">num</span>(b)), ea) <span style="color: #3a81c3; font-weight: bold;">/</span> <span style="color: #3a81c3;">expand</span>(ea <span style="color: #3a81c3; font-weight: bold;">*</span> <span style="color: #3a81c3;">denom</span>(b))
   );
-<span style="color: #4f97d7;">display</span>(a, b, c, d);
+<span style="color: #3a81c3;">display</span>(a, b, c, d);
 </pre>
 </div>
 
-<pre class="example" id="org0859456">
+<pre class="example" id="orgae114c9">
       - aa           - aa
     %e     x + y + %e     y
 a = -----------------------
@@ -894,7 +905,7 @@ a = -----------------------
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-23 Fri 16:52</p>
+<p class="date">Created: 2021-04-30 Fri 18:16</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

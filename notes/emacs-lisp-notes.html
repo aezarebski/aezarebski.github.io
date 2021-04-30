@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-06 Tue 18:53 -->
+<!-- 2021-04-30 Fri 18:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -242,11 +242,15 @@
 <ul>
 <li><a href="#org8ebc756">Variables</a></li>
 <li><a href="#org9552719">String handling</a></li>
+<li><a href="#org790629c">Working with files</a></li>
+<li><a href="#org76b10b4">Working with passwords</a></li>
+<li><a href="#org8c7efcb">System command</a></li>
 </ul>
 </li>
 <li><a href="#org747a43d">Emacs Lisp Packages</a>
 <ul>
 <li><a href="#org5f27da0">JSON</a></li>
+<li><a href="#org7c82bac">String</a></li>
 </ul>
 </li>
 </ul>
@@ -266,16 +270,80 @@
 Use <code>defvar</code> to define a variable along with <i>optionally</i> an initial value and a
 docstring. Use <code>setq</code> to set the value of a variable.
 </p>
+
+<p>
+Keep in mind that if you want to evaulate an element of a quoted list you can
+use <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote.html">backquotes</a>.
+</p>
 </div>
 </div>
 
 <div id="outline-container-org9552719" class="outline-3">
 <h3 id="org9552719">String handling</h3>
 <div class="outline-text-3" id="text-org9552719">
-<ul class="org-ul">
-<li><code>format</code> is for string interpolation.</li>
-<li><code>concat</code> is for string concatenation.</li>
-</ul>
+<p>
+The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see the <a href="#org7c82bac">notes below</a>.
+</p>
+</div>
+
+<div id="outline-container-org0b75efc" class="outline-4">
+<h4 id="org0b75efc">string interpolation</h4>
+<div class="outline-text-4" id="text-org0b75efc">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>s-format <span style="color: #2d9574;">"foo ${bar}"</span> 'aget `<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"bar"</span> . ,<span style="color: #67b11d;">(</span>+ <span style="color: #4e3163;">1</span> <span style="color: #4e3163;">1</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org790629c" class="outline-3">
+<h3 id="org790629c">Working with files</h3>
+<div class="outline-text-3" id="text-org790629c">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Function</th>
+<th scope="col" class="org-left">Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>directory-files</code></td>
+<td class="org-left">list files in a directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org76b10b4" class="outline-3">
+<h3 id="org76b10b4">Working with passwords</h3>
+<div class="outline-text-3" id="text-org76b10b4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>read-passwd <span style="color: #2d9574;">"magic word: "</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+More details are available in the <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Reading-a-Password.html">docs</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8c7efcb" class="outline-3">
+<h3 id="org8c7efcb">System command</h3>
+<div class="outline-text-3" id="text-org8c7efcb">
+<p>
+To run a system command/shell command there is <code>shell-command</code>.
+</p>
 </div>
 </div>
 </div>
@@ -292,26 +360,77 @@ For parsing and encoding to JSON there is the <a href="https://github.com/emacs-
 </p>
 </div>
 
-<div id="outline-container-org17e60ef" class="outline-4">
-<h4 id="org17e60ef">Examples</h4>
-<div class="outline-text-4" id="text-org17e60ef">
+<div id="outline-container-orga8fdcbd" class="outline-4">
+<h4 id="orga8fdcbd">Examples to and from a string</h4>
+<div class="outline-text-4" id="text-orga8fdcbd">
 <p>
 Open up a REPL in emacs and try the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>json-encode '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"a"</span> . <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"b"</span> . <span style="color: #2d9574;">"c"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>json-read-from-string <span style="color: #2d9574;">"{\"a\":1,\"b\":\"c\"}"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>json-encode '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"a"</span> . <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"b"</span> . <span style="color: #2d9574;">"c"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>json-read-from-string <span style="color: #2d9574;">"{\"a\":1,\"b\":\"c\"}"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
+</div>
+
+<div id="outline-container-orgeebd279" class="outline-4">
+<h4 id="orgeebd279">Examples reading from file</h4>
+<div class="outline-text-4" id="text-orgeebd279">
+<p>
+<code>json-read-file</code> to read from the given file.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7c82bac" class="outline-3">
+<h3 id="org7c82bac">String</h3>
+<div class="outline-text-3" id="text-org7c82bac">
+<p>
+The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see <a href="#org9552719">these notes</a> for a
+table of commonly used functions.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Function</th>
+<th scope="col" class="org-left">Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>s-format</code></td>
+<td class="org-left">string interpolation</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s-concat</code></td>
+<td class="org-left">string concatenation</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s-matches?</code></td>
+<td class="org-left">regex matching</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-06 Tue 18:53</p>
+<p class="date">Created: 2021-04-30 Fri 18:16</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

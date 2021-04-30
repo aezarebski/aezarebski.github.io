@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-21 Wed 13:33 -->
+<!-- 2021-04-30 Fri 18:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -269,6 +269,7 @@
 <li><a href="#org4ef6cfc">Monad transformers with <code>mtl</code></a></li>
 <li><a href="#org6d2f32b">Data structures</a></li>
 <li><a href="#orga529127"><code>ST</code> monad</a></li>
+<li><a href="#orgb23fb3d">The Either monad</a></li>
 <li><a href="#orgb74f1e3">Linting <code>hindent</code></a></li>
 <li><a href="#orgb2faa4e">JSON with Aeson</a></li>
 <li><a href="#orgc4f2233">Haskell layer in Spacemacs</a></li>
@@ -292,7 +293,7 @@
 <li><a href="#orge95a44b">Root finding</a></li>
 <li><a href="#orgff6a7fd">Differential equations</a></li>
 <li><a href="#org048a8bc">Random number simulation</a></li>
-<li><a href="#org72e5a9c">Numbers</a></li>
+<li><a href="#org2d7744d">Numbers</a></li>
 <li><a href="#orgf8327eb">Special functions</a></li>
 </ul>
 </li>
@@ -301,7 +302,7 @@
 </div>
 
 
-<div id="org2a88d26" class="figure">
+<div id="org3358641" class="figure">
 <p><img src="../images/haskell-logo.png" alt="haskell-logo.png" /> 
 </p>
 </div>
@@ -1125,6 +1126,18 @@ to the record type to avoid name clashes.
 </div>
 </div>
 
+<div id="outline-container-orgf234beb" class="outline-4">
+<h4 id="orgf234beb">Type coercion</h4>
+<div class="outline-text-4" id="text-orgf234beb">
+<p>
+If you have a wrapper type and want to access the data within but do not want to
+continually pattern match to get the value out you can use the <code>coerce</code> function
+from <code>Data.Coerce</code> (which is part of base). This functionality is encoded in the
+<code>Coercible</code> typeclass.
+</p>
+</div>
+</div>
+
 <div id="outline-container-org5594360" class="outline-4">
 <h4 id="org5594360">List comprehensions</h4>
 <div class="outline-text-4" id="text-org5594360">
@@ -1342,11 +1355,11 @@ Left "Could not find file in step 2"
 <h3 id="org6d2f32b">Data structures</h3>
 <div class="outline-text-3" id="text-org6d2f32b">
 </div>
-<div id="outline-container-org2d7744d" class="outline-4">
-<h4 id="org2d7744d">Numbers</h4>
-<div class="outline-text-4" id="text-org2d7744d">
+<div id="outline-container-org5f2de60" class="outline-4">
+<h4 id="org5f2de60">Numbers</h4>
+<div class="outline-text-4" id="text-org5f2de60">
 
-<div id="org09d61a2" class="figure">
+<div id="org0ff9ed9" class="figure">
 <p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
 </p>
 </div>
@@ -1447,9 +1460,9 @@ f (t b)</code>
 <h3 id="orga529127"><code>ST</code> monad</h3>
 <div class="outline-text-3" id="text-orga529127">
 </div>
-<div id="outline-container-orgeebde68" class="outline-4">
-<h4 id="orgeebde68">Example</h4>
-<div class="outline-text-4" id="text-orgeebde68">
+<div id="outline-container-org04867b5" class="outline-4">
+<h4 id="org04867b5">Example</h4>
+<div class="outline-text-4" id="text-org04867b5">
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad</span> <span style="color: #3a81c3;">(</span>replicateM_,liftM<span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3; font-weight: bold;">import</span> <span style="color: #ba2f59; font-weight: bold;">Control.Monad.ST</span> <span style="color: #3a81c3;">(</span>runST<span style="color: #3a81c3;">)</span>
@@ -1519,6 +1532,31 @@ implementation
     readSTRef n
 </pre>
 </div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb23fb3d" class="outline-3">
+<h3 id="orgb23fb3d">The Either monad</h3>
+<div class="outline-text-3" id="text-orgb23fb3d">
+</div>
+<div id="outline-container-org3a489c5" class="outline-4">
+<h4 id="org3a489c5">Missing <code>MonadFail</code> instance</h4>
+<div class="outline-text-4" id="text-org3a489c5">
+<p>
+Described <a href="https://gitlab.haskell.org/ghc/ghc/-/issues/12160">here</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3a81c3; font-weight: bold;">instance</span> <span style="color: #ba2f59; font-weight: bold;">MonadFail</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">Either</span> <span style="color: #ba2f59; font-weight: bold;">String</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3; font-weight: bold;">where</span>
+  fail <span style="color: #715ab1;">=</span> <span style="color: #ba2f59; font-weight: bold;">Left</span>
+</pre>
+</div>
+
+<p>
+This sort of thing was ultimately rejected to preserve a neutral interpretation
+of how the Either monad would should work.
+</p>
 </div>
 </div>
 </div>
@@ -1697,6 +1735,24 @@ The following example from <a href="https://kowainik.github.io/posts/arrows-zoo#
            putStrLn <span style="color: #2d9574;">"Choose wisely"</span> <span style="color: #715ab1;">&gt;&gt;</span> choose allowedStrs
 </pre>
 </div>
+
+<p>
+And another example from <a href="https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/guide-to-ghc-extensions/basic-syntax-extensions#multiwayif">School of Haskell</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #6c3163;">{-# LANGUAGE MultiWayIf #-}</span>
+
+<span style="color: #6c3163; font-weight: bold;">fn</span> <span style="color: #715ab1;">::</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">Int</span> <span style="color: #715ab1;">-&gt;</span> <span style="color: #ba2f59; font-weight: bold;">String</span>
+<span style="color: #6c3163; font-weight: bold;">fn</span> x y <span style="color: #715ab1;">=</span> <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #715ab1;">|</span> x <span style="color: #715ab1;">==</span> <span style="color: #4e3163;">1</span>    <span style="color: #715ab1;">-&gt;</span> <span style="color: #2d9574;">"a"</span>
+            <span style="color: #715ab1;">|</span> y <span style="color: #715ab1;">&lt;</span>  <span style="color: #4e3163;">2</span>    <span style="color: #715ab1;">-&gt;</span> <span style="color: #2d9574;">"b"</span>
+            <span style="color: #715ab1;">|</span> otherwise <span style="color: #715ab1;">-&gt;</span> <span style="color: #2d9574;">"c"</span>
+
+<span style="color: #da8b55;">-- | should print:</span>
+<span style="color: #da8b55;">--   @c@</span>
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #715ab1;">=</span> putStrLn <span style="color: #715ab1;">$</span> fn <span style="color: #4e3163;">3</span> <span style="color: #4e3163;">4</span>
+</pre>
+</div>
 </div>
 </div>
 
@@ -1865,9 +1921,9 @@ being evaluated this can even introduce a space leak.
 </div>
 </div>
 
-<div id="outline-container-org04867b5" class="outline-4">
-<h4 id="org04867b5">Example</h4>
-<div class="outline-text-4" id="text-org04867b5">
+<div id="outline-container-org9e90bb7" class="outline-4">
+<h4 id="org9e90bb7">Example</h4>
+<div class="outline-text-4" id="text-org9e90bb7">
 <p>
 The very simple example given here demonstrates how to run code in parallel
 using only the <code>parallel</code> library (which is maintained by
@@ -2135,9 +2191,9 @@ with a hardcoded seed in the library.
 </div>
 </div>
 
-<div id="outline-container-org72e5a9c" class="outline-3">
-<h3 id="org72e5a9c">Numbers</h3>
-<div class="outline-text-3" id="text-org72e5a9c">
+<div id="outline-container-org2d7744d" class="outline-3">
+<h3 id="org2d7744d">Numbers</h3>
+<div class="outline-text-3" id="text-org2d7744d">
 <p>
 To learn about how Haskell handles numbers &#x2014; although we only really care
 about <code>Integer</code> and <code>Double</code> &#x2014; there is the <a href="https://www.haskell.org/onlinereport/basic.html">report</a> and a <a href="https://www.haskell.org/tutorial/numbers.html">gentle introduction</a>
@@ -2161,7 +2217,7 @@ binomial coefficients.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-21 Wed 13:33</p>
+<p class="date">Created: 2021-04-30 Fri 18:16</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
