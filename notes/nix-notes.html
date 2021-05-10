@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-06 Tue 18:53 -->
+<!-- 2021-05-10 Mon 11:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -211,7 +211,6 @@
        if(null != target) {
          elem.classList.remove("code-highlighted");
          target.classList.remove("code-highlighted");
-       }
      }
     /*]]>*///-->
 // @license-end
@@ -228,7 +227,7 @@
 <script src="./main.js"></script>
 
 
-<div id="org2387c5e" class="figure">
+<div id="orgf30753a" class="figure">
 <p><img src="../images/nix-logo.png" alt="nix-logo.png" />
 </p>
 </div>
@@ -248,11 +247,13 @@
 <li><a href="#org1baf662">Nix as a language</a></li>
 <li><a href="#orgd97f8eb">Examples</a>
 <ul>
+<li><a href="#org42c3ea2">Uninstalling packages</a></li>
 <li><a href="#org6e49242">Jupyter Lab</a></li>
 <li><a href="#orgd9310c0">DOOM</a></li>
 <li><a href="#orgd82b417">A reproducible R environment</a></li>
 <li><a href="#org49632bc">A reproducible python environment</a></li>
 <li><a href="#orgfd9b9fc">Haskell development</a></li>
+<li><a href="#org8d5a71f">Dhall</a></li>
 </ul>
 </li>
 <li><a href="#org5eb8ed3">Rough notes</a></li>
@@ -286,7 +287,6 @@
 <h3 id="org48a1eef">Documentation</h3>
 </div>
 
-
 <div id="outline-container-orgea7777d" class="outline-3">
 <h3 id="orgea7777d">Books</h3>
 </div>
@@ -306,6 +306,23 @@ expressions to see if they behave as expected.
 <h2 id="orgd97f8eb">Examples</h2>
 <div class="outline-text-2" id="text-orgd97f8eb">
 </div>
+<div id="outline-container-org42c3ea2" class="outline-3">
+<h3 id="org42c3ea2">Uninstalling packages</h3>
+<div class="outline-text-3" id="text-org42c3ea2">
+<p>
+There are notes on how to uninstall a package <a href="https://nixos.org/manual/nix/stable/#idm140737322638944">here</a>. Bear in mind that after you
+uninstall a package the files are not deleted, you need to garbage collect to
+actually remove the files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nix-env --uninstall firefox
+nix-collect-garbage
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org6e49242" class="outline-3">
 <h3 id="org6e49242">Jupyter Lab</h3>
 <div class="outline-text-3" id="text-org6e49242">
@@ -475,7 +492,6 @@ it
 </div>
 </div>
 
-
 <div id="outline-container-org49632bc" class="outline-3">
 <h3 id="org49632bc">A reproducible python environment</h3>
 <div class="outline-text-3" id="text-org49632bc">
@@ -575,6 +591,35 @@ If the commit hash is too old, you can find a new one among the listed versions
 </div>
 </div>
 </div>
+
+<div id="outline-container-org8d5a71f" class="outline-3">
+<h3 id="org8d5a71f">Dhall</h3>
+<div class="outline-text-3" id="text-org8d5a71f">
+<div class="org-src-container">
+<pre class="src src-nix"><span style="color: #4f97d7; font-weight: bold;">let</span>
+  <span style="color: #7590db;">commitHash</span> = <span style="color: #2d9574;">"dc326c78a93862efb30a76216f527a56496e6284"</span>;
+  <span style="color: #7590db;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #bc6ec5;">$</span><span style="color: #4f97d7;">{</span>commitHash<span style="color: #4f97d7;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #7590db;">pkgs</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">fetchTarball</span> tarballUrl<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
+  <span style="color: #7590db;">stdenv</span> = pkgs.stdenv;
+<span style="color: #4f97d7; font-weight: bold;">in</span> with pkgs; <span style="color: #4f97d7;">{</span>
+  <span style="color: #7590db;">myProject</span> = stdenv.mkDerivation <span style="color: #bc6ec5;">{</span>
+    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"example-dhall-env"</span>;
+    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #7590db;">src</span> = <span style="color: #4f97d7; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">null</span> <span style="color: #4f97d7; font-weight: bold;">else</span> nix;
+
+    <span style="color: #7590db;">buildInputs</span> = <span style="color: #2d9574;">[</span>
+      dhall
+      dhall-json
+    <span style="color: #2d9574;">]</span>;
+   <span style="color: #7590db;">shellHook</span> = <span style="color: #2d9574;">''</span>
+<span style="color: #2d9574;">             printf "\n\nWelcome to the dhall shell :)\n\n"</span>
+<span style="color: #2d9574;">      ''</span>;
+  <span style="color: #bc6ec5;">}</span>;
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org5eb8ed3" class="outline-2">
@@ -643,7 +688,7 @@ haskell.lib.buildStackProject <span style="color: #4f97d7;">{</span>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-06 Tue 18:53</p>
+<p class="date">Created: 2021-05-10 Mon 11:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -223,77 +223,125 @@
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
-<script src="./main.js"></script>
+<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
+<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
+
+<script>
+    function setStyleSheet(url){
+       var stylesheet = document.getElementById("stylesheet");
+       stylesheet.setAttribute('href', url);
+    }
+</script>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org27e8b4d">Additional resources</a>
+<li><a href="#org9c4b098">Dhall configuration language</a>
 <ul>
-<li><a href="#org7fd1ab9">Colour blindness</a></li>
-<li><a href="#org702b0ac">Curated palettes</a></li>
-<li><a href="#orgf74e1d0">Converting between representations</a></li>
+<li><a href="#orgaff69d2">References and reading materials</a></li>
+<li><a href="#org288ba7e">Examples</a></li>
+<li><a href="#org69b070e">Nix shell</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
+<div id="outline-container-org9c4b098" class="outline-2">
+<h2 id="org9c4b098">Dhall configuration language</h2>
+<div class="outline-text-2" id="text-org9c4b098">
+</div>
+<div id="outline-container-orgaff69d2" class="outline-3">
+<h3 id="orgaff69d2">References and reading materials</h3>
+<div class="outline-text-3" id="text-orgaff69d2">
 <p>
-This snippet contains some pleasant colours from colorbrewer2.
+<a href="https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html#getting-started-generate-json-or-yaml">Short introduction</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org288ba7e" class="outline-3">
+<h3 id="org288ba7e">Examples</h3>
+<div class="outline-text-3" id="text-org288ba7e">
+</div>
+<div id="outline-container-orgc140dc5" class="outline-4">
+<h4 id="orgc140dc5">Command line usage</h4>
+<div class="outline-text-4" id="text-orgc140dc5">
+<div class="org-src-container">
+<pre class="src src-shell">dhall-to-json &lt;&lt;&lt; <span style="color: #2d9574;">'{ foo = [1, 2, 3], bar = True }'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75b6fa7" class="outline-4">
+<h4 id="org75b6fa7">Type annotations and schema</h4>
+<div class="outline-text-4" id="text-org75b6fa7">
+<p>
+Inline type annotations 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #4f97d7;">{</span>
-    <span style="color: #2d9574;">"colorbrewer2"</span>: <span style="color: #bc6ec5;">{</span>
-        <span style="color: #2d9574;">"sequential"</span>: <span style="color: #2d9574;">{</span>
-            <span style="color: #2d9574;">"oranges"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #2d9574;">"three"</span>: <span style="color: #b1951d;">[</span><span style="color: #2d9574;">"#fee6ce"</span>, <span style="color: #2d9574;">"#fdae6b"</span>, <span style="color: #2d9574;">"#e6550d"</span><span style="color: #b1951d;">]</span>
-            <span style="color: #67b11d;">}</span>,
-            <span style="color: #2d9574;">"blues"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #2d9574;">"three"</span>: <span style="color: #b1951d;">[</span><span style="color: #2d9574;">"#deebf7"</span>, <span style="color: #2d9574;">"#9ecae1"</span>, <span style="color: #2d9574;">"#3182bd"</span><span style="color: #b1951d;">]</span>
-            <span style="color: #67b11d;">}</span>,
-            <span style="color: #2d9574;">"purples"</span>: <span style="color: #67b11d;">{</span>
-                <span style="color: #2d9574;">"five"</span>: <span style="color: #b1951d;">[</span><span style="color: #2d9574;">"#f2f0f7"</span>, <span style="color: #2d9574;">"#cbc9e2"</span>, <span style="color: #2d9574;">"#9e9ac8"</span>, <span style="color: #2d9574;">"#756bb1"</span>, <span style="color: #2d9574;">"#54278f"</span><span style="color: #b1951d;">]</span>
-            <span style="color: #67b11d;">}</span>
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+<pre class="src src-shell">dhall-to-json &lt;&lt;&lt; <span style="color: #2d9574;">'{ foo = 1, bar = True } : { foo : Natural, bar : Bool }'</span>
 </pre>
 </div>
 
-<div id="outline-container-org27e8b4d" class="outline-2">
-<h2 id="org27e8b4d">Additional resources</h2>
-<div class="outline-text-2" id="text-org27e8b4d">
-</div>
-<div id="outline-container-org7fd1ab9" class="outline-3">
-<h3 id="org7fd1ab9">Colour blindness</h3>
-<div class="outline-text-3" id="text-org7fd1ab9">
 <p>
-For R users who want a drop-in solution for avoiding issues with limited colour
-perception there is <a href="https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html">colorBlindness</a>, a package which automates the palette
-selection process.
+Schema in a file
 </p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">'{ foo : Natural, bar : Bool }'</span> &gt; schema.dhall
+dhall-to-json &lt;&lt;&lt; <span style="color: #2d9574;">'{ foo = 1, bar = True } : ./schema.dhall'</span>
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org702b0ac" class="outline-3">
-<h3 id="org702b0ac">Curated palettes</h3>
-<div class="outline-text-3" id="text-org702b0ac">
-<p>
-The ultimate resource is <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">colorbrewer2</a>.
-</p>
+<div id="outline-container-org653f2e6" class="outline-4">
+<h4 id="org653f2e6">Variables</h4>
+<div class="outline-text-4" id="text-org653f2e6">
+<div class="org-src-container">
+<pre class="src src-dhall">let x = 1
+let y = 2
+in  [x, y]
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgf74e1d0" class="outline-3">
-<h3 id="orgf74e1d0">Converting between representations</h3>
-<div class="outline-text-3" id="text-orgf74e1d0">
-<p>
-DuckDuckGo has an <a href="https://duckduckgo.com/?t=ffab&amp;q=hex+to+rgb+converter&amp;ia=answer">online tool</a> for converting between colour representations.
-</p>
+<div id="outline-container-orgb78c799" class="outline-4">
+<h4 id="orgb78c799">Functions</h4>
+<div class="outline-text-4" id="text-orgb78c799">
+<div class="org-src-container">
+<pre class="src src-dhall">let twice = \(x : Natural) -&gt; [x, x] in twice 2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org770caac" class="outline-4">
+<h4 id="org770caac">Monoid</h4>
+<div class="outline-text-4" id="text-org770caac">
+<div class="org-src-container">
+<pre class="src src-dhall">{ foo = 1 } /\ { bar = 2}
+
+"ABC" ++ "DEF"
+
+[1, 2, 3] # [4, 5, 6]
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org69b070e" class="outline-3">
+<h3 id="org69b070e">Nix shell</h3>
+<div class="outline-text-3" id="text-org69b070e">
+<ul class="org-ul">
+<li>I have a <a href="./nix-notes.html">example nix-shell</a> for working with dhall.</li>
+</ul>
 </div>
 </div>
 </div>

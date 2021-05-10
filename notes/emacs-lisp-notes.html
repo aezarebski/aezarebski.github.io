@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-30 Fri 18:16 -->
+<!-- 2021-05-10 Mon 11:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -211,7 +211,6 @@
        if(null != target) {
          elem.classList.remove("code-highlighted");
          target.classList.remove("code-highlighted");
-       }
      }
     /*]]>*///-->
 // @license-end
@@ -241,7 +240,9 @@
 <li><a href="#org91a6fed">Emacs Lisp</a>
 <ul>
 <li><a href="#org8ebc756">Variables</a></li>
+<li><a href="#org6443930">Program flow</a></li>
 <li><a href="#org9552719">String handling</a></li>
+<li><a href="#org2ad3f4d">Working with dates and times</a></li>
 <li><a href="#org790629c">Working with files</a></li>
 <li><a href="#org76b10b4">Working with passwords</a></li>
 <li><a href="#org8c7efcb">System command</a></li>
@@ -278,6 +279,15 @@ use <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote
 </div>
 </div>
 
+<div id="outline-container-org6443930" class="outline-3">
+<h3 id="org6443930">Program flow</h3>
+<div class="outline-text-3" id="text-org6443930">
+<ul class="org-ul">
+<li><code>progn</code> to sequence commands and return the value of the last one.</li>
+</ul>
+</div>
+</div>
+
 <div id="outline-container-org9552719" class="outline-3">
 <h3 id="org9552719">String handling</h3>
 <div class="outline-text-3" id="text-org9552719">
@@ -290,10 +300,21 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 <h4 id="org0b75efc">string interpolation</h4>
 <div class="outline-text-4" id="text-org0b75efc">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>s-format <span style="color: #2d9574;">"foo ${bar}"</span> 'aget `<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"bar"</span> . ,<span style="color: #67b11d;">(</span>+ <span style="color: #4e3163;">1</span> <span style="color: #4e3163;">1</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>s-format <span style="color: #2d9574;">"foo ${bar}"</span> 'aget `<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"bar"</span> . ,<span style="color: #67b11d;">(</span>+ <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">1</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org2ad3f4d" class="outline-3">
+<h3 id="org2ad3f4d">Working with dates and times</h3>
+<div class="outline-text-3" id="text-org2ad3f4d">
+<ul class="org-ul">
+<li><code>format-time-string</code> to get datetime as a string</li>
+<li><code>current-time</code> for the current time as a list of integers</li>
+<li><code>time-subtract</code> and <code>time-add</code> for datetime arithmetic</li>
+</ul>
 </div>
 </div>
 
@@ -328,7 +349,7 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 <h3 id="org76b10b4">Working with passwords</h3>
 <div class="outline-text-3" id="text-org76b10b4">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>read-passwd <span style="color: #2d9574;">"magic word: "</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>read-passwd <span style="color: #2d9574;">"magic word: "</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -368,8 +389,8 @@ Open up a REPL in emacs and try the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>json-encode '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"a"</span> . <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"b"</span> . <span style="color: #2d9574;">"c"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>json-read-from-string <span style="color: #2d9574;">"{\"a\":1,\"b\":\"c\"}"</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>json-encode '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"a"</span> . <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"b"</span> . <span style="color: #2d9574;">"c"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>json-read-from-string <span style="color: #2d9574;">"{\"a\":1,\"b\":\"c\"}"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -430,7 +451,7 @@ table of commonly used functions.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-30 Fri 18:16</p>
+<p class="date">Created: 2021-05-10 Mon 11:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
