@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-10 Mon 11:43 -->
+<!-- 2021-05-13 Thu 17:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -260,6 +260,7 @@
 <li><a href="#org36f0388">Testing <code>hspec</code></a></li>
 <li><a href="#org98ed121">Testing <code>hspec</code> and <code>QuickCheck</code></a></li>
 <li><a href="#org4bb76b0">Handy IO</a></li>
+<li><a href="#orga39ad0e"><code>.cabal</code> and Cabal</a></li>
 <li><a href="#org56fd108"><code>stack</code> and friends</a></li>
 <li><a href="#org1c7c626">Profiling criterion</a></li>
 <li><a href="#orga08824c">Documentation with <code>haddock</code></a></li>
@@ -292,7 +293,7 @@
 <li><a href="#orge95a44b">Root finding</a></li>
 <li><a href="#orgff6a7fd">Differential equations</a></li>
 <li><a href="#org048a8bc">Random number simulation</a></li>
-<li><a href="#org5f2de60">Numbers</a></li>
+<li><a href="#org8e0210b">Numbers</a></li>
 <li><a href="#orgf8327eb">Special functions</a></li>
 </ul>
 </li>
@@ -301,7 +302,7 @@
 </div>
 
 
-<div id="org8471097" class="figure">
+<div id="org108ee1d" class="figure">
 <p><img src="../images/haskell-logo.png" alt="haskell-logo.png" /> 
 </p>
 </div>
@@ -322,6 +323,7 @@
 <h4 id="org982ede6">Blog posts</h4>
 <div class="outline-text-4" id="text-org982ede6">
 <ul class="org-ul">
+<li><a href="https://vrom911.github.io/blog/common-stanzas">common stanzas</a> to keep cabal files DRY **</li>
 <li><a href="https://www.haskellforall.com/2021/05/the-trick-to-avoid-deeply-nested-error.html">The trick to avoid deeply-nested error-handling code</a> <b>*</b></li>
 <li><a href="https://kowainik.github.io/posts/haskell-mini-patterns">Haskell mini-patterns handbook</a> <b>*</b></li>
 <li><a href="https://kowainik.github.io/posts/totality">Discussion of totality of functions</a> **</li>
@@ -336,7 +338,6 @@
 <div class="outline-text-4" id="text-orgd896be1">
 <ul class="org-ul">
 <li><a href="https://markkarpov.com/post/existential-quantification.html">Existential quantification</a></li>
-<li><a href="https://vrom911.github.io/blog/common-stanzas">common stanzas</a> for cabal files</li>
 <li><a href="https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/guide-to-ghc-extensions/basic-syntax-extensions">basic syntax extensions</a> from the School of Haskell (reference material)</li>
 </ul>
 </div>
@@ -414,14 +415,18 @@ the command line at run time rather than data about how the program was called.
 <div class="outline-text-3" id="text-org0f2566b">
 <ol class="org-ol">
 <li>Load the relevant module: <code>λ&gt; :load &lt;module.hs&gt;</code></li>
-<li>Set a break point: <code>λ&gt; :break &lt;n&gt;</code></li>
+<li>Set a break point: <code>λ&gt; :break &lt;identifier&gt;</code> where identifier can be a
+function name or line number</li>
 <li>Evaluate relevant expression</li>
 </ol>
 
 <p>
-The <code>break</code> command can also be used to set breakpoints in other modules with
-<code>:break &lt;module&gt; &lt;n&gt;</code>, although you have to be a little bit careful in this
-situation, since some functions may go out of scope as you move between modules.
+In the output <code>_result</code> is the name of the value of the current expression. When
+working with <code>let</code> expressions the break point will be upon the body of the
+expression rather than any of the values bound. The <code>break</code> command can also be
+used to set breakpoints in other modules with <code>:break &lt;module&gt; &lt;n&gt;</code>, although
+you have to be a little bit careful in this situation, since some functions may
+go out of scope as you move between modules.
 </p>
 
 <p>
@@ -449,8 +454,13 @@ You can always use <code>:help</code> to get a listing, but here are some useful
 </tr>
 
 <tr>
+<td class="org-left"><code>:print</code></td>
+<td class="org-left">Print variable</td>
+</tr>
+
+<tr>
 <td class="org-left"><code>:step</code></td>
-<td class="org-left">Step to next line</td>
+<td class="org-left">Step to next expression</td>
 </tr>
 
 <tr>
@@ -469,7 +479,11 @@ You can always use <code>:help</code> to get a listing, but here are some useful
 </tr>
 </tbody>
 </table>
+</div>
 
+<div id="outline-container-org5e14962" class="outline-4">
+<h4 id="org5e14962">Less recommended way of debugging</h4>
+<div class="outline-text-4" id="text-org5e14962">
 <p>
 The <code>trace</code> function provided by <code>Debug.Trace</code> from the standard library is a
 good way to inspect the values of variables from pure code while debugging. The
@@ -494,6 +508,7 @@ the computation.
 <p>
 The GHC user guide has a section on <a href="https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/ghci-debugger.html">the GHCI debugger</a>.
 </p>
+</div>
 </div>
 </div>
 
@@ -592,6 +607,18 @@ L<span style="color: #bc6ec5; font-weight: bold;">.</span>writeFile <span style=
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orga39ad0e" class="outline-3">
+<h3 id="orga39ad0e"><code>.cabal</code> and Cabal</h3>
+<div class="outline-text-3" id="text-orga39ad0e">
+<p>
+The first part of a cabal file is called the <i>package properties</i> and then
+definitions that come after that are called <i>stanzas</i>. You can use <a href="https://vrom911.github.io/blog/common-stanzas">common
+stanzas</a> to keep cabal files DRY. There is also <code>dhall-to-cabal</code> if you want a
+more powerful way to write cabal files.
+</p>
 </div>
 </div>
 
@@ -1400,11 +1427,11 @@ Left "Could not find file in step 2"
 <h3 id="org6d2f32b">Data structures</h3>
 <div class="outline-text-3" id="text-org6d2f32b">
 </div>
-<div id="outline-container-org473a26f" class="outline-4">
-<h4 id="org473a26f">Numbers</h4>
-<div class="outline-text-4" id="text-org473a26f">
+<div id="outline-container-org5e52c3b" class="outline-4">
+<h4 id="org5e52c3b">Numbers</h4>
+<div class="outline-text-4" id="text-org5e52c3b">
 
-<div id="orgc67ac99" class="figure">
+<div id="org1041804" class="figure">
 <p><img src="../images/numeric-tower-haskell.png" alt="numeric-tower-haskell.png" />
 </p>
 </div>
@@ -1505,9 +1532,9 @@ f (t b)</code>
 <h3 id="orga529127"><code>ST</code> monad</h3>
 <div class="outline-text-3" id="text-orga529127">
 </div>
-<div id="outline-container-org9e90bb7" class="outline-4">
-<h4 id="org9e90bb7">Example</h4>
-<div class="outline-text-4" id="text-org9e90bb7">
+<div id="outline-container-org8a00f59" class="outline-4">
+<h4 id="org8a00f59">Example</h4>
+<div class="outline-text-4" id="text-org8a00f59">
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad</span> <span style="color: #4f97d7;">(</span>replicateM_,liftM<span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.ST</span> <span style="color: #4f97d7;">(</span>runST<span style="color: #4f97d7;">)</span>
@@ -1939,9 +1966,9 @@ being evaluated this can even introduce a space leak.
 </div>
 </div>
 
-<div id="outline-container-org81175e6" class="outline-4">
-<h4 id="org81175e6">Example</h4>
-<div class="outline-text-4" id="text-org81175e6">
+<div id="outline-container-org7452dee" class="outline-4">
+<h4 id="org7452dee">Example</h4>
+<div class="outline-text-4" id="text-org7452dee">
 <p>
 The very simple example given here demonstrates how to run code in parallel
 using only the <code>parallel</code> library (which is maintained by
@@ -2209,9 +2236,9 @@ with a hardcoded seed in the library.
 </div>
 </div>
 
-<div id="outline-container-org5f2de60" class="outline-3">
-<h3 id="org5f2de60">Numbers</h3>
-<div class="outline-text-3" id="text-org5f2de60">
+<div id="outline-container-org8e0210b" class="outline-3">
+<h3 id="org8e0210b">Numbers</h3>
+<div class="outline-text-3" id="text-org8e0210b">
 <p>
 To learn about how Haskell handles numbers &#x2014; although we only really care
 about <code>Integer</code> and <code>Double</code> &#x2014; there is the <a href="https://www.haskell.org/onlinereport/basic.html">report</a> and a <a href="https://www.haskell.org/tutorial/numbers.html">gentle introduction</a>
@@ -2235,7 +2262,7 @@ binomial coefficients.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-05-10 Mon 11:43</p>
+<p class="date">Created: 2021-05-13 Thu 17:35</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
