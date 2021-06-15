@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-06 Tue 18:53 -->
+<!-- 2021-06-14 Mon 16:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -274,6 +274,18 @@
 <ul>
 <li><a href="#org057451d">Negative binomial</a></li>
 <li><a href="#org4e617bf">Poisson</a></li>
+<li><a href="#org2d455b9">Bivariate discrete distributions</a></li>
+<li><a href="#org38428d8">Bivariate Poisson (by trivariate reduction)</a></li>
+<li><a href="#org54e6e47">Bivariate negative binomial (by multiplicative method)</a></li>
+<li><a href="#org00147a8">Bivariate negative binomial (by generating function)</a></li>
+</ul>
+</li>
+<li><a href="#orgb08da9d">Bibliography</a>
+<ul>
+<li><a href="#orgf1ad024">edwards1961class</a></li>
+<li><a href="#org5d33c0b">famoye2010bivariate</a></li>
+<li><a href="#org7d26fd1">karlis2003analysis</a></li>
+<li><a href="#org21ec435">lakshminarayana1999bivariate</a></li>
 </ul>
 </li>
 </ul>
@@ -544,9 +556,9 @@ Jonathon Novak has a particularly clear <a href="https://doi.org/10.4169/amer.ma
 <h3 id="org057451d">Negative binomial</h3>
 <div class="outline-text-3" id="text-org057451d">
 </div>
-<div id="outline-container-org2d5f6fa" class="outline-4">
-<h4 id="org2d5f6fa">Notation</h4>
-<div class="outline-text-4" id="text-org2d5f6fa">
+<div id="outline-container-org8697a65" class="outline-4">
+<h4 id="org8697a65">Notation</h4>
+<div class="outline-text-4" id="text-org8697a65">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -559,9 +571,9 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-org1291510" class="outline-4">
-<h4 id="org1291510">Properties</h4>
-<div class="outline-text-4" id="text-org1291510">
+<div id="outline-container-org36255cd" class="outline-4">
+<h4 id="org36255cd">Properties</h4>
+<div class="outline-text-4" id="text-org36255cd">
 <p>
 \[
 \mathbb{E}X = \frac{pr}{1-p}
@@ -621,9 +633,9 @@ distribution, it uses \(1-p\) where above we use \(p\).
 <h3 id="org4e617bf">Poisson</h3>
 <div class="outline-text-3" id="text-org4e617bf">
 </div>
-<div id="outline-container-org9c7ebbc" class="outline-4">
-<h4 id="org9c7ebbc">Notation</h4>
-<div class="outline-text-4" id="text-org9c7ebbc">
+<div id="outline-container-org9c99230" class="outline-4">
+<h4 id="org9c99230">Notation</h4>
+<div class="outline-text-4" id="text-org9c99230">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -636,9 +648,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-org942d84f" class="outline-4">
-<h4 id="org942d84f">Properties</h4>
-<div class="outline-text-4" id="text-org942d84f">
+<div id="outline-container-orgcdfb8dc" class="outline-4">
+<h4 id="orgcdfb8dc">Properties</h4>
+<div class="outline-text-4" id="text-orgcdfb8dc">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -663,11 +675,311 @@ G_{x}(z) = \exp[ \lambda (e^z - 1) ]
 </div>
 </div>
 </div>
+
+<div id="outline-container-org2d455b9" class="outline-3">
+<h3 id="org2d455b9">Bivariate discrete distributions</h3>
+<div class="outline-text-3" id="text-org2d455b9">
+</div>
+<div id="outline-container-org03d2531" class="outline-4">
+<h4 id="org03d2531">Trivariate reduction</h4>
+<div class="outline-text-4" id="text-org03d2531">
+<p>
+Suppose that \(X = X_1 + X_3\) and \(Y = X_2 + X_3\) have the desired marginal
+distributions where the \(X_i\) are independent. This method of constructing
+bivariate distributions is called <i>trivariate reduction</i>. For example, a
+bivariate Poisson distribution can be constructed in this way.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org13b5d06" class="outline-4">
+<h4 id="org13b5d06">Multiplicative method</h4>
+<div class="outline-text-4" id="text-org13b5d06">
+<p>
+For marginal PMFs \(f_X\) and \(f_Y\) the multiplicative method produces a
+bivariate distribution with PMF
+</p>
+
+<p>
+\[
+f_X(x)f_Y(y)(1 + \lambda (g_1(x) - c_1) (g_2(y) - c_2))
+\]
+</p>
+
+<p>
+where the \(g_i\) are functions that are bounded and \(c_1 = \mathbb{E}g_1(X)\)
+and \(c_2 = \mathbb{E}g_2(Y)\), with the expectations taken over the given
+marginal. This construction allows for both positive and negative correlations
+but limitations on \(\lambda\) can bound the strength of the correlation. See
+<a href="#org21ec435">Lakshminarayana <i>et al</i> (1999)</a> for an example using a Poisson distribution and
+<a href="#org5d33c0b">Famoye (2010)</a> for a bivariate negative binomial distribution
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38428d8" class="outline-3">
+<h3 id="org38428d8">Bivariate Poisson (by trivariate reduction)</h3>
+<div class="outline-text-3" id="text-org38428d8">
+<p>
+This distribution is constrained to have a non-negative correlation. See <a href="#org7d26fd1">Karlis
+and Ntzoufras (2003)</a> for an example.
+</p>
+</div>
+
+<div id="outline-container-org6dad21f" class="outline-4">
+<h4 id="org6dad21f">Notation</h4>
+<div class="outline-text-4" id="text-org6dad21f">
+<p>
+\[
+(X,Y) \sim \text{BP}(\lambda_{1},\lambda_{2},\lambda_{3})
+\]
+</p>
+
+<p>
+when \(X = X_{1} + X_{3}\) and \(Y = X_{2} + X_{3}\), and the \(X_{i} \sim
+\text{Pois}(\lambda_{i})\) (independently).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org54e6e47" class="outline-3">
+<h3 id="org54e6e47">Bivariate negative binomial (by multiplicative method)</h3>
+<div class="outline-text-3" id="text-org54e6e47">
+<p>
+See <a href="#org5d33c0b">Famoye (2010)</a> for a bivariate negative binomial distribution constructed
+using the <a href="#org13b5d06">multiplicative method</a> described above.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org00147a8" class="outline-3">
+<h3 id="org00147a8">Bivariate negative binomial (by generating function)</h3>
+<div class="outline-text-3" id="text-org00147a8">
+<p>
+This distribution comes from <a href="#orgf1ad024">Edwards and Gurland (1961)</a>, who call it the
+<i>compound correlated bivariate Poisson distribution</i>. The PGF of this distribution is
+</p>
+
+<p>
+\[
+g_{X_1, X_2}(z_1, z_2) = \left( A + B_1 z_1 +B_2 z_2 + B_{12} z_1 z_2 \right)^{-k}
+\]
+</p>
+
+<p>
+where \(A = 1 - B_1 - B_2 - B_{12}\). The PGF can then be used to get the PGFs
+of the marginal distributions and from this we can get the MGF and hence the
+moments.
+</p>
+</div>
+
+<div id="outline-container-orgaf92198" class="outline-4">
+<h4 id="orgaf92198">Method of moments parameters</h4>
+<div class="outline-text-4" id="text-orgaf92198">
+<p>
+The following snippets demonstrate how to compute the method of moments
+estimators given the first two moments of the first marginal and the covariance
+and the mean of the second marginal. We can define the PGF in maxima and then
+compute the mean and variance of the marginal distributions and check that these
+match up with the values given by Edwards and Gurland (1961).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">g</span>(<span style="color: #7590db;">z1, z2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> ((<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> B12) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">*</span> z2 <span style="color: #4f97d7; font-weight: bold;">+</span> B12 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">*</span> z2) <span style="color: #4f97d7; font-weight: bold;">^</span> (<span style="color: #4f97d7; font-weight: bold;">-</span>k);
+
+<span style="color: #bc6ec5; font-weight: bold;">m1</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #4f97d7;">exp</span>(t), <span style="color: #a45bad;">1</span>));
+
+m11 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">1</span>));
+m12 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">2</span>));
+
+var1 <span style="color: #4f97d7; font-weight: bold;">:</span> collectterms(<span style="color: #4f97d7;">expand</span>(m12 <span style="color: #4f97d7; font-weight: bold;">-</span> m11<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span>), k);
+
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">check that the variance is correct </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(var1, <span style="color: #4f97d7; font-weight: bold;">-</span>k <span style="color: #4f97d7; font-weight: bold;">*</span> (B1 <span style="color: #4f97d7; font-weight: bold;">+</span> B12) <span style="color: #4f97d7; font-weight: bold;">*</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B12))));
+</pre>
+</div>
+
+<pre class="example">
+is(equal(var1, (- k) (B1 + B12) (1 - B1 - B12))) = true
+</pre>
+
+
+<p>
+It is useful to define \(c = B_1 + B_{12}\). Then we can solve for \(k\) and
+\(c\) based on the mean and variance of the first marginal distribution.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">use c = B1 + B12 and solve for c and k based on the marginal distribution </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">solve</span>([ex1 <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7; font-weight: bold;">-</span>k <span style="color: #4f97d7; font-weight: bold;">*</span> c, vx1 <span style="color: #4f97d7; font-weight: bold;">=</span> ex1 <span style="color: #4f97d7; font-weight: bold;">*</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> c)], [k, c])[<span style="color: #a45bad;">1</span>]);
+</pre>
+</div>
+
+<pre class="example">
+solve([ex1 = - c k, vx1 = (1 - c) ex1], [k, c])(1) = 
+                                                         2
+                                                      ex1            vx1 - ex1
+                                               [k = ---------, c = - ---------]
+                                                    vx1 - ex1           ex1
+</pre>
+
+
+<p>
+The next step is to check that the expression given for the covariance is
+correct (and get an equivalent expression in terms of \(c\)).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">g</span>(<span style="color: #7590db;">z1, z2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> ((<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> B12) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">*</span> z2 <span style="color: #4f97d7; font-weight: bold;">+</span> B12 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">*</span> z2) <span style="color: #4f97d7; font-weight: bold;">^</span> (<span style="color: #4f97d7; font-weight: bold;">-</span>k);
+<span style="color: #bc6ec5; font-weight: bold;">m1</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #4f97d7;">exp</span>(t), <span style="color: #a45bad;">1</span>));
+m11 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">1</span>));
+
+<span style="color: #bc6ec5; font-weight: bold;">m2</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #a45bad;">1</span>, <span style="color: #4f97d7;">exp</span>(t)));
+m21 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m2(t), t));
+eXY <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t2, <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t1, <span style="color: #4f97d7;">diff</span>(<span style="color: #4f97d7;">diff</span>(g(<span style="color: #4f97d7;">exp</span>(t1), <span style="color: #4f97d7;">exp</span>(t2)), t1), t2)));
+
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">check the covariance is correct </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+cov_in_c <span style="color: #4f97d7; font-weight: bold;">:</span> k <span style="color: #4f97d7; font-weight: bold;">*</span> ((c <span style="color: #4f97d7; font-weight: bold;">-</span> B1) <span style="color: #4f97d7; font-weight: bold;">*</span> (c <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> B2);
+<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">is</span>(
+    <span style="color: #4f97d7;">equal</span>(
+      eXY <span style="color: #4f97d7; font-weight: bold;">-</span> m11 <span style="color: #4f97d7; font-weight: bold;">*</span> m21,
+      <span style="color: #4f97d7;">subst</span>(B1 <span style="color: #4f97d7; font-weight: bold;">+</span> B12, c, cov_in_c)
+      )
+    ));
+</pre>
+</div>
+
+<pre class="example">
+is(equal(eXY - m11 m21, subst(B1 + B12, c, cov_in_c))) = true
+</pre>
+
+
+<p>
+Finally, we can use the covariance and the mean of the second marginal
+distribution to solve for \(B_1\) and \(B_2\), which then then gives us
+\(B_{12}\) from the solution for \(c\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">g</span>(<span style="color: #7590db;">z1, z2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> ((<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> B12) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">*</span> z2 <span style="color: #4f97d7; font-weight: bold;">+</span> B12 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">*</span> z2) <span style="color: #4f97d7; font-weight: bold;">^</span> (<span style="color: #4f97d7; font-weight: bold;">-</span>k);
+<span style="color: #bc6ec5; font-weight: bold;">m1</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #4f97d7;">exp</span>(t), <span style="color: #a45bad;">1</span>));
+m11 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">1</span>));
+
+<span style="color: #bc6ec5; font-weight: bold;">m2</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #a45bad;">1</span>, <span style="color: #4f97d7;">exp</span>(t)));
+m21 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m2(t), t));
+eXY <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t2, <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t1, <span style="color: #4f97d7;">diff</span>(<span style="color: #4f97d7;">diff</span>(g(<span style="color: #4f97d7;">exp</span>(t1), <span style="color: #4f97d7;">exp</span>(t2)), t1), t2)));
+
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">check the covariance is correct </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+cov_in_c <span style="color: #4f97d7; font-weight: bold;">:</span> k <span style="color: #4f97d7; font-weight: bold;">*</span> ((c <span style="color: #4f97d7; font-weight: bold;">-</span> B1) <span style="color: #4f97d7; font-weight: bold;">*</span> (c <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> B2);
+
+<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">solve for B1 and B2 based on the covariance and mean of the second marginal </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">solve</span>([ex2 <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7;">subst</span>(c <span style="color: #4f97d7; font-weight: bold;">-</span> B1, B12, m21), cov12 <span style="color: #4f97d7; font-weight: bold;">=</span> cov_in_c], [B1, B2])[<span style="color: #a45bad;">1</span>]);
+</pre>
+</div>
+
+<pre class="example">
+solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k], 
+                                 c k + c ex2 + cov12       (c - 1) ex2 + cov12
+            [B1, B2])(1) = [B1 = -------------------, B2 = -------------------]
+                                          k                         k
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb08da9d" class="outline-2">
+<h2 id="orgb08da9d">Bibliography</h2>
+<div class="outline-text-2" id="text-orgb08da9d">
+</div>
+<div id="outline-container-orgf1ad024" class="outline-3">
+<h3 id="orgf1ad024">edwards1961class</h3>
+<div class="outline-text-3" id="text-orgf1ad024">
+<div class="org-src-container">
+<pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">edwards1961class</span>,
+  <span style="color: #7590db;">author</span> =       {Carol B. Edwards and John Gurland},
+  <span style="color: #7590db;">title</span> =        {{A} {C}lass of {D}istributions {A}pplicable to {A}ccidents},
+  <span style="color: #7590db;">journal</span> =      {Journal of the American Statistical Association},
+  <span style="color: #7590db;">volume</span> =       56,
+  <span style="color: #7590db;">number</span> =       295,
+  <span style="color: #7590db;">pages</span> =        {503-517},
+  <span style="color: #7590db;">year</span> =         1961,
+  <span style="color: #7590db;">publisher</span> =    {Taylor &amp; Francis},
+  <span style="color: #7590db;">doi</span> =          {<span style="color: #2aa1ae; text-decoration: underline;">10.1080/01621459.1961.10480641</span>},
+  <span style="color: #7590db;">url</span> =          {
+<span style="color: #2aa1ae; text-decoration: underline;">                  https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1961.10480641</span>
+                  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5d33c0b" class="outline-3">
+<h3 id="org5d33c0b">famoye2010bivariate</h3>
+<div class="outline-text-3" id="text-org5d33c0b">
+<div class="org-src-container">
+<pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">famoye2010bivariate</span>,
+  <span style="color: #7590db;">journal</span> =      {Journal of Applied Statistics},
+  <span style="color: #7590db;">pages</span> =        {969--981},
+  <span style="color: #7590db;">volume</span> =       37,
+  <span style="color: #7590db;">publisher</span> =    {Taylor &amp; Francis},
+  <span style="color: #7590db;">number</span> =       6,
+  <span style="color: #7590db;">year</span> =         2010,
+  <span style="color: #7590db;">title</span> =        {On the bivariate negative binomial regression model},
+  <span style="color: #7590db;">author</span> =       {Famoye, Felix},
+  <span style="color: #7590db;">url</span> =          {<span style="color: #2aa1ae; text-decoration: underline;">http://www.tandfonline.com/doi/abs/10.1080/02664760902984618</span>}
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d26fd1" class="outline-3">
+<h3 id="org7d26fd1">karlis2003analysis</h3>
+<div class="outline-text-3" id="text-org7d26fd1">
+<div class="org-src-container">
+<pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">karlis2003analysis</span>,
+  <span style="color: #7590db;">journal</span> =      {Journal Of The Royal Statistical Society Series D-The
+                  Statistician},
+  <span style="color: #7590db;">pages</span> =        {381--393},
+  <span style="color: #7590db;">volume</span> =       52,
+  <span style="color: #7590db;">publisher</span> =    {BLACKWELL PUBL LTD},
+  <span style="color: #7590db;">year</span> =         2003,
+  <span style="color: #7590db;">title</span> =        {{A}nalysis of sports data by using bivariate {P}oisson models},
+  <span style="color: #7590db;">author</span> =       {Karlis, D and Ntzoufras, L},
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21ec435" class="outline-3">
+<h3 id="org21ec435">lakshminarayana1999bivariate</h3>
+<div class="outline-text-3" id="text-org21ec435">
+<div class="org-src-container">
+<pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">lakshminarayana1999bivariate</span>,
+  <span style="color: #7590db;">journal</span> =      {Communications in Statistics - Theory and Methods},
+  <span style="color: #7590db;">pages</span> =        {267--276},
+  <span style="color: #7590db;">volume</span> =       28,
+  <span style="color: #7590db;">publisher</span> =    {Marcel Dekker, Inc},
+  <span style="color: #7590db;">number</span> =       2,
+  <span style="color: #7590db;">year</span> =         1999,
+  <span style="color: #7590db;">title</span> =        {{O}n a {B}ivariate {P}oisson {D}istribution},
+  <span style="color: #7590db;">author</span> =       {Lakshminarayana, J and Pandit, S.N.N and Srinivasa Rao, K},
+  <span style="color: #7590db;">url</span> =          {<span style="color: #2aa1ae; text-decoration: underline;">http://www.tandfonline.com/doi/abs/10.1080/03610929908832297</span>}
+}
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-06 Tue 18:53</p>
+<p class="date">Created: 2021-06-14 Mon 16:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

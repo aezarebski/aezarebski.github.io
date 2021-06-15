@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-21 Fri 11:42 -->
+<!-- 2021-06-04 Fri 17:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -289,6 +289,7 @@
 <ul>
 <li><a href="#orgdd8c340">Recommended reading</a></li>
 <li><a href="#org8ff7105">Functional programming support</a></li>
+<li><a href="#orgd2cf472">R/Haskell Prelude</a></li>
 <li><a href="#orgf0f1925">Program flow and control</a></li>
 <li><a href="#org359aa49">Numbers</a></li>
 <li><a href="#org2e340f1">Metaprogramming</a></li>
@@ -308,7 +309,7 @@
 </div>
 
 
-<div id="orgebeaa4a" class="figure">
+<div id="org0099b94" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -1328,6 +1329,44 @@ analogue in R.
 </div>
 </div>
 
+<div id="outline-container-orgd2cf472" class="outline-3">
+<h3 id="orgd2cf472">R/Haskell Prelude</h3>
+<div class="outline-text-3" id="text-orgd2cf472">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile</span>
+<span style="color: #bc6ec5; font-weight: bold;">drop_while</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>p, xs<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>length<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span> == <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+    xs
+  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
+    x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> head<span style="color: #2d9574;">(</span>xs, <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
+    remaining <span style="color: #ce537a; font-weight: bold;">&lt;-</span> tail<span style="color: #2d9574;">(</span>xs, -<span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+      drop_while<span style="color: #67b11d;">(</span>p, remaining<span style="color: #67b11d;">)</span>
+    <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
+      remaining
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile</span>
+<span style="color: #bc6ec5; font-weight: bold;">take_while</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>p, xs<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>length<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span> == <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+    xs
+  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
+    x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> head<span style="color: #2d9574;">(</span>xs, <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
+    remaining <span style="color: #ce537a; font-weight: bold;">&lt;-</span> tail<span style="color: #2d9574;">(</span>xs, -<span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+      c<span style="color: #67b11d;">(</span>x, take_while<span style="color: #b1951d;">(</span>p, remaining<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+    <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
+      c<span style="color: #67b11d;">()</span>
+    <span style="color: #2d9574;">}</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgf0f1925" class="outline-3">
 <h3 id="orgf0f1925">Program flow and control</h3>
 <div class="outline-text-3" id="text-orgf0f1925">
@@ -1622,7 +1661,7 @@ ggplot<span style="color: #4f97d7;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-05-21 Fri 11:42</p>
+<p class="date">Created: 2021-06-04 Fri 17:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

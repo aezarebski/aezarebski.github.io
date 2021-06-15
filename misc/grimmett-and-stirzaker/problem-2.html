@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-06-04 Fri 17:29 -->
+<!-- 2021-06-14 Mon 16:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -216,29 +216,97 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../index.html">Home</a>
-</p>
-
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
-<script src="./main.js"></script>
-
-<p>
-Here is a collection of technical notes based on my reading of academic papers.
-</p>
-
-<ul class="org-ul">
-<li><a href="./reading/manceau2020probability.html"><code>manceau2020probability</code></a></li>
-<li><a href="./reading/lakshminarayana1999bivariate.html"><code>lakshminarayana1999bivariate</code></a></li>
+<ul class="nav-menu">
+    <li class="nav-menu"><a id="prevProblem">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a id="nextProblem">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><a onclick="toggleStyle()">Light/Dark</a></li>
 </ul>
+
+<script src="./main.js"></script>
+<p style="margin-top: 100px"> </p>
+
+<blockquote>
+<p>
+A fair coin is thrown repeatedly. What is the probability that on the \(n\)th
+throw:
+</p>
+
+<p>
+a.) a heads appears for the first time?
+b.) the number of heads and tails to date are equal?
+c.) exactly two heads have appeared altogether to date?
+d.) at least two heads have appeared to date?
+</p>
+</blockquote>
+
+<p>
+The probability of a heads occurring for the first time on the \(n\)th trial is
+the same as \(n-1\) tails followed by a heads, so \(2^{-n}\).
+</p>
+
+<p>
+To have had an equal number of heads and tails upon the \(n\)th throw requires
+\(n = 2k\) for some \(k\), otherwise the probability is trivially zero. The
+number of heads is a binomial random variable, so the probability is
+</p>
+
+<p>
+\[
+{2k \choose k} 2^{-n}
+\]
+</p>
+
+<p>
+Similarly to get exactly two heads is
+</p>
+
+<p>
+\[
+{n \choose 2} 2^{-n}
+\]
+</p>
+
+<p>
+And at least two heads is just the compliment of either zero or one head.
+</p>
+
+<p>
+\[
+1 - (1 - n)2^{-n}.
+\]
+</p>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-06-04 Fri 17:29</p>
+<p class="date">Created: 2021-06-14 Mon 16:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
