@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-06-16 Wed 10:28 -->
+<!-- 2021-06-22 Tue 11:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-notes</title>
+<title>aez-notes-probability</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
 <style type="text/css">
@@ -241,7 +241,7 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">aez-notes</h1>
+<h1 class="title">aez-notes-probability</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
@@ -262,6 +262,9 @@
 <ul>
 <li><a href="#org13a18fe">Probability notes</a>
 <ul>
+<li><a href="#org7b5e7f2">\(\sigma\)-field</a></li>
+<li><a href="#org62885d6">Probability measure</a></li>
+<li><a href="#org88e35c5">Conditional probability</a></li>
 <li><a href="#orgead8db6">Poisson process</a></li>
 <li><a href="#orgd10420f">Birth process</a></li>
 <li><a href="#orgffcdf35">Birth-death process</a></li>
@@ -296,12 +299,67 @@
 <h2 id="org13a18fe">Probability notes</h2>
 <div class="outline-text-2" id="text-org13a18fe">
 </div>
+<div id="outline-container-org7b5e7f2" class="outline-3">
+<h3 id="org7b5e7f2">\(\sigma\)-field</h3>
+<div class="outline-text-3" id="text-org7b5e7f2">
+<p>
+A \(\sigma\)-field, \(\Sigma\), over a set \(\Omega\) is a subset of the power
+set of \(\Omega\) (ie it is a set of subsets of \(\Omega\)) with three
+properties:
+</p>
+
+<ol class="org-ol">
+<li>\(\Sigma\) contains \(\Omega\),</li>
+<li>\(\Sigma\) is closed under complements, and</li>
+<li>\(\Sigma\) is closed under countable unions.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org62885d6" class="outline-3">
+<h3 id="org62885d6">Probability measure</h3>
+<div class="outline-text-3" id="text-org62885d6">
+<p>
+Given a set, \(\Omega\) and a <a href="#org7b5e7f2">\(\sigma\)-field</a>, \(\Sigma\), over it, a real
+valued function, \(\mu\) is a measure if
+</p>
+
+<ol class="org-ol">
+<li>\(\mu\) is non-negative,</li>
+<li>\(\mu(\emptyset) = 0\), and</li>
+<li>\(\mu\) has countable additivity, ie the measure of a union of a countable
+set of disjoint sets is the sum of the measures of them.</li>
+</ol>
+
+<p>
+A probability measure is a measure where \(\mu(\Omega) = 1\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org88e35c5" class="outline-3">
+<h3 id="org88e35c5">Conditional probability</h3>
+<div class="outline-text-3" id="text-org88e35c5">
+<p>
+For a <a href="#org62885d6">probability measure</a> if \(P(B) > 0\), then the probability of \(A\) given
+\(B\) is defined by
+</p>
+
+<p>
+\[
+P(A\mid B) = \frac{P(A \cap B)}{P(B)}
+\]
+</p>
+</div>
+</div>
+
 <div id="outline-container-orgead8db6" class="outline-3">
 <h3 id="orgead8db6">Poisson process</h3>
 <div class="outline-text-3" id="text-orgead8db6">
 <p>
-This is a continuous time process which counts the arrivals which occur at exponentially distributed times with rate \(\lambda\).
-The master equations for this process are
+This is a continuous time process which counts the arrivals which occur at
+exponentially distributed times with rate \(\lambda\). The master equations for
+this process are
 </p>
 
 <p>
@@ -321,8 +379,9 @@ and for \(i>0\)
 </p>
 
 <p>
-Note that the rate at which the population increases in independent of the size of the population.
-We can multiply through by \(z^{i}\) and sum over \(i\) to get the following PDE for the PGF, \(g(z,t)\)
+Note that the rate at which the population increases in independent of the size
+of the population. We can multiply through by \(z^{i}\) and sum over \(i\) to
+get the following PDE for the PGF, \(g(z,t)\)
 </p>
 
 <p>
@@ -351,9 +410,9 @@ which is the PGF for a Poisson distribution with rate \(\lambda t\).
 <h3 id="orgd10420f">Birth process</h3>
 <div class="outline-text-3" id="text-orgd10420f">
 <p>
-Consider a process where individuals give birth with rate \(\lambda\).
-In this case the rate at which the population increases in size depends on the current population size.
-The master equation for this is
+Consider a process where individuals give birth with rate \(\lambda\). In this
+case the rate at which the population increases in size depends on the current
+population size. The master equation for this is
 </p>
 
 <p>
@@ -363,8 +422,9 @@ The master equation for this is
 </p>
 
 <p>
-for \(i\geq n\) where the process starts with a population of size \(n\): \(p_{n}(0) = 1\).
-Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+for \(i\geq n\) where the process starts with a population of size \(n\):
+\(p_{n}(0) = 1\). Multiplying through by \(z^i\) and summing over \(i\) gives
+the following PDE for the PGF, \(g(z,t)\)
 </p>
 
 <p>
@@ -374,8 +434,9 @@ Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE fo
 </p>
 
 <p>
-Given the initial condition, the boundary condition for the PDE is \(g(z,0) = z^n\).
-The method of characteristics looks suitable for solving this; the function, \(g\), will be constant along the curves satisfying
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) =
+z^n\). The method of characteristics looks suitable for solving this; the
+function, \(g\), will be constant along the curves satisfying
 </p>
 
 <p>
@@ -397,7 +458,8 @@ C = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
 
 <p>
 So we know that \(g\) must be a function of the RHS of the previous equation.
-With the initial condition \(n=1\) &#x2014; which due to independence is usually sufficient to consider &#x2014; that function is the identity function so
+With the initial condition \(n=1\) &#x2014; which due to independence is usually
+sufficient to consider &#x2014; that function is the identity function so
 </p>
 
 <p>
@@ -417,8 +479,8 @@ From this we can then see that
 </p>
 
 <p>
-which agrees with the mean-field approximation.
-To check that this is actually a solution to the PDE, we can use the following little bit of Maxima
+which agrees with the mean-field approximation. To check that this is actually a
+solution to the PDE, we can use the following little bit of Maxima
 </p>
 
 <div class="org-src-container">
@@ -435,8 +497,8 @@ To check that this is actually a solution to the PDE, we can use the following l
 <h3 id="orgffcdf35">Birth-death process</h3>
 <div class="outline-text-3" id="text-orgffcdf35">
 <p>
-Consider a process where individuals give birth at a rate \(\lambda\) and die at a rate \(\mu\).
-The master equation for this is
+Consider a process where individuals give birth at a rate \(\lambda\) and die at
+a rate \(\mu\). The master equation for this is
 </p>
 
 <p>
@@ -446,8 +508,8 @@ The master equation for this is
 </p>
 
 <p>
-with the condition that \(p_i=0\) for \(i<0\).
-Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+with the condition that \(p_i=0\) for \(i<0\). Multiplying through by \(z^i\)
+and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
 </p>
 
 <p>
@@ -457,8 +519,9 @@ Multiplying through by \(z^i\) and summing over \(i\) gives the following PDE fo
 </p>
 
 <p>
-Given the initial condition, the boundary condition for the PDE is \(g(z,0) = z^n\).
-The method of characteristics looks suitable for solving this; the function, \(g\), will be constant along the curves satisfying
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) =
+z^n\). The method of characteristics looks suitable for solving this; the
+function, \(g\), will be constant along the curves satisfying
 </p>
 
 <p>
@@ -479,8 +542,9 @@ C = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda 
 </p>
 
 <p>
-So we know that the solution can only be a function of the RHS of the previous equation.
-Since this simplifies to \(z\) at \(t=0\) and assuming the initial condition \(n=1\) we get the solution
+So we know that the solution can only be a function of the RHS of the previous
+equation. Since this simplifies to \(z\) at \(t=0\) and assuming the initial
+condition \(n=1\) we get the solution
 </p>
 
 <p>
@@ -502,7 +566,8 @@ We can then test this in maxima with the following
 </div>
 
 <p>
-Taking the derivative and the limit we get that the expected population size is \(exp\{(&lambda;-&mu;)t\} which again agrees with the mean field approximation.
+Taking the derivative and the limit we get that the expected population size is
+\(exp\{(&lambda;-&mu;)t\} which again agrees with the mean field approximation.
 </p>
 </div>
 </div>
@@ -556,9 +621,9 @@ Jonathon Novak has a particularly clear <a href="https://doi.org/10.4169/amer.ma
 <h3 id="org057451d">Negative binomial</h3>
 <div class="outline-text-3" id="text-org057451d">
 </div>
-<div id="outline-container-org6dad21f" class="outline-4">
-<h4 id="org6dad21f">Notation</h4>
-<div class="outline-text-4" id="text-org6dad21f">
+<div id="outline-container-org113b3aa" class="outline-4">
+<h4 id="org113b3aa">Notation</h4>
+<div class="outline-text-4" id="text-org113b3aa">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -571,9 +636,9 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-orgcdfb8dc" class="outline-4">
-<h4 id="orgcdfb8dc">Properties</h4>
-<div class="outline-text-4" id="text-orgcdfb8dc">
+<div id="outline-container-org811b97a" class="outline-4">
+<h4 id="org811b97a">Properties</h4>
+<div class="outline-text-4" id="text-org811b97a">
 <p>
 \[
 \mathbb{E}X = \frac{pr}{1-p}
@@ -633,9 +698,9 @@ distribution, it uses \(1-p\) where above we use \(p\).
 <h3 id="org4e617bf">Poisson</h3>
 <div class="outline-text-3" id="text-org4e617bf">
 </div>
-<div id="outline-container-orgfd447a2" class="outline-4">
-<h4 id="orgfd447a2">Notation</h4>
-<div class="outline-text-4" id="text-orgfd447a2">
+<div id="outline-container-org795a400" class="outline-4">
+<h4 id="org795a400">Notation</h4>
+<div class="outline-text-4" id="text-org795a400">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -648,9 +713,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-org811b97a" class="outline-4">
-<h4 id="org811b97a">Properties</h4>
-<div class="outline-text-4" id="text-org811b97a">
+<div id="outline-container-org15ddb7a" class="outline-4">
+<h4 id="org15ddb7a">Properties</h4>
+<div class="outline-text-4" id="text-org15ddb7a">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -727,9 +792,9 @@ and Ntzoufras (2003)</a> for an example.
 </p>
 </div>
 
-<div id="outline-container-org113b3aa" class="outline-4">
-<h4 id="org113b3aa">Notation</h4>
-<div class="outline-text-4" id="text-org113b3aa">
+<div id="outline-container-org61a8a36" class="outline-4">
+<h4 id="org61a8a36">Notation</h4>
+<div class="outline-text-4" id="text-org61a8a36">
 <p>
 \[
 (X,Y) \sim \text{BP}(\lambda_{1},\lambda_{2},\lambda_{3})
@@ -985,7 +1050,7 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-06-16 Wed 10:28</p>
+<p class="date">Created: 2021-06-22 Tue 11:11</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
