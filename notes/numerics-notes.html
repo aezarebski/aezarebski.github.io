@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-18 Tue 16:17 -->
+<!-- 2021-07-05 Mon 10:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -261,6 +261,7 @@
 <li><a href="#org3769d3f">Combinatoric functions</a></li>
 <li><a href="#org509fa00">Factorial</a></li>
 <li><a href="#org825fd97">Pochhammer</a></li>
+<li><a href="#org510a6b9">Computational complexity</a></li>
 </ul>
 </li>
 </ul>
@@ -465,11 +466,38 @@ Pochhammer function.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org510a6b9" class="outline-3">
+<h3 id="org510a6b9">Computational complexity</h3>
+<div class="outline-text-3" id="text-org510a6b9">
+<p>
+Suppose you have a program that depends on a parameter <code>n</code> and takes <code>t</code> seconds
+to evaluate. The following snippet can be used as a starting point for
+estimating how long it will take to run on a larger input.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">df <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>t = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">38</span>,<span style="color: #a45bad;">106</span>,<span style="color: #a45bad;">255</span>,<span style="color: #a45bad;">847</span><span style="color: #bc6ec5;">)</span>, n = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">180</span>,<span style="color: #a45bad;">190</span>,<span style="color: #a45bad;">200</span>,<span style="color: #a45bad;">210</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+ggplot<span style="color: #4f97d7;">(</span>data = df, mapping = aes<span style="color: #bc6ec5;">(</span>x = n, y = t / <span style="color: #a45bad;">60</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span> +
+  scale_y_log10<span style="color: #4f97d7;">(</span>n.breaks = <span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span> +
+  geom_smooth<span style="color: #4f97d7;">(</span>method = <span style="color: #2d9574;">"lm"</span>, fullrange = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span> +
+  xlim<span style="color: #4f97d7;">(</span>c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">170</span>, <span style="color: #a45bad;">220</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+Of course, this assumes an exponential complexity, but is easy to tweak for
+polynomial complexity.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-05-18 Tue 16:17</p>
+<p class="date">Created: 2021-07-05 Mon 10:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
