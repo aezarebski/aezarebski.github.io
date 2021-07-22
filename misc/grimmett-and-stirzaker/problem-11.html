@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-20 Tue 10:59 -->
+<!-- 2021-07-05 Mon 10:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -193,7 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet-dark.css" />
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -242,211 +242,58 @@
 <body>
 <div id="content">
 <h1 class="title">aez-notes</h1>
-<p>
-<a href="../index.html">Home</a>
-</p>
-
-<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
-
-<script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
-</script>
-
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org8b0c35d">Coalescent theory</a>
-<ul>
-<li><a href="#org2978cff">Notes from <code>nordborg2000coalescent</code></a></li>
-</ul>
-</li>
-<li><a href="#org8608aed">Grammars</a>
-<ul>
-<li><a href="#orga05af82">Newick</a></li>
-</ul>
-</li>
-<li><a href="#org6994df2">Software</a>
-<ul>
-<li><a href="#orgcaca74f">Beast2</a></li>
-<li><a href="#org6c320de">APE in R</a></li>
-<li><a href="#org51ed92b">Ggtree and friends</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org8b0c35d" class="outline-2">
-<h2 id="org8b0c35d">Coalescent theory</h2>
-<div class="outline-text-2" id="text-org8b0c35d">
-</div>
-<div id="outline-container-org2978cff" class="outline-3">
-<h3 id="org2978cff">Notes from <code>nordborg2000coalescent</code></h3>
-<div class="outline-text-3" id="text-org2978cff">
-<ul class="org-ul">
-<li>Wright-Fisher considers a population of \(N\) asexually reproducing
-individuals.</li>
-<li>Each individual selects a parent from the previous generation independently
-sampling uniformly at random.</li>
-<li>The probability that two individuals have a common ancestor longer than \(t\)
-generations ago is \((1-1/N)^t\) which can be seen by observing that they
-probability that the probability of sharing an ancestor is \(1/N\) in each
-generation.</li>
-<li>Time can be rescaled into \(\tau = t / N\) in which case \(\tau N = t\) and
-the expression before limits to \(e^{-\tau}\) in the limit as \(N\to\infty\).
-Hence the time between coalescent events follows an exponential distribution
-(in the limit).</li>
-<li>If there are \(k\) lineages we care about there are \(k\) choose \(2\) ways
-for a coalescence to occur hence the global coalescence rate is \(k(k-1)/2\).</li>
-<li>There is a similar set up for a structured coalescent in which migration
-events and coalescent events occur following a Poisson process. This is
-possible because of a particular scaling of time.</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org8608aed" class="outline-2">
-<h2 id="org8608aed">Grammars</h2>
-<div class="outline-text-2" id="text-org8608aed">
-</div>
-<div id="outline-container-orga05af82" class="outline-3">
-<h3 id="orga05af82">Newick</h3>
-<div class="outline-text-3" id="text-orga05af82">
-<p>
-See <a href="https://web.archive.org/web/20210225204509/https://evolution.genetics.washington.edu/phylip/newick_doc.html">here</a> for a formal specification of the Newick grammar by Gary Olsen (1990).
-The important part of this is
-</p>
-
-<div class="org-src-container">
-<pre class="src src-text">Conventions:
-   Items in { } may appear zero or more times.
-   Items in [ ] are optional, they may appear once or not at all.
-   All other punctuation marks (colon, semicolon, parentheses, comma and
-         single quote) are required parts of the format.
-
-
-              tree ==&gt; descendant_list [ root_label ] [ : branch_length ] ;
-
-   descendant_list ==&gt; ( subtree { , subtree } )
-
-           subtree ==&gt; descendant_list [internal_node_label] [: branch_length]
-                   ==&gt; leaf_label [: branch_length]
-
-            root_label ==&gt; label
-   internal_node_label ==&gt; label
-            leaf_label ==&gt; label
-
-                 label ==&gt; unquoted_label
-                       ==&gt; quoted_label
-
-        unquoted_label ==&gt; string_of_printing_characters
-          quoted_label ==&gt; ' string_of_printing_characters '
-
-         branch_length ==&gt; signed_number
-                       ==&gt; unsigned_number
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org6994df2" class="outline-2">
-<h2 id="org6994df2">Software</h2>
-<div class="outline-text-2" id="text-org6994df2">
-</div>
-<div id="outline-container-orgcaca74f" class="outline-3">
-<h3 id="orgcaca74f">Beast2</h3>
-<div class="outline-text-3" id="text-orgcaca74f">
-<ul class="org-ul">
-<li><code>nix-shell -p jdk11</code> gives you a shell with java installed.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org6c320de" class="outline-3">
-<h3 id="org6c320de">APE in R</h3>
-<div class="outline-text-3" id="text-org6c320de">
-<p>
-<a href="https://cran.r-project.org/web/packages/ape/ape.pdf">FULL DOCUMENTATION</a>
-</p>
-
-<p>
-Use <code>rlineage</code> to simulate the complete tree. To get the sub-tree consisting of
-just those that made it to the present use <code>drop.fossils</code>. If you want to filter
-for particular nodes, there is <code>keep.tip</code> and <code>drop.tip</code>.
-</p>
-
-<p>
-There is a <code>plot.phylo</code> method and <code>ltt.plot</code> which can be used to get quick
-visualisations of a phylogeny, but for publication quality figures you probably
-want to use Ggtree.
-</p>
-</div>
-
-<div id="outline-container-org18754a4" class="outline-4">
-<h4 id="org18754a4">The <code>phylo</code> class</h4>
-<div class="outline-text-4" id="text-org18754a4">
-<p>
-The <code>phylo</code> class is pretty much the defacto standard for representing
-phylogenies in R. A phylogeny with \(n\) tips is represented as a <code>phylo</code> which
-has the following attributes:
-</p>
-
-<ul class="org-ul">
-<li><code>Nnode</code> is the number of internal nodes in the tree,</li>
-<li><code>tip.label</code> is a string indicating the name of each tip,</li>
-<li><code>edge</code> is a matrix with two columns where a row, \([i,j]\), indicates an edge
-from node \(i\) to node \(j\),</li>
-<li><code>edge.length</code> is an array where element is the length of an edge in the
-corresponding row of the <code>edge</code> matrix.</li>
+<ul class="nav-menu">
+    <li class="nav-menu"><a id="prevProblem">Previous</a></li>
+    <li class="nav-menu"><a href="./index.html">Problem list</a></li>
+    <li class="nav-menu"><a id="nextProblem">Next</a></li>
+    <li class="nav-menu" style="float:right"><a href="../../index.html">Home</a></li>
+    <li class="nav-menu" style="float:right"><a onclick="toggleStyle()">Light/Dark</a></li>
 </ul>
 
-<p>
-<b>Note</b> that the indexing of the nodes of the tree is \(1\) to \(n\) for the tips
-and the internal nodes get allocated the integers \(n+1,n+2,\dots\). You do not
-want to reconstruct the tree from this information yourself though so <code>ape</code>
-offers convenience functions such as <code>node.depth.edgelength</code> which gives you the
-depths from the TMRCA down to each node.
-</p>
-</div>
-</div>
-</div>
+<script src="./main.js"></script>
+<p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org51ed92b" class="outline-3">
-<h3 id="org51ed92b">Ggtree and friends</h3>
-<div class="outline-text-3" id="text-org51ed92b">
+<blockquote>
 <p>
-To parse the various tree formats there is the <code>treeio</code> package which has
-functions such as <code>read.beast</code> and <code>read.nhx</code>. This will produce a value of the
-<code>treedata</code> class which is defined in the <code>tidytree</code> package. The <code>treedata</code> is
-an S4 class, so it has <i>slots</i>. So to get the <code>phylo</code> object storing the
-topology you would use <code>mytreedata@phylo</code> and to get associated data there is a
-<code>data</code> slot.
+Prove <b>Boole's inequalities:</b>
 </p>
 
 <p>
-To actually visualise these objects there is the <code>ggtree</code> package which provides
-geometries in the style of Ggplot2. Note that to install these packages you will
-likely want to use Bioconductor.
+\[
+\mathbb{P}\left(\bigcup_i^n A_i \right) \leq \sum_i^n \mathbb{P}(A_i), \quad \mathbb{P}\left(\bigcap_i^n A_i \right) \geq 1 - \sum_i^n \mathbb{P}(A_i^c)
+\]
+</p>
+</blockquote>
+
+<p>
+If \(n=1\) the first inequality is trivally true. If it holds up to \(n\) then
 </p>
 
-<div class="org-src-container">
-<pre class="src src-R">BiocManager::install<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ggtree"</span><span style="color: #4f97d7;">)</span> 
-</pre>
-</div>
-</div>
-</div>
-</div>
+\begin{align*}
+\mathbb{P}\left(\bigcup_i^{n+1} A_i \right) =& \mathbb{P}\left(\bigcup_i^{n} A_i \right) + \mathbb{P}\left(A_{n+1}\backslash \bigcup_i^{n} A_i\right) \\
+\leq& \mathbb{P}\left(\bigcup_i^{n} A_i \right) + \mathbb{P}\left(A_{n+1}\right) \\
+\leq& \sum_i^n \mathbb{P}(A_i) + \mathbb{P}\left(A_{n+1}\right) \\
+=& \sum_i^{n+1} \mathbb{P}(A_i)
+\end{align*}
+
+<p>
+and the result follows by induction. For the second inequality, we use De
+Morgan's law.
+</p>
+
+\begin{align*}
+\mathbb{P}\left(\bigcap_i^n A_i \right) =& \mathbb{P}\left(\left(\bigcup_i^n A_i^c \right)^c \right) \\
+=& 1 - \mathbb{P}\left(\bigcup_i^n A_i^c  \right) \\
+\geq& 1 - \sum_i^n \mathbb{P}(A_i^c)
+\end{align*}
+
+<p>
+where the last inequality comes from the previous result.
+</p>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-07-20 Tue 10:59</p>
+<p class="date">Created: 2021-07-05 Mon 10:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

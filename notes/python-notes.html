@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-06 Tue 18:53 -->
+<!-- 2021-07-20 Tue 10:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -226,6 +226,7 @@
 <ul>
 <li><a href="#org7dffbf0">Python notes</a>
 <ul>
+<li><a href="#org2c946f1">Syntax</a></li>
 <li><a href="#org845461d">Virtual environment</a></li>
 <li><a href="#orgccd5f73">Jupyter via Nix</a></li>
 <li><a href="#org9d85a36">Spacemacs layer</a></li>
@@ -236,7 +237,17 @@
 <li><a href="#org22b1838">Filtering by column values</a></li>
 </ul>
 </li>
-<li><a href="#org2315347">Matplotlib</a></li>
+<li><a href="#org2315347">Matplotlib</a>
+<ul>
+<li><a href="#orgc14f977">Jupyter</a></li>
+<li><a href="#org18ee625">Random notes</a></li>
+</ul>
+</li>
+<li><a href="#org4b62832">NetworkX</a>
+<ul>
+<li><a href="#org34bc56c">Mutating a network</a></li>
+</ul>
+</li>
 <li><a href="#org0b4edd9"><span class="todo TODO">TODO</span> Debugging</a></li>
 </ul>
 </li>
@@ -251,6 +262,20 @@
 <h2 id="org7dffbf0">Python notes</h2>
 <div class="outline-text-2" id="text-org7dffbf0">
 </div>
+<div id="outline-container-org2c946f1" class="outline-3">
+<h3 id="org2c946f1">Syntax</h3>
+<div class="outline-text-3" id="text-org2c946f1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">dictionary</span>
+<span style="color: #7590db;">my_dict</span> = <span style="color: #4f97d7;">{</span><span style="color: #2d9574;">"foo"</span>: <span style="color: #a45bad;">1</span>, <span style="color: #2d9574;">"bar"</span>: <span style="color: #2d9574;">'a'</span><span style="color: #4f97d7;">}</span> 
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list comprehension</span>
+<span style="color: #4f97d7;">[</span>f<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> xs <span style="color: #4f97d7; font-weight: bold;">if</span> p<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org845461d" class="outline-3">
 <h3 id="org845461d">Virtual environment</h3>
 <div class="outline-text-3" id="text-org845461d">
@@ -260,6 +285,15 @@
 pip install -U pip   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">update pip</span>
 pip install -r requirements.txt
 deactivate
+</pre>
+</div>
+
+<p>
+To save a copy of the packages in an environment you can use freeze
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">pip freeze &gt; requirements.txt
 </pre>
 </div>
 </div>
@@ -348,6 +382,13 @@ jupyter lab server.
 </tr>
 </tbody>
 </table>
+
+<ul class="org-ul">
+<li>I have found that if I'm using a virtual environment I need to pip install
+IPython before I can use the REPL properly. If the REPL starts in the wrong
+python version even after activating the virtual environment this might be
+worth a try.</li>
+</ul>
 </div>
 </div>
 
@@ -356,7 +397,8 @@ jupyter lab server.
 <div class="outline-text-3" id="text-orgfb83fc6">
 <p>
 There is the function <code>help</code> which you can give an object and it will attempt to
-provide some information about the class of the object.
+provide some information about the class of the object. You can also get a list
+of the attributes of an object with the <code>.__dir__()</code> method.
 </p>
 </div>
 </div>
@@ -443,6 +485,10 @@ only return a view of the data.
 <div id="outline-container-org2315347" class="outline-3">
 <h3 id="org2315347">Matplotlib</h3>
 <div class="outline-text-3" id="text-org2315347">
+</div>
+<div id="outline-container-orgc14f977" class="outline-4">
+<h4 id="orgc14f977">Jupyter</h4>
+<div class="outline-text-4" id="text-orgc14f977">
 <p>
 To get this working in a jupyter notebook you'll need the following at the head
 of the first cell pretty much.
@@ -462,6 +508,40 @@ hist. Legends need to be added seperately.
 </div>
 </div>
 
+<div id="outline-container-org18ee625" class="outline-4">
+<h4 id="org18ee625">Random notes</h4>
+<div class="outline-text-4" id="text-org18ee625">
+<ul class="org-ul">
+<li>You want to use the pyplot interface: <code>import matplotlib.pyplot as plt</code>.</li>
+<li>You create a figure object first: <code>fig = plt.figure()</code></li>
+<li>You create an axes object from the figure object: <code>ax =
+  fig.add_axes([0.1,0.1,0.8,0.8])</code></li>
+<li>If you want to draw multiple subplots there are methods to generate multiple
+axes.</li>
+<li>The axes object has all sorts of methods to draw different geometric objects.
+There is a <code>plot</code> method for basic lines and points, but there are other
+methods, eg <code>bar</code> and <code>text</code> to draw other things.</li>
+<li>You show the figure with <code>plt.show()</code>, or you can save it with the
+<code>plt.savefig()</code> method.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b62832" class="outline-3">
+<h3 id="org4b62832">NetworkX</h3>
+<div class="outline-text-3" id="text-org4b62832">
+</div>
+<div id="outline-container-org34bc56c" class="outline-4">
+<h4 id="org34bc56c">Mutating a network</h4>
+<div class="outline-text-4" id="text-org34bc56c">
+<ul class="org-ul">
+<li>relabel a node with <a href="https://networkx.org/documentation/stable/reference/generated/networkx.relabel.relabel_nodes.html?highlight=rename#networkx-relabel-relabel-nodes"><code>networkx.relabel.relabel_nodes</code></a></li>
+</ul>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org0b4edd9" class="outline-3">
 <h3 id="org0b4edd9"><span class="todo TODO">TODO</span> Debugging</h3>
 </div>
@@ -469,7 +549,7 @@ hist. Legends need to be added seperately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-06 Tue 18:53</p>
+<p class="date">Created: 2021-07-20 Tue 10:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
