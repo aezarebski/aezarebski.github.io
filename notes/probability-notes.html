@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-26 Mon 13:56 -->
+<!-- 2021-08-04 Wed 11:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-probability</title>
@@ -266,12 +266,14 @@
 <li><a href="#org62885d6">Probability measure</a></li>
 <li><a href="#org88e35c5">Conditional probability</a></li>
 <li><a href="#orgead8db6">Poisson process</a></li>
+<li><a href="#org074784d">Probability generating function (PGF)</a></li>
 <li><a href="#orgd10420f">Birth process</a></li>
 <li><a href="#orgffcdf35">Birth-death process</a></li>
 <li><a href="#org14f1789">Moment closure</a></li>
 <li><a href="#org12c3861">Change/Transformation of variable</a></li>
 <li><a href="#org53ad437">Random walk</a></li>
 <li><a href="#orgd7dbc6c">Geometric series</a></li>
+<li><a href="#org4a0ddd8">Squeeze theorem</a></li>
 </ul>
 </li>
 <li><a href="#orgdb2ecba">Distributions</a>
@@ -407,6 +409,26 @@ which is the PGF for a Poisson distribution with rate \(\lambda t\).
 </div>
 </div>
 
+<div id="outline-container-org074784d" class="outline-3">
+<h3 id="org074784d">Probability generating function (PGF)</h3>
+<div class="outline-text-3" id="text-org074784d">
+<p>
+For a discrete random variable \(X\) taking values from the non-negative
+integers, the <i>probability generating function</i> is defined as
+</p>
+
+<p>
+\[
+G(z) = \mathbb{E}(z^{X}) = \sum_{x=0}^{\infty} f_X(x) z^{x}
+\]
+</p>
+
+<p>
+where \(f_X\) is the <i>probability mass function</i> (PMF).
+</p>
+</div>
+</div>
+
 <div id="outline-container-orgd10420f" class="outline-3">
 <h3 id="orgd10420f">Birth process</h3>
 <div class="outline-text-3" id="text-orgd10420f">
@@ -485,10 +507,10 @@ solution to the PDE, we can use the following little bit of Maxima
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(g(z,t), z <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>l <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> z <span style="color: #4f97d7; font-weight: bold;">*</span> ( <span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span>l <span style="color: #4f97d7; font-weight: bold;">*</span> t))));
+<pre class="src src-maxima">define<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span>z,t<span style="color: #bc6ec5;">)</span>, z * exp<span style="color: #bc6ec5;">(</span>-l * t<span style="color: #bc6ec5;">)</span> / <span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span> - z * <span style="color: #2d9574;">(</span> <span style="color: #a45bad;">1-</span> exp<span style="color: #67b11d;">(</span>-l * t<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(l <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">*</span> (z <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">diff</span>(g(z,t), z), <span style="color: #4f97d7;">diff</span>(g(z,t), t)));
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(g(z,<span style="color: #a45bad;">0</span>), z));
+is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</span>l * z * <span style="color: #2d9574;">(</span>z - <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span> * diff<span style="color: #2d9574;">(</span>g<span style="color: #67b11d;">(</span>z,t<span style="color: #67b11d;">)</span>, z<span style="color: #2d9574;">)</span>, diff<span style="color: #2d9574;">(</span>g<span style="color: #67b11d;">(</span>z,t<span style="color: #67b11d;">)</span>, t<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</span>g<span style="color: #2d9574;">(</span>z,<span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span>, z<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 </div>
@@ -559,10 +581,10 @@ We can then test this in maxima with the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">define</span>(g(z,t), ((b <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> (b <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">-</span> a <span style="color: #4f97d7; font-weight: bold;">*</span> ( z<span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>)) <span style="color: #4f97d7; font-weight: bold;">/</span> ((b <span style="color: #4f97d7; font-weight: bold;">*</span> z <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">exp</span>(<span style="color: #4f97d7; font-weight: bold;">-</span> (b <span style="color: #4f97d7; font-weight: bold;">-</span> a) <span style="color: #4f97d7; font-weight: bold;">*</span> t) <span style="color: #4f97d7; font-weight: bold;">-</span> b <span style="color: #4f97d7; font-weight: bold;">*</span> ( z<span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>)));
+<pre class="src src-maxima">define<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span>z,t<span style="color: #bc6ec5;">)</span>, <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>b * z - a<span style="color: #2d9574;">)</span> * exp<span style="color: #2d9574;">(</span>- <span style="color: #67b11d;">(</span>b - a<span style="color: #67b11d;">)</span> * t<span style="color: #2d9574;">)</span> - a * <span style="color: #2d9574;">(</span> z- <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> / <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>b * z - a<span style="color: #2d9574;">)</span> * exp<span style="color: #2d9574;">(</span>- <span style="color: #67b11d;">(</span>b - a<span style="color: #67b11d;">)</span> * t<span style="color: #2d9574;">)</span> - b * <span style="color: #2d9574;">(</span> z- <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>((<span style="color: #a45bad;">1</span><span style="color: #4f97d7; font-weight: bold;">-</span>z)<span style="color: #4f97d7; font-weight: bold;">*</span>(b<span style="color: #4f97d7; font-weight: bold;">*</span>z<span style="color: #4f97d7; font-weight: bold;">-</span>a) <span style="color: #4f97d7; font-weight: bold;">*</span> <span style="color: #4f97d7;">diff</span>(g(z,t), z), <span style="color: #4f97d7; font-weight: bold;">-</span><span style="color: #4f97d7;">diff</span>(g(z,t), t)));
-<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(g(z,<span style="color: #a45bad;">0</span>), z));
+is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #a45bad;">1-z</span><span style="color: #2d9574;">)</span>*<span style="color: #2d9574;">(</span>b*z-a<span style="color: #2d9574;">)</span> * diff<span style="color: #2d9574;">(</span>g<span style="color: #67b11d;">(</span>z,t<span style="color: #67b11d;">)</span>, z<span style="color: #2d9574;">)</span>, -diff<span style="color: #2d9574;">(</span>g<span style="color: #67b11d;">(</span>z,t<span style="color: #67b11d;">)</span>, t<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</span>g<span style="color: #2d9574;">(</span>z,<span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span>, z<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 
@@ -627,6 +649,17 @@ for \(|r| < 1\).
 </p>
 </div>
 </div>
+
+<div id="outline-container-org4a0ddd8" class="outline-3">
+<h3 id="org4a0ddd8">Squeeze theorem</h3>
+<div class="outline-text-3" id="text-org4a0ddd8">
+<p>
+Let \(\{a_n\}\) and \(\{c_n\}\) be two sequences which converge to \(l\). If
+there is an \(N\) such that for all \(n\geq N\) we have \(a_n \leq b_n \leq
+c_n\), then \(\{b_n\}\) also converges to \(l\).
+</p>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgdb2ecba" class="outline-2">
@@ -637,9 +670,9 @@ for \(|r| < 1\).
 <h3 id="org057451d">Negative binomial</h3>
 <div class="outline-text-3" id="text-org057451d">
 </div>
-<div id="outline-container-org61a8a36" class="outline-4">
-<h4 id="org61a8a36">Notation</h4>
-<div class="outline-text-4" id="text-org61a8a36">
+<div id="outline-container-org2954614" class="outline-4">
+<h4 id="org2954614">Notation</h4>
+<div class="outline-text-4" id="text-org2954614">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -652,9 +685,18 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-org15ddb7a" class="outline-4">
-<h4 id="org15ddb7a">Properties</h4>
-<div class="outline-text-4" id="text-org15ddb7a">
+<div id="outline-container-org969ffa0" class="outline-4">
+<h4 id="org969ffa0">Properties</h4>
+<div class="outline-text-4" id="text-org969ffa0">
+<p>
+<b>Note</b> that sometimes the distribution is parameterised in terms of \(1-p\)
+which will change the following expressions.
+</p>
+</div>
+
+<div id="outline-container-org1926ee0" class="outline-5">
+<h5 id="org1926ee0">Mean and variance</h5>
+<div class="outline-text-5" id="text-org1926ee0">
 <p>
 \[
 \mathbb{E}X = \frac{pr}{1-p}
@@ -676,36 +718,45 @@ and so
 p = 1 - \frac{m}{v}, \quad r = \frac{m^2}{v - m}
 \]
 </p>
+</div>
+</div>
 
-<p>
-The probability generating function is
-</p>
-
+<div id="outline-container-org781a8b5" class="outline-5">
+<h5 id="org781a8b5">Probability generating function</h5>
+<div class="outline-text-5" id="text-org781a8b5">
 <p>
 \[
-G_{X}(z) = \left(\frac{1-p}{1-pz}\right)^r
+G(z, r, p) = \left(\frac{1-p}{1-pz}\right)^r
 \]
 </p>
 
 <p>
-The moment generating function is
+which has some useful properties:
 </p>
 
+<ul class="org-ul">
+<li>\(G(\alpha z, r, p) = \left(\frac{1 - p}{1 - pz}\right)^r G(z, r, \alpha p)\)</li>
+<li>\(\partial_{z}^{n} G(z, r, p) = r^{\bar{n}} \left( \frac{p}{1-p} \right)^{n}
+  G(z, r + n, p)\) where \(x^{\bar{n}} = x (x + 1) \dots (x + n - 1)\) (ie the
+Pochhammer symbol).</li>
+<li>\(z G(z, r, p) = G(z, r, p) / p - (1 - p) G(z, r - 1, p) / p\)</li>
+</ul>
+
+<p>
+There is a maxima script for showing this is true <a href="./neg-binom.mac">here</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgca0f9ac" class="outline-5">
+<h5 id="orgca0f9ac">Moment generating function</h5>
+<div class="outline-text-5" id="text-orgca0f9ac">
 <p>
 \[
 M_{X}(t) = \left(\frac{1-p}{1-p e^{t}}\right)^r
 \]
 </p>
 </div>
-</div>
-
-<div id="outline-container-orgcb64814" class="outline-4">
-<h4 id="orgcb64814">Computation</h4>
-<div class="outline-text-4" id="text-orgcb64814">
-<p>
-R uses a slightly different parameterisation of the negative binomial
-distribution, it uses \(1-p\) where above we use \(p\).
-</p>
 </div>
 </div>
 </div>
@@ -714,9 +765,9 @@ distribution, it uses \(1-p\) where above we use \(p\).
 <h3 id="org4e617bf">Poisson</h3>
 <div class="outline-text-3" id="text-org4e617bf">
 </div>
-<div id="outline-container-orgbb383d4" class="outline-4">
-<h4 id="orgbb383d4">Notation</h4>
-<div class="outline-text-4" id="text-orgbb383d4">
+<div id="outline-container-orgae5542f" class="outline-4">
+<h4 id="orgae5542f">Notation</h4>
+<div class="outline-text-4" id="text-orgae5542f">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -729,9 +780,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-org6637c91" class="outline-4">
-<h4 id="org6637c91">Properties</h4>
-<div class="outline-text-4" id="text-org6637c91">
+<div id="outline-container-orgf3d7f8c" class="outline-4">
+<h4 id="orgf3d7f8c">Properties</h4>
+<div class="outline-text-4" id="text-orgf3d7f8c">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -808,9 +859,9 @@ and Ntzoufras (2003)</a> for an example.
 </p>
 </div>
 
-<div id="outline-container-org7fc04e9" class="outline-4">
-<h4 id="org7fc04e9">Notation</h4>
-<div class="outline-text-4" id="text-org7fc04e9">
+<div id="outline-container-orga755379" class="outline-4">
+<h4 id="orga755379">Notation</h4>
+<div class="outline-text-4" id="text-orga755379">
 <p>
 \[
 (X,Y) \sim \text{BP}(\lambda_{1},\lambda_{2},\lambda_{3})
@@ -874,17 +925,17 @@ match up with the values given by Edwards and Gurland (1961).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">g</span>(<span style="color: #7590db;">z1, z2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> ((<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> B12) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">*</span> z2 <span style="color: #4f97d7; font-weight: bold;">+</span> B12 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">*</span> z2) <span style="color: #4f97d7; font-weight: bold;">^</span> (<span style="color: #4f97d7; font-weight: bold;">-</span>k);
+<pre class="src src-maxima">g<span style="color: #4f97d7;">(</span>z1, z2<span style="color: #4f97d7;">)</span> := <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span> - B1 - B2 - B12<span style="color: #bc6ec5;">)</span> + B1 * z1 + B2 * z2 + B12 * z1 * z2<span style="color: #4f97d7;">)</span> ^ <span style="color: #4f97d7;">(</span>-k<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">m1</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #4f97d7;">exp</span>(t), <span style="color: #a45bad;">1</span>));
+m1<span style="color: #4f97d7;">(</span>t<span style="color: #4f97d7;">)</span> := ratsimp<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-m11 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">1</span>));
-m12 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">2</span>));
+m11 : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t, diff<span style="color: #bc6ec5;">(</span>m1<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, t, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+m12 : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t, diff<span style="color: #bc6ec5;">(</span>m1<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, t, <span style="color: #a45bad;">2</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-var1 <span style="color: #4f97d7; font-weight: bold;">:</span> collectterms(<span style="color: #4f97d7;">expand</span>(m12 <span style="color: #4f97d7; font-weight: bold;">-</span> m11<span style="color: #4f97d7; font-weight: bold;">^</span><span style="color: #a45bad;">2</span>), k);
+var1 : collectterms<span style="color: #4f97d7;">(</span>expand<span style="color: #bc6ec5;">(</span>m12 - m11^<span style="color: #a45bad;">2</span><span style="color: #bc6ec5;">)</span>, k<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">check that the variance is correct </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(var1, <span style="color: #4f97d7; font-weight: bold;">-</span>k <span style="color: #4f97d7; font-weight: bold;">*</span> (B1 <span style="color: #4f97d7; font-weight: bold;">+</span> B12) <span style="color: #4f97d7; font-weight: bold;">*</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B12))));
+/* check that the variance is correct */
+display<span style="color: #4f97d7;">(</span>is<span style="color: #bc6ec5;">(</span>equal<span style="color: #2d9574;">(</span>var1, -k * <span style="color: #67b11d;">(</span>B1 + B12<span style="color: #67b11d;">)</span> * <span style="color: #67b11d;">(</span><span style="color: #a45bad;">1</span> - B1 - B12<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 
@@ -899,8 +950,8 @@ It is useful to define \(c = B_1 + B_{12}\). Then we can solve for \(k\) and
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">use c = B1 + B12 and solve for c and k based on the marginal distribution </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">solve</span>([ex1 <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7; font-weight: bold;">-</span>k <span style="color: #4f97d7; font-weight: bold;">*</span> c, vx1 <span style="color: #4f97d7; font-weight: bold;">=</span> ex1 <span style="color: #4f97d7; font-weight: bold;">*</span> (<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> c)], [k, c])[<span style="color: #a45bad;">1</span>]);
+<pre class="src src-maxima">/* use c = B1 + B12 and solve for c and k based on the marginal distribution */
+display<span style="color: #4f97d7;">(</span>solve<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">[</span>ex1 = -k * c, vx1 = ex1 * <span style="color: #67b11d;">(</span><span style="color: #a45bad;">1</span> - c<span style="color: #67b11d;">)</span><span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>k, c<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 
@@ -919,22 +970,22 @@ correct (and get an equivalent expression in terms of \(c\)).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">g</span>(<span style="color: #7590db;">z1, z2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> ((<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> B12) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">*</span> z2 <span style="color: #4f97d7; font-weight: bold;">+</span> B12 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">*</span> z2) <span style="color: #4f97d7; font-weight: bold;">^</span> (<span style="color: #4f97d7; font-weight: bold;">-</span>k);
-<span style="color: #bc6ec5; font-weight: bold;">m1</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #4f97d7;">exp</span>(t), <span style="color: #a45bad;">1</span>));
-m11 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">1</span>));
+<pre class="src src-maxima">g<span style="color: #4f97d7;">(</span>z1, z2<span style="color: #4f97d7;">)</span> := <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span> - B1 - B2 - B12<span style="color: #bc6ec5;">)</span> + B1 * z1 + B2 * z2 + B12 * z1 * z2<span style="color: #4f97d7;">)</span> ^ <span style="color: #4f97d7;">(</span>-k<span style="color: #4f97d7;">)</span>;
+m1<span style="color: #4f97d7;">(</span>t<span style="color: #4f97d7;">)</span> := ratsimp<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+m11 : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t, diff<span style="color: #bc6ec5;">(</span>m1<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, t, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">m2</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #a45bad;">1</span>, <span style="color: #4f97d7;">exp</span>(t)));
-m21 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m2(t), t));
-eXY <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t2, <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t1, <span style="color: #4f97d7;">diff</span>(<span style="color: #4f97d7;">diff</span>(g(<span style="color: #4f97d7;">exp</span>(t1), <span style="color: #4f97d7;">exp</span>(t2)), t1), t2)));
+m2<span style="color: #4f97d7;">(</span>t<span style="color: #4f97d7;">)</span> := ratsimp<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span>, exp<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+m21 : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t, diff<span style="color: #bc6ec5;">(</span>m2<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+eXY : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t2, subst<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">0</span>, t1, diff<span style="color: #2d9574;">(</span>diff<span style="color: #67b11d;">(</span>g<span style="color: #b1951d;">(</span>exp<span style="color: #4f97d7;">(</span>t1<span style="color: #4f97d7;">)</span>, exp<span style="color: #4f97d7;">(</span>t2<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>, t1<span style="color: #67b11d;">)</span>, t2<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">check the covariance is correct </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-cov_in_c <span style="color: #4f97d7; font-weight: bold;">:</span> k <span style="color: #4f97d7; font-weight: bold;">*</span> ((c <span style="color: #4f97d7; font-weight: bold;">-</span> B1) <span style="color: #4f97d7; font-weight: bold;">*</span> (c <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> B2);
-<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">is</span>(
-    <span style="color: #4f97d7;">equal</span>(
-      eXY <span style="color: #4f97d7; font-weight: bold;">-</span> m11 <span style="color: #4f97d7; font-weight: bold;">*</span> m21,
-      <span style="color: #4f97d7;">subst</span>(B1 <span style="color: #4f97d7; font-weight: bold;">+</span> B12, c, cov_in_c)
-      )
-    ));
+/* check the covariance is correct */
+cov_in_c : k * <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>c - B1<span style="color: #bc6ec5;">)</span> * <span style="color: #bc6ec5;">(</span>c + B2 - <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> + B1 * B2<span style="color: #4f97d7;">)</span>;
+display<span style="color: #4f97d7;">(</span>is<span style="color: #bc6ec5;">(</span>
+    equal<span style="color: #2d9574;">(</span>
+      eXY - m11 * m21,
+      subst<span style="color: #67b11d;">(</span>B1 + B12, c, cov_in_c<span style="color: #67b11d;">)</span>
+      <span style="color: #2d9574;">)</span>
+    <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 
@@ -950,19 +1001,19 @@ distribution to solve for \(B_1\) and \(B_2\), which then then gives us
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #bc6ec5; font-weight: bold;">g</span>(<span style="color: #7590db;">z1, z2</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> ((<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> B1 <span style="color: #4f97d7; font-weight: bold;">-</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> B12) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">*</span> z2 <span style="color: #4f97d7; font-weight: bold;">+</span> B12 <span style="color: #4f97d7; font-weight: bold;">*</span> z1 <span style="color: #4f97d7; font-weight: bold;">*</span> z2) <span style="color: #4f97d7; font-weight: bold;">^</span> (<span style="color: #4f97d7; font-weight: bold;">-</span>k);
-<span style="color: #bc6ec5; font-weight: bold;">m1</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #4f97d7;">exp</span>(t), <span style="color: #a45bad;">1</span>));
-m11 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m1(t), t, <span style="color: #a45bad;">1</span>));
+<pre class="src src-maxima">g<span style="color: #4f97d7;">(</span>z1, z2<span style="color: #4f97d7;">)</span> := <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span> - B1 - B2 - B12<span style="color: #bc6ec5;">)</span> + B1 * z1 + B2 * z2 + B12 * z1 * z2<span style="color: #4f97d7;">)</span> ^ <span style="color: #4f97d7;">(</span>-k<span style="color: #4f97d7;">)</span>;
+m1<span style="color: #4f97d7;">(</span>t<span style="color: #4f97d7;">)</span> := ratsimp<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+m11 : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t, diff<span style="color: #bc6ec5;">(</span>m1<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, t, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">m2</span>(<span style="color: #7590db;">t</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">ratsimp</span>(g(<span style="color: #a45bad;">1</span>, <span style="color: #4f97d7;">exp</span>(t)));
-m21 <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t, <span style="color: #4f97d7;">diff</span>(m2(t), t));
-eXY <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t2, <span style="color: #4f97d7;">subst</span>(<span style="color: #a45bad;">0</span>, t1, <span style="color: #4f97d7;">diff</span>(<span style="color: #4f97d7;">diff</span>(g(<span style="color: #4f97d7;">exp</span>(t1), <span style="color: #4f97d7;">exp</span>(t2)), t1), t2)));
+m2<span style="color: #4f97d7;">(</span>t<span style="color: #4f97d7;">)</span> := ratsimp<span style="color: #4f97d7;">(</span>g<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span>, exp<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+m21 : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t, diff<span style="color: #bc6ec5;">(</span>m2<span style="color: #2d9574;">(</span>t<span style="color: #2d9574;">)</span>, t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+eXY : subst<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>, t2, subst<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">0</span>, t1, diff<span style="color: #2d9574;">(</span>diff<span style="color: #67b11d;">(</span>g<span style="color: #b1951d;">(</span>exp<span style="color: #4f97d7;">(</span>t1<span style="color: #4f97d7;">)</span>, exp<span style="color: #4f97d7;">(</span>t2<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>, t1<span style="color: #67b11d;">)</span>, t2<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">check the covariance is correct </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-cov_in_c <span style="color: #4f97d7; font-weight: bold;">:</span> k <span style="color: #4f97d7; font-weight: bold;">*</span> ((c <span style="color: #4f97d7; font-weight: bold;">-</span> B1) <span style="color: #4f97d7; font-weight: bold;">*</span> (c <span style="color: #4f97d7; font-weight: bold;">+</span> B2 <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span>) <span style="color: #4f97d7; font-weight: bold;">+</span> B1 <span style="color: #4f97d7; font-weight: bold;">*</span> B2);
+/* check the covariance is correct */
+cov_in_c : k * <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>c - B1<span style="color: #bc6ec5;">)</span> * <span style="color: #bc6ec5;">(</span>c + B2 - <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> + B1 * B2<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">solve for B1 and B2 based on the covariance and mean of the second marginal </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #4f97d7;">display</span>(<span style="color: #4f97d7;">solve</span>([ex2 <span style="color: #4f97d7; font-weight: bold;">=</span> <span style="color: #4f97d7;">subst</span>(c <span style="color: #4f97d7; font-weight: bold;">-</span> B1, B12, m21), cov12 <span style="color: #4f97d7; font-weight: bold;">=</span> cov_in_c], [B1, B2])[<span style="color: #a45bad;">1</span>]);
+/* solve for B1 and B2 based on the covariance and mean of the second marginal */
+display<span style="color: #4f97d7;">(</span>solve<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">[</span>ex2 = subst<span style="color: #67b11d;">(</span>c - B1, B12, m21<span style="color: #67b11d;">)</span>, cov12 = cov_in_c<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>B1, B2<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 
@@ -1066,7 +1117,7 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-07-26 Mon 13:56</p>
+<p class="date">Created: 2021-08-04 Wed 11:35</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
