@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-10 Mon 11:43 -->
+<!-- 2021-08-12 Thu 15:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -211,6 +211,7 @@
        if(null != target) {
          elem.classList.remove("code-highlighted");
          target.classList.remove("code-highlighted");
+       }
      }
     /*]]>*///-->
 // @license-end
@@ -241,7 +242,9 @@
 <ul>
 <li><a href="#orgaff69d2">References and reading materials</a></li>
 <li><a href="#org288ba7e">Examples</a></li>
+<li><a href="#org4fdb2e8">Installation</a></li>
 <li><a href="#org69b070e">Nix shell</a></li>
+<li><a href="#org02f3235">Editor configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -265,6 +268,16 @@
 <h3 id="org288ba7e">Examples</h3>
 <div class="outline-text-3" id="text-org288ba7e">
 </div>
+<div id="outline-container-org58d3fbd" class="outline-4">
+<h4 id="org58d3fbd">REPL</h4>
+<div class="outline-text-4" id="text-org58d3fbd">
+<div class="org-src-container">
+<pre class="src src-shell">dhall repl  
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgc140dc5" class="outline-4">
 <h4 id="orgc140dc5">Command line usage</h4>
 <div class="outline-text-4" id="text-orgc140dc5">
@@ -292,10 +305,35 @@ Schema in a file
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">'{ foo : Natural, bar : Bool }'</span> &gt; schema.dhall
+<pre class="src src-shell"><span style="color: #3a81c3;">echo</span> <span style="color: #2d9574;">'{ foo : Natural, bar : Bool }'</span> &gt; schema.dhall
 dhall-to-json &lt;&lt;&lt; <span style="color: #2d9574;">'{ foo = 1, bar = True } : ./schema.dhall'</span>
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org01c8548" class="outline-4">
+<h4 id="org01c8548">Prelude</h4>
+<div class="outline-text-4" id="text-org01c8548">
+<p>
+Import the prelude from the URL (which can take a while&#x2026;)
+</p>
+
+<pre class="example">
+⊢ :let Prelude = https://prelude.dhall-lang.org/v15.0.0/package.dhall 
+</pre>
+
+<p>
+see what modules there are
+</p>
+
+<pre class="example">
+⊢ Prelude.&lt;TAB&gt;
+Prelude.Bool      Prelude.JSON      Prelude.Monoid    Prelude.XML
+Prelude.Double    Prelude.List      Prelude.Natural
+Prelude.Function  Prelude.Location  Prelude.Optional
+Prelude.Integer   Prelude.Map       Prelude.Text 
+</pre>
 </div>
 </div>
 
@@ -303,9 +341,9 @@ dhall-to-json &lt;&lt;&lt; <span style="color: #2d9574;">'{ foo = 1, bar = True 
 <h4 id="org653f2e6">Variables</h4>
 <div class="outline-text-4" id="text-org653f2e6">
 <div class="org-src-container">
-<pre class="src src-dhall">let x = 1
-let y = 2
-in  [x, y]
+<pre class="src src-dhall"><span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #715ab1;">x</span> <span style="color: #3a81c3;">=</span> <span style="color: #4e3163;">1</span>
+<span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #715ab1;">y</span> <span style="color: #3a81c3;">=</span> <span style="color: #4e3163;">2</span>
+<span style="color: #3a81c3; font-weight: bold;">in</span>  <span style="color: #3a81c3;">[</span>x<span style="color: #3a81c3;">,</span> y<span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 </div>
@@ -315,7 +353,7 @@ in  [x, y]
 <h4 id="orgb78c799">Functions</h4>
 <div class="outline-text-4" id="text-orgb78c799">
 <div class="org-src-container">
-<pre class="src src-dhall">let twice = \(x : Natural) -&gt; [x, x] in twice 2
+<pre class="src src-dhall"><span style="color: #3a81c3; font-weight: bold;">let</span> <span style="color: #715ab1;">twice</span> <span style="color: #3a81c3;">=</span> \<span style="color: #3a81c3;">(</span>x <span style="color: #3a81c3;">:</span> <span style="color: #ba2f59; font-weight: bold;">Natural</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">-&gt;</span> <span style="color: #3a81c3;">[</span>x<span style="color: #3a81c3;">,</span> x<span style="color: #3a81c3;">]</span> <span style="color: #3a81c3; font-weight: bold;">in</span> twice <span style="color: #4e3163;">2</span>
 </pre>
 </div>
 </div>
@@ -325,14 +363,25 @@ in  [x, y]
 <h4 id="org770caac">Monoid</h4>
 <div class="outline-text-4" id="text-org770caac">
 <div class="org-src-container">
-<pre class="src src-dhall">{ foo = 1 } /\ { bar = 2}
+<pre class="src src-dhall"><span style="color: #3a81c3;">{</span> <span style="color: #715ab1;">foo</span> <span style="color: #3a81c3;">=</span> <span style="color: #4e3163;">1</span> <span style="color: #3a81c3;">}</span> /\ <span style="color: #3a81c3;">{</span> <span style="color: #715ab1;">bar</span> <span style="color: #3a81c3;">=</span> <span style="color: #4e3163;">2</span><span style="color: #3a81c3;">}</span>
 
-"ABC" ++ "DEF"
+<span style="color: #2d9574;">"ABC"</span> <span style="color: #3a81c3;">++</span> <span style="color: #2d9574;">"DEF"</span>
 
-[1, 2, 3] # [4, 5, 6]
+<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">,</span> <span style="color: #4e3163;">2</span><span style="color: #3a81c3;">,</span> <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">]</span> <span style="color: #3a81c3;">#</span> <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">4</span><span style="color: #3a81c3;">,</span> <span style="color: #4e3163;">5</span><span style="color: #3a81c3;">,</span> <span style="color: #4e3163;">6</span><span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org4fdb2e8" class="outline-3">
+<h3 id="org4fdb2e8">Installation</h3>
+<div class="outline-text-3" id="text-org4fdb2e8">
+<ol class="org-ol">
+<li>Get a <a href="https://github.com/dhall-lang/dhall-haskell/releases">recent version</a>,</li>
+<li>Unpack it: <code>tar --extract --bzip2 --file dhall-*-x86_64-linux.tar.bz2</code>,</li>
+<li>Put it on your path <code>sudo cp -i ./bin/dhall /usr/bin/</code>.</li>
+</ol>
 </div>
 </div>
 
@@ -344,11 +393,20 @@ in  [x, y]
 </ul>
 </div>
 </div>
+
+<div id="outline-container-org02f3235" class="outline-3">
+<h3 id="org02f3235">Editor configuration</h3>
+<div class="outline-text-3" id="text-org02f3235">
+<p>
+There is an undocumented dhall layer in spacemacs.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-05-10 Mon 11:43</p>
+<p class="date">Created: 2021-08-12 Thu 15:41</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
