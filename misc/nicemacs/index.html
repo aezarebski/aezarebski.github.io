@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-08-04 Wed 11:35 -->
+<!-- 2021-09-10 Fri 14:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -243,7 +243,7 @@
 <div id="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="org161f4f4" class="figure">
+<div id="orgfd2e26c" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" />
 </p>
 </div>
@@ -667,16 +667,26 @@ This is a <i>bibtex</i> file for my <i>references</i> so the binding is <code>ob
 </pre>
 </div>
 
+<p>
+The <code>last-bib</code> function opens the most recent bibtex file in the Downloads
+directory in a new buffer. If there is no such file then a message is given to
+indicate this.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">last-bib</span> <span style="color: #bc6ec5;">()</span>
-  <span style="color: #9f8766;">"Opens the most recent bibtex file in the Downloads directory</span>
-<span style="color: #9f8766;">in a new buffer. If there is no such file then a message is</span>
-<span style="color: #9f8766;">given to indicate this."</span>
   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let*</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>bib-files <span style="color: #b1951d;">(</span>directory-files-and-attributes <span style="color: #2d9574;">"~/Downloads"</span> t <span style="color: #2d9574;">".*bib"</span> <span style="color: #2d9574;">"ctime"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>path-and-time <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>list <span style="color: #bc6ec5;">(</span>first x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>eighth x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>time-order <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>a b<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>time-less-p <span style="color: #bc6ec5;">(</span>second b<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>second a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>most-recent <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>files<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>car <span style="color: #bc6ec5;">(</span>car <span style="color: #2d9574;">(</span>sort <span style="color: #9cb6ad;">(</span>mapcar path-and-time files<span style="color: #9cb6ad;">)</span> time-order<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let*</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>bib-files <span style="color: #b1951d;">(</span>directory-files-and-attributes <span style="color: #2d9574;">"~/Downloads"</span>
+                                                    t <span style="color: #2d9574;">".*bib"</span> <span style="color: #2d9574;">"ctime"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+         <span style="color: #67b11d;">(</span>path-and-time <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
+                          <span style="color: #4f97d7;">(</span>list <span style="color: #bc6ec5;">(</span>first x<span style="color: #bc6ec5;">)</span>
+                                <span style="color: #bc6ec5;">(</span>eighth x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+         <span style="color: #67b11d;">(</span>time-order <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>a b<span style="color: #4f97d7;">)</span>
+                       <span style="color: #4f97d7;">(</span>time-less-p <span style="color: #bc6ec5;">(</span>second b<span style="color: #bc6ec5;">)</span>
+                                    <span style="color: #bc6ec5;">(</span>second a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+         <span style="color: #67b11d;">(</span>most-recent <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>files<span style="color: #4f97d7;">)</span>
+                        <span style="color: #4f97d7;">(</span>car <span style="color: #bc6ec5;">(</span>car <span style="color: #2d9574;">(</span>sort <span style="color: #9cb6ad;">(</span>mapcar path-and-time files<span style="color: #9cb6ad;">)</span>
+                                        time-order<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>not <span style="color: #b1951d;">(</span>null bib-files<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
         <span style="color: #67b11d;">(</span>find-file <span style="color: #b1951d;">(</span>funcall most-recent bib-files<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
       <span style="color: #67b11d;">(</span>message <span style="color: #2d9574;">"No bib files found in ~/Downloads/"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
@@ -775,9 +785,9 @@ region of text it will count the words and characters there.
 </div>
 </div>
 
-<div id="outline-container-org3bbd043" class="outline-3">
-<h3 id="org3bbd043">Org-mode</h3>
-<div class="outline-text-3" id="text-org3bbd043">
+<div id="outline-container-orgbc5e6b7" class="outline-3">
+<h3 id="orgbc5e6b7">Org-mode</h3>
+<div class="outline-text-3" id="text-orgbc5e6b7">
 <p>
 Bindings for org-mode functionality start with <code>o o</code> for "owner org".
 </p>
@@ -958,7 +968,8 @@ To make it easy to access these we will bind them to come convenient keys.
 <div class="outline-text-4" id="text-orgcb99f99">
 <p>
 Set up for publishing my website, note that this will write the output directly
-to the github repository for the site.
+to the github repository for the site. Note that the <code>:exclude</code> variable can be
+used to specify which files to ignore using a regular expression.
 </p>
 
 <div class="org-src-container">
@@ -978,6 +989,7 @@ to the github repository for the site.
         <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org-static"</span>
          <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
          <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"css</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">js</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">png</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">jpg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">gif</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">pdf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">mp3</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">ogg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">swf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">txt</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">cur</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">svg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">csv</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">html</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">json</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">webp"</span>
+         <span style="color: #4f97d7;">:exclude</span> <span style="color: #2d9574;">"~/public-site/org/misc/matplotlib/ven.*"</span>
          <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
          <span style="color: #4f97d7;">:recursive</span> t
          <span style="color: #4f97d7;">:publishing-function</span> org-publish-attachment
@@ -989,21 +1001,34 @@ to the github repository for the site.
          <span style="color: #4f97d7;">:recursive</span> <span style="color: #67b11d;">()</span>
          <span style="color: #4f97d7;">:publishing-function</span> org-html-publish-to-html
          <span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org"</span> <span style="color: #4f97d7;">:components</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"org-notes"</span> <span style="color: #2d9574;">"org-static"</span> <span style="color: #2d9574;">"org-nicemacs"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org-bibliography"</span>
+       <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/Documents/bibliography/"</span>
+       <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"png"</span>
+       <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/resources/"</span>
+       <span style="color: #4f97d7;">:recursive</span> <span style="color: #67b11d;">()</span>
+       <span style="color: #4f97d7;">:publishing-function</span> org-publish-attachment
+       <span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org"</span> <span style="color: #4f97d7;">:components</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"org-notes"</span> <span style="color: #2d9574;">"org-static"</span> <span style="color: #2d9574;">"org-nicemacs"</span> <span style="color: #2d9574;">"org-bibliography"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
         <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
 <p>
 The following function simplifies the process of compiling the site and
-commiting it to github so it goes live. To enable this page to be copied to a
+committing it to github so it goes live. To enable this page to be copied to a
 file with a more sensible name and to have easier access to the logo there are
 some additional commands.
 </p>
 
+<p>
+There are two functions here, the first, <code>publish-my-site</code>, is bound to <code>SPC
+oop</code> runs the publishing and the second, <code>publish-my-site-and-magit</code>, bound to
+<code>SPC ooP</code> runs the publishing and opens the magit buffer to commit and push the
+changes.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">publish-my-site</span> <span style="color: #bc6ec5;">()</span>
-  <span style="color: #9f8766;">"Publish site and open version control for the published site."</span>
   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
   <span style="color: #bc6ec5;">(</span>org-publish <span style="color: #2d9574;">"org"</span><span style="color: #bc6ec5;">)</span>
   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>readme <span style="color: #2d9574;">"~/aezarebski.github.io/misc/nicemacs/README.html"</span><span style="color: #67b11d;">)</span>
@@ -1013,9 +1038,19 @@ some additional commands.
   <span style="color: #bc6ec5;">(</span>copy-file <span style="color: #2d9574;">"~/Documents/nicemacs/resources/nicemacs-logo.png"</span>
              <span style="color: #2d9574;">"~/aezarebski.github.io/misc/nicemacs/resources/nicemacs-logo.png"</span>
              t<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>magit-status <span style="color: #2d9574;">"~/aezarebski.github.io"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  <span style="color: #bc6ec5;">(</span>copy-file <span style="color: #2d9574;">"~/public-site/org/scratch.html"</span>
+             <span style="color: #2d9574;">"~/aezarebski.github.io/index.html"</span>
+             t<span style="color: #bc6ec5;">)</span>
+  <span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">publish-my-site-and-magit</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>publish-my-site<span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>magit-status <span style="color: #2d9574;">"~/aezarebski.github.io"</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #4f97d7;">)</span>
 
 <span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oop"</span> 'publish-my-site<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ooP"</span> 'publish-my-site-and-magit<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1584,21 +1619,20 @@ is bound to <code>SPC o f d</code> for owner-files-directory.
 <p>
 To insert a unicode character based on its name use <code>C-x 8 RET</code>. Since typically
 this is just the Greek letters we can define the following function to make this
-easier.
+easier. 
 </p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek</span> <span style="color: #bc6ec5;">(</span>case-name letter-name<span style="color: #bc6ec5;">)</span>
   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span>
-      <span style="color: #2d9574;">(</span>equal case-name <span style="color: #2d9574;">"small"</span><span style="color: #2d9574;">)</span>
-      <span style="color: #2d9574;">(</span>insert <span style="color: #67b11d;">(</span>char-from-name <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"GREEK SMALL LETTER %s"</span> <span style="color: #4f97d7;">(</span>upcase letter-name<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-      <span style="color: #2d9574;">(</span>insert <span style="color: #67b11d;">(</span>char-from-name <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"GREEK CAPITAL LETTER %s"</span> <span style="color: #4f97d7;">(</span>upcase letter-name<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  <span style="color: #bc6ec5;">(</span>insert <span style="color: #2d9574;">(</span>char-from-name <span style="color: #67b11d;">(</span>upcase <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"GREEK %s LETTER %s"</span> case-name letter-name<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
 <p>
-Then we can add key bindings for this <code>SPC o u &lt;l&gt;</code> to insert the Greek letter.
+For example, to insert a lower case alpha, you would use <code>(insert-greek "small"
+"alpha")</code>. Then we can add key bindings for this <code>SPC o u &lt;l&gt;</code> to insert the
+Greek letter.
 </p>
 </div>
 
@@ -1644,6 +1678,15 @@ Then we can add key bindings for this <code>SPC o u &lt;l&gt;</code> to insert t
 <span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oud"</span> 'insert-greek-small-delta<span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouD"</span> 'insert-greek-capital-delta<span style="color: #4f97d7;">)</span>
 
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek-small-theta</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"theta"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek-capital-theta</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"theta"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"outh"</span> 'insert-greek-small-theta<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouTh"</span> 'insert-greek-capital-theta<span style="color: #4f97d7;">)</span>
+
 <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek-small-lambda</span> <span style="color: #bc6ec5;">()</span>
   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
   <span style="color: #bc6ec5;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"lambda"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
@@ -1679,6 +1722,15 @@ Then we can add key bindings for this <code>SPC o u &lt;l&gt;</code> to insert t
   <span style="color: #bc6ec5;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"rho"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"our"</span> 'insert-greek-small-rho<span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouR"</span> 'insert-greek-capital-rho<span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek-small-sigma</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"sigma"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek-capital-sigma</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #bc6ec5;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"sigma"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ous"</span> 'insert-greek-small-sigma<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouS"</span> 'insert-greek-capital-sigma<span style="color: #4f97d7;">)</span>
 
 <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">insert-greek-small-psi</span> <span style="color: #bc6ec5;">()</span>
   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #bc6ec5;">)</span>
@@ -1839,6 +1891,10 @@ library<span style="color: #4f97d7;">(</span>coda<span style="color: #4f97d7;">)
 <div id="outline-container-org9ae92c1" class="outline-4">
 <h4 id="org9ae92c1">Useful programming snippets</h4>
 <div class="outline-text-4" id="text-org9ae92c1">
+</div>
+<ul class="org-ul">
+<li><a id="org9ea8d59"></a>Writing CSV<br />
+<div class="outline-text-5" id="text-org9ea8d59">
 <p>
 A snippet with sensible defaults for writing a data frame to CSV
 </p>
@@ -1857,7 +1913,31 @@ write.table<span style="color: #4f97d7;">(</span>x = <span style="color: #4f97d7
 <span style="color: #dc752f; background-color: #292b2e;">$</span><span style="color: #2d9574;">0</span>
 </pre>
 </div>
+</div>
+</li>
 
+<li><a id="orgac060cf"></a>Writing JSON<br />
+<div class="outline-text-5" id="text-orgac060cf">
+<div class="org-src-container">
+<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #292e34;"># -*- mode: snippet -*-</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># name: JSON output from R using jsonlite</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># key: rhelp-json-output</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># --</span>
+
+jsonlite::write_json<span style="color: #4f97d7;">(</span>
+  x = <span style="color: #4f97d7; font-weight: bold;">$</span><span style="color: #2d9574;">1</span>,
+  path = <span style="color: #4f97d7; font-weight: bold;">$</span><span style="color: #2d9574;">2</span>,
+  auto_unbox = T
+<span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">$</span><span style="color: #2d9574;">0</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org3adb32b"></a>Main function<br />
+<div class="outline-text-5" id="text-org3adb32b">
 <p>
 A snippet to provide a main function which only runs when the script is called
 from the command line and passes any command line arguments through.
@@ -1880,6 +1960,8 @@ if <span style="color: #4f97d7;">(</span>!interactive<span style="color: #bc6ec5
 </pre>
 </div>
 </div>
+</li>
+</ul>
 </div>
 </div>
 
@@ -1952,9 +2034,9 @@ A snippet for a very simple histogram in vega-lite.
 </div>
 </div>
 
-<div id="outline-container-org656991d" class="outline-3">
-<h3 id="org656991d">Org-mode</h3>
-<div class="outline-text-3" id="text-org656991d">
+<div id="outline-container-org3169efd" class="outline-3">
+<h3 id="org3169efd">Org-mode</h3>
+<div class="outline-text-3" id="text-org3169efd">
 </div>
 <div id="outline-container-org0202a96" class="outline-4">
 <h4 id="org0202a96">header</h4>
@@ -2031,7 +2113,7 @@ to a list in emacs-lisp.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-08-04 Wed 11:35</p>
+<p class="date">Created: 2021-09-10 Fri 14:18</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

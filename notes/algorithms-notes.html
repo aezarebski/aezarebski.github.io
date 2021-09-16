@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-09-16 Thu 12:56 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>aez-notes-algorithms</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Alex Zarebski" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">aez-notes-algorithms</h1>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
+<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
+
+<script>
+    function setStyleSheet(url){
+       var stylesheet = document.getElementById("stylesheet");
+       stylesheet.setAttribute('href', url);
+    }
+</script>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org80e67a8">Theory</a>
+<ul>
+<li><a href="#org8513aea">Order of growth classification</a></li>
+</ul>
+</li>
+<li><a href="#org9a402fe">Data structures</a>
+<ul>
+<li><a href="#orgda67b9f">Symbol tables</a></li>
+<li><a href="#org991a9be">Heap (binary tree)</a></li>
+<li><a href="#orga38eefa">Binary search tree</a></li>
+<li><a href="#orgfa3fdf8">Stacks and queues</a></li>
+</ul>
+</li>
+<li><a href="#org82cc446">Algorithms</a>
+<ul>
+<li><a href="#org8f0661a">Dynamic connectivity</a></li>
+<li><a href="#org1d9c909">Sorting</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org80e67a8" class="outline-2">
+<h2 id="org80e67a8">Theory</h2>
+<div class="outline-text-2" id="text-org80e67a8">
+</div>
+<div id="outline-container-org8513aea" class="outline-3">
+<h3 id="org8513aea">Order of growth classification</h3>
+<div class="outline-text-3" id="text-org8513aea">
+<p>
+Most of the time we can limit consideration to:
+</p>
+
+<ul class="org-ul">
+<li>\(1\)</li>
+<li>\(\log N\)</li>
+<li>\(N\)</li>
+<li>\(N \log N\) (logarithmic)</li>
+<li>\(N^2\)</li>
+<li>\(N^3\)</li>
+<li>\(2^N\)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a402fe" class="outline-2">
+<h2 id="org9a402fe">Data structures</h2>
+<div class="outline-text-2" id="text-org9a402fe">
+</div>
+<div id="outline-container-orgda67b9f" class="outline-3">
+<h3 id="orgda67b9f">Symbol tables</h3>
+<div class="outline-text-3" id="text-orgda67b9f">
+<ul class="org-ul">
+<li>An abstraction of key-value pairs, a.k.a. association table. Dictionaries in
+python are the cannonical example.
+<ul class="org-ul">
+<li>Linked list implementation has linear operations so is not useful</li>
+<li>Sorted array with binary search gets the lookup methods efficient but
+insertion is expensive.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org991a9be" class="outline-3">
+<h3 id="org991a9be">Heap (binary tree)</h3>
+<div class="outline-text-3" id="text-org991a9be">
+<ul class="org-ul">
+<li>This data structure is defined recursively, it is either empty or a node with
+links to left and right subtrees.</li>
+<li>A binary tree is complete if it is balanced at all nodes down to the final
+layer. A complete tree with \(N\) nodes will have a depth \(\lg N\).</li>
+<li><i>Heap-ordering</i> in a binary tree means that the labels on each node is never
+smaller than the label on it's parent node.
+<ul class="org-ul">
+<li>The <i>swim</i> operation is used to move a node up the tree if it violates the
+heap-ordering: this is how the insertion method works. There is also a
+<i>sink</i> method to push nodes down a tree.</li>
+<li>Heap-ordering provides a natural way to represent the binary tree with an
+array.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga38eefa" class="outline-3">
+<h3 id="orga38eefa">Binary search tree</h3>
+<div class="outline-text-3" id="text-orga38eefa">
+<ul class="org-ul">
+<li>While a <a href="#org991a9be">heap</a> uses an implicit tree represented as an array and uses
+heap-order, the BST uses an explicit tree and stores keys in symmetric order:
+<ul class="org-ul">
+<li>All keys in left subtree are smaller all keys in right subtree are bigger.</li>
+</ul></li>
+<li>When working with BSTs recursive methods lead to very slick code (some of
+which was invented by Robert Sedgewick).</li>
+<li>Insertion into a BST is \(\ln N\) which is why you might prefer it to a heap.</li>
+<li>Deletion is \(\sqrt{N}\) for randomised data which can kill performance. There
+are alternative structures that get around this.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfa3fdf8" class="outline-3">
+<h3 id="orgfa3fdf8">Stacks and queues</h3>
+<div class="outline-text-3" id="text-orgfa3fdf8">
+<ul class="org-ul">
+<li>A min/max priority queue will dequeue the min/max element that has been
+enqueued. You probably want a binary tree style data structure to get an
+efficient implementation.</li>
+<li>A <i>bag</i> or <i>set</i> can be implemented as a randomized queue.</li>
+<li>Stacks have <i>push</i> and <i>pop</i>
+<ul class="org-ul">
+<li>Can be implemented as a linked list (which has constant time operations)</li>
+<li>Can be implemented as an array but this requires keeping track of the array
+size and avoid the loitering problem for the garbage collector. Double when
+full, half at a quarter.</li>
+<li>Linked list has more consistent performance but will be slower on average
+than the array based implementation.</li>
+</ul></li>
+<li>Queues have <i>enqueue</i> and <i>dequeue</i></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82cc446" class="outline-2">
+<h2 id="org82cc446">Algorithms</h2>
+<div class="outline-text-2" id="text-org82cc446">
+</div>
+<div id="outline-container-org8f0661a" class="outline-3">
+<h3 id="org8f0661a">Dynamic connectivity</h3>
+<div class="outline-text-3" id="text-org8f0661a">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Algorithm</th>
+<th scope="col" class="org-left">Initialisation</th>
+<th scope="col" class="org-left">Union</th>
+<th scope="col" class="org-left">Find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org213856a">Quick-find</a></td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(1\)</td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#org29931b7">Quick-union</a></td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(N\)</td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#orge1bdb5c">Weighted quick-union</a></td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(\text{lg} N\)</td>
+<td class="org-left">\(\text{lg} N\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org213856a" class="outline-4">
+<h4 id="org213856a">Quick-find</h4>
+<div class="outline-text-4" id="text-org213856a">
+<p>
+Consider a graph, \(G\), with \(N\) nodes. The operations we care about are
+checking if two nodes are connected, and updating the graph by adding an edge.
+Quick-find refers to a way of checking if two nodes are connected by some path.
+The data structure used is an array where the \(i\)-th entry lists the connected
+component node \(i\) belongs to. To check if two nodes are connected then you
+just need to look up if they have the same value in this array.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Quick-find on \(N\) nodes.</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Initialisation</th>
+<th scope="col" class="org-left">Union</th>
+<th scope="col" class="org-left">Find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(1\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org29931b7" class="outline-4">
+<h4 id="org29931b7">Quick-union</h4>
+<div class="outline-text-4" id="text-org29931b7">
+<p>
+Same problem and data structure as used by <a href="#org213856a">Quick-find</a> but the connected
+components are modelled as trees and the array values represent either the
+parent node or the node index if it is the root. Checking if two nodes are
+connected is just checking if their roots are the same. Updating when a new edge
+is added is just changing one of the root nodes to be the child of the other
+root if necessary.
+</p>
+
+<p>
+There is the potential for the trees involved to grow very tall which then makes
+this algorithm too slow.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Quick-union on \(N\) nodes.</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Initialisation</th>
+<th scope="col" class="org-left">Union</th>
+<th scope="col" class="org-left">Find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(N\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orge1bdb5c" class="outline-4">
+<h4 id="orge1bdb5c">Weighted quick-union</h4>
+<div class="outline-text-4" id="text-orge1bdb5c">
+<p>
+This is the same as <a href="#org29931b7">Quick-union</a> but always selects the smaller tree to be added
+as a subtree of the root of the bigger tree during a union operation. To make
+this work you need another array to count the number of nodes in the tree rooted
+at each index. Note that this considers the size of the trees rather than their
+depth.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> Weighted quick-union on \(N\) nodes.</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Initialisation</th>
+<th scope="col" class="org-left">Union</th>
+<th scope="col" class="org-left">Find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(N\)</td>
+<td class="org-left">\(\text{lg} N\)</td>
+<td class="org-left">\(\text{lg} N\)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+An additional modification, <i>path compression</i> can further improve the
+efficiency with very little added bookkeeping.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d9c909" class="outline-3">
+<h3 id="org1d9c909">Sorting</h3>
+<div class="outline-text-3" id="text-org1d9c909">
+<p>
+A <i>partially sorted</i> array is one which differs from a sorted array by a linear
+number of inversions.
+</p>
+
+<p>
+A <i>stable sort</i> is a sorting algorithm that preserves the relative order of
+items with equal keys. <a href="#orgc37aaa4">Insertion sort</a> and <a href="#org02a4da9">mergesort</a> are stable but <a href="#orgb0f3ac1">selection
+sort</a> and <a href="#org30f5f59">shell sort</a> are not stable.
+</p>
+
+<p>
+A lower bound on the complexity of sorting can be obtained by representing an
+arbitrary computation by a binary decision tree. Graph theory tells us that any
+tree big enough to support all possible orderings must have a depth proportional
+to \(N \lg N\) yielding the lower bound! This argument is used to prove that
+<a href="#org02a4da9">mergesort</a> is an optimal algorithm. In practise <a href="#orga4c2bfa">quicksort</a> is the best if you
+don't need stability.
+</p>
+</div>
+
+<div id="outline-container-orgb0f3ac1" class="outline-4">
+<h4 id="orgb0f3ac1">Selection sort</h4>
+<div class="outline-text-4" id="text-orgb0f3ac1">
+<p>
+Go through and select the smallest element then repeat on the remaining
+elements. This requires order \(N^2 / 2\) comparisons and \(N\) movements of
+data to sort a list of \(N\) elements. The amount of work required does not
+change if the collection is already partially sorted.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc37aaa4" class="outline-4">
+<h4 id="orgc37aaa4">Insertion sort</h4>
+<div class="outline-text-4" id="text-orgc37aaa4">
+<p>
+Go through and more each element to the left of the collection until all
+elements further left are lower and repeat. For a randomly ordered array it
+requires order \(N^2 / 4\) comparisons and \(N^2 / 4\) movements of data. If the
+collection is already partially sorted though this can be much quicker, it runs
+in linear time for partially sorted arrays.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org30f5f59" class="outline-4">
+<h4 id="org30f5f59">Shell sort</h4>
+<div class="outline-text-4" id="text-org30f5f59">
+<p>
+Perform a sequence of <i>h</i>-sorts for a decreasing sequence of <i>h</i>. An <i>h</i>-sort is
+sorting the subsequences with indicies \(1,h+1,2h+1,\dots\), and
+\(2,h+2,2h+2,\dots\) and \(3,h+3,2h+3,\dots\), etcetera. This substantially
+reduces the amount of times that data needs to be moved. You can use insertion
+sort for each <i>h</i>-sort. Open problem to analyse complexity, but it performs well
+in practise.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbce225f" class="outline-4">
+<h4 id="orgbce225f">Knuth shuffle</h4>
+<div class="outline-text-4" id="text-orgbce225f">
+<p>
+Is a linear time shuffling algorithm. Just iterate over the list, on iteration
+<i>i</i> randomly exchange element <i>i</i> with one of the others in the list. There is a
+<a href="https://rosettacode.org/wiki/Knuth_shuffle#Haskell">Haskell implementation on Rosetta code</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9bdb842" class="outline-4">
+<h4 id="org9bdb842">Graham scan for computing the convex hull</h4>
+<div class="outline-text-4" id="text-org9bdb842">
+<p>
+This is an algorithm for computing the convex hull in two dimensions. It uses
+sorting to order the points by polar angle relative to the point right most
+bottom point.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org02a4da9" class="outline-4">
+<h4 id="org02a4da9">Mergesort</h4>
+<div class="outline-text-4" id="text-org02a4da9">
+<p>
+Split the list in two, recursively sort, then merge the two. The merge step
+makes use of an auxiliary array. The number of comparisons and array accesses is
+order \(N \lg N\) (recalling that this is the base-2 logarithm). This can be
+proved with a recurrence relationship.
+</p>
+
+<p>
+A trivial improvement to performance is to use <a href="#orgc37aaa4">insertion sort</a> to sort the arrays
+once the size has gotten down to 7 because at this size the overhead required
+for mergesort means that it is no longer superior.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga4c2bfa" class="outline-4">
+<h4 id="orga4c2bfa">Quicksort</h4>
+<div class="outline-text-4" id="text-orga4c2bfa">
+<ul class="org-ul">
+<li>Inplace sorting method</li>
+<li>Depth of recursion is logarithmic assuming a random ordering of elements in
+array.</li>
+<li>On average takes \(\approx 1.39 N \ln N\)</li>
+<li>Not stable!</li>
+<li>Again default to insertion sort once arrays get below about 10.</li>
+<li>Related to a linear algorithm for quick-select.</li>
+<li>There is a variant which does a three-way partition which is more efficient if
+there are lots of duplicate keys.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge8d4ff9" class="outline-4">
+<h4 id="orge8d4ff9">Heapsort</h4>
+<div class="outline-text-4" id="text-orge8d4ff9">
+<p>
+Heapsort builds up a <a href="#org991a9be">binary heap</a> from the array and then uses it to put the
+elements in order. This is takes \(N \lg N\) time in the worst cast and does the
+sorting in place. However it is not stable and in practise it is slower than
+quicksort and mergesort.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2021-09-16 Thu 12:56</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

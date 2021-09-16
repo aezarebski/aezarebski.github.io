@@ -1,689 +1,290 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html>
+
 <head>
-<!-- 2021-08-12 Thu 15:41 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-notes</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Alex Zarebski" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+    <meta charset="UTF-8">
+    <title>Alex's internet garden</title>
+    <style>
+        body {
+            cursor: url(resources/nyan.cur), auto !important;
+            background-color: #fbf8ef;
+        }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="css/stylesheet-dark.css" />
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
+        a {
+            text-decoration: none;
+            color: #007885;
+        }
+
+        a:hover,
+        a:active {
+            cursor: url(resources/rainbow.png), auto !important;
+            background-color: #ecaa30;
+            color: #850d00;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            line-height: 20pt;
+            color: #3a81c3;
+        }
+
+        h3 {
+            text-decoration: underline;
+            color: #3a81c3;
+        }
+
+
+        h5 {
+            font-style: italic;
+            color: #3a81c3;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: #ddd8eb;
+            padding: 5px;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .grid-item {
+            background-color: #efeae9;
+            border: 2px solid #ddd8eb;
+            max-width: 475px;
+            padding: 10px;
+        }
+
+        #science-block {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+        }
+
+        #logo-block {
+            grid-column: 3;
+            grid-row: 1 / span 3;
+            width: 100px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .logo-figure {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 70px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #random-picture {
+            width: 330px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
+
+
 <body>
-<div id="content">
-<h1 class="title">aez-notes</h1>
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
-<img id="myPicture" class="centered-figure">
-<script src="./index.js"></script>
+    <h1 style="color: red; text-decoration: underline;">UNDER CONSTRUCTION</h1>
+    <h1>Alex's little corner of the internet</h1>
+    <div class="grid-container">
+        <div class="grid-item">
+            <h3>Professional</h3>
+            <h5>Information</h5>
+            <div>
+                <ul>
+                    <li><a href="./data/academic-information.json">Academic information</a></li>
+                    <li><a href="https://www.oxfordmartin.ox.ac.uk/people/dr-alexander-zarebski/">Oxford Martin profile</a></li>
+                    <li><a href="http://evolve.zoo.ox.ac.uk/Evolve/Alex_Zarebski.html"><code>evolve.zoo</code></a></li>
+                    <li><a href="./publications.html">Publications</a></li>
+                </ul>
+            </div>
+            <h5>Social media</h5>
+            <div>
+                <ul>
+                    <li><a href="https://scholar.google.com.au/citations?user=w9AM8zcAAAAJ&hl=en">Google Scholar</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/User:Aezarebski">Wikipedia</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="grid-item" id="science-block">
 
-<div id="outline-container-orgcc2d78d" class="outline-2">
-<h2 id="orgcc2d78d">Short cuts</h2>
-<div class="outline-text-2" id="text-orgcc2d78d">
-<div class="grid-container">
+            <h3>Notes</h3>
 
-<div class="figure grid-figure">
-  <a href="./notes/linux-notes.html">
-    <img width=100px src="./images/linux-logo.png" alt="linux-logo.png">
-  </a>
-</div>
+            <h5>Mathematics, statistics and computation</h5>
+            <ul>
+                <li><a href="./notes/glossary-mathematics-and-statistics.html">Glossary of mathematics and statistics</a></li>
+                <li><a href="./notes/numerics-notes.html">Numerics notes</a></li>
+                <li><a href="./notes/probability-notes.html">Probability notes</a></li>
+                <li><a href="./notes/type-theory-notes.html">Type theory and functional programming notes</a></li>
+            </ul>
 
-<div class="figure grid-figure">
-  <a href="./notes/spacemacs-notes.html">
-    <img width=100px src="./images/emacs-logo.png" alt="emacs-logo.png">
-  </a>
-</div>
+            <h5>Programming and software</h5>
+            <div>
+                <ul>
+                    <li><a href="./notes/css-notes.html">CSS notes</a></li>
+                    <li><a href="./notes/emacs-lisp-notes.html">Emacs Lisp notes</a></li>
+                    <li><a href="./notes/ggplot2-notes.html">Ggplot2 notes and examples</a></li>
+                    <li><a href="./notes/git-notes.html">Git notes</a></li>
+                    <li><a href="./notes/haskell-notes.html">Haskell notes</a></li>
+                    <li><a href="./notes/html-notes.html">HTML notes</a></li>
+                    <li><a href="./notes/inkscape-notes.html">Inkscape notes</a></li>
+                    <li><a href="./notes/java-notes.html">Java notes</a></li>
+                    <li><a href="./notes/javascript-notes.html">JavaScript notes</a></li>
+                    <li><a href="./notes/latex-notes.html">LaTeX notes</a></li>
+                    <li><a href="./notes/linux-notes.html">Linux notes</a></li>
+                    <li><a href="./notes/maxima-notes.html">Maxima notes</a></li>
+                    <li><a href="./notes/org-mode-notes.html">Org-mode notes</a></li>
+                    <li><a href="./notes/python-notes.html">Python notes</a></li>
+                    <li><a href="./notes/r-notes.html">R notes</a></li>
+                    <li><a href="./notes/spacemacs-notes.html">Emacs notes</a></li>
+                    <li><a href="./notes/stan-notes.html">Stan notes</a></li>
+                </ul>
+            </div>
 
-<div class="figure grid-figure">
-  <a href="./notes/org-mode-notes.html">
-    <img width=100px src="./images/org-mode-logo.png" alt="org-mode-logo.png">
-  </a>
-</div>
+            <h5>Academia</h5>
+            <div>
+                <ul>
+                    <li><a href="./lists/journals.html">Journal list</a></li>
+                    <li><a href="./notes/academic-journal-notes.html">Journal notes</a></li>
+                    <li><a href="./notes/oxford-tutoring-notes.html">Tutoring notes</a></li>
+                </ul>
+            </div>
 
-<div class="figure grid-figure">
-  <a href="./notes/latex-notes.html">
-    <img width=100px src="./images/latex-logo.png">
-  </a>
-</div>
+            <h5>Visualisation</h5>
+            <div>
+                <ul>
+                    <li><a href="./notes/colour-notes.html">Curated colours</a></li>
+                    <li><a href="./misc/ggplot2/gallery.html">Ggplot2 gallery</a></li>
+                    <li><a href="./notes/ggplot2-notes.html">Ggplot2 notes</a></li>
+                </ul>
+            </div>
+        </div>
 
-<div class="figure grid-figure">
-  <a href="./notes/haskell-notes.html">
-    <img width=100px src="./images/haskell-logo.png" alt="haskell-logo.png">
-  </a>
-</div>
+        <div class="grid-item" id="logo-block">
+            <h3>Quick Links</h3>
 
-<div class="figure grid-figure">
-  <a href="./notes/r-notes.html">
-    <img width=100px src="./images/r-logo.png" alt="r-logo.png">
-  </a>
-</div>
+            <div class="logo-container">
 
-<div class="figure grid-figure">
-  <a href="./notes/nix-notes.html">
-    <img width=100px src="./images/nix-logo.png">
-  </a>
-</div>
+                <div>
+                    <a href="./notes/linux-notes.html">
+                        <img class="logo-figure" src="./images/linux-logo.png">
+                    </a>
+                </div>
 
-<div class="figure grid-figure">
-  <a href="./notes/git-notes.html">
-    <img width=100px src="./images/git-logo.png" alt="git-logo.png">
-  </a>
-</div>
+                <div>
+                    <a href="./notes/spacemacs-notes.html">
+                        <img class="logo-figure" src="./images/emacs-logo.png">
+                    </a>
+                </div>
 
-<div class="figure grid-figure">
-  <a href="./notes/maxima-notes.html">
-    <img width=100px src="./images/maxima-logo.png" alt="maxima-logo.png">
-  </a>
-</div>
+                <div>
+                    <a href="./notes/org-mode-notes.html">
+                        <img class="logo-figure" src="./images/org-mode-logo.png">
+                    </a>
+                </div>
 
-<div class="figure grid-figure">
-  <a href="./notes/ggplot2-notes.html">
-    <img width=100px src="./images/ggplot2-logo.png" alt="ggplot2-logo.png">
-  </a>
-</div>
+                <div>
+                    <a href="./notes/latex-notes.html">
+                        <img class="logo-figure" src="./images/latex-logo.png">
+                    </a>
+                </div>
 
-</div>
-</div>
-</div>
+                <div>
+                    <a href="./notes/haskell-notes.html">
+                        <img class="logo-figure" src="./images/haskell-logo.png">
+                    </a>
+                </div>
 
-<div id="outline-container-org3e1dc5b" class="outline-2">
-<h2 id="org3e1dc5b">COVID-19</h2>
-<div class="outline-text-2" id="text-org3e1dc5b">
-<p>
-<a href="./covid/index.html">COVID-19</a>
-</p>
+                <div>
+                    <a href="./notes/r-notes.html">
+                        <img class="logo-figure" src="./images/r-logo.png">
+                    </a>
+                </div>
 
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgcc2d78d">Short cuts</a></li>
-<li><a href="#org3e1dc5b">COVID-19</a></li>
-<li><a href="#org8982af2">About</a></li>
-<li><a href="#org59daf6f">Technology</a></li>
-<li><a href="#orga1e7358">Projects</a></li>
-<li><a href="#orgdedfdd8">Mathematics, statistics and computation</a></li>
-<li><a href="#org0721f6c">Visualisation</a></li>
-<li><a href="#org872fe13">Biology</a></li>
-<li><a href="#org2f4bda5">Philosophy</a></li>
-<li><a href="#orgac093f7">Academia</a></li>
-<li><a href="#org3d57684">English language and writing</a></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+                <div>
+                    <a href="./notes/nix-notes.html">
+                        <img class="logo-figure" src="./images/nix-logo.png">
+                    </a>
+                </div>
 
-<div id="outline-container-org8982af2" class="outline-2">
-<h2 id="org8982af2">About</h2>
-<div class="outline-text-2" id="text-org8982af2">
-<ul class="org-ul">
-<li><a href="./data/academic-information.json">Academic information</a></li>
-<li><a href="./resources/zarebski-cv.pdf">CV</a></li>
-<li><a href="https://www.oxfordmartin.ox.ac.uk/people/dr-alexander-zarebski/">Oxford Martin profile</a></li>
-<li><a href="http://evolve.zoo.ox.ac.uk/Evolve/Alex_Zarebski.html"><code>evolve.zoo</code></a></li>
-</ul>
+                <div>
+                    <a href="./notes/git-notes.html">
+                        <img class="logo-figure" src="./images/git-logo.png">
+                    </a>
+                </div>
 
-<p>
-<a href="./publications.html">PUBLICATIONS</a>
-</p>
-</div>
+                <div>
+                    <a href="./notes/maxima-notes.html">
+                        <img class="logo-figure" src="./images/maxima-logo.png">
+                    </a>
+                </div>
 
-<div id="outline-container-org53a64df" class="outline-3">
-<h3 id="org53a64df">Academic social media</h3>
-<div class="outline-text-3" id="text-org53a64df">
-<ul class="org-ul">
-<li><a href="https://scholar.google.com.au/citations?user=w9AM8zcAAAAJ&amp;hl=en">Google scholar</a></li>
-<li><a href="https://twitter.com/aezarebski"><code>@aezarebski</code></a> on Twitter</li>
-<li><a href="https://www.reddit.com/user/zonkedkangaroo"><code>u/zonkedkangaroo</code></a> on Reddit</li>
-<li><a href="https://orcid.org/0000-0003-1824-7653">ORCID</a></li>
-<li><a href="https://en.wikipedia.org/wiki/User:Aezarebski"><code>User:Aezarebski</code></a> on Wikipedia</li>
-<li><a href="https://figshare.com/authors/Alexander_Zarebski/9166757">figshare</a></li>
-<li><a href="https://www.linkedin.com/in/alexander-zarebski-353556212/">linkedin</a></li>
-</ul>
-</div>
-</div>
+                <div>
+                    <a href="./notes/ggplot2-notes.html">
+                        <img class="logo-figure" src="./images/ggplot2-logo.png">
+                    </a>
+                </div>
+            </div>
+        </div>
 
-<div id="outline-container-orgb2d89b2" class="outline-3">
-<h3 id="orgb2d89b2">Programming</h3>
-<div class="outline-text-3" id="text-orgb2d89b2">
-<ul class="org-ul">
-<li><a href="https://github.com/aezarebski">Github</a></li>
-<li><a href="https://gitlab.com/aezarebski">GitLab</a></li>
-<li><a href="https://bitbucket.org/azarebski/">Bitbucket</a></li>
-<li><a href="https://github.com/aezarebski/nicemacs">Spacemacs configuration</a></li>
-</ul>
-</div>
-</div>
+        <div class="grid-item">
+            <h3>Projects</h3>
+            <div>
+                <h5><i>Fifty Challenging Problems in Probability</i></h5>
+                <p>In 2021 I used the book <a href="https://archive.org/details/fiftychallenging00most"><i>Fifty Challenging Problems in Probability</i></a> as a set of exercises to learn how to use <a href="./notes/maxima-notes.html">Maxima</a>.</p>
+            </div>
+            <div>
+                <h5>Nicemacs</h5>
+                <p>In 2020 I started working on the emacs configuration described <a href="./misc/nicemacs/index.html">here</a>, which you can get from <a href="https://github.com/aezarebski/nicemacs">github</a>.</p>
+            </div>
+        </div>
 
-<div id="outline-container-orga550df3" class="outline-3">
-<h3 id="orga550df3">Lists</h3>
-<div class="outline-text-3" id="text-orga550df3">
-<ul class="org-ul">
-<li><a href="./lists/books.html">Books</a></li>
-<li><a href="./lists/movies-and-series.html">Movies and Series</a></li>
-<li><a href="./lists/music.html">Music</a></li>
-</ul>
-</div>
-</div>
-</div>
+        <div class="grid-item">
+            <div>
+                <h3>Lists</h3>
+                <ul>
+                    <li><a href="./lists/books.html">Books</a></li>
+                    <li><a href="./lists/links.html">External links</a></li>
+                    <li><a href="./lists/lecture-slides.html">Lecture slides</a></li>
+                    <li><a href="./lists/movies-and-series.html">Movies and Series</a></li>
+                    <li><a href="./lists/music.html">Music</a></li>
+                </ul>
+            </div>
 
-<div id="outline-container-org59daf6f" class="outline-2">
-<h2 id="org59daf6f">Technology</h2>
-<div class="outline-text-2" id="text-org59daf6f">
-<p>
-The notes on this site likely contain many errors.
-If you find an error, please let me know so I can correct it.
-</p>
-</div>
+        </div>
 
-<div id="outline-container-org9f0640d" class="outline-3">
-<h3 id="org9f0640d">GNU, Linux and friends</h3>
-<div class="outline-text-3" id="text-org9f0640d">
-<ul class="org-ul">
-<li><a href="./notes/org-mode-notes.html">org-mode notes</a></li>
-<li><a href="./notes/spacemacs-notes.html">spacemacs/emacs notes</a></li>
-<li><a href="https://www.gnu.org/software/emacs/refcards/">Reference cards</a></li>
-<li><a href="./notes/linux-notes.html">Linux notes</a></li>
-<li><a href="./notes/libreoffice-calc-notes.html">Calc - spreadsheet</a></li>
-<li><a href="https://yt-dl.org/">youtube-dl</a> is a command-line program to download videos from YouTube.com and a
-few more sites.</li>
-</ul>
-</div>
-</div>
+        <div class="grid-item">
+            <h3>Random Art</h3>
+            <img id="random-picture">
+            <script>
+                var imageFilePaths = [
+                    "hail-science.png",
+                    "skull.png",
+                    "blueberry.jpg",
+                    "daggson-anarchy.webp",
+                    "bold-and-brash.webp",
+                    "lockdown-graffiti.jpg",
+                    "free-speech-flag.png"
+                ].map((x) => "./resources/" + x);
 
-<div id="outline-container-org9ffe90c" class="outline-3">
-<h3 id="org9ffe90c">Hardware</h3>
-<div class="outline-text-3" id="text-org9ffe90c">
-<ul class="org-ul">
-<li><a href="./notes/hardware-notes.html">Hardware notes</a></li>
-</ul>
-</div>
-</div>
+                var fileNumber = Math.floor(Math.random() * imageFilePaths.length);
 
-<div id="outline-container-org26726bf" class="outline-3">
-<h3 id="org26726bf">Languages and libraries</h3>
-<div class="outline-text-3" id="text-org26726bf">
-<ul class="org-ul">
-<li><a href="./notes/css-notes.html">CSS notes</a></li>
-<li><a href="./notes/spacemacs-notes.html">Emacs notes</a></li>
-<li><a href="./notes/emacs-lisp-notes.html">Emacs Lisp notes</a></li>
-<li><a href="./notes/ggplot2-notes.html">Ggplot2 notes and examples</a></li>
-<li><a href="./notes/graphviz-notes.html">GraphViz notes</a></li>
-<li><a href="./notes/haskell-notes.html">Haskell notes</a></li>
-<li><a href="./notes/html-notes.html">HTML notes</a></li>
-<li><a href="./notes/javascript-notes.html">JavaScript notes</a></li>
-<li><a href="./notes/latex-notes.html">LaTeX notes</a></li>
-<li><a href="./notes/linux-notes.html">Linux notes</a></li>
-<li><a href="./misc/matplotlib/gallery.html">Matplotlib gallery</a></li>
-<li><a href="./notes/maxima-notes.html">Maxima notes</a></li>
-<li><a href="./notes/nimble-notes.html">Nimble notes</a></li>
-<li><a href="./notes/org-mode-notes.html">Org-mode notes</a></li>
-<li><a href="./notes/python-notes.html">Python notes</a></li>
-<li><a href="./notes/r-notes.html">R notes</a></li>
-<li><a href="./notes/stan-notes.html">Stan notes</a></li>
-<li><a href="./notes/computational-geography-notes.html">Computational geography notes</a></li>
-<li><a href="https://tabula.technology/">Tabula for extracting tables from PDFs</a></li>
-<li><a href="./notes/vega-lite-notes.html">Vega Lite notes</a></li>
-</ul>
-</div>
-</div>
+                document
+                    .getElementById("random-picture")
+                    .setAttribute("src", imageFilePaths[fileNumber]);
+            </script>
+        </div>
 
-<div id="outline-container-orgde43513" class="outline-3">
-<h3 id="orgde43513">Software engineering and tooling</h3>
-<div class="outline-text-3" id="text-orgde43513">
-<ul class="org-ul">
-<li><a href="./notes/docker-notes.html">Docker notes</a></li>
-<li><a href="./notes/git-notes.html">Git notes</a></li>
-<li><a href="./notes/inkscape-notes.html">Inkscape notes</a></li>
-<li><a href="./notes/json-notes.html">JSON notes</a></li>
-<li><a href="./notes/lsp-notes.html">LSP notes</a></li>
-<li><a href="./notes/markdown-notes.html">Markdown notes</a></li>
-<li><a href="./notes/nix-notes.html">Nix notes</a></li>
-<li><a href="./notes/dhall-notes.html">Dhall notes</a></li>
-<li><a href="./notes/software-project-notes.html">Project notes</a></li>
-<li><a href="./notes/optimisation-notes.html">Program optimisation notes</a></li>
-<li><a href="./notes/templating-notes.html">Templating notes</a></li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga1e7358" class="outline-2">
-<h2 id="orga1e7358">Projects</h2>
-<div class="outline-text-2" id="text-orga1e7358">
-</div>
-<div id="outline-container-orgebba213" class="outline-3">
-<h3 id="orgebba213"><a href="./misc/grimmett-and-stirzaker/index.html"><i>One Thousand Exercises in Probability</i></a></h3>
-<div class="outline-text-3" id="text-orgebba213">
-<p>
-In 2021 I used the book <i>One Thousand Exercises in Probability</i> as a way to
-learn more Maxima and probability. I only considered the problems at the end of
-each chapter rather then the execrises throughout the chapters.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org66dfb20" class="outline-3">
-<h3 id="org66dfb20"><a href="./misc/fifty-problems/index.html"><i>Fifty Challenging Problems in Probability</i></a></h3>
-<div class="outline-text-3" id="text-org66dfb20">
-<p>
-In 2021 I used the book <a href="https://archive.org/details/fiftychallenging00most"><i>Fifty Challenging Problems in Probability</i></a> as a set of
-exercises to learn how to use <a href="./notes/maxima-notes.html">Maxima</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org22eda7d" class="outline-3">
-<h3 id="org22eda7d"><a href="https://github.com/aezarebski/white-chocolate-macadamia">White Chocolate Macadamia</a></h3>
-<div class="outline-text-3" id="text-org22eda7d">
-<p>
-A Haskell Stack template for a cookie cutter project.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">stack new my-project https://raw.githubusercontent.com/aezarebski/white-chocolate-macadamia/main/macadamia.hsfiles
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga2a6c3d" class="outline-3">
-<h3 id="orga2a6c3d">Epidemic simulator</h3>
-<div class="outline-text-3" id="text-orga2a6c3d">
-<p>
-<a href="https://hackage.haskell.org/package/epi-sim">epi-sim</a>: a library for simulating epidemics, with a focus on phylodynamics and
-observation models.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgb27a119" class="outline-3">
-<h3 id="orgb27a119">Vega Cookbook</h3>
-<div class="outline-text-3" id="text-orgb27a119">
-<a href="https://github.com/aezarebski/vegacookbook">
-  <img src="https://github.com/aezarebski/vegacookbook/raw/master/vcb-logo.png"
-       width=300px
-       style="display:block;margin-left:auto;margin-right:auto;">
-</a>
-
-<p>
-The <a href="https://github.com/aezarebski/vegacookbook">vegacookbook</a> is my attempt to port the examples from the BBC's <a href="https://bbc.github.io/rcookbook/">rcookbook</a>
-into vegalite. This is a work in progress, and I do not intend to get this
-perfect, just close enough that it provides some useful examples of making
-publication quality figures. If you think you can improve this, please lodge a
-PR.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org6abb660" class="outline-3">
-<h3 id="org6abb660">Nicemacs</h3>
-<div class="outline-text-3" id="text-org6abb660">
-<a href="./misc/nicemacs/index.html">
-  <img src="./misc/nicemacs/resources/nicemacs-logo.png"
-       height=200px
-       style="display:block;margin-left:auto;margin-right:auto;">
-</a>
-
-<p>
-My configuration for of spacemacs is <a href="https://aezarebski.github.io/misc/nicemacs/index.html">nicemacs</a>. You can get a copy of it from
-<a href="https://github.com/aezarebski/nicemacs">github</a>. Some of it is pretty specific to spacemacs and the machines I work on,
-but the snippets might be of interest to emacs users.
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgdedfdd8" class="outline-2">
-<h2 id="orgdedfdd8">Mathematics, statistics and computation</h2>
-<div class="outline-text-2" id="text-orgdedfdd8">
-<ul class="org-ul">
-<li><a href="./notes/differential-equations-notes.html">Differential Equations notes</a></li>
-<li><a href="./notes/numerics-notes.html">Numerics notes</a></li>
-<li><a href="./notes/phylogenetics-notes.html">Phylogenetics notes</a></li>
-<li><a href="./notes/probability-notes.html">Probability notes</a></li>
-<li><a href="./notes/reading-notes.html">Notes from reading papers</a></li>
-<li><a href="./notes/regex-notes.html">Regular expressions notes</a></li>
-<li><a href="./notes/statistics-notes.html">Statistics notes</a></li>
-<li><a href="./notes/type-theory-notes.html">Type theory and functional programming notes</a></li>
-<li><a href="./notes/glossary-mathematics-and-statistics.html">Glossary of Mathematics and Statistics</a></li>
-</ul>
-</div>
-
-<div id="outline-container-org6f8c7c5" class="outline-3">
-<h3 id="org6f8c7c5">Miscellaneous (external)</h3>
-<div class="outline-text-3" id="text-org6f8c7c5">
-<ul class="org-ul">
-<li><a href="https://www.hillelwayne.com/talks/esolangs/">A Brief Introduction to Esoteric Languages</a></li>
-<li><a href="https://people.maths.ox.ac.uk/trefethen/maxims.html">Trefethen's Maxims</a></li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0721f6c" class="outline-2">
-<h2 id="org0721f6c">Visualisation</h2>
-<div class="outline-text-2" id="text-org0721f6c">
-<ul class="org-ul">
-<li><a href="./notes/colour-notes.html">Alex's curated colours</a></li>
-<li><a href="./notes/ggplot2-notes.html">ggplot2 notes</a></li>
-<li><a href="./notes/graphviz-notes.html">Graphviz notes</a></li>
-<li><a href="./notes/vega-lite-notes.html">Vega-Lite notes</a></li>
-</ul>
-</div>
-
-<div id="outline-container-orgb974b94" class="outline-3">
-<h3 id="orgb974b94">Miscellaneous (external)</h3>
-<div class="outline-text-3" id="text-orgb974b94">
-<ul class="org-ul">
-<li><a href="https://exts.ggplot2.tidyverse.org/">ggplot2 extensions</a></li>
-<li><a href="https://datavizproject.com/">DataVisProject: a catalogue of visualisation types</a></li>
-<li><a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">colorbrewer2</a></li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org872fe13" class="outline-2">
-<h2 id="org872fe13">Biology</h2>
-<div class="outline-text-2" id="text-org872fe13">
-<ul class="org-ul">
-<li><a href="./notes/glossary-biology.html">Glossary of Biology</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org2f4bda5" class="outline-2">
-<h2 id="org2f4bda5">Philosophy</h2>
-<div class="outline-text-2" id="text-org2f4bda5">
-<ul class="org-ul">
-<li><a href="./notes/glossary-philosophy.html">Glossary of Philosophy</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgac093f7" class="outline-2">
-<h2 id="orgac093f7">Academia</h2>
-<div class="outline-text-2" id="text-orgac093f7">
-<ul class="org-ul">
-<li><a href="./notes/academic-journal-notes.html">Notes on academic journals</a></li>
-<li><a href="./notes/data-repository-notes.html">Notes on data repositories</a></li>
-</ul>
-</div>
-
-<div id="outline-container-org01b0499" class="outline-3">
-<h3 id="org01b0499">Oxford specific stuff</h3>
-<div class="outline-text-3" id="text-org01b0499">
-<ul class="org-ul">
-<li><a href="./notes/boring-admin-notes.html">Oxford administrative notes</a></li>
-<li><a href="./notes/oxford-tutoring-notes.html">Oxford tutoring notes</a></li>
-<li><a href="./notes/oxford-library-notes.html">Oxford library notes</a></li>
-<li><a href="https://researchsupport.admin.ox.ac.uk/funding">Oxford funding information portal thing</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgf3613c7" class="outline-3">
-<h3 id="orgf3613c7">Miscellaneous (external)</h3>
-<div class="outline-text-3" id="text-orgf3613c7">
-<ul class="org-ul">
-<li><a href="https://osc.cam.ac.uk/copyright/third-party-copyright">Third party copyright</a> description from the University of Cambridge</li>
-<li><a href="https://www.ukdataservice.ac.uk/">UK Data Service</a> has a description of the <a href="https://www.ukdataservice.ac.uk/manage-data/rights.aspx">rights relating to research data</a></li>
-<li><a href="https://scholar.archive.org/">Internet Archive Scholar</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Academic_ranks_(Australia_and_New_Zealand)#Teaching_and_research_positions">Table of academic levels in Australia and New Zealand</a></li>
-<li><a href="https://gazette.web.ox.ac.uk/current-jobs-and-vacancies#tab-2466851">Oxford Gazette Current Jobs and Vacancies</a></li>
-<li><a href="https://www.elsevier.com/reviewers/how-to-review">Elsevier's reviewer guidance</a></li>
-<li><a href="https://www.elsevier.com/connect/reviewers-update/ten-tips-for-a-truly-terrible-peer-review">Ten tips for a truly terrible peer review</a> (point 6 has some points for sanity checking a review)</li>
-<li><a href="https://beallslist.net/">Beall's list of predatory journals</a></li>
-<li><a href="http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign">Babraham Bioinformatics course: <i>Scientific Figure Design</i></a> which includes some very nice notes on using <a href="http://www.bioinformatics.babraham.ac.uk/training/Figure_Design_Course/Inkscape%20Tutorial.pdf">Inkscape</a></li>
-<li><a href="https://github.com/bioinformatics-core-shared-training/effective-figure-design">Effective Figure Design course</a></li>
-<li><a href="https://choosealicense.com/">Choosing a license for your open source repository</a></li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org3d57684" class="outline-2">
-<h2 id="org3d57684">English language and writing</h2>
-<div class="outline-text-2" id="text-org3d57684">
-<ul class="org-ul">
-<li><a href="./notes/grammar-notes.html">Notes on grammar</a></li>
-<li><a href="./misc/spelling.html">Spelling of tricky words</a></li>
-</ul>
-</div>
-
-<div id="outline-container-org4fcb850" class="outline-3">
-<h3 id="org4fcb850">Miscellaneous (external)</h3>
-<div class="outline-text-3" id="text-org4fcb850">
-<ul class="org-ul">
-<li><a href="http://paulgraham.com/simply.html">Write Simply</a> (essay from Paul Graham)</li>
-<li><a href="./notes/writing-notes.html">Notes on writing</a> (copied from Andrew Gelman)</li>
-<li><a href="https://www.grammarly.com/blog/which-vs-that/">Which vs. That: How to Choose</a></li>
-<li><a href="https://hbr.org/2016/11/how-to-write-email-with-military-precision">Precise emails: ACTION, SIGN, INFO, DECISION, REQUEST, COORD</a></li>
-<li><a href="https://youtu.be/dNlkHtMgcPQ">Beware of nominalizations (AKA zombie nouns) - Helen Sword</a></li>
-<li><a href="http://www.plainenglish.co.uk/free-guides.html">Plain English Campaign Guides</a>
-<ul class="org-ul">
-<li><a href="http://www.plainenglish.co.uk/files/howto.pdf">General writing</a></li>
-<li><a href="http://www.plainenglish.co.uk/files/alternative.pdf">Useful synonyms</a></li>
-<li><a href="http://www.plainenglish.co.uk/files/partsofspeech.pdf">Basic grammar</a></li>
-</ul></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-08-12 Thu 15:41</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
+    </div>
 </body>
+
 </html>

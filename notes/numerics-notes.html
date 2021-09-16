@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-05 Mon 10:48 -->
+<!-- 2021-09-10 Fri 14:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -255,6 +255,7 @@
 <ul>
 <li><a href="#org5797d3d">Numerics notes</a>
 <ul>
+<li><a href="#orge7e93e2">Numbers</a></li>
 <li><a href="#orgfdaa2c6">Numeric differentiation</a></li>
 <li><a href="#org39c692b">Mathematical optimisation</a></li>
 <li><a href="#orgabb9c5f">LogSumExp function</a></li>
@@ -272,6 +273,16 @@
 <h2 id="org5797d3d">Numerics notes</h2>
 <div class="outline-text-2" id="text-org5797d3d">
 </div>
+<div id="outline-container-orge7e93e2" class="outline-3">
+<h3 id="orge7e93e2">Numbers</h3>
+<div class="outline-text-3" id="text-orge7e93e2">
+<p>
+IEEE-754 compliant double precision numbers have a precision of about 16 decimal
+places.
+</p>
+</div>
+</div>
+
 <div id="outline-container-orgfdaa2c6" class="outline-3">
 <h3 id="orgfdaa2c6">Numeric differentiation</h3>
 <div class="outline-text-3" id="text-orgfdaa2c6">
@@ -291,6 +302,27 @@ derivatives and have an error of order \(h^4\)
 </pre>
 </div>
 </div>
+
+<div id="outline-container-org5c163e8" class="outline-4">
+<h4 id="org5c163e8">Gradient</h4>
+<div class="outline-text-4" id="text-org5c163e8">
+<p>
+The <code>firstDerivative</code> function above can then be used to numerically evaluate
+the gradient
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #9f8766;">-- | The gradient vector computed using 'firstDerivative'.</span>
+<span style="color: #bc6ec5; font-weight: bold;">gradient</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>a<span style="color: #bc6ec5;">]</span> <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span>
+<span style="color: #bc6ec5; font-weight: bold;">gradient</span> h f x <span style="color: #7590db;">=</span>
+  <span style="color: #4f97d7; font-weight: bold;">let</span> n <span style="color: #7590db;">=</span> length x
+      es <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span>replicate <span style="color: #bc6ec5;">(</span>i<span style="color: #7590db;">-</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0</span> <span style="color: #7590db;">++</span> <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> <span style="color: #7590db;">++</span> replicate <span style="color: #bc6ec5;">(</span>n<span style="color: #7590db;">-</span>i<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0</span> <span style="color: #7590db;">|</span> i <span style="color: #7590db;">&lt;-</span> <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">..</span>n<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
+      g e d <span style="color: #7590db;">=</span> f <span style="color: #4f97d7;">[</span>xi <span style="color: #7590db;">+</span> d <span style="color: #7590db;">*</span> ei <span style="color: #7590db;">|</span> <span style="color: #bc6ec5;">(</span>xi,ei<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">&lt;-</span> zip x e<span style="color: #4f97d7;">]</span>
+  <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">[</span>firstDerivative h <span style="color: #bc6ec5;">(</span>g e<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0.0</span> <span style="color: #7590db;">|</span> e <span style="color: #7590db;">&lt;-</span> es<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org39c692b" class="outline-3">
@@ -308,7 +340,85 @@ space.
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgad90fb8" class="outline-4">
+<h4 id="orgad90fb8">Golden section</h4>
+<div class="outline-text-4" id="text-orgad90fb8">
+<p>
+The golden section algorithm is a gradient free method which can be used to
+obtain an estimate up to a precision of about \(\sqrt{\epsilon}\) where
+\(\epsilon\) is machine precision. To initialise it, three points are needed,
+\(a,b,c\) such that \(a < b < c\) and \(f(a) > f(b) < f(c)\). The name comes
+from the fact that one of the parameters of the algorithm is the golden ratio.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Golden</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Golden</span> <span style="color: #4f97d7;">{</span> gPoint      <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
+                     , gValue      <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
+                     , gDerivative <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #4f97d7;">}</span> <span style="color: #4f97d7; font-weight: bold;">deriving</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Show</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #9f8766;">-- | Bracket the minimum</span>
+<span style="color: #9f8766;">--</span>
+<span style="color: #9f8766;">-- &gt;&gt;&gt; bracket (\x -&gt; x * (x - 1)) 0 0.1</span>
+<span style="color: #9f8766;">--</span>
+<span style="color: #bc6ec5; font-weight: bold;">bracket</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+        <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
+        <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
+        <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Either</span> <span style="color: #ce537a; font-weight: bold;">String</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">bracket</span> f a b <span style="color: #7590db;">=</span>
+  <span style="color: #4f97d7; font-weight: bold;">let</span> g <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1.618034</span>
+      c <span style="color: #7590db;">=</span> b <span style="color: #7590db;">+</span> g <span style="color: #7590db;">*</span> <span style="color: #4f97d7;">(</span>b <span style="color: #7590db;">-</span> a<span style="color: #4f97d7;">)</span>
+      <span style="color: #4f97d7;">(</span>fa, fb, fc<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>f a, f b, f c<span style="color: #4f97d7;">)</span>
+      <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #7590db;">|</span> a <span style="color: #7590db;">&gt;</span> b     <span style="color: #7590db;">-&gt;</span> bracket f b a
+            <span style="color: #7590db;">|</span> fa <span style="color: #7590db;">&lt;</span> fb   <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Left</span> <span style="color: #2d9574;">"initial points given to bracket do not go downhill"</span>
+            <span style="color: #7590db;">|</span> fb <span style="color: #7590db;">&lt;</span> fc   <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Right</span> <span style="color: #4f97d7;">(</span>a,b,c<span style="color: #4f97d7;">)</span>
+            <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">-&gt;</span> bracket f b c
+
+<span style="color: #9f8766;">-- | Golden section search.</span>
+<span style="color: #9f8766;">--</span>
+<span style="color: #9f8766;">-- &gt;&gt;&gt; golden (\x -&gt; x * (x - 1)) (0.26,0.52,0.94)</span>
+<span style="color: #9f8766;">--</span>
+<span style="color: #bc6ec5; font-weight: bold;">golden</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+       <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+       <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Either</span> <span style="color: #ce537a; font-weight: bold;">String</span> <span style="color: #ce537a; font-weight: bold;">Golden</span>
+<span style="color: #bc6ec5; font-weight: bold;">golden</span> f <span style="color: #4f97d7;">(</span>a,b,c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span>
+  <span style="color: #4f97d7; font-weight: bold;">let</span>
+    r <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0.61803399</span>
+    tol <span style="color: #7590db;">=</span> <span style="color: #a45bad;">3.0e-8</span>
+    <span style="color: #4f97d7;">(</span>fa,fb,fc<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>f a,f b,f c<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7;">(</span>x0,x3<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>a,c<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7;">(</span>x1,x2<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">if</span> abs <span style="color: #4f97d7;">(</span>c<span style="color: #7590db;">-</span>b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&gt;</span> abs <span style="color: #4f97d7;">(</span>b<span style="color: #7590db;">-</span>a<span style="color: #4f97d7;">)</span>
+              <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">(</span>b,r<span style="color: #7590db;">*</span>b<span style="color: #7590db;">+</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">*</span>c<span style="color: #4f97d7;">)</span>
+              <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">*</span>a<span style="color: #7590db;">+</span>r<span style="color: #7590db;">*</span>b,b<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7;">(</span>xmin,fmin<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> gwl r tol f <span style="color: #4f97d7;">(</span>x0,x1,x2,x3<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f x1,f x2<span style="color: #4f97d7;">)</span>
+    fder <span style="color: #7590db;">=</span> firstDerivative tol f xmin
+  <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7; font-weight: bold;">if</span> a <span style="color: #7590db;">&lt;</span> b <span style="color: #7590db;">&amp;&amp;</span> b <span style="color: #7590db;">&lt;</span> c <span style="color: #7590db;">&amp;&amp;</span> fa <span style="color: #7590db;">&gt;</span> fb <span style="color: #7590db;">&amp;&amp;</span> fb <span style="color: #7590db;">&lt;</span> fc
+     <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #ce537a; font-weight: bold;">Right</span> <span style="color: #7590db;">$</span> <span style="color: #ce537a; font-weight: bold;">Golden</span> xmin fmin fder
+     <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #ce537a; font-weight: bold;">Left</span> <span style="color: #2d9574;">"invalid triple given to golden"</span>
+
+<span style="color: #9f8766;">-- | Golden while loop</span>
+<span style="color: #bc6ec5; font-weight: bold;">gwl</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
+    <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
+    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">gwl</span> r tol f <span style="color: #4f97d7;">(</span>x0,x1,x2,x3<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f1,f2<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> abs <span style="color: #4f97d7;">(</span>x3 <span style="color: #7590db;">-</span> x0<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&gt;</span> tol <span style="color: #7590db;">*</span> <span style="color: #4f97d7;">(</span>abs x1 <span style="color: #7590db;">+</span> abs x2<span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7; font-weight: bold;">if</span> f2 <span style="color: #7590db;">&lt;</span> f1
+       <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7; font-weight: bold;">let</span> x' <span style="color: #7590db;">=</span> r<span style="color: #7590db;">*</span>x2<span style="color: #7590db;">+</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #4f97d7;">)</span><span style="color: #7590db;">*</span>x3
+            <span style="color: #4f97d7; font-weight: bold;">in</span> gwl r tol f <span style="color: #4f97d7;">(</span>x1,x2,x',x3<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f2,f x'<span style="color: #4f97d7;">)</span>
+       <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7; font-weight: bold;">let</span> x' <span style="color: #7590db;">=</span> r<span style="color: #7590db;">*</span>x1<span style="color: #7590db;">+</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #4f97d7;">)</span><span style="color: #7590db;">*</span>x0
+            <span style="color: #4f97d7; font-weight: bold;">in</span> gwl r tol f <span style="color: #4f97d7;">(</span>x0,x',x1,x2<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f2,f x'<span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7; font-weight: bold;">if</span> f1 <span style="color: #7590db;">&lt;</span> f2
+       <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">(</span>x1,f1<span style="color: #4f97d7;">)</span>
+       <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7;">(</span>x2,f2<span style="color: #4f97d7;">)</span>
+</pre>
 </div>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-orgabb9c5f" class="outline-3">
 <h3 id="orgabb9c5f">LogSumExp function</h3>
@@ -492,12 +602,73 @@ Of course, this assumes an exponential complexity, but is easy to tweak for
 polynomial complexity.
 </p>
 </div>
+
+<div id="outline-container-org21418b2" class="outline-4">
+<h4 id="org21418b2">Time</h4>
+<div class="outline-text-4" id="text-org21418b2">
+<p>
+Here is a table that might help you decide is something runs fast enough.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Seconds</th>
+<th scope="col" class="org-left">Convenient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(10^{0}\)</td>
+<td class="org-left">\(<1\) minute</td>
+</tr>
+
+<tr>
+<td class="org-left">\(10^{1}\)</td>
+<td class="org-left">\(<1\) minute</td>
+</tr>
+
+<tr>
+<td class="org-left">\(10^{2}\)</td>
+<td class="org-left">\(\approx 2\) minute</td>
+</tr>
+
+<tr>
+<td class="org-left">\(10^{3}\)</td>
+<td class="org-left">\(\approx 20\) minutes</td>
+</tr>
+
+<tr>
+<td class="org-left">\(10^{4}\)</td>
+<td class="org-left">\(\approx 3\) hours</td>
+</tr>
+
+<tr>
+<td class="org-left">\(10^{5}\)</td>
+<td class="org-left">\(\approx 1\) day</td>
+</tr>
+
+<tr>
+<td class="org-left">\(10^{6}\)</td>
+<td class="org-left">\(\approx 10\) days</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-07-05 Mon 10:48</p>
+<p class="date">Created: 2021-09-10 Fri 14:18</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-06-30 Wed 15:52 -->
+<!-- 2021-09-14 Tue 10:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -271,6 +271,7 @@
 <li><a href="#orgd3ff886">TIDYDATA and the <code>tidyverse</code></a></li>
 <li><a href="#orge579850">Command line arguments</a></li>
 <li><a href="#orgbf5d596">Working with JSON</a></li>
+<li><a href="#org99a9c42">Working with HTML</a></li>
 <li><a href="#org66433fd">Working with Mustache templates</a></li>
 <li><a href="#org118d86b">Unit testing with <code>testthat</code></a></li>
 <li><a href="#org8e215a3">Dependency management with <code>packrat</code></a></li>
@@ -309,7 +310,7 @@
 </div>
 
 
-<div id="org2f39a4f" class="figure">
+<div id="org3a87434" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -769,6 +770,12 @@ Be careful when passing in numbers because they are read in as strings.
 <p>
 For parsing and encoding JSON there is the <code>jsonlite</code> package.
 </p>
+
+<p>
+<b>WARNING:</b> by default <code>jsonlite::write_json</code> only uses 4 digits which is not
+enough for many scientific applications, unless there is a good reason not to,
+it is probably better to set <code>digits = 16</code>.
+</p>
 </div>
 
 <div id="outline-container-org8597675" class="outline-4">
@@ -789,13 +796,112 @@ the time.
 </div>
 </div>
 
+<div id="outline-container-org99a9c42" class="outline-3">
+<h3 id="org99a9c42">Working with HTML</h3>
+<div class="outline-text-3" id="text-org99a9c42">
+<p>
+There is the <code>htmltools</code> package for generating HTML in R.
+</p>
+</div>
+
+<div id="outline-container-org94b3058" class="outline-4">
+<h4 id="org94b3058">Example</h4>
+<div class="outline-text-4" id="text-org94b3058">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>htmltools<span style="color: #4f97d7;">)</span>
+
+my_html <span style="color: #ce537a; font-weight: bold;">&lt;-</span>
+  tags$html<span style="color: #4f97d7;">(</span>
+         tags$head<span style="color: #bc6ec5;">(</span>tags$title<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"My Title"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
+         tags$body<span style="color: #bc6ec5;">(</span>
+                tags$h1<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"Hello"</span><span style="color: #2d9574;">)</span>,
+                tags$div<span style="color: #2d9574;">(</span>
+                       tags$h3<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"Hello World"</span><span style="color: #67b11d;">)</span>,
+                       tags$img<span style="color: #67b11d;">(</span>src = <span style="color: #2d9574;">"the-world.png"</span><span style="color: #67b11d;">)</span>,
+                       tags$p<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"What a wonderful world!"</span><span style="color: #67b11d;">)</span>
+                     <span style="color: #2d9574;">)</span>
+              <span style="color: #bc6ec5;">)</span>
+       <span style="color: #4f97d7;">)</span>
+
+save_html<span style="color: #4f97d7;">(</span>
+  doRenderTags<span style="color: #bc6ec5;">(</span>my_html<span style="color: #bc6ec5;">)</span>,
+  file = <span style="color: #2d9574;">"world.html"</span>
+<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+produces the following HTML
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #4f97d7; font-weight: bold;">!DOCTYPE</span> html&gt;
+&lt;<span style="color: #bc6ec5; font-weight: bold;">html</span> <span style="color: #7590db;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;
+&lt;<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
+&lt;<span style="color: #bc6ec5; font-weight: bold;">meta</span> <span style="color: #7590db;">charset</span>=<span style="color: #2d9574;">"utf-8"</span>/&gt;
+&lt;<span style="color: #bc6ec5; font-weight: bold;">style</span>&gt;body{background-color:white;}&lt;/<span style="color: #bc6ec5; font-weight: bold;">style</span>&gt;
+
+
+&lt;/<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
+&lt;<span style="color: #bc6ec5; font-weight: bold;">html</span>&gt;
+  &lt;<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
+    &lt;<span style="color: #bc6ec5; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">My Title</span>&lt;/<span style="color: #bc6ec5; font-weight: bold;">title</span>&gt;
+  &lt;/<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
+  &lt;<span style="color: #bc6ec5; font-weight: bold;">body</span>&gt;
+    &lt;<span style="color: #bc6ec5; font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Hello</span>&lt;/<span style="color: #bc6ec5; font-weight: bold;">h1</span>&gt;
+    &lt;<span style="color: #bc6ec5; font-weight: bold;">div</span>&gt;
+      &lt;<span style="color: #bc6ec5; font-weight: bold;">h3</span>&gt;<span style="font-style: italic; text-decoration: underline;">Hello World</span>&lt;/<span style="color: #bc6ec5; font-weight: bold;">h3</span>&gt;
+      &lt;<span style="color: #bc6ec5; font-weight: bold;">img</span> <span style="color: #7590db;">src</span>=<span style="color: #2d9574;">"the-world.png"</span>/&gt;
+      &lt;<span style="color: #bc6ec5; font-weight: bold;">p</span>&gt;What a wonderful world!&lt;/<span style="color: #bc6ec5; font-weight: bold;">p</span>&gt;
+    &lt;/<span style="color: #bc6ec5; font-weight: bold;">div</span>&gt;
+  &lt;/<span style="color: #bc6ec5; font-weight: bold;">body</span>&gt;
+&lt;/<span style="color: #bc6ec5; font-weight: bold;">html</span>&gt;
+&lt;/<span style="color: #bc6ec5; font-weight: bold;">html</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb50b43" class="outline-4">
+<h4 id="orgfb50b43">Example: embedding PNG as string in HTML</h4>
+<div class="outline-text-4" id="text-orgfb50b43">
+<p>
+The following function is useful if you want to avoid referencing external files
+in your HTML but still want to include figures.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> An HTML tag encoding an image stored in a PNG.</span>
+<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> This uses the \code{base64enc} and \code{htmltools} packages.</span>
+<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #4f97d7; background-color: #292e34; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #7590db; background-color: #292e34;">filepath</span><span style="color: #2aa1ae; background-color: #292e34;"> is the path to the PNG</span>
+<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #4f97d7; background-color: #292e34; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #7590db; background-color: #292e34;">...</span><span style="color: #2aa1ae; background-color: #292e34;"> is additional arguments to \code{tags$img} such as style.</span>
+<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
+<span style="color: #bc6ec5; font-weight: bold;">png_as_img</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>filepath, ...<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>tools::file_ext<span style="color: #2d9574;">(</span>filepath<span style="color: #2d9574;">)</span> == <span style="color: #2d9574;">"png"</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+    b64 <span style="color: #ce537a; font-weight: bold;">&lt;-</span> base64enc::base64encode<span style="color: #2d9574;">(</span>what = filepath<span style="color: #2d9574;">)</span>
+    tags$img<span style="color: #2d9574;">(</span>
+           src = paste<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"data:image/png;base64"</span>, b64, sep = <span style="color: #2d9574;">","</span><span style="color: #67b11d;">)</span>,
+           ...
+         <span style="color: #2d9574;">)</span>
+  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">stop</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"Filepath given to png_as_img must be a PNG."</span><span style="color: #2d9574;">)</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org66433fd" class="outline-3">
 <h3 id="org66433fd">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org66433fd">
 </div>
-<div id="outline-container-orgef3ffbd" class="outline-4">
-<h4 id="orgef3ffbd">Example</h4>
-<div class="outline-text-4" id="text-orgef3ffbd">
+<div id="outline-container-org10ce4d0" class="outline-4">
+<h4 id="org10ce4d0">Example</h4>
+<div class="outline-text-4" id="text-org10ce4d0">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>whisker<span style="color: #4f97d7;">)</span>
 
@@ -1386,9 +1492,9 @@ analogue in R.
 </div>
 </div>
 
-<div id="outline-container-org7aa4709" class="outline-4">
-<h4 id="org7aa4709">Switch/case</h4>
-<div class="outline-text-4" id="text-org7aa4709">
+<div id="outline-container-orgfdd13df" class="outline-4">
+<h4 id="orgfdd13df">Switch/case/which</h4>
+<div class="outline-text-4" id="text-orgfdd13df">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">centre</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x, type<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
   <span style="color: #4f97d7; font-weight: bold;">switch</span><span style="color: #bc6ec5;">(</span>type,
@@ -1666,7 +1772,7 @@ ggplot<span style="color: #4f97d7;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-06-30 Wed 15:52</p>
+<p class="date">Created: 2021-09-14 Tue 10:54</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-08-04 Wed 11:35 -->
+<!-- 2021-08-31 Tue 14:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-probability</title>
@@ -278,6 +278,7 @@
 </li>
 <li><a href="#orgdb2ecba">Distributions</a>
 <ul>
+<li><a href="#org471cacf">Log-normal</a></li>
 <li><a href="#org057451d">Negative binomial</a></li>
 <li><a href="#org4e617bf">Poisson</a></li>
 <li><a href="#org2d455b9">Bivariate discrete distributions</a></li>
@@ -666,13 +667,70 @@ c_n\), then \(\{b_n\}\) also converges to \(l\).
 <h2 id="orgdb2ecba">Distributions</h2>
 <div class="outline-text-2" id="text-orgdb2ecba">
 </div>
+<div id="outline-container-org471cacf" class="outline-3">
+<h3 id="org471cacf">Log-normal</h3>
+<div class="outline-text-3" id="text-org471cacf">
+</div>
+<div id="outline-container-orga755379" class="outline-4">
+<h4 id="orga755379">Notation</h4>
+<div class="outline-text-4" id="text-orga755379">
+<p>
+\[
+X \sim \text{Lognormal}(\mu,\sigma^2)
+\]
+</p>
+
+<p>
+where \(\mu\) can be any real number and \(\sigma>0\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf3d7f8c" class="outline-4">
+<h4 id="orgf3d7f8c">Properties</h4>
+<div class="outline-text-4" id="text-orgf3d7f8c">
+</div>
+<div id="outline-container-org539bdf3" class="outline-5">
+<h5 id="org539bdf3">Density</h5>
+<div class="outline-text-5" id="text-org539bdf3">
+<p>
+\[
+f(x) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp\left\{ - \frac{{(\log(x) - \mu)}^{2}}{2\sigma^{2}} \right\}
+\]
+</p>
+
+<p>
+If \(g(x)\) is the density of \(N(\mu, \sigma)\), then
+</p>
+
+<p>
+\[
+f(x) = g(\log x) / x.
+\]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">load<span style="color: #4f97d7;">(</span>distrib<span style="color: #4f97d7;">)</span>;
+
+print<span style="color: #4f97d7;">(</span>is<span style="color: #bc6ec5;">(</span>equal<span style="color: #2d9574;">(</span>pdf_lognormal<span style="color: #67b11d;">(</span>x, m, s<span style="color: #67b11d;">)</span>, unit_step<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span> * pdf_normal<span style="color: #67b11d;">(</span>log<span style="color: #b1951d;">(</span>x<span style="color: #b1951d;">)</span>, m, s<span style="color: #67b11d;">)</span> / x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+
+<pre class="example">
+true 
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org057451d" class="outline-3">
 <h3 id="org057451d">Negative binomial</h3>
 <div class="outline-text-3" id="text-org057451d">
 </div>
-<div id="outline-container-org2954614" class="outline-4">
-<h4 id="org2954614">Notation</h4>
-<div class="outline-text-4" id="text-org2954614">
+<div id="outline-container-org19b5a34" class="outline-4">
+<h4 id="org19b5a34">Notation</h4>
+<div class="outline-text-4" id="text-org19b5a34">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -685,9 +743,9 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-org969ffa0" class="outline-4">
-<h4 id="org969ffa0">Properties</h4>
-<div class="outline-text-4" id="text-org969ffa0">
+<div id="outline-container-orgad41c4b" class="outline-4">
+<h4 id="orgad41c4b">Properties</h4>
+<div class="outline-text-4" id="text-orgad41c4b">
 <p>
 <b>Note</b> that sometimes the distribution is parameterised in terms of \(1-p\)
 which will change the following expressions.
@@ -765,9 +823,9 @@ M_{X}(t) = \left(\frac{1-p}{1-p e^{t}}\right)^r
 <h3 id="org4e617bf">Poisson</h3>
 <div class="outline-text-3" id="text-org4e617bf">
 </div>
-<div id="outline-container-orgae5542f" class="outline-4">
-<h4 id="orgae5542f">Notation</h4>
-<div class="outline-text-4" id="text-orgae5542f">
+<div id="outline-container-orgf1734c0" class="outline-4">
+<h4 id="orgf1734c0">Notation</h4>
+<div class="outline-text-4" id="text-orgf1734c0">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -780,9 +838,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-orgf3d7f8c" class="outline-4">
-<h4 id="orgf3d7f8c">Properties</h4>
-<div class="outline-text-4" id="text-orgf3d7f8c">
+<div id="outline-container-orgf603513" class="outline-4">
+<h4 id="orgf603513">Properties</h4>
+<div class="outline-text-4" id="text-orgf603513">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -859,9 +917,9 @@ and Ntzoufras (2003)</a> for an example.
 </p>
 </div>
 
-<div id="outline-container-orga755379" class="outline-4">
-<h4 id="orga755379">Notation</h4>
-<div class="outline-text-4" id="text-orga755379">
+<div id="outline-container-org9bc0a79" class="outline-4">
+<h4 id="org9bc0a79">Notation</h4>
+<div class="outline-text-4" id="text-org9bc0a79">
 <p>
 \[
 (X,Y) \sim \text{BP}(\lambda_{1},\lambda_{2},\lambda_{3})
@@ -1117,7 +1175,7 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-08-04 Wed 11:35</p>
+<p class="date">Created: 2021-08-31 Tue 14:49</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
