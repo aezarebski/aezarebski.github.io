@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-09-14 Tue 10:54 -->
+<!-- 2021-09-22 Wed 09:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -270,6 +270,7 @@
 <li><a href="#org83805d6">Packages I like</a></li>
 <li><a href="#orgd3ff886">TIDYDATA and the <code>tidyverse</code></a></li>
 <li><a href="#orge579850">Command line arguments</a></li>
+<li><a href="#org013a49a"><span class="todo TODO">TODO</span> Command line arguments with <code>argparse</code></a></li>
 <li><a href="#orgbf5d596">Working with JSON</a></li>
 <li><a href="#org99a9c42">Working with HTML</a></li>
 <li><a href="#org66433fd">Working with Mustache templates</a></li>
@@ -310,7 +311,7 @@
 </div>
 
 
-<div id="org3a87434" class="figure">
+<div id="org863aba5" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -367,15 +368,15 @@ packages, the following command can help with this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">my_pkgs <span style="color: #ce537a; font-weight: bold;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dplyr"</span>, 
+<pre class="src src-R">my_pkgs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"dplyr"</span>, 
              <span style="color: #2d9574;">"purrr"</span>,
              <span style="color: #2d9574;">"magrittr"</span>,
              <span style="color: #2d9574;">"ggplot2"</span>,
              <span style="color: #2d9574;">"reshape2"</span>,
              <span style="color: #2d9574;">"future"</span>,
              <span style="color: #2d9574;">"furrr"</span>,
-             <span style="color: #2d9574;">"stringr"</span><span style="color: #4f97d7;">)</span>
-install.packages<span style="color: #4f97d7;">(</span>my_pkgs<span style="color: #4f97d7;">)</span>
+             <span style="color: #2d9574;">"stringr"</span><span style="color: #3a81c3;">)</span>
+install.packages<span style="color: #3a81c3;">(</span>my_pkgs<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -423,9 +424,9 @@ list. I also needed to install a package <code>build-dep</code> before building 
 <h4 id="org31e37e3">Running system commands</h4>
 <div class="outline-text-4" id="text-org31e37e3">
 <div class="org-src-container">
-<pre class="src src-R">system2<span style="color: #4f97d7;">(</span>command, args = character<span style="color: #bc6ec5;">()</span>,
-        wait = <span style="color: #a45bad;">TRUE</span>,
-        timeout = <span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">system2<span style="color: #3a81c3;">(</span>command, args = character<span style="color: #6c3163;">()</span>,
+        wait = <span style="color: #4e3163;">TRUE</span>,
+        timeout = <span style="color: #4e3163;">0</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -436,7 +437,7 @@ after that amount of time if it has not finished.</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-R">system2<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ls"</span>, args = <span style="color: #2d9574;">"/home/aez/Documents"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">system2<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ls"</span>, args = <span style="color: #2d9574;">"/home/aez/Documents"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -451,36 +452,36 @@ function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">message</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"loading the run_command function."</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">message</span><span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"loading the run_command function."</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> Helper function for running system commands.</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> Example</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> &gt; run_command("stack build")</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> &gt; run_command("Rscript R/make-simulation-configuration-1.R")</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
-<span style="color: #bc6ec5; font-weight: bold;">run_command</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>cmd, silent = <span style="color: #a45bad;">TRUE</span>, ...<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7;">message</span><span style="color: #bc6ec5;">(</span>sprintf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"\nRunning command:\n\t%s"</span>, cmd<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  tmp <span style="color: #ce537a; font-weight: bold;">&lt;-</span> unlist<span style="color: #bc6ec5;">(</span>strsplit<span style="color: #2d9574;">(</span>cmd, <span style="color: #2d9574;">" "</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  cmd_name <span style="color: #ce537a; font-weight: bold;">&lt;-</span> head<span style="color: #bc6ec5;">(</span>tmp, <span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span>
-  cmd_args <span style="color: #ce537a; font-weight: bold;">&lt;-</span> tail<span style="color: #bc6ec5;">(</span>tmp, -<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span>
-  std_val <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>silent<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #a45bad;">FALSE</span>
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Helper function for running system commands.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Example</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> &gt; run_command("stack build")</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> &gt; run_command("Rscript R/make-simulation-configuration-1.R")</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">run_command</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>cmd, silent = <span style="color: #4e3163;">TRUE</span>, ...<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3;">message</span><span style="color: #6c3163;">(</span>sprintf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"\nRunning command:\n\t%s"</span>, cmd<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+  tmp <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> unlist<span style="color: #6c3163;">(</span>strsplit<span style="color: #2d9574;">(</span>cmd, <span style="color: #2d9574;">" "</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+  cmd_name <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> head<span style="color: #6c3163;">(</span>tmp, <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  cmd_args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tail<span style="color: #6c3163;">(</span>tmp, -<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  std_val <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>silent<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #4e3163;">FALSE</span>
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #6c3163;">{</span>
     <span style="color: #2d9574;">""</span>
-  <span style="color: #bc6ec5;">}</span>
-  result <span style="color: #ce537a; font-weight: bold;">&lt;-</span> system2<span style="color: #bc6ec5;">(</span>
+  <span style="color: #6c3163;">}</span>
+  result <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> system2<span style="color: #6c3163;">(</span>
     cmd_name,
     args = cmd_args,
     stdout = std_val,
     stderr = std_val,
     ...
-  <span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>result != <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">stop</span><span style="color: #2d9574;">(</span>sprintf<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"command %s failed!"</span>, cmd<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span>
-  <span style="color: #4f97d7; font-weight: bold;">return</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">NULL</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>result != <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">stop</span><span style="color: #2d9574;">(</span>sprintf<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"command %s failed!"</span>, cmd<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">}</span>
+  <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #6c3163;">(</span><span style="color: #4e3163;">NULL</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -495,13 +496,13 @@ Hadley has a nice <a href="http://adv-r.had.co.nz/Exceptions-Debugging.html#cond
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">show_condition</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>code<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">tryCatch</span><span style="color: #bc6ec5;">(</span>code,
-    error = <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span>c<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">"error"</span>
-  <span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
-show_condition<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">stop</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"!"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">evaluates to the string "error"</span>
-show_condition<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">evalates to the numeric 10</span>
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">show_condition</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>code<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">tryCatch</span><span style="color: #6c3163;">(</span>code,
+    error = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #2d9574;">(</span>c<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">"error"</span>
+  <span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+show_condition<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">stop</span><span style="color: #6c3163;">(</span><span style="color: #2d9574;">"!"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">evaluates to the string "error"</span>
+show_condition<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">evalates to the numeric 10</span>
 </pre>
 </div>
 </div>
@@ -550,7 +551,7 @@ The <code>devtools::use_packag</code> function has been deprecated in favour of 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">usethis::use_package<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"foo"</span>, <span style="color: #2d9574;">"bar"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">usethis::use_package<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"foo"</span>, <span style="color: #2d9574;">"bar"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -602,10 +603,10 @@ the following snippet for an example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>future<span style="color: #4f97d7;">)</span>
-plan<span style="color: #4f97d7;">(</span>multiprocess<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>future<span style="color: #3a81c3;">)</span>
+plan<span style="color: #3a81c3;">(</span>multiprocess<span style="color: #3a81c3;">)</span>
 
-y <span style="color: #ce537a; font-weight: bold;">&lt;-</span> furrr::future_map<span style="color: #4f97d7;">(</span>x, ~ f<span style="color: #bc6ec5;">(</span>.x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> furrr::future_map<span style="color: #3a81c3;">(</span>x, ~ f<span style="color: #6c3163;">(</span>.x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -715,9 +716,9 @@ the order of the arguments, the ordering of the rows does.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">foo <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x = <span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">3</span>, y = letters<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-bar <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span>:<span style="color: #a45bad;">4</span>,<span style="color: #a45bad;">2</span>:<span style="color: #a45bad;">4</span><span style="color: #bc6ec5;">)</span>, z = LETTERS<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">6</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-dplyr::full_join<span style="color: #4f97d7;">(</span>foo,bar<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">foo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>, y = letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
+bar <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>:<span style="color: #4e3163;">4</span>,<span style="color: #4e3163;">2</span>:<span style="color: #4e3163;">4</span><span style="color: #6c3163;">)</span>, z = LETTERS<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">6</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
+dplyr::full_join<span style="color: #3a81c3;">(</span>foo,bar<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -743,9 +744,9 @@ The simplest example is probably what you'll need most of the time
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">demo.R</span>
-args <span style="color: #ce537a; font-weight: bold;">&lt;-</span> commandArgs<span style="color: #4f97d7;">(</span>trailingOnly = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
-print<span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">demo.R</span>
+args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> commandArgs<span style="color: #3a81c3;">(</span>trailingOnly = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+print<span style="color: #3a81c3;">(</span>args<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -760,6 +761,15 @@ $ Rscript demo.R 3 foo.csv
 
 <p>
 Be careful when passing in numbers because they are read in as strings.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org013a49a" class="outline-3">
+<h3 id="org013a49a"><span class="todo TODO">TODO</span> Command line arguments with <code>argparse</code></h3>
+<div class="outline-text-3" id="text-org013a49a">
+<p>
+See the <a href="https://cran.r-project.org/web/packages/argparse/vignettes/argparse.html">vignette</a>.
 </p>
 </div>
 </div>
@@ -782,9 +792,9 @@ it is probably better to set <code>digits = 16</code>.
 <h4 id="org8597675">Examples</h4>
 <div class="outline-text-4" id="text-org8597675">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>jsonlite<span style="color: #4f97d7;">)</span>
-read_json<span style="color: #4f97d7;">(</span>&lt;filepath&gt;<span style="color: #4f97d7;">)</span>
-write_json<span style="color: #4f97d7;">(</span>&lt;object&gt;, &lt;filepath&gt;, pretty = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>  
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>jsonlite<span style="color: #3a81c3;">)</span>
+read_json<span style="color: #3a81c3;">(</span>&lt;filepath&gt;<span style="color: #3a81c3;">)</span>
+write_json<span style="color: #3a81c3;">(</span>&lt;object&gt;, &lt;filepath&gt;, pretty = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>  
 </pre>
 </div>
 
@@ -804,29 +814,29 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org94b3058" class="outline-4">
-<h4 id="org94b3058">Example</h4>
-<div class="outline-text-4" id="text-org94b3058">
+<div id="outline-container-org10ce4d0" class="outline-4">
+<h4 id="org10ce4d0">Example</h4>
+<div class="outline-text-4" id="text-org10ce4d0">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>htmltools<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
-my_html <span style="color: #ce537a; font-weight: bold;">&lt;-</span>
-  tags$html<span style="color: #4f97d7;">(</span>
-         tags$head<span style="color: #bc6ec5;">(</span>tags$title<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"My Title"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
-         tags$body<span style="color: #bc6ec5;">(</span>
+my_html <span style="color: #ba2f59; font-weight: bold;">&lt;-</span>
+  tags$html<span style="color: #3a81c3;">(</span>
+         tags$head<span style="color: #6c3163;">(</span>tags$title<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"My Title"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>,
+         tags$body<span style="color: #6c3163;">(</span>
                 tags$h1<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"Hello"</span><span style="color: #2d9574;">)</span>,
                 tags$div<span style="color: #2d9574;">(</span>
                        tags$h3<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"Hello World"</span><span style="color: #67b11d;">)</span>,
                        tags$img<span style="color: #67b11d;">(</span>src = <span style="color: #2d9574;">"the-world.png"</span><span style="color: #67b11d;">)</span>,
                        tags$p<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"What a wonderful world!"</span><span style="color: #67b11d;">)</span>
                      <span style="color: #2d9574;">)</span>
-              <span style="color: #bc6ec5;">)</span>
-       <span style="color: #4f97d7;">)</span>
+              <span style="color: #6c3163;">)</span>
+       <span style="color: #3a81c3;">)</span>
 
-save_html<span style="color: #4f97d7;">(</span>
-  doRenderTags<span style="color: #bc6ec5;">(</span>my_html<span style="color: #bc6ec5;">)</span>,
+save_html<span style="color: #3a81c3;">(</span>
+  doRenderTags<span style="color: #6c3163;">(</span>my_html<span style="color: #6c3163;">)</span>,
   file = <span style="color: #2d9574;">"world.html"</span>
-<span style="color: #4f97d7;">)</span>
+<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -835,28 +845,28 @@ produces the following HTML
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #4f97d7; font-weight: bold;">!DOCTYPE</span> html&gt;
-&lt;<span style="color: #bc6ec5; font-weight: bold;">html</span> <span style="color: #7590db;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;
-&lt;<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
-&lt;<span style="color: #bc6ec5; font-weight: bold;">meta</span> <span style="color: #7590db;">charset</span>=<span style="color: #2d9574;">"utf-8"</span>/&gt;
-&lt;<span style="color: #bc6ec5; font-weight: bold;">style</span>&gt;body{background-color:white;}&lt;/<span style="color: #bc6ec5; font-weight: bold;">style</span>&gt;
+<pre class="src src-html">&lt;<span style="color: #3a81c3; font-weight: bold;">!DOCTYPE</span> html&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">html</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">meta</span> <span style="color: #715ab1;">charset</span>=<span style="color: #2d9574;">"utf-8"</span>/&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">style</span>&gt;body{background-color:white;}&lt;/<span style="color: #6c3163; font-weight: bold;">style</span>&gt;
 
 
-&lt;/<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
-&lt;<span style="color: #bc6ec5; font-weight: bold;">html</span>&gt;
-  &lt;<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
-    &lt;<span style="color: #bc6ec5; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">My Title</span>&lt;/<span style="color: #bc6ec5; font-weight: bold;">title</span>&gt;
-  &lt;/<span style="color: #bc6ec5; font-weight: bold;">head</span>&gt;
-  &lt;<span style="color: #bc6ec5; font-weight: bold;">body</span>&gt;
-    &lt;<span style="color: #bc6ec5; font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Hello</span>&lt;/<span style="color: #bc6ec5; font-weight: bold;">h1</span>&gt;
-    &lt;<span style="color: #bc6ec5; font-weight: bold;">div</span>&gt;
-      &lt;<span style="color: #bc6ec5; font-weight: bold;">h3</span>&gt;<span style="font-style: italic; text-decoration: underline;">Hello World</span>&lt;/<span style="color: #bc6ec5; font-weight: bold;">h3</span>&gt;
-      &lt;<span style="color: #bc6ec5; font-weight: bold;">img</span> <span style="color: #7590db;">src</span>=<span style="color: #2d9574;">"the-world.png"</span>/&gt;
-      &lt;<span style="color: #bc6ec5; font-weight: bold;">p</span>&gt;What a wonderful world!&lt;/<span style="color: #bc6ec5; font-weight: bold;">p</span>&gt;
-    &lt;/<span style="color: #bc6ec5; font-weight: bold;">div</span>&gt;
-  &lt;/<span style="color: #bc6ec5; font-weight: bold;">body</span>&gt;
-&lt;/<span style="color: #bc6ec5; font-weight: bold;">html</span>&gt;
-&lt;/<span style="color: #bc6ec5; font-weight: bold;">html</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">My Title</span>&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">body</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Hello</span>&lt;/<span style="color: #6c3163; font-weight: bold;">h1</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+      &lt;<span style="color: #6c3163; font-weight: bold;">h3</span>&gt;<span style="font-style: italic; text-decoration: underline;">Hello World</span>&lt;/<span style="color: #6c3163; font-weight: bold;">h3</span>&gt;
+      &lt;<span style="color: #6c3163; font-weight: bold;">img</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"the-world.png"</span>/&gt;
+      &lt;<span style="color: #6c3163; font-weight: bold;">p</span>&gt;What a wonderful world!&lt;/<span style="color: #6c3163; font-weight: bold;">p</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">body</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
 </pre>
 </div>
 </div>
@@ -871,24 +881,24 @@ in your HTML but still want to include figures.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> An HTML tag encoding an image stored in a PNG.</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> This uses the \code{base64enc} and \code{htmltools} packages.</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #4f97d7; background-color: #292e34; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #7590db; background-color: #292e34;">filepath</span><span style="color: #2aa1ae; background-color: #292e34;"> is the path to the PNG</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #4f97d7; background-color: #292e34; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #292e34;"> </span><span style="color: #7590db; background-color: #292e34;">...</span><span style="color: #2aa1ae; background-color: #292e34;"> is additional arguments to \code{tags$img} such as style.</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
-<span style="color: #bc6ec5; font-weight: bold;">png_as_img</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>filepath, ...<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>tools::file_ext<span style="color: #2d9574;">(</span>filepath<span style="color: #2d9574;">)</span> == <span style="color: #2d9574;">"png"</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    b64 <span style="color: #ce537a; font-weight: bold;">&lt;-</span> base64enc::base64encode<span style="color: #2d9574;">(</span>what = filepath<span style="color: #2d9574;">)</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> An HTML tag encoding an image stored in a PNG.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> This uses the \code{base64enc} and \code{htmltools} packages.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">filepath</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> is the path to the PNG</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">...</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> is additional arguments to \code{tags$img} such as style.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">png_as_img</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>filepath, ...<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>tools::file_ext<span style="color: #2d9574;">(</span>filepath<span style="color: #2d9574;">)</span> == <span style="color: #2d9574;">"png"</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    b64 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> base64enc::base64encode<span style="color: #2d9574;">(</span>what = filepath<span style="color: #2d9574;">)</span>
     tags$img<span style="color: #2d9574;">(</span>
            src = paste<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"data:image/png;base64"</span>, b64, sep = <span style="color: #2d9574;">","</span><span style="color: #67b11d;">)</span>,
            ...
          <span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">stop</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"Filepath given to png_as_img must be a PNG."</span><span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">stop</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"Filepath given to png_as_img must be a PNG."</span><span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -899,20 +909,20 @@ in your HTML but still want to include figures.
 <h3 id="org66433fd">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org66433fd">
 </div>
-<div id="outline-container-org10ce4d0" class="outline-4">
-<h4 id="org10ce4d0">Example</h4>
-<div class="outline-text-4" id="text-org10ce4d0">
+<div id="outline-container-orgb4ebced" class="outline-4">
+<h4 id="orgb4ebced">Example</h4>
+<div class="outline-text-4" id="text-orgb4ebced">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>whisker<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
-template <span style="color: #ce537a; font-weight: bold;">&lt;-</span> readLines<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"./template.html"</span><span style="color: #4f97d7;">)</span>
-data <span style="color: #ce537a; font-weight: bold;">&lt;-</span> list<span style="color: #4f97d7;">(</span> name = <span style="color: #2d9574;">"Chris"</span>
-            , value = <span style="color: #a45bad;">10000</span>
-            , taxed_value = <span style="color: #a45bad;">10000</span> - <span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">10000</span> * <span style="color: #a45bad;">0.4</span><span style="color: #bc6ec5;">)</span>
-            , in_ca = <span style="color: #a45bad;">TRUE</span>
-            <span style="color: #4f97d7;">)</span>
+template <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> readLines<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"./template.html"</span><span style="color: #3a81c3;">)</span>
+data <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> list<span style="color: #3a81c3;">(</span> name = <span style="color: #2d9574;">"Chris"</span>
+            , value = <span style="color: #4e3163;">10000</span>
+            , taxed_value = <span style="color: #4e3163;">10000</span> - <span style="color: #6c3163;">(</span><span style="color: #4e3163;">10000</span> * <span style="color: #4e3163;">0.4</span><span style="color: #6c3163;">)</span>
+            , in_ca = <span style="color: #4e3163;">TRUE</span>
+            <span style="color: #3a81c3;">)</span>
 
-writeLines<span style="color: #4f97d7;">(</span>whisker.render<span style="color: #bc6ec5;">(</span>template, data<span style="color: #bc6ec5;">)</span>, <span style="color: #2d9574;">"./output.html"</span><span style="color: #4f97d7;">)</span>
+writeLines<span style="color: #3a81c3;">(</span>whisker.render<span style="color: #6c3163;">(</span>template, data<span style="color: #6c3163;">)</span>, <span style="color: #2d9574;">"./output.html"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -985,7 +995,7 @@ To start a packrat project use
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::init<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">packrat::init<span style="color: #3a81c3;">()</span>
 </pre>
 </div>
 
@@ -1002,7 +1012,7 @@ stored in the private packrat library. Packages are not added to the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::snapshot<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">packrat::snapshot<span style="color: #3a81c3;">()</span>
 </pre>
 </div>
 
@@ -1013,7 +1023,7 @@ they live
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::set_opts<span style="color: #4f97d7;">(</span>local.repos = <span style="color: #2d9574;">"&lt;path/to/package&gt;"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">packrat::set_opts<span style="color: #3a81c3;">(</span>local.repos = <span style="color: #2d9574;">"&lt;path/to/package&gt;"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1024,7 +1034,7 @@ the packages so they can be <i>restored</i>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::restore<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">packrat::restore<span style="color: #3a81c3;">()</span>
 </pre>
 </div>
 </div>
@@ -1238,47 +1248,47 @@ from the project directory).</li>
 <h3 id="org7ce63bc"><code>Rmath.h</code></h3>
 <div class="outline-text-3" id="text-org7ce63bc">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #2aa1ae; background-color: #292e34;">/*</span>
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #ecf3ec;">/*</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">  To compile and run this I used the following...</span>
-
-
-<span style="color: #2aa1ae; background-color: #292e34;">  $ sudo apt update</span>
-<span style="color: #2aa1ae; background-color: #292e34;">  $ sudo apt install r-mathlib</span>
-<span style="color: #2aa1ae; background-color: #292e34;">  $ sudo apt install r-base-dev</span>
-<span style="color: #2aa1ae; background-color: #292e34;">  $ gcc -o mathlibtest demo.c -lRmath -lm</span>
-<span style="color: #2aa1ae; background-color: #292e34;">  $ ./mathlibtest</span>
-
-<span style="color: #2aa1ae; background-color: #292e34;"> */</span>
-
-<span style="color: #bc6ec5;">#include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">stdio.h</span><span style="color: #4f97d7;">&gt;</span>
-
-<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">MATHLIB_STANDALONE</span> <span style="color: #a45bad;">1</span>
-<span style="color: #bc6ec5;">#include</span> <span style="color: #2d9574;">"Rmath.h"</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  To compile and run this I used the following...</span>
 
 
-<span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">fib</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">n</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>n &lt; <span style="color: #a45bad;">2</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span><span style="color: #2d9574;">(</span><span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>;
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>fib<span style="color: #67b11d;">(</span>n-<span style="color: #a45bad;">1</span><span style="color: #67b11d;">)</span> + fib<span style="color: #67b11d;">(</span>n-<span style="color: #a45bad;">2</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt update</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt install r-mathlib</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt install r-base-dev</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ gcc -o mathlibtest demo.c -lRmath -lm</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ ./mathlibtest</span>
 
-<span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">main</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">ac</span>, <span style="color: #ce537a; font-weight: bold;">char</span>** <span style="color: #7590db;">av</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">{</span>
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">n</span>;
-  <span style="color: #ce537a; font-weight: bold;">double</span> <span style="color: #7590db;">foo</span>;
+<span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
 
-  <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #bc6ec5;">(</span> n = <span style="color: #a45bad;">0</span>; n &lt; <span style="color: #a45bad;">10</span>; n = n + <span style="color: #a45bad;">1</span> <span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+<span style="color: #6c3163;">#include</span> <span style="color: #3a81c3;">&lt;</span><span style="color: #2d9574;">stdio.h</span><span style="color: #3a81c3;">&gt;</span>
+
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">MATHLIB_STANDALONE</span> <span style="color: #4e3163;">1</span>
+<span style="color: #6c3163;">#include</span> <span style="color: #2d9574;">"Rmath.h"</span>
+
+
+<span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">fib</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>n &lt; <span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #2d9574;">(</span><span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>fib<span style="color: #67b11d;">(</span>n-<span style="color: #4e3163;">1</span><span style="color: #67b11d;">)</span> + fib<span style="color: #67b11d;">(</span>n-<span style="color: #4e3163;">2</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">main</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">ac</span>, <span style="color: #ba2f59; font-weight: bold;">char</span>** <span style="color: #715ab1;">av</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span>;
+  <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">foo</span>;
+
+  <span style="color: #3a81c3; font-weight: bold;">for</span> <span style="color: #6c3163;">(</span> n = <span style="color: #4e3163;">0</span>; n &lt; <span style="color: #4e3163;">10</span>; n = n + <span style="color: #4e3163;">1</span> <span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
     printf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"%d\n"</span>, fib<span style="color: #67b11d;">(</span>n<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
-    foo = dnorm<span style="color: #2d9574;">(</span><span style="color: #a45bad;">1.0</span>, <span style="color: #a45bad;">0.0</span>, <span style="color: #a45bad;">1.0</span>, <span style="color: #a45bad;">0</span><span style="color: #2d9574;">)</span>;
+    foo = dnorm<span style="color: #2d9574;">(</span><span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">0.0</span>, <span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">0</span><span style="color: #2d9574;">)</span>;
     printf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"%f\n"</span>, foo<span style="color: #2d9574;">)</span>;
-  <span style="color: #bc6ec5;">}</span>
+  <span style="color: #6c3163;">}</span>
 
-  printf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"hello, %s\n"</span>, <span style="color: #2d9574;">"world"</span><span style="color: #bc6ec5;">)</span>;
-  <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">0</span>;
-<span style="color: #4f97d7;">}</span>
+  printf<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"hello, %s\n"</span>, <span style="color: #2d9574;">"world"</span><span style="color: #6c3163;">)</span>;
+  <span style="color: #3a81c3; font-weight: bold;">return</span> <span style="color: #4e3163;">0</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -1297,10 +1307,10 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">num_lines_in_file</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>fp<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  wc_stdout <span style="color: #ce537a; font-weight: bold;">&lt;-</span> system2<span style="color: #bc6ec5;">(</span>command = <span style="color: #2d9574;">"wc"</span>, args = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"-l"</span>, fp<span style="color: #2d9574;">)</span>, stdout = <span style="color: #a45bad;">TRUE</span><span style="color: #bc6ec5;">)</span>
-  as.numeric<span style="color: #bc6ec5;">(</span>head<span style="color: #2d9574;">(</span>unlist<span style="color: #67b11d;">(</span>strsplit<span style="color: #b1951d;">(</span>x = wc_stdout, split = <span style="color: #2d9574;">" "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>,<span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">num_lines_in_file</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>fp<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  wc_stdout <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> system2<span style="color: #6c3163;">(</span>command = <span style="color: #2d9574;">"wc"</span>, args = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"-l"</span>, fp<span style="color: #2d9574;">)</span>, stdout = <span style="color: #4e3163;">TRUE</span><span style="color: #6c3163;">)</span>
+  as.numeric<span style="color: #6c3163;">(</span>head<span style="color: #2d9574;">(</span>unlist<span style="color: #67b11d;">(</span>strsplit<span style="color: #b1951d;">(</span>x = wc_stdout, split = <span style="color: #2d9574;">" "</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>,<span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -1310,13 +1320,13 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 <h4 id="org9885295">Julian day of the year</h4>
 <div class="outline-text-4" id="text-org9885295">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> Julian day of the year</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> &gt; j_day("2014-01-03", "2014-01-01")</span>
-<span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #292e34; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #292e34;"> 3</span>
-<span style="color: #bc6ec5; font-weight: bold;">j_day</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>date_string, first_day_of_year_string<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  as.integer<span style="color: #bc6ec5;">(</span>as.Date<span style="color: #2d9574;">(</span>date_string<span style="color: #2d9574;">)</span> - as.Date<span style="color: #2d9574;">(</span>first_day_of_year_string<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> + <span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7;">}</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Julian day of the year</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> &gt; j_day("2014-01-03", "2014-01-01")</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> 3</span>
+<span style="color: #6c3163; font-weight: bold;">j_day</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>date_string, first_day_of_year_string<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  as.integer<span style="color: #6c3163;">(</span>as.Date<span style="color: #2d9574;">(</span>date_string<span style="color: #2d9574;">)</span> - as.Date<span style="color: #2d9574;">(</span>first_day_of_year_string<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">1</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -1343,7 +1353,7 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 <h4 id="orgbf5658d">Sorting rows of a data frame</h4>
 <div class="outline-text-4" id="text-orgbf5658d">
 <div class="org-src-container">
-<pre class="src src-R">iris<span style="color: #4f97d7;">[</span>order<span style="color: #bc6ec5;">(</span>iris$Sepal.Length<span style="color: #bc6ec5;">)</span>,<span style="color: #4f97d7;">]</span>
+<pre class="src src-R">iris<span style="color: #3a81c3;">[</span>order<span style="color: #6c3163;">(</span>iris$Sepal.Length<span style="color: #6c3163;">)</span>,<span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 </div>
@@ -1363,9 +1373,9 @@ by default), a.k.a. map, dictionary, loopkup&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">my_dict <span style="color: #ce537a; font-weight: bold;">&lt;-</span> new.env<span style="color: #4f97d7;">(</span>hash = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
-my_dict<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"key"</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #a45bad;">2</span>
-my_dict<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"key"</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">will return 2.</span>
+<pre class="src src-R">my_dict <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> new.env<span style="color: #3a81c3;">(</span>hash = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+my_dict<span style="color: #3a81c3;">[</span><span style="color: #6c3163;">[</span><span style="color: #2d9574;">"key"</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">]</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">2</span>
+my_dict<span style="color: #3a81c3;">[</span><span style="color: #6c3163;">[</span><span style="color: #2d9574;">"key"</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">]</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">will return 2.</span>
 </pre>
 </div>
 </div>
@@ -1391,8 +1401,8 @@ my_dict<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</sp
 <h3 id="org8ff7105">Functional programming support</h3>
 <div class="outline-text-3" id="text-org8ff7105">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>magrittr<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>purrr<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1444,35 +1454,35 @@ analogue in R.
 <h3 id="orgd2cf472">R/Haskell Prelude</h3>
 <div class="outline-text-3" id="text-orgd2cf472">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile</span>
-<span style="color: #bc6ec5; font-weight: bold;">drop_while</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>p, xs<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>length<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span> == <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile</span>
+<span style="color: #6c3163; font-weight: bold;">drop_while</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>p, xs<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>length<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span> == <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
     xs
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
-    x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> head<span style="color: #2d9574;">(</span>xs, <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
-    remaining <span style="color: #ce537a; font-weight: bold;">&lt;-</span> tail<span style="color: #2d9574;">(</span>xs, -<span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #6c3163;">{</span>
+    x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> head<span style="color: #2d9574;">(</span>xs, <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>
+    remaining <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tail<span style="color: #2d9574;">(</span>xs, -<span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>
+    <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
       drop_while<span style="color: #67b11d;">(</span>p, remaining<span style="color: #67b11d;">)</span>
-    <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #2d9574;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
       remaining
     <span style="color: #2d9574;">}</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile</span>
-<span style="color: #bc6ec5; font-weight: bold;">take_while</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>p, xs<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>length<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span> == <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile</span>
+<span style="color: #6c3163; font-weight: bold;">take_while</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>p, xs<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>length<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span> == <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
     xs
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span>
-    x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> head<span style="color: #2d9574;">(</span>xs, <span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
-    remaining <span style="color: #ce537a; font-weight: bold;">&lt;-</span> tail<span style="color: #2d9574;">(</span>xs, -<span style="color: #a45bad;">1</span><span style="color: #2d9574;">)</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #6c3163;">{</span>
+    x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> head<span style="color: #2d9574;">(</span>xs, <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>
+    remaining <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tail<span style="color: #2d9574;">(</span>xs, -<span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>
+    <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
       c<span style="color: #67b11d;">(</span>x, take_while<span style="color: #b1951d;">(</span>p, remaining<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-    <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #2d9574;">}</span> <span style="color: #3a81c3; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
       c<span style="color: #67b11d;">()</span>
     <span style="color: #2d9574;">}</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -1486,7 +1496,7 @@ analogue in R.
 <h4 id="orgf9671d3">Ternary operator</h4>
 <div class="outline-text-4" id="text-orgf9671d3">
 <div class="org-src-container">
-<pre class="src src-R">ifelse<span style="color: #4f97d7;">(</span>test, yes, no<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">ifelse<span style="color: #3a81c3;">(</span>test, yes, no<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1496,12 +1506,12 @@ analogue in R.
 <h4 id="orgfdd13df">Switch/case/which</h4>
 <div class="outline-text-4" id="text-orgfdd13df">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">centre</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x, type<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">switch</span><span style="color: #bc6ec5;">(</span>type,
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">centre</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x, type<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">switch</span><span style="color: #6c3163;">(</span>type,
          mean = mean<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>,
          median = median<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>,
-         trimmed = mean<span style="color: #2d9574;">(</span>x, trim = .1<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+         trimmed = mean<span style="color: #2d9574;">(</span>x, trim = .1<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -1533,8 +1543,8 @@ There is a synonym <code>as.name</code> which derives from S terminology while "
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">a <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #a45bad;">1</span>
-eval<span style="color: #4f97d7;">(</span>as.symbol<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"a"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">a <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">1</span>
+eval<span style="color: #3a81c3;">(</span>as.symbol<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"a"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1544,11 +1554,11 @@ Instead we can do the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">this has a syntax error</span>
-data.frame<span style="color: #4f97d7;">(</span>letters<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> = <span style="color: #a45bad;">2</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">this has a syntax error</span>
+data.frame<span style="color: #3a81c3;">(</span>letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span> = <span style="color: #4e3163;">2</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">this works!</span>
-eval<span style="color: #4f97d7;">(</span>parse<span style="color: #bc6ec5;">(</span>text = sprintf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"data.frame(%s = 2)"</span>, letters<span style="color: #67b11d;">[</span><span style="color: #a45bad;">1</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">this works!</span>
+eval<span style="color: #3a81c3;">(</span>parse<span style="color: #6c3163;">(</span>text = sprintf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"data.frame(%s = 2)"</span>, letters<span style="color: #67b11d;">[</span><span style="color: #4e3163;">1</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1626,21 +1636,21 @@ The following demonstrates how to solve this system with <code>deSolve</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>deSolve<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>deSolve<span style="color: #3a81c3;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">sir_diff</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>time, state, params<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    with<span style="color: #bc6ec5;">(</span>as.list<span style="color: #2d9574;">(</span>c<span style="color: #67b11d;">(</span>params, state<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, <span style="color: #2d9574;">{</span>
-        ds <span style="color: #ce537a; font-weight: bold;">&lt;-</span> - beta * susceptible * infectious
-        di <span style="color: #ce537a; font-weight: bold;">&lt;-</span> beta * susceptible * infectious - gamma * infectious
+<span style="color: #6c3163; font-weight: bold;">sir_diff</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>time, state, params<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    with<span style="color: #6c3163;">(</span>as.list<span style="color: #2d9574;">(</span>c<span style="color: #67b11d;">(</span>params, state<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, <span style="color: #2d9574;">{</span>
+        ds <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> - beta * susceptible * infectious
+        di <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> beta * susceptible * infectious - gamma * infectious
         list<span style="color: #67b11d;">(</span>c<span style="color: #b1951d;">(</span>ds, di<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-    <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+    <span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-params <span style="color: #ce537a; font-weight: bold;">&lt;-</span> c<span style="color: #4f97d7;">(</span>beta = <span style="color: #a45bad;">1.2</span>, gamma = <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
-state <span style="color: #ce537a; font-weight: bold;">&lt;-</span> c<span style="color: #4f97d7;">(</span>susceptible = <span style="color: #a45bad;">0.99</span>, infectious = <span style="color: #a45bad;">0.01</span><span style="color: #4f97d7;">)</span>
-times <span style="color: #ce537a; font-weight: bold;">&lt;-</span> seq<span style="color: #4f97d7;">(</span>from = <span style="color: #a45bad;">0</span>, to = <span style="color: #a45bad;">20</span>, length = <span style="color: #a45bad;">100</span><span style="color: #4f97d7;">)</span>
-pd <span style="color: #ce537a; font-weight: bold;">&lt;-</span> matrix<span style="color: #4f97d7;">(</span>nrow = <span style="color: #a45bad;">2</span>, ncol = <span style="color: #a45bad;">2</span>, data = <span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span>
-out1 <span style="color: #ce537a; font-weight: bold;">&lt;-</span> deSolve::ode<span style="color: #4f97d7;">(</span>state, times, sir_diff, parms = params<span style="color: #4f97d7;">)</span>
+params <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span>beta = <span style="color: #4e3163;">1.2</span>, gamma = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+state <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span>susceptible = <span style="color: #4e3163;">0.99</span>, infectious = <span style="color: #4e3163;">0.01</span><span style="color: #3a81c3;">)</span>
+times <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> seq<span style="color: #3a81c3;">(</span>from = <span style="color: #4e3163;">0</span>, to = <span style="color: #4e3163;">20</span>, length = <span style="color: #4e3163;">100</span><span style="color: #3a81c3;">)</span>
+pd <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> matrix<span style="color: #3a81c3;">(</span>nrow = <span style="color: #4e3163;">2</span>, ncol = <span style="color: #4e3163;">2</span>, data = <span style="color: #4e3163;">0</span><span style="color: #3a81c3;">)</span>
+out1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> deSolve::ode<span style="color: #3a81c3;">(</span>state, times, sir_diff, parms = params<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1654,30 +1664,30 @@ Then we can implement the differential in C as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">file sirmod.c</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
-<span style="color: #bc6ec5;">#include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">R.h</span><span style="color: #4f97d7;">&gt;</span>
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">file sirmod.c</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+<span style="color: #6c3163;">#include</span> <span style="color: #3a81c3;">&lt;</span><span style="color: #2d9574;">R.h</span><span style="color: #3a81c3;">&gt;</span>
 
-<span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #ce537a; font-weight: bold;">double</span> <span style="color: #7590db;">params</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">2</span><span style="color: #4f97d7;">]</span>;
-<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">beta</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span>
-<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">gamma</span> params<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
+<span style="color: #3a81c3; font-weight: bold;">static</span> <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">params</span><span style="color: #3a81c3;">[</span><span style="color: #4e3163;">2</span><span style="color: #3a81c3;">]</span>;
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">beta</span> params<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">gamma</span> params<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">initializer</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
-<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">initmod</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5;">(</span>* <span style="color: #bc6ec5; font-weight: bold;">odeparams</span><span style="color: #bc6ec5;">)(</span><span style="color: #ce537a; font-weight: bold;">int</span> *, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">{</span>
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">N</span>=<span style="color: #a45bad;">2</span>;
-  odeparams<span style="color: #bc6ec5;">(</span>&amp;N, params<span style="color: #bc6ec5;">)</span>;
-<span style="color: #4f97d7;">}</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">initializer</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+<span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">initmod</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163;">(</span>* <span style="color: #6c3163; font-weight: bold;">odeparams</span><span style="color: #6c3163;">)(</span><span style="color: #ba2f59; font-weight: bold;">int</span> *, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">N</span>=<span style="color: #4e3163;">2</span>;
+  odeparams<span style="color: #6c3163;">(</span>&amp;N, params<span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">Derivatives and 1 output variable</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
-<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">derivs</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">neq</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">t</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">y</span>, <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">ydot</span>,
-             <span style="color: #ce537a; font-weight: bold;">double</span> *<span style="color: #7590db;">yout</span>, <span style="color: #ce537a; font-weight: bold;">int</span> *<span style="color: #7590db;">ip</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>ip<span style="color: #2d9574;">[</span><span style="color: #a45bad;">0</span><span style="color: #2d9574;">]</span> &lt;<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> error<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"nout should be at least 1"</span><span style="color: #bc6ec5;">)</span>;
-  ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = -beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
-  ydot<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> = beta*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> - gamma*y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
-  yout<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span> = <span style="color: #a45bad;">1.0</span>-y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span>+y<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span>;
-<span style="color: #4f97d7;">}</span>
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">END file sirmod.c</span><span style="color: #2aa1ae; background-color: #292e34;"> */</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Derivatives and 1 output variable</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+<span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">derivs</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> *<span style="color: #715ab1;">neq</span>, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">t</span>, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">y</span>, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">ydot</span>,
+             <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">yout</span>, <span style="color: #ba2f59; font-weight: bold;">int</span> *<span style="color: #715ab1;">ip</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #6c3163;">(</span>ip<span style="color: #2d9574;">[</span><span style="color: #4e3163;">0</span><span style="color: #2d9574;">]</span> &lt;<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span> error<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"nout should be at least 1"</span><span style="color: #6c3163;">)</span>;
+  ydot<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span> = -beta*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>;
+  ydot<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span> = beta*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span> - gamma*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>;
+  yout<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span> = <span style="color: #4e3163;">1.0</span>-y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>+y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>;
+<span style="color: #3a81c3;">}</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">END file sirmod.c</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
 </pre>
 </div>
 
@@ -1686,11 +1696,11 @@ Then we need to compile this and load the object for use of <code>deSovle</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">system<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"R CMD SHLIB sirmod.c"</span><span style="color: #4f97d7;">)</span>
-dyn.load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"sirmod.so"</span><span style="color: #4f97d7;">)</span>
-out2 <span style="color: #ce537a; font-weight: bold;">&lt;-</span> deSolve::ode<span style="color: #4f97d7;">(</span>state, times, func = <span style="color: #2d9574;">"derivs"</span>, parms = params,
-                     dllname = <span style="color: #2d9574;">"sirmod"</span>, initfunc = <span style="color: #2d9574;">"initmod"</span>, nout = <span style="color: #a45bad;">1</span>,
-                     outnames = <span style="color: #2d9574;">"recovered"</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">system<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"R CMD SHLIB sirmod.c"</span><span style="color: #3a81c3;">)</span>
+dyn.load<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"sirmod.so"</span><span style="color: #3a81c3;">)</span>
+out2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> deSolve::ode<span style="color: #3a81c3;">(</span>state, times, func = <span style="color: #2d9574;">"derivs"</span>, parms = params,
+                     dllname = <span style="color: #2d9574;">"sirmod"</span>, initfunc = <span style="color: #2d9574;">"initmod"</span>, nout = <span style="color: #4e3163;">1</span>,
+                     outnames = <span style="color: #2d9574;">"recovered"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1723,47 +1733,47 @@ Here is an example looking at how to use <code>KernSmooth</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>KernSmooth<span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>KernSmooth<span style="color: #3a81c3;">)</span>
 
-set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
 
-x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> c<span style="color: #4f97d7;">(</span>rpois<span style="color: #bc6ec5;">(</span>n = <span style="color: #a45bad;">500</span>, lambda=<span style="color: #a45bad;">10</span><span style="color: #bc6ec5;">)</span>,
-       rpois<span style="color: #bc6ec5;">(</span>n = <span style="color: #a45bad;">500</span>, lambda = <span style="color: #a45bad;">30</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span>rpois<span style="color: #6c3163;">(</span>n = <span style="color: #4e3163;">500</span>, lambda=<span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span>,
+       rpois<span style="color: #6c3163;">(</span>n = <span style="color: #4e3163;">500</span>, lambda = <span style="color: #4e3163;">30</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">f_x</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x, ...<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #a45bad;">0.5</span> * <span style="color: #bc6ec5;">(</span>dpois<span style="color: #2d9574;">(</span>x = x, lambda = <span style="color: #a45bad;">10</span>, ...<span style="color: #2d9574;">)</span> +
-         dpois<span style="color: #2d9574;">(</span>x = x, lambda = <span style="color: #a45bad;">30</span>, ...<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #6c3163; font-weight: bold;">f_x</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x, ...<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #4e3163;">0.5</span> * <span style="color: #6c3163;">(</span>dpois<span style="color: #2d9574;">(</span>x = x, lambda = <span style="color: #4e3163;">10</span>, ...<span style="color: #2d9574;">)</span> +
+         dpois<span style="color: #2d9574;">(</span>x = x, lambda = <span style="color: #4e3163;">30</span>, ...<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-x_mesh <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #a45bad;">0</span>:<span style="color: #a45bad;">100</span>
-y_mesh <span style="color: #ce537a; font-weight: bold;">&lt;-</span> f_x<span style="color: #4f97d7;">(</span>x_mesh<span style="color: #4f97d7;">)</span>
+x_mesh <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>:<span style="color: #4e3163;">100</span>
+y_mesh <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> f_x<span style="color: #3a81c3;">(</span>x_mesh<span style="color: #3a81c3;">)</span>
 
 
-kde_obj <span style="color: #ce537a; font-weight: bold;">&lt;-</span> bkde<span style="color: #4f97d7;">(</span>x, bandwidth = <span style="color: #a45bad;">3</span>, range.x = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">100</span><span style="color: #bc6ec5;">)</span>, gridsize = <span style="color: #a45bad;">101</span><span style="color: #4f97d7;">)</span>
+kde_obj <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> bkde<span style="color: #3a81c3;">(</span>x, bandwidth = <span style="color: #4e3163;">3</span>, range.x = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">100</span><span style="color: #6c3163;">)</span>, gridsize = <span style="color: #4e3163;">101</span><span style="color: #3a81c3;">)</span>
 
-r_kde_samples <span style="color: #ce537a; font-weight: bold;">&lt;-</span> sample<span style="color: #4f97d7;">(</span>x = kde_obj$x,
-                       size = length<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>,
-                       replace = <span style="color: #a45bad;">TRUE</span>,
-                       prob = pmax<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">0</span>, kde_obj$y<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+r_kde_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span>x = kde_obj$x,
+                       size = length<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span>,
+                       replace = <span style="color: #4e3163;">TRUE</span>,
+                       prob = pmax<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>, kde_obj$y<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-type_char <span style="color: #ce537a; font-weight: bold;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"true"</span>, <span style="color: #2d9574;">"estimate"</span><span style="color: #4f97d7;">)</span>
+type_char <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"true"</span>, <span style="color: #2d9574;">"estimate"</span><span style="color: #3a81c3;">)</span>
 
-density_df <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x = c<span style="color: #bc6ec5;">(</span>x_mesh, x_mesh<span style="color: #bc6ec5;">)</span>,
-                         y = c<span style="color: #bc6ec5;">(</span>y_mesh, pmax<span style="color: #2d9574;">(</span><span style="color: #a45bad;">0</span>, kde_obj$y<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
-                         type = rep<span style="color: #bc6ec5;">(</span>type_char, each = <span style="color: #a45bad;">101</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+density_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = c<span style="color: #6c3163;">(</span>x_mesh, x_mesh<span style="color: #6c3163;">)</span>,
+                         y = c<span style="color: #6c3163;">(</span>y_mesh, pmax<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, kde_obj$y<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>,
+                         type = rep<span style="color: #6c3163;">(</span>type_char, each = <span style="color: #4e3163;">101</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-sample_df <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x = c<span style="color: #bc6ec5;">(</span>x, r_kde_samples<span style="color: #bc6ec5;">)</span>,
-                        type = rep<span style="color: #bc6ec5;">(</span>type_char,
-                                   each = length<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+sample_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = c<span style="color: #6c3163;">(</span>x, r_kde_samples<span style="color: #6c3163;">)</span>,
+                        type = rep<span style="color: #6c3163;">(</span>type_char,
+                                   each = length<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-ggplot<span style="color: #4f97d7;">()</span> +
-  geom_histogram<span style="color: #4f97d7;">(</span>data = sample_df,
-                 mapping = aes<span style="color: #bc6ec5;">(</span>x = x, y = ..density.., fill = type<span style="color: #bc6ec5;">)</span>,
-                 bins = <span style="color: #a45bad;">25</span>,
-                 size = <span style="color: #a45bad;">3</span>,
-                 position = <span style="color: #2d9574;">"dodge"</span><span style="color: #4f97d7;">)</span> +
-  geom_line<span style="color: #4f97d7;">(</span>data = density_df,
-            mapping = aes<span style="color: #bc6ec5;">(</span>x = x, y = y, colour = type<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>data = sample_df,
+                 mapping = aes<span style="color: #6c3163;">(</span>x = x, y = ..density.., fill = type<span style="color: #6c3163;">)</span>,
+                 bins = <span style="color: #4e3163;">25</span>,
+                 size = <span style="color: #4e3163;">3</span>,
+                 position = <span style="color: #2d9574;">"dodge"</span><span style="color: #3a81c3;">)</span> +
+  geom_line<span style="color: #3a81c3;">(</span>data = density_df,
+            mapping = aes<span style="color: #6c3163;">(</span>x = x, y = y, colour = type<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1772,7 +1782,7 @@ ggplot<span style="color: #4f97d7;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-09-14 Tue 10:54</p>
+<p class="date">Created: 2021-09-22 Wed 09:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
