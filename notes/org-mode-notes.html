@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-08-25 Wed 14:05 -->
+<!-- 2021-10-01 Fri 15:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -235,6 +235,7 @@
 <ul>
 <li><a href="#org4fccdd7">Further reading</a></li>
 <li><a href="#orgfacbb2d">Basic markup</a></li>
+<li><a href="#org2d9b92e"><span class="todo TODO">TODO</span> The citation engine</a></li>
 <li><a href="#org90157b9">Using LaTeX</a></li>
 <li><a href="#orgbd1b544">Source code</a></li>
 <li><a href="#org5d6121d">HTML export</a></li>
@@ -256,7 +257,7 @@
 </div>
 
 
-<div id="orge6aaa8c" class="figure">
+<div id="orgfb97054" class="figure">
 <p><img src="../images/org-mode-logo.png" alt="org-mode-logo.png" />
 </p>
 </div>
@@ -302,6 +303,36 @@
 <li><code>/foo/</code> will italicise the text: <i>foo</i></li>
 <li><code>[[target][label]]</code> will generate links</li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-org2d9b92e" class="outline-3">
+<h3 id="org2d9b92e"><span class="todo TODO">TODO</span> The citation engine</h3>
+<div class="outline-text-3" id="text-org2d9b92e">
+<p>
+As stated <a href="https://orgmode.org/Changes.html">here</a>.
+</p>
+
+<blockquote>
+<p>
+Org 9.5 provides a new library oc.el which provides tooling to handle citations
+in Org, e.g., activate, follow, insert, and export them, respectively called
+"activate", "follow", "insert" and "export" capabilities. Libraries responsible
+for providing some, or all, of these capabilities are called "citation
+processors".
+</p>
+
+<p>
+The manual contains a few pointers to let you start and you may want to check
+<a href="https://blog.tecosaur.com/tmio/2021-07-31-citations.html">this blog post</a>. If you need help using this new features, please ask on the
+mailing list.
+</p>
+
+<p>
+Thanks to Nicolas Goaziou for implementing this, to Bruce D'Arcus for helping
+him and to John Kitchin for paving the way with org-ref.el.
+</p>
+</blockquote>
 </div>
 </div>
 
@@ -397,7 +428,7 @@ file.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../css/stylesheet.css" /&gt;</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+HTML_HEAD: &lt;link rel="stylesheet" type="text/css" href="../css/stylesheet.css" /&gt;</span>
 </pre>
 </div>
 
@@ -416,7 +447,7 @@ to HTML. For example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+attr_html: :width 700px</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+attr_html: :width 700px</span>
 <span style="color: #2aa1ae; text-decoration: underline;"><a href="./path/to/image.png">./path/to/image.png</a></span>  
 </pre>
 </div>
@@ -438,30 +469,30 @@ following snippet. For the version of the code actually used, check out my
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> '<span style="color: #a45bad;">ox-publish</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">require</span> '<span style="color: #4e3163;">ox-publish</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-publish-project-alist
-      '<span style="color: #bc6ec5;">(</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-publish-project-alist
+      '<span style="color: #6c3163;">(</span>
         <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org-notes"</span>
-         <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
-         <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"org"</span>
-         <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
-         <span style="color: #4f97d7;">:recursive</span> t
-         <span style="color: #4f97d7;">:publishing-function</span> org-html-publish-to-html
-         <span style="color: #4f97d7;">:headline-levels</span> <span style="color: #a45bad;">4</span>
-         <span style="color: #4f97d7;">:auto-preamble</span> t
+         <span style="color: #3a81c3;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
+         <span style="color: #3a81c3;">:base-extension</span> <span style="color: #2d9574;">"org"</span>
+         <span style="color: #3a81c3;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
+         <span style="color: #3a81c3;">:recursive</span> t
+         <span style="color: #3a81c3;">:publishing-function</span> org-html-publish-to-html
+         <span style="color: #3a81c3;">:headline-levels</span> <span style="color: #4e3163;">4</span>
+         <span style="color: #3a81c3;">:auto-preamble</span> t
          <span style="color: #2d9574;">)</span>
         <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org-static"</span>
-         <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
-         <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"css</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">js</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">png</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">jpg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">gif</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">pdf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">mp3</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">ogg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">swf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">txt</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">cur</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">svg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">csv</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">json"</span>
-         <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
-         <span style="color: #4f97d7;">:recursive</span> t
-         <span style="color: #4f97d7;">:publishing-function</span> org-publish-attachment
+         <span style="color: #3a81c3;">:base-directory</span> <span style="color: #2d9574;">"~/public-site/org/"</span>
+         <span style="color: #3a81c3;">:base-extension</span> <span style="color: #2d9574;">"css</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">js</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">png</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">jpg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">gif</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">pdf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">mp3</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">ogg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">swf</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">txt</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">cur</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">svg</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">csv</span><span style="color: #2d9574; font-weight: bold;">\\</span><span style="color: #2d9574; font-weight: bold;">|</span><span style="color: #2d9574;">json"</span>
+         <span style="color: #3a81c3;">:publishing-directory</span> <span style="color: #2d9574;">"~/aezarebski.github.io/"</span>
+         <span style="color: #3a81c3;">:recursive</span> t
+         <span style="color: #3a81c3;">:publishing-function</span> org-publish-attachment
          <span style="color: #2d9574;">)</span>
         <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"org"</span>
-         <span style="color: #4f97d7;">:components</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"org-notes"</span> <span style="color: #2d9574;">"org-static"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+         <span style="color: #3a81c3;">:components</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"org-notes"</span> <span style="color: #2d9574;">"org-static"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #4f97d7;">(</span>org-publish <span style="color: #2d9574;">"org"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #3a81c3;">(</span>org-publish <span style="color: #2d9574;">"org"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -492,24 +523,24 @@ that
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org">Evaluate an expression and cache the values as <span style="color: #4f97d7;">=x=</span>.
+<pre class="src src-org">Evaluate an expression and cache the values as <span style="color: #3a81c3;">=x=</span>.
 
-<span style="color: #9f8766;">#+name: x</span>
+<span style="color: #da8b55;">#+name: x</span>
 \#+begin_src R :cache yes
 mean(1:10)
 \#+end_src
 
-<span style="color: #9f8766;">#+RESULTS[57c60ad6be3794c58f0a94dc3c107a692489cb2b]: x</span>
-<span style="color: #28def0;">: 5.5</span>
+<span style="color: #da8b55;">#+RESULTS[57c60ad6be3794c58f0a94dc3c107a692489cb2b]: x</span>
+<span style="color: #21b8c7;">: 5.5</span>
 
-Carry out an action using the variable <span style="color: #4f97d7;">=x=</span>
+Carry out an action using the variable <span style="color: #3a81c3;">=x=</span>
 
 \#+begin_src R :var x = x
 print(x)
 \#+end_src
 
-<span style="color: #9f8766;">#+RESULTS:</span>
-<span style="color: #28def0;">: 5.5</span>
+<span style="color: #da8b55;">#+RESULTS:</span>
+<span style="color: #21b8c7;">: 5.5</span>
 </pre>
 </div>
 </div>
@@ -528,7 +559,7 @@ that specified session.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+header: :width 300 :height 300</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+header: :width 300 :height 300</span>
 #+begin_src R :session <span style="font-weight: bold;">*R-demo*</span> :file 2.png :results graphics file :tangle demo.R
   library(ggplot2)
 
@@ -556,7 +587,7 @@ resulting output are exported.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+header: :exports both</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+header: :exports both</span>
 #+begin_src maxima :results output
   a : (x* exp(-aa) + y + y * exp(-aa))/ (y*exp(-aa) + x);
   b : ratsimp(a);
@@ -584,9 +615,9 @@ export set <code>:noweb no-export</code> as shown in the following example.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript" id="org7fe79ae"><span style="color: #4f97d7;">{</span>
+<pre class="src src-javascript" id="org7fe79ae"><span style="color: #3a81c3;">{</span>
     <span style="color: #2d9574;">"foo"</span>: <span style="color: #2d9574;">"bar"</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
@@ -610,10 +641,10 @@ following block
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript" id="org68d3d60"><span style="color: #4f97d7;">{</span>
+<pre class="src src-javascript" id="org68d3d60"><span style="color: #3a81c3;">{</span>
     <span style="color: #2d9574;">"fleeb"</span>: 
         &lt;&lt;foobar&gt;&gt;
-<span style="color: #4f97d7;">}</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
@@ -637,12 +668,12 @@ Tangling this produces the following JSON
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #4f97d7;">{</span>
+<pre class="src src-javascript"><span style="color: #3a81c3;">{</span>
     <span style="color: #2d9574;">"fleeb"</span>: 
-        <span style="color: #bc6ec5;">{</span>
+        <span style="color: #6c3163;">{</span>
             <span style="color: #2d9574;">"foo"</span>: <span style="color: #2d9574;">"bar"</span>
-        <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+        <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -658,9 +689,14 @@ document. To change the size of the displayed image use the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+ATTR_ORG: :width 600</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+attr_org: :width 500</span>
 </pre>
 </div>
+
+<p>
+For export there are other commands you might want to issue. See for example <a href="#org1b2b0ec">the
+HTML attributes</a>.
+</p>
 </div>
 </div>
 
@@ -719,7 +755,7 @@ definition to the top of the file.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+OPTIONS: toc:nil</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+OPTIONS: toc:nil</span>
 </pre>
 </div>
 </div>
@@ -733,7 +769,7 @@ Define a macro at the top of the file
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span style="color: #9f8766;">#+MACRO: name   replacement text $1, $2 are arguments</span>
+<pre class="src src-org"><span style="color: #da8b55;">#+MACRO: name   replacement text $1, $2 are arguments</span>
 </pre>
 </div>
 
@@ -769,9 +805,9 @@ days ago and over a 30 day span in total.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #2d9574;">"-3d"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-agenda-span <span style="color: #a45bad;">30</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil<span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #2d9574;">"-3d"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-span <span style="color: #4e3163;">30</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -783,7 +819,7 @@ to use customise to set these variables.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">'<span style="color: #4f97d7;">(</span>org-todo-keywords '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #dc752f;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #86dc2f;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-todo-keywords '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>sequence <span style="color: #2d9574;">"</span><span style="color: #dc752f;">TODO</span><span style="color: #2d9574;">"</span> <span style="color: #2d9574;">"BLOCKED"</span> <span style="color: #2d9574;">"</span><span style="color: #42ae2c;">DONE</span><span style="color: #2d9574;">"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -812,12 +848,12 @@ There is good documentation for this variable, I use the following setting
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">'<span style="color: #4f97d7;">(</span>org-link-frame-setup
-  '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>vm . vm-visit-folder-other-frame<span style="color: #2d9574;">)</span>
+<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>org-link-frame-setup
+  '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>vm . vm-visit-folder-other-frame<span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span>vm-imap . vm-visit-imap-folder-other-frame<span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span>gnus . org-gnus-no-new-news<span style="color: #2d9574;">)</span>
     <span style="color: #2d9574;">(</span>file . find-file<span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>wl . wl-other-frame<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #2d9574;">(</span>wl . wl-other-frame<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -846,7 +882,7 @@ Which will generate a link like <a href="./haskell-notes.html#org1b41c64">this</
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-08-25 Wed 14:05</p>
+<p class="date">Created: 2021-10-01 Fri 15:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

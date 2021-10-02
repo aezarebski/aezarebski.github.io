@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-09-22 Wed 09:53 -->
+<!-- 2021-10-02 Sat 18:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -269,8 +269,9 @@
 <li><a href="#org2c99e8c">High performance computing</a></li>
 <li><a href="#org83805d6">Packages I like</a></li>
 <li><a href="#orgd3ff886">TIDYDATA and the <code>tidyverse</code></a></li>
+<li><a href="#orge40bfe2">Reshaping dataframes with <code>reshape2</code></a></li>
 <li><a href="#orge579850">Command line arguments</a></li>
-<li><a href="#org013a49a"><span class="todo TODO">TODO</span> Command line arguments with <code>argparse</code></a></li>
+<li><a href="#org013a49a">Command line arguments with <code>argparse</code></a></li>
 <li><a href="#orgbf5d596">Working with JSON</a></li>
 <li><a href="#org99a9c42">Working with HTML</a></li>
 <li><a href="#org66433fd">Working with Mustache templates</a></li>
@@ -311,7 +312,7 @@
 </div>
 
 
-<div id="org863aba5" class="figure">
+<div id="org03c05ca" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -736,6 +737,26 @@ Joining, by = "x"
 </div>
 </div>
 
+<div id="outline-container-orge40bfe2" class="outline-3">
+<h3 id="orge40bfe2">Reshaping dataframes with <code>reshape2</code></h3>
+<div class="outline-text-3" id="text-orge40bfe2">
+</div>
+<div id="outline-container-orgf2eae0e" class="outline-4">
+<h4 id="orgf2eae0e">Casting</h4>
+<div class="outline-text-4" id="text-orgf2eae0e">
+<p>
+Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/10/19/reshape/">Sean C. Anderson</a> helps
+</p>
+
+
+<div id="org001906a" class="figure">
+<p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orge579850" class="outline-3">
 <h3 id="orge579850">Command line arguments</h3>
 <div class="outline-text-3" id="text-orge579850">
@@ -766,13 +787,45 @@ Be careful when passing in numbers because they are read in as strings.
 </div>
 
 <div id="outline-container-org013a49a" class="outline-3">
-<h3 id="org013a49a"><span class="todo TODO">TODO</span> Command line arguments with <code>argparse</code></h3>
+<h3 id="org013a49a">Command line arguments with <code>argparse</code></h3>
 <div class="outline-text-3" id="text-org013a49a">
 <p>
 See the <a href="https://cran.r-project.org/web/packages/argparse/vignettes/argparse.html">vignette</a>.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>argparse<span style="color: #3a81c3;">)</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">create parser object</span>
+parser <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ArgumentParser<span style="color: #3a81c3;">()</span>
+
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-v"</span>,
+         <span style="color: #2d9574;">"--verbose"</span>,
+         action = <span style="color: #2d9574;">"store_true"</span>,
+         default = <span style="color: #4e3163;">FALSE</span>,
+         help = <span style="color: #2d9574;">"Verbose output"</span>
+       <span style="color: #3a81c3;">)</span>
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-s"</span>,
+         <span style="color: #2d9574;">"--seed"</span>,
+         type = <span style="color: #2d9574;">"integer"</span>,
+         default = <span style="color: #4e3163;">1</span>,
+         help = <span style="color: #2d9574;">"PRNG seed"</span>
+       <span style="color: #3a81c3;">)</span>
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-p"</span>,
+         <span style="color: #2d9574;">"--parameters"</span>,
+         type = <span style="color: #2d9574;">"character"</span>,
+         help = <span style="color: #2d9574;">"Filepath to parameters JSON"</span>
+       <span style="color: #3a81c3;">)</span>
+
+args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> parser$parse_args<span style="color: #3a81c3;">()</span>
+</pre>
 </div>
 </div>
+</div>
+
 
 <div id="outline-container-orgbf5d596" class="outline-3">
 <h3 id="orgbf5d596">Working with JSON</h3>
@@ -814,9 +867,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org10ce4d0" class="outline-4">
-<h4 id="org10ce4d0">Example</h4>
-<div class="outline-text-4" id="text-org10ce4d0">
+<div id="outline-container-org9a29457" class="outline-4">
+<h4 id="org9a29457">Example</h4>
+<div class="outline-text-4" id="text-org9a29457">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
@@ -909,9 +962,9 @@ in your HTML but still want to include figures.
 <h3 id="org66433fd">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org66433fd">
 </div>
-<div id="outline-container-orgb4ebced" class="outline-4">
-<h4 id="orgb4ebced">Example</h4>
-<div class="outline-text-4" id="text-orgb4ebced">
+<div id="outline-container-orge564b49" class="outline-4">
+<h4 id="orge564b49">Example</h4>
+<div class="outline-text-4" id="text-orge564b49">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
@@ -1782,7 +1835,7 @@ ggplot<span style="color: #3a81c3;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-09-22 Wed 09:53</p>
+<p class="date">Created: 2021-10-02 Sat 18:58</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
