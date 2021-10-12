@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-02 Sat 18:58 -->
+<!-- 2021-10-12 Tue 13:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -312,7 +312,7 @@
 </div>
 
 
-<div id="org03c05ca" class="figure">
+<div id="org4083a07" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -749,7 +749,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org001906a" class="figure">
+<div id="org1059df3" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -867,9 +867,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org9a29457" class="outline-4">
-<h4 id="org9a29457">Example</h4>
-<div class="outline-text-4" id="text-org9a29457">
+<div id="outline-container-orgd178f94" class="outline-4">
+<h4 id="orgd178f94">Example</h4>
+<div class="outline-text-4" id="text-orgd178f94">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
@@ -956,15 +956,38 @@ in your HTML but still want to include figures.
 </div>
 </div>
 </div>
+
+<div id="outline-container-org95960fb" class="outline-4">
+<h4 id="org95960fb">Example: including a table representation of a dataframe</h4>
+<div class="outline-text-4" id="text-org95960fb">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> An HTML tag encoding a data frame as a basic table.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> This uses the \code{xtable} package to generate the HTML for the table.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">df</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> data.frame to create an table from</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec; font-weight: bold;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">...</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> additional parameters for \code{xtable::xtable}.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">df_as_table</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>df, ...<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  tmp_file <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tempfile<span style="color: #6c3163;">()</span>
+  print<span style="color: #6c3163;">(</span>xtable::xtable<span style="color: #2d9574;">(</span>df, ...<span style="color: #2d9574;">)</span>,
+        type = <span style="color: #2d9574;">"html"</span>,
+        file = tmp_file<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>tags$div<span style="color: #2d9574;">(</span>includeHTML<span style="color: #67b11d;">(</span>tmp_file<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org66433fd" class="outline-3">
 <h3 id="org66433fd">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org66433fd">
 </div>
-<div id="outline-container-orge564b49" class="outline-4">
-<h4 id="orge564b49">Example</h4>
-<div class="outline-text-4" id="text-orge564b49">
+<div id="outline-container-org935dfbf" class="outline-4">
+<h4 id="org935dfbf">Example</h4>
+<div class="outline-text-4" id="text-org935dfbf">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
@@ -1776,6 +1799,27 @@ this design.
 diagnostic plots.
 </p>
 </div>
+
+<div id="outline-container-orga86c193" class="outline-4">
+<h4 id="orga86c193">Thinning (destructive)</h4>
+<div class="outline-text-4" id="text-orga86c193">
+<p>
+This snippet demonstrates how to subset a data frame. It is a destructive
+change, but since MCMC samples can be large you may not want the additional cost
+of creating a copy.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">demo_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">100</span>, y = rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">take every third sample</span>
+thinning_factor <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">3</span>
+
+demo_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> demo_df<span style="color: #3a81c3;">[</span>seq<span style="color: #6c3163;">(</span>from = <span style="color: #4e3163;">1</span>, to = nrow<span style="color: #2d9574;">(</span>demo_df<span style="color: #2d9574;">)</span>, by = thinning_factor<span style="color: #6c3163;">)</span>, <span style="color: #3a81c3;">]</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org1093069" class="outline-3">
@@ -1835,7 +1879,7 @@ ggplot<span style="color: #3a81c3;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-02 Sat 18:58</p>
+<p class="date">Created: 2021-10-12 Tue 13:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
