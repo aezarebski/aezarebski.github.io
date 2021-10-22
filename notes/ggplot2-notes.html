@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-04 Mon 10:35 -->
+<!-- 2021-10-22 Fri 16:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -246,7 +246,6 @@
 </li>
 <li><a href="#org9e203ed">Installation and usage</a>
 <ul>
-<li><a href="#org61b4467">Paper sizes</a></li>
 <li><a href="#orgf17dcdf">Saving figures to SVG</a></li>
 <li><a href="#org5723f35">Ggtree</a></li>
 </ul>
@@ -258,7 +257,7 @@
 </div>
 
 
-<div id="org7fc1b51" class="figure">
+<div id="org0e768fa" class="figure">
 <p><img src="../images/ggplot2-logo.png" alt="ggplot2-logo.png" />
 </p>
 </div>
@@ -297,60 +296,60 @@ this map to a PNG.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggspatial<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>GADMTools<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>reshape2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggmap<span style="color: #3a81c3;">)</span>
+<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>ggplot2<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>ggspatial<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>GADMTools<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>purrr<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>dplyr<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>reshape2<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>ggmap<span style="color: #4f97d7;">)</span>
 
-<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Define some parameters for how to draw and colour the figure</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Define some parameters for how to draw and colour the figure</span>
 
-my_breaks <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">5</span>,<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span>
+my_breaks <span style="color: #ce537a; font-weight: bold;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">5</span>,<span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span>
 
-my_cols <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> hcl.colors<span style="color: #3a81c3;">(</span>n = length<span style="color: #6c3163;">(</span>my_breaks<span style="color: #6c3163;">)</span> - <span style="color: #4e3163;">1</span>,
+my_cols <span style="color: #ce537a; font-weight: bold;">&lt;-</span> hcl.colors<span style="color: #4f97d7;">(</span>n = length<span style="color: #bc6ec5;">(</span>my_breaks<span style="color: #bc6ec5;">)</span> - <span style="color: #a45bad;">1</span>,
                       palette = <span style="color: #2d9574;">"reds 3"</span>,
-                      alpha = <span style="color: #4e3163;">NULL</span>,
-                      rev = <span style="color: #4e3163;">TRUE</span>,
-                      fixup = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+                      alpha = <span style="color: #a45bad;">NULL</span>,
+                      rev = <span style="color: #a45bad;">TRUE</span>,
+                      fixup = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
 
-map_country_line_colour <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"#252525"</span>
-map_inline_thickness <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.1</span>
-map_outline_thickness <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.5</span>
+map_country_line_colour <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"#252525"</span>
+map_inline_thickness <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #a45bad;">0.1</span>
+map_outline_thickness <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #a45bad;">0.5</span>
 
-map_plot_background <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> element_rect<span style="color: #3a81c3;">(</span>colour = <span style="color: #2d9574;">"#252525"</span>,
-                                    fill = <span style="color: #2d9574;">"#FFFFFF"</span><span style="color: #3a81c3;">)</span>
-
-
-<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Load the map data from GADM</span>
-italy_sf <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> gadm_sf_loadCountries<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>$sf
-italy_sf$foobar <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rpois<span style="color: #3a81c3;">(</span>n = nrow<span style="color: #6c3163;">(</span>italy_sf<span style="color: #6c3163;">)</span>, lambda = <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>
-
-<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Include an additional level zero object for the country outline.</span>
-italy_outline_sf <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> gadm_sf_loadCountries<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #4e3163;">0</span><span style="color: #3a81c3;">)</span>$sf
+map_plot_background <span style="color: #ce537a; font-weight: bold;">&lt;-</span> element_rect<span style="color: #4f97d7;">(</span>colour = <span style="color: #2d9574;">"#252525"</span>,
+                                    fill = <span style="color: #2d9574;">"#FFFFFF"</span><span style="color: #4f97d7;">)</span>
 
 
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Load the map data from GADM</span>
+italy_sf <span style="color: #ce537a; font-weight: bold;">&lt;-</span> gadm_sf_loadCountries<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>$sf
+italy_sf$foobar <span style="color: #ce537a; font-weight: bold;">&lt;-</span> rpois<span style="color: #4f97d7;">(</span>n = nrow<span style="color: #bc6ec5;">(</span>italy_sf<span style="color: #bc6ec5;">)</span>, lambda = <span style="color: #a45bad;">3</span><span style="color: #4f97d7;">)</span>
 
-g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
-    geom_sf<span style="color: #3a81c3;">(</span>data = italy_sf,
-            mapping = aes<span style="color: #6c3163;">(</span>fill = foobar<span style="color: #6c3163;">)</span>,
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Include an additional level zero object for the country outline.</span>
+italy_outline_sf <span style="color: #ce537a; font-weight: bold;">&lt;-</span> gadm_sf_loadCountries<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ITA"</span>, level = <span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span>$sf
+
+
+
+g <span style="color: #ce537a; font-weight: bold;">&lt;-</span> ggplot<span style="color: #4f97d7;">()</span> +
+    geom_sf<span style="color: #4f97d7;">(</span>data = italy_sf,
+            mapping = aes<span style="color: #bc6ec5;">(</span>fill = foobar<span style="color: #bc6ec5;">)</span>,
             colour = map_country_line_colour,
-            size = map_inline_thickness<span style="color: #3a81c3;">)</span> +
-    geom_sf<span style="color: #3a81c3;">(</span>data = italy_outline_sf,
-            fill = <span style="color: #4e3163;">NA</span>,
+            size = map_inline_thickness<span style="color: #4f97d7;">)</span> +
+    geom_sf<span style="color: #4f97d7;">(</span>data = italy_outline_sf,
+            fill = <span style="color: #a45bad;">NA</span>,
             colour = map_country_line_colour,
-            size = map_outline_thickness<span style="color: #3a81c3;">)</span> +
-    scale_fill_gradientn<span style="color: #3a81c3;">(</span>breaks = my_breaks,
+            size = map_outline_thickness<span style="color: #4f97d7;">)</span> +
+    scale_fill_gradientn<span style="color: #4f97d7;">(</span>breaks = my_breaks,
                          colors = my_cols,
-                         limits = range<span style="color: #6c3163;">(</span>my_breaks<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-    theme<span style="color: #3a81c3;">(</span>plot.background = map_plot_background<span style="color: #3a81c3;">)</span> +
-    labs<span style="color: #3a81c3;">(</span>fill = <span style="color: #2d9574;">"Foobar"</span><span style="color: #3a81c3;">)</span> +
-    theme_void<span style="color: #3a81c3;">()</span> +
-    theme<span style="color: #3a81c3;">(</span>legend.position = <span style="color: #2d9574;">"left"</span><span style="color: #3a81c3;">)</span>
+                         limits = range<span style="color: #bc6ec5;">(</span>my_breaks<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+    theme<span style="color: #4f97d7;">(</span>plot.background = map_plot_background<span style="color: #4f97d7;">)</span> +
+    labs<span style="color: #4f97d7;">(</span>fill = <span style="color: #2d9574;">"Foobar"</span><span style="color: #4f97d7;">)</span> +
+    theme_void<span style="color: #4f97d7;">()</span> +
+    theme<span style="color: #4f97d7;">(</span>legend.position = <span style="color: #2d9574;">"left"</span><span style="color: #4f97d7;">)</span>
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-02.pdf"</span>,
-       g<span style="color: #3a81c3;">)</span>
+ggsave<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-02.pdf"</span>,
+       g<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -365,33 +364,33 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../re
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>latex2exp<span style="color: #3a81c3;">)</span>
+<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>magrittr<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>ggplot2<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>latex2exp<span style="color: #4f97d7;">)</span>
 
 
-x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> seq<span style="color: #3a81c3;">(</span>from = <span style="color: #4e3163;">1</span>, to = <span style="color: #4e3163;">7</span>, length = <span style="color: #4e3163;">20</span><span style="color: #3a81c3;">)</span>
-y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rnorm<span style="color: #3a81c3;">(</span>n = length<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span>, mean = x, sd = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
-z <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = x, y = y<span style="color: #3a81c3;">)</span>
+x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> seq<span style="color: #4f97d7;">(</span>from = <span style="color: #a45bad;">1</span>, to = <span style="color: #a45bad;">7</span>, length = <span style="color: #a45bad;">20</span><span style="color: #4f97d7;">)</span>
+y <span style="color: #ce537a; font-weight: bold;">&lt;-</span> rnorm<span style="color: #4f97d7;">(</span>n = length<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, mean = x, sd = <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+z <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x = x, y = y<span style="color: #4f97d7;">)</span>
 
-rsquared <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> lm<span style="color: #3a81c3;">(</span>y ~ x, data = z<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">%&gt;%</span>
-  summary <span style="color: #715ab1;">%&gt;%</span>
-  use_series<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"r.squared"</span><span style="color: #3a81c3;">)</span>
+rsquared <span style="color: #ce537a; font-weight: bold;">&lt;-</span> lm<span style="color: #4f97d7;">(</span>y ~ x, data = z<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">%&gt;%</span>
+  summary <span style="color: #7590db;">%&gt;%</span>
+  use_series<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"r.squared"</span><span style="color: #4f97d7;">)</span>
 
-annotation_exp <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> TeX<span style="color: #3a81c3;">(</span>sprintf<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Linear model $R^2 = %.2f$"</span>, rsquared<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+annotation_exp <span style="color: #ce537a; font-weight: bold;">&lt;-</span> TeX<span style="color: #4f97d7;">(</span>sprintf<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Linear model $R^2 = %.2f$"</span>, rsquared<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>data = z,
-       mapping = aes<span style="color: #6c3163;">(</span>x = x, y = y<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-  geom_point<span style="color: #3a81c3;">()</span> +
-  geom_smooth<span style="color: #3a81c3;">(</span>method = <span style="color: #2d9574;">"lm"</span><span style="color: #3a81c3;">)</span> +
-  annotate<span style="color: #3a81c3;">(</span>geom = <span style="color: #2d9574;">"text"</span>,
-           x = <span style="color: #4e3163;">5</span>,
-           y = <span style="color: #4e3163;">2</span>,
-           label = annotation_exp<span style="color: #3a81c3;">)</span> +
-  coord_fixed<span style="color: #3a81c3;">()</span>
+g <span style="color: #ce537a; font-weight: bold;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>data = z,
+       mapping = aes<span style="color: #bc6ec5;">(</span>x = x, y = y<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span> +
+  geom_smooth<span style="color: #4f97d7;">(</span>method = <span style="color: #2d9574;">"lm"</span><span style="color: #4f97d7;">)</span> +
+  annotate<span style="color: #4f97d7;">(</span>geom = <span style="color: #2d9574;">"text"</span>,
+           x = <span style="color: #a45bad;">5</span>,
+           y = <span style="color: #a45bad;">2</span>,
+           label = annotation_exp<span style="color: #4f97d7;">)</span> +
+  coord_fixed<span style="color: #4f97d7;">()</span>
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-05.png"</span>,
-       g<span style="color: #3a81c3;">)</span>
+ggsave<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"../resources/ggplot2-example-05.png"</span>,
+       g<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -402,55 +401,6 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"../re
 <h2 id="org9e203ed">Installation and usage</h2>
 <div class="outline-text-2" id="text-org9e203ed">
 </div>
-<div id="outline-container-org61b4467" class="outline-3">
-<h3 id="org61b4467">Paper sizes</h3>
-<div class="outline-text-3" id="text-org61b4467">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Paper</th>
-<th scope="col" class="org-left">Width</th>
-<th scope="col" class="org-left">Height</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">A4</td>
-<td class="org-left">210mm</td>
-<td class="org-left">297mm</td>
-</tr>
-
-<tr>
-<td class="org-left">A5</td>
-<td class="org-left">148mm</td>
-<td class="org-left">210mm</td>
-</tr>
-
-<tr>
-<td class="org-left">A6</td>
-<td class="org-left">105mm</td>
-<td class="org-left">148mm</td>
-</tr>
-
-<tr>
-<td class="org-left">A7</td>
-<td class="org-left">74mm</td>
-<td class="org-left">105mm</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
 <div id="outline-container-orgf17dcdf" class="outline-3">
 <h3 id="orgf17dcdf">Saving figures to SVG</h3>
 <div class="outline-text-3" id="text-orgf17dcdf">
@@ -470,10 +420,10 @@ Ubuntu, this requred me to install <code>libcairo2-dev</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">(</span>!requireNamespace<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"BiocManager"</span>, quietly = <span style="color: #4e3163;">TRUE</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-  install.packages<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"BiocManager"</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-R"><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">(</span>!requireNamespace<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"BiocManager"</span>, quietly = <span style="color: #a45bad;">TRUE</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  install.packages<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"BiocManager"</span><span style="color: #4f97d7;">)</span>
 
-BiocManager::install<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ggtree"</span><span style="color: #3a81c3;">)</span>
+BiocManager::install<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ggtree"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -494,18 +444,6 @@ BiocManager::install<span style="color: #3a81c3;">(</span><span style="color: #2
 </div>
 
 </div>
-
-<ul class="org-ul">
-<li><a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">colorbrewer2</a></li>
-<li><a href="https://datavizproject.com/">DataVisProject: a catalogue of visualisation types</a></li>
-<li><a href="https://exts.ggplot2.tidyverse.org/">ggplot2 extensions</a></li>
-<li><a href="https://www.r-graph-gallery.com/index.html">R Graph Gallery</a></li>
-<li><a href="https://r-spatial.org/">R spatial</a> blog posts</li>
-</ul>
-
-<p>
-Also see my list of <a href="../lists/links.html#orge515d49">links relating to visualisation</a>
-</p>
 </div>
 </div>
 
@@ -519,29 +457,29 @@ following <a href="./nix-notes.html">nix shell</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">run-ggplot2-examples.sh</span>
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">run-ggplot2-examples.sh</span>
 
-<span style="color: #3a81c3; font-weight: bold;">for</span> ix<span style="color: #3a81c3; font-weight: bold;"> in</span> <span style="color: #6c3163;">`seq 1 6`</span>;
-<span style="color: #3a81c3; font-weight: bold;">do</span>
-    Rscript ggplot2-example-0$<span style="color: #715ab1;">ix</span>.R
-<span style="color: #3a81c3; font-weight: bold;">done</span>
+<span style="color: #4f97d7; font-weight: bold;">for</span> ix<span style="color: #4f97d7; font-weight: bold;"> in</span> <span style="color: #bc6ec5;">`seq 1 6`</span>;
+<span style="color: #4f97d7; font-weight: bold;">do</span>
+    Rscript ggplot2-example-0$<span style="color: #7590db;">ix</span>.R
+<span style="color: #4f97d7; font-weight: bold;">done</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">ggplot2-shell.nix </span>
-<span style="color: #3a81c3; font-weight: bold;">let</span>
-  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
-  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
-  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
-  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
-<span style="color: #3a81c3; font-weight: bold;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
-  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"ggplot2-env"</span>;
-    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
-    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3; font-weight: bold;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3; font-weight: bold;">else</span> nix;
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">ggplot2-shell.nix </span>
+<span style="color: #4f97d7; font-weight: bold;">let</span>
+  <span style="color: #7590db;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
+  <span style="color: #7590db;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #bc6ec5;">$</span><span style="color: #4f97d7;">{</span>commitHash<span style="color: #4f97d7;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #7590db;">pkgs</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">fetchTarball</span> tarballUrl<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
+  <span style="color: #7590db;">stdenv</span> = pkgs.stdenv;
+<span style="color: #4f97d7; font-weight: bold;">in</span> with pkgs; <span style="color: #4f97d7;">{</span>
+  <span style="color: #7590db;">myProject</span> = stdenv.mkDerivation <span style="color: #bc6ec5;">{</span>
+    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"ggplot2-env"</span>;
+    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #7590db;">src</span> = <span style="color: #4f97d7; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">null</span> <span style="color: #4f97d7; font-weight: bold;">else</span> nix;
 
-    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
+    <span style="color: #7590db;">buildInputs</span> = <span style="color: #4f97d7; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
       R
       rPackages.cowplot
       rPackages.dplyr
@@ -553,11 +491,11 @@ following <a href="./nix-notes.html">nix shell</a>.
       rPackages.stringi
       rPackages.udunits2
     <span style="color: #2d9574;">]</span>;
-   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
+   <span style="color: #7590db;">shellHook</span> = <span style="color: #2d9574;">''</span>
 <span style="color: #2d9574;">             printf "\n\nWelcome to the ggplot2 shell :)\n\n"</span>
 <span style="color: #2d9574;">      ''</span>;
-  <span style="color: #6c3163;">}</span>;
-<span style="color: #3a81c3;">}</span>
+  <span style="color: #bc6ec5;">}</span>;
+<span style="color: #4f97d7;">}</span>
 </pre>
 </div>
 </div>
@@ -565,7 +503,7 @@ following <a href="./nix-notes.html">nix shell</a>.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-04 Mon 10:35</p>
+<p class="date">Created: 2021-10-22 Fri 16:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

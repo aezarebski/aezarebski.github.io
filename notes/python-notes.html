@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-04 Mon 10:35 -->
+<!-- 2021-10-22 Fri 16:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -195,7 +195,7 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
      function CodeHighlightOn(elem, id)
      {
@@ -241,6 +241,8 @@
 <ul>
 <li><a href="#org93288a9">Pandas</a>
 <ul>
+<li><a href="#org974f3e6">Exploratory data analysis</a></li>
+<li><a href="#orgae4a74a">IO</a></li>
 <li><a href="#orgbdf53b8">Cross tabulation</a></li>
 <li><a href="#org22b1838">Filtering by column values</a></li>
 </ul>
@@ -273,11 +275,11 @@
 <h3 id="org2c946f1">Syntax</h3>
 <div class="outline-text-3" id="text-org2c946f1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">dictionary</span>
-<span style="color: #715ab1;">my_dict</span> = <span style="color: #3a81c3;">{</span><span style="color: #2d9574;">"foo"</span>: <span style="color: #4e3163;">1</span>, <span style="color: #2d9574;">"bar"</span>: <span style="color: #2d9574;">'a'</span><span style="color: #3a81c3;">}</span> 
+<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">dictionary</span>
+<span style="color: #7590db;">my_dict</span> = <span style="color: #4f97d7;">{</span><span style="color: #2d9574;">"foo"</span>: <span style="color: #a45bad;">1</span>, <span style="color: #2d9574;">"bar"</span>: <span style="color: #2d9574;">'a'</span><span style="color: #4f97d7;">}</span> 
 
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">list comprehension</span>
-<span style="color: #3a81c3;">[</span>f<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">for</span> x <span style="color: #3a81c3; font-weight: bold;">in</span> xs <span style="color: #3a81c3; font-weight: bold;">if</span> p<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list comprehension</span>
+<span style="color: #4f97d7;">[</span>f<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> xs <span style="color: #4f97d7; font-weight: bold;">if</span> p<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
 </pre>
 </div>
 </div>
@@ -288,8 +290,8 @@
 <div class="outline-text-3" id="text-org845461d">
 <div class="org-src-container">
 <pre class="src src-sh">python3 -m venv venv
-<span style="color: #3a81c3;">source</span> venv/bin/activate
-pip install -U pip   <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">update pip</span>
+<span style="color: #4f97d7;">source</span> venv/bin/activate
+pip install -U pip   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">update pip</span>
 pip install -r requirements.txt
 deactivate
 </pre>
@@ -345,30 +347,30 @@ jupyter lab server.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">This provides a shell running a jupyter lab server. To start the server run</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">the following command</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">$ nix-shell --command "jupyter lab"</span>
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This provides a shell running a jupyter lab server. To start the server run</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the following command</span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">$ nix-shell --command "jupyter lab"</span>
 
-<span style="color: #3a81c3; font-weight: bold;">let</span>
-  <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
-    <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
-    <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">"10d64ee254050de69d0dc51c9c39fdadf1398c38"</span>;
-  <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+<span style="color: #4f97d7; font-weight: bold;">let</span>
+  <span style="color: #7590db;">jupyter</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span>builtins.fetchGit <span style="color: #bc6ec5;">{</span>
+    <span style="color: #7590db;">url</span> = <span style="color: #a45bad;">https://github.com/tweag/jupyterWith</span>;
+    <span style="color: #7590db;">rev</span> = <span style="color: #2d9574;">"10d64ee254050de69d0dc51c9c39fdadf1398c38"</span>;
+  <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
 
-  <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy
+  <span style="color: #7590db;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #4f97d7;">{</span>
+    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"python"</span>;
+    <span style="color: #7590db;">packages</span> = p: <span style="color: #4f97d7; font-weight: bold;">with</span> p; <span style="color: #bc6ec5;">[</span> numpy
                             altair
                             scipy
                             pandas
-                            matplotlib <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
+                            matplotlib <span style="color: #bc6ec5;">]</span>;
+  <span style="color: #4f97d7;">}</span>;
 
-  <span style="color: #715ab1;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #3a81c3;">{</span>
-    <span style="color: #715ab1;">kernels</span> = <span style="color: #6c3163;">[</span> ipython <span style="color: #6c3163;">]</span>;
-  <span style="color: #3a81c3;">}</span>;
-<span style="color: #3a81c3; font-weight: bold;">in</span>
+  <span style="color: #7590db;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #4f97d7;">{</span>
+    <span style="color: #7590db;">kernels</span> = <span style="color: #bc6ec5;">[</span> ipython <span style="color: #bc6ec5;">]</span>;
+  <span style="color: #4f97d7;">}</span>;
+<span style="color: #4f97d7; font-weight: bold;">in</span>
   jupyterEnvironment.env
 </pre>
 </div>
@@ -466,22 +468,11 @@ For notes on installation of packages see the notes above about <a href="#org96b
 <div id="outline-container-org93288a9" class="outline-3">
 <h3 id="org93288a9">Pandas</h3>
 <div class="outline-text-3" id="text-org93288a9">
+<p>
+There is a <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">comparison with R</a> in the quickstart guide. 
+</p>
+
 <ul class="org-ul">
-<li>A combination of the <code>describe</code>, <code>info</code> and <code>dtypes</code> method provide an
-acceptable replacement for the <code>str</code> and <code>summary</code> functions from R.</li>
-<li>The <code>.value_counts</code> method is the same as the <code>table</code> function from R. If you
-just want the unique values there is the <code>unique</code> method. A notable extension
-of <code>value_counts</code> is the <code>crosstab</code> function which returns a table with the
-value count across multiple variables. Both the cross and regular tables are
-data frames themselves and can be used in subsequent calculations.</li>
-<li>Most base R statistical functions are available as methods on <code>DataFrame</code>
-objects.
-<ul class="org-ul">
-<li><code>hist</code></li>
-<li><code>plot</code></li>
-<li><code>mean</code></li>
-<li><code>boxplot</code></li>
-</ul></li>
 <li><code>import pandas as pd</code> and import <code>Series</code> and <code>DataFrame</code> into the global
 namespace since these will be used a lot in pandas work.
 <ul class="org-ul">
@@ -499,11 +490,32 @@ result will also modify the original dataframe. To avoid this you need a
 <li>There are summary statistics, which take an <code>axis</code> argument to specify which
 axis to apply them to.</li>
 </ul></li>
-<li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
-method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
 <li><b>Beware</b> the difference between views and copies of data when using pandas.
 There is the <code>copy</code> method to help you a lot of the time.</li>
 </ul>
+</div>
+
+<div id="outline-container-org974f3e6" class="outline-4">
+<h4 id="org974f3e6">Exploratory data analysis</h4>
+<div class="outline-text-4" id="text-org974f3e6">
+<ul class="org-ul">
+<li>A combination of the <code>describe</code>, <code>info</code> and <code>dtypes</code> method provide an
+acceptable replacement for the <code>str</code> and <code>summary</code> functions from R.</li>
+<li>The <code>columns</code> method returns an array of the column names.</li>
+<li>There is a <code>quantile</code> method on Series which takes an iterable of
+probabilities to evaluate the quantiles at.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgae4a74a" class="outline-4">
+<h4 id="orgae4a74a">IO</h4>
+<div class="outline-text-4" id="text-orgae4a74a">
+<ul class="org-ul">
+<li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
+method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
+</ul>
+</div>
 </div>
 
 <div id="outline-container-orgbdf53b8" class="outline-4">
@@ -515,9 +527,17 @@ cross tabulate the number of each pair.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">pd.crosstab<span style="color: #3a81c3;">(</span>df.discrete_a, df.discrete_b<span style="color: #3a81c3;">)</span>  
+<pre class="src src-python">pd.crosstab<span style="color: #4f97d7;">(</span>df.discrete_a, df.discrete_b<span style="color: #4f97d7;">)</span>  
 </pre>
 </div>
+
+<ul class="org-ul">
+<li>The <code>.value_counts</code> method is the same as the <code>table</code> function from R. If you
+just want the unique values there is the <code>unique</code> method. A notable extension
+of <code>value_counts</code> is the <code>crosstab</code> function which returns a table with the
+value count across multiple variables. Both the cross and regular tables are
+data frames themselves and can be used in subsequent calculations.</li>
+</ul>
 </div>
 </div>
 
@@ -530,7 +550,7 @@ select only the rows corresponding to the year 2002.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #715ab1;">gapminder_not_2002</span> = gapminder<span style="color: #3a81c3;">[</span>gapminder.year != <span style="color: #4e3163;">2002</span><span style="color: #3a81c3;">]</span>
+<pre class="src src-python"><span style="color: #7590db;">gapminder_not_2002</span> = gapminder<span style="color: #4f97d7;">[</span>gapminder.year != <span style="color: #a45bad;">2002</span><span style="color: #4f97d7;">]</span>
 </pre>
 </div>
 
@@ -565,7 +585,7 @@ of the first cell pretty much.
 <div class="org-src-container">
 <pre class="src src-python">%matplotlib inline
 
-<span style="color: #3a81c3; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #3a81c3; font-weight: bold;">as</span> plt
+<span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
 </pre>
 </div>
 
@@ -624,7 +644,7 @@ algorithms.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-04 Mon 10:35</p>
+<p class="date">Created: 2021-10-22 Fri 16:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
