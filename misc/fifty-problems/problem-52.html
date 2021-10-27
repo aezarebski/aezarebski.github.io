@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-12 Mon 17:32 -->
+<!-- 2021-10-27 Wed 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -41,21 +42,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -191,31 +192,8 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet-dark.css" />
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         displayAlign: "center",
@@ -236,11 +214,10 @@
              }
 });
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">aez-notes</h1>
 <ul class="nav-menu">
     <li class="nav-menu"><a id="prevProblem">Previous</a></li>
@@ -253,9 +230,9 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org64c3d12" class="outline-2">
-<h2 id="org64c3d12">Three-Dimensional Random Walk</h2>
-<div class="outline-text-2" id="text-org64c3d12">
+<div id="outline-container-org71e1906" class="outline-2">
+<h2 id="org71e1906">Three-Dimensional Random Walk</h2>
+<div class="outline-text-2" id="text-org71e1906">
 <blockquote>
 <p>
 What is the chance the simple random walk on \(\mathbb{Z}^{3}\) returns to its
@@ -276,44 +253,44 @@ first digit correct though, even when compiled and with memoization.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">restart</span>();
-<span style="color: #4f97d7;">kill</span>(<span style="color: #4f97d7; font-weight: bold;">all</span>);
+<pre class="src src-maxima">restart<span style="color: #4f97d7;">()</span>;
+kill<span style="color: #4f97d7;">(</span>all<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">foldl</span>(<span style="color: #7590db;">f, x0, xs</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
-<span style="color: #4f97d7; font-weight: bold;">if</span> emptyp(xs)
-<span style="color: #4f97d7; font-weight: bold;">then</span> x0
-<span style="color: #4f97d7; font-weight: bold;">else</span> foldl(f, f(x0, <span style="color: #4f97d7;">first</span>(xs)), <span style="color: #4f97d7;">rest</span>(xs));
+foldl<span style="color: #4f97d7;">(</span>f, x0, xs<span style="color: #4f97d7;">)</span> :=
+if emptyp<span style="color: #4f97d7;">(</span>xs<span style="color: #4f97d7;">)</span>
+then x0
+else foldl<span style="color: #4f97d7;">(</span>f, f<span style="color: #bc6ec5;">(</span>x0, first<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, rest<span style="color: #bc6ec5;">(</span>xs<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">prod</span>(<span style="color: #7590db;">xs</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
-<span style="color: #4f97d7; font-weight: bold;">if</span> emptyp(xs)
-<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">0</span>
-<span style="color: #4f97d7; font-weight: bold;">else</span> foldl(<span style="color: #2d9574;">"*"</span>, <span style="color: #4f97d7;">first</span>(xs), <span style="color: #4f97d7;">rest</span>(xs));
+prod<span style="color: #4f97d7;">(</span>xs<span style="color: #4f97d7;">)</span> :=
+if emptyp<span style="color: #4f97d7;">(</span>xs<span style="color: #4f97d7;">)</span>
+then <span style="color: #a45bad;">0</span>
+else foldl<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"*"</span>, first<span style="color: #bc6ec5;">(</span>xs<span style="color: #bc6ec5;">)</span>, rest<span style="color: #bc6ec5;">(</span>xs<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">arraymap</span>(<span style="color: #7590db;">a, xs</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7;">lambda</span>([x], a[x]), xs);
+arraymap<span style="color: #4f97d7;">(</span>a, xs<span style="color: #4f97d7;">)</span> := map<span style="color: #4f97d7;">(</span>lambda<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">[</span>x<span style="color: #2d9574;">]</span>, a<span style="color: #2d9574;">[</span>x<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span>, xs<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">l_1</span>[<span style="color: #7590db;">n</span>] <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">evenp</span>(n) <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">binomial</span>(n, n<span style="color: #4f97d7; font-weight: bold;">/</span><span style="color: #a45bad;">2</span>) <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #a45bad;">0</span>;
+l_1<span style="color: #4f97d7;">[</span>n<span style="color: #4f97d7;">]</span> := if evenp<span style="color: #4f97d7;">(</span>n<span style="color: #4f97d7;">)</span> then binomial<span style="color: #4f97d7;">(</span>n, n/2<span style="color: #4f97d7;">)</span> else <span style="color: #a45bad;">0</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">l_coeff</span>(<span style="color: #7590db;">n, d</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span>
-<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">is</span>(<span style="color: #4f97d7;">equal</span>(n, <span style="color: #a45bad;">0</span>))
-<span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #a45bad;">1</span>
-<span style="color: #4f97d7; font-weight: bold;">else</span> lsum(i, i,
-  <span style="color: #4f97d7;">map</span>(
-    <span style="color: #4f97d7;">lambda</span>([p], <span style="color: #4f97d7;">apply</span>(multinomial_coeff, p) <span style="color: #4f97d7; font-weight: bold;">*</span> prod(arraymap(l_1, p))),
-    listify(flatten(<span style="color: #4f97d7;">map</span>(permutations, integer_partitions(n, d))))));
+l_coeff<span style="color: #4f97d7;">(</span>n, d<span style="color: #4f97d7;">)</span> :=
+if is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</span>n, <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+then <span style="color: #a45bad;">1</span>
+else lsum<span style="color: #4f97d7;">(</span>i, i,
+  map<span style="color: #bc6ec5;">(</span>
+    lambda<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>p<span style="color: #67b11d;">]</span>, apply<span style="color: #67b11d;">(</span>multinomial_coeff, p<span style="color: #67b11d;">)</span> * prod<span style="color: #67b11d;">(</span>arraymap<span style="color: #b1951d;">(</span>l_1, p<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+    listify<span style="color: #2d9574;">(</span>flatten<span style="color: #67b11d;">(</span>map<span style="color: #b1951d;">(</span>permutations, integer_partitions<span style="color: #4f97d7;">(</span>n, d<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #bc6ec5; font-weight: bold;">L</span>(<span style="color: #7590db;">z, d, N</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">sum</span>(l_coeff(<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> n, d) <span style="color: #4f97d7; font-weight: bold;">*</span> z<span style="color: #4f97d7; font-weight: bold;">^</span>(<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> n), n, <span style="color: #a45bad;">0</span>, N);
-<span style="color: #bc6ec5; font-weight: bold;">prob_return</span>(<span style="color: #7590db;">d, N</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> <span style="color: #4f97d7;">float</span>(<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">-</span> <span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">/</span> L(<span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">/</span> (<span style="color: #a45bad;">2</span> <span style="color: #4f97d7; font-weight: bold;">*</span> d), d, N));
+L<span style="color: #4f97d7;">(</span>z, d, N<span style="color: #4f97d7;">)</span> := sum<span style="color: #4f97d7;">(</span>l_coeff<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span> * n, d<span style="color: #bc6ec5;">)</span> * z^<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span> * n<span style="color: #bc6ec5;">)</span>, n, <span style="color: #a45bad;">0</span>, N<span style="color: #4f97d7;">)</span>;
+prob_return<span style="color: #4f97d7;">(</span>d, N<span style="color: #4f97d7;">)</span> := float<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span> - <span style="color: #a45bad;">1</span> / L<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span> / <span style="color: #2d9574;">(</span><span style="color: #a45bad;">2</span> * d<span style="color: #2d9574;">)</span>, d, N<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 
-<span style="color: #4f97d7;">compile</span>(l_coeff);
+compile<span style="color: #4f97d7;">(</span>l_coeff<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #4f97d7;">print</span>(prob_return(<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">50</span>));
-<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
-<span style="color: #2aa1ae; background-color: #292e34;">0.3107687252064985</span>
-<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
-<span style="color: #4f97d7;">print</span>(prob_return(<span style="color: #a45bad;">4</span>, <span style="color: #a45bad;">10</span>));
-<span style="color: #2aa1ae; background-color: #292e34;">/*</span>
-<span style="color: #2aa1ae; background-color: #292e34;">0.1807480265784589</span>
-<span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+print<span style="color: #4f97d7;">(</span>prob_return<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">50</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+/*
+<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">3107687252064985</span>
+*/
+print<span style="color: #4f97d7;">(</span>prob_return<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">4</span>, <span style="color: #a45bad;">10</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+/*
+<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">1807480265784589</span>
+*/
 </pre>
 </div>
 </div>
@@ -321,7 +298,7 @@ first digit correct though, even when compiled and with memoization.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-12 Mon 17:32</p>
+<p class="date">Created: 2021-10-27 Wed 19:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

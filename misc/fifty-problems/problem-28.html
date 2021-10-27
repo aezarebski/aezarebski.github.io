@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-06 Tue 18:53 -->
+<!-- 2021-10-27 Wed 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -41,21 +42,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -191,31 +192,8 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet-dark.css" />
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         displayAlign: "center",
@@ -236,11 +214,10 @@
              }
 });
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">aez-notes</h1>
 <ul class="nav-menu">
     <li class="nav-menu"><a id="prevProblem">Previous</a></li>
@@ -253,9 +230,9 @@
 <script src="./main.js"></script>
 <p style="margin-top: 100px"> </p>
 
-<div id="outline-container-org9fc869d" class="outline-2">
-<h2 id="org9fc869d">Catching the Greedy Counterfeiter</h2>
-<div class="outline-text-2" id="text-org9fc869d">
+<div id="outline-container-org366b245" class="outline-2">
+<h2 id="org366b245">Catching the Greedy Counterfeiter</h2>
+<div class="outline-text-2" id="text-org366b245">
 <blockquote>
 <p>
 The king's minter boxes his coins <i>n</i> to a box. Each box contains <i>m</i> false
@@ -273,12 +250,12 @@ there are \(r\) successes
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">load</span>(<span style="color: #4f97d7;">distrib</span>)$
+<pre class="src src-maxima">load<span style="color: #4f97d7;">(</span>distrib<span style="color: #4f97d7;">)</span>$
 
-<span style="color: #bc6ec5; font-weight: bold;">f</span>(<span style="color: #7590db;">x</span>) <span style="color: #4f97d7; font-weight: bold;">:=</span> pdf_binomial(x,n,m<span style="color: #4f97d7; font-weight: bold;">/</span>n);
+f<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> := pdf_binomial<span style="color: #4f97d7;">(</span>x,n,m/n<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #4f97d7;">print</span>(f(r));
-<span style="color: #2aa1ae; background-color: #292e34;">/* </span><span style="color: #2aa1ae; background-color: #292e34;">binomial(n,r) (m/n)^r (1 - m/n)^(n-r) </span><span style="color: #2aa1ae; background-color: #292e34;">*/</span>
+print<span style="color: #4f97d7;">(</span>f<span style="color: #bc6ec5;">(</span>r<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+/* binomial<span style="color: #4f97d7;">(</span>n,r<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>m/n<span style="color: #4f97d7;">)</span>^r <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span> - m/n<span style="color: #4f97d7;">)</span>^<span style="color: #4f97d7;">(</span>n-r<span style="color: #4f97d7;">)</span> */
 </pre>
 </div>
 </div>
@@ -286,7 +263,7 @@ there are \(r\) successes
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-04-06 Tue 18:53</p>
+<p class="date">Created: 2021-10-27 Wed 19:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
