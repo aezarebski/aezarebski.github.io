@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-12 Tue 13:46 -->
+<!-- 2021-10-27 Wed 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-algorithms</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -41,21 +42,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -191,31 +192,8 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         displayAlign: "center",
@@ -236,11 +214,10 @@
              }
 });
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">aez-notes-algorithms</h1>
 <p>
 <a href="../index.html">Home</a>
@@ -256,44 +233,44 @@
     }
 </script>
 
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org80e67a8">Theory</a>
+<li><a href="#orgd2a48c1">Theory</a>
 <ul>
-<li><a href="#org8513aea">Order of growth classification</a></li>
+<li><a href="#org3952032">Order of growth classification</a></li>
 </ul>
 </li>
-<li><a href="#org9a402fe">Data structures</a>
+<li><a href="#orgaad339a">Data structures</a>
 <ul>
-<li><a href="#org4c1294d">Hash table</a></li>
-<li><a href="#orgda67b9f">Symbol tables</a></li>
-<li><a href="#org991a9be">Heap (binary tree)</a></li>
-<li><a href="#orga38eefa">Binary search tree</a></li>
-<li><a href="#orgafba090">2-3 tree</a></li>
-<li><a href="#orgecfacde">Left-leaning red-black tree</a></li>
-<li><a href="#orgc7e370f">kd tree</a></li>
-<li><a href="#orgfa3fdf8">Stacks and queues</a></li>
+<li><a href="#org78b05b1">Hash table</a></li>
+<li><a href="#orgc948797">Symbol tables</a></li>
+<li><a href="#org998f622">Heap (binary tree)</a></li>
+<li><a href="#org975e1f7">Binary search tree</a></li>
+<li><a href="#org4a532e5">2-3 tree</a></li>
+<li><a href="#orgcbeb747">Left-leaning red-black tree</a></li>
+<li><a href="#org7916d23">kd tree</a></li>
+<li><a href="#org2a19e34">Stacks and queues</a></li>
 </ul>
 </li>
-<li><a href="#org82cc446">Algorithms</a>
+<li><a href="#org3754fbd">Algorithms</a>
 <ul>
-<li><a href="#org8f0661a">Dynamic connectivity</a></li>
-<li><a href="#org1d9c909">Sorting</a></li>
+<li><a href="#orgc96196d">Dynamic connectivity</a></li>
+<li><a href="#org1dbb782">Sorting</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org80e67a8" class="outline-2">
-<h2 id="org80e67a8">Theory</h2>
-<div class="outline-text-2" id="text-org80e67a8">
+<div id="outline-container-orgd2a48c1" class="outline-2">
+<h2 id="orgd2a48c1">Theory</h2>
+<div class="outline-text-2" id="text-orgd2a48c1">
 </div>
-<div id="outline-container-org8513aea" class="outline-3">
-<h3 id="org8513aea">Order of growth classification</h3>
-<div class="outline-text-3" id="text-org8513aea">
+<div id="outline-container-org3952032" class="outline-3">
+<h3 id="org3952032">Order of growth classification</h3>
+<div class="outline-text-3" id="text-org3952032">
 <p>
 Most of the time we can limit consideration to:
 </p>
@@ -311,17 +288,17 @@ Most of the time we can limit consideration to:
 </div>
 </div>
 
-<div id="outline-container-org9a402fe" class="outline-2">
-<h2 id="org9a402fe">Data structures</h2>
-<div class="outline-text-2" id="text-org9a402fe">
+<div id="outline-container-orgaad339a" class="outline-2">
+<h2 id="orgaad339a">Data structures</h2>
+<div class="outline-text-2" id="text-orgaad339a">
 </div>
-<div id="outline-container-org4c1294d" class="outline-3">
-<h3 id="org4c1294d">Hash table</h3>
-<div class="outline-text-3" id="text-org4c1294d">
+<div id="outline-container-org78b05b1" class="outline-3">
+<h3 id="org78b05b1">Hash table</h3>
+<div class="outline-text-3" id="text-org78b05b1">
 </div>
-<div id="outline-container-orgeb1232b" class="outline-4">
-<h4 id="orgeb1232b">Separate-chaining</h4>
-<div class="outline-text-4" id="text-orgeb1232b">
+<div id="outline-container-org8a2cdff" class="outline-4">
+<h4 id="org8a2cdff">Separate-chaining</h4>
+<div class="outline-text-4" id="text-org8a2cdff">
 <p>
 <i>Idea:</i> use a hash function to index into an array where each element of the
 array points to a linked list. Under uniformity assumptions of the hashing this
@@ -330,9 +307,9 @@ leads to near constant time operations in the average case.
 </div>
 </div>
 
-<div id="outline-container-org2598113" class="outline-4">
-<h4 id="org2598113">Linear probing</h4>
-<div class="outline-text-4" id="text-org2598113">
+<div id="outline-container-org230de7e" class="outline-4">
+<h4 id="org230de7e">Linear probing</h4>
+<div class="outline-text-4" id="text-org230de7e">
 <p>
 <i>Idea:</i> if there is a hash collision, just use the next position in the array.
 This has similar properties to the separate-chaining solution but avoids the
@@ -345,9 +322,9 @@ look next.
 </div>
 </div>
 
-<div id="outline-container-orgda67b9f" class="outline-3">
-<h3 id="orgda67b9f">Symbol tables</h3>
-<div class="outline-text-3" id="text-orgda67b9f">
+<div id="outline-container-orgc948797" class="outline-3">
+<h3 id="orgc948797">Symbol tables</h3>
+<div class="outline-text-3" id="text-orgc948797">
 <ul class="org-ul">
 <li>An abstraction of key-value pairs, a.k.a. association table. Dictionaries in
 python are the cannonical example.
@@ -360,9 +337,9 @@ insertion is expensive.</li>
 </div>
 </div>
 
-<div id="outline-container-org991a9be" class="outline-3">
-<h3 id="org991a9be">Heap (binary tree)</h3>
-<div class="outline-text-3" id="text-org991a9be">
+<div id="outline-container-org998f622" class="outline-3">
+<h3 id="org998f622">Heap (binary tree)</h3>
+<div class="outline-text-3" id="text-org998f622">
 <ul class="org-ul">
 <li>This data structure is defined recursively, it is either empty or a node with
 links to left and right subtrees.</li>
@@ -381,11 +358,11 @@ array.</li>
 </div>
 </div>
 
-<div id="outline-container-orga38eefa" class="outline-3">
-<h3 id="orga38eefa">Binary search tree</h3>
-<div class="outline-text-3" id="text-orga38eefa">
+<div id="outline-container-org975e1f7" class="outline-3">
+<h3 id="org975e1f7">Binary search tree</h3>
+<div class="outline-text-3" id="text-org975e1f7">
 <ul class="org-ul">
-<li>While a <a href="#org991a9be">heap</a> uses an implicit tree represented as an array and uses
+<li>While a <a href="#org998f622">heap</a> uses an implicit tree represented as an array and uses
 heap-order, the BST uses an explicit tree and stores keys in symmetric order:
 <ul class="org-ul">
 <li>All keys in left subtree are smaller all keys in right subtree are bigger.</li>
@@ -399,9 +376,9 @@ are alternative structures that get around this.</li>
 </div>
 </div>
 
-<div id="outline-container-orgafba090" class="outline-3">
-<h3 id="orgafba090">2-3 tree</h3>
-<div class="outline-text-3" id="text-orgafba090">
+<div id="outline-container-org4a532e5" class="outline-3">
+<h3 id="org4a532e5">2-3 tree</h3>
+<div class="outline-text-3" id="text-org4a532e5">
 <ul class="org-ul">
 <li>A tree allowing for both 2 and 3 nodes which is complicated but keeps the tree
 perfectly balanced on all operations we care about.</li>
@@ -409,18 +386,18 @@ perfectly balanced on all operations we care about.</li>
 </div>
 </div>
 
-<div id="outline-container-orgecfacde" class="outline-3">
-<h3 id="orgecfacde">Left-leaning red-black tree</h3>
-<div class="outline-text-3" id="text-orgecfacde">
+<div id="outline-container-orgcbeb747" class="outline-3">
+<h3 id="orgcbeb747">Left-leaning red-black tree</h3>
+<div class="outline-text-3" id="text-orgcbeb747">
 <ul class="org-ul">
 <li>This binary tree uses edge labels to get performance closer to a 2-3 tree.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc7e370f" class="outline-3">
-<h3 id="orgc7e370f">kd tree</h3>
-<div class="outline-text-3" id="text-orgc7e370f">
+<div id="outline-container-org7916d23" class="outline-3">
+<h3 id="org7916d23">kd tree</h3>
+<div class="outline-text-3" id="text-org7916d23">
 <ul class="org-ul">
 <li>Tree data structure for working with geometric data in a \(k\) dimensional
 space.
@@ -433,9 +410,9 @@ next dimension.</li>
 </div>
 </div>
 
-<div id="outline-container-orgfa3fdf8" class="outline-3">
-<h3 id="orgfa3fdf8">Stacks and queues</h3>
-<div class="outline-text-3" id="text-orgfa3fdf8">
+<div id="outline-container-org2a19e34" class="outline-3">
+<h3 id="org2a19e34">Stacks and queues</h3>
+<div class="outline-text-3" id="text-org2a19e34">
 <ul class="org-ul">
 <li>A min/max priority queue will dequeue the min/max element that has been
 enqueued. You probably want a binary tree style data structure to get an
@@ -456,13 +433,13 @@ than the array based implementation.</li>
 </div>
 </div>
 
-<div id="outline-container-org82cc446" class="outline-2">
-<h2 id="org82cc446">Algorithms</h2>
-<div class="outline-text-2" id="text-org82cc446">
+<div id="outline-container-org3754fbd" class="outline-2">
+<h2 id="org3754fbd">Algorithms</h2>
+<div class="outline-text-2" id="text-org3754fbd">
 </div>
-<div id="outline-container-org8f0661a" class="outline-3">
-<h3 id="org8f0661a">Dynamic connectivity</h3>
-<div class="outline-text-3" id="text-org8f0661a">
+<div id="outline-container-orgc96196d" class="outline-3">
+<h3 id="orgc96196d">Dynamic connectivity</h3>
+<div class="outline-text-3" id="text-orgc96196d">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -485,21 +462,21 @@ than the array based implementation.</li>
 </thead>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org213856a">Quick-find</a></td>
+<td class="org-left"><a href="#orgb526863">Quick-find</a></td>
 <td class="org-left">\(N\)</td>
 <td class="org-left">\(N\)</td>
 <td class="org-left">\(1\)</td>
 </tr>
 
 <tr>
-<td class="org-left"><a href="#org29931b7">Quick-union</a></td>
+<td class="org-left"><a href="#org1dde2e0">Quick-union</a></td>
 <td class="org-left">\(N\)</td>
 <td class="org-left">\(N\)</td>
 <td class="org-left">\(N\)</td>
 </tr>
 
 <tr>
-<td class="org-left"><a href="#orge1bdb5c">Weighted quick-union</a></td>
+<td class="org-left"><a href="#org3daea43">Weighted quick-union</a></td>
 <td class="org-left">\(N\)</td>
 <td class="org-left">\(\text{lg} N\)</td>
 <td class="org-left">\(\text{lg} N\)</td>
@@ -508,9 +485,9 @@ than the array based implementation.</li>
 </table>
 </div>
 
-<div id="outline-container-org213856a" class="outline-4">
-<h4 id="org213856a">Quick-find</h4>
-<div class="outline-text-4" id="text-org213856a">
+<div id="outline-container-orgb526863" class="outline-4">
+<h4 id="orgb526863">Quick-find</h4>
+<div class="outline-text-4" id="text-orgb526863">
 <p>
 Consider a graph, \(G\), with \(N\) nodes. The operations we care about are
 checking if two nodes are connected, and updating the graph by adding an edge.
@@ -548,11 +525,11 @@ just need to look up if they have the same value in this array.
 </div>
 </div>
 
-<div id="outline-container-org29931b7" class="outline-4">
-<h4 id="org29931b7">Quick-union</h4>
-<div class="outline-text-4" id="text-org29931b7">
+<div id="outline-container-org1dde2e0" class="outline-4">
+<h4 id="org1dde2e0">Quick-union</h4>
+<div class="outline-text-4" id="text-org1dde2e0">
 <p>
-Same problem and data structure as used by <a href="#org213856a">Quick-find</a> but the connected
+Same problem and data structure as used by <a href="#orgb526863">Quick-find</a> but the connected
 components are modelled as trees and the array values represent either the
 parent node or the node index if it is the root. Checking if two nodes are
 connected is just checking if their roots are the same. Updating when a new edge
@@ -593,11 +570,11 @@ this algorithm too slow.
 </div>
 </div>
 
-<div id="outline-container-orge1bdb5c" class="outline-4">
-<h4 id="orge1bdb5c">Weighted quick-union</h4>
-<div class="outline-text-4" id="text-orge1bdb5c">
+<div id="outline-container-org3daea43" class="outline-4">
+<h4 id="org3daea43">Weighted quick-union</h4>
+<div class="outline-text-4" id="text-org3daea43">
 <p>
-This is the same as <a href="#org29931b7">Quick-union</a> but always selects the smaller tree to be added
+This is the same as <a href="#org1dde2e0">Quick-union</a> but always selects the smaller tree to be added
 as a subtree of the root of the bigger tree during a union operation. To make
 this work you need another array to count the number of nodes in the tree rooted
 at each index. Note that this considers the size of the trees rather than their
@@ -638,9 +615,9 @@ efficiency with very little added bookkeeping.
 </div>
 </div>
 
-<div id="outline-container-org1d9c909" class="outline-3">
-<h3 id="org1d9c909">Sorting</h3>
-<div class="outline-text-3" id="text-org1d9c909">
+<div id="outline-container-org1dbb782" class="outline-3">
+<h3 id="org1dbb782">Sorting</h3>
+<div class="outline-text-3" id="text-org1dbb782">
 <p>
 A <i>partially sorted</i> array is one which differs from a sorted array by a linear
 number of inversions.
@@ -648,8 +625,8 @@ number of inversions.
 
 <p>
 A <i>stable sort</i> is a sorting algorithm that preserves the relative order of
-items with equal keys. <a href="#orgc37aaa4">Insertion sort</a> and <a href="#org02a4da9">mergesort</a> are stable but <a href="#orgb0f3ac1">selection
-sort</a> and <a href="#org30f5f59">shell sort</a> are not stable.
+items with equal keys. <a href="#org619cacd">Insertion sort</a> and <a href="#org2d299da">mergesort</a> are stable but <a href="#orge7d09a8">selection
+sort</a> and <a href="#org6ef1987">shell sort</a> are not stable.
 </p>
 
 <p>
@@ -657,14 +634,14 @@ A lower bound on the complexity of sorting can be obtained by representing an
 arbitrary computation by a binary decision tree. Graph theory tells us that any
 tree big enough to support all possible orderings must have a depth proportional
 to \(N \lg N\) yielding the lower bound! This argument is used to prove that
-<a href="#org02a4da9">mergesort</a> is an optimal algorithm. In practise <a href="#orga4c2bfa">quicksort</a> is the best if you
+<a href="#org2d299da">mergesort</a> is an optimal algorithm. In practise <a href="#orgc6a9ecb">quicksort</a> is the best if you
 don't need stability.
 </p>
 </div>
 
-<div id="outline-container-orgb0f3ac1" class="outline-4">
-<h4 id="orgb0f3ac1">Selection sort</h4>
-<div class="outline-text-4" id="text-orgb0f3ac1">
+<div id="outline-container-orge7d09a8" class="outline-4">
+<h4 id="orge7d09a8">Selection sort</h4>
+<div class="outline-text-4" id="text-orge7d09a8">
 <p>
 Go through and select the smallest element then repeat on the remaining
 elements. This requires order \(N^2 / 2\) comparisons and \(N\) movements of
@@ -674,9 +651,9 @@ change if the collection is already partially sorted.
 </div>
 </div>
 
-<div id="outline-container-orgc37aaa4" class="outline-4">
-<h4 id="orgc37aaa4">Insertion sort</h4>
-<div class="outline-text-4" id="text-orgc37aaa4">
+<div id="outline-container-org619cacd" class="outline-4">
+<h4 id="org619cacd">Insertion sort</h4>
+<div class="outline-text-4" id="text-org619cacd">
 <p>
 Go through and more each element to the left of the collection until all
 elements further left are lower and repeat. For a randomly ordered array it
@@ -687,9 +664,9 @@ in linear time for partially sorted arrays.
 </div>
 </div>
 
-<div id="outline-container-org30f5f59" class="outline-4">
-<h4 id="org30f5f59">Shell sort</h4>
-<div class="outline-text-4" id="text-org30f5f59">
+<div id="outline-container-org6ef1987" class="outline-4">
+<h4 id="org6ef1987">Shell sort</h4>
+<div class="outline-text-4" id="text-org6ef1987">
 <p>
 Perform a sequence of <i>h</i>-sorts for a decreasing sequence of <i>h</i>. An <i>h</i>-sort is
 sorting the subsequences with indicies \(1,h+1,2h+1,\dots\), and
@@ -701,9 +678,9 @@ in practise.
 </div>
 </div>
 
-<div id="outline-container-orgbce225f" class="outline-4">
-<h4 id="orgbce225f">Knuth shuffle</h4>
-<div class="outline-text-4" id="text-orgbce225f">
+<div id="outline-container-org40e6319" class="outline-4">
+<h4 id="org40e6319">Knuth shuffle</h4>
+<div class="outline-text-4" id="text-org40e6319">
 <p>
 Is a linear time shuffling algorithm. Just iterate over the list, on iteration
 <i>i</i> randomly exchange element <i>i</i> with one of the others in the list. There is a
@@ -712,9 +689,9 @@ Is a linear time shuffling algorithm. Just iterate over the list, on iteration
 </div>
 </div>
 
-<div id="outline-container-org9bdb842" class="outline-4">
-<h4 id="org9bdb842">Graham scan for computing the convex hull</h4>
-<div class="outline-text-4" id="text-org9bdb842">
+<div id="outline-container-org2e9c06b" class="outline-4">
+<h4 id="org2e9c06b">Graham scan for computing the convex hull</h4>
+<div class="outline-text-4" id="text-org2e9c06b">
 <p>
 This is an algorithm for computing the convex hull in two dimensions. It uses
 sorting to order the points by polar angle relative to the point right most
@@ -723,9 +700,9 @@ bottom point.
 </div>
 </div>
 
-<div id="outline-container-org02a4da9" class="outline-4">
-<h4 id="org02a4da9">Mergesort</h4>
-<div class="outline-text-4" id="text-org02a4da9">
+<div id="outline-container-org2d299da" class="outline-4">
+<h4 id="org2d299da">Mergesort</h4>
+<div class="outline-text-4" id="text-org2d299da">
 <p>
 Split the list in two, recursively sort, then merge the two. The merge step
 makes use of an auxiliary array. The number of comparisons and array accesses is
@@ -734,16 +711,16 @@ proved with a recurrence relationship.
 </p>
 
 <p>
-A trivial improvement to performance is to use <a href="#orgc37aaa4">insertion sort</a> to sort the arrays
+A trivial improvement to performance is to use <a href="#org619cacd">insertion sort</a> to sort the arrays
 once the size has gotten down to 7 because at this size the overhead required
 for mergesort means that it is no longer superior.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga4c2bfa" class="outline-4">
-<h4 id="orga4c2bfa">Quicksort</h4>
-<div class="outline-text-4" id="text-orga4c2bfa">
+<div id="outline-container-orgc6a9ecb" class="outline-4">
+<h4 id="orgc6a9ecb">Quicksort</h4>
+<div class="outline-text-4" id="text-orgc6a9ecb">
 <ul class="org-ul">
 <li>Inplace sorting method</li>
 <li>Depth of recursion is logarithmic assuming a random ordering of elements in
@@ -758,11 +735,11 @@ there are lots of duplicate keys.</li>
 </div>
 </div>
 
-<div id="outline-container-orge8d4ff9" class="outline-4">
-<h4 id="orge8d4ff9">Heapsort</h4>
-<div class="outline-text-4" id="text-orge8d4ff9">
+<div id="outline-container-org720b0a9" class="outline-4">
+<h4 id="org720b0a9">Heapsort</h4>
+<div class="outline-text-4" id="text-org720b0a9">
 <p>
-Heapsort builds up a <a href="#org991a9be">binary heap</a> from the array and then uses it to put the
+Heapsort builds up a <a href="#org998f622">binary heap</a> from the array and then uses it to put the
 elements in order. This is takes \(N \lg N\) time in the worst cast and does the
 sorting in place. However it is not stable and in practise it is slower than
 quicksort and mergesort.
@@ -774,7 +751,7 @@ quicksort and mergesort.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-12 Tue 13:46</p>
+<p class="date">Created: 2021-10-27 Wed 19:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
