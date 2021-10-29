@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-20 Tue 10:59 -->
+<!-- 2021-10-27 Wed 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -41,21 +42,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -191,31 +192,8 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         displayAlign: "center",
@@ -236,11 +214,10 @@
              }
 });
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
@@ -256,38 +233,38 @@
     }
 </script>
 
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8b0c35d">Coalescent theory</a>
+<li><a href="#org5134aef">Coalescent theory</a>
 <ul>
-<li><a href="#org2978cff">Notes from <code>nordborg2000coalescent</code></a></li>
+<li><a href="#orga5a9b0b">Notes from <code>nordborg2000coalescent</code></a></li>
 </ul>
 </li>
-<li><a href="#org8608aed">Grammars</a>
+<li><a href="#orge612717">Grammars</a>
 <ul>
-<li><a href="#orga05af82">Newick</a></li>
+<li><a href="#org758a7ea">Newick</a></li>
 </ul>
 </li>
-<li><a href="#org6994df2">Software</a>
+<li><a href="#org07d87c1">Software</a>
 <ul>
-<li><a href="#orgcaca74f">Beast2</a></li>
-<li><a href="#org6c320de">APE in R</a></li>
-<li><a href="#org51ed92b">Ggtree and friends</a></li>
+<li><a href="#org7cdea75">Beast2</a></li>
+<li><a href="#org9a41e14">APE in R</a></li>
+<li><a href="#orgec3ab07">Ggtree and friends</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8b0c35d" class="outline-2">
-<h2 id="org8b0c35d">Coalescent theory</h2>
-<div class="outline-text-2" id="text-org8b0c35d">
+<div id="outline-container-org5134aef" class="outline-2">
+<h2 id="org5134aef">Coalescent theory</h2>
+<div class="outline-text-2" id="text-org5134aef">
 </div>
-<div id="outline-container-org2978cff" class="outline-3">
-<h3 id="org2978cff">Notes from <code>nordborg2000coalescent</code></h3>
-<div class="outline-text-3" id="text-org2978cff">
+<div id="outline-container-orga5a9b0b" class="outline-3">
+<h3 id="orga5a9b0b">Notes from <code>nordborg2000coalescent</code></h3>
+<div class="outline-text-3" id="text-orga5a9b0b">
 <ul class="org-ul">
 <li>Wright-Fisher considers a population of \(N\) asexually reproducing
 individuals.</li>
@@ -311,13 +288,13 @@ possible because of a particular scaling of time.</li>
 </div>
 </div>
 
-<div id="outline-container-org8608aed" class="outline-2">
-<h2 id="org8608aed">Grammars</h2>
-<div class="outline-text-2" id="text-org8608aed">
+<div id="outline-container-orge612717" class="outline-2">
+<h2 id="orge612717">Grammars</h2>
+<div class="outline-text-2" id="text-orge612717">
 </div>
-<div id="outline-container-orga05af82" class="outline-3">
-<h3 id="orga05af82">Newick</h3>
-<div class="outline-text-3" id="text-orga05af82">
+<div id="outline-container-org758a7ea" class="outline-3">
+<h3 id="org758a7ea">Newick</h3>
+<div class="outline-text-3" id="text-org758a7ea">
 <p>
 See <a href="https://web.archive.org/web/20210225204509/https://evolution.genetics.washington.edu/phylip/newick_doc.html">here</a> for a formal specification of the Newick grammar by Gary Olsen (1990).
 The important part of this is
@@ -356,22 +333,22 @@ The important part of this is
 </div>
 </div>
 
-<div id="outline-container-org6994df2" class="outline-2">
-<h2 id="org6994df2">Software</h2>
-<div class="outline-text-2" id="text-org6994df2">
+<div id="outline-container-org07d87c1" class="outline-2">
+<h2 id="org07d87c1">Software</h2>
+<div class="outline-text-2" id="text-org07d87c1">
 </div>
-<div id="outline-container-orgcaca74f" class="outline-3">
-<h3 id="orgcaca74f">Beast2</h3>
-<div class="outline-text-3" id="text-orgcaca74f">
+<div id="outline-container-org7cdea75" class="outline-3">
+<h3 id="org7cdea75">Beast2</h3>
+<div class="outline-text-3" id="text-org7cdea75">
 <ul class="org-ul">
 <li><code>nix-shell -p jdk11</code> gives you a shell with java installed.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6c320de" class="outline-3">
-<h3 id="org6c320de">APE in R</h3>
-<div class="outline-text-3" id="text-org6c320de">
+<div id="outline-container-org9a41e14" class="outline-3">
+<h3 id="org9a41e14">APE in R</h3>
+<div class="outline-text-3" id="text-org9a41e14">
 <p>
 <a href="https://cran.r-project.org/web/packages/ape/ape.pdf">FULL DOCUMENTATION</a>
 </p>
@@ -389,9 +366,9 @@ want to use Ggtree.
 </p>
 </div>
 
-<div id="outline-container-org18754a4" class="outline-4">
-<h4 id="org18754a4">The <code>phylo</code> class</h4>
-<div class="outline-text-4" id="text-org18754a4">
+<div id="outline-container-orgaf7cc2a" class="outline-4">
+<h4 id="orgaf7cc2a">The <code>phylo</code> class</h4>
+<div class="outline-text-4" id="text-orgaf7cc2a">
 <p>
 The <code>phylo</code> class is pretty much the defacto standard for representing
 phylogenies in R. A phylogeny with \(n\) tips is represented as a <code>phylo</code> which
@@ -418,9 +395,9 @@ depths from the TMRCA down to each node.
 </div>
 </div>
 
-<div id="outline-container-org51ed92b" class="outline-3">
-<h3 id="org51ed92b">Ggtree and friends</h3>
-<div class="outline-text-3" id="text-org51ed92b">
+<div id="outline-container-orgec3ab07" class="outline-3">
+<h3 id="orgec3ab07">Ggtree and friends</h3>
+<div class="outline-text-3" id="text-orgec3ab07">
 <p>
 To parse the various tree formats there is the <code>treeio</code> package which has
 functions such as <code>read.beast</code> and <code>read.nhx</code>. This will produce a value of the
@@ -446,7 +423,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-07-20 Tue 10:59</p>
+<p class="date">Created: 2021-10-27 Wed 19:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

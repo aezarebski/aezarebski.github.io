@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-08-31 Tue 14:49 -->
+<!-- 2021-10-27 Wed 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-probability</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Alex Zarebski" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -41,21 +42,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -191,31 +192,8 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         displayAlign: "center",
@@ -236,11 +214,10 @@
              }
 });
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">aez-notes-probability</h1>
 <p>
 <a href="../index.html">Home</a>
@@ -256,56 +233,56 @@
     }
 </script>
 
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org13a18fe">Probability notes</a>
+<li><a href="#org6bd881d">Probability notes</a>
 <ul>
-<li><a href="#org7b5e7f2">\(\sigma\)-field</a></li>
-<li><a href="#org62885d6">Probability measure</a></li>
-<li><a href="#org88e35c5">Conditional probability</a></li>
-<li><a href="#orgead8db6">Poisson process</a></li>
-<li><a href="#org074784d">Probability generating function (PGF)</a></li>
-<li><a href="#orgd10420f">Birth process</a></li>
-<li><a href="#orgffcdf35">Birth-death process</a></li>
-<li><a href="#org14f1789">Moment closure</a></li>
-<li><a href="#org12c3861">Change/Transformation of variable</a></li>
-<li><a href="#org53ad437">Random walk</a></li>
-<li><a href="#orgd7dbc6c">Geometric series</a></li>
-<li><a href="#org4a0ddd8">Squeeze theorem</a></li>
+<li><a href="#org55e6d87">\(\sigma\)-field</a></li>
+<li><a href="#org6c2fd75">Probability measure</a></li>
+<li><a href="#org0bfc475">Conditional probability</a></li>
+<li><a href="#org277039a">Poisson process</a></li>
+<li><a href="#orga3c8ac7">Probability generating function (PGF)</a></li>
+<li><a href="#org7575708">Birth process</a></li>
+<li><a href="#org92d02f0">Birth-death process</a></li>
+<li><a href="#orgd2518b5">Moment closure</a></li>
+<li><a href="#org72cb0d4">Change/Transformation of variable</a></li>
+<li><a href="#orgfa09f54">Random walk</a></li>
+<li><a href="#org2e6ea1f">Geometric series</a></li>
+<li><a href="#org6b8e742">Squeeze theorem</a></li>
 </ul>
 </li>
-<li><a href="#orgdb2ecba">Distributions</a>
+<li><a href="#org6e40713">Distributions</a>
 <ul>
-<li><a href="#org471cacf">Log-normal</a></li>
-<li><a href="#org057451d">Negative binomial</a></li>
-<li><a href="#org4e617bf">Poisson</a></li>
-<li><a href="#org2d455b9">Bivariate discrete distributions</a></li>
-<li><a href="#org38428d8">Bivariate Poisson (by trivariate reduction)</a></li>
-<li><a href="#org54e6e47">Bivariate negative binomial (by multiplicative method)</a></li>
-<li><a href="#org00147a8">Bivariate negative binomial (by generating function)</a></li>
+<li><a href="#org372957a">Log-normal</a></li>
+<li><a href="#org5fb036f">Negative binomial</a></li>
+<li><a href="#orgca742f9">Poisson</a></li>
+<li><a href="#orgb3156ad">Bivariate discrete distributions</a></li>
+<li><a href="#org52f945f">Bivariate Poisson (by trivariate reduction)</a></li>
+<li><a href="#org0d132ee">Bivariate negative binomial (by multiplicative method)</a></li>
+<li><a href="#orge91e4f8">Bivariate negative binomial (by generating function)</a></li>
 </ul>
 </li>
-<li><a href="#orgb08da9d">Bibliography</a>
+<li><a href="#org9f06191">Bibliography</a>
 <ul>
-<li><a href="#orgf1ad024">edwards1961class</a></li>
-<li><a href="#org5d33c0b">famoye2010bivariate</a></li>
-<li><a href="#org7d26fd1">karlis2003analysis</a></li>
-<li><a href="#org21ec435">lakshminarayana1999bivariate</a></li>
+<li><a href="#orgbef950e">edwards1961class</a></li>
+<li><a href="#org0a0ec3b">famoye2010bivariate</a></li>
+<li><a href="#orgc33276b">karlis2003analysis</a></li>
+<li><a href="#orgb021cb3">lakshminarayana1999bivariate</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org13a18fe" class="outline-2">
-<h2 id="org13a18fe">Probability notes</h2>
-<div class="outline-text-2" id="text-org13a18fe">
+<div id="outline-container-org6bd881d" class="outline-2">
+<h2 id="org6bd881d">Probability notes</h2>
+<div class="outline-text-2" id="text-org6bd881d">
 </div>
-<div id="outline-container-org7b5e7f2" class="outline-3">
-<h3 id="org7b5e7f2">\(\sigma\)-field</h3>
-<div class="outline-text-3" id="text-org7b5e7f2">
+<div id="outline-container-org55e6d87" class="outline-3">
+<h3 id="org55e6d87">\(\sigma\)-field</h3>
+<div class="outline-text-3" id="text-org55e6d87">
 <p>
 A \(\sigma\)-field, \(\Sigma\), over a set \(\Omega\) is a subset of the power
 set of \(\Omega\) (ie it is a set of subsets of \(\Omega\)) with three
@@ -320,11 +297,11 @@ properties:
 </div>
 </div>
 
-<div id="outline-container-org62885d6" class="outline-3">
-<h3 id="org62885d6">Probability measure</h3>
-<div class="outline-text-3" id="text-org62885d6">
+<div id="outline-container-org6c2fd75" class="outline-3">
+<h3 id="org6c2fd75">Probability measure</h3>
+<div class="outline-text-3" id="text-org6c2fd75">
 <p>
-Given a set, \(\Omega\) and a <a href="#org7b5e7f2">\(\sigma\)-field</a>, \(\Sigma\), over it, a real
+Given a set, \(\Omega\) and a <a href="#org55e6d87">\(\sigma\)-field</a>, \(\Sigma\), over it, a real
 valued function, \(\mu\) is a measure if
 </p>
 
@@ -341,11 +318,11 @@ A probability measure is a measure where \(\mu(\Omega) = 1\).
 </div>
 </div>
 
-<div id="outline-container-org88e35c5" class="outline-3">
-<h3 id="org88e35c5">Conditional probability</h3>
-<div class="outline-text-3" id="text-org88e35c5">
+<div id="outline-container-org0bfc475" class="outline-3">
+<h3 id="org0bfc475">Conditional probability</h3>
+<div class="outline-text-3" id="text-org0bfc475">
 <p>
-For a <a href="#org62885d6">probability measure</a> if \(P(B) > 0\), then the probability of \(A\) given
+For a <a href="#org6c2fd75">probability measure</a> if \(P(B) > 0\), then the probability of \(A\) given
 \(B\) is defined by
 </p>
 
@@ -357,9 +334,9 @@ P(A\mid B) = \frac{P(A \cap B)}{P(B)}
 </div>
 </div>
 
-<div id="outline-container-orgead8db6" class="outline-3">
-<h3 id="orgead8db6">Poisson process</h3>
-<div class="outline-text-3" id="text-orgead8db6">
+<div id="outline-container-org277039a" class="outline-3">
+<h3 id="org277039a">Poisson process</h3>
+<div class="outline-text-3" id="text-org277039a">
 <p>
 This is a continuous time process which counts the arrivals which occur at
 exponentially distributed times with rate \(\lambda\). The master equations for
@@ -410,9 +387,9 @@ which is the PGF for a Poisson distribution with rate \(\lambda t\).
 </div>
 </div>
 
-<div id="outline-container-org074784d" class="outline-3">
-<h3 id="org074784d">Probability generating function (PGF)</h3>
-<div class="outline-text-3" id="text-org074784d">
+<div id="outline-container-orga3c8ac7" class="outline-3">
+<h3 id="orga3c8ac7">Probability generating function (PGF)</h3>
+<div class="outline-text-3" id="text-orga3c8ac7">
 <p>
 For a discrete random variable \(X\) taking values from the non-negative
 integers, the <i>probability generating function</i> is defined as
@@ -430,9 +407,9 @@ where \(f_X\) is the <i>probability mass function</i> (PMF).
 </div>
 </div>
 
-<div id="outline-container-orgd10420f" class="outline-3">
-<h3 id="orgd10420f">Birth process</h3>
-<div class="outline-text-3" id="text-orgd10420f">
+<div id="outline-container-org7575708" class="outline-3">
+<h3 id="org7575708">Birth process</h3>
+<div class="outline-text-3" id="text-org7575708">
 <p>
 Consider a process where individuals give birth with rate \(\lambda\). In this
 case the rate at which the population increases in size depends on the current
@@ -517,9 +494,9 @@ is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</sp
 </div>
 </div>
 
-<div id="outline-container-orgffcdf35" class="outline-3">
-<h3 id="orgffcdf35">Birth-death process</h3>
-<div class="outline-text-3" id="text-orgffcdf35">
+<div id="outline-container-org92d02f0" class="outline-3">
+<h3 id="org92d02f0">Birth-death process</h3>
+<div class="outline-text-3" id="text-org92d02f0">
 <p>
 Consider a process where individuals give birth at a rate \(\lambda\) and die at
 a rate \(\mu\). The master equation for this is
@@ -596,18 +573,18 @@ Taking the derivative and the limit we get that the expected population size is
 </div>
 </div>
 
-<div id="outline-container-org14f1789" class="outline-3">
-<h3 id="org14f1789">Moment closure</h3>
-<div class="outline-text-3" id="text-org14f1789">
+<div id="outline-container-orgd2518b5" class="outline-3">
+<h3 id="orgd2518b5">Moment closure</h3>
+<div class="outline-text-3" id="text-orgd2518b5">
 <p>
 For notes on moment closure, see my <a href="./statistics-notes.html">statistics notes</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org12c3861" class="outline-3">
-<h3 id="org12c3861">Change/Transformation of variable</h3>
-<div class="outline-text-3" id="text-org12c3861">
+<div id="outline-container-org72cb0d4" class="outline-3">
+<h3 id="org72cb0d4">Change/Transformation of variable</h3>
+<div class="outline-text-3" id="text-org72cb0d4">
 <p>
 This is a particularly nifty trick when dealing with tricky MCMC problems, see
 my <a href="./statistics-notes.html">statistics notes</a>.
@@ -615,13 +592,13 @@ my <a href="./statistics-notes.html">statistics notes</a>.
 </div>
 </div>
 
-<div id="outline-container-org53ad437" class="outline-3">
-<h3 id="org53ad437">Random walk</h3>
-<div class="outline-text-3" id="text-org53ad437">
+<div id="outline-container-orgfa09f54" class="outline-3">
+<h3 id="orgfa09f54">Random walk</h3>
+<div class="outline-text-3" id="text-orgfa09f54">
 </div>
-<div id="outline-container-orge88a1a0" class="outline-4">
-<h4 id="orge88a1a0">Polya's Random Walk Theorem</h4>
-<div class="outline-text-4" id="text-orge88a1a0">
+<div id="outline-container-org45212b7" class="outline-4">
+<h4 id="org45212b7">Polya's Random Walk Theorem</h4>
+<div class="outline-text-4" id="text-org45212b7">
 <blockquote>
 <p>
 <b>Theorem</b> The simple random walk on \(\mathbb{Z}^{d}\) is recurrent in
@@ -636,9 +613,9 @@ Jonathon Novak has a particularly clear <a href="https://doi.org/10.4169/amer.ma
 </div>
 </div>
 
-<div id="outline-container-orgd7dbc6c" class="outline-3">
-<h3 id="orgd7dbc6c">Geometric series</h3>
-<div class="outline-text-3" id="text-orgd7dbc6c">
+<div id="outline-container-org2e6ea1f" class="outline-3">
+<h3 id="org2e6ea1f">Geometric series</h3>
+<div class="outline-text-3" id="text-org2e6ea1f">
 <p>
 \[
 \sum_{k=0}^{\infty} r^{k} = \frac{1}{1 - r}
@@ -651,9 +628,9 @@ for \(|r| < 1\).
 </div>
 </div>
 
-<div id="outline-container-org4a0ddd8" class="outline-3">
-<h3 id="org4a0ddd8">Squeeze theorem</h3>
-<div class="outline-text-3" id="text-org4a0ddd8">
+<div id="outline-container-org6b8e742" class="outline-3">
+<h3 id="org6b8e742">Squeeze theorem</h3>
+<div class="outline-text-3" id="text-org6b8e742">
 <p>
 Let \(\{a_n\}\) and \(\{c_n\}\) be two sequences which converge to \(l\). If
 there is an \(N\) such that for all \(n\geq N\) we have \(a_n \leq b_n \leq
@@ -663,17 +640,17 @@ c_n\), then \(\{b_n\}\) also converges to \(l\).
 </div>
 </div>
 
-<div id="outline-container-orgdb2ecba" class="outline-2">
-<h2 id="orgdb2ecba">Distributions</h2>
-<div class="outline-text-2" id="text-orgdb2ecba">
+<div id="outline-container-org6e40713" class="outline-2">
+<h2 id="org6e40713">Distributions</h2>
+<div class="outline-text-2" id="text-org6e40713">
 </div>
-<div id="outline-container-org471cacf" class="outline-3">
-<h3 id="org471cacf">Log-normal</h3>
-<div class="outline-text-3" id="text-org471cacf">
+<div id="outline-container-org372957a" class="outline-3">
+<h3 id="org372957a">Log-normal</h3>
+<div class="outline-text-3" id="text-org372957a">
 </div>
-<div id="outline-container-orga755379" class="outline-4">
-<h4 id="orga755379">Notation</h4>
-<div class="outline-text-4" id="text-orga755379">
+<div id="outline-container-orgb2c764f" class="outline-4">
+<h4 id="orgb2c764f">Notation</h4>
+<div class="outline-text-4" id="text-orgb2c764f">
 <p>
 \[
 X \sim \text{Lognormal}(\mu,\sigma^2)
@@ -686,13 +663,13 @@ where \(\mu\) can be any real number and \(\sigma>0\).
 </div>
 </div>
 
-<div id="outline-container-orgf3d7f8c" class="outline-4">
-<h4 id="orgf3d7f8c">Properties</h4>
-<div class="outline-text-4" id="text-orgf3d7f8c">
+<div id="outline-container-org0276ed4" class="outline-4">
+<h4 id="org0276ed4">Properties</h4>
+<div class="outline-text-4" id="text-org0276ed4">
 </div>
-<div id="outline-container-org539bdf3" class="outline-5">
-<h5 id="org539bdf3">Density</h5>
-<div class="outline-text-5" id="text-org539bdf3">
+<div id="outline-container-org86bd56d" class="outline-5">
+<h5 id="org86bd56d">Density</h5>
+<div class="outline-text-5" id="text-org86bd56d">
 <p>
 \[
 f(x) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp\left\{ - \frac{{(\log(x) - \mu)}^{2}}{2\sigma^{2}} \right\}
@@ -724,13 +701,13 @@ true
 </div>
 </div>
 
-<div id="outline-container-org057451d" class="outline-3">
-<h3 id="org057451d">Negative binomial</h3>
-<div class="outline-text-3" id="text-org057451d">
+<div id="outline-container-org5fb036f" class="outline-3">
+<h3 id="org5fb036f">Negative binomial</h3>
+<div class="outline-text-3" id="text-org5fb036f">
 </div>
-<div id="outline-container-org19b5a34" class="outline-4">
-<h4 id="org19b5a34">Notation</h4>
-<div class="outline-text-4" id="text-org19b5a34">
+<div id="outline-container-orga2cfa8a" class="outline-4">
+<h4 id="orga2cfa8a">Notation</h4>
+<div class="outline-text-4" id="text-orga2cfa8a">
 <p>
 \[
 X \sim \text{NB}(r,p)
@@ -743,18 +720,18 @@ where \(r>0\) and \(p\in[0,1]\).
 </div>
 </div>
 
-<div id="outline-container-orgad41c4b" class="outline-4">
-<h4 id="orgad41c4b">Properties</h4>
-<div class="outline-text-4" id="text-orgad41c4b">
+<div id="outline-container-orgdc31943" class="outline-4">
+<h4 id="orgdc31943">Properties</h4>
+<div class="outline-text-4" id="text-orgdc31943">
 <p>
 <b>Note</b> that sometimes the distribution is parameterised in terms of \(1-p\)
 which will change the following expressions.
 </p>
 </div>
 
-<div id="outline-container-org1926ee0" class="outline-5">
-<h5 id="org1926ee0">Mean and variance</h5>
-<div class="outline-text-5" id="text-org1926ee0">
+<div id="outline-container-orge1fdf69" class="outline-5">
+<h5 id="orge1fdf69">Mean and variance</h5>
+<div class="outline-text-5" id="text-orge1fdf69">
 <p>
 \[
 \mathbb{E}X = \frac{pr}{1-p}
@@ -779,9 +756,9 @@ p = 1 - \frac{m}{v}, \quad r = \frac{m^2}{v - m}
 </div>
 </div>
 
-<div id="outline-container-org781a8b5" class="outline-5">
-<h5 id="org781a8b5">Probability generating function</h5>
-<div class="outline-text-5" id="text-org781a8b5">
+<div id="outline-container-orge1d56ea" class="outline-5">
+<h5 id="orge1d56ea">Probability generating function</h5>
+<div class="outline-text-5" id="text-orge1d56ea">
 <p>
 \[
 G(z, r, p) = \left(\frac{1-p}{1-pz}\right)^r
@@ -806,9 +783,9 @@ There is a maxima script for showing this is true <a href="./neg-binom.mac">here
 </div>
 </div>
 
-<div id="outline-container-orgca0f9ac" class="outline-5">
-<h5 id="orgca0f9ac">Moment generating function</h5>
-<div class="outline-text-5" id="text-orgca0f9ac">
+<div id="outline-container-org61b7dd9" class="outline-5">
+<h5 id="org61b7dd9">Moment generating function</h5>
+<div class="outline-text-5" id="text-org61b7dd9">
 <p>
 \[
 M_{X}(t) = \left(\frac{1-p}{1-p e^{t}}\right)^r
@@ -819,13 +796,13 @@ M_{X}(t) = \left(\frac{1-p}{1-p e^{t}}\right)^r
 </div>
 </div>
 
-<div id="outline-container-org4e617bf" class="outline-3">
-<h3 id="org4e617bf">Poisson</h3>
-<div class="outline-text-3" id="text-org4e617bf">
+<div id="outline-container-orgca742f9" class="outline-3">
+<h3 id="orgca742f9">Poisson</h3>
+<div class="outline-text-3" id="text-orgca742f9">
 </div>
-<div id="outline-container-orgf1734c0" class="outline-4">
-<h4 id="orgf1734c0">Notation</h4>
-<div class="outline-text-4" id="text-orgf1734c0">
+<div id="outline-container-orgd149784" class="outline-4">
+<h4 id="orgd149784">Notation</h4>
+<div class="outline-text-4" id="text-orgd149784">
 <p>
 \[
 X \sim \text{Pois}(\lambda\)
@@ -838,9 +815,9 @@ where \(\lambda > 0\).
 </div>
 </div>
 
-<div id="outline-container-orgf603513" class="outline-4">
-<h4 id="orgf603513">Properties</h4>
-<div class="outline-text-4" id="text-orgf603513">
+<div id="outline-container-orgd4c7f0e" class="outline-4">
+<h4 id="orgd4c7f0e">Properties</h4>
+<div class="outline-text-4" id="text-orgd4c7f0e">
 <p>
 \[
 \mathbb{E}X = \lambda
@@ -866,13 +843,13 @@ G_{x}(z) = \exp[ \lambda (e^z - 1) ]
 </div>
 </div>
 
-<div id="outline-container-org2d455b9" class="outline-3">
-<h3 id="org2d455b9">Bivariate discrete distributions</h3>
-<div class="outline-text-3" id="text-org2d455b9">
+<div id="outline-container-orgb3156ad" class="outline-3">
+<h3 id="orgb3156ad">Bivariate discrete distributions</h3>
+<div class="outline-text-3" id="text-orgb3156ad">
 </div>
-<div id="outline-container-org03d2531" class="outline-4">
-<h4 id="org03d2531">Trivariate reduction</h4>
-<div class="outline-text-4" id="text-org03d2531">
+<div id="outline-container-orgcdd86c9" class="outline-4">
+<h4 id="orgcdd86c9">Trivariate reduction</h4>
+<div class="outline-text-4" id="text-orgcdd86c9">
 <p>
 Suppose that \(X = X_1 + X_3\) and \(Y = X_2 + X_3\) have the desired marginal
 distributions where the \(X_i\) are independent. This method of constructing
@@ -882,9 +859,9 @@ bivariate Poisson distribution can be constructed in this way.
 </div>
 </div>
 
-<div id="outline-container-org13b5d06" class="outline-4">
-<h4 id="org13b5d06">Multiplicative method</h4>
-<div class="outline-text-4" id="text-org13b5d06">
+<div id="outline-container-orgb4d746a" class="outline-4">
+<h4 id="orgb4d746a">Multiplicative method</h4>
+<div class="outline-text-4" id="text-orgb4d746a">
 <p>
 For marginal PMFs \(f_X\) and \(f_Y\) the multiplicative method produces a
 bivariate distribution with PMF
@@ -901,25 +878,25 @@ where the \(g_i\) are functions that are bounded and \(c_1 = \mathbb{E}g_1(X)\)
 and \(c_2 = \mathbb{E}g_2(Y)\), with the expectations taken over the given
 marginal. This construction allows for both positive and negative correlations
 but limitations on \(\lambda\) can bound the strength of the correlation. See
-<a href="#org21ec435">Lakshminarayana <i>et al</i> (1999)</a> for an example using a Poisson distribution and
-<a href="#org5d33c0b">Famoye (2010)</a> for a bivariate negative binomial distribution
+<a href="#orgb021cb3">Lakshminarayana <i>et al</i> (1999)</a> for an example using a Poisson distribution and
+<a href="#org0a0ec3b">Famoye (2010)</a> for a bivariate negative binomial distribution
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org38428d8" class="outline-3">
-<h3 id="org38428d8">Bivariate Poisson (by trivariate reduction)</h3>
-<div class="outline-text-3" id="text-org38428d8">
+<div id="outline-container-org52f945f" class="outline-3">
+<h3 id="org52f945f">Bivariate Poisson (by trivariate reduction)</h3>
+<div class="outline-text-3" id="text-org52f945f">
 <p>
-This distribution is constrained to have a non-negative correlation. See <a href="#org7d26fd1">Karlis
+This distribution is constrained to have a non-negative correlation. See <a href="#orgc33276b">Karlis
 and Ntzoufras (2003)</a> for an example.
 </p>
 </div>
 
-<div id="outline-container-org9bc0a79" class="outline-4">
-<h4 id="org9bc0a79">Notation</h4>
-<div class="outline-text-4" id="text-org9bc0a79">
+<div id="outline-container-orgcd9d0df" class="outline-4">
+<h4 id="orgcd9d0df">Notation</h4>
+<div class="outline-text-4" id="text-orgcd9d0df">
 <p>
 \[
 (X,Y) \sim \text{BP}(\lambda_{1},\lambda_{2},\lambda_{3})
@@ -934,21 +911,21 @@ when \(X = X_{1} + X_{3}\) and \(Y = X_{2} + X_{3}\), and the \(X_{i} \sim
 </div>
 </div>
 
-<div id="outline-container-org54e6e47" class="outline-3">
-<h3 id="org54e6e47">Bivariate negative binomial (by multiplicative method)</h3>
-<div class="outline-text-3" id="text-org54e6e47">
+<div id="outline-container-org0d132ee" class="outline-3">
+<h3 id="org0d132ee">Bivariate negative binomial (by multiplicative method)</h3>
+<div class="outline-text-3" id="text-org0d132ee">
 <p>
-See <a href="#org5d33c0b">Famoye (2010)</a> for a bivariate negative binomial distribution constructed
-using the <a href="#org13b5d06">multiplicative method</a> described above.
+See <a href="#org0a0ec3b">Famoye (2010)</a> for a bivariate negative binomial distribution constructed
+using the <a href="#orgb4d746a">multiplicative method</a> described above.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org00147a8" class="outline-3">
-<h3 id="org00147a8">Bivariate negative binomial (by generating function)</h3>
-<div class="outline-text-3" id="text-org00147a8">
+<div id="outline-container-orge91e4f8" class="outline-3">
+<h3 id="orge91e4f8">Bivariate negative binomial (by generating function)</h3>
+<div class="outline-text-3" id="text-orge91e4f8">
 <p>
-This distribution comes from <a href="#orgf1ad024">Edwards and Gurland (1961)</a>, who call it the
+This distribution comes from <a href="#orgbef950e">Edwards and Gurland (1961)</a>, who call it the
 <i>compound correlated bivariate Poisson distribution</i>. The PGF of this distribution is
 </p>
 
@@ -971,9 +948,9 @@ computationally more convenient approach.
 </p>
 </div>
 
-<div id="outline-container-orgaf92198" class="outline-4">
-<h4 id="orgaf92198">Method of moments parameters</h4>
-<div class="outline-text-4" id="text-orgaf92198">
+<div id="outline-container-org2818a6e" class="outline-4">
+<h4 id="org2818a6e">Method of moments parameters</h4>
+<div class="outline-text-4" id="text-org2818a6e">
 <p>
 The following snippets demonstrate how to compute the method of moments
 estimators given the first two moments of the first marginal and the covariance
@@ -1086,13 +1063,13 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 </div>
 
-<div id="outline-container-orgb08da9d" class="outline-2">
-<h2 id="orgb08da9d">Bibliography</h2>
-<div class="outline-text-2" id="text-orgb08da9d">
+<div id="outline-container-org9f06191" class="outline-2">
+<h2 id="org9f06191">Bibliography</h2>
+<div class="outline-text-2" id="text-org9f06191">
 </div>
-<div id="outline-container-orgf1ad024" class="outline-3">
-<h3 id="orgf1ad024">edwards1961class</h3>
-<div class="outline-text-3" id="text-orgf1ad024">
+<div id="outline-container-orgbef950e" class="outline-3">
+<h3 id="orgbef950e">edwards1961class</h3>
+<div class="outline-text-3" id="text-orgbef950e">
 <div class="org-src-container">
 <pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">edwards1961class</span>,
   <span style="color: #7590db;">author</span> =       {Carol B. Edwards and John Gurland},
@@ -1113,9 +1090,9 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 </div>
 
-<div id="outline-container-org5d33c0b" class="outline-3">
-<h3 id="org5d33c0b">famoye2010bivariate</h3>
-<div class="outline-text-3" id="text-org5d33c0b">
+<div id="outline-container-org0a0ec3b" class="outline-3">
+<h3 id="org0a0ec3b">famoye2010bivariate</h3>
+<div class="outline-text-3" id="text-org0a0ec3b">
 <div class="org-src-container">
 <pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">famoye2010bivariate</span>,
   <span style="color: #7590db;">journal</span> =      {Journal of Applied Statistics},
@@ -1133,9 +1110,9 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 </div>
 
-<div id="outline-container-org7d26fd1" class="outline-3">
-<h3 id="org7d26fd1">karlis2003analysis</h3>
-<div class="outline-text-3" id="text-org7d26fd1">
+<div id="outline-container-orgc33276b" class="outline-3">
+<h3 id="orgc33276b">karlis2003analysis</h3>
+<div class="outline-text-3" id="text-orgc33276b">
 <div class="org-src-container">
 <pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">karlis2003analysis</span>,
   <span style="color: #7590db;">journal</span> =      {Journal Of The Royal Statistical Society Series D-The
@@ -1152,9 +1129,9 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 </div>
 
-<div id="outline-container-org21ec435" class="outline-3">
-<h3 id="org21ec435">lakshminarayana1999bivariate</h3>
-<div class="outline-text-3" id="text-org21ec435">
+<div id="outline-container-orgb021cb3" class="outline-3">
+<h3 id="orgb021cb3">lakshminarayana1999bivariate</h3>
+<div class="outline-text-3" id="text-orgb021cb3">
 <div class="org-src-container">
 <pre class="src src-bibtex"><span style="color: #bc6ec5; font-weight: bold;">@article</span>{<span style="color: #a45bad;">lakshminarayana1999bivariate</span>,
   <span style="color: #7590db;">journal</span> =      {Communications in Statistics - Theory and Methods},
@@ -1175,7 +1152,7 @@ solve([ex2 = - (c + B2 - B1) k, cov12 = ((c - B1) (c + B2 - 1) + B1 B2) k],
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-08-31 Tue 14:49</p>
+<p class="date">Created: 2021-10-27 Wed 19:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
