@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-09 Tue 18:40 -->
+<!-- 2021-11-17 Wed 12:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -220,7 +220,7 @@
 <div id="content" class="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="org8704399" class="figure">
+<div id="org3a31070" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" />
 </p>
 </div>
@@ -284,8 +284,7 @@ should also document the configuration layers that I use.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>
-  auto-completion
+<pre class="src src-emacs-lisp">'<span style="color: #3a81c3;">(</span>auto-completion
   better-defaults
   bibtex
   csv
@@ -295,6 +294,7 @@ should also document the configuration layers that I use.
   <span style="color: #6c3163;">(</span>ess <span style="color: #3a81c3;">:variables</span>
        ess-r-backend 'ess<span style="color: #6c3163;">)</span>
   git
+  graphviz
   <span style="color: #6c3163;">(</span>hackernews <span style="color: #3a81c3;">:variables</span>
               hackernews-items-per-page <span style="color: #4e3163;">24</span><span style="color: #6c3163;">)</span>
   <span style="color: #6c3163;">(</span>haskell <span style="color: #3a81c3;">:variables</span>
@@ -303,6 +303,7 @@ should also document the configuration layers that I use.
            hsakell-enable-hindent-style <span style="color: #2d9574;">"fundamental"</span><span style="color: #6c3163;">)</span>
   helm
   html
+  hy
   <span style="color: #6c3163;">(</span>javascript <span style="color: #3a81c3;">:variables</span>
               javascript-import-tool 'import-js
               javascript-repl 'nodejs
@@ -331,15 +332,6 @@ should also document the configuration layers that I use.
   treemacs<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
-
-<ul class="org-ul">
-<li>The <code>semantic</code> layer is needed for formating emacs lisp code.</li>
-<li>The <code>hackernews</code> layer provides an application for reading hacker news
-<ul class="org-ul">
-<li>the application is bound to <code>SPC a w h</code></li>
-<li>the variable <code>hackernews-items-per-page</code> describes how many to display.</li>
-</ul></li>
-</ul>
 </div>
 </div>
 </div>
@@ -576,6 +568,15 @@ hacky solution by it works.</li>
 </div>
 </div>
 
+<div id="outline-container-orga5993e4" class="outline-3">
+<h3 id="orga5993e4">Maxima</h3>
+<div class="outline-text-3" id="text-orga5993e4">
+<p>
+See <a href="https://github.com/dalanicolai/maxima-layer">maxima-layer</a> by <a href="https://dalanicolai.github.io/">Daniel Nicolai</a>.
+</p>
+</div>
+</div>
+
 <div id="outline-container-orgb3db274" class="outline-3">
 <h3 id="orgb3db274">Latex and Bibtex</h3>
 <div class="outline-text-3" id="text-orgb3db274">
@@ -771,9 +772,9 @@ region of text it will count the words and characters there.
 </div>
 </div>
 
-<div id="outline-container-orgaaf5bc4" class="outline-3">
-<h3 id="orgaaf5bc4">Org-mode</h3>
-<div class="outline-text-3" id="text-orgaaf5bc4">
+<div id="outline-container-org54f380e" class="outline-3">
+<h3 id="org54f380e">Org-mode</h3>
+<div class="outline-text-3" id="text-org54f380e">
 <p>
 Bindings for org-mode functionality start with <code>o o</code> for "owner org".
 </p>
@@ -796,6 +797,57 @@ for toggle style functions we will have a submenu.
 <div id="outline-container-org171e95d" class="outline-4">
 <h4 id="org171e95d">Writing prose</h4>
 <div class="outline-text-4" id="text-org171e95d">
+<p>
+The following can be used to hide extra markup symbols
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">setq</span> org-hide-emphasis-markers t<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+We can use a hook to switch to proportional font for org-mode, because lines now
+become a bit tricky we need to include <code>visual-line-mode</code> otherwise things look
+weird.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-hook 'org-mode-hook 'variable-pitch-mode<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>add-hook 'org-mode-hook 'visual-line-mode<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+To make sure that code blocks are still rendered with a fixed width font we need
+to specify this. Note that the <code>describe-char</code> function is super helpful for
+linking to further fine tuning via the customisation interface. Currently I am
+using Noto with serifs for text and sans for headers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"> <span style="color: #3a81c3;">(</span>custom-set-faces
+'<span style="color: #6c3163;">(</span>org-block <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-block-begin-line <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch <span style="color: #3a81c3;">:extend</span> t <span style="color: #3a81c3;">:background</span> <span style="color: #2d9574;">"#ddd8eb"</span> <span style="color: #3a81c3;">:foreground</span> <span style="color: #2d9574;">"#9380b2"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-block-end-line <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch <span style="color: #3a81c3;">:extend</span> t <span style="color: #3a81c3;">:background</span> <span style="color: #2d9574;">"#ddd8eb"</span> <span style="color: #3a81c3;">:foreground</span> <span style="color: #2d9574;">"#9380b2"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-code <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> <span style="color: #3a81c3;">(</span>shadow fixed-pitch<span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-document-info <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-document-info-keyword <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-document-title <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> nil <span style="color: #3a81c3;">:foreground</span> <span style="color: #2d9574;">"#6c3163"</span> <span style="color: #3a81c3;">:underline</span> t <span style="color: #3a81c3;">:weight</span> bold <span style="color: #3a81c3;">:height</span> <span style="color: #4e3163;">2.0</span> <span style="color: #3a81c3;">:family</span> <span style="color: #2d9574;">"Noto Sans"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-level-1 <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> nil <span style="color: #3a81c3;">:extend</span> nil <span style="color: #3a81c3;">:foreground</span> <span style="color: #2d9574;">"#3a81c3"</span> <span style="color: #3a81c3;">:weight</span> bold <span style="color: #3a81c3;">:height</span> <span style="color: #4e3163;">1.4</span> <span style="color: #3a81c3;">:family</span> <span style="color: #2d9574;">"Noto Sans"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-level-2 <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> nil <span style="color: #3a81c3;">:extend</span> nil <span style="color: #3a81c3;">:foreground</span> <span style="color: #2d9574;">"#2d9574"</span> <span style="color: #3a81c3;">:weight</span> bold <span style="color: #3a81c3;">:height</span> <span style="color: #4e3163;">1.2</span> <span style="color: #3a81c3;">:width</span> normal <span style="color: #3a81c3;">:family</span> <span style="color: #2d9574;">"Noto Sans"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-level-3 <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:extend</span> nil <span style="color: #3a81c3;">:foreground</span> <span style="color: #2d9574;">"#67b11d"</span> <span style="color: #3a81c3;">:weight</span> normal <span style="color: #3a81c3;">:height</span> <span style="color: #4e3163;">1.1</span> <span style="color: #3a81c3;">:family</span> <span style="color: #2d9574;">"Noto Sans"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-link <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:underline</span> t<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-meta-line <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-property-value <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> t<span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-special-keyword <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-table <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-tag <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>org-verbatim <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:inherit</span> fixed-pitch<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+'<span style="color: #6c3163;">(</span>variable-pitch <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>t <span style="color: #b1951d;">(</span><span style="color: #3a81c3;">:family</span> <span style="color: #2d9574;">"Noto Serif"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
 <p>
 The <code>writeroom-mode</code> provides a clean setup for writing prose. It centres the
 text and removes visual distractions. The following little function sets up a
@@ -820,6 +872,15 @@ how wide the display should be.
 <span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ootw"</span> 'toggle-writeroom<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgc3a43d0" class="outline-4">
+<h4 id="orgc3a43d0">Spell checking</h4>
+<div class="outline-text-4" id="text-orgc3a43d0">
+<p>
+Highlight the text and use <code>SPC S r</code> to spellcheck that region.
+</p>
 </div>
 </div>
 
@@ -1235,19 +1296,9 @@ edit the aliases in the eshell is using the definitions below!
 </div>
 
 <p>
-If you want to create an alias in the eshell the following examples of a command
-to run in the shell will achieve this.
-</p>
-
-<pre class="example">
-alias cdk cd ..
-alias ff find-file $1
-</pre>
-
-<p>
-It is useful to be able to have these specified in code though in case the alias
-file gets lost during an upgrade. The following expressions set up some useful
-aliases to have in the shell.
+The following expressions set up some useful aliases to have in the shell. Note
+that while the shell is indespensible, <code>dired</code> is also a good solution in many
+situations.
 </p>
 
 <div class="org-src-container">
@@ -1255,6 +1306,7 @@ aliases to have in the shell.
 <span style="color: #3a81c3;">(</span>eshell/alias <span style="color: #2d9574;">"cdk"</span> <span style="color: #2d9574;">"cd .."</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span>eshell/alias <span style="color: #2d9574;">"cdkk"</span> <span style="color: #2d9574;">"cd ../.."</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span>eshell/alias <span style="color: #2d9574;">"cdkkk"</span> <span style="color: #2d9574;">"cd ../../.."</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>eshell/alias <span style="color: #2d9574;">"ls1"</span> <span style="color: #2d9574;">"ls -1 $1"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span>eshell/alias <span style="color: #2d9574;">"ff"</span> <span style="color: #2d9574;">"find-file $1"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
@@ -1468,9 +1520,6 @@ If you want to kill buffers with names that match a regex there is the
 <span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">their buffers.</span>
 <span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"wD"</span> 'spacemacs/window-manipulation-transient-state/delete-other-windows<span style="color: #3a81c3;">)</span>
 
-<span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Define a short cut for C-g which is a little awkward.</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"og"</span> 'keyboard-quit<span style="color: #3a81c3;">)</span>
-
 <span style="color: #2aa1ae; background-color: #ecf3ec;">;; </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Define a short cut for following files</span>
 <span style="color: #3a81c3;">(</span>spacemacs/declare-prefix <span style="color: #2d9574;">"of"</span> <span style="color: #2d9574;">"file-stuff"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"off"</span> 'find-file-at-point<span style="color: #3a81c3;">)</span>
@@ -1530,6 +1579,7 @@ Then we need to define the actual files that we want listed
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-visit</span> org-mode-notes <span style="color: #2d9574;">"org-mode notes"</span> <span style="color: #2d9574;">"/home/aez/public-site/org/notes/org-mode-notes.org"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-visit</span> reading-list <span style="color: #2d9574;">"Reading list"</span> <span style="color: #2d9574;">"/home/aez/Documents/bibliography/review/reading-list.tex"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-visit</span> references <span style="color: #2d9574;">"Bibtex references"</span> <span style="color: #2d9574;">"/home/aez/Documents/bibliography/references.bib"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-visit</span> statistics-notes <span style="color: #2d9574;">"Statistics notes"</span> <span style="color: #2d9574;">"/home/aez/public-site/org/notes/statistics-notes.org"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1574,6 +1624,7 @@ And finally we need to writing keybindings for these.
   <span style="color: #2d9574;">"ovno"</span> 'nvf-org-mode-notes
   <span style="color: #2d9574;">"ovnp"</span> 'nvf-python-notes
   <span style="color: #2d9574;">"ovnr"</span> 'nvf-r-notes
+  <span style="color: #2d9574;">"ovns"</span> 'nvf-statistics-notes
   <span style="color: #2d9574;">"ovp"</span> 'nvf-professional
   <span style="color: #2d9574;">"ovr"</span> 'nvf-references
   <span style="color: #2d9574;">"ovs"</span> 'nvf-spelling
@@ -1641,137 +1692,66 @@ Treemacs provides a file and project explorer. To summon treemacs use <code>SPC 
 <div class="outline-text-3" id="text-org116b1a4">
 <p>
 To insert a unicode character based on its name use <code>C-x 8 RET</code>. Since typically
-this is just the Greek letters we can define the following function to make this
-easier.
+this is just the Greek letters we can define key bindings for them. A macro
+makes this code a little cleaner.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek</span> <span style="color: #6c3163;">(</span>case-name letter-name<span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert <span style="color: #2d9574;">(</span>char-from-name <span style="color: #67b11d;">(</span>upcase <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"GREEK %s LETTER %s"</span> case-name letter-name<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defmacro</span> <span style="color: #6c3163; font-weight: bold;">nicemacs-greek</span> <span style="color: #6c3163;">(</span>lname<span style="color: #6c3163;">)</span>
+    <span style="color: #6c3163;">(</span>list 'progn
+          <span style="color: #2d9574;">(</span>list 'defun <span style="color: #67b11d;">(</span>intern <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"nag-%s-small"</span> lname<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">()</span>
+                <span style="color: #67b11d;">(</span>list 'interactive<span style="color: #67b11d;">)</span>
+                <span style="color: #67b11d;">(</span>list 'insert <span style="color: #b1951d;">(</span>char-from-name <span style="color: #3a81c3;">(</span>upcase <span style="color: #6c3163;">(</span>format <span style="color: #2d9574;">"greek small letter %s"</span> lname<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+          <span style="color: #2d9574;">(</span>list 'defun <span style="color: #67b11d;">(</span>intern <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"nag-%s-capital"</span> lname<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">()</span>
+                <span style="color: #67b11d;">(</span>list 'interactive<span style="color: #67b11d;">)</span>
+                <span style="color: #67b11d;">(</span>list 'insert <span style="color: #b1951d;">(</span>char-from-name <span style="color: #3a81c3;">(</span>upcase <span style="color: #6c3163;">(</span>format <span style="color: #2d9574;">"greek capital letter %s"</span> lname<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> alpha<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> beta<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> gamma<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> delta<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> theta<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> lambda<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> mu<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> nu<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> rho<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> sigma<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> psi<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">nicemacs-greek</span> omega<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
 <p>
-For example, to insert a lower case alpha, you would use <code>(insert-greek "small"
-"alpha")</code>. Then we can add key bindings for this <code>SPC o u &lt;l&gt;</code> to insert the
-Greek letter.
+And now to specify the actual keybindings
 </p>
-</div>
 
-<div id="outline-container-org7885fbb" class="outline-4">
-<h4 id="org7885fbb"><span class="todo TODO">TODO</span> Work out how to abstract this with a macro.</h4>
-<div class="outline-text-4" id="text-org7885fbb">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>spacemacs/declare-prefix <span style="color: #2d9574;">"ou"</span> <span style="color: #2d9574;">"unicode-stuff"</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-alpha</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"alpha"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-alpha</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"alpha"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oua"</span> 'insert-greek-small-alpha<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouA"</span> 'insert-greek-capital-alpha<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-beta</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"beta"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-beta</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"beta"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oub"</span> 'insert-greek-small-beta<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouB"</span> 'insert-greek-capital-beta<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-gamma</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"gamma"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-gamma</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"gamma"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oug"</span> 'insert-greek-small-gamma<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouG"</span> 'insert-greek-capital-gamma<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-delta</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"delta"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-delta</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"delta"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oud"</span> 'insert-greek-small-delta<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouD"</span> 'insert-greek-capital-delta<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-theta</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"theta"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-theta</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"theta"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"outh"</span> 'insert-greek-small-theta<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouTh"</span> 'insert-greek-capital-theta<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-lambda</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"lambda"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-lambda</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"lambda"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oul"</span> 'insert-greek-small-lambda<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouL"</span> 'insert-greek-capital-lambda<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-mu</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"mu"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-mu</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"mu"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oum"</span> 'insert-greek-small-mu<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouM"</span> 'insert-greek-capital-mu<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-nu</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"nu"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-nu</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"nu"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oun"</span> 'insert-greek-small-nu<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouN"</span> 'insert-greek-capital-nu<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-rho</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"rho"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-rho</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"rho"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"our"</span> 'insert-greek-small-rho<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouR"</span> 'insert-greek-capital-rho<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-sigma</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"sigma"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-sigma</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"sigma"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ous"</span> 'insert-greek-small-sigma<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouS"</span> 'insert-greek-capital-sigma<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-psi</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"psi"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-psi</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"psi"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"oups"</span> 'insert-greek-small-psi<span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-small-omega</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"small"</span> <span style="color: #2d9574;">"omega"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defun</span> <span style="color: #6c3163; font-weight: bold;">insert-greek-capital-omega</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3; font-weight: bold;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>insert-greek <span style="color: #2d9574;">"capital"</span> <span style="color: #2d9574;">"omega"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ouo"</span> 'insert-greek-small-omega<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys
+  <span style="color: #2d9574;">"oua"</span> 'nag-alpha-small
+  <span style="color: #2d9574;">"ouA"</span> 'nag-alpha-capital
+  <span style="color: #2d9574;">"oub"</span> 'nag-beta-small
+  <span style="color: #2d9574;">"ouB"</span> 'nag-beta-capital
+  <span style="color: #2d9574;">"oug"</span> 'nag-gamma-small
+  <span style="color: #2d9574;">"ouG"</span> 'nag-gamma-capital
+  <span style="color: #2d9574;">"oud"</span> 'nag-delta-small
+  <span style="color: #2d9574;">"ouD"</span> 'nag-delta-capital
+  <span style="color: #2d9574;">"outh"</span> 'nag-theta-small
+  <span style="color: #2d9574;">"ouTh"</span> 'nag-theta-capital
+  <span style="color: #2d9574;">"oul"</span> 'nag-lambda-small
+  <span style="color: #2d9574;">"ouL"</span> 'nag-lambda-capital
+  <span style="color: #2d9574;">"oum"</span> 'nag-mu-small
+  <span style="color: #2d9574;">"ouM"</span> 'nag-mu-capital
+  <span style="color: #2d9574;">"oun"</span> 'nag-nu-small
+  <span style="color: #2d9574;">"ouN"</span> 'nag-nu-capital
+  <span style="color: #2d9574;">"our"</span> 'nag-rho-small
+  <span style="color: #2d9574;">"ouR"</span> 'nag-rho-capital
+  <span style="color: #2d9574;">"ous"</span> 'nag-sigma-small
+  <span style="color: #2d9574;">"ouS"</span> 'nag-sigma-capital
+  <span style="color: #2d9574;">"oup"</span> 'nag-psi-small
+  <span style="color: #2d9574;">"ouo"</span> 'nag-omega-small<span style="color: #3a81c3;">)</span>
 </pre>
-</div>
 </div>
 </div>
 </div>
@@ -1802,9 +1782,6 @@ not already exist.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>files--ensure-directory <span style="color: #2d9574;">"~/.emacs.d/private/snippets/ess-r-mode"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>files--ensure-directory <span style="color: #2d9574;">"~/.emacs.d/private/snippets/json-mode"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>files--ensure-directory <span style="color: #2d9574;">"~/.emacs.d/private/snippets/web-mode"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span>files--ensure-directory <span style="color: #2d9574;">"~/.emacs.d/private/snippets/org-mode"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -1812,19 +1789,6 @@ not already exist.
 <div id="outline-container-org1b386f0" class="outline-3">
 <h3 id="org1b386f0">Yasnippet configuration</h3>
 <div class="outline-text-3" id="text-org1b386f0">
-<p>
-I have started to get some weird warnings which <a href="https://github.com/syl20bnr/spacemacs/issues/12648">this issue</a> suggests may be
-something breaking in Emacs 27, but can be silenced with the following.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3; font-weight: bold;">defvaralias</span>
-  'helm-c-yas-space-match-any-greedy
-  'helm-yas-space-match-any-greedy
-  <span style="color: #da8b55;">"Temporary alias for Emacs27"</span><span style="color: #3a81c3;">)</span>
-</pre>
-</div>
-
 <p>
 For some unknown reason, when I try to insert a snippet in the JSON mode I get
 an error, "No JavaScript AST available". Things are working fine in other modes
@@ -1858,6 +1822,7 @@ default.
 <span style="color: #2aa1ae; background-color: #ecf3ec;"># key: rpacks</span>
 <span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
 library<span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+library<span style="color: #3a81c3;">(</span>reshape2<span style="color: #3a81c3;">)</span>
 library<span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
 library<span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
 library<span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
@@ -1875,8 +1840,8 @@ aren't needed enough to be imported by default.
 <span style="color: #2aa1ae; background-color: #ecf3ec;"># key: rpacks-extra</span>
 <span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
 library<span style="color: #3a81c3;">(</span>jsonlite<span style="color: #3a81c3;">)</span>
-library<span style="color: #3a81c3;">(</span>reshape2<span style="color: #3a81c3;">)</span>
 library<span style="color: #3a81c3;">(</span>stringr<span style="color: #3a81c3;">)</span>
+library<span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
 library<span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
@@ -1916,6 +1881,31 @@ library<span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)
 <div class="outline-text-4" id="text-org44e743d">
 </div>
 <ul class="org-ul">
+<li><a id="org5ee21e7"></a>Saving ggplot2 figures<br />
+<div class="outline-text-5" id="text-org5ee21e7">
+<p>
+This snippet offers some sensible default values for saving <code>ggplot2</code> figures.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #ecf3ec;"># -*- mode: snippet -*-</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># name: Save a ggplot2 figure to default paper sizes</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># key: rhelp-ggsave</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
+
+ggsave<span style="color: #3a81c3;">(</span>filename = <span style="color: #3a81c3; font-weight: bold;">$</span><span style="color: #2d9574;">1</span>,
+       plot = <span style="color: #3a81c3; font-weight: bold;">$</span><span style="color: #2d9574;">2</span>,
+       ## A5 height = <span style="color: #4e3163;">14</span>.<span style="color: #4e3163;">8</span>, width = <span style="color: #4e3163;">21</span>.<span style="color: #4e3163;">0</span>,
+       ## A6 height = <span style="color: #4e3163;">10</span>.<span style="color: #4e3163;">5</span>, width = <span style="color: #4e3163;">14</span>.<span style="color: #4e3163;">8</span>,
+       ## A7 height = <span style="color: #4e3163;">7</span>.<span style="color: #4e3163;">4</span>, width = <span style="color: #4e3163;">10</span>.<span style="color: #4e3163;">5</span>,
+       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #dc752f; background-color: #fbf8ef;">$</span><span style="color: #2d9574;">0</span>
+</pre>
+</div>
+</div>
+</li>
+
 <li><a id="orgfbea778"></a>Writing CSV<br />
 <div class="outline-text-5" id="text-orgfbea778">
 <p>
@@ -2074,140 +2064,6 @@ parser$add_argument<span style="color: #3a81c3;">(</span>
 </ul>
 </div>
 </div>
-
-
-<div id="outline-container-org7c0836f" class="outline-3">
-<h3 id="org7c0836f">Vega-Lite</h3>
-<div class="outline-text-3" id="text-org7c0836f">
-<p>
-The following files need to be moved into the correct snippet directory for your
-configuration.
-</p>
-
-<p>
-A snippet for a very simple scatter plot in vega-lite.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #ecf3ec;"># -*- mode: snippet -*-</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># name: vega-lite scatter plot</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># key: vl-scatter-plot</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
-
-<span style="color: #3a81c3;">{</span>
-    <span style="color: #2d9574;">"$schema"</span>: <span style="color: #2d9574;">"https://vega.github.io/schema/vega-lite/v4.json"</span>,
-    <span style="color: #2d9574;">"data"</span>: <span style="color: #6c3163;">{</span>
-        <span style="color: #2d9574;">"url"</span>: <span style="color: #2d9574;">"$1"</span>
-    <span style="color: #6c3163; font-weight: bold;">}</span>,
-    <span style="color: #2d9574;">"mark"</span>: <span style="color: #2d9574;">"point"</span>,
-    <span style="color: #2d9574;">"encoding"</span>: <span style="color: #6c3163;">{</span>
-        <span style="color: #2d9574;">"x"</span>: <span style="color: #2d9574;">{</span>
-            <span style="color: #2d9574;">"field"</span>: <span style="color: #2d9574;">"$2"</span>,
-            <span style="color: #2d9574;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span>
-        <span style="color: #2d9574; font-weight: bold;">}</span>,
-        <span style="color: #2d9574;">"y"</span>: <span style="color: #2d9574;">{</span>
-            <span style="color: #2d9574;">"field"</span>: <span style="color: #2d9574;">"$3"</span>,
-            <span style="color: #2d9574;">"type"</span>: <span style="color: #2d9574;">"quantitative"</span>
-        <span style="color: #2d9574; font-weight: bold;">}</span>
-    <span style="color: #6c3163; font-weight: bold;">}</span>
-<span style="color: #3a81c3; font-weight: bold;">}</span>
-</pre>
-</div>
-
-<p>
-A snippet for a very simple histogram in vega-lite.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #ecf3ec;"># -*- mode: snippet -*-</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># name: vega-lite histogram</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># key: vl-histogram</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
-
-<span style="color: #3a81c3;">{</span>
-    <span style="color: #2d9574;">"$schema"</span>: <span style="color: #2d9574;">"https://vega.github.io/schema/vega-lite/v4.json"</span>,
-    <span style="color: #2d9574;">"data"</span>: <span style="color: #6c3163;">{</span>
-        <span style="color: #2d9574;">"url"</span>: <span style="color: #2d9574;">"$1"</span>
-    <span style="color: #6c3163; font-weight: bold;">}</span>,
-    <span style="color: #2d9574;">"mark"</span>: <span style="color: #2d9574;">"bar"</span>,
-    <span style="color: #2d9574;">"encoding"</span>: <span style="color: #6c3163;">{</span>
-        <span style="color: #2d9574;">"x"</span>: <span style="color: #2d9574;">{</span>
-            <span style="color: #2d9574;">"bin"</span>: true,
-            <span style="color: #2d9574;">"field"</span>: <span style="color: #2d9574;">"$2"</span>
-        <span style="color: #2d9574; font-weight: bold;">}</span>,
-        <span style="color: #2d9574;">"y"</span>: <span style="color: #2d9574;">{</span>
-            <span style="color: #2d9574;">"aggregate"</span>: <span style="color: #2d9574;">"count"</span>
-        <span style="color: #2d9574; font-weight: bold;">}</span>
-    <span style="color: #6c3163; font-weight: bold;">}</span>
-<span style="color: #3a81c3; font-weight: bold;">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org54f380e" class="outline-3">
-<h3 id="org54f380e">Org-mode</h3>
-<div class="outline-text-3" id="text-org54f380e">
-</div>
-<div id="outline-container-org4a43e29" class="outline-4">
-<h4 id="org4a43e29">header</h4>
-<div class="outline-text-4" id="text-org4a43e29">
-<div class="org-src-container">
-<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #ecf3ec;"># -*- mode: snippet -*-</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># name: header</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># key: header</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
-
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#+header:</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgc93e342" class="outline-4">
-<h4 id="orgc93e342">name</h4>
-<div class="outline-text-4" id="text-orgc93e342">
-<div class="org-src-container">
-<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #ecf3ec;"># -*- mode: snippet -*-</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># name: name</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># key: name</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
-
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#+name:</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgb7931d8" class="outline-4">
-<h4 id="orgb7931d8">title</h4>
-<div class="outline-text-4" id="text-orgb7931d8">
-<div class="org-src-container">
-<pre class="src src-snippet"><span style="color: #2aa1ae; background-color: #ecf3ec;"># -*- mode: snippet -*-</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># name: title</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># key: title</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># --</span>
-
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#+title:</span>
-</pre>
-</div>
-
-<p>
-Unfortunately it is very difficult to write a source block snippet in this
-literate programming style, so you probably just want to do that manually.
-</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga5993e4" class="outline-2">
-<h2 id="orga5993e4">Maxima</h2>
-<div class="outline-text-2" id="text-orga5993e4">
-<p>
-See <a href="https://github.com/dalanicolai/maxima-layer">maxima-layer</a> by <a href="https://dalanicolai.github.io/">Daniel Nicolai</a>.
-</p>
-</div>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
@@ -2224,7 +2080,7 @@ to a list in emacs-lisp.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-09 Tue 18:40</p>
+<p class="date">Created: 2021-11-17 Wed 12:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:08 -->
+<!-- 2021-11-16 Tue 16:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>statistics-aez-notes</title>
@@ -239,6 +239,7 @@
 <li><a href="#orgd6e8e2e">MCMC parameter transformation</a></li>
 <li><a href="#org265c539">Linear regression</a></li>
 <li><a href="#org8e01bf9">Profile likelihood function</a></li>
+<li><a href="#orgf9314e2"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</a></li>
 <li><a href="#org2cc0da6">Contingency tables</a></li>
 <li><a href="#org40b0528">Linear Mixed-effects Models</a></li>
 <li><a href="#org46e436b">Moment closure for CTMC processes</a></li>
@@ -374,7 +375,7 @@ distribution function (EDF) is
 </p>
 
 <p>
-where \(I\) is the indicator function. Linearity shows 
+where \(I\) is the indicator function. Linearity shows
 </p>
 
 <p>
@@ -437,23 +438,23 @@ estimated parameter value.
 <p>
 You want to sample \(x\) which has density \(f\) but the MCMC samples are
 butting up against the edge of the support. For example, we have \(X\sim
-\text{Lognormal}(0,1)\). 
+\text{Lognormal}(0,1)\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>mcmc<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">library</span><span style="color: #4f97d7;">(</span>coda<span style="color: #4f97d7;">)</span>
-set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>mcmc<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)</span>
+set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">mcmc_samples</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>obj<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    as.mcmc<span style="color: #bc6ec5;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #6c3163; font-weight: bold;">mcmc_samples</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>obj<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    as.mcmc<span style="color: #6c3163;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">posterior</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    dlnorm<span style="color: #bc6ec5;">(</span>x = x, meanlog = <span style="color: #a45bad;">0</span>, sdlog = <span style="color: #a45bad;">1</span>, log = <span style="color: #a45bad;">TRUE</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #6c3163; font-weight: bold;">posterior</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    dlnorm<span style="color: #6c3163;">(</span>x = x, meanlog = <span style="color: #4e3163;">0</span>, sdlog = <span style="color: #4e3163;">1</span>, log = <span style="color: #4e3163;">TRUE</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-x_samples <span style="color: #ce537a; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>posterior<span style="color: #4f97d7;">)</span>
+x_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>posterior<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -485,11 +486,11 @@ take the logarithm to get the log-posterior this becomes just \(y\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">y_posterior</span> <span style="color: #ce537a; font-weight: bold;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    posterior<span style="color: #bc6ec5;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> + y
-<span style="color: #4f97d7;">}</span>
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">y_posterior</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>y<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    posterior<span style="color: #6c3163;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> + y
+<span style="color: #3a81c3;">}</span>
 
-y_samples <span style="color: #ce537a; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #4f97d7;">(</span>y_posterior<span style="color: #4f97d7;">)</span>
+y_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>y_posterior<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -501,7 +502,7 @@ efficiently.
 </p>
 
 
-<div id="org68fcd6a" class="figure">
+<div id="org2530bc8" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -532,7 +533,7 @@ dive deeper into the data. The <i>leverage</i> of a datum can be thought of as t
 potential to influence parameters and can be calculated with <code>stats::hatvalues</code>.
 However, high leverage is not necessarily a bad thing unless it is also an
 outlier. One way to measure how plausible a measurement is to have arisen from
-the model is by considering its standardised residual, <code>rstandard</code>. 
+the model is by considering its standardised residual, <code>rstandard</code>.
 </p>
 
 <p>
@@ -563,6 +564,45 @@ likelihood</i> is
 </div>
 </div>
 
+<div id="outline-container-orgf9314e2" class="outline-3">
+<h3 id="orgf9314e2"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</h3>
+<div class="outline-text-3" id="text-orgf9314e2">
+</div>
+<div id="outline-container-org1c5e236" class="outline-4">
+<h4 id="org1c5e236">Null is specific mean</h4>
+<div class="outline-text-4" id="text-org1c5e236">
+<div class="org-src-container">
+<pre class="src src-R">t.test<span style="color: #3a81c3;">(</span>rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean=<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>, mu = <span style="color: #4e3163;">0</span><span style="color: #3a81c3;">)</span>$p.value
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c776a4" class="outline-4">
+<h4 id="org0c776a4">Null is different mean (assumed equal variance)</h4>
+<div class="outline-text-4" id="text-org0c776a4">
+<div class="org-src-container">
+<pre class="src src-R">t.test<span style="color: #3a81c3;">(</span>rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span>, rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>, var.equal = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>$p.value
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge600920" class="outline-4">
+<h4 id="orge600920">Null is different mean (Welch)</h4>
+<div class="outline-text-4" id="text-orge600920">
+<div class="org-src-container">
+<pre class="src src-R">t.test<span style="color: #3a81c3;">(</span>rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span>, rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">1</span>, sd = <span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span>, var.equal = <span style="color: #4e3163;">FALSE</span><span style="color: #3a81c3;">)</span>$p.value
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb3e15a0" class="outline-4">
+<h4 id="orgb3e15a0"><span class="todo TODO">TODO</span> Null is different mean but values are paired</h4>
+</div>
+</div>
+
 <div id="outline-container-org2cc0da6" class="outline-3">
 <h3 id="org2cc0da6">Contingency tables</h3>
 <div class="outline-text-3" id="text-org2cc0da6">
@@ -577,10 +617,10 @@ catagorical variables as follows
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">set.seed<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
-x <span style="color: #ce537a; font-weight: bold;">&lt;-</span> sample<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">1000</span>, replace = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
-y <span style="color: #ce537a; font-weight: bold;">&lt;-</span> sample<span style="color: #4f97d7;">(</span>letters<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">]</span>, <span style="color: #a45bad;">1000</span>, replace = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
-df <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x, y<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">1000</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span>letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #6c3163;">]</span>, <span style="color: #4e3163;">1000</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
+df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x, y<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -589,17 +629,17 @@ Then we can create a contingency table from this with the <code>xtabs</code> fun
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">tab <span style="color: #ce537a; font-weight: bold;">&lt;-</span> xtabs<span style="color: #4f97d7;">(</span>~ x + y, data = df<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">tab <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> xtabs<span style="color: #3a81c3;">(</span>~ x + y, data = df<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R">&gt; print<span style="color: #4f97d7;">(</span>tab<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">&gt; print<span style="color: #3a81c3;">(</span>tab<span style="color: #3a81c3;">)</span>
    y
 x     a   b   c
-  <span style="color: #a45bad;">1</span> <span style="color: #a45bad;">131</span> <span style="color: #a45bad;">109</span> <span style="color: #a45bad;">111</span>
-  <span style="color: #a45bad;">2</span> <span style="color: #a45bad;">100</span> <span style="color: #a45bad;">122</span> <span style="color: #a45bad;">117</span>
-  <span style="color: #a45bad;">3</span> <span style="color: #a45bad;">100</span>  <span style="color: #a45bad;">99</span> <span style="color: #a45bad;">111</span>
+  <span style="color: #4e3163;">1</span> <span style="color: #4e3163;">131</span> <span style="color: #4e3163;">109</span> <span style="color: #4e3163;">111</span>
+  <span style="color: #4e3163;">2</span> <span style="color: #4e3163;">100</span> <span style="color: #4e3163;">122</span> <span style="color: #4e3163;">117</span>
+  <span style="color: #4e3163;">3</span> <span style="color: #4e3163;">100</span>  <span style="color: #4e3163;">99</span> <span style="color: #4e3163;">111</span>
 </pre>
 </div>
 
@@ -611,7 +651,7 @@ binary we could use Fisher's exact test, but since there are more, and there are
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">&gt; print<span style="color: #4f97d7;">(</span>chisq.test<span style="color: #bc6ec5;">(</span>tab<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">&gt; print<span style="color: #3a81c3;">(</span>chisq.test<span style="color: #6c3163;">(</span>tab<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
   Pearson<span style="color: #2d9574;">'s Chi-squared test</span>
 
@@ -700,7 +740,7 @@ parts of the parameters form the fixed effects.
 <h4 id="org573eb5c">Model notation</h4>
 <div class="outline-text-4" id="text-org573eb5c">
 <p>
-The <code>lme4</code> package in R introduces some syntax for describing these models. 
+The <code>lme4</code> package in R introduces some syntax for describing these models.
 </p>
 
 <ul class="org-ul">
@@ -734,12 +774,12 @@ equations for the distribution are
 <p>
 We multiple both sides of the equation through by \(n\) and sum in \(n\) over
 \(\mathbb{N}_0\) to get everything in terms of expected values of functions of
-\(X_t\). 
+\(X_t\).
 </p>
 
 <p>
 \[
-\frac{d}{dt} \mathbb{E}[X_t] = \mathbb{E}[((X_t + 1) - X_t) a_{X_t}] + \mathbb{E}[((X_t - 1) - X_t) b_{X_t}] 
+\frac{d}{dt} \mathbb{E}[X_t] = \mathbb{E}[((X_t + 1) - X_t) a_{X_t}] + \mathbb{E}[((X_t - 1) - X_t) b_{X_t}]
 \]
 </p>
 
@@ -756,7 +796,7 @@ moments this generalises as
 </p>
 
 <p>
-Recall the binomial formula, 
+Recall the binomial formula,
 </p>
 
 <p>
@@ -838,7 +878,7 @@ The first rule of machine learning: Start without machine learning
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:08</p>
+<p class="date">Created: 2021-11-16 Tue 16:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-09 Tue 18:40 -->
+<!-- 2021-11-17 Wed 12:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-beast2</title>
@@ -194,6 +194,27 @@
   .org-svg { width: 90%; }
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -210,10 +231,12 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org3f61c1b">Links</a></li>
+<li><a href="#org40ad059">Tools</a></li>
 <li><a href="#org791a8df">Examples</a>
 <ul>
 <li><a href="#org0cae390">BEAST2 as an MCMC engine: part I</a></li>
 <li><a href="#org71098bf">BEAST2 as an MCMC engine: part II</a></li>
+<li><a href="#orga649ac8">Birth-death simulation example</a></li>
 </ul>
 </li>
 </ul>
@@ -226,8 +249,22 @@
 <ul class="org-ul">
 <li><a href="https://github.com/CompEvol/beast2">BEAST2 repository</a></li>
 <li><a href="https://github.com/tgvaughan/feast">feast</a> a collection of resources from Tim Vaughan</li>
+<li><a href="https://taming-the-beast.org/">Taming the BEAST</a> is a collection of tutorials for BEAST2</li>
 <li><a href="https://github.com/laduplessis/skylinetools">skylinetools</a> is a package from Louis du Plessis which has skylining
 functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org40ad059" class="outline-2">
+<h2 id="org40ad059">Tools</h2>
+<div class="outline-text-2" id="text-org40ad059">
+<ul class="org-ul">
+<li>You can run both <code>beast</code> and <code>beauti</code> from the command line as they are both
+available in the <code>beast.jar</code>. In the case of <code>beauti</code> it will be something like
+<code>java -sp &lt;path/to/beast.jar&gt; beast.app.beauti.Beauti</code>.</li>
+<li>Tracer, FigTree and TreeAnnotator all comes as a separate jar files. You can
+just click on the jar file and it should run the program correctly.</li>
 </ul>
 </div>
 </div>
@@ -235,7 +272,13 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 <div id="outline-container-org791a8df" class="outline-2">
 <h2 id="org791a8df">Examples</h2>
 <div class="outline-text-2" id="text-org791a8df">
+<ul class="org-ul">
+<li><a href="#org0cae390">BEAST2 as an MCMC engine: part I</a></li>
+<li><a href="#org71098bf">BEAST2 as an MCMC engine: part II</a></li>
+<li><a href="#orga649ac8">Birth-death simulation example</a></li>
+</ul>
 </div>
+
 <div id="outline-container-org0cae390" class="outline-3">
 <h3 id="org0cae390">BEAST2 as an MCMC engine: part I</h3>
 <div class="outline-text-3" id="text-org0cae390">
@@ -320,9 +363,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-org1753a24" class="outline-4">
-<h4 id="org1753a24">Running the sampler</h4>
-<div class="outline-text-4" id="text-org1753a24">
+<div id="outline-container-orge50d381" class="outline-4">
+<h4 id="orge50d381">Running the sampler</h4>
+<div class="outline-text-4" id="text-orge50d381">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -339,16 +382,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-orge2f3888" class="outline-4">
-<h4 id="orge2f3888">Visualising the results</h4>
-<div class="outline-text-4" id="text-orge2f3888">
+<div id="outline-container-orgc3e6b43" class="outline-4">
+<h4 id="orgc3e6b43">Visualising the results</h4>
+<div class="outline-text-4" id="text-orgc3e6b43">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org0ff3e78" class="figure">
+<div id="org4359d46" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -446,9 +489,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-orgb736284" class="outline-4">
-<h4 id="orgb736284">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgb736284">
+<div id="outline-container-org8b6a405" class="outline-4">
+<h4 id="org8b6a405">Running the sampler</h4>
+<div class="outline-text-4" id="text-org8b6a405">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -465,16 +508,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-org3ef4a7b" class="outline-4">
-<h4 id="org3ef4a7b">Visualising the results</h4>
-<div class="outline-text-4" id="text-org3ef4a7b">
+<div id="outline-container-org1752620" class="outline-4">
+<h4 id="org1752620">Visualising the results</h4>
+<div class="outline-text-4" id="text-org1752620">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org1e2029f" class="figure">
+<div id="orgbe287a4" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -522,11 +565,423 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"beast
 </div>
 </div>
 </div>
+
+<div id="outline-container-orga649ac8" class="outline-3">
+<h3 id="orga649ac8">Birth-death simulation example</h3>
+<div class="outline-text-3" id="text-orga649ac8">
+<p>
+In this example we will simulate sequences on a realisation of the birth-death
+process and then attempt to estimate the birth rate from these sequences. We
+will use <code>ape</code> to simulate the birth-death process and <code>phangorn</code> to simulate the
+sequences. To ensure a correct XML specification we will use <code>beauti</code> to generate
+the XML for the analysis. Finally, we will use <code>tracer</code> to check the results.
+</p>
+
+<p>
+To start with we will load the required libraries and define the files we will
+write output to.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ape<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>phangorn<span style="color: #3a81c3;">)</span>
+
+set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>
+output_dir <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"birth-death-simulation-output"</span>
+newick_file <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir,
+                         <span style="color: #2d9574;">"reconstructed-tree.newick"</span><span style="color: #3a81c3;">)</span>
+fasta_file <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir,
+                        <span style="color: #2d9574;">"sequences.fasta"</span><span style="color: #3a81c3;">)</span>
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb54dba1" class="outline-4">
+<h4 id="orgb54dba1">Simulating the tree</h4>
+<div class="outline-text-4" id="text-orgb54dba1">
+<p>
+We will use years as our unit of time. Assuming that an individual is infectious
+for 7 days (\(1/52\) of a year) on average, and that \(1\%\) of infections are
+sequenced we end up with the following equations for the rates: \(\mu + \psi =
+52\) and \(\psi / (\psi + \mu) = 1 / 100\). Solving these give us \(\mu =
+5148/100\) and \(\psi = 52/100\). If we have an \(\lambda / (\mu + \psi) = R_{0}
+= 2\) then \(\lambda = 104\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">birth_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">104</span>
+death_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">5148</span> / <span style="color: #4e3163;">100</span>
+sampling_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">52</span> / <span style="color: #4e3163;">100</span>
+sim_duration <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.15</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">year</span>
+</pre>
+</div>
+
+<p>
+Then we use <code>rlineage</code> to simulate from the birth-death process and subsequently
+to sub-sample the extinct lineages. We store the result in a Newick file for
+subsequent use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #3a81c3;">(</span>birth_rate,
+                     net_removal_rate,
+                     Tmax = sim_duration<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+We include the tip dates as part of the tip labels so that later we can parse
+this information out of them when we load this into Beauti.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">num_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #3a81c3;">(</span>sim_tree$tip.label<span style="color: #3a81c3;">)</span>
+tip_fwd_times <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> node.depth.edgelength<span style="color: #3a81c3;">(</span>sim_tree<span style="color: #3a81c3;">)[</span><span style="color: #4e3163;">1</span>:num_tips<span style="color: #3a81c3;">]</span>
+sim_tree$tip.label <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sprintf<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"%s_%f"</span>,
+                              sim_tree$tip.label,
+                              <span style="color: #4e3163;">2021</span> + tip_fwd_times<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+The reconstructed tree is the tree that remains when we only keep a binomial
+sample of the extinct tips (ie those that are not extant). The probability that
+a tip is sequenced is \(\psi / (\mu + \psi\)\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">extant_mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tip_fwd_times &gt;= sim_duration
+num_removed <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sum<span style="color: #3a81c3;">(</span>!extant_mask<span style="color: #3a81c3;">)</span>
+num_sampled <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rbinom<span style="color: #3a81c3;">(</span>n = <span style="color: #4e3163;">1</span>,
+                      size = num_removed,
+                      prob = sampling_rate / net_removal_rate<span style="color: #3a81c3;">)</span>
+sampled_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span>x = sim_tree$tip.label<span style="color: #6c3163;">[</span>!extant_mask<span style="color: #6c3163;">]</span>,
+                       size = num_sampled<span style="color: #3a81c3;">)</span>
+reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> keep.tip<span style="color: #3a81c3;">(</span>phy = sim_tree,
+                               tip = sampled_tips<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+We can combine all of this into a function
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">rand_reconstructed_tree</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>birth_rate,
+                                    death_rate,
+                                    sampling_rate,
+                                    duration<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  net_removal_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> death_rate + sampling_rate
+
+  sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #6c3163;">(</span>birth_rate,
+                       net_removal_rate,
+                       Tmax = sim_duration<span style="color: #6c3163;">)</span>
+
+  num_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>sim_tree$tip.label<span style="color: #6c3163;">)</span>
+  tip_fwd_times <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> node.depth.edgelength<span style="color: #6c3163;">(</span>sim_tree<span style="color: #6c3163;">)[</span><span style="color: #4e3163;">1</span>:num_tips<span style="color: #6c3163;">]</span>
+  sim_tree$tip.label <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sprintf<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"%s_%f"</span>,
+                                sim_tree$tip.label,
+                                <span style="color: #4e3163;">2021</span> + tip_fwd_times<span style="color: #6c3163;">)</span>
+
+  extant_mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tip_fwd_times &gt;= sim_duration
+  num_removed <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sum<span style="color: #6c3163;">(</span>!extant_mask<span style="color: #6c3163;">)</span>
+  num_sampled <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rbinom<span style="color: #6c3163;">(</span>n = <span style="color: #4e3163;">1</span>,
+                        size = num_removed,
+                        prob = sampling_rate / net_removal_rate<span style="color: #6c3163;">)</span>
+  sampled_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #6c3163;">(</span>x = sim_tree$tip.label<span style="color: #2d9574;">[</span>!extant_mask<span style="color: #2d9574;">]</span>,
+                         size = num_sampled<span style="color: #6c3163;">)</span>
+  reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> keep.tip<span style="color: #6c3163;">(</span>phy = sim_tree,
+                                 tip = sampled_tips<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>reconstructed_tree<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+Then we repeat the simulation until we get a sensible output to continue with.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3; font-weight: bold;">while</span> <span style="color: #3a81c3;">(</span>iter_count &lt; <span style="color: #4e3163;">100</span> &amp;&amp; num_seqs &lt; <span style="color: #4e3163;">20</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rand_reconstructed_tree<span style="color: #6c3163;">(</span>birth_rate,
+                                                death_rate,
+                                                sampling_rate,
+                                                sim_duration<span style="color: #6c3163;">)</span>
+  iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> iter_count + <span style="color: #4e3163;">1</span>
+  num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>reconstructed_tree$tip.label<span style="color: #6c3163;">)</span>
+  print<span style="color: #6c3163;">(</span>iter_count<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+This tree should be saved for later use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">write.tree<span style="color: #3a81c3;">(</span>phy = reconstructed_tree,
+           file = newick_file<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga788b22" class="outline-4">
+<h4 id="orga788b22">Simulating the sequences</h4>
+<div class="outline-text-4" id="text-orga788b22">
+<p>
+Then we use the <code>simSeq</code> function to simulate an alignment this tree. By default
+this function uses the JC model for the sequence simulation with a rate of 1
+(using the branch lengths as the units of time). RNA viruses have a mutation
+rate of \(\approx 10^{-3}\) substitutions per site per year. We are already
+working in units of years so we can use this as our rate. The length of the
+sequence we will use is 2000 which is similar to the HA of influenza.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">sim_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> simSeq<span style="color: #3a81c3;">(</span>x = reconstructed_tree,
+                   rate = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
+                   l = <span style="color: #4e3163;">2000</span>,
+                   type = <span style="color: #2d9574;">"DNA"</span><span style="color: #3a81c3;">)</span>
+
+write.phyDat<span style="color: #3a81c3;">(</span>x = sim_seqs,
+             file = fasta_file,
+             format = <span style="color: #2d9574;">"fasta"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Finally we can print out a little summary of the data that is generated by the
+script.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">cat<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"There were "</span>,
+    length<span style="color: #6c3163;">(</span>reconstructed_tree$tip.label<span style="color: #6c3163;">)</span>,
+    <span style="color: #2d9574;">" tips in the reconstructed tree\n"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org175bd58" class="outline-4">
+<h4 id="org175bd58">Constructing the XML</h4>
+<div class="outline-text-4" id="text-org175bd58">
+<ol class="org-ol">
+<li>Open Beauti and load in the alignment produced by the simulation above.</li>
+<li>Open the <b>Tip Dates</b> tab and auto-configure to get the tip dates.
+<ul class="org-ul">
+<li>Since the sequences have been simulated with JC model with rate 1 nothing
+special is needed for the <b>Site Model</b> and <b>Clock Model</b> tabs.</li>
+</ul></li>
+<li>Open the <b>Priors</b> tab and select the <b>Birth Death Skyline Serial</b> prior
+<ul class="org-ul">
+<li>The reproduction number has dimension 10 by default, we used constant rates
+so this should be reduced to 1.</li>
+<li>Go over the parameters and make sure that for each one the prior looks
+sensible. To make things a bit easier, set informative priors for each
+parameter.</li>
+</ul></li>
+<li>Save the analysis as an XML.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org63bca52" class="outline-4">
+<h4 id="org63bca52">Running the sampler</h4>
+<div class="outline-text-4" id="text-org63bca52">
+<p>
+Running the sampler for \(10^{6}\) iterations does not take very long and allows
+us to see which variables are getting stuck. There are some suggested
+adjustments to the operators which should be done before increasing the sample
+size to \(10^{7}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd2ff327" class="outline-4">
+<h4 id="orgd2ff327">Analysing the posterior samples</h4>
+<div class="outline-text-4" id="text-orgd2ff327">
+<p>
+Tracer can be used for preliminary investigation of the posterior samples. To
+display the prior and posteriors on the same figure we need to resort to <code>ggplot2</code>
+though. There appear to be some identifiability issues (which is to be
+expected), but the estimates of the origin and basic reproduction number are
+decent. The figure shows the prior distributions (solid lines), the marginal
+posterior distribution (histogram) and the true values used in the simulation
+(dashed red line).
+</p>
+
+
+<div id="org0580e40" class="figure">
+<p><img src="../misc/beast2/birth-death-simulation-output/prior-posterior.png" alt="prior-posterior.png" width="800px" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
+
+output_dir <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"birth-death-simulation-output"</span>
+mcmc_log <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir, <span style="color: #2d9574;">"mcmc.log"</span><span style="color: #3a81c3;">)</span>
+result_png <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir, <span style="color: #2d9574;">"prior-posterior.png"</span><span style="color: #3a81c3;">)</span>
+
+birth_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">104</span>
+death_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">5148</span> / <span style="color: #4e3163;">100</span>
+sampling_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">52</span> / <span style="color: #4e3163;">100</span>
+sim_duration <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.15</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">year</span>
+
+mcmc_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.csv<span style="color: #3a81c3;">(</span>
+  mcmc_log,
+  comment.char = <span style="color: #2d9574;">"#"</span>,
+  sep = <span style="color: #2d9574;">"\t"</span>
+<span style="color: #3a81c3;">)</span> |&gt;
+  rename<span style="color: #3a81c3;">(</span>
+    clock_rate = clockRate,
+    origin = origin_BDSKY_Serial,
+    net_removal_rate = becomeUninfectiousRate_BDSKY_Serial,
+    r_naught = reproductiveNumber_BDSKY_Serial,
+    sampling_proportion = samplingProportion_BDSKY_Serial
+  <span style="color: #3a81c3;">)</span> |&gt;
+  select<span style="color: #3a81c3;">(</span>
+    clock_rate,
+    origin,
+    net_removal_rate,
+    r_naught,
+    sampling_proportion
+  <span style="color: #3a81c3;">)</span> |&gt;
+  tail<span style="color: #3a81c3;">(</span>-<span style="color: #4e3163;">1000</span><span style="color: #3a81c3;">)</span>
+
+
+g1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
+    data = mcmc_samples,
+    mapping = aes<span style="color: #6c3163;">(</span>x = r_naught, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">40</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = <span style="color: #4e3163;">0.0</span>, sdlog = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = birth_rate / <span style="color: #6c3163;">(</span>death_rate + sampling_rate<span style="color: #6c3163;">)</span>,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0.1</span>, <span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"R-naught"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
+
+g2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
+    data = mcmc_samples,
+    mapping = aes<span style="color: #6c3163;">(</span>
+      x = net_removal_rate,
+      y = ..density..
+    <span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dnorm<span style="color: #6c3163;">(</span>x, mean = <span style="color: #4e3163;">52</span>, sd = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = death_rate + sampling_rate,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">48</span>, <span style="color: #4e3163;">56</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Net removal rate"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
+
+g3 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
+    data = mcmc_samples,
+    mapping = aes<span style="color: #6c3163;">(</span>x = sampling_proportion, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">20</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dbeta<span style="color: #6c3163;">(</span>x, shape1 = <span style="color: #4e3163;">2.0</span>, shape2 = <span style="color: #4e3163;">97.0</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = sampling_rate / <span style="color: #6c3163;">(</span>death_rate + sampling_rate<span style="color: #6c3163;">)</span>,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0.1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Sampling proportion"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
+
+g4 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
+    data = mcmc_samples,
+    mapping = aes<span style="color: #6c3163;">(</span>x = origin, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">20</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = log<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0.1</span><span style="color: #2d9574;">)</span>, sdlog = <span style="color: #4e3163;">1.25</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = sim_duration,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0.3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Origin"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
+
+g5 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
+    data = mcmc_samples,
+    mapping = aes<span style="color: #6c3163;">(</span>x = clock_rate, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">40</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dgamma<span style="color: #6c3163;">(</span>x, <span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">1e4</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">5</span>, <span style="color: #4e3163;">3e</span>-<span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Clock rate"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
+
+g_comb <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_grid<span style="color: #3a81c3;">(</span>
+  plot_grid<span style="color: #6c3163;">(</span>g1, g2, g3, nrow = <span style="color: #4e3163;">1</span>, labels = LETTERS<span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>,
+  plot_grid<span style="color: #6c3163;">(</span>g4, g5, nrow = <span style="color: #4e3163;">1</span>, labels = LETTERS<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span>:<span style="color: #4e3163;">5</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>,
+  nrow = <span style="color: #4e3163;">2</span>
+<span style="color: #3a81c3;">)</span>
+
+ggsave<span style="color: #3a81c3;">(</span>
+  filename = result_png,
+  plot = g_comb,
+  height = <span style="color: #4e3163;">14.8</span>, width = <span style="color: #4e3163;">21.0</span>,
+  units = <span style="color: #2d9574;">"cm"</span>
+<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-09 Tue 18:40</p>
+<p class="date">Created: 2021-11-17 Wed 12:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

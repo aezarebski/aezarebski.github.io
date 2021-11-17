@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2021-11-10 Wed 10:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -204,10 +204,17 @@
 <ul>
 <li><a href="#org9ad086f">Python notes</a>
 <ul>
-<li><a href="#org8b832ce">Syntax</a></li>
+<li><a href="#org8b832ce">Syntax</a>
+<ul>
+<li><a href="#org55374b4">Assertions</a></li>
+<li><a href="#org952a29a">Dictionary</a></li>
+<li><a href="#org4f5997c">List comprehension</a></li>
+</ul>
+</li>
 <li><a href="#org403d96f">Virtual environment</a></li>
 <li><a href="#org623aaaf">Pip</a></li>
 <li><a href="#org23b2189">PIP VANISHED!!!</a></li>
+<li><a href="#org533ffcc">Colab</a></li>
 <li><a href="#org0b83012">Jupyter via Nix</a></li>
 <li><a href="#org9266c19">Spacemacs layer</a></li>
 <li><a href="#org07ee4c3">Help</a></li>
@@ -253,13 +260,34 @@
 <div id="outline-container-org8b832ce" class="outline-3">
 <h3 id="org8b832ce">Syntax</h3>
 <div class="outline-text-3" id="text-org8b832ce">
+</div>
+<div id="outline-container-org55374b4" class="outline-4">
+<h4 id="org55374b4">Assertions</h4>
+<div class="outline-text-4" id="text-org55374b4">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">dictionary</span>
-<span style="color: #7590db;">my_dict</span> = <span style="color: #4f97d7;">{</span><span style="color: #2d9574;">"foo"</span>: <span style="color: #a45bad;">1</span>, <span style="color: #2d9574;">"bar"</span>: <span style="color: #2d9574;">'a'</span><span style="color: #4f97d7;">}</span> 
-
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list comprehension</span>
-<span style="color: #4f97d7;">[</span>f<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> xs <span style="color: #4f97d7; font-weight: bold;">if</span> p<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
+<pre class="src src-python"><span style="color: #3a81c3; font-weight: bold;">assert</span> <span style="color: #4e3163;">1</span> == <span style="color: #4e3163;">1</span>
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org952a29a" class="outline-4">
+<h4 id="org952a29a">Dictionary</h4>
+<div class="outline-text-4" id="text-org952a29a">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #715ab1;">my_dict</span> = <span style="color: #3a81c3;">{</span><span style="color: #2d9574;">"foo"</span>: <span style="color: #4e3163;">1</span>, <span style="color: #2d9574;">"bar"</span>: <span style="color: #2d9574;">'a'</span><span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4f5997c" class="outline-4">
+<h4 id="org4f5997c">List comprehension</h4>
+<div class="outline-text-4" id="text-org4f5997c">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3a81c3;">[</span>f<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">for</span> x<span style="color: #3a81c3; font-weight: bold;"> in</span> xs if p<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -269,8 +297,8 @@
 <div class="outline-text-3" id="text-org403d96f">
 <div class="org-src-container">
 <pre class="src src-sh">python3 -m venv venv
-<span style="color: #4f97d7;">source</span> venv/bin/activate
-pip install -U pip   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">update pip</span>
+<span style="color: #3a81c3;">source</span> venv/bin/activate
+pip install -U pip   <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">update pip</span>
 pip install -r requirements.txt
 deactivate
 </pre>
@@ -291,11 +319,11 @@ To save a copy of the packages in an environment you can use freeze
 <h3 id="org623aaaf">Pip</h3>
 <div class="outline-text-3" id="text-org623aaaf">
 <p>
-To install a package from source 
+To install a package from source
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">pip install &lt;package&gt; -e &lt;path/to/source&gt;  
+<pre class="src src-sh">pip install &lt;package&gt; -e &lt;path/to/source&gt;
 </pre>
 </div>
 </div>
@@ -312,11 +340,21 @@ back.
 </div>
 </div>
 
+<div id="outline-container-org533ffcc" class="outline-3">
+<h3 id="org533ffcc">Colab</h3>
+<div class="outline-text-3" id="text-org533ffcc">
+<p>
+If you are using Google's Colab to run notebooks, the <code>requests</code> package is
+useful for reading files from Github.
+</p>
+</div>
+</div>
+
 <div id="outline-container-org0b83012" class="outline-3">
 <h3 id="org0b83012">Jupyter via Nix</h3>
 <div class="outline-text-3" id="text-org0b83012">
 <div class="org-src-container">
-<pre class="src src-sh">nix-shell --command <span style="color: #2d9574;">"jupyter lab"</span> 
+<pre class="src src-sh">nix-shell --command <span style="color: #2d9574;">"jupyter lab"</span>
 </pre>
 </div>
 
@@ -326,30 +364,30 @@ jupyter lab server.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This provides a shell running a jupyter lab server. To start the server run</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the following command</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">$ nix-shell --command "jupyter lab"</span>
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">This provides a shell running a jupyter lab server. To start the server run</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">the following command</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">$ nix-shell --command "jupyter lab"</span>
 
-<span style="color: #4f97d7; font-weight: bold;">let</span>
-  <span style="color: #7590db;">jupyter</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span>builtins.fetchGit <span style="color: #bc6ec5;">{</span>
-    <span style="color: #7590db;">url</span> = <span style="color: #a45bad;">https://github.com/tweag/jupyterWith</span>;
-    <span style="color: #7590db;">rev</span> = <span style="color: #2d9574;">"10d64ee254050de69d0dc51c9c39fdadf1398c38"</span>;
-  <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
+<span style="color: #3a81c3; font-weight: bold;">let</span>
+  <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
+    <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">"10d64ee254050de69d0dc51c9c39fdadf1398c38"</span>;
+  <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
 
-  <span style="color: #7590db;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #7590db;">packages</span> = p: <span style="color: #4f97d7; font-weight: bold;">with</span> p; <span style="color: #bc6ec5;">[</span> numpy
+  <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
+    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy
                             altair
                             scipy
                             pandas
-                            matplotlib <span style="color: #bc6ec5;">]</span>;
-  <span style="color: #4f97d7;">}</span>;
+                            matplotlib <span style="color: #6c3163;">]</span>;
+  <span style="color: #3a81c3;">}</span>;
 
-  <span style="color: #7590db;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">kernels</span> = <span style="color: #bc6ec5;">[</span> ipython <span style="color: #bc6ec5;">]</span>;
-  <span style="color: #4f97d7;">}</span>;
-<span style="color: #4f97d7; font-weight: bold;">in</span>
+  <span style="color: #715ab1;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">kernels</span> = <span style="color: #6c3163;">[</span> ipython <span style="color: #6c3163;">]</span>;
+  <span style="color: #3a81c3;">}</span>;
+<span style="color: #3a81c3; font-weight: bold;">in</span>
   jupyterEnvironment.env
 </pre>
 </div>
@@ -448,7 +486,7 @@ For notes on installation of packages see the notes above about <a href="#org623
 <h3 id="org5cb0504">Pandas</h3>
 <div class="outline-text-3" id="text-org5cb0504">
 <p>
-There is a <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">comparison with R</a> in the quickstart guide. 
+There is a <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">comparison with R</a> in the quickstart guide.
 </p>
 
 <ul class="org-ul">
@@ -506,7 +544,7 @@ cross tabulate the number of each pair.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">pd.crosstab<span style="color: #4f97d7;">(</span>df.discrete_a, df.discrete_b<span style="color: #4f97d7;">)</span>  
+<pre class="src src-python">pd.crosstab<span style="color: #3a81c3;">(</span>df.discrete_a, df.discrete_b<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -529,7 +567,7 @@ select only the rows corresponding to the year 2002.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #7590db;">gapminder_not_2002</span> = gapminder<span style="color: #4f97d7;">[</span>gapminder.year != <span style="color: #a45bad;">2002</span><span style="color: #4f97d7;">]</span>
+<pre class="src src-python"><span style="color: #715ab1;">gapminder_not_2002</span> = gapminder<span style="color: #3a81c3;">[</span>gapminder.year != <span style="color: #4e3163;">2002</span><span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 
@@ -564,7 +602,7 @@ of the first cell pretty much.
 <div class="org-src-container">
 <pre class="src src-python">%matplotlib inline
 
-<span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
+<span style="color: #3a81c3; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #3a81c3; font-weight: bold;">as</span> plt
 </pre>
 </div>
 
@@ -666,7 +704,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2021-11-10 Wed 10:12</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

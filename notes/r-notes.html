@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-08 Mon 14:40 -->
+<!-- 2021-11-16 Tue 16:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -245,7 +245,6 @@
 <li><a href="#org0a1ba9e">R Packages by Wickham and Bryan</a></li>
 <li><a href="#org17759e2">High performance computing</a></li>
 <li><a href="#orgbcbe12a">Packages I like</a></li>
-<li><a href="#orga314a11">TIDYDATA and the <code>tidyverse</code></a></li>
 <li><a href="#org23a112d">Reshaping dataframes with <code>reshape2</code></a></li>
 <li><a href="#org6b0fbcb">Command line arguments</a></li>
 <li><a href="#orgb3d7bb3">Command line arguments with <code>argparse</code></a></li>
@@ -264,6 +263,12 @@
 <li><a href="#orgce5fad4">Cheat sheets</a></li>
 <li><a href="#org49468e8">Data frames</a></li>
 <li><a href="#org70acbca">Data structures</a></li>
+</ul>
+</li>
+<li><a href="#orgf8eb2ff">Data munging</a>
+<ul>
+<li><a href="#orgd03c11f">Joins</a></li>
+<li><a href="#org024a273">Aggregation</a></li>
 </ul>
 </li>
 <li><a href="#org9b6e753">Programming in R (language and evaluation)</a>
@@ -291,7 +296,7 @@
 </div>
 
 
-<div id="orgb35979c" class="figure">
+<div id="org668f230" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -685,37 +690,6 @@ There are many useful aliases exported by <code>magrittr</code>, the table below
 </div>
 </div>
 
-<div id="outline-container-orga314a11" class="outline-3">
-<h3 id="orga314a11">TIDYDATA and the <code>tidyverse</code></h3>
-<div class="outline-text-3" id="text-orga314a11">
-<p>
-There are several ways to join data frames using <code>dplyr</code>, the folling snippet
-demonstrates a full join which duplicates records where necessary and will fill
-in missing values. Although the data in the joined data frame does not depend on
-the order of the arguments, the ordering of the rows does.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R">foo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>, y = letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
-bar <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>:<span style="color: #4e3163;">4</span>,<span style="color: #4e3163;">2</span>:<span style="color: #4e3163;">4</span><span style="color: #6c3163;">)</span>, z = LETTERS<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">6</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
-dplyr::full_join<span style="color: #3a81c3;">(</span>foo,bar<span style="color: #3a81c3;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-Joining, by = "x"
-  x    y    z
-1 1    a &lt;NA&gt;
-2 2    b    A
-3 2    b    D
-4 3    c    B
-5 3    c    E
-6 4 &lt;NA&gt;    C
-7 4 &lt;NA&gt;    F
-</pre>
-</div>
-</div>
-
 <div id="outline-container-org23a112d" class="outline-3">
 <h3 id="org23a112d">Reshaping dataframes with <code>reshape2</code></h3>
 <div class="outline-text-3" id="text-org23a112d">
@@ -728,7 +702,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="orga78463c" class="figure">
+<div id="orga5f3bbf" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -846,9 +820,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-orga29c446" class="outline-4">
-<h4 id="orga29c446">Example</h4>
-<div class="outline-text-4" id="text-orga29c446">
+<div id="outline-container-orgf09bb9a" class="outline-4">
+<h4 id="orgf09bb9a">Example</h4>
+<div class="outline-text-4" id="text-orgf09bb9a">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
@@ -964,9 +938,9 @@ in your HTML but still want to include figures.
 <h3 id="org642f2ba">Working with XML</h3>
 <div class="outline-text-3" id="text-org642f2ba">
 </div>
-<div id="outline-container-orgd9da0e4" class="outline-4">
-<h4 id="orgd9da0e4">Example</h4>
-<div class="outline-text-4" id="text-orgd9da0e4">
+<div id="outline-container-orga4cd032" class="outline-4">
+<h4 id="orga4cd032">Example</h4>
+<div class="outline-text-4" id="text-orga4cd032">
 <p>
 The following snippet produces a file <code>demo.xml</code>
 </p>
@@ -1021,9 +995,9 @@ And here is the result
 <h3 id="org4b67e7d">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org4b67e7d">
 </div>
-<div id="outline-container-orgf09bb9a" class="outline-4">
-<h4 id="orgf09bb9a">Example</h4>
-<div class="outline-text-4" id="text-orgf09bb9a">
+<div id="outline-container-orgc6167e6" class="outline-4">
+<h4 id="orgc6167e6">Example</h4>
+<div class="outline-text-4" id="text-orgc6167e6">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
@@ -1495,6 +1469,64 @@ my_dict<span style="color: #3a81c3;">[</span><span style="color: #6c3163;">[</sp
 </div>
 </div>
 
+<div id="outline-container-orgf8eb2ff" class="outline-2">
+<h2 id="orgf8eb2ff">Data munging</h2>
+<div class="outline-text-2" id="text-orgf8eb2ff">
+</div>
+<div id="outline-container-orgd03c11f" class="outline-3">
+<h3 id="orgd03c11f">Joins</h3>
+<div class="outline-text-3" id="text-orgd03c11f">
+<p>
+There are several ways to join data frames using <code>dplyr</code>, the folling snippet
+demonstrates a full join which duplicates records where necessary and will fill
+in missing values. Although the data in the joined data frame does not depend on
+the order of the arguments, the ordering of the rows does.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">foo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>, y = letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
+bar <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>:<span style="color: #4e3163;">4</span>,<span style="color: #4e3163;">2</span>:<span style="color: #4e3163;">4</span><span style="color: #6c3163;">)</span>, z = LETTERS<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">6</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
+dplyr::full_join<span style="color: #3a81c3;">(</span>foo,bar<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+Joining, by = "x"
+  x    y    z
+1 1    a &lt;NA&gt;
+2 2    b    A
+3 2    b    D
+4 3    c    B
+5 3    c    E
+6 4 &lt;NA&gt;    C
+7 4 &lt;NA&gt;    F
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org024a273" class="outline-3">
+<h3 id="org024a273">Aggregation</h3>
+<div class="outline-text-3" id="text-org024a273">
+<div class="org-src-container">
+<pre class="src src-R">aggregate<span style="color: #3a81c3;">(</span>formula = Petal.Length ~ Species, FUN = mean, data = iris<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+is equivalent to
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+iris <span style="color: #715ab1;">%&gt;%</span>
+  group_by<span style="color: #3a81c3;">(</span>Species<span style="color: #3a81c3;">)</span> <span style="color: #715ab1;">%&gt;%</span>
+  summarise<span style="color: #3a81c3;">(</span>mean_petal_length = mean<span style="color: #6c3163;">(</span>Petal.Length<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org9b6e753" class="outline-2">
 <h2 id="org9b6e753">Programming in R (language and evaluation)</h2>
 <div class="outline-text-2" id="text-org9b6e753">
@@ -1961,7 +1993,7 @@ ggplot<span style="color: #3a81c3;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-08 Mon 14:40</p>
+<p class="date">Created: 2021-11-16 Tue 16:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
