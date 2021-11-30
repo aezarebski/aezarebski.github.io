@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2021-11-30 Tue 10:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -206,7 +206,7 @@
 <script src="./main.js"></script>
 
 
-<div id="orgc678317" class="figure">
+<div id="org64af3f6" class="figure">
 <p><img src="../images/nix-logo.png" alt="nix-logo.png" />
 </p>
 </div>
@@ -258,6 +258,7 @@
 <div class="outline-text-3" id="text-org70dc5a0">
 <ul class="org-ul">
 <li><a href="https://scrive.github.io/nix-workshop/">Nix Workshop</a></li>
+<li><a href="https://ianthehenry.com/posts/how-to-learn-nix/">How to Learn Nix</a> is a series looking at starting with Nix from the ground up.</li>
 </ul>
 </div>
 </div>
@@ -317,32 +318,32 @@ server run the following command:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">shell.nix</span>
-<span style="color: #4f97d7; font-weight: bold;">let</span>
-  <span style="color: #7590db;">jupyter</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span>builtins.fetchGit <span style="color: #bc6ec5;">{</span>
-    <span style="color: #7590db;">url</span> = <span style="color: #a45bad;">https://github.com/tweag/jupyterWith</span>;
-    <span style="color: #7590db;">rev</span> = <span style="color: #2d9574;">""</span>;
-  <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">shell.nix</span>
+<span style="color: #3a81c3;">let</span>
+  <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
+    <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">""</span>;
+  <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
 
-  <span style="color: #7590db;">irkernel</span> = jupyter.kernels.iRWith <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"r"</span>;
-    <span style="color: #7590db;">packages</span> = p: <span style="color: #4f97d7; font-weight: bold;">with</span> p; <span style="color: #bc6ec5;">[</span> p.ggplot2 <span style="color: #bc6ec5;">]</span>;
-  <span style="color: #4f97d7;">}</span>;
+  <span style="color: #715ab1;">irkernel</span> = jupyter.kernels.iRWith <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"r"</span>;
+    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3;">with</span> p; <span style="color: #6c3163;">[</span> p.ggplot2 <span style="color: #6c3163;">]</span>;
+  <span style="color: #3a81c3;">}</span>;
 
-  <span style="color: #7590db;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #7590db;">packages</span> = p: <span style="color: #4f97d7; font-weight: bold;">with</span> p; <span style="color: #bc6ec5;">[</span> numpy
+  <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
+    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3;">with</span> p; <span style="color: #6c3163;">[</span> numpy
                             altair
                             statsmodels
                             pandas
-                            matplotlib <span style="color: #bc6ec5;">]</span>;
-  <span style="color: #4f97d7;">}</span>;
+                            matplotlib <span style="color: #6c3163;">]</span>;
+  <span style="color: #3a81c3;">}</span>;
 
-  <span style="color: #7590db;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">kernels</span> = <span style="color: #bc6ec5;">[</span> ipython
-                irkernel <span style="color: #bc6ec5;">]</span>;
-  <span style="color: #4f97d7;">}</span>;
-<span style="color: #4f97d7; font-weight: bold;">in</span>
+  <span style="color: #715ab1;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">kernels</span> = <span style="color: #6c3163;">[</span> ipython
+                irkernel <span style="color: #6c3163;">]</span>;
+  <span style="color: #3a81c3;">}</span>;
+<span style="color: #3a81c3;">in</span>
   jupyterEnvironment.env
 </pre>
 </div>
@@ -392,30 +393,30 @@ choosing a commit, see the listed versions <a href="https://status.nixos.org/">s
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">shell.nix</span>
-<span style="color: #4f97d7; font-weight: bold;">let</span>
-  <span style="color: #7590db;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
-  <span style="color: #7590db;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #bc6ec5;">$</span><span style="color: #4f97d7;">{</span>commitHash<span style="color: #4f97d7;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
-  <span style="color: #7590db;">pkgs</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">fetchTarball</span> tarballUrl<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
-  <span style="color: #7590db;">stdenv</span> = pkgs.stdenv;
-<span style="color: #4f97d7; font-weight: bold;">in</span> with pkgs; <span style="color: #4f97d7;">{</span>
-  <span style="color: #7590db;">myProject</span> = stdenv.mkDerivation <span style="color: #bc6ec5;">{</span>
-    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"example-r-env"</span>;
-    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"1"</span>;
-    <span style="color: #7590db;">src</span> = <span style="color: #4f97d7; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">null</span> <span style="color: #4f97d7; font-weight: bold;">else</span> nix;
+<pre class="src src-nix"><span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">shell.nix</span>
+<span style="color: #3a81c3;">let</span>
+  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
+  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
+<span style="color: #3a81c3;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"example-r-env"</span>;
+    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3;">else</span> nix;
 
-    <span style="color: #7590db;">buildInputs</span> = <span style="color: #4f97d7; font-weight: bold;">with</span> rPackages; <span style="color: #2d9574;">[</span>
+    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3;">with</span> rPackages; <span style="color: #2d9574;">[</span>
       R
       dplyr
       purrr
       magrittr
       ggplot2
     <span style="color: #2d9574;">]</span>;
-   <span style="color: #7590db;">shellHook</span> = <span style="color: #2d9574;">''</span>
+   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
 <span style="color: #2d9574;">             printf "\n\nWelcome to a reproducible R shell :)\n\n"</span>
 <span style="color: #2d9574;">      ''</span>;
-  <span style="color: #bc6ec5;">}</span>;
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">}</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -429,7 +430,7 @@ following produces sensible output then you are probably in the clear.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"foo.png"</span><span style="color: #4f97d7;">)</span>; plot<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span>; dev.off<span style="color: #4f97d7;">()</span>
+<pre class="src src-R">png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"foo.png"</span><span style="color: #3a81c3;">)</span>; plot<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span>; dev.off<span style="color: #3a81c3;">()</span>
 </pre>
 </div>
 
@@ -464,7 +465,7 @@ it
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">install.packages<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"stringi"</span>, repos=<span style="color: #2d9574;">"http://cran.rstudio.com/"</span>, dependencies=<span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">install.packages<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"stringi"</span>, repos=<span style="color: #2d9574;">"http://cran.rstudio.com/"</span>, dependencies=<span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -482,31 +483,31 @@ existing nix packages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #4f97d7;">{</span> pkgs ? <span style="color: #4f97d7;">import</span> <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7;">fetchTarball</span> https://github.com/nixos/nixpkgs/archive/nixos-20.<span style="color: #a45bad;">03</span>.tar.gz<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{}</span> <span style="color: #4f97d7;">}</span>:
+<pre class="src src-nix"><span style="color: #3a81c3;">{</span> pkgs ? <span style="color: #3a81c3;">import</span> <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">fetchTarball</span> https://github.com/nixos/nixpkgs/archive/nixos-20.<span style="color: #4e3163;">03</span>.tar.gz<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{}</span> <span style="color: #3a81c3;">}</span>:
 
-<span style="color: #4f97d7; font-weight: bold;">let</span>
-  <span style="color: #7590db;">grpclib</span> = pkgs.python37Packages.buildPythonPackage <span style="color: #4f97d7; font-weight: bold;">rec</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">pname</span> = <span style="color: #2d9574;">"grpclib"</span>;
-    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"0.3.1"</span>;
+<span style="color: #3a81c3;">let</span>
+  <span style="color: #715ab1;">grpclib</span> = pkgs.python37Packages.buildPythonPackage <span style="color: #3a81c3;">rec</span> <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">pname</span> = <span style="color: #2d9574;">"grpclib"</span>;
+    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"0.3.1"</span>;
 
-    <span style="color: #7590db;">src</span> = pkgs.python37Packages.fetchPypi <span style="color: #bc6ec5;">{</span>
-      <span style="color: #4f97d7; font-weight: bold;">inherit</span> pname version;
-      <span style="color: #7590db;">sha256</span> = <span style="color: #2d9574;">"0dw7jzw3pf2ckzrl808ayqvk9yqjhc45rj8qhmdxifv4ynwnyjam"</span>;
-    <span style="color: #bc6ec5;">}</span>;
+    <span style="color: #715ab1;">src</span> = pkgs.python37Packages.fetchPypi <span style="color: #6c3163;">{</span>
+      <span style="color: #3a81c3;">inherit</span> pname version;
+      <span style="color: #715ab1;">sha256</span> = <span style="color: #2d9574;">"0dw7jzw3pf2ckzrl808ayqvk9yqjhc45rj8qhmdxifv4ynwnyjam"</span>;
+    <span style="color: #6c3163;">}</span>;
 
-    <span style="color: #7590db;">propagatedBuildInputs</span> = <span style="color: #4f97d7; font-weight: bold;">with</span> pkgs.python37Packages; <span style="color: #bc6ec5;">[</span> h2 multidict <span style="color: #bc6ec5;">]</span>;
+    <span style="color: #715ab1;">propagatedBuildInputs</span> = <span style="color: #3a81c3;">with</span> pkgs.python37Packages; <span style="color: #6c3163;">[</span> h2 multidict <span style="color: #6c3163;">]</span>;
 
-    <span style="color: #7590db;">doCheck</span> = <span style="color: #4f97d7;">false</span>;
-  <span style="color: #4f97d7;">}</span>;
+    <span style="color: #715ab1;">doCheck</span> = <span style="color: #3a81c3;">false</span>;
+  <span style="color: #3a81c3;">}</span>;
 
-  <span style="color: #7590db;">customPython</span> = pkgs.python37.buildEnv.override <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">extraLibs</span> = <span style="color: #bc6ec5;">[</span> grpclib <span style="color: #bc6ec5;">]</span>;
-  <span style="color: #4f97d7;">}</span>;
-<span style="color: #4f97d7; font-weight: bold;">in</span>
+  <span style="color: #715ab1;">customPython</span> = pkgs.python37.buildEnv.override <span style="color: #3a81c3;">{</span>
+    <span style="color: #715ab1;">extraLibs</span> = <span style="color: #6c3163;">[</span> grpclib <span style="color: #6c3163;">]</span>;
+  <span style="color: #3a81c3;">}</span>;
+<span style="color: #3a81c3;">in</span>
 
-pkgs.mkShell <span style="color: #4f97d7;">{</span>
-  <span style="color: #7590db;">buildInputs</span> = <span style="color: #bc6ec5;">[</span> customPython <span style="color: #bc6ec5;">]</span>;
-<span style="color: #4f97d7;">}</span>
+pkgs.mkShell <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">buildInputs</span> = <span style="color: #6c3163;">[</span> customPython <span style="color: #6c3163;">]</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
@@ -545,27 +546,27 @@ If the commit hash is too old, you can find a new one among the listed versions
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #4f97d7; font-weight: bold;">let</span>
-  <span style="color: #7590db;">commitHash</span> = <span style="color: #2d9574;">"50b5738d6974785514c07b5b87f91641ca3f802d"</span>;
-  <span style="color: #7590db;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #bc6ec5;">$</span><span style="color: #4f97d7;">{</span>commitHash<span style="color: #4f97d7;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
-  <span style="color: #7590db;">pkgs</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">fetchTarball</span> tarballUrl<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
-  <span style="color: #7590db;">stdenv</span> = pkgs.stdenv;
-<span style="color: #4f97d7; font-weight: bold;">in</span> with pkgs; <span style="color: #4f97d7;">{</span>
-  <span style="color: #7590db;">myProject</span> = stdenv.mkDerivation <span style="color: #bc6ec5;">{</span>
-    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"example-haskell-env"</span>;
-    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"1"</span>;
-    <span style="color: #7590db;">src</span> = <span style="color: #4f97d7; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">null</span> <span style="color: #4f97d7; font-weight: bold;">else</span> nix;
+<pre class="src src-nix"><span style="color: #3a81c3;">let</span>
+  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"50b5738d6974785514c07b5b87f91641ca3f802d"</span>;
+  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
+<span style="color: #3a81c3;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"example-haskell-env"</span>;
+    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3;">else</span> nix;
 
-    <span style="color: #7590db;">buildInputs</span> = <span style="color: #4f97d7; font-weight: bold;">with</span> haskellPackages; <span style="color: #2d9574;">[</span>
+    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3;">with</span> haskellPackages; <span style="color: #2d9574;">[</span>
       ghc
       Cabal_3_2_0_0
       cabal-fmt
     <span style="color: #2d9574;">]</span>;
-   <span style="color: #7590db;">shellHook</span> = <span style="color: #2d9574;">''</span>
+   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
 <span style="color: #2d9574;">             printf "\n\nWelcome to the Haskell shell :)\n\n"</span>
 <span style="color: #2d9574;">      ''</span>;
-  <span style="color: #bc6ec5;">}</span>;
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">}</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -575,26 +576,26 @@ If the commit hash is too old, you can find a new one among the listed versions
 <h3 id="org294c26d">Dhall</h3>
 <div class="outline-text-3" id="text-org294c26d">
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #4f97d7; font-weight: bold;">let</span>
-  <span style="color: #7590db;">commitHash</span> = <span style="color: #2d9574;">"dc326c78a93862efb30a76216f527a56496e6284"</span>;
-  <span style="color: #7590db;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #bc6ec5;">$</span><span style="color: #4f97d7;">{</span>commitHash<span style="color: #4f97d7;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
-  <span style="color: #7590db;">pkgs</span> = <span style="color: #4f97d7;">import</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">fetchTarball</span> tarballUrl<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{}</span>;
-  <span style="color: #7590db;">stdenv</span> = pkgs.stdenv;
-<span style="color: #4f97d7; font-weight: bold;">in</span> with pkgs; <span style="color: #4f97d7;">{</span>
-  <span style="color: #7590db;">myProject</span> = stdenv.mkDerivation <span style="color: #bc6ec5;">{</span>
-    <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"example-dhall-env"</span>;
-    <span style="color: #7590db;">version</span> = <span style="color: #2d9574;">"1"</span>;
-    <span style="color: #7590db;">src</span> = <span style="color: #4f97d7; font-weight: bold;">if</span> pkgs.lib.inNixShell <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">null</span> <span style="color: #4f97d7; font-weight: bold;">else</span> nix;
+<pre class="src src-nix"><span style="color: #3a81c3;">let</span>
+  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"dc326c78a93862efb30a76216f527a56496e6284"</span>;
+  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
+  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
+  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
+<span style="color: #3a81c3;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
+  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
+    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"example-dhall-env"</span>;
+    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
+    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3;">else</span> nix;
 
-    <span style="color: #7590db;">buildInputs</span> = <span style="color: #2d9574;">[</span>
+    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #2d9574;">[</span>
       dhall
       dhall-json
     <span style="color: #2d9574;">]</span>;
-   <span style="color: #7590db;">shellHook</span> = <span style="color: #2d9574;">''</span>
+   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
 <span style="color: #2d9574;">             printf "\n\nWelcome to the dhall shell :)\n\n"</span>
 <span style="color: #2d9574;">      ''</span>;
-  <span style="color: #bc6ec5;">}</span>;
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #6c3163;">}</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -615,9 +616,9 @@ versions of R
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">! /usr/bin/</span><span style="color: #4f97d7; font-weight: bold;">env</span><span style="color: #2aa1ae; background-color: #292e34;"> nix-shell</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">! nix-shell --pure -i R -p R</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/14cf906f33c39d38741062df2cca0b0575b210ff.tar.gz</span>
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! /usr/bin/</span><span style="color: #3a81c3;">env</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> nix-shell</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! nix-shell --pure -i R -p R</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/14cf906f33c39d38741062df2cca0b0575b210ff.tar.gz</span>
 </pre>
 </div>
 
@@ -645,21 +646,21 @@ the specified <code>nix-shell</code>.</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #7590db;">nix</span>:
-  <span style="color: #7590db;">enable</span>: <span style="color: #a45bad;">true</span>
-  <span style="color: #7590db;">shell-file</span>: shell.nix
+<pre class="src src-yaml"><span style="color: #715ab1;">nix</span>:
+  <span style="color: #715ab1;">enable</span>: <span style="color: #4e3163;">true</span>
+  <span style="color: #715ab1;">shell-file</span>: shell.nix
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span style="color: #4f97d7;">{</span>ghc<span style="color: #4f97d7;">}</span>:
-<span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">import</span> <span style="color: #a45bad;">&lt;nixpkgs&gt;</span> <span style="color: #bc6ec5;">{}</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-nix"><span style="color: #3a81c3;">{</span>ghc<span style="color: #3a81c3;">}</span>:
+<span style="color: #3a81c3;">with</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">import</span> <span style="color: #4e3163;">&lt;nixpkgs&gt;</span> <span style="color: #6c3163;">{}</span><span style="color: #3a81c3;">)</span>;
 
-haskell.lib.buildStackProject <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">inherit</span> ghc;
-  <span style="color: #7590db;">name</span> = <span style="color: #2d9574;">"myEnv"</span>;
-  <span style="color: #7590db;">buildInputs</span> = <span style="color: #bc6ec5;">[</span> glpk pcre <span style="color: #bc6ec5;">]</span>;
-<span style="color: #4f97d7;">}</span>
+haskell.lib.buildStackProject <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3;">inherit</span> ghc;
+  <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"myEnv"</span>;
+  <span style="color: #715ab1;">buildInputs</span> = <span style="color: #6c3163;">[</span> glpk pcre <span style="color: #6c3163;">]</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
@@ -667,7 +668,7 @@ haskell.lib.buildStackProject <span style="color: #4f97d7;">{</span>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2021-11-30 Tue 10:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

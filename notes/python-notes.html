@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-10 Wed 10:12 -->
+<!-- 2021-11-30 Tue 10:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -238,6 +238,7 @@
 <li><a href="#org5096375">Random notes</a></li>
 </ul>
 </li>
+<li><a href="#orgd4db647">Statsmodels</a></li>
 <li><a href="#org08aee2c">NetworkX</a>
 <ul>
 <li><a href="#org94f539f">Mutating a network</a></li>
@@ -265,7 +266,7 @@
 <h4 id="org55374b4">Assertions</h4>
 <div class="outline-text-4" id="text-org55374b4">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #3a81c3; font-weight: bold;">assert</span> <span style="color: #4e3163;">1</span> == <span style="color: #4e3163;">1</span>
+<pre class="src src-python"><span style="color: #3a81c3;">assert</span> <span style="color: #4e3163;">1</span> == <span style="color: #4e3163;">1</span>
 </pre>
 </div>
 </div>
@@ -285,7 +286,7 @@
 <h4 id="org4f5997c">List comprehension</h4>
 <div class="outline-text-4" id="text-org4f5997c">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #3a81c3;">[</span>f<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> <span style="color: #3a81c3; font-weight: bold;">for</span> x<span style="color: #3a81c3; font-weight: bold;"> in</span> xs if p<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>
+<pre class="src src-sh"><span style="color: #3a81c3;">[</span>f<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> <span style="color: #3a81c3;">for</span> x<span style="color: #3a81c3;"> in</span> xs if p<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>
 </pre>
 </div>
 </div>
@@ -369,7 +370,7 @@ jupyter lab server.
 <span style="color: #2aa1ae; background-color: #ecf3ec;">#</span>
 <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">$ nix-shell --command "jupyter lab"</span>
 
-<span style="color: #3a81c3; font-weight: bold;">let</span>
+<span style="color: #3a81c3;">let</span>
   <span style="color: #715ab1;">jupyter</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span>builtins.fetchGit <span style="color: #6c3163;">{</span>
     <span style="color: #715ab1;">url</span> = <span style="color: #4e3163;">https://github.com/tweag/jupyterWith</span>;
     <span style="color: #715ab1;">rev</span> = <span style="color: #2d9574;">"10d64ee254050de69d0dc51c9c39fdadf1398c38"</span>;
@@ -377,7 +378,7 @@ jupyter lab server.
 
   <span style="color: #715ab1;">ipython</span> = jupyter.kernels.iPythonWith <span style="color: #3a81c3;">{</span>
     <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"python"</span>;
-    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3; font-weight: bold;">with</span> p; <span style="color: #6c3163;">[</span> numpy
+    <span style="color: #715ab1;">packages</span> = p: <span style="color: #3a81c3;">with</span> p; <span style="color: #6c3163;">[</span> numpy
                             altair
                             scipy
                             pandas
@@ -387,7 +388,7 @@ jupyter lab server.
   <span style="color: #715ab1;">jupyterEnvironment</span> = jupyter.jupyterlabWith <span style="color: #3a81c3;">{</span>
     <span style="color: #715ab1;">kernels</span> = <span style="color: #6c3163;">[</span> ipython <span style="color: #6c3163;">]</span>;
   <span style="color: #3a81c3;">}</span>;
-<span style="color: #3a81c3; font-weight: bold;">in</span>
+<span style="color: #3a81c3;">in</span>
   jupyterEnvironment.env
 </pre>
 </div>
@@ -486,7 +487,8 @@ For notes on installation of packages see the notes above about <a href="#org623
 <h3 id="org5cb0504">Pandas</h3>
 <div class="outline-text-3" id="text-org5cb0504">
 <p>
-There is a <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">comparison with R</a> in the quickstart guide.
+Pandas is an attempt to bring R-style data frames to python. There is a
+<a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">comparison with R</a> in the quickstart guide.
 </p>
 
 <ul class="org-ul">
@@ -602,7 +604,7 @@ of the first cell pretty much.
 <div class="org-src-container">
 <pre class="src src-python">%matplotlib inline
 
-<span style="color: #3a81c3; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #3a81c3; font-weight: bold;">as</span> plt
+<span style="color: #3a81c3;">import</span> matplotlib.pyplot <span style="color: #3a81c3;">as</span> plt
 </pre>
 </div>
 
@@ -629,6 +631,39 @@ methods, eg <code>bar</code> and <code>text</code> to draw other things.</li>
 <li>You show the figure with <code>plt.show()</code>, or you can save it with the
 <code>plt.savefig()</code> method.</li>
 </ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd4db647" class="outline-3">
+<h3 id="orgd4db647">Statsmodels</h3>
+<div class="outline-text-3" id="text-orgd4db647">
+<p>
+Where the <a href="#org5cb0504">Pandas</a> package provides R-style data frames in python, the Statsmodels
+attempts to provide all of the statistics functionality of R (primarily
+regression functions). The standard import statements for using Statsmodels are
+shown below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #3a81c3;">import</span> pandas <span style="color: #3a81c3;">as</span> pd
+<span style="color: #3a81c3;">import</span> statsmodels.api <span style="color: #3a81c3;">as</span> sm
+<span style="color: #3a81c3;">import</span> statsmodels.formula.api <span style="color: #3a81c3;">as</span> smf
+</pre>
+</div>
+
+<p>
+There is a <a href="https://www.statsmodels.org/devel/datasets/index.html">module</a> which provides all of the familiar datasets from R. Note that
+in this example <code>"Duncan"</code> is the name of the data set which is provided by the
+<code>"carData"</code> package. There is a full list available through the module
+documentation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #715ab1;">duncan_prestige</span> = sm.datasets.get_rdataset<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Duncan"</span>, <span style="color: #2d9574;">"carData"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">print</span><span style="color: #3a81c3;">(</span>duncan_prestige.<span style="color: #3a81c3;">__doc__</span><span style="color: #3a81c3;">)</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">for meta-data</span>
+duncan_prestige.data <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">pandas dataframe</span>
+</pre>
 </div>
 </div>
 </div>
@@ -704,7 +739,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-10 Wed 10:12</p>
+<p class="date">Created: 2021-11-30 Tue 10:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-17 Wed 12:46 -->
+<!-- 2021-11-30 Tue 10:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-beast2</title>
@@ -231,12 +231,17 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org3f61c1b">Links</a></li>
-<li><a href="#org40ad059">Tools</a></li>
+<li><a href="#org40ad059">Tools</a>
+<ul>
+<li><a href="#orga79c9df">Pretty printing Tracer output</a></li>
+</ul>
+</li>
 <li><a href="#org791a8df">Examples</a>
 <ul>
 <li><a href="#org0cae390">BEAST2 as an MCMC engine: part I</a></li>
 <li><a href="#org71098bf">BEAST2 as an MCMC engine: part II</a></li>
-<li><a href="#orga649ac8">Birth-death simulation example</a></li>
+<li><a href="#org2764221">Birth-death simulation: Example I</a></li>
+<li><a href="#org3af6932">Birth-death simulation: Example II</a></li>
 </ul>
 </li>
 </ul>
@@ -267,7 +272,81 @@ available in the <code>beast.jar</code>. In the case of <code>beauti</code> it w
 just click on the jar file and it should run the program correctly.</li>
 </ul>
 </div>
+
+<div id="outline-container-orga79c9df" class="outline-3">
+<h3 id="orga79c9df">Pretty printing Tracer output</h3>
+<div class="outline-text-3" id="text-orga79c9df">
+<p>
+The following little script can be used to translate a summary produced by
+Tracer into something that is easier to use in documents.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">!/usr/bin/env Rscript</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">-*- mode:ess-mode; -*-</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> tracer-table</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> ============</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Tool to convert tracer summary to an org-mode/markdown style table.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Usage</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> -----</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> ./tracer-table --input &lt;demo.txt&gt; --output demo.org</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+
+suppressPackageStartupMessages<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">library</span><span style="color: #6c3163;">(</span>argparse<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+parser <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ArgumentParser<span style="color: #3a81c3;">()</span>
+
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-v"</span>,
+         <span style="color: #2d9574;">"--verbose"</span>,
+         action = <span style="color: #2d9574;">"store_true"</span>,
+         default = <span style="color: #4e3163;">FALSE</span>,
+         help = <span style="color: #2d9574;">"Verbose output"</span>
+       <span style="color: #3a81c3;">)</span>
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-i"</span>,
+         <span style="color: #2d9574;">"--input"</span>,
+         type = <span style="color: #2d9574;">"character"</span>,
+         help = <span style="color: #2d9574;">"Input file"</span>
+       <span style="color: #3a81c3;">)</span>
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-o"</span>,
+         <span style="color: #2d9574;">"--output"</span>,
+         type = <span style="color: #2d9574;">"character"</span>,
+         help = <span style="color: #2d9574;">"Output file"</span>
+       <span style="color: #3a81c3;">)</span>
+
+args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> parser$parse_args<span style="color: #3a81c3;">()</span>
+
+
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>args<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  foo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> readLines<span style="color: #6c3163;">(</span>args$input<span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"\t"</span>, replacement = <span style="color: #2d9574;">" | "</span><span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"^"</span>, replacement = <span style="color: #2d9574;">"| "</span><span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"$"</span>, replacement = <span style="color: #2d9574;">" |"</span><span style="color: #6c3163;">)</span>
+  tbl_header <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> head<span style="color: #6c3163;">(</span>foo, <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  tbl_hline <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tbl_header |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"[_\ a-zA-Z]"</span>, replacement = <span style="color: #2d9574;">"-"</span><span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"-\\|-"</span>, replacement = <span style="color: #2d9574;">"-+-"</span><span style="color: #6c3163;">)</span>
+  tbl_body <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tail<span style="color: #6c3163;">(</span>foo, -<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  bar <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #6c3163;">(</span>tbl_header, tbl_hline, tbl_body<span style="color: #6c3163;">)</span>
+  writeLines<span style="color: #6c3163;">(</span>text = bar, con = args$output<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">if</span> <span style="color: #3a81c3;">(</span>!interactive<span style="color: #6c3163;">()</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> parser$parse_args<span style="color: #6c3163;">()</span>
+  main<span style="color: #6c3163;">(</span>args<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
 </div>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-org791a8df" class="outline-2">
 <h2 id="org791a8df">Examples</h2>
@@ -275,7 +354,8 @@ just click on the jar file and it should run the program correctly.</li>
 <ul class="org-ul">
 <li><a href="#org0cae390">BEAST2 as an MCMC engine: part I</a></li>
 <li><a href="#org71098bf">BEAST2 as an MCMC engine: part II</a></li>
-<li><a href="#orga649ac8">Birth-death simulation example</a></li>
+<li><a href="#org2764221">Birth-death simulation: Example I</a></li>
+<li><a href="#org3af6932">Birth-death simulation: Example II</a></li>
 </ul>
 </div>
 
@@ -288,7 +368,7 @@ distribution using MCMC. The XML for this has the following structure
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?<span style="color: #3a81c3; font-weight: bold;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
 &lt;<span style="color: #6c3163; font-weight: bold;">beast</span> <span style="color: #715ab1;">version</span>=<span style="color: #2d9574;">"2.0"</span>&gt;
 
   &lt;&lt;<span style="color: #6c3163; font-weight: bold;">targetDistribution</span>&gt;&gt;
@@ -363,9 +443,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-orge50d381" class="outline-4">
-<h4 id="orge50d381">Running the sampler</h4>
-<div class="outline-text-4" id="text-orge50d381">
+<div id="outline-container-org0e45955" class="outline-4">
+<h4 id="org0e45955">Running the sampler</h4>
+<div class="outline-text-4" id="text-org0e45955">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -382,16 +462,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-orgc3e6b43" class="outline-4">
-<h4 id="orgc3e6b43">Visualising the results</h4>
-<div class="outline-text-4" id="text-orgc3e6b43">
+<div id="outline-container-org638b1d5" class="outline-4">
+<h4 id="org638b1d5">Visualising the results</h4>
+<div class="outline-text-4" id="text-org638b1d5">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org4359d46" class="figure">
+<div id="orgbe3f687" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -450,7 +530,7 @@ heads and tails from the command line.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?<span style="color: #3a81c3; font-weight: bold;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
 &lt;<span style="color: #6c3163; font-weight: bold;">beast</span> <span style="color: #715ab1;">version</span>=<span style="color: #2d9574;">"2.0"</span>&gt;
 
     &lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"posterior"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.core.util.CompoundDistribution"</span> &gt;
@@ -489,9 +569,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-org8b6a405" class="outline-4">
-<h4 id="org8b6a405">Running the sampler</h4>
-<div class="outline-text-4" id="text-org8b6a405">
+<div id="outline-container-orgff1622e" class="outline-4">
+<h4 id="orgff1622e">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgff1622e">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -508,16 +588,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-org1752620" class="outline-4">
-<h4 id="org1752620">Visualising the results</h4>
-<div class="outline-text-4" id="text-org1752620">
+<div id="outline-container-org926e6bd" class="outline-4">
+<h4 id="org926e6bd">Visualising the results</h4>
+<div class="outline-text-4" id="text-org926e6bd">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="orgbe287a4" class="figure">
+<div id="org9b3dd46" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -566,9 +646,9 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"beast
 </div>
 </div>
 
-<div id="outline-container-orga649ac8" class="outline-3">
-<h3 id="orga649ac8">Birth-death simulation example</h3>
-<div class="outline-text-3" id="text-orga649ac8">
+<div id="outline-container-org2764221" class="outline-3">
+<h3 id="org2764221">Birth-death simulation: Example I</h3>
+<div class="outline-text-3" id="text-org2764221">
 <p>
 In this example we will simulate sequences on a realisation of the birth-death
 process and then attempt to estimate the birth rate from these sequences. We
@@ -672,7 +752,7 @@ We can combine all of this into a function
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">rand_reconstructed_tree</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #3a81c3;">(</span>birth_rate,
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">rand_reconstructed_tree</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>birth_rate,
                                     death_rate,
                                     sampling_rate,
                                     duration<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
@@ -697,7 +777,7 @@ We can combine all of this into a function
                          size = num_sampled<span style="color: #6c3163;">)</span>
   reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> keep.tip<span style="color: #6c3163;">(</span>phy = sim_tree,
                                  tip = sampled_tips<span style="color: #6c3163;">)</span>
-  <span style="color: #3a81c3; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>reconstructed_tree<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>reconstructed_tree<span style="color: #6c3163;">)</span>
 <span style="color: #3a81c3;">}</span>
 </pre>
 </div>
@@ -709,7 +789,7 @@ Then we repeat the simulation until we get a sensible output to continue with.
 <div class="org-src-container">
 <pre class="src src-R">iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
 num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
-<span style="color: #3a81c3; font-weight: bold;">while</span> <span style="color: #3a81c3;">(</span>iter_count &lt; <span style="color: #4e3163;">100</span> &amp;&amp; num_seqs &lt; <span style="color: #4e3163;">20</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+<span style="color: #3a81c3;">while</span> <span style="color: #3a81c3;">(</span>iter_count &lt; <span style="color: #4e3163;">100</span> &amp;&amp; num_seqs &lt; <span style="color: #4e3163;">20</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
   reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rand_reconstructed_tree<span style="color: #6c3163;">(</span>birth_rate,
                                                 death_rate,
                                                 sampling_rate,
@@ -794,9 +874,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-org63bca52" class="outline-4">
-<h4 id="org63bca52">Running the sampler</h4>
-<div class="outline-text-4" id="text-org63bca52">
+<div id="outline-container-orgea2b6e0" class="outline-4">
+<h4 id="orgea2b6e0">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgea2b6e0">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -820,7 +900,7 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="org0580e40" class="figure">
+<div id="org022a752" class="figure">
 <p><img src="../misc/beast2/birth-death-simulation-output/prior-posterior.png" alt="prior-posterior.png" width="800px" />
 </p>
 </div>
@@ -870,7 +950,7 @@ g1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span sty
     bins = <span style="color: #4e3163;">40</span>
   <span style="color: #3a81c3;">)</span> +
   stat_function<span style="color: #3a81c3;">(</span>
-    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = <span style="color: #4e3163;">0.0</span>, sdlog = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = <span style="color: #4e3163;">0.0</span>, sdlog = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
     geom = <span style="color: #2d9574;">"line"</span>
   <span style="color: #3a81c3;">)</span> +
   geom_vline<span style="color: #3a81c3;">(</span>
@@ -891,7 +971,7 @@ g2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span sty
     <span style="color: #6c3163;">)</span>
   <span style="color: #3a81c3;">)</span> +
   stat_function<span style="color: #3a81c3;">(</span>
-    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dnorm<span style="color: #6c3163;">(</span>x, mean = <span style="color: #4e3163;">52</span>, sd = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dnorm<span style="color: #6c3163;">(</span>x, mean = <span style="color: #4e3163;">52</span>, sd = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
     geom = <span style="color: #2d9574;">"line"</span>
   <span style="color: #3a81c3;">)</span> +
   geom_vline<span style="color: #3a81c3;">(</span>
@@ -910,7 +990,7 @@ g3 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span sty
     bins = <span style="color: #4e3163;">20</span>
   <span style="color: #3a81c3;">)</span> +
   stat_function<span style="color: #3a81c3;">(</span>
-    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dbeta<span style="color: #6c3163;">(</span>x, shape1 = <span style="color: #4e3163;">2.0</span>, shape2 = <span style="color: #4e3163;">97.0</span><span style="color: #6c3163;">)</span>,
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dbeta<span style="color: #6c3163;">(</span>x, shape1 = <span style="color: #4e3163;">2.0</span>, shape2 = <span style="color: #4e3163;">97.0</span><span style="color: #6c3163;">)</span>,
     geom = <span style="color: #2d9574;">"line"</span>
   <span style="color: #3a81c3;">)</span> +
   geom_vline<span style="color: #3a81c3;">(</span>
@@ -929,7 +1009,7 @@ g4 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span sty
     bins = <span style="color: #4e3163;">20</span>
   <span style="color: #3a81c3;">)</span> +
   stat_function<span style="color: #3a81c3;">(</span>
-    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = log<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0.1</span><span style="color: #2d9574;">)</span>, sdlog = <span style="color: #4e3163;">1.25</span><span style="color: #6c3163;">)</span>,
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = log<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0.1</span><span style="color: #2d9574;">)</span>, sdlog = <span style="color: #4e3163;">1.25</span><span style="color: #6c3163;">)</span>,
     geom = <span style="color: #2d9574;">"line"</span>
   <span style="color: #3a81c3;">)</span> +
   geom_vline<span style="color: #3a81c3;">(</span>
@@ -948,7 +1028,7 @@ g5 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span sty
     bins = <span style="color: #4e3163;">40</span>
   <span style="color: #3a81c3;">)</span> +
   stat_function<span style="color: #3a81c3;">(</span>
-    fun = <span style="color: #3a81c3; font-weight: bold;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dgamma<span style="color: #6c3163;">(</span>x, <span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">1e4</span><span style="color: #6c3163;">)</span>,
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dgamma<span style="color: #6c3163;">(</span>x, <span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">1e4</span><span style="color: #6c3163;">)</span>,
     geom = <span style="color: #2d9574;">"line"</span>
   <span style="color: #3a81c3;">)</span> +
   geom_vline<span style="color: #3a81c3;">(</span>
@@ -977,11 +1057,15 @@ ggsave<span style="color: #3a81c3;">(</span>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org3af6932" class="outline-3">
+<h3 id="org3af6932">Birth-death simulation: Example II</h3>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-17 Wed 12:46</p>
+<p class="date">Created: 2021-11-30 Tue 10:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
