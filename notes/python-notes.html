@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-30 Tue 10:46 -->
+<!-- 2021-12-07 Tue 17:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-notes</title>
+<title>aez-python-notes</title>
 <meta name="author" content="Alex Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -197,7 +197,7 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">aez-notes</h1>
+<h1 class="title">aez-python-notes</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
@@ -226,8 +226,9 @@
 <ul>
 <li><a href="#org5cb0504">Pandas</a>
 <ul>
-<li><a href="#org15fcca6">Exploratory data analysis</a></li>
 <li><a href="#org67bfa9f">IO</a></li>
+<li><a href="#org7601fc7">Munging</a></li>
+<li><a href="#org15fcca6">Exploratory data analysis</a></li>
 <li><a href="#org5e02532">Cross tabulation</a></li>
 <li><a href="#org54faa7b">Filtering by column values</a></li>
 </ul>
@@ -253,6 +254,46 @@
 <p>
 <a href="../index.html">Home</a>
 </p>
+
+<button type="button" onclick="toggleStyle()">Light/Dark</button>
+<script src="./main.js"></script>
+
+
+<div id="org54707ce" class="figure">
+<p><img src="../images/python-logo.png" alt="python-logo.png" width="300px" />
+</p>
+</div>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org9ad086f">Python notes</a>
+<ul>
+<li><a href="#org8b832ce">Syntax</a></li>
+<li><a href="#org403d96f">Virtual environment</a></li>
+<li><a href="#org623aaaf">Pip</a></li>
+<li><a href="#org23b2189">PIP VANISHED!!!</a></li>
+<li><a href="#org533ffcc">Colab</a></li>
+<li><a href="#org0b83012">Jupyter via Nix</a></li>
+<li><a href="#org9266c19">Spacemacs layer</a></li>
+<li><a href="#org07ee4c3">Help</a></li>
+<li><a href="#org55fbc56"><span class="todo TODO">TODO</span> Debugging</a></li>
+<li><a href="#orgf4082fd"><span class="todo TODO">TODO</span> Functional programming</a></li>
+</ul>
+</li>
+<li><a href="#orga18e903">Python packages</a>
+<ul>
+<li><a href="#org5cb0504">Pandas</a></li>
+<li><a href="#org73d805c">Matplotlib</a></li>
+<li><a href="#orgd4db647">Statsmodels</a></li>
+<li><a href="#org08aee2c">NetworkX</a></li>
+</ul>
+</li>
+<li><a href="#org40955ab">Hy</a></li>
+</ul>
+</div>
+</div>
 
 <div id="outline-container-org9ad086f" class="outline-2">
 <h2 id="org9ad086f">Python notes</h2>
@@ -514,6 +555,31 @@ There is the <code>copy</code> method to help you a lot of the time.</li>
 </ul>
 </div>
 
+<div id="outline-container-org67bfa9f" class="outline-4">
+<h4 id="org67bfa9f">IO</h4>
+<div class="outline-text-4" id="text-org67bfa9f">
+<ul class="org-ul">
+<li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
+method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7601fc7" class="outline-4">
+<h4 id="org7601fc7">Munging</h4>
+<div class="outline-text-4" id="text-org7601fc7">
+<p>
+The pandas data frame has a <code>rename</code> method to rename the columns:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">my_df.rename<span style="color: #3a81c3;">(</span>columns=<span style="color: #6c3163;">{</span><span style="color: #2d9574;">"old_name_1"</span>: <span style="color: #2d9574;">"new_name_1"</span>,
+                      <span style="color: #2d9574;">"old_name_2"</span>: <span style="color: #2d9574;">"new_name_2"</span><span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org15fcca6" class="outline-4">
 <h4 id="org15fcca6">Exploratory data analysis</h4>
 <div class="outline-text-4" id="text-org15fcca6">
@@ -523,16 +589,6 @@ acceptable replacement for the <code>str</code> and <code>summary</code> functio
 <li>The <code>columns</code> method returns an array of the column names.</li>
 <li>There is a <code>quantile</code> method on Series which takes an iterable of
 probabilities to evaluate the quantiles at.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org67bfa9f" class="outline-4">
-<h4 id="org67bfa9f">IO</h4>
-<div class="outline-text-4" id="text-org67bfa9f">
-<ul class="org-ul">
-<li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
-method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
 </ul>
 </div>
 </div>
@@ -739,7 +795,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-30 Tue 10:46</p>
+<p class="date">Created: 2021-12-07 Tue 17:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
