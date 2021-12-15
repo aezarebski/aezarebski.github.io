@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-30 Tue 10:47 -->
+<!-- 2021-12-10 Fri 14:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -220,7 +220,7 @@
 <div id="content" class="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="org2486d82" class="figure">
+<div id="orgdaf4eb6" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" />
 </p>
 </div>
@@ -1503,62 +1503,37 @@ commit message to use.
 </div>
 
 <p>
-Apparently, this is <a href="https://xkcd.com/1205/">worth the time&#x2026;</a> After staging the
-necessary files use <code>SPC o c j</code> for <i>journal</i>.
+Apparently, this is <a href="https://xkcd.com/1205/">worth the time&#x2026;</a> so let's write a macro to make these
+easier to define.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">defun</span> <span style="color: #6c3163; font-weight: bold;">journal-commit-function</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #da8b55;">"Create a commit and insert a string describing a generic</span>
-<span style="color: #da8b55;">commit to my journal file. This should be fun from the magit</span>
-<span style="color: #da8b55;">buffer"</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">let*</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>date-string <span style="color: #b1951d;">(</span>downcase <span style="color: #3a81c3;">(</span>format-time-string <span style="color: #2d9574;">"%A %l:%M %p"</span><span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>edit-string <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"-mupdate tasklist %s"</span>  date-string<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>magit-commit-create `<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"--edit"</span>, edit-string<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocj"</span> 'journal-commit-function<span style="color: #3a81c3;">)</span>
-</pre>
-</div>
-</div>
-
-<ul class="org-ul">
-<li><a id="org0f8529a"></a><span class="todo TODO">TODO</span> This should really finish the commit and push it as well!<br /></li>
-
-<li><a id="org3951f78"></a><span class="todo TODO">TODO</span> There is a lot of duplicated code here! This should be refactored.<br />
-<div class="outline-text-5" id="text-org3951f78">
-<p>
-And when updating my <i>web</i> page use <code>SPC o c w</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">defun</span> <span style="color: #6c3163; font-weight: bold;">website-commit-function</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">let*</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>date-string <span style="color: #b1951d;">(</span>downcase <span style="color: #3a81c3;">(</span>format-time-string <span style="color: #2d9574;">"%A %l:%M %p"</span><span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>edit-string <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"-mupdate website %s"</span>  date-string<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>magit-commit-create `<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"--edit"</span>, edit-string<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocw"</span> 'website-commit-function<span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">defmacro</span> <span style="color: #6c3163; font-weight: bold;">nicemacs-commits</span> <span style="color: #6c3163;">(</span>fname cmessage<span style="color: #6c3163;">)</span>
+  <span style="color: #6c3163;">(</span>list 'defun <span style="color: #2d9574;">(</span>intern <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"ncf-%s"</span> fname<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">()</span>
+        <span style="color: #2d9574;">(</span>list 'interactive<span style="color: #2d9574;">)</span>
+        <span style="color: #2d9574;">(</span>list 'magit-commit-create `<span style="color: #67b11d;">(</span>list <span style="color: #2d9574;">"--edit"</span> ,<span style="color: #b1951d;">(</span>list 'format <span style="color: #2d9574;">"-m %s %s"</span> cmessage <span style="color: #3a81c3;">(</span>list 'downcase <span style="color: #6c3163;">(</span>list 'format-time-string <span style="color: #2d9574;">"%A %l:%M %p"</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
 <p>
-And when we are updating the reading list it is always the same&#x2026;
+And some useful examples should be bound to shortcuts.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">defun</span> <span style="color: #6c3163; font-weight: bold;">review-commit-function</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">let*</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>date-string <span style="color: #b1951d;">(</span>downcase <span style="color: #3a81c3;">(</span>format-time-string <span style="color: #2d9574;">"%A %l:%M %p"</span><span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>edit-string <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"-mupdate reading list %s"</span>  date-string<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>magit-commit-create `<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"--edit"</span>, edit-string<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-commits</span> network <span style="color: #2d9574;">"update citation network"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocn"</span> 'ncf-network<span style="color: #3a81c3;">)</span>
 
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocr"</span> 'review-commit-function<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-commits</span> review <span style="color: #2d9574;">"update reading list"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocr"</span> 'ncf-review<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-commits</span> website <span style="color: #2d9574;">"update website"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocw"</span> 'ncf-website<span style="color: #3a81c3;">)</span>
+
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-commits</span> journal <span style="color: #2d9574;">"update journal"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ocj"</span> 'ncf-journal<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
-</li>
-</ul>
 </div>
 
 <div id="outline-container-org892d2a9" class="outline-3">
@@ -1722,17 +1697,20 @@ keybindings.
 <h4 id="org38d5bc8">Misc</h4>
 <div class="outline-text-4" id="text-org38d5bc8">
 <p>
-Sometimes it is useful to get the directory of the file shown in a buffer. This
-is bound to <code>SPC o f d</code> for owner-files-directory.
+Sometimes it is useful to get the fullpath of the file shown in a buffer. This
+is bound to <code>SPC o f d</code> for owner-files-directory. This also writes the path to
+the kill ring because often when you need this information it is because you are
+about to include it in a buffer.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">defun</span> <span style="color: #6c3163; font-weight: bold;">message-working-directory</span> <span style="color: #6c3163;">()</span>
-  <span style="color: #da8b55;">"Print the directory of the current buffer."</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">defun</span> <span style="color: #6c3163; font-weight: bold;">message-buffer-file-name</span> <span style="color: #6c3163;">()</span>
+  <span style="color: #da8b55;">"Print the full path of the current buffer and store this on the kill ring."</span>
   <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">interactive</span><span style="color: #6c3163;">)</span>
-  <span style="color: #6c3163;">(</span>message default-directory<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+  <span style="color: #6c3163;">(</span>kill-new buffer-file-name<span style="color: #6c3163;">)</span>
+  <span style="color: #6c3163;">(</span>message buffer-file-name<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ofd"</span> 'message-working-directory<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ofd"</span> 'message-buffer-file-name<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -2167,7 +2145,7 @@ to a list in emacs-lisp.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-30 Tue 10:47</p>
+<p class="date">Created: 2021-12-10 Fri 14:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
