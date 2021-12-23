@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2021-12-23 Thu 15:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -226,7 +226,7 @@
 <li><a href="#org23071e1">Program flow</a></li>
 <li><a href="#org98bebfe">Lists</a></li>
 <li><a href="#orgcac44c1">Evaluation</a></li>
-<li><a href="#orgc9ee871">Simplification</a></li>
+<li><a href="#orgcd7b386">Simplification</a></li>
 <li><a href="#orga543892">Packages</a></li>
 <li><a href="#orgc76af9c">REPL</a></li>
 <li><a href="#orgacc94ce">Batchmode</a></li>
@@ -244,7 +244,7 @@
 <ul>
 <li><a href="#orgb440823">Change of coordinates</a></li>
 <li><a href="#org7f10e58">Differential equations: simple</a></li>
-<li><a href="#orgcd7b386">Simplification</a></li>
+<li><a href="#org84d4113">Simplification</a></li>
 </ul>
 </li>
 </ul>
@@ -252,7 +252,7 @@
 </div>
 
 
-<div id="org6a6cfd3" class="figure">
+<div id="org27afa6b" class="figure">
 <p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
 </p>
 </div>
@@ -269,13 +269,13 @@ Add the following to your configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima mode"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #9f8766;">"Frontend for maxima with Image support"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima interaction"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #9f8766;">"Imath mode for math formula input"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>add-to-list 'auto-mode-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima mode"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #da8b55;">"Frontend for maxima with Image support"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima interaction"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #da8b55;">"Imath mode for math formula input"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>add-to-list 'auto-mode-alist '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -334,12 +334,12 @@ Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plo
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">plot2d<span style="color: #4f97d7;">(</span>sin<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, <span style="color: #bc6ec5;">[</span>x,<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">2%pi</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>$ 
+<pre class="src src-maxima">plot2d<span style="color: #3a81c3;">(</span>sin<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span>, <span style="color: #6c3163;">[</span>x,<span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">2%pi</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>$
 </pre>
 </div>
 
 
-<div id="org9b74a6e" class="figure">
+<div id="org397fb0c" class="figure">
 <p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
 </p>
 </div>
@@ -349,12 +349,12 @@ There is an example of how to save a figure in <a href="./../misc/fifty-problems
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">plot2d<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>discrete, <span style="color: #2d9574;">[</span><span style="color: #a45bad;">1</span>,<span style="color: #a45bad;">2</span>,<span style="color: #a45bad;">3</span>,<span style="color: #a45bad;">4</span><span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span><span style="color: #a45bad;">2</span>,-3,<span style="color: #a45bad;">4</span>,-5<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span>, <span style="color: #bc6ec5;">[</span>style, points<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>$
+<pre class="src src-maxima">plot2d<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">[</span>discrete, <span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">2</span>,<span style="color: #4e3163;">3</span>,<span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span><span style="color: #4e3163;">2</span>,-3,<span style="color: #4e3163;">4</span>,-5<span style="color: #2d9574;">]</span><span style="color: #6c3163;">]</span>, <span style="color: #6c3163;">[</span>style, points<span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>$
 </pre>
 </div>
 
 
-<div id="org84176c4" class="figure">
+<div id="orga0506fe" class="figure">
 <p><img src="../images/maxima-points-plot.png" alt="maxima-points-plot.png" />
 </p>
 </div>
@@ -407,8 +407,8 @@ function.
 <h3 id="org3690ef5">Removing existing definitions</h3>
 <div class="outline-text-3" id="text-org3690ef5">
 <div class="org-src-container">
-<pre class="src src-maxima">restart<span style="color: #4f97d7;">()</span>;
-kill<span style="color: #4f97d7;">(</span>all<span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">restart<span style="color: #3a81c3;">()</span>;
+kill<span style="color: #3a81c3;">(</span>all<span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 </div>
@@ -418,8 +418,8 @@ kill<span style="color: #4f97d7;">(</span>all<span style="color: #4f97d7;">)</sp
 <h3 id="org2e7bc81">Assignment</h3>
 <div class="outline-text-3" id="text-org2e7bc81">
 <div class="org-src-container">
-<pre class="src src-maxima">y : <span style="color: #a45bad;">10</span>;
-f<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> := x + <span style="color: #a45bad;">1</span>;  
+<pre class="src src-maxima">y : <span style="color: #4e3163;">10</span>;
+f<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> := x + <span style="color: #4e3163;">1</span>;
 </pre>
 </div>
 </div>
@@ -429,7 +429,7 @@ f<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> :
 <h3 id="org23071e1">Program flow</h3>
 <div class="outline-text-3" id="text-org23071e1">
 <div class="org-src-container">
-<pre class="src src-maxima">if cond_1 then expr_1 elseif cond_2 then expr_2 else expr_3; 
+<pre class="src src-maxima">if cond_1 then expr_1 elseif cond_2 then expr_2 else expr_3;
 </pre>
 </div>
 
@@ -444,7 +444,7 @@ for variable: initial_value step increment while condition do body
 
 for variable: initial_value step increment unless condition do body
 
-for variable in list do body  
+for variable in list do body
 </pre>
 </div>
 </div>
@@ -460,52 +460,63 @@ for variable in list do body
 <col  class="org-left" />
 
 <col  class="org-left" />
+
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
 <th scope="col" class="org-left">Function</th>
 <th scope="col" class="org-left">Use</th>
+<th scope="col" class="org-left">Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left"><code>makelist</code></td>
 <td class="org-left">Map and sequence style list creation</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>some</code> and <code>every</code></td>
 <td class="org-left">Fold predicate over list</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>cons</code></td>
 <td class="org-left">cons</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>first</code></td>
 <td class="org-left">First element of a list</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>rest</code></td>
 <td class="org-left">Works as head or tail</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>append</code></td>
 <td class="org-left">Concatenation (not <code>join</code>)</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left"><code>map</code></td>
 <td class="org-left">Map function over list; also see <code>makelist</code></td>
+<td class="org-left"><code>map(lambda([x], x+1), [1,2,3]);</code></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>apply</code></td>
 <td class="org-left">Uncurried application</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
@@ -521,27 +532,27 @@ function use the <code>define</code> function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">define<span style="color: #4f97d7;">(</span>fdash<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, diff<span style="color: #bc6ec5;">(</span>f<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>, x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">define<span style="color: #3a81c3;">(</span>fdash<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span>, diff<span style="color: #6c3163;">(</span>f<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>, x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc9ee871" class="outline-3">
-<h3 id="orgc9ee871">Simplification</h3>
-<div class="outline-text-3" id="text-orgc9ee871">
+<div id="outline-container-orgcd7b386" class="outline-3">
+<h3 id="orgcd7b386">Simplification</h3>
+<div class="outline-text-3" id="text-orgcd7b386">
 <div class="org-src-container">
-<pre class="src src-maxima">restart<span style="color: #4f97d7;">()</span>;
-kill<span style="color: #4f97d7;">(</span>all<span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">restart<span style="color: #3a81c3;">()</span>;
+kill<span style="color: #3a81c3;">(</span>all<span style="color: #3a81c3;">)</span>;
 
-matchdeclare<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>xx,yy,aa<span style="color: #bc6ec5;">]</span>,true<span style="color: #4f97d7;">)</span>$
-tellsimpafter<span style="color: #4f97d7;">(</span>xx^a*yy^a,<span style="color: #bc6ec5;">(</span>xx*yy<span style="color: #bc6ec5;">)</span>^a<span style="color: #4f97d7;">)</span>$
-tellsimpafter<span style="color: #4f97d7;">(</span>xx^a/yy^a,<span style="color: #bc6ec5;">(</span>xx/yy<span style="color: #bc6ec5;">)</span>^a<span style="color: #4f97d7;">)</span>$
+matchdeclare<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">[</span>xx,yy,aa<span style="color: #6c3163;">]</span>,true<span style="color: #3a81c3;">)</span>$
+tellsimpafter<span style="color: #3a81c3;">(</span>xx^a*yy^a,<span style="color: #6c3163;">(</span>xx*yy<span style="color: #6c3163;">)</span>^a<span style="color: #3a81c3;">)</span>$
+tellsimpafter<span style="color: #3a81c3;">(</span>xx^a/yy^a,<span style="color: #6c3163;">(</span>xx/yy<span style="color: #6c3163;">)</span>^a<span style="color: #3a81c3;">)</span>$
 
 x^a*y^a;
 x^a/y^a;
 x^a*y^a*z^a;
-x^a*<span style="color: #4f97d7;">(</span>y^a*z^a<span style="color: #4f97d7;">)</span>;
+x^a*<span style="color: #3a81c3;">(</span>y^a*z^a<span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
@@ -581,7 +592,7 @@ For example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"distrib"</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">load<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"distrib"</span><span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
@@ -824,8 +835,8 @@ demonstrates how to compute it with Maxima.
 <h4 id="orgae74764">Cartesian to polar</h4>
 <div class="outline-text-4" id="text-orgae74764">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">[</span>x,y<span style="color: #4f97d7;">]</span> : <span style="color: #4f97d7;">[</span>r * cos<span style="color: #bc6ec5;">(</span>p<span style="color: #bc6ec5;">)</span>, r * sin<span style="color: #bc6ec5;">(</span>p<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>;
-trigsimp<span style="color: #4f97d7;">(</span>determinant<span style="color: #bc6ec5;">(</span>jacobian<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>x,y<span style="color: #67b11d;">]</span>, <span style="color: #67b11d;">[</span>r,p<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima"><span style="color: #3a81c3;">[</span>x,y<span style="color: #3a81c3;">]</span> : <span style="color: #3a81c3;">[</span>r * cos<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span>, r * sin<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>;
+trigsimp<span style="color: #3a81c3;">(</span>determinant<span style="color: #6c3163;">(</span>jacobian<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>x,y<span style="color: #67b11d;">]</span>, <span style="color: #67b11d;">[</span>r,p<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 /*
 r
 */
@@ -838,11 +849,11 @@ r
 <h4 id="orgca62e40">Cartesian to spherical</h4>
 <div class="outline-text-4" id="text-orgca62e40">
 <div class="org-src-container">
-<pre class="src src-maxima"><span style="color: #4f97d7;">[</span>x,y,z<span style="color: #4f97d7;">]</span> : <span style="color: #4f97d7;">[</span>r * sin<span style="color: #bc6ec5;">(</span>p<span style="color: #bc6ec5;">)</span> * cos<span style="color: #bc6ec5;">(</span>t<span style="color: #bc6ec5;">)</span>, r * sin<span style="color: #bc6ec5;">(</span>p<span style="color: #bc6ec5;">)</span> * sin<span style="color: #bc6ec5;">(</span>t<span style="color: #bc6ec5;">)</span>, r * cos<span style="color: #bc6ec5;">(</span>p<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>;
-trigsimp<span style="color: #4f97d7;">(</span>determinant<span style="color: #bc6ec5;">(</span>jacobian<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>x,y,z<span style="color: #67b11d;">]</span>, <span style="color: #67b11d;">[</span>r,p,t<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima"><span style="color: #3a81c3;">[</span>x,y,z<span style="color: #3a81c3;">]</span> : <span style="color: #3a81c3;">[</span>r * sin<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span> * cos<span style="color: #6c3163;">(</span>t<span style="color: #6c3163;">)</span>, r * sin<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span> * sin<span style="color: #6c3163;">(</span>t<span style="color: #6c3163;">)</span>, r * cos<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>;
+trigsimp<span style="color: #3a81c3;">(</span>determinant<span style="color: #6c3163;">(</span>jacobian<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>x,y,z<span style="color: #67b11d;">]</span>, <span style="color: #67b11d;">[</span>r,p,t<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 /*
-            <span style="color: #a45bad;">2</span>
-    sin<span style="color: #4f97d7;">(</span>p<span style="color: #4f97d7;">)</span> r
+            <span style="color: #4e3163;">2</span>
+    sin<span style="color: #3a81c3;">(</span>p<span style="color: #3a81c3;">)</span> r
 */
 </pre>
 </div>
@@ -859,21 +870,21 @@ evaluated as we are defining the ODE here.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">eq : 'diff<span style="color: #4f97d7;">(</span>y,x<span style="color: #4f97d7;">)</span> = -y;
+<pre class="src src-maxima">eq : 'diff<span style="color: #3a81c3;">(</span>y,x<span style="color: #3a81c3;">)</span> = -y;
 
-ode2<span style="color: #4f97d7;">(</span>eq, y, x<span style="color: #4f97d7;">)</span>;
+ode2<span style="color: #3a81c3;">(</span>eq, y, x<span style="color: #3a81c3;">)</span>;
 
-sol : ic1<span style="color: #4f97d7;">(</span>%, x = <span style="color: #a45bad;">1</span>, y = <span style="color: #a45bad;">8</span><span style="color: #4f97d7;">)</span>;
+sol : ic1<span style="color: #3a81c3;">(</span>%, x = <span style="color: #4e3163;">1</span>, y = <span style="color: #4e3163;">8</span><span style="color: #3a81c3;">)</span>;
 
-plot2d<span style="color: #4f97d7;">(</span>rhs <span style="color: #bc6ec5;">(</span>sol<span style="color: #bc6ec5;">)</span>, <span style="color: #bc6ec5;">[</span>x, <span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">4</span><span style="color: #bc6ec5;">]</span>, <span style="color: #bc6ec5;">[</span>y, <span style="color: #a45bad;">0</span>, <span style="color: #a45bad;">10</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>;
+plot2d<span style="color: #3a81c3;">(</span>rhs <span style="color: #6c3163;">(</span>sol<span style="color: #6c3163;">)</span>, <span style="color: #6c3163;">[</span>x, <span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">4</span><span style="color: #6c3163;">]</span>, <span style="color: #6c3163;">[</span>y, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">10</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcd7b386" class="outline-3">
-<h3 id="orgcd7b386">Simplification</h3>
-<div class="outline-text-3" id="text-orgcd7b386">
+<div id="outline-container-org84d4113" class="outline-3">
+<h3 id="org84d4113">Simplification</h3>
+<div class="outline-text-3" id="text-org84d4113">
 <p>
 This snippet demonstrates some ways to get different expressions for the same
 quantity. Note how the numerator and denominator can be separated to have
@@ -881,18 +892,18 @@ different simplification steps applied as in the definition of <code>d</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">a : <span style="color: #4f97d7;">(</span>x* exp<span style="color: #bc6ec5;">(</span>-aa<span style="color: #bc6ec5;">)</span> + y + y * exp<span style="color: #bc6ec5;">(</span>-aa<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>/ <span style="color: #4f97d7;">(</span>y*exp<span style="color: #bc6ec5;">(</span>-aa<span style="color: #bc6ec5;">)</span> + x<span style="color: #4f97d7;">)</span>;
-b : ratsimp<span style="color: #4f97d7;">(</span>a<span style="color: #4f97d7;">)</span>;
-c : collectterms<span style="color: #4f97d7;">(</span>expand<span style="color: #bc6ec5;">(</span>num<span style="color: #2d9574;">(</span>b<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, exp<span style="color: #bc6ec5;">(</span>aa<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> / denom<span style="color: #4f97d7;">(</span>b<span style="color: #4f97d7;">)</span>;
-d : block<span style="color: #4f97d7;">(</span>
-  <span style="color: #bc6ec5;">[</span>ea: exp<span style="color: #2d9574;">(</span>-aa<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">]</span>,
-  collectterms<span style="color: #bc6ec5;">(</span>expand<span style="color: #2d9574;">(</span>ea * num<span style="color: #67b11d;">(</span>b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, ea<span style="color: #bc6ec5;">)</span> / expand<span style="color: #bc6ec5;">(</span>ea * denom<span style="color: #2d9574;">(</span>b<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7;">)</span>;
-display<span style="color: #4f97d7;">(</span>a, b, c, d<span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">a : <span style="color: #3a81c3;">(</span>x* exp<span style="color: #6c3163;">(</span>-aa<span style="color: #6c3163;">)</span> + y + y * exp<span style="color: #6c3163;">(</span>-aa<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>/ <span style="color: #3a81c3;">(</span>y*exp<span style="color: #6c3163;">(</span>-aa<span style="color: #6c3163;">)</span> + x<span style="color: #3a81c3;">)</span>;
+b : ratsimp<span style="color: #3a81c3;">(</span>a<span style="color: #3a81c3;">)</span>;
+c : collectterms<span style="color: #3a81c3;">(</span>expand<span style="color: #6c3163;">(</span>num<span style="color: #2d9574;">(</span>b<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>, exp<span style="color: #6c3163;">(</span>aa<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> / denom<span style="color: #3a81c3;">(</span>b<span style="color: #3a81c3;">)</span>;
+d : block<span style="color: #3a81c3;">(</span>
+  <span style="color: #6c3163;">[</span>ea: exp<span style="color: #2d9574;">(</span>-aa<span style="color: #2d9574;">)</span><span style="color: #6c3163;">]</span>,
+  collectterms<span style="color: #6c3163;">(</span>expand<span style="color: #2d9574;">(</span>ea * num<span style="color: #67b11d;">(</span>b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, ea<span style="color: #6c3163;">)</span> / expand<span style="color: #6c3163;">(</span>ea * denom<span style="color: #2d9574;">(</span>b<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span>;
+display<span style="color: #3a81c3;">(</span>a, b, c, d<span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
-<pre class="example" id="org98a8e55">
+<pre class="example" id="org0d440f5">
       - aa           - aa
     %e     y + y + %e     x
 a = -----------------------
@@ -920,7 +931,7 @@ a = -----------------------
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2021-12-23 Thu 15:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

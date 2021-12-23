@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-30 Tue 10:46 -->
+<!-- 2021-12-23 Thu 15:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-beast2</title>
@@ -443,9 +443,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-org0e45955" class="outline-4">
-<h4 id="org0e45955">Running the sampler</h4>
-<div class="outline-text-4" id="text-org0e45955">
+<div id="outline-container-orgea2b6e0" class="outline-4">
+<h4 id="orgea2b6e0">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgea2b6e0">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -462,16 +462,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-org638b1d5" class="outline-4">
-<h4 id="org638b1d5">Visualising the results</h4>
-<div class="outline-text-4" id="text-org638b1d5">
+<div id="outline-container-org926e6bd" class="outline-4">
+<h4 id="org926e6bd">Visualising the results</h4>
+<div class="outline-text-4" id="text-org926e6bd">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="orgbe3f687" class="figure">
+<div id="org47c51c4" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -569,9 +569,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-orgff1622e" class="outline-4">
-<h4 id="orgff1622e">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgff1622e">
+<div id="outline-container-orgd6ccc14" class="outline-4">
+<h4 id="orgd6ccc14">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgd6ccc14">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -588,16 +588,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-org926e6bd" class="outline-4">
-<h4 id="org926e6bd">Visualising the results</h4>
-<div class="outline-text-4" id="text-org926e6bd">
+<div id="outline-container-org17a4df2" class="outline-4">
+<h4 id="org17a4df2">Visualising the results</h4>
+<div class="outline-text-4" id="text-org17a4df2">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org9b3dd46" class="figure">
+<div id="org2847a88" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -656,29 +656,6 @@ will use <code>ape</code> to simulate the birth-death process and <code>phangorn
 sequences. To ensure a correct XML specification we will use <code>beauti</code> to generate
 the XML for the analysis. Finally, we will use <code>tracer</code> to check the results.
 </p>
-
-<p>
-To start with we will load the required libraries and define the files we will
-write output to.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ape<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>phangorn<span style="color: #3a81c3;">)</span>
-
-set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>
-output_dir <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"birth-death-simulation-output"</span>
-newick_file <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir,
-                         <span style="color: #2d9574;">"reconstructed-tree.newick"</span><span style="color: #3a81c3;">)</span>
-fasta_file <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir,
-                        <span style="color: #2d9574;">"sequences.fasta"</span><span style="color: #3a81c3;">)</span>
-
-</pre>
-</div>
 </div>
 
 <div id="outline-container-orgb54dba1" class="outline-4">
@@ -702,25 +679,26 @@ sim_duration <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span
 </div>
 
 <p>
-Then we use <code>rlineage</code> to simulate from the birth-death process and subsequently
-to sub-sample the extinct lineages. We store the result in a Newick file for
-subsequent use.
+The <code>rlineage</code> function returns a realisation of the birth-death process as a
+<code>phylo</code> object.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #3a81c3;">(</span>birth_rate,
+<pre class="src src-R" id="orgc0fc2de">net_removal_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> death_rate + sampling_rate
+sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #3a81c3;">(</span>birth_rate,
                      net_removal_rate,
                      Tmax = sim_duration<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
 <p>
-We include the tip dates as part of the tip labels so that later we can parse
-this information out of them when we load this into Beauti.
+We include the tip dates as part of the tip labels because it makes it much
+easier to read the data into Beauti if you can parse this information from the
+top labels.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">num_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #3a81c3;">(</span>sim_tree$tip.label<span style="color: #3a81c3;">)</span>
+<pre class="src src-R" id="org3949ca8">num_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #3a81c3;">(</span>sim_tree$tip.label<span style="color: #3a81c3;">)</span>
 tip_fwd_times <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> node.depth.edgelength<span style="color: #3a81c3;">(</span>sim_tree<span style="color: #3a81c3;">)[</span><span style="color: #4e3163;">1</span>:num_tips<span style="color: #3a81c3;">]</span>
 sim_tree$tip.label <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sprintf<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"%s_%f"</span>,
                               sim_tree$tip.label,
@@ -729,13 +707,13 @@ sim_tree$tip.label <span style="color: #ba2f59; font-weight: bold;">&lt;-</span>
 </div>
 
 <p>
-The reconstructed tree is the tree that remains when we only keep a binomial
-sample of the extinct tips (ie those that are not extant). The probability that
-a tip is sequenced is \(\psi / (\mu + \psi\)\).
+The reconstructed tree is the tree that remains when we sample the extinct tips
+(ie those that are not extant). The probability that a tip is sequenced is
+\(\psi / (\mu + \psi\)\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">extant_mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tip_fwd_times &gt;= sim_duration
+<pre class="src src-R" id="orge1f770e">extant_mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tip_fwd_times &gt;= sim_duration
 num_removed <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sum<span style="color: #3a81c3;">(</span>!extant_mask<span style="color: #3a81c3;">)</span>
 num_sampled <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rbinom<span style="color: #3a81c3;">(</span>n = <span style="color: #4e3163;">1</span>,
                       size = num_removed,
@@ -757,7 +735,6 @@ We can combine all of this into a function
                                     sampling_rate,
                                     duration<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
   net_removal_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> death_rate + sampling_rate
-
   sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #6c3163;">(</span>birth_rate,
                        net_removal_rate,
                        Tmax = sim_duration<span style="color: #6c3163;">)</span>
@@ -777,13 +754,15 @@ We can combine all of this into a function
                          size = num_sampled<span style="color: #6c3163;">)</span>
   reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> keep.tip<span style="color: #6c3163;">(</span>phy = sim_tree,
                                  tip = sampled_tips<span style="color: #6c3163;">)</span>
+
   <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>reconstructed_tree<span style="color: #6c3163;">)</span>
 <span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
 <p>
-Then we repeat the simulation until we get a sensible output to continue with.
+We want a simulation that has a reasonable number of sequences in it, so we
+generate random trees until we have one with at least \(20\) tips.
 </p>
 
 <div class="org-src-container">
@@ -807,7 +786,7 @@ This tree should be saved for later use.
 
 <div class="org-src-container">
 <pre class="src src-R">write.tree<span style="color: #3a81c3;">(</span>phy = reconstructed_tree,
-           file = newick_file<span style="color: #3a81c3;">)</span>
+           file = <span style="color: #2d9574;">"reconstructed-tree.newick"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -817,12 +796,13 @@ This tree should be saved for later use.
 <h4 id="orga788b22">Simulating the sequences</h4>
 <div class="outline-text-4" id="text-orga788b22">
 <p>
-Then we use the <code>simSeq</code> function to simulate an alignment this tree. By default
-this function uses the JC model for the sequence simulation with a rate of 1
-(using the branch lengths as the units of time). RNA viruses have a mutation
-rate of \(\approx 10^{-3}\) substitutions per site per year. We are already
-working in units of years so we can use this as our rate. The length of the
-sequence we will use is 2000 which is similar to the HA of influenza.
+Then we use the <code>simSeq</code> function to simulate a set of genomes for the leaves of
+this tree. By default this function uses the JC model for the sequence
+simulation with a rate of 1 (using the branch lengths as the units of time). RNA
+viruses have a mutation rate of \(\approx 10^{-3}\) substitutions per site per
+year. We are already working in units of years so we can use this as our rate.
+The length of the sequence we will use is 2000 which is similar to the HA of
+influenza.
 </p>
 
 <div class="org-src-container">
@@ -830,22 +810,17 @@ sequence we will use is 2000 which is similar to the HA of influenza.
                    rate = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
                    l = <span style="color: #4e3163;">2000</span>,
                    type = <span style="color: #2d9574;">"DNA"</span><span style="color: #3a81c3;">)</span>
-
-write.phyDat<span style="color: #3a81c3;">(</span>x = sim_seqs,
-             file = fasta_file,
-             format = <span style="color: #2d9574;">"fasta"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
 <p>
-Finally we can print out a little summary of the data that is generated by the
-script.
+Then we write this to a file so we can read it into Beauti.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">cat<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"There were "</span>,
-    length<span style="color: #6c3163;">(</span>reconstructed_tree$tip.label<span style="color: #6c3163;">)</span>,
-    <span style="color: #2d9574;">" tips in the reconstructed tree\n"</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-R">write.phyDat<span style="color: #3a81c3;">(</span>x = sim_seqs,
+             file = <span style="color: #2d9574;">"sequences.fasta"</span>,
+             format = <span style="color: #2d9574;">"fasta"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
@@ -854,6 +829,12 @@ script.
 <div id="outline-container-org175bd58" class="outline-4">
 <h4 id="org175bd58">Constructing the XML</h4>
 <div class="outline-text-4" id="text-org175bd58">
+<div class="org-src-container">
+<pre class="src src-sh">java -cp ~/Documents/beast2/build/dist/beast.jar beast.app.beauti.Beauti
+</pre>
+</div>
+
+
 <ol class="org-ol">
 <li>Open Beauti and load in the alignment produced by the simulation above.</li>
 <li>Open the <b>Tip Dates</b> tab and auto-configure to get the tip dates.
@@ -874,9 +855,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-orgea2b6e0" class="outline-4">
-<h4 id="orgea2b6e0">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgea2b6e0">
+<div id="outline-container-orgfb60d58" class="outline-4">
+<h4 id="orgfb60d58">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgfb60d58">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -890,9 +871,71 @@ size to \(10^{7}\).
 <h4 id="orgd2ff327">Analysing the posterior samples</h4>
 <div class="outline-text-4" id="text-orgd2ff327">
 <p>
-Tracer can be used for preliminary investigation of the posterior samples. To
-display the prior and posteriors on the same figure we need to resort to <code>ggplot2</code>
-though. There appear to be some identifiability issues (which is to be
+Tracer can be used for preliminary investigation of the posterior samples as
+shown in the following table (generated using <a href="#orga79c9df"><code>tracer-table</code></a>).
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Summary Statistic</th>
+<th scope="col" class="org-right">Mean</th>
+<th scope="col" class="org-left">95% HPD Interval</th>
+<th scope="col" class="org-right">Effective Sample Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">clock rate</td>
+<td class="org-right">7.641E-4</td>
+<td class="org-left">[3.9092E-4, 1.171E-3]</td>
+<td class="org-right">496.5</td>
+</tr>
+
+<tr>
+<td class="org-left">origin time</td>
+<td class="org-right">0.1509</td>
+<td class="org-left">[0.1146, 0.1935]</td>
+<td class="org-right">254.7</td>
+</tr>
+
+<tr>
+<td class="org-left">become uninfectious rate</td>
+<td class="org-right">51.9713</td>
+<td class="org-left">[50.0723, 53.9649]</td>
+<td class="org-right">4406.5</td>
+</tr>
+
+<tr>
+<td class="org-left">reproductive number</td>
+<td class="org-right">2.0901</td>
+<td class="org-left">[1.8752, 2.3189]</td>
+<td class="org-right">581.7</td>
+</tr>
+
+<tr>
+<td class="org-left">sampling proportion</td>
+<td class="org-right">0.0204</td>
+<td class="org-left">[1.9394E-3, 0.0435]</td>
+<td class="org-right">116.5</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+To display the prior and posteriors on the same figure we need to resort to
+<code>ggplot2</code> though. There appear to be some identifiability issues (which is to be
 expected), but the estimates of the origin and basic reproduction number are
 decent. The figure shows the prior distributions (solid lines), the marginal
 posterior distribution (histogram) and the true values used in the simulation
@@ -900,8 +943,8 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="org022a752" class="figure">
-<p><img src="../misc/beast2/birth-death-simulation-output/prior-posterior.png" alt="prior-posterior.png" width="800px" />
+<div id="orge547917" class="figure">
+<p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
 
@@ -912,17 +955,13 @@ posterior distribution (histogram) and the true values used in the simulation
 <span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
 
-output_dir <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"birth-death-simulation-output"</span>
-mcmc_log <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir, <span style="color: #2d9574;">"mcmc.log"</span><span style="color: #3a81c3;">)</span>
-result_png <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> file.path<span style="color: #3a81c3;">(</span>output_dir, <span style="color: #2d9574;">"prior-posterior.png"</span><span style="color: #3a81c3;">)</span>
-
 birth_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">104</span>
 death_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">5148</span> / <span style="color: #4e3163;">100</span>
 sampling_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">52</span> / <span style="color: #4e3163;">100</span>
 sim_duration <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.15</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">year</span>
 
 mcmc_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.csv<span style="color: #3a81c3;">(</span>
-  mcmc_log,
+  <span style="color: #2d9574;">"sequences.log"</span>,
   comment.char = <span style="color: #2d9574;">"#"</span>,
   sep = <span style="color: #2d9574;">"\t"</span>
 <span style="color: #3a81c3;">)</span> |&gt;
@@ -1047,7 +1086,7 @@ g_comb <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_grid<s
 <span style="color: #3a81c3;">)</span>
 
 ggsave<span style="color: #3a81c3;">(</span>
-  filename = result_png,
+  filename = <span style="color: #2d9574;">"combined-results.png"</span>,
   plot = g_comb,
   height = <span style="color: #4e3163;">14.8</span>, width = <span style="color: #4e3163;">21.0</span>,
   units = <span style="color: #2d9574;">"cm"</span>
@@ -1065,7 +1104,7 @@ ggsave<span style="color: #3a81c3;">(</span>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-30 Tue 10:46</p>
+<p class="date">Created: 2021-12-23 Thu 15:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

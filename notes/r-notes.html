@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-15 Wed 11:46 -->
+<!-- 2021-12-23 Thu 15:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -296,7 +296,7 @@
 </div>
 
 
-<div id="org645a431" class="figure">
+<div id="orgc80d03b" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" />
 </p>
 </div>
@@ -323,7 +323,7 @@
 <h3 id="orgb8bf356">Installing and updating R</h3>
 <div class="outline-text-3" id="text-orgb8bf356">
 <p>
-<b>Last update was to 4.1.0 &#x2013; Camp Pontanezen</b>
+<b>Last update was to 4.1.2 &#x2013; Bird Hippie</b>
 </p>
 
 <p>
@@ -335,7 +335,7 @@ follows.
 
 <ol class="org-ol">
 <li>Ensure you have the nessessary dependencies with <code>sudo apt-get r-base</code>.</li>
-<li>Download the relevant source, e.g. <code>R-4.1.0.tar.gz</code>, and unzip it: <code>tar -xvf
+<li>Download the relevant source, e.g. <code>R-4.1.2.tar.gz</code>, and unzip it: <code>tar -xvf
    R-X.Y.Z.tar.gz</code>.</li>
 <li>Run <code>./configure</code> and then <code>make</code> and <code>make info</code> to compile R and the
 documentation.</li>
@@ -353,7 +353,9 @@ packages, the following command can help with this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">my_pkgs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"dplyr"</span>,
+<pre class="src src-R">my_pkgs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"ape"</span>,
+             <span style="color: #2d9574;">"coda"</span>,
+             <span style="color: #2d9574;">"dplyr"</span>,
              <span style="color: #2d9574;">"purrr"</span>,
              <span style="color: #2d9574;">"magrittr"</span>,
              <span style="color: #2d9574;">"ggplot2"</span>,
@@ -367,9 +369,8 @@ install.packages<span style="color: #3a81c3;">(</span>my_pkgs<span style="color:
 
 <p>
 Last time when I updated the packages it said the default library was not
-writable so I used a personal library instead. Although if you have old package
-versions hanging around they can case you can find where they are with
-<code>.libPaths()</code> and remove them before starting fresh.
+writable so I used a personal library instead. Running the session with <code>sudo</code>
+fixed this. Old package versions hanging around can be found with <code>.libPaths()</code>.
 </p>
 </div>
 
@@ -377,6 +378,7 @@ versions hanging around they can case you can find where they are with
 <h4 id="org0405186">Notes</h4>
 <div class="outline-text-4" id="text-org0405186">
 <ul class="org-ul">
+<li><code>R-4.1.2</code></li>
 <li><code>R-4.1.0</code> introduces some new syntax: <code>|&gt;</code> for piping and some sugar for
 anonymous functions, eg <code>\(x) x + 1</code> becomes <code>function(x) x+1</code>. After
 upgrading I could not create plots interactively, instead there was a message
@@ -702,7 +704,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="orgba90fce" class="figure">
+<div id="org3257471" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -820,9 +822,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-orgc6167e6" class="outline-4">
-<h4 id="orgc6167e6">Example</h4>
-<div class="outline-text-4" id="text-orgc6167e6">
+<div id="outline-container-orgbdad6db" class="outline-4">
+<h4 id="orgbdad6db">Example</h4>
+<div class="outline-text-4" id="text-orgbdad6db">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
@@ -1035,15 +1037,32 @@ saveXML<span style="color: #3a81c3;">(</span>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org421206a" class="outline-4">
+<h4 id="org421206a">Example IV</h4>
+<div class="outline-text-4" id="text-org421206a">
+<p>
+We can use <a href="https://www.w3schools.com/xml/xpath_syntax.asp">XPath syntax</a> to extract a particular node and then query its
+attributes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">foo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> xmlTreeParse<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"demo.xml"</span><span style="color: #3a81c3;">)</span>$doc$children$beast
+kappa_node <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> getNodeSet<span style="color: #3a81c3;">(</span>foo, <span style="color: #2d9574;">"//kappa[@idref='hky.kappa']"</span><span style="color: #3a81c3;">)[</span><span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">]</span>
+xmlGetAttr<span style="color: #3a81c3;">(</span>kappa_node, <span style="color: #2d9574;">"idref"</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org4b67e7d" class="outline-3">
 <h3 id="org4b67e7d">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org4b67e7d">
 </div>
-<div id="outline-container-orgbdad6db" class="outline-4">
-<h4 id="orgbdad6db">Example</h4>
-<div class="outline-text-4" id="text-orgbdad6db">
+<div id="outline-container-orgd9d2171" class="outline-4">
+<h4 id="orgd9d2171">Example</h4>
+<div class="outline-text-4" id="text-orgd9d2171">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
@@ -2039,7 +2058,7 @@ ggplot<span style="color: #3a81c3;">()</span> +
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-12-15 Wed 11:46</p>
+<p class="date">Created: 2021-12-23 Thu 15:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

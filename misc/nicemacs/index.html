@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-10 Fri 14:43 -->
+<!-- 2021-12-23 Thu 15:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -220,7 +220,7 @@
 <div id="content" class="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="orgdaf4eb6" class="figure">
+<div id="org3d5e624" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" />
 </p>
 </div>
@@ -1562,6 +1562,26 @@ If you want to kill buffers with names that match a regex there is the
 </div>
 </div>
 
+<div id="outline-container-org885457c" class="outline-4">
+<h4 id="org885457c">Handling large files</h4>
+<div class="outline-text-4" id="text-org885457c">
+<p>
+Visiting large or sensitive files is unpleasant. There is <code>find-file-literally</code> to
+open a file in fundamental mode, following this up with <code>font-lock-fontify-buffer</code>
+will make things look a bit nicer. This is a decent option if you have a massive
+file and want to avoid crashing emacs. There is <code>view-file</code> which opens the file
+in read-only mode but somehow manages to get syntax highlighting correct despite
+the file being in fundamental mode.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ofv"</span> 'view-file<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>spacemacs/set-leader-keys <span style="color: #2d9574;">"ofl"</span> 'find-file-literally<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org960ca14" class="outline-4">
 <h4 id="org960ca14">Dired</h4>
 <div class="outline-text-4" id="text-org960ca14">
@@ -1614,7 +1634,8 @@ Then we need to define the actual files that we want listed
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> r-notes <span style="color: #2d9574;">"R notes"</span> <span style="color: #2d9574;">"/home/aez/public-site/org/notes/r-notes.org"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> org-mode-notes <span style="color: #2d9574;">"org-mode notes"</span> <span style="color: #2d9574;">"/home/aez/public-site/org/notes/org-mode-notes.org"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> reading-list <span style="color: #2d9574;">"Reading list"</span> <span style="color: #2d9574;">"/home/aez/Documents/bibliography/review/reading-list.tex"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> references <span style="color: #2d9574;">"Bibtex references"</span> <span style="color: #2d9574;">"/home/aez/Documents/bibliography/references.bib"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> review-references <span style="color: #2d9574;">"Bibtex references"</span> <span style="color: #2d9574;">"/home/aez/Documents/bibliography/references.bib"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> review-phylodynamics <span style="color: #2d9574;">"Literature review: Phylodynamics"</span> <span style="color: #2d9574;">"/home/aez/Documents/bibliography/review/phylodynamics.tex"</span><span style="color: #3a81c3;">)</span>
 <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">nicemacs-visit</span> statistics-notes <span style="color: #2d9574;">"Statistics notes"</span> <span style="color: #2d9574;">"/home/aez/public-site/org/notes/statistics-notes.org"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
@@ -1664,7 +1685,8 @@ And finally we need to writing keybindings for these.
   <span style="color: #2d9574;">"ovnr"</span> 'nvf-r-notes
   <span style="color: #2d9574;">"ovns"</span> 'nvf-statistics-notes
   <span style="color: #2d9574;">"ovp"</span> 'nvf-professional
-  <span style="color: #2d9574;">"ovr"</span> 'nvf-references
+  <span style="color: #2d9574;">"ovrr"</span> 'nvf-review-references
+  <span style="color: #2d9574;">"ovrp"</span> 'nvf-review-phylodynamics
   <span style="color: #2d9574;">"ovs"</span> 'nvf-spelling
   <span style="color: #2d9574;">"ovw"</span> 'nvf-website<span style="color: #3a81c3;">)</span>
 </pre>
@@ -2145,7 +2167,7 @@ to a list in emacs-lisp.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-12-10 Fri 14:43</p>
+<p class="date">Created: 2021-12-23 Thu 15:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
