@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-02-14 Mon 16:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Git, GitHub and Reproducible Research</title>
+<meta name="author" content="Alexander E. Zarebski" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+<link id="stylesheet" rel="stylesheet" type="text/css" href="./stylesheet.css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Git, GitHub and Reproducible Research</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgb68d2cf">1. Disclaimer</a></li>
+<li><a href="#orgd65fbf3">2. Background material</a>
+<ul>
+<li><a href="#org69e87b3">2.1. Version control</a></li>
+<li><a href="#org36a8359">2.2. Git</a></li>
+<li><a href="#org4162965">2.3. GitHub</a></li>
+<li><a href="#org9dec9b3">2.4. Zenodo</a></li>
+</ul>
+</li>
+<li><a href="#org9bcec7b">3. Worked example</a>
+<ul>
+<li><a href="#org0b9c336">3.1. Code and data</a></li>
+<li><a href="#org5e3141e">3.2. Organising the data and code</a></li>
+<li><a href="#orga55d729">3.3. Uploading to GitHub</a></li>
+<li><a href="#org0d0efe5">3.4. Adding a license</a></li>
+<li><a href="#orgca0572b">3.5. Adding a README</a></li>
+<li><a href="#org0356ce4">3.6. Recording the session information</a></li>
+<li><a href="#orgd996068">3.7. Branching and merging</a></li>
+</ul>
+</li>
+<li><a href="#orgef2f55c">4. Next steps and alternative solutions</a>
+<ul>
+<li><a href="#org36c5773">4.1. Upload to Zenodo</a></li>
+<li><a href="#org39945c0">4.2. Learn more about git</a></li>
+<li><a href="#org96fbd77">4.3. Learn more about GitHub</a></li>
+<li><a href="#org2cc6469">4.4. Alternative solutions</a></li>
+</ul>
+</li>
+<li><a href="#org676295d">5. Homework</a>
+<ul>
+<li><a href="#org04822ff">5.1. Question 1</a></li>
+<li><a href="#org9d9b938">5.2. Question 2</a></li>
+<li><a href="#org9eb57f9">5.3. Question 3</a></li>
+<li><a href="#orgec23a6c">5.4. Question 4</a></li>
+<li><a href="#org76b3a43">5.5. Question 5</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb68d2cf" class="outline-2">
+<h2 id="orgb68d2cf"><span class="section-number-2">1.</span> Disclaimer</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+These materials makes use of proprietary products and a simplified workflow in
+order to emphasise the main concepts and to save on installation and
+configuration time. Some references will be given at the end to direct you to
+free and open source solutions and more sustainable workflows; the core ideas
+are the same though so learning the material here should make it easier to
+migrate to more sensible methods in the future should the need arise.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd65fbf3" class="outline-2">
+<h2 id="orgd65fbf3"><span class="section-number-2">2.</span> Background material</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This section provides some context for why you might care about git, GitHub and
+reproducible research. This document only provides the absolute basics of these
+topics but should get you started with them and help direct further learning.
+</p>
+</div>
+
+<div id="outline-container-org69e87b3" class="outline-3">
+<h3 id="org69e87b3"><span class="section-number-3">2.1.</span> Version control</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<i>Version control</i> refers to systems which help to manage the writing and
+maintenance of things such as software, documents, and websites. These systems
+were developed to manage large software projects but are useful at many levels.
+For example, version control can help you avoid the following situation:
+<code>my-analysis.R</code>, <code>my-analysis-final.R</code>, <code>my-analysis-final-again.R</code>, and so on. Try
+coming back to that 3 months later when a reviewer asks you to re-run something
+with a slight modification!
+</p>
+</div>
+
+<div id="outline-container-org2f9a065" class="outline-4">
+<h4 id="org2f9a065">Reproducible research and Open research</h4>
+<div class="outline-text-4" id="text-org2f9a065">
+<p>
+In addition to helping <b>you</b> with organising your files, a version control system
+and it's associated tooling can also help the scientific community by helping to
+make your research reproducible and open.
+</p>
+
+<p>
+For your computational research to be considered <i>reproducible,</i> it needs to be
+described in such a way that others can replicate your results. For it to be
+<i>open</i>, the materials (code, data and sufficient documentation) need to be
+available for others. Simply dumping all of your code into something like GitHub
+is not sufficient for your research to be considered reproducible.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36a8359" class="outline-3">
+<h3 id="org36a8359"><span class="section-number-3">2.2.</span> Git</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Created in 2005 by Linus Torvalds to help with the development of the Linux
+kernel, git has become a fundamental tool in software development. In the 2021
+Stackoverflow Developer Survey over \(90\%\) of respondents used git; it is
+nearly synonymous with version control. If you intend to collaborate in the
+writing of substantial amounts of code, taking the time to learn how to use git
+is a good idea.
+</p>
+
+<p>
+Working with git will be much easier if you get familiar with some of the
+terminology first. Unless you are familiar with git already, you should at least
+skim these before continuing.
+</p>
+</div>
+
+<div id="outline-container-org7bd685e" class="outline-4">
+<h4 id="org7bd685e">Repository</h4>
+<div class="outline-text-4" id="text-org7bd685e">
+<p>
+A <i>repository</i> is a directory containing your files and the history of all the
+edits (see <a href="#orga3f8093">commit</a>) made to these files. You can have a repository that only
+lives on your machine, but they are often shared on a platform such as GitHub.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga3f8093" class="outline-4">
+<h4 id="orga3f8093">Commit</h4>
+<div class="outline-text-4" id="text-orga3f8093">
+<p>
+An edit to a file that you have recorded as part of the history of edits is
+called a <i>commit</i>. It is both a noun and a verb, you commit an edit and the
+<a href="#org7bd685e">repository</a> contains all of your commits. This can be thought of as a stronger
+version of saving a file. Each commit gets a unique identifier (called a <i>hash</i>).
+Sometimes we use "commit" to refer to the state of all the code after an edit.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org000bf7e" class="outline-4">
+<h4 id="org000bf7e">Clone</h4>
+<div class="outline-text-4" id="text-org000bf7e">
+<p>
+When you make a copy of a <a href="#org7bd685e">repository</a> you are <i>cloning</i> that repository. The
+resulting copy is referred to as a <i>clone</i>. Typically this will mean you have
+downloaded a copy from a platform such as GitHub.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org48a4ab6" class="outline-4">
+<h4 id="org48a4ab6">Pull</h4>
+<div class="outline-text-4" id="text-org48a4ab6">
+<p>
+Suppose you <a href="#org000bf7e">cloned</a> a repository a while ago and you want to get a copy of all
+the <a href="#orga3f8093">commits</a> that have been made to the original repository since then. To get
+these commits you <i>pull</i> them, which is a fancy way of saying updating your files.
+This is sometimes referred to as <i>fetching</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org38729a4" class="outline-4">
+<h4 id="org38729a4">Push</h4>
+<div class="outline-text-4" id="text-org38729a4">
+<p>
+If you have <a href="#orga3f8093">committed</a> some changes to your <a href="#org000bf7e">clone</a> of a <a href="#org7bd685e">repository</a> and want the
+original repository to have these changes made, you <i>push</i> these changes. This is
+a fancy way of saying use your edits to update the original files.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4db160d" class="outline-4">
+<h4 id="org4db160d">Branch</h4>
+<div class="outline-text-4" id="text-org4db160d">
+<p>
+A <i>branch</i> is similar to a <a href="#org000bf7e">clone</a> in that it is a copy of a <a href="#org7bd685e">repository</a>. This
+provides a more sophisticated way for people to work on their own version of
+code, without messing up the main copy. This is not particularly important
+unless you are collaborating with others on a project.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4a4605b" class="outline-4">
+<h4 id="org4a4605b">Merge</h4>
+<div class="outline-text-4" id="text-org4a4605b">
+<p>
+If someone has made some useful changes on their <a href="#org4db160d">branch</a> the owner of the
+repository may decide to include their commits in the main copy. This process of
+including the changes on someone's branch is called <i>merging</i> the changes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org612599b" class="outline-4">
+<h4 id="org612599b">Fork</h4>
+<div class="outline-text-4" id="text-org612599b">
+<p>
+When you make a copy of a repository that sits on your GitHub account. This is
+similar to, but distinct from <a href="#org000bf7e">cloning</a> and making a <a href="#org4db160d">branch</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4162965" class="outline-3">
+<h3 id="org4162965"><span class="section-number-3">2.3.</span> GitHub</h3>
+<div class="outline-text-3" id="text-2-3">
+</div>
+<div id="outline-container-org7f36afd" class="outline-4">
+<h4 id="org7f36afd">What is GitHub?</h4>
+<div class="outline-text-4" id="text-org7f36afd">
+<p>
+GitHub, Inc. is a subsidiary of Microsoft. Their website provides freemium
+hosting of git repositories. In addition to hosting the repositories, it offers
+additional tools to assist with software development. We will make extensive use
+of GitHub in this tutorial to avoid you needing to install anything on your
+machine. If you are going to use git extensively, it would be wise to learn how
+to do this from the command line or some other program.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org864a51e" class="outline-4">
+<h4 id="org864a51e">Setting up a GitHub account</h4>
+<div class="outline-text-4" id="text-org864a51e">
+<p>
+To register an account you will need an email address that can be used for
+verification.
+</p>
+
+<ol class="org-ol">
+<li>Visit <a href="https://github.com/">https://github.com/</a> and click <b>Sign Up</b>.</li>
+<li>Fill in the forms to create an account.</li>
+<li>Verify that account by entering the access code GitHub sends to the email
+address you registered with.</li>
+<li>Verify that you can summon the <b>Command Palette</b> with <code>crtl k</code> for Windows and
+Linux and <code>command k</code> on a mac.</li>
+<li>The appearance and accessibility settings can be reached by searching for
+them in the command palette.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9dec9b3" class="outline-3">
+<h3 id="org9dec9b3"><span class="section-number-3">2.4.</span> Zenodo</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Zenodo is an open access archive operated by CERN which allows researchers to
+archive research materials with a DOI which makes them easier to cite. This is a
+more permanent form of storage than GitHub. It is easy to archive a particular
+commit of a repository which is good practice if you want to refer to a
+particular version of some code in a paper.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bcec7b" class="outline-2">
+<h2 id="org9bcec7b"><span class="section-number-2">3.</span> Worked example</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Now that we have an understanding of version control and its associated tooling,
+we can see an example of how this enables us to do more reproducible research.
+Suppose that you wanted to include Figure <a href="#org879b374">1</a> in a manuscript and
+you wanted to ensure your analysis reproducible.
+</p>
+
+
+<div id="org879b374" class="figure">
+<p><img src="./git-usage-1.png" alt="git-usage-1.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>The percentage of developers who use git has increased since 2015. Data from the Stackoverflow Developer Survey is shown as black points and a least squares regression is shown as a blue line, the trend is not significant at \(95\%\).</p>
+</div>
+</div>
+
+<div id="outline-container-org0b9c336" class="outline-3">
+<h3 id="org0b9c336"><span class="section-number-3">3.1.</span> Code and data</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The data and the code that generated this figure are included below. The data is saved in a file <code>stackoverflow-git-data.csv</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-csv">year,percentage
+2015,69.3
+2017,69.2
+2018,87.2
+2020,82.8
+2021,93.43
+</pre>
+</div>
+
+<p>
+The code is saved in a file <code>make-plot.R</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+
+sods_data <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.csv<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"stackoverflow-git-data.csv"</span><span style="color: #3a81c3;">)</span>
+
+g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>
+  data = sods_data,
+  mapping = aes<span style="color: #6c3163;">(</span>x = year, y = percentage<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  geom_point<span style="color: #3a81c3;">()</span> +
+  geom_smooth<span style="color: #3a81c3;">(</span>method = <span style="color: #2d9574;">"lm"</span><span style="color: #3a81c3;">)</span> +
+  geom_text<span style="color: #3a81c3;">(</span>
+    aes<span style="color: #6c3163;">(</span>x = <span style="color: #4e3163;">2020</span>, y = <span style="color: #4e3163;">82.8</span>, label = <span style="color: #2d9574;">"only GitHub"</span><span style="color: #6c3163;">)</span>,
+    nudge_x = <span style="color: #4e3163;">0.2</span>,
+    nudge_y = -<span style="color: #4e3163;">4</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>
+    x = <span style="color: #2d9574;">"Year"</span>,
+    y = <span style="color: #2d9574;">"Percentage who used git"</span>,
+    title = <span style="color: #2d9574;">"Git usage has increased"</span>,
+    subtitle = <span style="color: #2d9574;">"Data from Stackoverflow Developer Survey"</span><span style="color: #3a81c3;">)</span>
+
+ggsave<span style="color: #3a81c3;">(</span>filename = <span style="color: #2d9574;">"git-usage.png"</span>,
+       plot = g,
+       height = <span style="color: #4e3163;">7.4</span>,
+       width = <span style="color: #4e3163;">10.5</span>,
+       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+
+sink<span style="color: #3a81c3;">(</span>file = <span style="color: #2d9574;">"regression-summary.txt"</span><span style="color: #3a81c3;">)</span>
+summary<span style="color: #3a81c3;">(</span>lm<span style="color: #6c3163;">(</span>percentage ~ year, data = sods_data<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+sink<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+<p>
+If we put these into a directory called <code>git-usage</code> we end up with the following
+</p>
+
+<pre class="example" id="orga3f43ae">
+git-usage
+├── git-usage.png
+├── make-plot.R
+├── regression-summary.txt
+└── stackoverflow-git-data.csv
+</pre>
+
+<p>
+Copy the code and data into a suitable place on your machine and run the R
+script to ensure that it works. In this worked example we will go through
+cleaning this up so it is easier for people (including ourselves) to make sense
+of this.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5e3141e" class="outline-3">
+<h3 id="org5e3141e"><span class="section-number-3">3.2.</span> Organising the data and code</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+As a first step we will use directories to impose a bit of structure. Organising
+our files in this way is useful as it makes it far easier for someone to
+understand the purpose of each of the files. Follow the following steps to
+organise your code more appropriately.
+</p>
+
+<ol class="org-ol">
+<li>Make a directory called <code>src</code> and move <code>make-plot.R</code> there.</li>
+<li>Make a directory called <code>data</code> and move <code>stackoverflow-git-data.csv</code> there.</li>
+<li>Make a directory called <code>out</code> which we will write results to.</li>
+<li>Fix the call to <code>read.csv</code> so it can find the CSV.</li>
+<li>Fix the calls to <code>ggsave</code> and <code>sink</code> so it writes the output into <code>out</code>.</li>
+</ol>
+
+<p>
+Once you have done this, the R script should look like the following.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">sods_data <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.csv<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"data/stackoverflow-git-data.csv"</span><span style="color: #3a81c3;">)</span>
+
+...
+
+ggsave<span style="color: #3a81c3;">(</span>filename = <span style="color: #2d9574;">"out/git-usage.png"</span>,
+       plot = g,
+       height = <span style="color: #4e3163;">7.4</span>,
+       width = <span style="color: #4e3163;">10.5</span>,
+       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+
+sink<span style="color: #3a81c3;">(</span>file = <span style="color: #2d9574;">"out/regression-summary.txt"</span><span style="color: #3a81c3;">)</span>
+summary<span style="color: #3a81c3;">(</span>lm<span style="color: #6c3163;">(</span>percentage ~ year, data = sods_data<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+sink<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+<p>
+After you have run the code, the directory structure should look like the
+following.
+</p>
+
+<pre class="example" id="org6e5ca31">
+git-usage
+├── data
+│   └── stackoverflow-git-data.csv
+├── out
+│   ├── git-usage.png
+│   └── regression-summary.txt
+└── src
+    └── make-plot.R
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga55d729" class="outline-3">
+<h3 id="orga55d729"><span class="section-number-3">3.3.</span> Uploading to GitHub</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Now that our code is in a reasonable state, we can upload it to GitHub. If you
+do not already have a GitHub account, please follow the instructions <a href="#org864a51e">above</a>,
+which describe how to make one. Once you have done this, follow the following
+steps:
+</p>
+
+<ol class="org-ol">
+<li>Visit <a href="https://github.com/">https://github.com/</a> and create a new repository by clicking <b>New</b>, you
+will need to pick a name for the repository (I called mine <code>git-usage</code>.) The
+default settings are fine. Click <b>Create repository</b>.</li>
+<li>Click <b>creating a new file</b> to start the process of adding <code>src/make-plot.R</code>.
+<ol class="org-ol">
+<li>Ensure the name of the file is <code>git-usage/src/make-plot.R</code>.</li>
+<li>Copy-and-paste the code in <code>make-plot.R</code> into the editor.</li>
+<li>Click <b>Commit new file</b>.</li>
+</ol></li>
+<li>Repeat this process with <code>data/stackoverflow-git-data.csv</code> and the output files
+by clicking on <b>Add file</b> and selecting <b>Create new file</b>. Note that for
+<code>git-usage.png</code> you will need to use <b>Upload file</b> instead of <b>Create new file</b>.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org0d0efe5" class="outline-3">
+<h3 id="org0d0efe5"><span class="section-number-3">3.4.</span> Adding a license</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+A license specifies what people can do with your code. If you aren't sure what
+license suits your needs, you might find <a href="https://choosealicense.com/">https://choosealicense.com/</a> has some
+helpful information. Most of the time, I will opt for the MIT license.
+</p>
+
+<p>
+There are two ways you might add a license. The manual method is to copy and
+paste the license text into a file called <code>LICENSE</code> to your repository, filling in
+<code>[year]</code> and <code>[fullname]</code> as appropriate. Alternatively, you can <b>Add file</b> and <b>Create
+new file</b> and specify that the file will be called "LICENSE" and it will offer
+you some templates to choose from. It will auto-fill the details of your name
+and the year.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgca0572b" class="outline-3">
+<h3 id="orgca0572b"><span class="section-number-3">3.5.</span> Adding a README</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+When you encounter a repository online it can be difficult to understand what
+its purpose is and how to use it. "README" is the name given to a file that
+contains this sort of information. Typically these will be written in markdown
+(similar to RMarkdown). Add a file called <code>README.md</code> to your repository with text
+similar to the following.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-markdown">This repository contains an analysis of git usage through time.
+
+To run this analysis use the following command:
+
+<span style="color: #a094a2;">```</span>
+<span style="color: #4e3163;">Rscript src/make-plot.R</span>
+<span style="color: #a094a2;">```</span>
+
+The input data is in <span style="color: #a094a2;">`</span><span style="color: #4e3163;">data</span><span style="color: #a094a2;">`</span> and the results are in <span style="color: #a094a2;">`</span><span style="color: #4e3163;">out</span><span style="color: #a094a2;">`</span>.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0356ce4" class="outline-3">
+<h3 id="org0356ce4"><span class="section-number-3">3.6.</span> Recording the session information</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Software gets updated, and sometimes these updates cause things to break. Where
+possible, it is very good practise to include details of the versions of
+software you have used. When working with R the <code>sessionInfo</code> command makes this
+simple. Try adding the following to the end of the <code>make-plot.R</code> script.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">sink<span style="color: #3a81c3;">(</span>file = <span style="color: #2d9574;">"out/package-versions.txt"</span><span style="color: #3a81c3;">)</span>
+sessionInfo<span style="color: #3a81c3;">()</span>
+sink<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+<p>
+The next time that you run this script, it will write a description of the
+version of R you used and the versions of all the loaded packages to the file
+<code>out/package-versions.txt</code>. Try running the script again to make sure this
+additional file was generated and contains something similar to the following.
+</p>
+
+<pre class="example" id="orgab2f002">
+R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/local/lib/R/lib/libRblas.so
+LAPACK: /usr/local/lib/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C
+ [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8
+ [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8
+ [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C
+[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base
+
+other attached packages:
+[1] ggplot2_3.3.5
+
+loaded via a namespace (and not attached):
+ [1] magrittr_2.0.1   splines_4.1.2    tidyselect_1.1.1 munsell_0.5.0
+ [5] colorspace_2.0-2 lattice_0.20-45  R6_2.5.1         rlang_0.4.12
+ [9] fansi_0.5.0      dplyr_1.0.7      tools_4.1.2      grid_4.1.2
+[13] gtable_0.3.0     nlme_3.1-153     mgcv_1.8-38      utf8_1.2.2
+[17] withr_2.4.3      ellipsis_0.3.2   digest_0.6.29    tibble_3.1.6
+[21] lifecycle_1.0.1  crayon_1.4.2     Matrix_1.3-4     farver_2.1.0
+[25] purrr_0.3.4      vctrs_0.3.8      glue_1.6.0       labeling_0.4.2
+[29] compiler_4.1.2   pillar_1.6.4     generics_0.1.1   scales_1.1.1
+[33] pkgconfig_2.0.3
+</pre>
+
+<p>
+Once you are happy that this has worked, we need to commit these changes. First
+by editing the script, and second, add the <code>package-versions.txt</code> file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd996068" class="outline-3">
+<h3 id="orgd996068"><span class="section-number-3">3.7.</span> Branching and merging</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Suppose that after doing all of this one of your collaborators wants to adjust
+the figure. We will now go through the steps involved with doing this using
+branches.
+</p>
+</div>
+
+<div id="outline-container-org39db004" class="outline-4">
+<h4 id="org39db004">Branching to make changes</h4>
+<div class="outline-text-4" id="text-org39db004">
+<p>
+Figure <a href="#org30f4c0f">2</a> is a modification of Figure <a href="#org879b374">1</a> with the
+desired changes.
+</p>
+
+
+<div id="org30f4c0f" class="figure">
+<p><img src="./git-usage-2.png" alt="git-usage-2.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The percentage of developers who use git has increased since 2015. Data from the Stackoverflow Developer Survey is shown as black points and a least squares regression is shown as a grey line, the trend is not significant at \(95\%\).</p>
+</div>
+
+<p>
+To avoid making changes to the main copy of the code we will work on a <a href="#org4db160d">branch</a>,
+and then when we are happy with the changes we will <a href="#org4a4605b">merge</a> them. To start with,
+create a new branch by clicking on the drop-down menu labelled "main" as shown
+in Figure <a href="#org60906f8">3</a>. I called it "edit-plot", but you can use
+anything other than "main" (because that is the default branch name used by
+GitHub).
+</p>
+
+
+<div id="org60906f8" class="figure">
+<p><img src="./create-new-branch.png" alt="create-new-branch.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Create a new branch using the drop-down menu.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e3b568" class="outline-4">
+<h4 id="org4e3b568">Make desired edits to the code and output</h4>
+<div class="outline-text-4" id="text-org4e3b568">
+<p>
+<span class="underline">Making sure that you are on your branch</span> &#x2014; if you're not sure, click on the
+<b>branch</b> button to double check &#x2014; edit the <code>make-plot.R</code> script so that it has the
+following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>
+  data = sods_data,
+  mapping = aes<span style="color: #6c3163;">(</span>x = year, y = percentage<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  geom_point<span style="color: #3a81c3;">()</span> +
+  geom_smooth<span style="color: #3a81c3;">(</span>method = <span style="color: #2d9574;">"lm"</span>, colour = <span style="color: #2d9574;">"darkgrey"</span><span style="color: #3a81c3;">)</span> +
+  geom_text<span style="color: #3a81c3;">(</span>
+    aes<span style="color: #6c3163;">(</span>x = <span style="color: #4e3163;">2020</span>, y = <span style="color: #4e3163;">82.8</span>, label = <span style="color: #2d9574;">"only GitHub"</span><span style="color: #6c3163;">)</span>,
+    size = <span style="color: #4e3163;">3</span>,
+    nudge_x = <span style="color: #4e3163;">0.2</span>,
+    nudge_y = -<span style="color: #4e3163;">6</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>
+    x = <span style="color: #2d9574;">"Year"</span>,
+    y = <span style="color: #2d9574;">"Percentage who used git"</span><span style="color: #3a81c3;">)</span> +
+  ylim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>,<span style="color: #4e3163;">100</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  theme_bw<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+<p>
+Once you have made the changes and re-run that script the figure in
+<code>git-usage.png</code> will have changed &#x2014; it should look like Figure <a href="#org30f4c0f">2</a>
+now. Ordinarily, you would update the figure in the same way that you update
+code, by committing the changes. However, this is tricky to do via the GitHub
+website for image files, so instead, delete the file and upload the modified
+one. At this point it might be interesting to move between the <code>main</code> branch and
+your new branch to see how the files change between the two.
+</p>
+
+<p>
+One motivation for branches is that you can make exploratory changes without
+risking messing up your code on the main branch. If you have a collaborator that
+wanted to try something, they could do so on a separate branch and then, if you
+like their edits, you can <a href="#org4a4605b">merge</a> them into <code>main</code> as we are about to do now.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga00f9f7" class="outline-4">
+<h4 id="orga00f9f7">Merge the changes</h4>
+<div class="outline-text-4" id="text-orga00f9f7">
+<p>
+To <a href="#org4a4605b">merge</a> your changes via the website, go back to the main page of the
+repository and you should see a new button, like the one shown in Figure
+<a href="#orgba25efa">4</a>, inviting you to compare the changes on this branch, i.e., to
+inspect if you consider this work worthy of inclusion.
+</p>
+
+
+<div id="orgba25efa" class="figure">
+<p><img src="./pull-request.png" alt="pull-request.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 4: </span>A button appears to invite you to compare branches.</p>
+</div>
+
+<p>
+Inspect the differences between the branches and if you are happy with them
+create a pull request by clicking the button as shown in Figure
+<a href="#orgab98230">5</a>.
+</p>
+
+
+<div id="orgab98230" class="figure">
+<p><img src="./create-pull-request.png" alt="create-pull-request.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 5: </span>If you are happy with the content of a branch, you can create a pull request.</p>
+</div>
+
+<p>
+Once you have created the pull request, the next step is to <a href="#org4a4605b">merge</a> that branch
+into the <code>main</code> branch. To do this you just need to click the button shown in
+Figure <a href="#org3481fa6">6</a>.
+</p>
+
+
+<div id="org3481fa6" class="figure">
+<p><img src="./merge-pull-request.png" alt="merge-pull-request.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 6: </span>If you accept a pull request you can merge the changes with the Merge pull request button.</p>
+</div>
+
+<p>
+Once a branch has been merged it will hang around until you delete it. Since
+having old branches around can lead to confusion, it is sensible to delete them
+afterwards. As shown in Figure <a href="#orga23b3ac">7</a> there is a button to achieve
+this.
+</p>
+
+
+<div id="orga23b3ac" class="figure">
+<p><img src="./delete-branch.png" alt="delete-branch.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Deleting a branch after it has been merged keeps the repository tidy.</p>
+</div>
+
+<p>
+At this point you should only have a single branch left and it should have the
+modifications to the figure. Congratulations on a reproducible analysis!
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef2f55c" class="outline-2">
+<h2 id="orgef2f55c"><span class="section-number-2">4.</span> Next steps and alternative solutions</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org36c5773" class="outline-3">
+<h3 id="org36c5773"><span class="section-number-3">4.1.</span> Upload to Zenodo</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+The <a href="https://help.zenodo.org/">Zenodo FAQs</a> contain information about how to archive a GitHub repository if
+you want a more permanent form of storage. Ideally, one would archive the commit
+used to generate the contents of a manuscript so it has a DOI and reference both
+the archive and the <i>live</i> version of the code on GitHub in the manuscript.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org39945c0" class="outline-3">
+<h3 id="org39945c0"><span class="section-number-3">4.2.</span> Learn more about git</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li><a href="https://git-scm.com/book/en/v2">Pro Git</a> by Scott Chacon and Ben Straub is a free book that is the ultimate
+guide but is a bit technical at times.</li>
+<li><a href="https://www.atlassian.com/git/tutorials">Atlassian/Bitbucket</a> has excellent tutorials.</li>
+<li><a href="https://learngitbranching.js.org/">Learn Git Branching</a> is a game revolving around explaining git.</li>
+<li><a href="https://lab.github.com/">GitHub Learning Lab</a> has some introductory material on the use of git and
+GitHub.</li>
+<li><a href="https://stackoverflow.com/questions/tagged/git">Stackoverflow questions</a> will often have answers to your questions.</li>
+<li><a href="https://youtu.be/bSA91XTzeuA">Inside the Hidden Git Folder - Computerphile</a> gives a bit of a behind the
+scenes tour of how git works.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org96fbd77" class="outline-3">
+<h3 id="org96fbd77"><span class="section-number-3">4.3.</span> Learn more about GitHub</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+There are lots of features in GitHub that haven't been covered but may be worth
+looking into: the issue tracker, the wiki, VSCode integration, and GitHub Pages
+and GitHub Actions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2cc6469" class="outline-3">
+<h3 id="org2cc6469"><span class="section-number-3">4.4.</span> Alternative solutions</h3>
+<div class="outline-text-3" id="text-4-4">
+</div>
+<div id="outline-container-orgfcd2e77" class="outline-4">
+<h4 id="orgfcd2e77">Git</h4>
+<div class="outline-text-4" id="text-orgfcd2e77">
+<p>
+Git has the greatest market share but there are alternatives such as Subversion,
+Mercurial, CVS and Darcs. Given that the vast majority of people use git, your
+time is probably best spent learning git.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8cf0cd7" class="outline-4">
+<h4 id="org8cf0cd7">GitHub</h4>
+<div class="outline-text-4" id="text-org8cf0cd7">
+<p>
+While git dominates the market as the choice of version control system, there
+are many viable alternatives platforms to GitHub which may be more suitable for
+your needs:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://bitbucket.org/product/">Bitbucket</a></li>
+<li><a href="https://about.gitlab.com/">GitLab</a></li>
+<li><a href="https://sourceforge.net/">SourceForge</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org38be0fa" class="outline-4">
+<h4 id="org38be0fa">Zenodo</h4>
+<div class="outline-text-4" id="text-org38be0fa">
+<p>
+There are good general purpose alternatives to Zenodo such as <a href="https://figshare.com/">figshare</a> and
+<a href="http://datadryad.org/">Dryad</a>. There are also numerous alternatives that are more field specific, such
+as <a href="http://www.gisaid.org/">GISAID</a>.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org676295d" class="outline-2">
+<h2 id="org676295d"><span class="section-number-2">5.</span> Homework</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org04822ff" class="outline-3">
+<h3 id="org04822ff"><span class="section-number-3">5.1.</span> Question 1</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Explain (in 100&#x2013;200 words) the purpose of git, GitHub, and Zenodo and the
+relationship between these things. Describe the value of one feature of GitHub
+not overed in this tutorial (in 100&#x2013;150 words).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9d9b938" class="outline-3">
+<h3 id="org9d9b938"><span class="section-number-3">5.2.</span> Question 2</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Explain (in 100&#x2013;200 words) the role of version control in reproducible
+research. Give an example (in 100&#x2013;150 words) of a situation in which version
+control does not suffice to make a piece of work reproducible.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9eb57f9" class="outline-3">
+<h3 id="org9eb57f9"><span class="section-number-3">5.3.</span> Question 3</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Download the following script and data and organise this material in a
+repository in a suitable way. Give a brief overview of the decisions you made
+along the way (100&#x2013;200 words).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec23a6c" class="outline-3">
+<h3 id="orgec23a6c"><span class="section-number-3">5.4.</span> Question 4</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Fork the repository at <a href="https://github.com/aezarebski/conflict-resolution-example">https://github.com/aezarebski/conflict-resolution-example</a>
+and merge the pull request. Note that this will require resolving the conflict
+in a sensible way. Explain what you did (in &lt;100 words). If you have done this
+well, the commit log should look like Figure <a href="#org1c6dc9d">8</a>.
+</p>
+
+
+<div id="org1c6dc9d" class="figure">
+<p><img src="./merge-task.png" alt="merge-task.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 8: </span>The commit log could look like this after completing Question 4.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org76b3a43" class="outline-3">
+<h3 id="org76b3a43"><span class="section-number-3">5.5.</span> Question 5</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+Read the editorial <a href="https://doi.org/10.1371/journal.pcbi.1003285">Ten Simple Rules for Reproducible Computational Research</a> and
+(in 200&#x2013;300 words) give a brief explanation of how git and GitHub would or
+would not be relevant to each rule.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2022-02-14 Mon 16:38</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
