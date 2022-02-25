@@ -193,48 +193,122 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../../css/stylesheet.css" />
 </head>
 <body>
 <div id="content" class="content">
 <h1 class="title">aez-notes-js4ds</h1>
 <p>
-<a href="../../index.html">Home</a>
+<a href="../../../index.html">Home</a>
 </p>
 
-<div id="outline-container-org1d33cae" class="outline-2">
-<h2 id="org1d33cae">JavaScript for Data Science</h2>
-<div class="outline-text-2" id="text-org1d33cae">
 <p>
-Here are rough worked solutions to the problems in the book <a href="https://js4ds.org">JavaScript for Data
-Science</a> by Maya Gans, Toby Hodges, and Greg Wilson
+<a href="../index.html">Chapter listing</a>
+</p>
+
+<div id="outline-container-org9254a7a" class="outline-2">
+<h2 id="org9254a7a">Promises</h2>
+<div class="outline-text-2" id="text-org9254a7a">
+</div>
+<div id="outline-container-orgaa9dbce" class="outline-3">
+<h3 id="orgaa9dbce">Exercises</h3>
+<div class="outline-text-3" id="text-orgaa9dbce">
+</div>
+<div id="outline-container-orgd81e6ce" class="outline-4">
+<h4 id="orgd81e6ce">What’s Going On?</h4>
+<div class="outline-text-4" id="text-orgd81e6ce">
+<p>
+It looks like there is a syntax error because it has not recognised that this is
+meant to be two expressions. Including a semi-colon at the end of the first line
+seems to fix things.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgafb6ccf" class="outline-4">
+<h4 id="orgafb6ccf">A Stay of Execution</h4>
+<div class="outline-text-4" id="text-orgafb6ccf">
+<p>
+To log something to the console between the "Waiting&#x2026;" statements you can
+either put it as the first action in the <code>setTimeout</code> callback, or at the end of
+the <code>swingAxe</code> function.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f1cf13" class="outline-4">
+<h4 id="org2f1cf13">A Synchronous or Asynchronous?</h4>
+<div class="outline-text-4" id="text-org2f1cf13">
+<p>
+Finding the nearest town and all of the routes between two locations seem like
+the kind of things that would require querying a database or API so it seems
+like they should run asynchronously, however computing the volume of a sphere is
+a simple expression so should be synchronous. Probably the best way to check is
+to look at the source code.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb8f9c28" class="outline-4">
+<h4 id="orgb8f9c28">Handling Exceptions</h4>
+<div class="outline-text-4" id="text-orgb8f9c28">
+<p>
+<code>setTimeout</code> puts the call to <code>reject</code> at the end of the queue and allows
+<code>resolve('')</code> to be evaluated in the mean time. Since this calls the
+<code>checkForBlanks</code> function this the error message is encountered.
+However, for this to actually be logged, it seems to propagate all the way
+through the error branches. To see this I had to test out using a string in
+place of <code>error.message</code> and <code>checkedOutput</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org34d7f25" class="outline-4">
+<h4 id="org34d7f25">Empty Promises</h4>
+<div class="outline-text-4" id="text-org34d7f25">
+<p>
+It looks like the syntax of <code>setTimeout</code> may have changed since the exercise was
+written, but the following worked for me.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bibtex"><span style="color: #6c3163; font-weight: bold;">@book</span>{<span style="color: #4e3163;">gans2020javascript</span>,
-  <span style="color: #715ab1;">year</span> =         2020,
-  <span style="color: #715ab1;">title</span> =        {{J}ava{S}cript for {D}ata {S}cience},
-  <span style="color: #715ab1;">author</span> =       {Gans, Maya and Hodges, Toby and Wilson, Greg},
-  <span style="color: #715ab1;">publisher</span> =    {Chapman \&amp; Hall-CRC}
-}
+<pre class="src src-javascript"><span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">makePromise</span> = <span style="color: #3a81c3;">(</span>someInteger<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">Promise</span><span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>resolve, reject<span style="color: #2d9574;">)</span> =&gt; <span style="color: #2d9574;">{</span>
+        setTimeout<span style="color: #67b11d;">(</span>resolve, someInteger * <span style="color: #4e3163;">1000</span>, someInteger<span style="color: #67b11d;">)</span>
+    <span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+Promise.all<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">[</span>makePromise<span style="color: #2d9574;">(</span><span style="color: #4e3163;">7</span><span style="color: #2d9574;">)</span>, makePromise<span style="color: #2d9574;">(</span><span style="color: #4e3163;">8</span><span style="color: #2d9574;">)</span>, makePromise<span style="color: #2d9574;">(</span><span style="color: #4e3163;">2</span><span style="color: #2d9574;">)</span>,
+             makePromise<span style="color: #2d9574;">(</span><span style="color: #4e3163;">6</span><span style="color: #2d9574;">)</span>, makePromise<span style="color: #2d9574;">(</span><span style="color: #4e3163;">5</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>.then<span style="color: #3a81c3;">(</span>
+                 numbers =&gt; console.log<span style="color: #6c3163;">(</span>numbers<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
+</div>
+
+<p>
+In order to print <code>2</code> instead of the whole array you can replace <code>all</code> with <code>race</code> so
+it just takes the result that was returned first which in this case is the 2.
+</p>
 </div>
 </div>
 
-<div id="outline-container-org322a157" class="outline-3">
-<h3 id="org322a157">Chapters</h3>
-<div class="outline-text-3" id="text-org322a157">
-<ol class="org-ol">
-<li><a href="./chapter-1/index.html">Introduction</a></li>
-<li><a href="./chapter-2/index.html">Basic Features</a></li>
-<li>TODO <a href="./chapter-3/index.html">Callbacks</a></li>
-<li>TODO <a href="./chapter-4/index.html">Objects and Classes</a></li>
-<li><a href="./chapter-5/index.html">HTML and CSS</a></li>
-<li><a href="./chapter-6/index.html">Manipulating Pages</a></li>
-<li><a href="./chapter-7/index.html">Dynamic Pages</a></li>
-<li><a href="./chapter-8/index.html">Visualizing Data</a></li>
-<li><a href="./chapter-9/index.html">Promises</a></li>
-</ol>
+<div id="outline-container-orga7d4a9c" class="outline-4">
+<h4 id="orga7d4a9c"><code>async</code>, Therefore I Am</h4>
+<div class="outline-text-4" id="text-orga7d4a9c">
+<p>
+I cannot be sure, but I think the way to convert <code>makePromise</code> into an async
+function is to change it to the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">makePromise</span> = <span style="color: #3a81c3;">async</span> <span style="color: #3a81c3;">(</span>someInteger<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">let</span> <span style="color: #715ab1;">foo</span> = <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">Promise</span><span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>resolve, reject<span style="color: #2d9574;">)</span> =&gt; <span style="color: #2d9574;">{</span>
+        setTimeout<span style="color: #67b11d;">(</span>resolve, someInteger * <span style="color: #4e3163;">100</span>, someInteger<span style="color: #67b11d;">)</span>
+    <span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>;
+    <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">await</span> foo;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
