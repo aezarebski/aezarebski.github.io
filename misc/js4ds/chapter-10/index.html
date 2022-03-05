@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-03-05 Sat 17:42 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>aez-notes-js4ds</title>
+<meta name="author" content="alex" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../../css/stylesheet.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">aez-notes-js4ds</h1>
+<p>
+<a href="../../../index.html">Home</a>
+</p>
+
+<p>
+<a href="../index.html">Chapter listing</a>
+</p>
+
+<div id="outline-container-org325e696" class="outline-2">
+<h2 id="org325e696">Interactive Sites</h2>
+<div class="outline-text-2" id="text-org325e696">
+<div class="org-src-container">
+<pre class="src src-sh">mkdir interactive-sites
+<span style="color: #3a81c3;">cd</span> interactive-sites
+npm init -y
+npm install parcel react react-dom
+touch index.html
+touch app.js
+npx parcel index.html
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org45eda4b" class="outline-3">
+<h3 id="org45eda4b">Setup</h3>
+<div class="outline-text-3" id="text-org45eda4b">
+<p>
+The <code>index.html</code> file is pretty much the same for both pages; a different title
+might be useful.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">meta</span> <span style="color: #715ab1;">charset</span>=<span style="color: #2d9574;">"utf-8"</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Foobar</span>&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">body</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">div</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"app"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">type</span>=<span style="color: #2d9574;">"module"</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"app.js"</span> async&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">body</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgc2ec934" class="outline-4">
+<h4 id="orgc2ec934">Up and Down</h4>
+<div class="outline-text-4" id="text-orgc2ec934">
+</div>
+<div id="outline-container-orgbfa6716" class="outline-5">
+<h5 id="orgbfa6716">Application script</h5>
+<div class="outline-text-5" id="text-orgbfa6716">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+<span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">{</span>UpAndDown<span style="color: #3a81c3;">}</span> from <span style="color: #2d9574;">"./UpAndDown"</span>
+<span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">{</span>NumberDisplay<span style="color: #3a81c3;">}</span> from <span style="color: #2d9574;">"./NumberDisplay"</span>
+
+<span style="color: #3a81c3;">class</span> App <span style="color: #3a81c3;">extends</span> React.Component <span style="color: #3a81c3;">{</span>
+
+    constructor <span style="color: #6c3163;">(</span>props<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">super</span><span style="color: #2d9574;">(</span>props<span style="color: #2d9574;">)</span>
+        <span style="color: #4e3163;">this</span>.state = <span style="color: #2d9574;">{</span>counter: <span style="color: #4e3163;">0</span><span style="color: #2d9574;">}</span>
+    <span style="color: #6c3163;">}</span>
+
+    increment = <span style="color: #6c3163;">(</span>event<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #4e3163;">this</span>.setState<span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>counter: <span style="color: #4e3163;">this</span>.state.counter + <span style="color: #4e3163;">1</span><span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span>
+
+    decrement = <span style="color: #6c3163;">(</span>event<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #4e3163;">this</span>.setState<span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>counter: <span style="color: #4e3163;">this</span>.state.counter - <span style="color: #4e3163;">1</span><span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span>
+
+    render = <span style="color: #6c3163;">()</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">return</span> <span style="color: #2d9574;">(</span>
+                <span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">div</span><span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                    </span><span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">UpAndDown</span> <span style="color: #715ab1;">up</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.increment<span style="color: #b1951d;">}</span> <span style="color: #715ab1;">down</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.decrement<span style="color: #b1951d;">}</span> /<span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                </span><span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">NumberDisplay</span> <span style="color: #715ab1;">label</span>=<span style="color: #2d9574;">'counter'</span> <span style="color: #715ab1;">value</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.state.counter<span style="color: #b1951d;">}</span> /<span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                </span><span style="color: #67b11d;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">div</span><span style="color: #67b11d;">&gt;</span>
+        <span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">mount</span> = document.getElementById<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"app"</span><span style="color: #3a81c3;">)</span>
+ReactDOM.render<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">App</span>/<span style="color: #6c3163;">&gt;</span>, mount<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1a2cc51" class="outline-5">
+<h5 id="org1a2cc51">Buttons</h5>
+<div class="outline-text-5" id="text-org1a2cc51">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">UpAndDown</span> = <span style="color: #3a81c3;">(</span>props<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span>
+            <span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">button</span> <span style="color: #715ab1;">onClick</span>=<span style="color: #67b11d;">{</span>props.up<span style="color: #67b11d;">}</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;"> </span><span style="color: #2d9574; background-color: #fbf8ef;">[</span><span style="color: #655370; background-color: #fbf8ef;">+</span><span style="color: #2d9574; background-color: #fbf8ef;">]</span><span style="color: #655370; background-color: #fbf8ef;"> </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">button</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">button</span> <span style="color: #715ab1;">onClick</span>=<span style="color: #67b11d;">{</span>props.down<span style="color: #67b11d;">}</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;"> </span><span style="color: #2d9574; background-color: #fbf8ef;">[</span><span style="color: #655370; background-color: #fbf8ef;">-</span><span style="color: #2d9574; background-color: #fbf8ef;">]</span><span style="color: #655370; background-color: #fbf8ef;"> </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">button</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+    <span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">export</span> <span style="color: #3a81c3;">{</span>UpAndDown<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6f05065" class="outline-5">
+<h5 id="org6f05065">Display</h5>
+<div class="outline-text-5" id="text-org6f05065">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">NumberDisplay</span> = <span style="color: #3a81c3;">(</span>props<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;{</span>props.label<span style="color: #2d9574;">}</span><span style="color: #655370; background-color: #fbf8ef;">: </span><span style="color: #2d9574;">{</span>props.value<span style="color: #2d9574;">}&lt;</span>/<span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span><span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">export</span> <span style="color: #3a81c3;">{</span>NumberDisplay<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7444cb2" class="outline-4">
+<h4 id="org7444cb2">Fetching data</h4>
+<div class="outline-text-4" id="text-org7444cb2">
+</div>
+<div id="outline-container-org2fc43d8" class="outline-5">
+<h5 id="org2fc43d8">Application script</h5>
+<div class="outline-text-5" id="text-org2fc43d8">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+<span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">{</span>AsteroidList<span style="color: #3a81c3;">}</span> from <span style="color: #2d9574;">"./AsteroidList"</span>
+<span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">{</span>DateSubmit<span style="color: #3a81c3;">}</span> from <span style="color: #2d9574;">"./DateSubmit"</span>
+
+<span style="color: #3a81c3;">class</span> App <span style="color: #3a81c3;">extends</span> React.Component <span style="color: #3a81c3;">{</span>
+
+    constructor <span style="color: #6c3163;">(</span>props<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">super</span><span style="color: #2d9574;">(</span>props<span style="color: #2d9574;">)</span>
+        <span style="color: #4e3163;">this</span>.state = <span style="color: #2d9574;">{</span>
+            asteroids: <span style="color: #67b11d;">[</span>
+                <span style="color: #b1951d;">{</span>name: <span style="color: #2d9574;">'a30x1000'</span>, date: <span style="color: #2d9574;">'2017-03-03'</span>,
+                 diameter: <span style="color: #4e3163;">30</span>, distance: <span style="color: #4e3163;">1000</span><span style="color: #b1951d;">}</span>,
+                <span style="color: #b1951d;">{</span>name: <span style="color: #2d9574;">'a5x500'</span>, date: <span style="color: #2d9574;">'2017-05-05'</span>,
+                 diameter: <span style="color: #4e3163;">5</span>, distance: <span style="color: #4e3163;">500</span><span style="color: #b1951d;">}</span>,
+                <span style="color: #b1951d;">{</span>name: <span style="color: #2d9574;">'a2000x200'</span>, date: <span style="color: #2d9574;">'2017-02-02'</span>,
+                 diameter: <span style="color: #4e3163;">2000</span>, distance: <span style="color: #4e3163;">200</span><span style="color: #b1951d;">}</span>
+            <span style="color: #67b11d;">]</span>
+        <span style="color: #2d9574;">}</span>
+    <span style="color: #6c3163;">}</span>
+
+    onEditNewDate = <span style="color: #6c3163;">(</span>text<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #4e3163;">this</span>.setState<span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>newDate: text<span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span>
+
+    onSubmitNewDate = <span style="color: #6c3163;">(</span>text<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">url</span> = <span style="color: #2d9574;">'https://api.nasa.gov/neo/rest/v1/feed'</span> +
+              <span style="color: #2d9574;">`?api_key=DEMO_KEY&amp;start_date=${text}`</span>
+        fetch<span style="color: #2d9574;">(</span>url<span style="color: #2d9574;">)</span>.then<span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>response<span style="color: #67b11d;">)</span> =&gt; <span style="color: #67b11d;">{</span>
+            <span style="color: #3a81c3;">return</span> response.json<span style="color: #b1951d;">()</span>
+        <span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>.then<span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>raw<span style="color: #67b11d;">)</span> =&gt; <span style="color: #67b11d;">{</span>
+            <span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">asteroids</span> = <span style="color: #4e3163;">this</span>.transform<span style="color: #b1951d;">(</span>raw<span style="color: #b1951d;">)</span>
+            <span style="color: #4e3163;">this</span>.setState<span style="color: #b1951d;">(</span><span style="color: #3a81c3;">{</span>
+                newDate: <span style="color: #2d9574;">''</span>,
+                asteroids: asteroids
+            <span style="color: #3a81c3;">}</span><span style="color: #b1951d;">)</span>
+        <span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span>
+
+    transform = <span style="color: #6c3163;">(</span>raw<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">let</span> <span style="color: #715ab1;">result</span> = <span style="color: #2d9574;">[]</span>
+        <span style="color: #3a81c3;">for</span> <span style="color: #2d9574;">(</span><span style="color: #3a81c3;">let</span> <span style="color: #715ab1;">key</span> <span style="color: #3a81c3;">in</span> raw.near_earth_objects<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+            raw.near_earth_objects<span style="color: #67b11d;">[</span>key<span style="color: #67b11d;">]</span>.forEach<span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>asteroid<span style="color: #b1951d;">)</span> =&gt; <span style="color: #b1951d;">{</span>
+                result.push<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">{</span>
+                    name: asteroid.name,
+                    date: asteroid.close_approach_data<span style="color: #2d9574;">[</span><span style="color: #4e3163;">0</span><span style="color: #2d9574;">]</span>.close_approach_date,
+                    diameter: asteroid.estimated_diameter.meters.estimated_diameter_max,
+                    distance: asteroid.close_approach_data<span style="color: #2d9574;">[</span><span style="color: #4e3163;">0</span><span style="color: #2d9574;">]</span>.miss_distance.kilometers
+                <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+            <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>
+        <span style="color: #2d9574;">}</span>
+        <span style="color: #3a81c3;">return</span> result
+    <span style="color: #6c3163;">}</span>
+
+    render = <span style="color: #6c3163;">()</span> =&gt; <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">return</span> <span style="color: #2d9574;">(</span>
+                <span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">div</span><span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                </span><span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">h1</span><span style="color: #67b11d;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">Asteroids</span><span style="color: #67b11d;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">h1</span><span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                </span><span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">DateSubmit</span>
+            <span style="color: #715ab1;">label</span>=<span style="color: #2d9574;">'Date'</span>
+            <span style="color: #715ab1;">value</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.state.newDate<span style="color: #b1951d;">}</span>
+            <span style="color: #715ab1;">onChange</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.onEditNewDate<span style="color: #b1951d;">}</span>
+            <span style="color: #715ab1;">onCommit</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.onSubmitNewDate<span style="color: #b1951d;">}</span> /<span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                </span><span style="color: #67b11d;">&lt;</span><span style="color: #6c3163; font-weight: bold;">AsteroidList</span> <span style="color: #715ab1;">asteroids</span>=<span style="color: #b1951d;">{</span><span style="color: #4e3163;">this</span>.state.asteroids<span style="color: #b1951d;">}</span> /<span style="color: #67b11d;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                </span><span style="color: #67b11d;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">div</span><span style="color: #67b11d;">&gt;</span>
+        <span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">mount</span> = document.getElementById<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"app"</span><span style="color: #3a81c3;">)</span>
+ReactDOM.render<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">App</span>/<span style="color: #6c3163;">&gt;</span>, mount<span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgad8badc" class="outline-5">
+<h5 id="orgad8badc">Asteroid list</h5>
+<div class="outline-text-5" id="text-orgad8badc">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">AsteroidList</span> = <span style="color: #3a81c3;">(</span>props<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span>
+            <span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">table</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">tbody</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">tr</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">Name</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">Date</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">Diameter </span><span style="color: #2d9574; background-color: #fbf8ef;">(</span><span style="color: #655370; background-color: #fbf8ef;">m</span><span style="color: #2d9574; background-color: #fbf8ef;">)</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">Approach </span><span style="color: #2d9574; background-color: #fbf8ef;">(</span><span style="color: #655370; background-color: #fbf8ef;">km</span><span style="color: #2d9574; background-color: #fbf8ef;">)</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">th</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">tr</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">{</span>props.asteroids.map<span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>a<span style="color: #b1951d;">)</span> =&gt; <span style="color: #b1951d;">{</span>
+                <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">(</span>
+                        <span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">tr</span> <span style="color: #715ab1;">key</span>=<span style="color: #2d9574;">{</span>a.name<span style="color: #2d9574;">}</span><span style="color: #6c3163;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                        </span><span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;{</span>a.name<span style="color: #6c3163;">}&lt;</span>/<span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                        </span><span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;{</span>a.date<span style="color: #6c3163;">}&lt;</span>/<span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                        </span><span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;{</span>a.diameter<span style="color: #6c3163;">}&lt;</span>/<span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                        </span><span style="color: #6c3163;">&lt;</span><span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;{</span>a.distance<span style="color: #6c3163;">}&lt;</span>/<span style="color: #6c3163; font-weight: bold;">td</span><span style="color: #6c3163;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">                        </span><span style="color: #6c3163;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">tr</span><span style="color: #6c3163;">&gt;</span>
+                <span style="color: #3a81c3;">)</span>
+            <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">}</span>
+<span style="color: #655370; background-color: #fbf8ef;">        </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">tbody</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">table</span><span style="color: #2d9574;">&gt;</span>
+    <span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">export</span> <span style="color: #3a81c3;">{</span>AsteroidList<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3bf0c4a" class="outline-5">
+<h5 id="org3bf0c4a">Date entry</h5>
+<div class="outline-text-5" id="text-org3bf0c4a">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">DateSubmit</span> = <span style="color: #3a81c3;">(</span><span style="color: #6c3163;">{</span>label, value, onChange, onCommit<span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span>
+            <span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">{</span>label<span style="color: #2d9574;">}</span><span style="color: #655370; background-color: #fbf8ef;">:</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">input</span> <span style="color: #715ab1;">type</span>=<span style="color: #2d9574;">"text"</span> <span style="color: #715ab1;">value</span>=<span style="color: #67b11d;">{</span>value<span style="color: #67b11d;">}</span>
+        <span style="color: #715ab1;">onChange</span>=<span style="color: #67b11d;">{</span><span style="color: #b1951d;">(</span>event<span style="color: #b1951d;">)</span> =&gt; onChange<span style="color: #b1951d;">(</span>event.target.value<span style="color: #b1951d;">)</span><span style="color: #67b11d;">}</span> /<span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">button</span> <span style="color: #715ab1;">onClick</span>=<span style="color: #67b11d;">{</span><span style="color: #b1951d;">(</span>event<span style="color: #b1951d;">)</span> =&gt; onCommit<span style="color: #b1951d;">(</span>value<span style="color: #b1951d;">)</span><span style="color: #67b11d;">}</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">new</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">button</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+    <span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+<span style="color: #3a81c3;">export</span> <span style="color: #3a81c3;">{</span>DateSubmit<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a9213c" class="outline-3">
+<h3 id="org0a9213c">Exercises</h3>
+<div class="outline-text-3" id="text-org0a9213c">
+</div>
+<div id="outline-container-orgde733dc" class="outline-4">
+<h4 id="orgde733dc">Reset</h4>
+<div class="outline-text-4" id="text-orgde733dc">
+<p>
+To add a reset button <code>index.html</code> stays the same but we need to add a <code>reset</code>
+method to the <code>App</code> class and include this in <code>render</code>. The relevant section looks
+like this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">reset = <span style="color: #3a81c3;">(</span>event<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #4e3163;">this</span>.setState<span style="color: #6c3163;">(</span><span style="color: #2d9574;">{</span>counter: <span style="color: #4e3163;">0</span><span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+render = <span style="color: #3a81c3;">()</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span>
+            &lt;div&gt;
+            &lt;UpAndDown up=<span style="color: #2d9574;">{</span><span style="color: #4e3163;">this</span>.increment<span style="color: #2d9574;">}</span> down=<span style="color: #2d9574;">{</span><span style="color: #4e3163;">this</span>.decrement<span style="color: #2d9574;">}</span> /&gt;
+            &lt;NumberDisplay label=<span style="color: #2d9574;">'counter'</span> value=<span style="color: #2d9574;">{</span><span style="color: #4e3163;">this</span>.state.counter<span style="color: #2d9574;">}</span> /&gt;
+            &lt;Reset reset=<span style="color: #2d9574;">{</span><span style="color: #4e3163;">this</span>.reset<span style="color: #2d9574;">}</span> /&gt;
+            &lt;/div&gt;
+    <span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+The actual reset button is made with the following component, of course you need
+to use <code>import {Reset} from "./Reset"</code> in <code>app.js</code> to make use of this!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">Reset</span> = <span style="color: #3a81c3;">(</span>props<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span>
+            <span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">button</span> <span style="color: #715ab1;">onClick</span>=<span style="color: #67b11d;">{</span>props.reset<span style="color: #67b11d;">}</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;"> Reset counter </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">button</span><span style="color: #2d9574;">&gt;</span>
+<span style="color: #655370; background-color: #fbf8ef;">            </span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+    <span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">export</span> <span style="color: #3a81c3;">{</span>Reset<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2493edf" class="outline-4">
+<h4 id="org2493edf">Transform</h4>
+</div>
+
+<div id="outline-container-orge121808" class="outline-4">
+<h4 id="orge121808">Exports</h4>
+<div class="outline-text-4" id="text-orge121808">
+<p>
+Omitting the curly braces from the export statements breaks the site. It sounds
+as though, since it is common to only have a single export that some people
+would like to remove the requirement for exports. This seems unwise though, it
+is only a little extra typing and it makes things much clearer.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org92c61e5" class="outline-4">
+<h4 id="org92c61e5">Validation</h4>
+<div class="outline-text-4" id="text-org92c61e5">
+<p>
+The following method can be used to check if a date can be parsed sensibly.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">isDate = <span style="color: #3a81c3;">(</span>date<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">return</span> <span style="color: #6c3163;">(</span><span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">Date</span><span style="color: #2d9574;">(</span>date<span style="color: #2d9574;">)</span> !== <span style="color: #2d9574;">"Invalid Date"</span><span style="color: #6c3163;">)</span> &amp;&amp; !isNaN<span style="color: #6c3163;">(</span><span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">Date</span><span style="color: #2d9574;">(</span>date<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+The modified <code>onSubmitNewDate</code> function looks like this. This allows some values
+through that otherwise would not be allowed, but it seems to be a sensible step
+so that in the future one could parse multiple date formats and then use a <code>Date</code>
+object to format them as NASA desires.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">onSubmitNewDate = <span style="color: #3a81c3;">(</span>text<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">if</span> <span style="color: #6c3163;">(</span><span style="color: #4e3163;">this</span>.isDate<span style="color: #2d9574;">(</span>text<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+        <span style="color: #4e3163;">this</span>.setState<span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>validDate: <span style="color: #4e3163;">true</span><span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>;
+        <span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">url</span> = <span style="color: #2d9574;">'https://api.nasa.gov/neo/rest/v1/feed'</span> +
+              <span style="color: #2d9574;">`?api_key=DEMO_KEY&amp;start_date=${text}`</span>
+        fetch<span style="color: #2d9574;">(</span>url<span style="color: #2d9574;">)</span>.then<span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>response<span style="color: #67b11d;">)</span> =&gt; <span style="color: #67b11d;">{</span>
+            <span style="color: #3a81c3;">return</span> response.json<span style="color: #b1951d;">()</span>
+        <span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>.then<span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>raw<span style="color: #67b11d;">)</span> =&gt; <span style="color: #67b11d;">{</span>
+            <span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">asteroids</span> = <span style="color: #4e3163;">this</span>.transform<span style="color: #b1951d;">(</span>raw<span style="color: #b1951d;">)</span>
+            <span style="color: #4e3163;">this</span>.setState<span style="color: #b1951d;">(</span><span style="color: #3a81c3;">{</span>
+                newDate: <span style="color: #2d9574;">''</span>,
+                asteroids: asteroids
+            <span style="color: #3a81c3;">}</span><span style="color: #b1951d;">)</span>
+        <span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>
+    <span style="color: #6c3163;">}</span> <span style="color: #3a81c3;">else</span> <span style="color: #6c3163;">{</span>
+        <span style="color: #4e3163;">this</span>.setState<span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>validDate: <span style="color: #4e3163;">false</span><span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span>;
+    <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+The <code>ErrorMessage</code> component has the following definition.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">import</span> React from <span style="color: #2d9574;">"react"</span>
+<span style="color: #3a81c3;">import</span> ReactDOM from <span style="color: #2d9574;">"react-dom"</span>
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">ErrorMessage</span> = <span style="color: #3a81c3;">(</span><span style="color: #6c3163;">{</span>validDate<span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">if</span> <span style="color: #6c3163;">(</span>validDate<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">return</span> <span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">date OK</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+    <span style="color: #6c3163;">}</span> <span style="color: #3a81c3;">else</span> <span style="color: #6c3163;">{</span>
+        <span style="color: #3a81c3;">return</span> <span style="color: #2d9574;">&lt;</span><span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span><span style="color: #655370; background-color: #fbf8ef;">date invalid</span><span style="color: #2d9574;">&lt;</span>/<span style="color: #6c3163; font-weight: bold;">p</span><span style="color: #2d9574;">&gt;</span>
+    <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #3a81c3;">export</span> <span style="color: #3a81c3;">{</span>ErrorMessage<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+There is a lively discussion on stackexchange for alternatives to this very
+rough solution
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: alex</p>
+<p class="date">Created: 2022-03-05 Sat 17:42</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
