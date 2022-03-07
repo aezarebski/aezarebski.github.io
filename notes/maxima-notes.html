@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-01-25 Tue 21:33 -->
+<!-- 2022-03-05 Sat 12:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -209,16 +209,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org83292ab">Emacs interface to Maxima</a>
-<ul>
-<li><a href="#org82d9640">Spacemacs</a></li>
-<li><a href="#orgc83e013">REPL display configuration</a></li>
-</ul>
-</li>
 <li><a href="#org3e6e2a5">Plotting</a></li>
 <li><a href="#orgdb2bc69">Programming in Maxima</a>
 <ul>
 <li><a href="#org59ecdf4">Expressions</a></li>
+<li><a href="#org0fe8eb4">Blocks</a></li>
 <li><a href="#org55c18d1">Org-mode as a notebook environment</a></li>
 <li><a href="#org8917cab">Getting help</a></li>
 <li><a href="#org57d1e28">Removing existing definitions</a></li>
@@ -226,7 +221,7 @@
 <li><a href="#org714adc9">Program flow</a></li>
 <li><a href="#org26f960d">Lists</a></li>
 <li><a href="#orga16dada">Evaluation</a></li>
-<li><a href="#orgfee75c0">Simplification</a></li>
+<li><a href="#org4f94acf">Simplification</a></li>
 <li><a href="#org7c1956e">Packages</a></li>
 <li><a href="#org2ab83cc">REPL</a></li>
 <li><a href="#org8705af4">Batchmode</a></li>
@@ -244,7 +239,13 @@
 <ul>
 <li><a href="#org1cc3064">Change of coordinates</a></li>
 <li><a href="#orgf8a51b7">Differential equations: simple</a></li>
-<li><a href="#org4f94acf">Simplification</a></li>
+<li><a href="#org527b608">Simplification</a></li>
+</ul>
+</li>
+<li><a href="#org071e7b9">Front-ends for Maxima</a>
+<ul>
+<li><a href="#orga7e3cda">wxMaxima</a></li>
+<li><a href="#orgd1e67cc">Emacs</a></li>
 </ul>
 </li>
 </ul>
@@ -252,7 +253,7 @@
 </div>
 
 
-<div id="org6e90de4" class="figure">
+<div id="orgad1611e" class="figure">
 <p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
 </p>
 </div>
@@ -260,71 +261,6 @@
 <p>
 <a href="http://maxima.sourceforge.net/docs/manual/maxima.html">ONLINE DOCUMENTATION</a>
 </p>
-
-<div id="outline-container-org83292ab" class="outline-2">
-<h2 id="org83292ab">Emacs interface to Maxima</h2>
-<div class="outline-text-2" id="text-org83292ab">
-<p>
-Add the following to your configuration.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima mode"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #9f8766;">"Frontend for maxima with Image support"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #9f8766;">"Maxima interaction"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #9f8766;">"Imath mode for math formula input"</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>add-to-list 'auto-mode-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<p>
-Start a Maxima session with <code>M-x imaxima</code>. To send a buffer to the REPL use <code>C-c
-C-b</code>. To send a region <code>C-c C-r</code> or just a single line <code>C-c C-c</code>. To get the
-potential completions for a variable name <code>M-TAB</code>.
-</p>
-</div>
-
-<div id="outline-container-org82d9640" class="outline-3">
-<h3 id="org82d9640">Spacemacs</h3>
-<div class="outline-text-3" id="text-org82d9640">
-<p>
-There is a <a href="https://github.com/dalanicolai/maxima-layer">spacemacs layer for maxima</a> and I have a <a href="https://github.com/aezarebski/maxima-layer">fork</a> too. The instructions
-above are not necessary if you are using this layer with spacemacs.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgc83e013" class="outline-3">
-<h3 id="orgc83e013">REPL display configuration</h3>
-<div class="outline-text-3" id="text-orgc83e013">
-<p>
-The output of Maxima can be displayed in three ways: single line of ascii,
-multiple lines of ascii or rendered with <code>imaxima</code>. The output type is
-determined by the value of the <code>display2d</code> variable (in Maxima) which can be
-<code>false</code>, <code>true</code>, or <code>imaxima</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-maxima">display2d: true;
-</pre>
-</div>
-
-<p>
-If you want to change the font size for the latex output, modify the
-(customisable) variable <code>imaxima-fnt-size</code>.
-</p>
-
-<p>
-If you want to change the number of significant figures to which floating point
-numbers are displayed there is the variable <code>fpprintprec</code> (floating point print
-precision?). The default value is <code>0</code>, for larger integers it is that number of
-digits.
-</p>
-</div>
-</div>
-</div>
 
 <div id="outline-container-org3e6e2a5" class="outline-2">
 <h2 id="org3e6e2a5">Plotting</h2>
@@ -339,7 +275,7 @@ Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plo
 </div>
 
 
-<div id="org450f10c" class="figure">
+<div id="orgda8d148" class="figure">
 <p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
 </p>
 </div>
@@ -354,7 +290,7 @@ There is an example of how to save a figure in <a href="./../misc/fifty-problems
 </div>
 
 
-<div id="org9486cc5" class="figure">
+<div id="orga3a4655" class="figure">
 <p><img src="../images/maxima-points-plot.png" alt="maxima-points-plot.png" />
 </p>
 </div>
@@ -383,12 +319,37 @@ of nouns and verbs in Maxima.</li>
 </div>
 </div>
 
+<div id="outline-container-org0fe8eb4" class="outline-3">
+<h3 id="org0fe8eb4">Blocks</h3>
+<div class="outline-text-3" id="text-org0fe8eb4">
+<p>
+The <code>block</code> allows you to have local variables, similar to a <code>let</code> or <code>where</code> in
+Haskell. The first argument should be a list of the variable names that will be
+local to this expression. The following demonstrates the usage:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">print(block([a,b],a:1,b:2,[a+b,numberp(a)]));
+print(numberp(a));
+</pre>
+</div>
+
+<pre class="example">
+[3, true]
+false
+</pre>
+</div>
+</div>
+
 <div id="outline-container-org55c18d1" class="outline-3">
 <h3 id="org55c18d1">Org-mode as a notebook environment</h3>
 <div class="outline-text-3" id="text-org55c18d1">
-<p>
-<a href="https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-maxima.html">This tutorial</a> shows how you can set up org-mode to work as a Maxima notebook.
-</p>
+<ul class="org-ul">
+<li><a href="https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-maxima.html">This tutorial</a> shows how you can set up org-mode to work as a Maxima notebook.</li>
+<li>To actually evaluate a source block use either <code>org-babel-execute-src-block</code> or
+<code>org-babel-execute-maybe</code>. The latter is just a convenience wrapper around the
+former. In spacemacs this is bound to <code>SPC m b e</code>.</li>
+</ul>
 </div>
 </div>
 
@@ -538,9 +499,9 @@ function use the <code>define</code> function.
 </div>
 </div>
 
-<div id="outline-container-orgfee75c0" class="outline-3">
-<h3 id="orgfee75c0">Simplification</h3>
-<div class="outline-text-3" id="text-orgfee75c0">
+<div id="outline-container-org4f94acf" class="outline-3">
+<h3 id="org4f94acf">Simplification</h3>
+<div class="outline-text-3" id="text-org4f94acf">
 <div class="org-src-container">
 <pre class="src src-maxima">restart();
 kill(all);
@@ -882,9 +843,9 @@ plot2d(rhs (sol), [x, 0,4], [y, 0, 10]);
 </div>
 </div>
 
-<div id="outline-container-org4f94acf" class="outline-3">
-<h3 id="org4f94acf">Simplification</h3>
-<div class="outline-text-3" id="text-org4f94acf">
+<div id="outline-container-org527b608" class="outline-3">
+<h3 id="org527b608">Simplification</h3>
+<div class="outline-text-3" id="text-org527b608">
 <p>
 This snippet demonstrates some ways to get different expressions for the same
 quantity. Note how the numerator and denominator can be separated to have
@@ -903,7 +864,7 @@ display(a, b, c, d);
 </pre>
 </div>
 
-<pre class="example" id="orgba9a261">
+<pre class="example" id="org4591bac">
       - aa           - aa
     %e     y + y + %e     x
 a = -----------------------
@@ -928,10 +889,88 @@ a = -----------------------
 </div>
 </div>
 </div>
+<div id="outline-container-org071e7b9" class="outline-2">
+<h2 id="org071e7b9">Front-ends for Maxima</h2>
+<div class="outline-text-2" id="text-org071e7b9">
+</div>
+<div id="outline-container-orga7e3cda" class="outline-3">
+<h3 id="orga7e3cda">wxMaxima</h3>
+<div class="outline-text-3" id="text-orga7e3cda">
+<ul class="org-ul">
+<li>Use <code>ctrl k</code> to trigger the auto-complete function.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd1e67cc" class="outline-3">
+<h3 id="orgd1e67cc">Emacs</h3>
+<div class="outline-text-3" id="text-orgd1e67cc">
+<p>
+Add the following to your configuration.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>add-to-list 'load-path <span style="color: #2d9574;">"&lt;path/to/emacs/maxima/"</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima-mode <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima mode"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imaxima <span style="color: #2d9574;">"imaxima"</span> <span style="color: #da8b55;">"Frontend for maxima with Image support"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'maxima <span style="color: #2d9574;">"maxima"</span> <span style="color: #da8b55;">"Maxima interaction"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>autoload 'imath-mode <span style="color: #2d9574;">"imath"</span> <span style="color: #da8b55;">"Imath mode for math formula input"</span> t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">setq</span> imaxima-use-maxima-mode-flag t<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">(</span>add-to-list 'auto-mode-alist '<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"\\.ma[cx]"</span> . maxima-mode<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+</pre>
+</div>
+
+<p>
+Start a Maxima session with <code>M-x imaxima</code>. To send a buffer to the REPL use <code>C-c
+C-b</code>. To send a region <code>C-c C-r</code> or just a single line <code>C-c C-c</code>. To get the
+potential completions for a variable name <code>M-TAB</code>.
+</p>
+</div>
+
+<div id="outline-container-org82d9640" class="outline-4">
+<h4 id="org82d9640">Spacemacs</h4>
+<div class="outline-text-4" id="text-org82d9640">
+<p>
+There is a <a href="https://github.com/dalanicolai/maxima-layer">spacemacs layer for maxima</a> and I have a <a href="https://github.com/aezarebski/maxima-layer">fork</a> too. The instructions
+above are not necessary if you are using this layer with spacemacs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc83e013" class="outline-4">
+<h4 id="orgc83e013">REPL display configuration</h4>
+<div class="outline-text-4" id="text-orgc83e013">
+<p>
+The output of Maxima can be displayed in three ways: single line of ascii,
+multiple lines of ascii or rendered with <code>imaxima</code>. The output type is
+determined by the value of the <code>display2d</code> variable (in Maxima) which can be
+<code>false</code>, <code>true</code>, or <code>imaxima</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">display2d: true;
+</pre>
+</div>
+
+<p>
+If you want to change the font size for the latex output, modify the
+(customisable) variable <code>imaxima-fnt-size</code>.
+</p>
+
+<p>
+If you want to change the number of significant figures to which floating point
+numbers are displayed there is the variable <code>fpprintprec</code> (floating point print
+precision?). The default value is <code>0</code>, for larger integers it is that number of
+digits.
+</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: alex</p>
-<p class="date">Created: 2022-01-25 Tue 21:33</p>
+<p class="date">Created: 2022-03-05 Sat 12:02</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
