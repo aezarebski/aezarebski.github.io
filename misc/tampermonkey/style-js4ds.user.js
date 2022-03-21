@@ -5,6 +5,7 @@
 // @description  Make the site a little easier on the eye.
 // @author       Alexander E Zarebski
 // @match        http://js4ds.org/
+// @match        https://js4ds.org/
 // @icon         https://www.google.com/s2/favicons?domain=js4ds.org
 // @grant        none
 // ==/UserScript==

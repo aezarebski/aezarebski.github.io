@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-14 Mon 10:20 -->
+<!-- 2022-03-18 Fri 19:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-js4ds</title>
-<meta name="author" content="alex" />
+<meta name="author" content="Alex Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -206,25 +206,25 @@
 <a href="../index.html">Chapter listing</a>
 </p>
 
-<div id="outline-container-org7c6f6d9" class="outline-2">
-<h2 id="org7c6f6d9">Managing data</h2>
-<div class="outline-text-2" id="text-org7c6f6d9">
+<div id="outline-container-orgf28b326" class="outline-2">
+<h2 id="orgf28b326">Managing data</h2>
+<div class="outline-text-2" id="text-orgf28b326">
 </div>
-<div id="outline-container-orga9b955d" class="outline-3">
-<h3 id="orga9b955d">Set up</h3>
-<div class="outline-text-3" id="text-orga9b955d">
+<div id="outline-container-org0082d59" class="outline-3">
+<h3 id="org0082d59">Set up</h3>
+<div class="outline-text-3" id="text-org0082d59">
 <div class="org-src-container">
 <pre class="src src-sh">mkdir managing-data
 <span style="color: #3a81c3;">cd</span> managing-data
 npm init -y
-npm install papaparse seedrandom
+npm install papaparse seedrandom command-line-args
 touch select-random.js
 node select-random.js surveys.csv <span style="color: #4e3163;">10</span> slice.csv
 </pre>
 </div>
 
 <p>
-The starting form of <code>select-random.js</code> is the following
+Download the <a href="https://figshare.com/articles/Portal_Project_Teaching_Database/1314459"><code>survey.csv</code></a> dataset. The starting form of <code>select-random.js</code> is the following
 </p>
 
 <div class="org-src-container">
@@ -245,13 +245,13 @@ fs.writeFileSync<span style="color: #3a81c3;">(</span>outputFile, header + <span
 </div>
 </div>
 
-<div id="outline-container-orgc38578f" class="outline-3">
-<h3 id="orgc38578f">Exercises</h3>
-<div class="outline-text-3" id="text-orgc38578f">
+<div id="outline-container-org10581d3" class="outline-3">
+<h3 id="org10581d3">Exercises</h3>
+<div class="outline-text-3" id="text-org10581d3">
 </div>
-<div id="outline-container-orge7d8db0" class="outline-4">
-<h4 id="orge7d8db0">Tracing Data</h4>
-<div class="outline-text-4" id="text-orge7d8db0">
+<div id="outline-container-org6bb6ef4" class="outline-4">
+<h4 id="org6bb6ef4">Tracing Data</h4>
+<div class="outline-text-4" id="text-org6bb6ef4">
 <div class="org-src-container">
 <pre class="src src-javascript"><span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">sample</span> = lines.slice<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
       .map<span style="color: #3a81c3;">(</span>line =&gt; <span style="color: #6c3163;">[</span>Math.random<span style="color: #2d9574;">()</span>, line<span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
@@ -271,11 +271,11 @@ fs.writeFileSync<span style="color: #3a81c3;">(</span>outputFile, header + <span
 </div>
 </div>
 
-<div id="outline-container-org242acbf" class="outline-4">
-<h4 id="org242acbf">Unrandom</h4>
-<div class="outline-text-4" id="text-org242acbf">
+<div id="outline-container-org9e52979" class="outline-4">
+<h4 id="org9e52979">Unrandom</h4>
+<div class="outline-text-4" id="text-org9e52979">
 <p>
-We had already installed <code>seedrandom</code> as part of the <a href="#orga9b955d">set up</a>. To import the package
+We had already installed <code>seedrandom</code> as part of the <a href="#org0082d59">set up</a>. To import the package
 and use a command line argument as the seed for the PRNG the first lines of
 <code>select-random.js</code> become the following:
 </p>
@@ -296,9 +296,9 @@ sampler.
 </div>
 </div>
 
-<div id="outline-container-orgbad6803" class="outline-4">
-<h4 id="orgbad6803">One Record Per Year</h4>
-<div class="outline-text-4" id="text-orgbad6803">
+<div id="outline-container-org77cb109" class="outline-4">
+<h4 id="org77cb109">One Record Per Year</h4>
+<div class="outline-text-4" id="text-org77cb109">
 <p>
 We start be including the <code>DataManager</code> class with an additional attribute
 indicating the header.
@@ -370,9 +370,9 @@ statement for each of these records.
 </div>
 </div>
 
-<div id="outline-container-orgde68de9" class="outline-4">
-<h4 id="orgde68de9">Error Handling</h4>
-<div class="outline-text-4" id="text-orgde68de9">
+<div id="outline-container-org93b95d7" class="outline-4">
+<h4 id="org93b95d7">Error Handling</h4>
+<div class="outline-text-4" id="text-org93b95d7">
 <p>
 We can expand the <code>DataManager</code> class to have a list of parse errors (which are
 returned by <code>papaparse</code>) and other errors which may be beyond the scope of the
@@ -404,9 +404,9 @@ parsing step.
 </div>
 </div>
 
-<div id="outline-container-org9796a81" class="outline-4">
-<h4 id="org9796a81">Generalization</h4>
-<div class="outline-text-4" id="text-org9796a81">
+<div id="outline-container-org8a67071" class="outline-4">
+<h4 id="org8a67071">Generalization</h4>
+<div class="outline-text-4" id="text-org8a67071">
 <p>
 We can achieve the summary for arbitrary variables by using the <i>spread syntax</i> to
 collect them into an array and then construct the key-value pairs in a
@@ -436,15 +436,51 @@ programmatic way. The only change is to the <code>getSurveyRange</code> method.
 </div>
 </div>
 
-<div id="outline-container-orgfdd81cf" class="outline-4">
-<h4 id="orgfdd81cf"><span class="todo TODO">TODO</span> Handling Command-Line Arguments</h4>
+<div id="outline-container-org175c37f" class="outline-4">
+<h4 id="org175c37f">Handling Command-Line Arguments</h4>
+<div class="outline-text-4" id="text-org175c37f">
+<p>
+With the <code>command-line-args</code> package we can define command line arguments in a
+more explicit way. Using this package,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">const</span> <span style="color: #3a81c3;">[</span><span style="color: #715ab1;">inputFile</span>, <span style="color: #715ab1;">numLines</span>, <span style="color: #715ab1;">outputFile</span><span style="color: #3a81c3;">]</span> = process.argv.splice<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">2</span><span style="color: #3a81c3;">)</span>;
+</pre>
+</div>
+
+<p>
+is more cleanly expressed as
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">commandLineArgs</span> = require<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'command-line-args'</span><span style="color: #3a81c3;">)</span>;
+
+<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">optionDefinitions</span> = <span style="color: #3a81c3;">[</span>
+    <span style="color: #6c3163;">{</span>name: <span style="color: #2d9574;">'inputFile'</span>, alias: <span style="color: #2d9574;">'i'</span>, type: String<span style="color: #6c3163;">}</span>,
+    <span style="color: #6c3163;">{</span>name: <span style="color: #2d9574;">'numLines'</span>, alias: <span style="color: #2d9574;">'n'</span>, type: Number<span style="color: #6c3163;">}</span>,
+    <span style="color: #6c3163;">{</span>name: <span style="color: #2d9574;">'outputFile'</span>, alias: <span style="color: #2d9574;">'o'</span>, type: String<span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">]</span>;
+<span style="color: #3a81c3;">const</span> <span style="color: #3a81c3;">{</span>inputFile, numLines, outputFile<span style="color: #3a81c3;">}</span> = commandLineArgs<span style="color: #3a81c3;">(</span>optionDefinitions<span style="color: #3a81c3;">)</span>;
+</pre>
+</div>
+
+<p>
+This allows us to call this script with named arguments:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">node select-random.js -i surveys.csv -n <span style="color: #4e3163;">10</span> -o slice.csv
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: alex</p>
-<p class="date">Created: 2022-03-14 Mon 10:20</p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2022-03-18 Fri 19:28</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
