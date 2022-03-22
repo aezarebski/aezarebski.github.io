@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-16 Tue 16:43 -->
+<!-- 2022-03-22 Tue 18:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -401,6 +401,49 @@ depths from the TMRCA down to each node.
 I wrote a little tool that uses ape to simulate from the
 birth-death-sampling-occurrence process. It is available in this <a href="https://gist.github.com/aezarebski/346684e01831be9293ef1830350a4d97">gist</a>.
 </p>
+
+<p>
+To simulate from the process with time varying rates, here is a little example.
+Note that this uses forwards time starting from the origin as time zero. Figure
+<a href="#org7136485">X</a> shows the output of this simulation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ape<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
+set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+
+<span style="color: #6c3163; font-weight: bold;">birth_rate</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>ts<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  ifelse<span style="color: #6c3163;">(</span>ts &lt; <span style="color: #4e3163;">0.5</span>, <span style="color: #4e3163;">5.0</span>, <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">death_rate</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>ts<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  rep<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2.0</span>, length<span style="color: #2d9574;">(</span>ts<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #6c3163; font-weight: bold;">max_ltt</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  max<span style="color: #6c3163;">(</span>ltt.plot.coords<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)[</span>,<span style="color: #4e3163;">2</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+
+ps <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> purrr::map<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">100</span>, \<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> rlineage<span style="color: #6c3163;">(</span>birth_rate, death_rate, Tmax = <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+
+y_upper_lim <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> purrr::map<span style="color: #3a81c3;">(</span>ps, max_ltt<span style="color: #3a81c3;">)</span> |&gt; as_vector<span style="color: #3a81c3;">()</span> |&gt; max<span style="color: #3a81c3;">()</span>
+png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'ape-rlineage-demo.png'</span>,
+    width = <span style="color: #4e3163;">1.618</span> * <span style="color: #4e3163;">300</span>,
+    height = <span style="color: #4e3163;">300</span>,
+    units = <span style="color: #2d9574;">"px"</span><span style="color: #3a81c3;">)</span>
+ltt.plot<span style="color: #3a81c3;">(</span>ps<span style="color: #6c3163;">[</span><span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">]</span>, ylim = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>, y_upper_lim<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+purrr::walk<span style="color: #3a81c3;">(</span>tail<span style="color: #6c3163;">(</span>ps, -<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>, ltt.lines<span style="color: #3a81c3;">)</span>
+abline<span style="color: #3a81c3;">(</span>v=-<span style="color: #4e3163;">0.5</span>, col=<span style="color: #2d9574;">'red'</span><span style="color: #3a81c3;">)</span>
+dev.off<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+
+<div id="org7136485" class="figure">
+<p><img src="../images/ape-rlineage-demo.png" alt="ape-rlineage-demo.png" width="450px" />
+</p>
+</div>
 </div>
 </div>
 </div>
@@ -433,7 +476,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-11-16 Tue 16:43</p>
+<p class="date">Created: 2022-03-22 Tue 18:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
