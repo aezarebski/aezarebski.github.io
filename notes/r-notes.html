@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-16 Wed 15:43 -->
+<!-- 2022-03-23 Wed 17:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -290,11 +290,16 @@
 <li><a href="#org6bc5c30">MCMC (without <code>Stan</code>)</a></li>
 <li><a href="#orge8dc911">(Nonparametric) density estimation with <code>KernSmooth</code></a></li>
 </ul>
+</li>
+<li><a href="#org1d0e592">Miscellaneous functions</a>
+<ul>
+<li><a href="#org6fc9f1f">Step function</a></li>
+</ul>
 </div>
 </div>
 
 
-<div id="orgb750310" class="figure">
+<div id="org4967643" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -704,7 +709,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="orgdef0904" class="figure">
+<div id="org8a79b7e" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -822,9 +827,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org0df82a0" class="outline-4">
-<h4 id="org0df82a0">Example</h4>
-<div class="outline-text-4" id="text-org0df82a0">
+<div id="outline-container-org8292fda" class="outline-4">
+<h4 id="org8292fda">Example</h4>
+<div class="outline-text-4" id="text-org8292fda">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
@@ -1239,9 +1244,9 @@ which produces <code>demo3.xml</code> shown below
 <h3 id="org4b67e7d">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org4b67e7d">
 </div>
-<div id="outline-container-org8292fda" class="outline-4">
-<h4 id="org8292fda">Example</h4>
-<div class="outline-text-4" id="text-org8292fda">
+<div id="outline-container-orga6ca707" class="outline-4">
+<h4 id="orga6ca707">Example</h4>
+<div class="outline-text-4" id="text-orga6ca707">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
@@ -2251,10 +2256,90 @@ ggplot<span style="color: #3a81c3;">()</span> +
 </div>
 </div>
 </div>
+
+<div id="outline-container-org1d0e592" class="outline-2">
+<h2 id="org1d0e592">Miscellaneous functions</h2>
+<div class="outline-text-2" id="text-org1d0e592">
+</div>
+<div id="outline-container-org6fc9f1f" class="outline-3">
+<h3 id="org6fc9f1f">Step function</h3>
+<div class="outline-text-3" id="text-org6fc9f1f">
+<p>
+The following snippet defines a vectorised step function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Return a vectorised step function.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">ts</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> the times at which there is a step.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">vs</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> the value of the function at the step.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">step_function_factory</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>ts, vs<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  n <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>ts<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">if</span> <span style="color: #6c3163;">(</span>n &lt; <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3;">stop</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"need at least one step time."</span><span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">}</span>
+  <span style="color: #3a81c3;">if</span> <span style="color: #6c3163;">(</span>length<span style="color: #2d9574;">(</span>vs<span style="color: #2d9574;">)</span> != <span style="color: #2d9574;">(</span><span style="color: #4e3163;">1</span> + n<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3;">stop</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"if there are n step times there must be n+1 values."</span><span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">}</span>
+
+  <span style="color: #6c3163; font-weight: bold;">step_func</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    m <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>
+    y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> numeric<span style="color: #2d9574;">(</span>m<span style="color: #2d9574;">)</span>
+    mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> logical<span style="color: #2d9574;">(</span>m<span style="color: #2d9574;">)</span>
+    mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> x &lt; ts<span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span><span style="color: #2d9574;">]</span>
+    y<span style="color: #2d9574;">[</span>mask<span style="color: #2d9574;">]</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> vs<span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span><span style="color: #2d9574;">]</span>
+    <span style="color: #3a81c3;">if</span> <span style="color: #2d9574;">(</span>n &gt; <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+      <span style="color: #3a81c3;">for</span> <span style="color: #67b11d;">(</span>ix <span style="color: #3a81c3;">in</span> seq.int<span style="color: #b1951d;">(</span><span style="color: #4e3163;">2</span>, n<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+        mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #b1951d;">(</span>ts<span style="color: #3a81c3;">[</span>ix-<span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span> &lt;= x<span style="color: #b1951d;">)</span> &amp; <span style="color: #b1951d;">(</span>x &lt; ts<span style="color: #3a81c3;">[</span>ix<span style="color: #3a81c3;">]</span><span style="color: #b1951d;">)</span>
+        y<span style="color: #b1951d;">[</span>mask<span style="color: #b1951d;">]</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> vs<span style="color: #b1951d;">[</span>ix<span style="color: #b1951d;">]</span>
+      <span style="color: #67b11d;">}</span>
+    <span style="color: #2d9574;">}</span>
+    mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> x &gt;= ts<span style="color: #2d9574;">[</span>n<span style="color: #2d9574;">]</span>
+    y<span style="color: #2d9574;">[</span>mask<span style="color: #2d9574;">]</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> vs<span style="color: #2d9574;">[</span>n+<span style="color: #4e3163;">1</span><span style="color: #2d9574;">]</span>
+    <span style="color: #3a81c3;">return</span><span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">}</span>
+
+  <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>step_func<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+Here is a demonstration of it in action producing Figure <a href="#orgb003d15">X</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">ts <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">2.0</span>, <span style="color: #4e3163;">3.0</span><span style="color: #3a81c3;">)</span>
+vs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">3.0</span>, <span style="color: #4e3163;">2.5</span>, <span style="color: #4e3163;">3.5</span><span style="color: #3a81c3;">)</span>
+demo_func <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> step_function_factory<span style="color: #3a81c3;">(</span>ts, vs<span style="color: #3a81c3;">)</span>
+x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> seq<span style="color: #3a81c3;">(</span>from = <span style="color: #4e3163;">0</span>, to = <span style="color: #4e3163;">4</span>, length = <span style="color: #4e3163;">200</span><span style="color: #3a81c3;">)</span>
+y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> demo_func<span style="color: #3a81c3;">(</span>xx<span style="color: #3a81c3;">)</span>
+
+png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'step-function-demo.png'</span>,
+    width = <span style="color: #4e3163;">1.618</span> * <span style="color: #4e3163;">300</span>,
+    height = <span style="color: #4e3163;">300</span>,
+    units = <span style="color: #2d9574;">"px"</span><span style="color: #3a81c3;">)</span>
+plot<span style="color: #3a81c3;">(</span>x, y, <span style="color: #2d9574;">'l'</span>, col = <span style="color: #2d9574;">'black'</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>ts, demo_func<span style="color: #6c3163;">(</span>ts<span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'blue'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">16</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>ts, demo_func<span style="color: #6c3163;">(</span>ts - <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'red'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+dev.off<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+
+<div id="orgb003d15" class="figure">
+<p><img src="../images/step-function-demo.png" alt="step-function-demo.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Example of step function result.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-03-16 Wed 15:43</p>
+<p class="date">Created: 2022-03-23 Wed 17:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
