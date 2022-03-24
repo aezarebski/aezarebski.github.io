@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-23 Wed 17:08 -->
+<!-- 2022-03-24 Thu 12:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -299,7 +299,7 @@
 </div>
 
 
-<div id="org4967643" class="figure">
+<div id="org2a091a9" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -709,7 +709,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org8a79b7e" class="figure">
+<div id="org9ad1923" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -827,9 +827,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org8292fda" class="outline-4">
-<h4 id="org8292fda">Example</h4>
-<div class="outline-text-4" id="text-org8292fda">
+<div id="outline-container-orga6ca707" class="outline-4">
+<h4 id="orga6ca707">Example</h4>
+<div class="outline-text-4" id="text-orga6ca707">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>htmltools<span style="color: #3a81c3;">)</span>
 
@@ -1244,9 +1244,9 @@ which produces <code>demo3.xml</code> shown below
 <h3 id="org4b67e7d">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org4b67e7d">
 </div>
-<div id="outline-container-orga6ca707" class="outline-4">
-<h4 id="orga6ca707">Example</h4>
-<div class="outline-text-4" id="text-orga6ca707">
+<div id="outline-container-org73a27dd" class="outline-4">
+<h4 id="org73a27dd">Example</h4>
+<div class="outline-text-4" id="text-org73a27dd">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>whisker<span style="color: #3a81c3;">)</span>
 
@@ -2264,6 +2264,10 @@ ggplot<span style="color: #3a81c3;">()</span> +
 <div id="outline-container-org6fc9f1f" class="outline-3">
 <h3 id="org6fc9f1f">Step function</h3>
 <div class="outline-text-3" id="text-org6fc9f1f">
+</div>
+<div id="outline-container-org04b9b6d" class="outline-4">
+<h4 id="org04b9b6d">Step function construction</h4>
+<div class="outline-text-4" id="text-org04b9b6d">
 <p>
 The following snippet defines a vectorised step function.
 </p>
@@ -2300,7 +2304,13 @@ The following snippet defines a vectorised step function.
     <span style="color: #3a81c3;">return</span><span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span>
   <span style="color: #6c3163;">}</span>
 
-  <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>step_func<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>
+    list<span style="color: #2d9574;">(</span>
+      func = step_func,
+      times = ts,
+      values = vs
+    <span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">)</span>
 <span style="color: #3a81c3;">}</span>
 </pre>
 </div>
@@ -2310,19 +2320,27 @@ Here is a demonstration of it in action producing Figure <a href="#orgb003d15">X
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">ts <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">2.0</span>, <span style="color: #4e3163;">3.0</span><span style="color: #3a81c3;">)</span>
-vs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">3.0</span>, <span style="color: #4e3163;">2.5</span>, <span style="color: #4e3163;">3.5</span><span style="color: #3a81c3;">)</span>
-demo_func <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> step_function_factory<span style="color: #3a81c3;">(</span>ts, vs<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">t1s <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">2.0</span>, <span style="color: #4e3163;">3.0</span><span style="color: #3a81c3;">)</span>
+v1s <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">3.0</span>, <span style="color: #4e3163;">2.5</span>, <span style="color: #4e3163;">3.5</span><span style="color: #3a81c3;">)</span>
+demo1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> step_function_factory<span style="color: #3a81c3;">(</span>t1s, v1s<span style="color: #3a81c3;">)</span>
+t2s <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1.0</span><span style="color: #3a81c3;">)</span>
+v2s <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">2.0</span><span style="color: #3a81c3;">)</span>
+demo2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> step_function_factory<span style="color: #3a81c3;">(</span>t2s, v2s<span style="color: #3a81c3;">)</span>
+
 x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> seq<span style="color: #3a81c3;">(</span>from = <span style="color: #4e3163;">0</span>, to = <span style="color: #4e3163;">4</span>, length = <span style="color: #4e3163;">200</span><span style="color: #3a81c3;">)</span>
-y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> demo_func<span style="color: #3a81c3;">(</span>xx<span style="color: #3a81c3;">)</span>
+y1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> demo1$func<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>
+y2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> demo2$func<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>
 
 png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'step-function-demo.png'</span>,
     width = <span style="color: #4e3163;">1.618</span> * <span style="color: #4e3163;">300</span>,
     height = <span style="color: #4e3163;">300</span>,
     units = <span style="color: #2d9574;">"px"</span><span style="color: #3a81c3;">)</span>
-plot<span style="color: #3a81c3;">(</span>x, y, <span style="color: #2d9574;">'l'</span>, col = <span style="color: #2d9574;">'black'</span><span style="color: #3a81c3;">)</span>
-points<span style="color: #3a81c3;">(</span>ts, demo_func<span style="color: #6c3163;">(</span>ts<span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'blue'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">16</span><span style="color: #3a81c3;">)</span>
-points<span style="color: #3a81c3;">(</span>ts, demo_func<span style="color: #6c3163;">(</span>ts - <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'red'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+plot<span style="color: #3a81c3;">(</span>x, y1, <span style="color: #2d9574;">'l'</span>, col = <span style="color: #2d9574;">'black'</span>, ylab = <span style="color: #2d9574;">""</span>, ylim = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0.5</span>, <span style="color: #4e3163;">3.5</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+lines<span style="color: #3a81c3;">(</span>x, y2, col = <span style="color: #2d9574;">'black'</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>t1s, demo1$func<span style="color: #6c3163;">(</span>t1s<span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'blue'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">16</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>t1s, demo1$func<span style="color: #6c3163;">(</span>t1s - <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'red'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>t2s, demo2$func<span style="color: #6c3163;">(</span>t2s<span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'blue'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">16</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>t2s, demo2$func<span style="color: #6c3163;">(</span>t2s - <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'red'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
 dev.off<span style="color: #3a81c3;">()</span>
 </pre>
 </div>
@@ -2335,11 +2353,78 @@ dev.off<span style="color: #3a81c3;">()</span>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org7556ef9" class="outline-4">
+<h4 id="org7556ef9">Applying binary functions to step functions</h4>
+<div class="outline-text-4" id="text-org7556ef9">
+<p>
+The class of step functions is closed under the point-wise application of binary
+functions. What? This means if you have two functions \(f(x)\) and \(g(x)\)
+which are step functions, then \(h(x) := f(x) + g(x) \) is also a step function,
+and more generally \(h^{F}(x) := F(f(x), g(x))\) is a step function given some
+binary function \(F\). This can be implemented as follows
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Return a vectorised step function resulting from the point-wise application</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> of a binary function to two step functions.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">step_func_a</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> a step function (see \code{step_function_factory}.)</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">step_func_b</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> a step function (see \code{step_function_factory}.)</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">binary_func</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> a binary function.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">map_step_function</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>step_func_a, step_func_b, binary_func<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  times_c <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sort<span style="color: #6c3163;">(</span>union<span style="color: #2d9574;">(</span>step_func_a$times, step_func_b$times<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+  n <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>times_c<span style="color: #6c3163;">)</span>
+  values_c <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> numeric<span style="color: #6c3163;">(</span>n + <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  values_c<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> binary_func<span style="color: #6c3163;">(</span>
+    step_func_a$func<span style="color: #2d9574;">(</span>step_func_a$times<span style="color: #67b11d;">[</span><span style="color: #4e3163;">1</span><span style="color: #67b11d;">]</span> - <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>,
+    step_func_b$func<span style="color: #2d9574;">(</span>step_func_b$times<span style="color: #67b11d;">[</span><span style="color: #4e3163;">1</span><span style="color: #67b11d;">]</span> - <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">for</span> <span style="color: #6c3163;">(</span>ix <span style="color: #3a81c3;">in</span> seq.int<span style="color: #2d9574;">(</span>n<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    values_c<span style="color: #2d9574;">[</span>ix+<span style="color: #4e3163;">1</span><span style="color: #2d9574;">]</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> binary_func<span style="color: #2d9574;">(</span>
+      step_func_a$func<span style="color: #67b11d;">(</span>times_c<span style="color: #b1951d;">[</span>ix<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span>,
+      step_func_b$func<span style="color: #67b11d;">(</span>times_c<span style="color: #b1951d;">[</span>ix<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span>
+    <span style="color: #2d9574;">)</span>
+  <span style="color: #6c3163;">}</span>
+  <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>step_function_factory<span style="color: #2d9574;">(</span>times_c, values_c<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+Here is a demonstration of it in action producing Figure [[fig:step-function-binary][Y]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">demo3 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> map_step_function<span style="color: #3a81c3;">(</span>demo1, demo2, <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x, y<span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span> x / y <span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>
+y3 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> demo3$func<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>
+
+png<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">'step-function-binary-demo.png'</span>,
+    width = <span style="color: #4e3163;">1.618</span> * <span style="color: #4e3163;">300</span>,
+    height = <span style="color: #4e3163;">300</span>,
+    units = <span style="color: #2d9574;">"px"</span><span style="color: #3a81c3;">)</span>
+plot<span style="color: #3a81c3;">(</span>x, y3, <span style="color: #2d9574;">'l'</span>, col = <span style="color: #2d9574;">'black'</span>, ylab = <span style="color: #2d9574;">""</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>t3s, demo3$func<span style="color: #6c3163;">(</span>t3s<span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'blue'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">16</span><span style="color: #3a81c3;">)</span>
+points<span style="color: #3a81c3;">(</span>t3s, demo3$func<span style="color: #6c3163;">(</span>t3s - <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span>, col = <span style="color: #2d9574;">'red'</span>, cex = <span style="color: #4e3163;">3</span>, pch = <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+dev.off<span style="color: #3a81c3;">()</span>
+</pre>
+</div>
+
+
+<div id="orgaad5406" class="figure">
+<p><img src="../images/step-function-binary-demo.png" alt="step-function-binary-demo.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The result of combining two step functions.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-03-23 Wed 17:08</p>
+<p class="date">Created: 2022-03-24 Thu 12:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
