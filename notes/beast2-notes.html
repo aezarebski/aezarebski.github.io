@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-23 Wed 17:08 -->
+<!-- 2022-04-15 Fri 12:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-notes-beast2</title>
+<title>beast2-aez-notes</title>
 <meta name="author" content="Alex Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,7 +193,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         displayAlign: "center",
@@ -218,13 +218,16 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">aez-notes-beast2</h1>
+<h1 class="title">beast2-aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
-<script src="./main.js"></script>
+
+<div id="orga7c40d1" class="figure">
+<p><img src="../images/beast2-logo.png" alt="beast2-logo.png" width="250px" />
+</p>
+</div>
 
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
@@ -234,10 +237,13 @@
 <li><a href="#org0447a40">Notes</a>
 <ul>
 <li><a href="#org154e07a">Build a BEAST2</a></li>
+<li><a href="#orgbc136f7"><span class="todo TODO">TODO</span> Understanding Packages</a></li>
 <li><a href="#org26ab5d4">Understanding BEAST2</a></li>
+<li><a href="#org1d1e787"><span class="todo TODO">TODO</span> Understanding the XML</a></li>
 <li><a href="#orga12a8e1">Understanding <code>bdsky</code></a></li>
 </ul>
 </li>
+<li><a href="#orgde82e86">Packages</a></li>
 <li><a href="#org40ad059">Tools</a>
 <ul>
 <li><a href="#orga79c9df">Pretty printing Tracer output</a></li>
@@ -277,8 +283,15 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 <h3 id="org154e07a">Build a BEAST2</h3>
 <div class="outline-text-3" id="text-org154e07a">
 <ol class="org-ol">
-<li>Clone the BEAST2 repository.</li>
-<li>Build the project by running <code>ant</code>.</li>
+<li>Clone the BEAST2 repository.
+<ul class="org-ul">
+<li><code>git clone git@github.com:CompEvol/beast2.git</code></li>
+</ul></li>
+<li>Build the project by running <code>ant</code>.
+<ul class="org-ul">
+<li>If you don't care about running the tests <code>ant compile-all</code> does the
+compilation without running the tests.</li>
+</ul></li>
 <li>Run the desired program:
 <ul class="org-ul">
 <li><code>java -cp build/dist/beast.jar beast.app.beauti.Beauti</code></li>
@@ -290,6 +303,59 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 Note that you can clock on the little '?' in Beauti to get the location that
 packages are stored at.
 </p>
+</div>
+
+<div id="outline-container-org7263170" class="outline-4">
+<h4 id="org7263170">Notes</h4>
+<div class="outline-text-4" id="text-org7263170">
+<ul class="org-ul">
+<li><code>v2.6.7</code>:</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc136f7" class="outline-3">
+<h3 id="orgbc136f7"><span class="todo TODO">TODO</span> Understanding Packages</h3>
+<div class="outline-text-3" id="text-orgbc136f7">
+<p>
+Bouckaert has a <a href="https://www.beast2.org/2021/06/21/building-from-source.html">blog post</a> about building package from source from mid-2021. The
+following line from the Babel <code>build.xml</code> (which is the example package used in
+the blog post)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #6c3163; font-weight: bold;">property</span> <span style="color: #715ab1;">name</span>=<span style="color: #2d9574;">"beast2path"</span> <span style="color: #715ab1;">location</span>=<span style="color: #2d9574;">"../beast2"</span> /&gt;
+</pre>
+</div>
+
+<p>
+makes it sound like it assumes that BEAST2 will be in the same directory as the
+packages during compilation.
+</p>
+</div>
+
+<div id="outline-container-org88cd08c" class="outline-4">
+<h4 id="org88cd08c"><span class="todo TODO">TODO</span> Configuring IntelliJ for writing a package</h4>
+<div class="outline-text-4" id="text-org88cd08c">
+<p>
+I have no idea if this is the correct way that BEAST2 packages should be set up,
+but this has worked for me in the past, and provided there are a sufficient
+number of unit tests I assume it should work&#x2026;
+</p>
+
+<ul class="org-ul">
+<li>Note that the <code>build.xml</code> probably assumes that BEAST2 and your code are in
+sibling directories.</li>
+<li>Build the BEAST2 project first and then close it and open your project
+(probably based on the results of <code>ant skeleton</code>).</li>
+<li>Click through <b>File</b> &#x2013; <b>Project Settings</b> &#x2013; <b>Modules</b> &#x2013; <b>&lt;YOUR/PACKAGE&gt;</b> and then
+using the <b>+</b> (add) button, tell IntelliJ that you want to add a Module
+Dependency, which will be BEAST2.</li>
+<li>When building the package, if it complains about missing packages, you may
+need to add JAR files in the same way.</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -306,13 +372,19 @@ foundation for both the classes deriving from <code>SpeciesTreeDistribution</cod
 are the birth-death models) and various coalescent models.</li>
 </ul>
 </div>
+</div>
 
-<div id="outline-container-orgde82e86" class="outline-4">
-<h4 id="orgde82e86"><span class="todo TODO">TODO</span> Packages</h4>
-<div class="outline-text-4" id="text-orgde82e86">
+<div id="outline-container-org1d1e787" class="outline-3">
+<h3 id="org1d1e787"><span class="todo TODO">TODO</span> Understanding the XML</h3>
+<div class="outline-text-3" id="text-org1d1e787">
 <p>
-Bouckaert has a <a href="https://www.beast2.org/2021/06/21/building-from-source.html">blog post</a> about building package from source from mid-2021.
+The following tag can be used as a way to initialise values in an analysis&#x2026; I
+think. For example, this can be used to specify the starting tree.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #6c3163; font-weight: bold;">init</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"PUT THE CLASS HERE"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"PUT A UNIQUE IDENTIFIER HERE"</span> /&gt;
+</pre>
 </div>
 </div>
 </div>
@@ -509,6 +581,67 @@ method.
 </div>
 </div>
 
+<div id="outline-container-orgde82e86" class="outline-2">
+<h2 id="orgde82e86">Packages</h2>
+<div class="outline-text-2" id="text-orgde82e86">
+<p>
+Here are some links to BEAST2 packages that may be of interest. This table is
+likely to go out of date <i>very</i> quickly.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> BEAST2 packages</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Package</th>
+<th scope="col" class="org-left">Publication (implementation)</th>
+<th scope="col" class="org-left">Source</th>
+<th scope="col" class="org-left">Publication (method)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">BADTRIP</td>
+<td class="org-left"><a href="https://doi.org/10.1371/journal.pcbi.1006117">https://doi.org/10.1371/journal.pcbi.1006117</a></td>
+<td class="org-left"><a href="https://bitbucket.org/nicofmay/badtrip/src/master/">bitbucket</a></td>
+<td class="org-left"><code>???</code></td>
+</tr>
+
+<tr>
+<td class="org-left">BDSKY</td>
+<td class="org-left"><a href="https://doi.org/10.1073/pnas.1207965110">https://doi.org/10.1073/pnas.1207965110</a></td>
+<td class="org-left"><a href="https://github.com/BEAST2-Dev/bdsky/">github</a></td>
+<td class="org-left"><a href="https://doi.org/https://doi.org/10.1016/j.jtbi.2010.09.010">https://doi.org/https://doi.org/10.1016/j.jtbi.2010.09.010</a></td>
+</tr>
+
+<tr>
+<td class="org-left">BESP</td>
+<td class="org-left"><a href="https://doi.org/10.1093/molbev/msaa016">https://doi.org/10.1093/molbev/msaa016</a></td>
+<td class="org-left"><a href="https://github.com/laduplessis/besp/">github</a></td>
+<td class="org-left"><a href="https://doi.org/10.1093/molbev/msaa016">https://doi.org/10.1093/molbev/msaa016</a></td>
+</tr>
+
+<tr>
+<td class="org-left">TimTam</td>
+<td class="org-left"><code>???</code></td>
+<td class="org-left"><a href="https://github.com/aezarebski/timtam2">github</a></td>
+<td class="org-left"><a href="https://doi.org/10.1371/journal.pcbi.1009805">https://doi.org/10.1371/journal.pcbi.1009805</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
 <div id="outline-container-org40ad059" class="outline-2">
 <h2 id="org40ad059">Tools</h2>
 <div class="outline-text-2" id="text-org40ad059">
@@ -690,9 +823,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-orgd8c899f" class="outline-4">
-<h4 id="orgd8c899f">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgd8c899f">
+<div id="outline-container-orge0b5749" class="outline-4">
+<h4 id="orge0b5749">Running the sampler</h4>
+<div class="outline-text-4" id="text-orge0b5749">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -709,16 +842,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-org0b64cd7" class="outline-4">
-<h4 id="org0b64cd7">Visualising the results</h4>
-<div class="outline-text-4" id="text-org0b64cd7">
+<div id="outline-container-orga28472b" class="outline-4">
+<h4 id="orga28472b">Visualising the results</h4>
+<div class="outline-text-4" id="text-orga28472b">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org49e855c" class="figure">
+<div id="org0830091" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -816,9 +949,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-orgefa74d5" class="outline-4">
-<h4 id="orgefa74d5">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgefa74d5">
+<div id="outline-container-org865b3ce" class="outline-4">
+<h4 id="org865b3ce">Running the sampler</h4>
+<div class="outline-text-4" id="text-org865b3ce">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -835,16 +968,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-orgf6e4d91" class="outline-4">
-<h4 id="orgf6e4d91">Visualising the results</h4>
-<div class="outline-text-4" id="text-orgf6e4d91">
+<div id="outline-container-orgc1dc333" class="outline-4">
+<h4 id="orgc1dc333">Visualising the results</h4>
+<div class="outline-text-4" id="text-orgc1dc333">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org18b8706" class="figure">
+<div id="orgb132892" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -1102,9 +1235,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-org5e50f76" class="outline-4">
-<h4 id="org5e50f76">Running the sampler</h4>
-<div class="outline-text-4" id="text-org5e50f76">
+<div id="outline-container-org08790ef" class="outline-4">
+<h4 id="org08790ef">Running the sampler</h4>
+<div class="outline-text-4" id="text-org08790ef">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -1190,7 +1323,7 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="orgaf52c30" class="figure">
+<div id="org71ace5f" class="figure">
 <p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
@@ -1513,7 +1646,7 @@ of sampling proportions is close to the true ratio.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-03-23 Wed 17:08</p>
+<p class="date">Created: 2022-04-15 Fri 12:28</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

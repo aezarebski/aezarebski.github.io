@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2022-04-15 Fri 12:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -228,36 +228,36 @@ Poisson distribution for the number of colonies per plate. To consider the large
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">f<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> := pdf_poisson<span style="color: #4f97d7;">(</span>x,x<span style="color: #4f97d7;">)</span>;
-print<span style="color: #4f97d7;">(</span>f<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">f<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> := pdf_poisson<span style="color: #3a81c3;">(</span>x,x<span style="color: #3a81c3;">)</span>;
+print<span style="color: #3a81c3;">(</span>f<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 /*
  x   - x
 x  %e
--------- 
+--------
    x!
 */
 
-stirling<span style="color: #4f97d7;">(</span>n<span style="color: #4f97d7;">)</span> := n * log<span style="color: #4f97d7;">(</span>n<span style="color: #4f97d7;">)</span> - n + log<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">2</span> * %pi * n<span style="color: #4f97d7;">)</span> / <span style="color: #a45bad;">2</span>;
+stirling<span style="color: #3a81c3;">(</span>n<span style="color: #3a81c3;">)</span> := n * log<span style="color: #3a81c3;">(</span>n<span style="color: #3a81c3;">)</span> - n + log<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">2</span> * %pi * n<span style="color: #3a81c3;">)</span> / <span style="color: #4e3163;">2</span>;
 
-approxLogF<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> := <span style="color: #4f97d7;">(</span>x * log<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> - x<span style="color: #4f97d7;">)</span> - stirling<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>;
+approxLogF<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> := <span style="color: #3a81c3;">(</span>x * log<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> - x<span style="color: #3a81c3;">)</span> - stirling<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>;
 
-approxLogF2<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> := <span style="color: #a45bad;">1</span> / sqrt<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">2</span> * %pi * x<span style="color: #4f97d7;">)</span>;
-print<span style="color: #4f97d7;">(</span>float<span style="color: #bc6ec5;">(</span>approxLogF2<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+approxLogF2<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> := <span style="color: #4e3163;">1</span> / sqrt<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">2</span> * %pi * x<span style="color: #3a81c3;">)</span>;
+print<span style="color: #3a81c3;">(</span>float<span style="color: #6c3163;">(</span>approxLogF2<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
 /*
-<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">3989422804014326</span>
------------------- 
-     sqrt<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
+<span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">3989422804014326</span>
+------------------
+     sqrt<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>
 */
 
 
-vals<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> := <span style="color: #4f97d7;">[</span>x, float<span style="color: #bc6ec5;">(</span>f<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, float<span style="color: #bc6ec5;">(</span>approxLogF2<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>;
-print<span style="color: #4f97d7;">(</span>vals<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span>^<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span>, vals<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span>^<span style="color: #a45bad;">2</span><span style="color: #bc6ec5;">)</span>, vals<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span>^<span style="color: #a45bad;">3</span><span style="color: #bc6ec5;">)</span>, vals<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span>^<span style="color: #a45bad;">4</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+vals<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> := <span style="color: #3a81c3;">[</span>x, float<span style="color: #6c3163;">(</span>f<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>, float<span style="color: #6c3163;">(</span>approxLogF2<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">]</span>;
+print<span style="color: #3a81c3;">(</span>vals<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>^<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>, vals<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>^<span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span>, vals<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>^<span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span>, vals<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span>^<span style="color: #4e3163;">4</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 /*
-<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">2</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">2706705664732254</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">2820947917738781</span><span style="color: #4f97d7;">]</span> 
-<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">4</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">1953668148131645</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">1994711402007163</span><span style="color: #4f97d7;">]</span> 
-<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">8</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">1395865319505969</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">141047395886939</span><span style="color: #4f97d7;">]</span> 
-<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">16</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">09921753162215583</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">0997355701003581</span><span style="color: #4f97d7;">]</span> 
+<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">2</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">2706705664732254</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">2820947917738781</span><span style="color: #3a81c3;">]</span>
+<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">4</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">1953668148131645</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">1994711402007163</span><span style="color: #3a81c3;">]</span>
+<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">8</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">1395865319505969</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">141047395886939</span><span style="color: #3a81c3;">]</span>
+<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">16</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">09921753162215583</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">0997355701003581</span><span style="color: #3a81c3;">]</span>
 */
 </pre>
 </div>
@@ -266,7 +266,7 @@ print<span style="color: #4f97d7;">(</span>vals<span style="color: #bc6ec5;">(</
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2022-04-15 Fri 12:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

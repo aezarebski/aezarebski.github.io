@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-16 Wed 18:47 -->
+<!-- 2022-04-15 Fri 12:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>java-lang-aez-notes</title>
@@ -227,15 +227,20 @@
 <li><a href="#org50809b5">Syntax examples</a>
 <ul>
 <li><a href="#org465c72c">Arrays</a></li>
+<li><a href="#org82b4938">Documentation</a></li>
 <li><a href="#org840f7bd">Enumerations and switch statements</a></li>
+<li><a href="#org363ca56">For-each loop</a></li>
+<li><a href="#org8b076d4">Hello world</a></li>
 <li><a href="#orgffa5626">Ternary operator</a></li>
 <li><a href="#org6a21c54">Varargs</a></li>
+<li><a href="#org5d4a249">JUnit</a></li>
 </ul>
 </li>
 <li><a href="#orga7edcb8">Compilation and runtime</a></li>
-<li><a href="#org9457d6e">Environment</a>
+<li><a href="#org82a4edf">Environment and</a>
 <ul>
 <li><a href="#org1cdd735">IntelliJ</a></li>
+<li><a href="#orgbb5f7fc">VisualVM</a></li>
 </ul>
 </li>
 </ul>
@@ -243,7 +248,7 @@
 </div>
 
 
-<div id="org38284f4" class="figure">
+<div id="org56978c6" class="figure">
 <p><img src="../images/java-logo.png" alt="java-logo.png" width="200px" />
 </p>
 </div>
@@ -300,13 +305,15 @@ these things provide slightly different functionality.</li>
 <h2 id="org0662e5e">Modifiers</h2>
 <div class="outline-text-2" id="text-org0662e5e">
 <ul class="org-ul">
-<li>If an attribute or method is <code>final</code>, then it cannot be overwritten or
-modified.</li>
-<li>If an attribute of method is <code>static</code>, then they belong to the class rather
-than any particular instance of the class.</li>
+<li>If an attribute or method is <code>final</code>, then it cannot be overwritten or modified.
+If an attribute of method is <code>static</code>, then they belong to the class rather than
+any particular instance of the class. The <code>static</code> modifier allows you to access
+the attribute or method from the class without needing to create in instance
+of the class.</li>
 <li>Attributes and methods marked <code>public</code> can be accessed by all classes. If the
-<code>private</code> modifier is used, then the attributes or method is only accessable
-from within the class.</li>
+<code>protected</code> modifier is used, then the attreibutes of method is only accessable
+by members of the package. If the <code>private</code> modifier is used, then the
+attributes or method is only accessable from within the class.</li>
 </ul>
 </div>
 </div>
@@ -409,9 +416,9 @@ this
 </div>
 </div>
 
-<div id="outline-container-org88b3881" class="outline-4">
-<h4 id="org88b3881">Example</h4>
-<div class="outline-text-4" id="text-org88b3881">
+<div id="outline-container-org9e7028d" class="outline-4">
+<h4 id="org9e7028d">Example</h4>
+<div class="outline-text-4" id="text-org9e7028d">
 <p>
 This is taken from Sedgewick's lecture notes but the next example seems to fit
 better with some of the problems he set.
@@ -438,9 +445,9 @@ better with some of the problems he set.
 </div>
 </div>
 
-<div id="outline-container-orgb084bda" class="outline-4">
-<h4 id="orgb084bda">Example</h4>
-<div class="outline-text-4" id="text-orgb084bda">
+<div id="outline-container-orge1b6d08" class="outline-4">
+<h4 id="orge1b6d08">Example</h4>
+<div class="outline-text-4" id="text-orge1b6d08">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #ba2f59; font-weight: bold;">Iterable</span><span style="color: #3a81c3;">&lt;</span><span style="color: #ba2f59; font-weight: bold;">Item</span><span style="color: #3a81c3;">&gt;</span> <span style="color: #6c3163; font-weight: bold;">range</span><span style="color: #3a81c3;">()</span> <span style="color: #3a81c3;">{</span>
     <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">ItemIterable</span><span style="color: #6c3163;">()</span>;
@@ -534,9 +541,55 @@ For arrays with values determined at compile time
 </div>
 </div>
 
+<div id="outline-container-org82b4938" class="outline-3">
+<h3 id="org82b4938">Documentation</h3>
+<div class="outline-text-3" id="text-org82b4938">
+<p>
+The documentation system for Java is <code>javadoc</code>; the <a href="https://en.wikipedia.org/wiki/Javadoc">Wikipedia page for Javadoc</a> has
+some useful examples, and this is supported by <a href="https://www.jetbrains.com/help/idea/working-with-code-documentation.html">IntelliJ</a>. There is a full list of
+available tags (e.g. <code>@param</code>) in the <a href="https://docs.oracle.com/en/java/javase/13/docs/specs/javadoc/doc-comment-spec.html">specification</a>.
+</p>
+
+<ul class="org-ul">
+<li><code>&lt;p&gt;</code> and <code>&lt;a&gt;</code> tags are supported,</li>
+<li>and to reference a method use <code>{@link package.class#method}</code>.</li>
+</ul>
+</div>
+
+<div id="outline-container-org5bf1ccf" class="outline-4">
+<h4 id="org5bf1ccf">Example</h4>
+<div class="outline-text-4" id="text-org5bf1ccf">
+<div class="org-src-container">
+<pre class="src src-java"> <span style="color: #da8b55;">/**</span>
+<span style="color: #da8b55;"> * Short one line description.                           (1)</span>
+<span style="color: #da8b55;"> * </span><span style="color: #4e3163;">&lt;p&gt;</span>
+<span style="color: #da8b55;"> * Longer description. If there were any, it would be    (2)</span>
+<span style="color: #da8b55;"> * here.</span>
+<span style="color: #da8b55;"> * </span><span style="color: #4e3163;">&lt;p&gt;</span>
+<span style="color: #da8b55;"> * And even more explanations to follow in consecutive</span>
+<span style="color: #da8b55;"> * paragraphs separated by HTML paragraph breaks.</span>
+<span style="color: #da8b55;"> *</span>
+<span style="color: #da8b55;"> * </span><span style="color: #4e3163;">@param</span><span style="color: #da8b55;">  variable Description text text text.          (3)</span>
+<span style="color: #da8b55;"> * </span><span style="color: #4e3163;">@return</span><span style="color: #da8b55;"> Description text text text.</span>
+<span style="color: #da8b55;"> */</span>
+<span style="color: #3a81c3;">public</span> <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">methodName</span> <span style="color: #3a81c3;">(</span>...<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    <span style="color: #2aa1ae; background-color: #ecf3ec;">// </span><span style="color: #2aa1ae; background-color: #ecf3ec;">method body with a return statement</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org840f7bd" class="outline-3">
 <h3 id="org840f7bd">Enumerations and switch statements</h3>
 <div class="outline-text-3" id="text-org840f7bd">
+<p>
+<b>WARNING</b> the switch syntax has changed between Java versions so it may be best to
+stick to <code>if-else</code> unless you know the version you will be using and are
+comfortable with this.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">Demo</span> <span style="color: #3a81c3;">{</span>
 
@@ -624,6 +677,48 @@ There is also some sugar for writing switch statements
 </div>
 </div>
 
+<div id="outline-container-org363ca56" class="outline-3">
+<h3 id="org363ca56">For-each loop</h3>
+<div class="outline-text-3" id="text-org363ca56">
+<p>
+There is some syntactic sugar to assist with writing loops.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">xs</span> = <span style="color: #3a81c3;">{</span><span style="color: #4e3163;">1</span>,<span style="color: #4e3163;">2</span>,<span style="color: #4e3163;">3</span><span style="color: #3a81c3;">}</span>;
+<span style="color: #3a81c3;">for</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">x</span> : xs<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+    System.out.println<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8b076d4" class="outline-3">
+<h3 id="org8b076d4">Hello world</h3>
+<div class="outline-text-3" id="text-org8b076d4">
+<p>
+Here is a complete <i>Hello World</i> example.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #2aa1ae; background-color: #ecf3ec;">// </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Hello.java</span>
+<span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">Hello</span> <span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">static</span> <span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">main</span><span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">String</span><span style="color: #2d9574;">[]</span> <span style="color: #715ab1;">args</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+        System.out.println<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"hello, world!"</span><span style="color: #2d9574;">)</span>;
+    <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<pre class="example" id="org024f9e7">
+$ javac Hello.java
+$ java Hello
+hello, world!
+</pre>
+</div>
+</div>
+
 <div id="outline-container-orgffa5626" class="outline-3">
 <h3 id="orgffa5626">Ternary operator</h3>
 <div class="outline-text-3" id="text-orgffa5626">
@@ -659,6 +754,28 @@ argument may be passed as an array <i>or</i> as a sequence of arguments.
 </blockquote>
 </div>
 </div>
+
+<div id="outline-container-org5d4a249" class="outline-3">
+<h3 id="org5d4a249">JUnit</h3>
+<div class="outline-text-3" id="text-org5d4a249">
+<p>
+There are differences between the major versions of JUnit that cannot be ignored.
+</p>
+</div>
+
+<div id="outline-container-orgbfb57e7" class="outline-4">
+<h4 id="orgbfb57e7">JUnit4.X asserting it should throw an exceptions</h4>
+<div class="outline-text-4" id="text-orgbfb57e7">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #4e3163;">@Test</span><span style="color: #3a81c3;">(</span>expected = RuntimeException.<span style="color: #3a81c3;">class</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">public</span> <span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">testItThrowsException</span><span style="color: #3a81c3;">()</span> <span style="color: #3a81c3;">{</span>
+    <span style="color: #ba2f59; font-weight: bold;">Foo</span> <span style="color: #715ab1;">x</span> = <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">Foo</span><span style="color: #6c3163;">(</span><span style="color: #2d9574;">"this is not a good value"</span><span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orga7edcb8" class="outline-2">
@@ -672,45 +789,16 @@ in production.</li>
 </div>
 </div>
 
-<div id="outline-container-org9457d6e" class="outline-2">
-<h2 id="org9457d6e">Environment</h2>
-<div class="outline-text-2" id="text-org9457d6e">
-<p>
-Intellij manages a lot of the mess of working in Java. There is the IdeaVim
-plugin to give sensible keybindings.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-nix"><span style="color: #3a81c3;">let</span>
-  <span style="color: #715ab1;">commitHash</span> = <span style="color: #2d9574;">"78dc359abf8217da2499a6da0fcf624b139d7ac3"</span>;
-  <span style="color: #715ab1;">tarballUrl</span> = <span style="color: #2d9574;">"https://github.com/NixOS/nixpkgs/archive/</span><span style="color: #6c3163;">$</span><span style="color: #3a81c3;">{</span>commitHash<span style="color: #3a81c3;">}</span><span style="color: #2d9574;">.tar.gz"</span>;
-  <span style="color: #715ab1;">pkgs</span> = <span style="color: #3a81c3;">import</span> <span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">fetchTarball</span> tarballUrl<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{}</span>;
-  <span style="color: #715ab1;">stdenv</span> = pkgs.stdenv;
-
-<span style="color: #3a81c3;">in</span> with pkgs; <span style="color: #3a81c3;">{</span>
-  <span style="color: #715ab1;">myProject</span> = stdenv.mkDerivation <span style="color: #6c3163;">{</span>
-    <span style="color: #715ab1;">name</span> = <span style="color: #2d9574;">"java-via-intellij"</span>;
-    <span style="color: #715ab1;">version</span> = <span style="color: #2d9574;">"1"</span>;
-    <span style="color: #715ab1;">src</span> = <span style="color: #3a81c3;">if</span> pkgs.lib.inNixShell <span style="color: #3a81c3;">then</span> <span style="color: #3a81c3;">null</span> <span style="color: #3a81c3;">else</span> nix;
-
-    <span style="color: #715ab1;">buildInputs</span> = <span style="color: #3a81c3;">with</span> jetbrains; <span style="color: #2d9574;">[</span>
-      idea-community
-    <span style="color: #2d9574;">]</span>;
-   <span style="color: #715ab1;">shellHook</span> = <span style="color: #2d9574;">''</span>
-<span style="color: #2d9574;">             printf "\n\nWelcome to a reproducible java environment :)\n\n"</span>
-<span style="color: #2d9574;">      ''</span>;
-  <span style="color: #6c3163;">}</span>;
-<span style="color: #3a81c3;">}</span>
-</pre>
+<div id="outline-container-org82a4edf" class="outline-2">
+<h2 id="org82a4edf">Environment and</h2>
+<div class="outline-text-2" id="text-org82a4edf">
 </div>
-</div>
-
 <div id="outline-container-org1cdd735" class="outline-3">
 <h3 id="org1cdd735">IntelliJ</h3>
 <div class="outline-text-3" id="text-org1cdd735">
 <p>
-There is a Spacemacs theme available in the marketplace and the Vim support is
-good.
+IntelliJ manages a lot of the mess of working in Java. There is the IdeaVim
+plugin to give sensible keybindings. The solarized theme is nice.
 </p>
 </div>
 
@@ -718,10 +806,10 @@ good.
 <h4 id="org5c01546">Code navigation and editing</h4>
 <div class="outline-text-4" id="text-org5c01546">
 <ul class="org-ul">
-<li><code>zz</code> to center the current line (<code>recenter-top-bottom</code>).</li>
+<li><code>zz</code> to centre the current line (<code>recenter-top-bottom</code>).</li>
 <li><code>Alt + Enter</code> to apply suggested change.</li>
 <li><code>F2</code> to jump to next error.</li>
-<li><code>F4</code> to jump to definition.</li>
+<li><code>F4</code> or <code>Crtl + Alt + B</code> to jump to definition.</li>
 <li><code>Ctrl + /</code> to comment (and uncomment) code.</li>
 </ul>
 </div>
@@ -747,11 +835,25 @@ select the attributes to generate the methods for.
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgbb5f7fc" class="outline-3">
+<h3 id="orgbb5f7fc">VisualVM</h3>
+<div class="outline-text-3" id="text-orgbb5f7fc">
+<p>
+This is a tool from Oracle that makes it very easy to profile a running program.
+It hooks into the JVM and generates a report on both the resource consumption
+and the CPU and memory usage through the code. There is an <a href="https://www.youtube.com/watch?v=z8n7Bg7-A4I">instructional video</a>
+from 2013 which is sufficient to get started with.
+</p>
+
+<iframe style="display:block;margin:auto;" width="560" height="315" src="https://www.youtube.com/embed/z8n7Bg7-A4I"></iframe>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-03-16 Wed 18:47</p>
+<p class="date">Created: 2022-04-15 Fri 12:28</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

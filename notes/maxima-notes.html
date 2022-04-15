@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-28 Mon 18:10 -->
+<!-- 2022-04-15 Fri 12:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-notes</title>
+<title>maxima-aez-notes</title>
 <meta name="author" content="Alex Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,17 +193,14 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">aez-notes</h1>
+<h1 class="title">maxima-aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
-
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
-<script src="./main.js"></script>
 
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
@@ -226,7 +223,7 @@
 <li><a href="#org23071e1">Program flow</a></li>
 <li><a href="#org98bebfe">Lists</a></li>
 <li><a href="#orgcac44c1">Evaluation</a></li>
-<li><a href="#orgc5638fc">Simplification</a></li>
+<li><a href="#org4c2c91c">Simplification</a></li>
 <li><a href="#orga543892">Packages</a></li>
 <li><a href="#orgc76af9c">REPL</a></li>
 <li><a href="#orgacc94ce">Batchmode</a></li>
@@ -245,7 +242,7 @@
 <ul>
 <li><a href="#orgb440823">Change of coordinates</a></li>
 <li><a href="#org7f10e58">Differential equations: simple</a></li>
-<li><a href="#orgd24b3cd">Simplification</a></li>
+<li><a href="#orgda9a166">Simplification</a></li>
 </ul>
 </li>
 <li><a href="#org03332c4">Front-ends for Maxima</a>
@@ -259,8 +256,8 @@
 </div>
 
 
-<div id="org030dd3c" class="figure">
-<p><img src="../images/maxima-logo.png" alt="maxima-logo.png" />
+<div id="org975079a" class="figure">
+<p><img src="../images/maxima-logo.png" alt="maxima-logo.png" width="250px" />
 </p>
 </div>
 
@@ -285,8 +282,8 @@ Maxima uses Gnuplot for plotting; n.b. the use of <code>$</code> to show the plo
 </div>
 
 
-<div id="org82515ca" class="figure">
-<p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" />
+<div id="org8daa166" class="figure">
+<p><img src="../images/maxima-sine-plot.png" alt="maxima-sine-plot.png" width="500px" />
 </p>
 </div>
 </div>
@@ -305,8 +302,8 @@ There is an example of how to save a figure in <a href="./../misc/fifty-problems
 </div>
 
 
-<div id="orgf5e5388" class="figure">
-<p><img src="../images/maxima-points-plot.png" alt="maxima-points-plot.png" />
+<div id="orgd8df1b7" class="figure">
+<p><img src="../images/maxima-points-plot.png" alt="maxima-points-plot.png" width="500px" />
 </p>
 </div>
 </div>
@@ -350,9 +347,9 @@ print<span style="color: #3a81c3;">(</span>numberp<span style="color: #6c3163;">
 </pre>
 </div>
 
-<pre class="example">
-[3, true]
-false
+<pre class="example" id="org56c1e8b">
+: [3, true]
+: false
 </pre>
 </div>
 </div>
@@ -360,12 +357,22 @@ false
 <div id="outline-container-orgc144dc5" class="outline-3">
 <h3 id="orgc144dc5">Org-mode as a notebook environment</h3>
 <div class="outline-text-3" id="text-orgc144dc5">
-<ul class="org-ul">
-<li><a href="https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-maxima.html">This tutorial</a> shows how you can set up org-mode to work as a Maxima notebook.</li>
-<li>To actually evaluate a source block use either <code>org-babel-execute-src-block</code> or
-<code>org-babel-execute-maybe</code>. The latter is just a convenience wrapper around the
-former. In spacemacs this is bound to <code>SPC m b e</code>.</li>
-</ul>
+<p>
+<b>NOTE:</b> <span class="underline">As of 2022 I prefer <a href="#org29b341f">wxMaxima</a> as a notebook style front-end for Maxima.</span>
+</p>
+
+<p>
+<a href="https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-maxima.html">This tutorial</a> shows how you can set up org-mode to work as a Maxima notebook.
+</p>
+
+<p>
+Each cell of the notebook should have the following header <code>#+header: :exports
+both</code> so that org-mode knows to display the output and then the source block
+should also have the language specified as <code>maxima</code> and <code>:results output</code> included
+as well. To actually evaluate a source block use either
+<code>org-babel-execute-src-block</code> or <code>org-babel-execute-maybe</code>. The latter is just a
+convenience wrapper around the former. In spacemacs this is bound to <code>SPC m b e</code>.
+</p>
 </div>
 </div>
 
@@ -515,9 +522,9 @@ function use the <code>define</code> function.
 </div>
 </div>
 
-<div id="outline-container-orgc5638fc" class="outline-3">
-<h3 id="orgc5638fc">Simplification</h3>
-<div class="outline-text-3" id="text-orgc5638fc">
+<div id="outline-container-org4c2c91c" class="outline-3">
+<h3 id="org4c2c91c">Simplification</h3>
+<div class="outline-text-3" id="text-org4c2c91c">
 <div class="org-src-container">
 <pre class="src src-maxima">restart<span style="color: #3a81c3;">()</span>;
 kill<span style="color: #3a81c3;">(</span>all<span style="color: #3a81c3;">)</span>;
@@ -526,10 +533,10 @@ matchdeclare<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">
 tellsimpafter<span style="color: #3a81c3;">(</span>xx^a*yy^a,<span style="color: #6c3163;">(</span>xx*yy<span style="color: #6c3163;">)</span>^a<span style="color: #3a81c3;">)</span>$
 tellsimpafter<span style="color: #3a81c3;">(</span>xx^a/yy^a,<span style="color: #6c3163;">(</span>xx/yy<span style="color: #6c3163;">)</span>^a<span style="color: #3a81c3;">)</span>$
 
-x^a*y^a;
-x^a/y^a;
-x^a*y^a*z^a;
-x^a*<span style="color: #3a81c3;">(</span>y^a*z^a<span style="color: #3a81c3;">)</span>;
+print<span style="color: #3a81c3;">(</span>x^a*y^a<span style="color: #3a81c3;">)</span>;
+print<span style="color: #3a81c3;">(</span>x^a/y^a<span style="color: #3a81c3;">)</span>;
+print<span style="color: #3a81c3;">(</span>x^a*y^a*z^a<span style="color: #3a81c3;">)</span>;
+print<span style="color: #3a81c3;">(</span>x^a*<span style="color: #6c3163;">(</span>y^a*z^a<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
@@ -537,20 +544,19 @@ x^a*<span style="color: #3a81c3;">(</span>y^a*z^a<span style="color: #3a81c3;">)
 produces the following output
 </p>
 
-<pre class="example">
-(%i4) x^a*y^a;
-                                         a
-(%o4)                               (x y)
-(%i5) x^a/y^a;
-                                      x a
-(%o5)                                (-)
-                                      y
-(%i6) x^a*y^a*z^a;
-                                    a  a  a
-(%o6)                              x  y  z
-(%i7) x^a*(y^a*z^a);
-                                          a
-(%o7)                              (x y z)
+<pre class="example" id="org703cf9a">
+:      a
+: (x y)
+
+:  x a
+: (-)
+:  y
+
+:  a  a  a
+: x  y  z
+
+:        a
+: (x y z)
 </pre>
 
 <p>
@@ -896,9 +902,9 @@ plot2d<span style="color: #3a81c3;">(</span>rhs <span style="color: #6c3163;">(<
 </div>
 </div>
 
-<div id="outline-container-orgd24b3cd" class="outline-3">
-<h3 id="orgd24b3cd">Simplification</h3>
-<div class="outline-text-3" id="text-orgd24b3cd">
+<div id="outline-container-orgda9a166" class="outline-3">
+<h3 id="orgda9a166">Simplification</h3>
+<div class="outline-text-3" id="text-orgda9a166">
 <p>
 This snippet demonstrates some ways to get different expressions for the same
 quantity. Note how the numerator and denominator can be separated to have
@@ -917,7 +923,7 @@ display<span style="color: #3a81c3;">(</span>a, b, c, d<span style="color: #3a81
 </pre>
 </div>
 
-<pre class="example" id="orgc4fc56d">
+<pre class="example" id="org63e0bc6">
       - aa           - aa
     %e     y + y + %e     x
 a = -----------------------
@@ -942,6 +948,7 @@ a = -----------------------
 </div>
 </div>
 </div>
+
 <div id="outline-container-org03332c4" class="outline-2">
 <h2 id="org03332c4">Front-ends for Maxima</h2>
 <div class="outline-text-2" id="text-org03332c4">
@@ -959,6 +966,16 @@ bunch of helpful text based cells.</li>
 Portuguese as the language. Far too much searching revealed that the way to
 solve this is to open <code>.wxMaxima</code> (the configuration file) and change
 <code>language=153</code> to <code>language=59</code> (British English).</li>
+<li><p>
+Another problem I hit was wxMaxima not being able to locate the Maxima
+documentation. The solution was to add the following line to <code>.wxMaxima</code>,
+unfortunately upon exiting, this seems to loose that configuration, I'm not
+sure how to correct this.
+</p>
+
+<pre class="example" id="orga8d6f1c">
+helpFile=/usr/share/maxima/5.43.2/doc/html/header.hhp
+</pre></li>
 </ul>
 </div>
 </div>
@@ -1031,7 +1048,7 @@ digits.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-03-28 Mon 18:10</p>
+<p class="date">Created: 2022-04-15 Fri 12:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

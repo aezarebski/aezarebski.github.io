@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2022-04-15 Fri 12:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -254,8 +254,8 @@ We start by defining a PDF for a single die.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima" id="org22d3998">pdf_dice<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> :=
-pdf_discrete_uniform<span style="color: #4f97d7;">(</span>x, <span style="color: #a45bad;">6</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima" id="org22d3998">pdf_dice<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> :=
+pdf_discrete_uniform<span style="color: #3a81c3;">(</span>x, <span style="color: #4e3163;">6</span><span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
@@ -264,8 +264,8 @@ Then we convolve this with itself to get the sum of two dice.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima" id="org729331b">pdf_roll<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> :=
-sum<span style="color: #4f97d7;">(</span>pdf_dice<span style="color: #bc6ec5;">(</span>x - i<span style="color: #bc6ec5;">)</span> * pdf_dice<span style="color: #bc6ec5;">(</span>i<span style="color: #bc6ec5;">)</span>, i, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">6</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima" id="org729331b">pdf_roll<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> :=
+sum<span style="color: #3a81c3;">(</span>pdf_dice<span style="color: #6c3163;">(</span>x - i<span style="color: #6c3163;">)</span> * pdf_dice<span style="color: #6c3163;">(</span>i<span style="color: #6c3163;">)</span>, i, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">6</span><span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
@@ -277,21 +277,21 @@ point initially, and win given that point.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima" id="org2b44954">point_vals : <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">4</span>,<span style="color: #a45bad;">5</span>,<span style="color: #a45bad;">6</span>,<span style="color: #a45bad;">8</span>,<span style="color: #a45bad;">9</span>,<span style="color: #a45bad;">10</span><span style="color: #4f97d7;">]</span>;
-prob_point_game : apply<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"+"</span>, map<span style="color: #bc6ec5;">(</span>pdf_roll, point_vals<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima" id="org2b44954">point_vals : <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">4</span>,<span style="color: #4e3163;">5</span>,<span style="color: #4e3163;">6</span>,<span style="color: #4e3163;">8</span>,<span style="color: #4e3163;">9</span>,<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">]</span>;
+prob_point_game : apply<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"+"</span>, map<span style="color: #6c3163;">(</span>pdf_roll, point_vals<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
-pdf_point_given_point<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> :=
-pdf_roll<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> / prob_point_game;
+pdf_point_given_point<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> :=
+pdf_roll<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> / prob_point_game;
 
-pdf_win_given_point<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> :=
-pdf_roll<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> / <span style="color: #4f97d7;">(</span>pdf_roll<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> + pdf_roll<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">7</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+pdf_win_given_point<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> :=
+pdf_roll<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> / <span style="color: #3a81c3;">(</span>pdf_roll<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> + pdf_roll<span style="color: #6c3163;">(</span><span style="color: #4e3163;">7</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
 prob_point_game_win : prob_point_game *
-apply<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"+"</span>,
-  map<span style="color: #bc6ec5;">(</span>lambda<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>x<span style="color: #67b11d;">]</span>,
+apply<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"+"</span>,
+  map<span style="color: #6c3163;">(</span>lambda<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>x<span style="color: #67b11d;">]</span>,
       pdf_point_given_point<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span> * pdf_win_given_point<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
-    point_vals<span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7;">)</span>;
+    point_vals<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span>;
 </pre>
 </div>
 
@@ -301,20 +301,20 @@ program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">load<span style="color: #4f97d7;">(</span>distrib<span style="color: #4f97d7;">)</span>$
+<pre class="src src-maxima">load<span style="color: #3a81c3;">(</span>distrib<span style="color: #3a81c3;">)</span>$
 
 &lt;&lt;dicePdf&gt;&gt;
 
 &lt;&lt;rollPdf&gt;&gt;
 
-prob_first_roll_win : pdf_roll<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">7</span><span style="color: #4f97d7;">)</span> + pdf_roll<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">11</span><span style="color: #4f97d7;">)</span>;
-/* about <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">222</span> */
+prob_first_roll_win : pdf_roll<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">7</span><span style="color: #3a81c3;">)</span> + pdf_roll<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">11</span><span style="color: #3a81c3;">)</span>;
+/* about <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">222</span> */
 
 &lt;&lt;pointWinProb&gt;&gt;
-/* about <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">271</span> */
+/* about <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">271</span> */
 
 prob_first_roll_win + prob_point_game_win, numer;
-/* about <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">493</span> */
+/* about <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">493</span> */
 </pre>
 </div>
 
@@ -326,7 +326,7 @@ This gives the chance of winning at \(0.493\).
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2022-04-15 Fri 12:30</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

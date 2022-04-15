@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2022-04-15 Fri 12:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -350,28 +350,28 @@ value encountered. The requirement on the ordering is why there is a factor of
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"distrib"</span><span style="color: #4f97d7;">)</span>$
-load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"newton1"</span><span style="color: #4f97d7;">)</span>$
+<pre class="src src-maxima">load<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"distrib"</span><span style="color: #3a81c3;">)</span>$
+load<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"newton1"</span><span style="color: #3a81c3;">)</span>$
 
-prob_current_wins<span style="color: #4f97d7;">(</span>x,r,n<span style="color: #4f97d7;">)</span> := x ^ <span style="color: #4f97d7;">(</span>n - r<span style="color: #4f97d7;">)</span>;
+prob_current_wins<span style="color: #3a81c3;">(</span>x,r,n<span style="color: #3a81c3;">)</span> := x ^ <span style="color: #3a81c3;">(</span>n - r<span style="color: #3a81c3;">)</span>;
 
-prob_next_wins<span style="color: #4f97d7;">(</span>x, r, n<span style="color: #4f97d7;">)</span> := sum<span style="color: #4f97d7;">(</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1/i</span><span style="color: #bc6ec5;">)</span> * pdf_binomial<span style="color: #bc6ec5;">(</span>i, n - r, <span style="color: #a45bad;">1</span> - x<span style="color: #bc6ec5;">)</span>,
+prob_next_wins<span style="color: #3a81c3;">(</span>x, r, n<span style="color: #3a81c3;">)</span> := sum<span style="color: #3a81c3;">(</span>
+  <span style="color: #6c3163;">(</span><span style="color: #4e3163;">1/i</span><span style="color: #6c3163;">)</span> * pdf_binomial<span style="color: #6c3163;">(</span>i, n - r, <span style="color: #4e3163;">1</span> - x<span style="color: #6c3163;">)</span>,
   i,
-  <span style="color: #a45bad;">1</span>,
-  n - r<span style="color: #4f97d7;">)</span>;
+  <span style="color: #4e3163;">1</span>,
+  n - r<span style="color: #3a81c3;">)</span>;
 
-hundred_case<span style="color: #4f97d7;">(</span>r<span style="color: #4f97d7;">)</span> := newton<span style="color: #4f97d7;">(</span>
-  prob_current_wins<span style="color: #bc6ec5;">(</span>x, r, <span style="color: #a45bad;">100</span><span style="color: #bc6ec5;">)</span> - prob_next_wins<span style="color: #bc6ec5;">(</span>x, r, <span style="color: #a45bad;">100</span><span style="color: #bc6ec5;">)</span>,
+hundred_case<span style="color: #3a81c3;">(</span>r<span style="color: #3a81c3;">)</span> := newton<span style="color: #3a81c3;">(</span>
+  prob_current_wins<span style="color: #6c3163;">(</span>x, r, <span style="color: #4e3163;">100</span><span style="color: #6c3163;">)</span> - prob_next_wins<span style="color: #6c3163;">(</span>x, r, <span style="color: #4e3163;">100</span><span style="color: #6c3163;">)</span>,
   x,
-  <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">9</span>,
-  <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">001</span><span style="color: #4f97d7;">)</span>;
+  <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">9</span>,
+  <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">001</span><span style="color: #3a81c3;">)</span>;
 
-fpprintprec : <span style="color: #a45bad;">4</span>;
+fpprintprec : <span style="color: #4e3163;">4</span>;
 
-for r:<span style="color: #a45bad;">99</span> step <span style="color: #4f97d7;">(</span>-1<span style="color: #4f97d7;">)</span> thru <span style="color: #a45bad;">85</span> do <span style="color: #4f97d7;">{</span>
-  print<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"|"</span>, r, <span style="color: #2d9574;">"|"</span>, float<span style="color: #2d9574;">(</span>hundred_case<span style="color: #67b11d;">(</span>r<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, <span style="color: #2d9574;">"|"</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7;">}</span>$
+for r:<span style="color: #4e3163;">99</span> step <span style="color: #3a81c3;">(</span>-1<span style="color: #3a81c3;">)</span> thru <span style="color: #4e3163;">85</span> do <span style="color: #3a81c3;">{</span>
+  print<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"|"</span>, r, <span style="color: #2d9574;">"|"</span>, float<span style="color: #2d9574;">(</span>hundred_case<span style="color: #67b11d;">(</span>r<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>, <span style="color: #2d9574;">"|"</span><span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">}</span>$
 </pre>
 </div>
 
@@ -384,7 +384,7 @@ below 95.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2022-04-15 Fri 12:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

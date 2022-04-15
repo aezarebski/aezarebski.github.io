@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2022-04-15 Fri 12:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -253,43 +253,43 @@ first digit correct though, even when compiled and with memoization.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-maxima">restart<span style="color: #4f97d7;">()</span>;
-kill<span style="color: #4f97d7;">(</span>all<span style="color: #4f97d7;">)</span>;
+<pre class="src src-maxima">restart<span style="color: #3a81c3;">()</span>;
+kill<span style="color: #3a81c3;">(</span>all<span style="color: #3a81c3;">)</span>;
 
-foldl<span style="color: #4f97d7;">(</span>f, x0, xs<span style="color: #4f97d7;">)</span> :=
-if emptyp<span style="color: #4f97d7;">(</span>xs<span style="color: #4f97d7;">)</span>
+foldl<span style="color: #3a81c3;">(</span>f, x0, xs<span style="color: #3a81c3;">)</span> :=
+if emptyp<span style="color: #3a81c3;">(</span>xs<span style="color: #3a81c3;">)</span>
 then x0
-else foldl<span style="color: #4f97d7;">(</span>f, f<span style="color: #bc6ec5;">(</span>x0, first<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, rest<span style="color: #bc6ec5;">(</span>xs<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+else foldl<span style="color: #3a81c3;">(</span>f, f<span style="color: #6c3163;">(</span>x0, first<span style="color: #2d9574;">(</span>xs<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>, rest<span style="color: #6c3163;">(</span>xs<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
-prod<span style="color: #4f97d7;">(</span>xs<span style="color: #4f97d7;">)</span> :=
-if emptyp<span style="color: #4f97d7;">(</span>xs<span style="color: #4f97d7;">)</span>
-then <span style="color: #a45bad;">0</span>
-else foldl<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"*"</span>, first<span style="color: #bc6ec5;">(</span>xs<span style="color: #bc6ec5;">)</span>, rest<span style="color: #bc6ec5;">(</span>xs<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+prod<span style="color: #3a81c3;">(</span>xs<span style="color: #3a81c3;">)</span> :=
+if emptyp<span style="color: #3a81c3;">(</span>xs<span style="color: #3a81c3;">)</span>
+then <span style="color: #4e3163;">0</span>
+else foldl<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"*"</span>, first<span style="color: #6c3163;">(</span>xs<span style="color: #6c3163;">)</span>, rest<span style="color: #6c3163;">(</span>xs<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
-arraymap<span style="color: #4f97d7;">(</span>a, xs<span style="color: #4f97d7;">)</span> := map<span style="color: #4f97d7;">(</span>lambda<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">[</span>x<span style="color: #2d9574;">]</span>, a<span style="color: #2d9574;">[</span>x<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span>, xs<span style="color: #4f97d7;">)</span>;
+arraymap<span style="color: #3a81c3;">(</span>a, xs<span style="color: #3a81c3;">)</span> := map<span style="color: #3a81c3;">(</span>lambda<span style="color: #6c3163;">(</span><span style="color: #2d9574;">[</span>x<span style="color: #2d9574;">]</span>, a<span style="color: #2d9574;">[</span>x<span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>, xs<span style="color: #3a81c3;">)</span>;
 
-l_1<span style="color: #4f97d7;">[</span>n<span style="color: #4f97d7;">]</span> := if evenp<span style="color: #4f97d7;">(</span>n<span style="color: #4f97d7;">)</span> then binomial<span style="color: #4f97d7;">(</span>n, n/2<span style="color: #4f97d7;">)</span> else <span style="color: #a45bad;">0</span>;
+l_1<span style="color: #3a81c3;">[</span>n<span style="color: #3a81c3;">]</span> := if evenp<span style="color: #3a81c3;">(</span>n<span style="color: #3a81c3;">)</span> then binomial<span style="color: #3a81c3;">(</span>n, n/2<span style="color: #3a81c3;">)</span> else <span style="color: #4e3163;">0</span>;
 
-l_coeff<span style="color: #4f97d7;">(</span>n, d<span style="color: #4f97d7;">)</span> :=
-if is<span style="color: #4f97d7;">(</span>equal<span style="color: #bc6ec5;">(</span>n, <span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-then <span style="color: #a45bad;">1</span>
-else lsum<span style="color: #4f97d7;">(</span>i, i,
-  map<span style="color: #bc6ec5;">(</span>
+l_coeff<span style="color: #3a81c3;">(</span>n, d<span style="color: #3a81c3;">)</span> :=
+if is<span style="color: #3a81c3;">(</span>equal<span style="color: #6c3163;">(</span>n, <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+then <span style="color: #4e3163;">1</span>
+else lsum<span style="color: #3a81c3;">(</span>i, i,
+  map<span style="color: #6c3163;">(</span>
     lambda<span style="color: #2d9574;">(</span><span style="color: #67b11d;">[</span>p<span style="color: #67b11d;">]</span>, apply<span style="color: #67b11d;">(</span>multinomial_coeff, p<span style="color: #67b11d;">)</span> * prod<span style="color: #67b11d;">(</span>arraymap<span style="color: #b1951d;">(</span>l_1, p<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
-    listify<span style="color: #2d9574;">(</span>flatten<span style="color: #67b11d;">(</span>map<span style="color: #b1951d;">(</span>permutations, integer_partitions<span style="color: #4f97d7;">(</span>n, d<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+    listify<span style="color: #2d9574;">(</span>flatten<span style="color: #67b11d;">(</span>map<span style="color: #b1951d;">(</span>permutations, integer_partitions<span style="color: #3a81c3;">(</span>n, d<span style="color: #3a81c3;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
-L<span style="color: #4f97d7;">(</span>z, d, N<span style="color: #4f97d7;">)</span> := sum<span style="color: #4f97d7;">(</span>l_coeff<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span> * n, d<span style="color: #bc6ec5;">)</span> * z^<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">2</span> * n<span style="color: #bc6ec5;">)</span>, n, <span style="color: #a45bad;">0</span>, N<span style="color: #4f97d7;">)</span>;
-prob_return<span style="color: #4f97d7;">(</span>d, N<span style="color: #4f97d7;">)</span> := float<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span> - <span style="color: #a45bad;">1</span> / L<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span> / <span style="color: #2d9574;">(</span><span style="color: #a45bad;">2</span> * d<span style="color: #2d9574;">)</span>, d, N<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+L<span style="color: #3a81c3;">(</span>z, d, N<span style="color: #3a81c3;">)</span> := sum<span style="color: #3a81c3;">(</span>l_coeff<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span> * n, d<span style="color: #6c3163;">)</span> * z^<span style="color: #6c3163;">(</span><span style="color: #4e3163;">2</span> * n<span style="color: #6c3163;">)</span>, n, <span style="color: #4e3163;">0</span>, N<span style="color: #3a81c3;">)</span>;
+prob_return<span style="color: #3a81c3;">(</span>d, N<span style="color: #3a81c3;">)</span> := float<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span> - <span style="color: #4e3163;">1</span> / L<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span> / <span style="color: #2d9574;">(</span><span style="color: #4e3163;">2</span> * d<span style="color: #2d9574;">)</span>, d, N<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 
-compile<span style="color: #4f97d7;">(</span>l_coeff<span style="color: #4f97d7;">)</span>;
+compile<span style="color: #3a81c3;">(</span>l_coeff<span style="color: #3a81c3;">)</span>;
 
-print<span style="color: #4f97d7;">(</span>prob_return<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">50</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+print<span style="color: #3a81c3;">(</span>prob_return<span style="color: #6c3163;">(</span><span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">50</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 /*
-<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">3107687252064985</span>
+<span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">3107687252064985</span>
 */
-print<span style="color: #4f97d7;">(</span>prob_return<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">4</span>, <span style="color: #a45bad;">10</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+print<span style="color: #3a81c3;">(</span>prob_return<span style="color: #6c3163;">(</span><span style="color: #4e3163;">4</span>, <span style="color: #4e3163;">10</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>;
 /*
-<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">1807480265784589</span>
+<span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">1807480265784589</span>
 */
 </pre>
 </div>
@@ -298,7 +298,7 @@ print<span style="color: #4f97d7;">(</span>prob_return<span style="color: #bc6ec
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2022-04-15 Fri 12:30</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
