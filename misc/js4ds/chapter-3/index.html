@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-15 Fri 12:30 -->
+<!-- 2022-04-17 Sun 14:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-js4ds</title>
@@ -206,17 +206,17 @@
 <a href="../index.html">Chapter listing</a>
 </p>
 
-<div id="outline-container-org09cc41c" class="outline-2">
-<h2 id="org09cc41c">Callbacks</h2>
-<div class="outline-text-2" id="text-org09cc41c">
+<div id="outline-container-orga57c2d9" class="outline-2">
+<h2 id="orga57c2d9">Callbacks</h2>
+<div class="outline-text-2" id="text-orga57c2d9">
 </div>
-<div id="outline-container-orge0023ad" class="outline-3">
-<h3 id="orge0023ad">Notes</h3>
-<div class="outline-text-3" id="text-orge0023ad">
+<div id="outline-container-orgacf945b" class="outline-3">
+<h3 id="orgacf945b">Notes</h3>
+<div class="outline-text-3" id="text-orgacf945b">
 </div>
-<div id="outline-container-org06e76b0" class="outline-4">
-<h4 id="org06e76b0">Functional programming</h4>
-<div class="outline-text-4" id="text-org06e76b0">
+<div id="outline-container-org70e1881" class="outline-4">
+<h4 id="org70e1881">Functional programming</h4>
+<div class="outline-text-4" id="text-org70e1881">
 <p>
 The <code>Array</code> module has the basic functions for working with collections:
 </p>
@@ -232,29 +232,29 @@ The <code>Array</code> module has the basic functions for working with collectio
 </div>
 </div>
 
-<div id="outline-container-org7eef799" class="outline-3">
-<h3 id="org7eef799">Exercises</h3>
-<div class="outline-text-3" id="text-org7eef799">
+<div id="outline-container-orgf9d372f" class="outline-3">
+<h3 id="orgf9d372f">Exercises</h3>
+<div class="outline-text-3" id="text-orgf9d372f">
 </div>
-<div id="outline-container-org637bd83" class="outline-4">
-<h4 id="org637bd83">Side Effects With <code>forEach</code></h4>
-<div class="outline-text-4" id="text-org637bd83">
+<div id="outline-container-org17b46ce" class="outline-4">
+<h4 id="org17b46ce">Side Effects With <code>forEach</code></h4>
+<div class="outline-text-4" id="text-org17b46ce">
 <p>
 A solution is given in the following script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript">doubleInPlace = <span style="color: #3a81c3;">(</span>xs<span style="color: #3a81c3;">)</span> =&gt; <span style="color: #3a81c3;">{</span>
-    <span style="color: #3a81c3;">return</span> xs.forEach<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span>x, ix, array<span style="color: #2d9574;">)</span> =&gt; <span style="color: #2d9574;">{</span>
-        array<span style="color: #67b11d;">[</span>ix<span style="color: #67b11d;">]</span> = <span style="color: #4e3163;">2</span> * x;
-    <span style="color: #2d9574;">}</span><span style="color: #6c3163;">)</span>;
-<span style="color: #3a81c3;">}</span>;
+<pre class="src src-javascript">doubleInPlace = (xs) =&gt; {
+    return xs.forEach((x, ix, array) =&gt; {
+	array[ix] = 2 * x;
+    });
+};
 
-<span style="color: #3a81c3;">const</span> <span style="color: #715ab1;">vals</span> = <span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">2</span>, <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">]</span>;
+const vals = [1, 2, 3];
 
-console.log<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">`vals before change: ${vals}`</span><span style="color: #3a81c3;">)</span>;
-doubleInPlace<span style="color: #3a81c3;">(</span>vals<span style="color: #3a81c3;">)</span>;
-console.log<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">`vals after change: ${vals}`</span><span style="color: #3a81c3;">)</span>;
+console.log(`vals before change: ${vals}`);
+doubleInPlace(vals);
+console.log(`vals after change: ${vals}`);
 </pre>
 </div>
 
@@ -262,7 +262,7 @@ console.log<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">`
 which when run performs the following action
 </p>
 
-<pre class="example" id="orgb517a1e">
+<pre class="example" id="org2e30589">
 $ node foo.js
 vals before change: 1,2,3
 vals after change: 2,4,6
@@ -270,15 +270,58 @@ vals after change: 2,4,6
 </div>
 </div>
 
-<div id="outline-container-org38a3729" class="outline-4">
-<h4 id="org38a3729"><span class="todo TODO">TODO</span> Annotating Data</h4>
+<div id="outline-container-orgf41c973" class="outline-4">
+<h4 id="orgf41c973">Annotating Data</h4>
+<div class="outline-text-4" id="text-orgf41c973">
+<p>
+The suggestion to use <code>reduce</code> is actually a bit of a distraction; the <code>map</code> method
+will supply the index if there are two parameters for the given function. This
+means we can get the result with a simple filter followed by a map.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">const input = [
+    {'date': '1977-7-16', 'sex': 'M', 'species': 'NL'},
+    {'date': '1977-7-16', 'sex': 'M', 'species': 'NL'},
+    {'date': '1977-7-16', 'sex': 'F', 'species': 'DM'},
+    {'date': '1977-7-16', 'sex': 'M', 'species': 'DM'},
+    {'date': '1977-7-16', 'sex': 'M', 'species': 'DM'},
+    {'date': '1977-7-16', 'sex': 'M', 'species': 'PF'},
+    {'date': '1977-7-16', 'sex': 'F', 'species': 'PE'},
+    {'date': '1977-7-16', 'sex': 'M', 'species': 'DM'}
+];
+
+const output = input
+      .filter(x =&gt; x.sex == 'F')
+      .map((x, i) =&gt; {
+	  x.seq = i+1;
+	  x.year = x.date.split('-')[0];
+	  delete x.date;
+	  return x;
+      });
+console.log(output);
+</pre>
+</div>
+
+<p>
+which when we run gives
+</p>
+
+<pre class="example" id="orgae0dcb2">
+$ node foo.js
+[
+  { sex: 'F', species: 'DM', seq: 1, year: '1977' },
+  { sex: 'F', species: 'PE', seq: 2, year: '1977' }
+]
+</pre>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-04-15 Fri 12:30</p>
+<p class="date">Created: 2022-04-17 Sun 14:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

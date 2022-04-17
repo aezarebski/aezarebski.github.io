@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-27 Wed 19:09 -->
+<!-- 2022-04-17 Sun 14:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes</title>
@@ -230,29 +230,30 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8afcecb">Numerics notes</a>
+<li><a href="#org1159b0d">Numerics notes</a>
 <ul>
-<li><a href="#org0f058cf">Numbers</a></li>
-<li><a href="#org206d21e">Numeric differentiation</a></li>
-<li><a href="#orgb8aea7e">Mathematical optimisation</a></li>
-<li><a href="#org14c992a">LogSumExp function</a></li>
-<li><a href="#org11932ed">Combinatoric functions</a></li>
-<li><a href="#org0a9a73d">Factorial</a></li>
-<li><a href="#org80b5e5e">Pochhammer</a></li>
-<li><a href="#org1cac4fd">Computational complexity</a></li>
+<li><a href="#org16bf034">Numbers</a></li>
+<li><a href="#org4a4353a">Numeric differentiation</a></li>
+<li><a href="#org5d00e08">Mathematical optimisation</a></li>
+<li><a href="#orgb9f47f4">LogSumExp function</a></li>
+<li><a href="#org0c8da8e">Combinatoric functions</a></li>
+<li><a href="#orgc5c464d">Factorial</a></li>
+<li><a href="#org286033b">Pochhammer</a></li>
+<li><a href="#orga6f9c60">Computational complexity</a></li>
+<li><a href="#org6ab6d76">Caching results</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8afcecb" class="outline-2">
-<h2 id="org8afcecb">Numerics notes</h2>
-<div class="outline-text-2" id="text-org8afcecb">
+<div id="outline-container-org1159b0d" class="outline-2">
+<h2 id="org1159b0d">Numerics notes</h2>
+<div class="outline-text-2" id="text-org1159b0d">
 </div>
-<div id="outline-container-org0f058cf" class="outline-3">
-<h3 id="org0f058cf">Numbers</h3>
-<div class="outline-text-3" id="text-org0f058cf">
+<div id="outline-container-org16bf034" class="outline-3">
+<h3 id="org16bf034">Numbers</h3>
+<div class="outline-text-3" id="text-org16bf034">
 <p>
 IEEE-754 compliant double precision numbers have a precision of about 16 decimal
 places.
@@ -260,55 +261,55 @@ places.
 </div>
 </div>
 
-<div id="outline-container-org206d21e" class="outline-3">
-<h3 id="org206d21e">Numeric differentiation</h3>
-<div class="outline-text-3" id="text-org206d21e">
+<div id="outline-container-org4a4353a" class="outline-3">
+<h3 id="org4a4353a">Numeric differentiation</h3>
+<div class="outline-text-3" id="text-org4a4353a">
 <p>
 The following functions use a five-point stencil to compute first and second
 derivatives and have an error of order \(h^4\)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">firstDerivative</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">firstDerivative</span> h f x <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span>f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> <span style="color: #a45bad;">8</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> <span style="color: #a45bad;">8</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">12</span> <span style="color: #7590db;">*</span> h<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell">firstDerivative :: Floating a =&gt; a -&gt; (a -&gt; a) -&gt; a -&gt; a
+firstDerivative h f x =
+  (-f (x + 2 * h) + 8 * f (x + h) - 8 * f (x - h) + f (x - 2 * h)) / (12 * h)
 
-<span style="color: #bc6ec5; font-weight: bold;">secondDerivative</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">secondDerivative</span> h f x <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span>f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> <span style="color: #a45bad;">16</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">+</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> <span style="color: #a45bad;">30</span> <span style="color: #7590db;">*</span> f x <span style="color: #7590db;">+</span> <span style="color: #a45bad;">16</span> <span style="color: #7590db;">*</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> h<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> f <span style="color: #bc6ec5;">(</span>x <span style="color: #7590db;">-</span> <span style="color: #a45bad;">2</span> <span style="color: #7590db;">*</span> h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #4f97d7;">(</span><span style="color: #a45bad;">12</span> <span style="color: #7590db;">*</span> h <span style="color: #7590db;">**</span> <span style="color: #a45bad;">2</span><span style="color: #4f97d7;">)</span>
+secondDerivative :: Floating a =&gt; a -&gt; (a -&gt; a) -&gt; a -&gt; a
+secondDerivative h f x =
+  (-f (x + 2 * h) + 16 * f (x + h) - 30 * f x + 16 * f (x - h) - f (x - 2 * h)) / (12 * h ** 2)
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org6e07002" class="outline-4">
-<h4 id="org6e07002">Gradient</h4>
-<div class="outline-text-4" id="text-org6e07002">
+<div id="outline-container-org431b7d8" class="outline-4">
+<h4 id="org431b7d8">Gradient</h4>
+<div class="outline-text-4" id="text-org431b7d8">
 <p>
 The <code>firstDerivative</code> function above can then be used to numerically evaluate
 the gradient
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #9f8766;">-- | The gradient vector computed using 'firstDerivative'.</span>
-<span style="color: #bc6ec5; font-weight: bold;">gradient</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Floating</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>a<span style="color: #bc6ec5;">]</span> <span style="color: #7590db;">-&gt;</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span>
-<span style="color: #bc6ec5; font-weight: bold;">gradient</span> h f x <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7; font-weight: bold;">let</span> n <span style="color: #7590db;">=</span> length x
-      es <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span>replicate <span style="color: #bc6ec5;">(</span>i<span style="color: #7590db;">-</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0</span> <span style="color: #7590db;">++</span> <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span> <span style="color: #7590db;">++</span> replicate <span style="color: #bc6ec5;">(</span>n<span style="color: #7590db;">-</span>i<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0</span> <span style="color: #7590db;">|</span> i <span style="color: #7590db;">&lt;-</span> <span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">..</span>n<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
-      g e d <span style="color: #7590db;">=</span> f <span style="color: #4f97d7;">[</span>xi <span style="color: #7590db;">+</span> d <span style="color: #7590db;">*</span> ei <span style="color: #7590db;">|</span> <span style="color: #bc6ec5;">(</span>xi,ei<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">&lt;-</span> zip x e<span style="color: #4f97d7;">]</span>
-  <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">[</span>firstDerivative h <span style="color: #bc6ec5;">(</span>g e<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0.0</span> <span style="color: #7590db;">|</span> e <span style="color: #7590db;">&lt;-</span> es<span style="color: #4f97d7;">]</span>
+<pre class="src src-haskell">-- | The gradient vector computed using 'firstDerivative'.
+gradient :: Floating a =&gt; a -&gt; ([a] -&gt; a) -&gt; [a] -&gt; [a]
+gradient h f x =
+  let n = length x
+      es = [replicate (i-1) 0 ++ [1] ++ replicate (n-i) 0 | i &lt;- [1..n]]
+      g e d = f [xi + d * ei | (xi,ei) &lt;- zip x e]
+  in [firstDerivative h (g e) 0.0 | e &lt;- es]
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb8aea7e" class="outline-3">
-<h3 id="orgb8aea7e">Mathematical optimisation</h3>
-<div class="outline-text-3" id="text-orgb8aea7e">
+<div id="outline-container-org5d00e08" class="outline-3">
+<h3 id="org5d00e08">Mathematical optimisation</h3>
+<div class="outline-text-3" id="text-org5d00e08">
 </div>
-<div id="outline-container-orgec7741e" class="outline-4">
-<h4 id="orgec7741e">Nelder-Mead</h4>
-<div class="outline-text-4" id="text-orgec7741e">
+<div id="outline-container-org4116550" class="outline-4">
+<h4 id="org4116550">Nelder-Mead</h4>
+<div class="outline-text-4" id="text-org4116550">
 <p>
 The Nelder-Mead algorithm is a gradient free method which is a simple way to get
 a rough estimate. The <span class="underline">rule of thumb</span> for the number of iterations to use for
@@ -318,9 +319,9 @@ space.
 </div>
 </div>
 
-<div id="outline-container-org01fddce" class="outline-4">
-<h4 id="org01fddce">Golden section</h4>
-<div class="outline-text-4" id="text-org01fddce">
+<div id="outline-container-org2187a54" class="outline-4">
+<h4 id="org2187a54">Golden section</h4>
+<div class="outline-text-4" id="text-org2187a54">
 <p>
 The golden section algorithm is a gradient free method which can be used to
 obtain an estimate up to a precision of about \(\sqrt{\epsilon}\) where
@@ -330,76 +331,75 @@ from the fact that one of the parameters of the algorithm is the golden ratio.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Golden</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Golden</span> <span style="color: #4f97d7;">{</span> gPoint      <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-                     , gValue      <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-                     , gDerivative <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #4f97d7;">}</span> <span style="color: #4f97d7; font-weight: bold;">deriving</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Show</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell">data Golden = Golden { gPoint      :: Double
+		     , gValue      :: Double
+		     , gDerivative :: Double } deriving (Show)
 
-<span style="color: #9f8766;">-- | Bracket the minimum</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #9f8766;">-- &gt;&gt;&gt; bracket (\x -&gt; x * (x - 1)) 0 0.1</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #bc6ec5; font-weight: bold;">bracket</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-        <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-        <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-        <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Either</span> <span style="color: #ce537a; font-weight: bold;">String</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-<span style="color: #bc6ec5; font-weight: bold;">bracket</span> f a b <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7; font-weight: bold;">let</span> g <span style="color: #7590db;">=</span> <span style="color: #a45bad;">1.618034</span>
-      c <span style="color: #7590db;">=</span> b <span style="color: #7590db;">+</span> g <span style="color: #7590db;">*</span> <span style="color: #4f97d7;">(</span>b <span style="color: #7590db;">-</span> a<span style="color: #4f97d7;">)</span>
-      <span style="color: #4f97d7;">(</span>fa, fb, fc<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>f a, f b, f c<span style="color: #4f97d7;">)</span>
-      <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #7590db;">|</span> a <span style="color: #7590db;">&gt;</span> b     <span style="color: #7590db;">-&gt;</span> bracket f b a
-            <span style="color: #7590db;">|</span> fa <span style="color: #7590db;">&lt;</span> fb   <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Left</span> <span style="color: #2d9574;">"initial points given to bracket do not go downhill"</span>
-            <span style="color: #7590db;">|</span> fb <span style="color: #7590db;">&lt;</span> fc   <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Right</span> <span style="color: #4f97d7;">(</span>a,b,c<span style="color: #4f97d7;">)</span>
-            <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">-&gt;</span> bracket f b c
+-- | Bracket the minimum
+--
+-- &gt;&gt;&gt; bracket (\x -&gt; x * (x - 1)) 0 0.1
+--
+bracket :: (Double -&gt; Double)
+	-&gt; Double
+	-&gt; Double
+	-&gt; Either String (Double,Double,Double)
+bracket f a b =
+  let g = 1.618034
+      c = b + g * (b - a)
+      (fa, fb, fc) = (f a, f b, f c)
+      in if | a &gt; b     -&gt; bracket f b a
+	    | fa &lt; fb   -&gt; Left "initial points given to bracket do not go downhill"
+	    | fb &lt; fc   -&gt; Right (a,b,c)
+	    | otherwise -&gt; bracket f b c
 
-<span style="color: #9f8766;">-- | Golden section search.</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #9f8766;">-- &gt;&gt;&gt; golden (\x -&gt; x * (x - 1)) (0.26,0.52,0.94)</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #bc6ec5; font-weight: bold;">golden</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-       <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-       <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Either</span> <span style="color: #ce537a; font-weight: bold;">String</span> <span style="color: #ce537a; font-weight: bold;">Golden</span>
-<span style="color: #bc6ec5; font-weight: bold;">golden</span> f <span style="color: #4f97d7;">(</span>a,b,c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7; font-weight: bold;">let</span>
-    r <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0.61803399</span>
-    tol <span style="color: #7590db;">=</span> <span style="color: #a45bad;">3.0e-8</span>
-    <span style="color: #4f97d7;">(</span>fa,fb,fc<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>f a,f b,f c<span style="color: #4f97d7;">)</span>
-    <span style="color: #4f97d7;">(</span>x0,x3<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>a,c<span style="color: #4f97d7;">)</span>
-    <span style="color: #4f97d7;">(</span>x1,x2<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">if</span> abs <span style="color: #4f97d7;">(</span>c<span style="color: #7590db;">-</span>b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&gt;</span> abs <span style="color: #4f97d7;">(</span>b<span style="color: #7590db;">-</span>a<span style="color: #4f97d7;">)</span>
-              <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">(</span>b,r<span style="color: #7590db;">*</span>b<span style="color: #7590db;">+</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">*</span>c<span style="color: #4f97d7;">)</span>
-              <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">*</span>a<span style="color: #7590db;">+</span>r<span style="color: #7590db;">*</span>b,b<span style="color: #4f97d7;">)</span>
-    <span style="color: #4f97d7;">(</span>xmin,fmin<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> gwl r tol f <span style="color: #4f97d7;">(</span>x0,x1,x2,x3<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f x1,f x2<span style="color: #4f97d7;">)</span>
-    fder <span style="color: #7590db;">=</span> firstDerivative tol f xmin
-  <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7; font-weight: bold;">if</span> a <span style="color: #7590db;">&lt;</span> b <span style="color: #7590db;">&amp;&amp;</span> b <span style="color: #7590db;">&lt;</span> c <span style="color: #7590db;">&amp;&amp;</span> fa <span style="color: #7590db;">&gt;</span> fb <span style="color: #7590db;">&amp;&amp;</span> fb <span style="color: #7590db;">&lt;</span> fc
-     <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #ce537a; font-weight: bold;">Right</span> <span style="color: #7590db;">$</span> <span style="color: #ce537a; font-weight: bold;">Golden</span> xmin fmin fder
-     <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #ce537a; font-weight: bold;">Left</span> <span style="color: #2d9574;">"invalid triple given to golden"</span>
+-- | Golden section search.
+--
+-- &gt;&gt;&gt; golden (\x -&gt; x * (x - 1)) (0.26,0.52,0.94)
+--
+golden :: (Double -&gt; Double)
+       -&gt; (Double,Double,Double)
+       -&gt; Either String Golden
+golden f (a,b,c) =
+  let
+    r = 0.61803399
+    tol = 3.0e-8
+    (fa,fb,fc) = (f a,f b,f c)
+    (x0,x3) = (a,c)
+    (x1,x2) = if abs (c-b) &gt; abs (b-a)
+	      then (b,r*b+(1-r)*c)
+	      else ((1-r)*a+r*b,b)
+    (xmin,fmin) = gwl r tol f (x0,x1,x2,x3) (f x1,f x2)
+    fder = firstDerivative tol f xmin
+  in if a &lt; b &amp;&amp; b &lt; c &amp;&amp; fa &gt; fb &amp;&amp; fb &lt; fc
+     then Right $ Golden xmin fmin fder
+     else Left "invalid triple given to golden"
 
-<span style="color: #9f8766;">-- | Golden while loop</span>
-<span style="color: #bc6ec5; font-weight: bold;">gwl</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-    <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-    <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Double</span>,<span style="color: #ce537a; font-weight: bold;">Double</span><span style="color: #4f97d7;">)</span>
-<span style="color: #bc6ec5; font-weight: bold;">gwl</span> r tol f <span style="color: #4f97d7;">(</span>x0,x1,x2,x3<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f1,f2<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> abs <span style="color: #4f97d7;">(</span>x3 <span style="color: #7590db;">-</span> x0<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&gt;</span> tol <span style="color: #7590db;">*</span> <span style="color: #4f97d7;">(</span>abs x1 <span style="color: #7590db;">+</span> abs x2<span style="color: #4f97d7;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7; font-weight: bold;">if</span> f2 <span style="color: #7590db;">&lt;</span> f1
-       <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7; font-weight: bold;">let</span> x' <span style="color: #7590db;">=</span> r<span style="color: #7590db;">*</span>x2<span style="color: #7590db;">+</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #4f97d7;">)</span><span style="color: #7590db;">*</span>x3
-            <span style="color: #4f97d7; font-weight: bold;">in</span> gwl r tol f <span style="color: #4f97d7;">(</span>x1,x2,x',x3<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f2,f x'<span style="color: #4f97d7;">)</span>
-       <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7; font-weight: bold;">let</span> x' <span style="color: #7590db;">=</span> r<span style="color: #7590db;">*</span>x1<span style="color: #7590db;">+</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span><span style="color: #7590db;">-</span>r<span style="color: #4f97d7;">)</span><span style="color: #7590db;">*</span>x0
-            <span style="color: #4f97d7; font-weight: bold;">in</span> gwl r tol f <span style="color: #4f97d7;">(</span>x0,x',x1,x2<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>f2,f x'<span style="color: #4f97d7;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7; font-weight: bold;">if</span> f1 <span style="color: #7590db;">&lt;</span> f2
-       <span style="color: #4f97d7; font-weight: bold;">then</span> <span style="color: #4f97d7;">(</span>x1,f1<span style="color: #4f97d7;">)</span>
-       <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #4f97d7;">(</span>x2,f2<span style="color: #4f97d7;">)</span>
+-- | Golden while loop
+gwl :: Double
+    -&gt; Double
+    -&gt; (Double -&gt; Double)
+    -&gt; (Double,Double,Double,Double)
+    -&gt; (Double,Double)
+    -&gt; (Double,Double)
+gwl r tol f (x0,x1,x2,x3) (f1,f2) =
+  if abs (x3 - x0) &gt; tol * (abs x1 + abs x2)
+  then if f2 &lt; f1
+       then let x' = r*x2+(1-r)*x3
+	    in gwl r tol f (x1,x2,x',x3) (f2,f x')
+       else let x' = r*x1+(1-r)*x0
+	    in gwl r tol f (x0,x',x1,x2) (f2,f x')
+  else if f1 &lt; f2
+       then (x1,f1)
+       else (x2,f2)
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-
-<div id="outline-container-org14c992a" class="outline-3">
-<h3 id="org14c992a">LogSumExp function</h3>
-<div class="outline-text-3" id="text-org14c992a">
+<div id="outline-container-orgb9f47f4" class="outline-3">
+<h3 id="orgb9f47f4">LogSumExp function</h3>
+<div class="outline-text-3" id="text-orgb9f47f4">
 <p>
 Consider the LogSumExp (LSE) function
 </p>
@@ -411,7 +411,7 @@ Consider the LogSumExp (LSE) function
 </p>
 
 <p>
-Let \(x^* = \max\{x_i\}\) and this can equally be expressed as 
+Let \(x^* = \max\{x_i\}\) and this can equally be expressed as
 </p>
 
 <p>
@@ -426,17 +426,17 @@ overflow or underflow as easily.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">logSumExp</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Floating</span> a, <span style="color: #ce537a; font-weight: bold;">Ord</span> a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> a
-<span style="color: #bc6ec5; font-weight: bold;">logSumExp</span> xs <span style="color: #7590db;">=</span> x' <span style="color: #7590db;">+</span> log <span style="color: #4f97d7;">(</span>sum <span style="color: #bc6ec5;">[</span>exp <span style="color: #2d9574;">(</span>x <span style="color: #7590db;">-</span> x'<span style="color: #2d9574;">)</span> <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;-</span> xs<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-               <span style="color: #4f97d7; font-weight: bold;">where</span> x' <span style="color: #7590db;">=</span> maximum xs
+<pre class="src src-haskell">logSumExp :: (Floating a, Ord a) =&gt; [a] -&gt; a
+logSumExp xs = x' + log (sum [exp (x - x') | x &lt;- xs])
+	       where x' = maximum xs
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org11932ed" class="outline-3">
-<h3 id="org11932ed">Combinatoric functions</h3>
-<div class="outline-text-3" id="text-org11932ed">
+<div id="outline-container-org0c8da8e" class="outline-3">
+<h3 id="org0c8da8e">Combinatoric functions</h3>
+<div class="outline-text-3" id="text-org0c8da8e">
 <p>
 The following is taken from the <code>math-functions</code> haskell package which
 demonstrates some useful implementations of functions for working with binomial
@@ -444,68 +444,68 @@ coefficients.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #2aa1ae; background-color: #292e34;">--</span><span style="color: #2aa1ae; background-color: #292e34;">--------------------------------------------------------------</span>
-<span style="color: #2aa1ae; background-color: #292e34;">-- </span><span style="color: #2aa1ae; background-color: #292e34;">Combinatorics</span>
-<span style="color: #2aa1ae; background-color: #292e34;">--</span><span style="color: #2aa1ae; background-color: #292e34;">--------------------------------------------------------------</span>
+<pre class="src src-haskell">----------------------------------------------------------------
+-- Combinatorics
+----------------------------------------------------------------
 
-<span style="color: #9f8766;">-- |</span>
-<span style="color: #9f8766;">-- Quickly compute the natural logarithm of </span><span style="color: #9f8766; font-style: italic;">/n/</span><span style="color: #9f8766;"> @`choose`@ </span><span style="color: #9f8766; font-style: italic;">/k/</span><span style="color: #9f8766;">, with</span>
-<span style="color: #9f8766;">-- no checking.</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #9f8766;">-- Less numerically stable:</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #9f8766;">-- &gt; exp $ lg (n+1) - lg (k+1) - lg (n-k+1)</span>
-<span style="color: #9f8766;">-- &gt;   where lg = logGamma . fromIntegral</span>
-<span style="color: #bc6ec5; font-weight: bold;">logChooseFast</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-<span style="color: #bc6ec5; font-weight: bold;">logChooseFast</span> n k <span style="color: #7590db;">=</span> <span style="color: #7590db;">-</span>log <span style="color: #4f97d7;">(</span>n <span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-</span> logBeta <span style="color: #4f97d7;">(</span>n <span style="color: #7590db;">-</span> k <span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>k <span style="color: #7590db;">+</span> <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+-- |
+-- Quickly compute the natural logarithm of /n/ @`choose`@ /k/, with
+-- no checking.
+--
+-- Less numerically stable:
+--
+-- &gt; exp $ lg (n+1) - lg (k+1) - lg (n-k+1)
+-- &gt;   where lg = logGamma . fromIntegral
+logChooseFast :: Double -&gt; Double -&gt; Double
+logChooseFast n k = -log (n + 1) - logBeta (n - k + 1) (k + 1)
 
-<span style="color: #9f8766;">-- | Calculate binomial coefficient using exact formula</span>
-<span style="color: #bc6ec5; font-weight: bold;">chooseExact</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-n <span style="color: #7590db;">`</span><span style="color: #bc6ec5; font-weight: bold;">chooseExact</span><span style="color: #7590db;">`</span> k
-  <span style="color: #7590db;">=</span> U.foldl' go <span style="color: #a45bad;">1</span> <span style="color: #7590db;">$</span> U.enumFromTo <span style="color: #a45bad;">1</span> k
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    go a i      <span style="color: #7590db;">=</span> a <span style="color: #7590db;">*</span> <span style="color: #4f97d7;">(</span>nk <span style="color: #7590db;">+</span> j<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> j
-        <span style="color: #4f97d7; font-weight: bold;">where</span> j <span style="color: #7590db;">=</span> fromIntegral i <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-    nk <span style="color: #7590db;">=</span> fromIntegral <span style="color: #4f97d7;">(</span>n <span style="color: #7590db;">-</span> k<span style="color: #4f97d7;">)</span>
+-- | Calculate binomial coefficient using exact formula
+chooseExact :: Int -&gt; Int -&gt; Double
+n `chooseExact` k
+  = U.foldl' go 1 $ U.enumFromTo 1 k
+  where
+    go a i      = a * (nk + j) / j
+	where j = fromIntegral i :: Double
+    nk = fromIntegral (n - k)
 
-<span style="color: #9f8766;">-- | Compute logarithm of the binomial coefficient.</span>
-<span style="color: #bc6ec5; font-weight: bold;">logChoose</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-n <span style="color: #7590db;">`</span><span style="color: #bc6ec5; font-weight: bold;">logChoose</span><span style="color: #7590db;">`</span> k
-    <span style="color: #7590db;">|</span> k  <span style="color: #7590db;">&gt;</span> n    <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span><span style="color: #7590db;">-</span><span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">/</span> <span style="color: #a45bad;">0</span>
-      <span style="color: #2aa1ae; background-color: #292e34;">-- </span><span style="color: #2aa1ae; background-color: #292e34;">For very large N exact algorithm overflows double so we</span>
-      <span style="color: #2aa1ae; background-color: #292e34;">-- </span><span style="color: #2aa1ae; background-color: #292e34;">switch to beta-function based one</span>
-    <span style="color: #7590db;">|</span> k' <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">50</span> <span style="color: #7590db;">&amp;&amp;</span> <span style="color: #4f97d7;">(</span>n <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">20000000</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> log <span style="color: #7590db;">$</span> chooseExact n k'
-    <span style="color: #7590db;">|</span> otherwise                 <span style="color: #7590db;">=</span> logChooseFast <span style="color: #4f97d7;">(</span>fromIntegral n<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>fromIntegral k<span style="color: #4f97d7;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    k' <span style="color: #7590db;">=</span> min k <span style="color: #4f97d7;">(</span>n<span style="color: #7590db;">-</span>k<span style="color: #4f97d7;">)</span>
+-- | Compute logarithm of the binomial coefficient.
+logChoose :: Int -&gt; Int -&gt; Double
+n `logChoose` k
+    | k  &gt; n    = (-1) / 0
+      -- For very large N exact algorithm overflows double so we
+      -- switch to beta-function based one
+    | k' &lt; 50 &amp;&amp; (n &lt; 20000000) = log $ chooseExact n k'
+    | otherwise                 = logChooseFast (fromIntegral n) (fromIntegral k)
+  where
+    k' = min k (n-k)
 
-<span style="color: #9f8766;">-- | Compute the binomial coefficient </span><span style="color: #9f8766; font-style: italic;">/n/</span><span style="color: #9f8766;"> @\``choose`\`@ </span><span style="color: #9f8766; font-style: italic;">/k/</span><span style="color: #9f8766;">. For</span>
-<span style="color: #9f8766;">-- values of </span><span style="color: #9f8766; font-style: italic;">/k/</span><span style="color: #9f8766;"> &gt; 50, this uses an approximation for performance</span>
-<span style="color: #9f8766;">-- reasons.  The approximation is accurate to 12 decimal places in the</span>
-<span style="color: #9f8766;">-- worst case</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #9f8766;">-- Example:</span>
-<span style="color: #9f8766;">--</span>
-<span style="color: #9f8766;">-- &gt; 7 `choose` 3 == 35</span>
-<span style="color: #bc6ec5; font-weight: bold;">choose</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span>
-n <span style="color: #7590db;">`</span><span style="color: #bc6ec5; font-weight: bold;">choose</span><span style="color: #7590db;">`</span> k
-    <span style="color: #7590db;">|</span> k  <span style="color: #7590db;">&gt;</span> n         <span style="color: #7590db;">=</span> <span style="color: #a45bad;">0</span>
-    <span style="color: #7590db;">|</span> k' <span style="color: #7590db;">&lt;</span> <span style="color: #a45bad;">50</span>        <span style="color: #7590db;">=</span> chooseExact n k'
-    <span style="color: #7590db;">|</span> approx <span style="color: #7590db;">&lt;</span> max64 <span style="color: #7590db;">=</span> fromIntegral <span style="color: #7590db;">.</span> round64 <span style="color: #7590db;">$</span> approx
-    <span style="color: #7590db;">|</span> otherwise      <span style="color: #7590db;">=</span> approx
-  <span style="color: #4f97d7; font-weight: bold;">where</span>
-    k'             <span style="color: #7590db;">=</span> min k <span style="color: #4f97d7;">(</span>n<span style="color: #7590db;">-</span>k<span style="color: #4f97d7;">)</span>
-    approx         <span style="color: #7590db;">=</span> exp <span style="color: #7590db;">$</span> logChooseFast <span style="color: #4f97d7;">(</span>fromIntegral n<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>fromIntegral k'<span style="color: #4f97d7;">)</span>
-    max64          <span style="color: #7590db;">=</span> fromIntegral <span style="color: #4f97d7;">(</span>maxBound <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int64</span><span style="color: #4f97d7;">)</span>
-    round64 x      <span style="color: #7590db;">=</span> round x <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int64</span> 
+-- | Compute the binomial coefficient /n/ @\``choose`\`@ /k/. For
+-- values of /k/ &gt; 50, this uses an approximation for performance
+-- reasons.  The approximation is accurate to 12 decimal places in the
+-- worst case
+--
+-- Example:
+--
+-- &gt; 7 `choose` 3 == 35
+choose :: Int -&gt; Int -&gt; Double
+n `choose` k
+    | k  &gt; n         = 0
+    | k' &lt; 50        = chooseExact n k'
+    | approx &lt; max64 = fromIntegral . round64 $ approx
+    | otherwise      = approx
+  where
+    k'             = min k (n-k)
+    approx         = exp $ logChooseFast (fromIntegral n) (fromIntegral k')
+    max64          = fromIntegral (maxBound :: Int64)
+    round64 x      = round x :: Int64
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0a9a73d" class="outline-3">
-<h3 id="org0a9a73d">Factorial</h3>
-<div class="outline-text-3" id="text-org0a9a73d">
+<div id="outline-container-orgc5c464d" class="outline-3">
+<h3 id="orgc5c464d">Factorial</h3>
+<div class="outline-text-3" id="text-orgc5c464d">
 <p>
 The factorial function has the following definition for positive integers
 </p>
@@ -523,9 +523,9 @@ need a safe implementation of the gamma function to work with factorials.
 </div>
 </div>
 
-<div id="outline-container-org80b5e5e" class="outline-3">
-<h3 id="org80b5e5e">Pochhammer</h3>
-<div class="outline-text-3" id="text-org80b5e5e">
+<div id="outline-container-org286033b" class="outline-3">
+<h3 id="org286033b">Pochhammer</h3>
+<div class="outline-text-3" id="text-org286033b">
 <p>
 For a positive integer, \(n\), the Pochhammer function, rising factorial, is
 given by
@@ -554,9 +554,9 @@ Pochhammer function.
 </div>
 </div>
 
-<div id="outline-container-org1cac4fd" class="outline-3">
-<h3 id="org1cac4fd">Computational complexity</h3>
-<div class="outline-text-3" id="text-org1cac4fd">
+<div id="outline-container-orga6f9c60" class="outline-3">
+<h3 id="orga6f9c60">Computational complexity</h3>
+<div class="outline-text-3" id="text-orga6f9c60">
 <p>
 Suppose you have a program that depends on a parameter <code>n</code> and takes <code>t</code> seconds
 to evaluate. The following snippet can be used as a starting point for
@@ -564,13 +564,13 @@ estimating how long it will take to run on a larger input.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">df <span style="color: #ce537a; font-weight: bold;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>t = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">38</span>,<span style="color: #a45bad;">106</span>,<span style="color: #a45bad;">255</span>,<span style="color: #a45bad;">847</span><span style="color: #bc6ec5;">)</span>, n = c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">180</span>,<span style="color: #a45bad;">190</span>,<span style="color: #a45bad;">200</span>,<span style="color: #a45bad;">210</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">df &lt;- data.frame(t = c(38,106,255,847), n = c(180,190,200,210))
 
-ggplot<span style="color: #4f97d7;">(</span>data = df, mapping = aes<span style="color: #bc6ec5;">(</span>x = n, y = t / <span style="color: #a45bad;">60</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
-  geom_point<span style="color: #4f97d7;">()</span> +
-  scale_y_log10<span style="color: #4f97d7;">(</span>n.breaks = <span style="color: #a45bad;">10</span><span style="color: #4f97d7;">)</span> +
-  geom_smooth<span style="color: #4f97d7;">(</span>method = <span style="color: #2d9574;">"lm"</span>, fullrange = <span style="color: #a45bad;">TRUE</span><span style="color: #4f97d7;">)</span> +
-  xlim<span style="color: #4f97d7;">(</span>c<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">170</span>, <span style="color: #a45bad;">220</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+ggplot(data = df, mapping = aes(x = n, y = t / 60)) +
+  geom_point() +
+  scale_y_log10(n.breaks = 10) +
+  geom_smooth(method = "lm", fullrange = TRUE) +
+  xlim(c(170, 220))
 </pre>
 </div>
 
@@ -580,9 +580,9 @@ polynomial complexity.
 </p>
 </div>
 
-<div id="outline-container-orgfa70678" class="outline-4">
-<h4 id="orgfa70678">Time</h4>
-<div class="outline-text-4" id="text-orgfa70678">
+<div id="outline-container-org643bfe3" class="outline-4">
+<h4 id="org643bfe3">Time</h4>
+<div class="outline-text-4" id="text-org643bfe3">
 <p>
 Here is a table that might help you decide is something runs fast enough.
 </p>
@@ -641,11 +641,118 @@ Here is a table that might help you decide is something runs fast enough.
 </div>
 </div>
 </div>
+
+<div id="outline-container-org6ab6d76" class="outline-3">
+<h3 id="org6ab6d76">Caching results</h3>
+<div class="outline-text-3" id="text-org6ab6d76">
+<p>
+Consider the following Java programs. The first one computes the logarithms each
+time they are used.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java">public class AAA {
+    public static void main(String[] args) {
+	double size = 100000;
+	double answer = 1051287.7089736538;
+	int repeats = Integer.parseInt(args[0]);
+	for (int m = 0; m &lt; repeats; m++) {
+	    double x = 0;
+	    for (double n = 1.0; n &lt; size; n+=1.0) {
+		x += Math.log(n);
+	    }
+	    if (x != answer) {
+		throw new RuntimeException("incorrect value");
+	    }
+	}
+    }
+}
+</pre>
+</div>
+
+<p>
+The second saves the results in an array and re-uses them.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java">public class BBB {
+    public static void main(String[] args) {
+	int size = 100000;
+	double answer = 1051287.7089736538;
+	int repeats = Integer.parseInt(args[0]);
+	double[] ls;
+	ls = new double[size+1];
+	for (int ix = 0; ix &lt;= size; ix++) {
+	    ls[ix] = Math.log(ix);
+	}
+
+	for (int m = 0; m &lt; repeats; m++) {
+	    double x = 0;
+	    for (int n = 1; n &lt; size; n++) {
+		x += ls[n];
+	    }
+	    if (x != answer) {
+		throw new RuntimeException("incorrect value");
+	    }
+	}
+    }
+}
+</pre>
+</div>
+
+<p>
+Running this program with varying number of repeats and timing the evaluation
+produces the dataset shown in Listing <a href="#org6f059b1">1</a> which is also shown in Figure <a href="#orgb717740">1</a>. This
+shows that for even reasonably small problems it is useful to cache results.
+</p>
+
+
+<div id="orgb717740" class="figure">
+<p><img src="../images/java-log-timing.png" alt="java-log-timing.png" width="400px" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-csv" id="org6f059b1">method,repeats,seconds
+AAA,100,0.286
+AAA,200,0.474
+AAA,300,0.612
+AAA,400,0.781
+AAA,500,0.945
+AAA,600,1.154
+AAA,700,1.312
+AAA,800,1.521
+AAA,900,1.712
+AAA,1000,1.764
+AAA,1100,2.084
+AAA,1200,2.177
+AAA,1300,2.397
+AAA,1400,2.619
+AAA,1500,2.661
+BBB,100,0.133
+BBB,200,0.128
+BBB,300,0.156
+BBB,400,0.154
+BBB,500,0.169
+BBB,600,0.174
+BBB,700,0.177
+BBB,800,0.186
+BBB,900,0.178
+BBB,1000,0.240
+BBB,1100,0.205
+BBB,1200,0.229
+BBB,1300,0.248
+BBB,1400,0.254
+BBB,1500,0.272
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2021-10-27 Wed 19:09</p>
+<p class="date">Created: 2022-04-17 Sun 14:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
