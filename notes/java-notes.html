@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-17 Sun 14:21 -->
+<!-- 2022-04-25 Mon 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>java-lang-aez-notes</title>
@@ -231,6 +231,7 @@
 <li><a href="#orgcb0d04a">Enumerations and switch statements</a></li>
 <li><a href="#orga03b76d">For-each loop</a></li>
 <li><a href="#org5c137cf">Hello world</a></li>
+<li><a href="#orgdfcfe86">Ant build script</a></li>
 <li><a href="#org05408ac">Ternary operator</a></li>
 <li><a href="#org1357a11">Varargs</a></li>
 <li><a href="#org9644745">Command line arguments</a></li>
@@ -249,7 +250,7 @@
 </div>
 
 
-<div id="org3824361" class="figure">
+<div id="orgabd56f4" class="figure">
 <p><img src="../images/java-logo.png" alt="java-logo.png" width="200px" />
 </p>
 </div>
@@ -417,9 +418,9 @@ this
 </div>
 </div>
 
-<div id="outline-container-org4f1d1a0" class="outline-4">
-<h4 id="org4f1d1a0">Example</h4>
-<div class="outline-text-4" id="text-org4f1d1a0">
+<div id="outline-container-org4226a93" class="outline-4">
+<h4 id="org4226a93">Example</h4>
+<div class="outline-text-4" id="text-org4226a93">
 <p>
 This is taken from Sedgewick's lecture notes but the next example seems to fit
 better with some of the problems he set.
@@ -446,9 +447,9 @@ public class Stack&lt;Item&gt; implements Iterable&lt;Item&gt;
 </div>
 </div>
 
-<div id="outline-container-org6660478" class="outline-4">
-<h4 id="org6660478">Example</h4>
-<div class="outline-text-4" id="text-org6660478">
+<div id="outline-container-org5882739" class="outline-4">
+<h4 id="org5882739">Example</h4>
+<div class="outline-text-4" id="text-org5882739">
 <div class="org-src-container">
 <pre class="src src-java">public Iterable&lt;Item&gt; range() {
     return new ItemIterable();
@@ -557,9 +558,9 @@ available tags (e.g. <code>@param</code>) in the <a href="https://docs.oracle.co
 </ul>
 </div>
 
-<div id="outline-container-org4226a93" class="outline-4">
-<h4 id="org4226a93">Example</h4>
-<div class="outline-text-4" id="text-org4226a93">
+<div id="outline-container-org34d9641" class="outline-4">
+<h4 id="org34d9641">Example</h4>
+<div class="outline-text-4" id="text-org34d9641">
 <div class="org-src-container">
 <pre class="src src-java"> /**
  * Short one line description.                           (1)
@@ -712,10 +713,60 @@ public class Hello {
 </pre>
 </div>
 
-<pre class="example" id="orga8e8fc6">
+<pre class="example" id="orgdf20b6c">
 $ javac Hello.java
 $ java Hello
 hello, world!
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgdfcfe86" class="outline-3">
+<h3 id="orgdfcfe86">Ant build script</h3>
+<div class="outline-text-3" id="text-orgdfcfe86">
+<p>
+The following ant build script can be used with the <a href="#org5c137cf">hello world</a> example above.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;project name="hello"
+	 basedir="."&gt;
+
+    &lt;target name="compile"&gt;
+	&lt;javac srcdir="."
+	       includeantruntime="true"
+	       includes="Hello.java"
+	       destdir="." /&gt;
+    &lt;/target&gt;
+
+    &lt;target name="run"
+	    depends="compile"&gt;
+	&lt;java classname="Hello"
+	      fork="true" /&gt;
+    &lt;/target&gt;
+
+&lt;/project&gt;
+</pre>
+</div>
+
+<pre class="example" id="orgafc09ec">
+$ ant compile
+Buildfile: &lt;path/to/build.xml&gt;
+
+compile:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
+$ ant run
+Buildfile: &lt;path/to/build.xml&gt;
+
+compile:
+
+run:
+     [java] hello, world!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
 </pre>
 </div>
 </div>
@@ -863,7 +914,7 @@ from 2013 which is sufficient to get started with.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-04-17 Sun 14:21</p>
+<p class="date">Created: 2022-04-25 Mon 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
