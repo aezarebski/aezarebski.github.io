@@ -1,0 +1,2768 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-04-27 Wed 11:17 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NICEMACS</title>
+<meta name="author" content="Alex Zarebski" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">NICEMACS</h1>
+
+<div id="org90a91b5" class="figure">
+<p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
+</p>
+</div>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga3cda2d">Build you an Emacs</a></li>
+<li><a href="#org4baec2d">Nicemacs</a>
+<ul>
+<li><a href="#org19acbb0">HELP</a></li>
+<li><a href="#orge05947e">Recursive grep</a></li>
+<li><a href="#orgc87c7d7">System</a></li>
+<li><a href="#org0be7def">Spacemacs shortcuts</a></li>
+<li><a href="#orgef6c0e9">Usage notes</a></li>
+<li><a href="#org39966f6">Stuff</a></li>
+<li><a href="#org72625e2">Completion</a></li>
+<li><a href="#org9896c52">LSP</a></li>
+<li><a href="#org05045c1">Haskell</a></li>
+<li><a href="#orgaf0e06f">Maxima</a></li>
+<li><a href="#orgd74aaac">JavaScript and Typescript</a></li>
+<li><a href="#orgef7b9aa"><span class="todo TODO">TODO</span> Miscellaneous configuration for prose</a></li>
+<li><a href="#orgffecc1d">Latex and Bibtex</a></li>
+<li><a href="#orge27d5e9">Org-mode</a></li>
+<li><a href="#orgfb78df9">Shells and REPLs</a></li>
+<li><a href="#org9c2de93">Monitoring processes</a></li>
+<li><a href="#orgc4dd86b">Emacs Speaks Statistics (ESS)</a></li>
+<li><a href="#org46a8adc">Version control via magit</a></li>
+<li><a href="#org7fc1083"><span class="todo TODO">TODO</span> File and buffer manipulation</a></li>
+<li><a href="#org6092667">Unicode and Greek letters</a></li>
+<li><a href="#org74f7725"><span class="todo TODO">TODO</span> XML editing</a></li>
+<li><a href="#org4aa372a">Yasnippet snippets</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga3cda2d" class="outline-2">
+<h2 id="orga3cda2d">Build you an Emacs</h2>
+<div class="outline-text-2" id="text-orga3cda2d">
+<p>
+Get the source code from <a href="http://git.savannah.gnu.org/cgit/emacs.git/">here</a> with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">wget http://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-VERSION.tar.gz
+tar -xf emacs-VERSION.tar.xz
+</pre>
+</div>
+
+<p>
+Alternatively, you can get clone the <a href="https://github.com/emacs-mirror/emacs">emacs mirror</a> from GitHub and check out the
+<code>emacs-28</code> branch (or whatever version you want).
+</p>
+
+<p>
+Follow the instructions in the <code>INSTALL</code> file to build emacs.
+</p>
+<ul class="org-ul">
+<li>This seems to just be <code>./configure</code> then <code>make</code> then <code>sudo make install</code>.</li>
+<li>If you cannot find the <code>configure</code> script, you may need to run <code>autogen.sh</code> first.</li>
+<li>If you have spare compute you can use multiple jobs to speed up the
+compilation with <code>make -j [N]</code> to use <code>N</code> jobs during compilation</li>
+</ul>
+</div>
+
+<div id="outline-container-orgee13abe" class="outline-4">
+<h4 id="orgee13abe">Notes</h4>
+<div class="outline-text-4" id="text-orgee13abe">
+<ul class="org-ul">
+<li><code>emacs-28.1</code>. I also installed <code>libgccjit</code> and used <code>./configure
+  --with-native-compilation</code> during the compilation, it does feel snappier.</li>
+<li><code>emacs-28.0.91</code> requested <code>mailutils</code> to be installed during configuration.</li>
+<li><code>emacs-28.0.60</code> requested <code>libacl1-dev</code> and <code>libharfbuzz-dev</code> be installed during
+configuration. It does feel snappier. It told me that my current version of
+GTK+ leads to a bug but I couldn't figure out how to update GTK+ and it seemed
+to be an up to date version anyway.</li>
+<li><code>emacs-27.2</code> build and installs without issue.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4baec2d" class="outline-2">
+<h2 id="org4baec2d">Nicemacs</h2>
+<div class="outline-text-2" id="text-org4baec2d">
+</div>
+<div id="outline-container-org19acbb0" class="outline-3">
+<h3 id="org19acbb0">HELP</h3>
+<div class="outline-text-3" id="text-org19acbb0">
+<p>
+There are a couple of help menus that are useful to be able to access easily:
+</p>
+
+<ul class="org-ul">
+<li><i>GNU Emacs NEWS</i> can be summoned with <code>view-emacs-news</code>.</li>
+<li><i>Spacemacs documentation</i> can be summoned with <code>helm-spacemacs-help-docs</code>.</li>
+<li><i>GNU Emacs Manual</i> can be summoned with <code>info-display-manual</code>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge05947e" class="outline-3">
+<h3 id="orge05947e">Recursive grep</h3>
+<div class="outline-text-3" id="text-orge05947e">
+<p>
+The <code>rgrep</code> function is used to recursively search files matching a given pattern.
+After running <code>rgrep</code> you will be asked for the search term, a pattern to specify
+the filenames to search and finally the root directory of the search. The
+results are presented in a buffer which links to the matches found.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc87c7d7" class="outline-3">
+<h3 id="orgc87c7d7">System</h3>
+<div class="outline-text-3" id="text-orgc87c7d7">
+</div>
+<div id="outline-container-org45a9c74" class="outline-4">
+<h4 id="org45a9c74">Display battery percentage</h4>
+<div class="outline-text-4" id="text-org45a9c74">
+<p>
+To toggle the display of the battery there is the shortcut <code>SPC t m b</code> which runs
+the command <code>spacemacs/toggle-mode-line-battery</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org068b84c" class="outline-4">
+<h4 id="org068b84c">Display time</h4>
+<div class="outline-text-4" id="text-org068b84c">
+<p>
+To toggle the display of the time there is the shortcut <code>SPC t m t</code> which runs the
+command <code>spacemacs/toggle-display-time</code>. Note that you can configure the way in
+which the time is displayed.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0be7def" class="outline-3">
+<h3 id="org0be7def">Spacemacs shortcuts</h3>
+<div class="outline-text-3" id="text-org0be7def">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Keys</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>SPC f e d</code></td>
+<td class="org-left">Open <code>.spacemacs</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC f e R</code></td>
+<td class="org-left">Reload <code>.spacemacs</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC TAB</code></td>
+<td class="org-left">Switch to last buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC f s</code></td>
+<td class="org-left">Save file</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC f f</code></td>
+<td class="org-left">Find (visit) file</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC w d</code></td>
+<td class="org-left">Kill <i>current</i> window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC w D</code></td>
+<td class="org-left">Kill all <i>other</i> windows</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC b b</code></td>
+<td class="org-left">List buffers</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC b n</code></td>
+<td class="org-left">Next buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC b p</code></td>
+<td class="org-left">Previous buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC b k</code></td>
+<td class="org-left">Kill buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC T n</code></td>
+<td class="org-left">Toggle the theme</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC q r</code></td>
+<td class="org-left">Restart emacs</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC v</code></td>
+<td class="org-left">Selects outwards sensibly</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org8df8737" class="outline-4">
+<h4 id="org8df8737">Owner menu</h4>
+<div class="outline-text-4" id="text-org8df8737">
+<p>
+The spacemacs documentation recommends that you store all of your shortcuts with
+a prefix of "o" for owner.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "o" "own-menu")
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef6c0e9" class="outline-3">
+<h3 id="orgef6c0e9">Usage notes</h3>
+<div class="outline-text-3" id="text-orgef6c0e9">
+<p>
+To tangle the <code>nicemacs.el</code> file from the command line execute the following
+command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">emacs nicemacs.org --batch --eval="(org-babel-tangle)"
+</pre>
+</div>
+
+<p>
+Then to include this in your spacemacs configuration add the following
+expression to <code>dotspacemacs/user-config</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(load "/home/aez/Documents/nicemacs/nicemacs.el")
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org854e30a" class="outline-4">
+<h4 id="org854e30a">Emacs-LISP REPL</h4>
+<div class="outline-text-4" id="text-org854e30a">
+<p>
+From time to time it will be useful to have access to an emacs lisp REPL. To
+start this repl run the <code>ielm</code> command.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org76f3b63" class="outline-4">
+<h4 id="org76f3b63">Configuration layers</h4>
+<div class="outline-text-4" id="text-org76f3b63">
+<p>
+This configuration is used from within spacemacs, so it seems appropriate that I
+should also document the configuration layers that I use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">'(auto-completion
+  better-defaults
+  bibtex
+  csv
+  dhall
+  emacs-lisp
+  epub
+  (ess :variables
+       ess-r-backend 'ess)
+  git
+  graphviz
+  (hackernews :variables
+	      hackernews-items-per-page 24)
+  (haskell :variables
+	   haskell-completion-backend 'lsp
+	   haskell-process-type 'stack-ghci
+	   hsakell-enable-hindent-style "fundamental")
+  helm
+  html
+  hy
+  (javascript :variables
+	      javascript-import-tool 'import-js
+	      javascript-repl 'nodejs
+	      javascript-backend 'tern
+	      javascript-fmt-tool 'web-beautify)
+  latex
+  lsp
+  maxima
+  multiple-cursors
+  nixos
+  org
+  python
+  semantic
+  (shell :variables
+	 shell-default-shell 'eshell
+	 shell-default-position 'right
+	 shell-default-width 50)
+  speed-reading
+  (spell-checking :variables
+		  spell-checking-enable-by-default nil
+		  enable-flyspell-auto-completion t)
+  syntax-checking
+  web-beautify
+  yaml
+  version-control
+  treemacs)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39966f6" class="outline-3">
+<h3 id="org39966f6">Stuff</h3>
+<div class="outline-text-3" id="text-org39966f6">
+<p>
+To quickly toggle between the default spacemacs themes use <code>SPC T n</code> (the
+default bindings.)
+</p>
+</div>
+
+<div id="outline-container-org1d2af22" class="outline-4">
+<h4 id="org1d2af22">Start up/splash page</h4>
+<div class="outline-text-4" id="text-org1d2af22">
+<p>
+I prefer the startup banner number 100, to use this put <code>100</code> for the
+<code>dotspacemacs-startup-banner</code> value in <code>.spacemacs</code>. To avoide having unnecesary
+icons displayed, the following can be used.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq dotspacemacs-startup-buffer-show-icons nil)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbf73c46" class="outline-4">
+<h4 id="orgbf73c46">Scratch buffer</h4>
+<div class="outline-text-4" id="text-orgbf73c46">
+<p>
+If you want to scratch something out quickly there is the scratch buffer
+provided by spacemacs at <code>SCP b s</code>. By default this opens in text mode. To avoid
+always needing to switch it into org-mode we can set the following variable
+instead.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq dotspacemacs-scratch-mode 'org-mode)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ad92fe" class="outline-4">
+<h4 id="org8ad92fe">Ugly ugly scroll bar</h4>
+<div class="outline-text-4" id="text-org8ad92fe">
+<p>
+I very much do not want to scroll bar popping up every now and then so I will
+remove the advice to do this!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(advice-remove 'mwheel-scroll #'spacemacs//scroll-bar-show-delayed-hide)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org72625e2" class="outline-3">
+<h3 id="org72625e2">Completion</h3>
+<div class="outline-text-3" id="text-org72625e2">
+<p>
+The following potentially reduce the latency in input which can be increased by
+unnecessary calls to a completion backend.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq company-idle-delay 0.5)
+(setq company-minimum-prefix-length 3)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9896c52" class="outline-3">
+<h3 id="org9896c52">LSP</h3>
+<div class="outline-text-3" id="text-org9896c52">
+<p>
+<a href="#org3fd579f">LSP and Haskell</a>
+</p>
+
+<ul class="org-ul">
+<li><a href="#org85fbba2">LSP with ESS</a></li>
+</ul>
+
+<p>
+The path to the current file in LSP is a little unnecessary.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq lsp-headerline-breadcrumb-enable nil)
+</pre>
+</div>
+
+<p>
+LSP tends to be a bit too eager to display help under the default delay of 0.2
+seconds and this also leads to an unnecessary amount of communication. To
+improve this we can increase the delay for both the documentation and the
+sideline display.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq lsp-ui-doc-delay 1.0)
+(setq lsp-ui-sideline-delay 1.0)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org05045c1" class="outline-3">
+<h3 id="org05045c1">Haskell</h3>
+<div class="outline-text-3" id="text-org05045c1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "oh" "haskell-menu")
+(spacemacs/set-leader-keys "ohr" 'haskell-process-restart)
+
+;; Set the input method to TeX for using unicode. Use C-\ to unset this.
+(spacemacs/set-leader-keys "ohu" 'set-input-method)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org979d181" class="outline-4">
+<h4 id="org979d181">Formatting code without LSP</h4>
+<div class="outline-text-4" id="text-org979d181">
+<p>
+If you are not using LSP then the following might be useful additions if you
+have <code>hindent</code> installed. Although I suspect a nicer option is to use <a href="#orgb84956e">stylish-haskell with LSP</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "ohhr" 'hindent-reformat-region)
+(spacemacs/set-leader-keys "ohhb" 'hindent-reformat-buffer)
+</pre>
+</div>
+
+<p>
+You will probably also want to set the <code>haskell-enable-hindent-style</code> variable
+to <code>"fundamental"</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq haskell-enable-hindent-style "fundamental")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb84956e" class="outline-4">
+<h4 id="orgb84956e">Formatting code with LSP</h4>
+<div class="outline-text-4" id="text-orgb84956e">
+<p>
+If you are using LSP then <code>hindent</code> is not available by default. <a href="https://github.com/haskell/stylish-haskell">stylish-haskell</a>
+seems to be an acceptable replacement though. The
+<code>lsp-haskell-formatting-provider</code> is used to specify which formatting tool to
+use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq lsp-haskell-formatting-provider "stylish-haskell")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3fd579f" class="outline-4">
+<h4 id="org3fd579f">LSP and Haskell</h4>
+<div class="outline-text-4" id="text-org3fd579f">
+<p>
+Even after installing the <code>haskell-language-server</code> using <a href="https://github.com/haskell/haskell-language-server#installation">the GHCUP installation
+method</a> there were some issues because emacs could not find it. It appears that
+setting the <code>lsp-haskell-server-path</code> to the executable solved things.
+</p>
+
+<ol class="org-ol">
+<li>Install <code>ghcup</code>, which will also offer to install the haskell language server
+for you.</li>
+</ol>
+
+<p>
+<a href="https://github.com/haskell/haskell-language-server#installation">GHCUP installation instructions are here</a>
+</p>
+
+<ol class="org-ol">
+<li>Make sure that this has been added to the <code>exec-path</code> and that
+<code>lsp-haskell-server-path</code> is set. Note that some projects might get upset
+about the language server being used, adjust this and restarting emacs is a
+hacky solution by it works.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq exec-path (append exec-path '("/home/aez/.ghcup/bin")))
+(setq lsp-haskell-server-path "/home/aez/.ghcup/bin/haskell-language-server-8.10.4")
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Make sure that the layer variables have been set to use LSP.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(haskell :variables
+	 haskell-completion-backend 'lsp
+	 haskell-process-type 'stack-ghci)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf0e06f" class="outline-3">
+<h3 id="orgaf0e06f">Maxima</h3>
+<div class="outline-text-3" id="text-orgaf0e06f">
+<p>
+See <a href="https://github.com/dalanicolai/maxima-layer">maxima-layer</a> by <a href="https://dalanicolai.github.io/">Daniel Nicolai</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd74aaac" class="outline-3">
+<h3 id="orgd74aaac">JavaScript and Typescript</h3>
+<div class="outline-text-3" id="text-orgd74aaac">
+<p>
+At the time of writing, the path to node is
+<code>/home/aez/.nvm/versions/node/v17.3.1/bin</code>, since this is used a few times we
+should define this as a constant.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defvar my-node-path "/home/aez/.nvm/versions/node/v17.3.1/bin"
+  "The path to node on my machine.")
+</pre>
+</div>
+
+<p>
+The following needs to be included for Eshell to be able to find node and npm.
+I'm not sure why you need to do it twice.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setenv "PATH" (concat (getenv "PATH") ":" my-node-path))
+(setq exec-path (append exec-path (list my-node-path)))
+</pre>
+</div>
+
+<p>
+By default the REPL used is geared towards front end work. To get it to use the
+node REPL add the following to the configuration so that the correct command is
+called.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun my-nodejs-repl-command ()
+  (concat my-node-path "/node"))
+
+(setq nodejs-repl-command 'my-nodejs-repl-command)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef7b9aa" class="outline-3">
+<h3 id="orgef7b9aa"><span class="todo TODO">TODO</span> Miscellaneous configuration for prose</h3>
+<div class="outline-text-3" id="text-orgef7b9aa">
+<ul class="org-ul">
+<li>A neat way to change a block of text from upper to lower case is to select the
+appropriate region and use <code>u</code> and <code>U</code> to toggle the case.</li>
+</ul>
+</div>
+
+<div id="outline-container-org52f4f14" class="outline-4">
+<h4 id="org52f4f14">Toggling paragraph filling</h4>
+<div class="outline-text-4" id="text-org52f4f14">
+<p>
+There are the <code>org-fill-paragraph</code> and <code>unfill-paragraph</code> functions which are useful
+to switch between representations of paragraphs when copying between editors. I
+think a suitable binding for these command is <code>SPC o p f</code> for fill and <code>SPC o p u</code>
+for unfill.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "op" "paragraph-modification-menu")
+(spacemacs/set-leader-keys "opf" 'org-fill-paragraph)
+(spacemacs/set-leader-keys "opu" 'unfill-paragraph)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org614c685" class="outline-4">
+<h4 id="org614c685"><span class="todo TODO">TODO</span> Dictionary</h4>
+<div class="outline-text-4" id="text-org614c685">
+<p>
+There is a dictionary mode which provides the <code>dictionary</code> function and the
+<code>dictionary-tooltip-mode</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4e2a06f" class="outline-4">
+<h4 id="org4e2a06f">Spell checking</h4>
+<div class="outline-text-4" id="text-org4e2a06f">
+<ul class="org-ul">
+<li>Highlight the text and use <code>SPC S r</code> to spellcheck that region.</li>
+<li>Use <code>SPC S b</code> to spellcheck the buffer.</li>
+<li>Use <code>SPC S s</code> to open spelling suggestions for the work under the cursor.</li>
+<li>It appears that when you add a word to a personal dictionary it is saved in
+<code>~/.aspell.en.pws</code>. A (probably outdated) version of my personal dictionary is
+<a href="./resources/aspell.en.pws">here</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgffecc1d" class="outline-3">
+<h3 id="orgffecc1d">Latex and Bibtex</h3>
+<div class="outline-text-3" id="text-orgffecc1d">
+<p>
+To ensure that files with the extension <code>.bibtex</code> open in <code>bibtex-mode</code> we need
+to explicitly request this
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-to-list 'auto-mode-alist '("\\.bibtex\\'" . bibtex-mode))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "ol" "latex")
+(spacemacs/declare-prefix "ob" "bibtex-menu")
+</pre>
+</div>
+
+<p>
+There are a couple of files that I want to have easy access to for reference and
+to make minor edits. Having a function to access such a file easily is useful
+for this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun visit-bib-and-tex-file (path-template)
+  (interactive)
+  (progn
+    (find-file path-template)
+    (goto-char 1)
+    (recenter-top-bottom)))
+</pre>
+</div>
+
+<p>
+This is a <i>latex</i> file for my <i>reviews</i> so the binding is <code>olr</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun review-tex-file ()
+  "Open my review.tex file"
+  (interactive)
+  (visit-bib-and-tex-file "~/Documents/bibliography/review/review.tex"))
+
+(spacemacs/set-leader-keys "olr" 'review-tex-file)
+</pre>
+</div>
+
+<p>
+This is a <i>bibtex</i> file for my <i>references</i> so the binding is <code>obr</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun references-bib-file ()
+  "Opens my bibtex references."
+  (interactive)
+  (visit-bib-and-tex-file "~/Documents/bibliography/references.bib"))
+
+(spacemacs/set-leader-keys "obr" 'references-bib-file)
+</pre>
+</div>
+
+<p>
+The <code>last-bib</code> function opens the most recent bibtex file in the Downloads
+directory in a new buffer. If there is no such file then a message is given to
+indicate this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun last-bib ()
+  (interactive)
+  (let* ((bib-files (directory-files-and-attributes "~/Downloads"
+						    t ".*bib" "ctime"))
+	 (path-and-time (lambda (x)
+			  (list (first x)
+				(eighth x))))
+	 (time-order (lambda (a b)
+		       (time-less-p (second b)
+				    (second a))))
+	 (most-recent (lambda (files)
+			(car (car (sort (mapcar path-and-time files)
+					time-order))))))
+    (if (not (null bib-files))
+	(find-file (funcall most-recent bib-files))
+      (message "No bib files found in ~/Downloads/"))))
+</pre>
+</div>
+
+<p>
+Bibtex requires that capital letters in the title be surrounded by braces to
+ensure that they are capitalised correctly. The following function is a way to
+quickly add these braces to long titles. Just hightlight the relevant text and
+run the function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun bibtex-braces ()
+  "Wrap upper case letters with brackets for bibtex titles."
+  (interactive)
+  (evil-ex "'&lt;,'&gt;s/\\([A-Z]+\\)/\\{\\1\\}/g"))
+</pre>
+</div>
+
+<p>
+Some places seem reluctant to provide a bibtex file for a citation, but they all
+seem to have RIS files available for download. There are tools to convert
+between them. The <code>bibtex-ris2bib</code> function looks up the most recent RIS file in
+your downloads directory and then converts that to a BIB file. You can then open
+this file using the <code>last-bib</code> function from above.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun bibtex-ris2bib ()
+  "Convert the most recent RIS file in my downloads to a BIB
+file. TODO Add error message if there are no RIS files."
+  (interactive "*")
+  (let* ((all-ris-files (directory-files "~/Downloads" 1 ".*ris"))
+	 (modification-time (lambda (fp)
+			      (list (time-convert (file-attribute-modification-time (file-attributes fp))
+						  'integer)
+				    fp)))
+	 (ris-filepath (nth 1
+			    (car (sort (mapcar modification-time all-ris-files)
+				       (lambda (x y)
+					 (&gt; (car x) (car y)))))))
+	 (target-bib "/home/aez/Downloads/new.bib")
+	 (ris2xml-command (format "ris2xml %s | xml2bib &gt; %s" ris-filepath
+				  target-bib)))
+    (shell-command ris2xml-command)))
+</pre>
+</div>
+
+<p>
+Now we need some sensible key-bindings for this functionality. The following aim
+to follow the naming used for the functionality because this is easier to
+remember. <b>Owner</b> <b>Bibtex</b> <b>X</b> where
+</p>
+
+<ul class="org-ul">
+<li><b>B</b> for <i>braces</i> around upper case characters,</li>
+<li><b>C</b> for <i>convert</i> between RIS and bibtex,</li>
+<li><b>F</b> for <i>format</i> the current buffer,</li>
+<li><b>L</b> for <i>last</i> bibtex file in <code>Downloads</code> and</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "obl" 'last-bib)
+(spacemacs/set-leader-keys "obf" 'bibtex-reformat)
+(spacemacs/set-leader-keys "obb" 'bibtex-braces)
+(spacemacs/set-leader-keys "obc" 'bibtex-ris2bib)
+</pre>
+</div>
+
+<p>
+I often want to be able to open my reading notes quickly so it would be useful
+to have a function to do that. This will be bound to <code>olp</code> because it is opening
+<i>the</i> PDF.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun nicemacs-open-review-pdf ()
+  "Open PDF of reading notes in evince."
+  (interactive)
+  (let ((pdf-viewer "evince")
+	(review-path "/home/aez/Documents/bibliography/review/review.pdf"))
+    (shell-command (concat pdf-viewer " " review-path " &amp;"))))
+
+(spacemacs/set-leader-keys "olp" 'nicemacs-open-review-pdf)
+</pre>
+</div>
+
+<p>
+If you want a word count there is the <code>count-words</code> function. This is used so
+infrequently though that it is not really worth adding a binding for it. By
+default it counts the words in the current buffer, but if you have selected a
+region of text it will count the words and characters there.
+</p>
+</div>
+
+<div id="outline-container-orgc97a5cf" class="outline-4">
+<h4 id="orgc97a5cf">Appearance</h4>
+<div class="outline-text-4" id="text-orgc97a5cf">
+<p>
+We can use a hook to switch to proportional font for org-mode, because lines now
+become a bit tricky we need to include <code>visual-line-mode</code> otherwise things look
+weird.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook 'LaTeX-mode-hook 'variable-pitch-mode)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+</pre>
+</div>
+
+<p>
+And then to get the faces looking good for the various elements of the display
+we have the following configuration
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(custom-set-faces
+ '(font-lock-comment-face ((t (:inherit fixed-pitch))))
+ '(font-lock-keyword-face ((t (:inherit fixed-pitch))))
+ '(font-latex-sectioning-2-face ((t (:inherit bold :foreground "#3a81c3" :height 1.3 :family "Noto Sans"))))
+ '(font-latex-sectioning-3-face ((t (:inherit bold :foreground "#2d9574" :height 1.2 :family "Noto Sans")))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge27d5e9" class="outline-3">
+<h3 id="orge27d5e9">Org-mode</h3>
+<div class="outline-text-3" id="text-orge27d5e9">
+<p>
+Bindings for org-mode functionality start with <code>o o</code> for "owner org".
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "oo" "org-menu")
+</pre>
+</div>
+
+<p>
+for toggle style functions we will have a submenu.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "oot" "org-toggle-menu")
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9055489" class="outline-4">
+<h4 id="org9055489"><span class="todo TODO">TODO</span> Citation engine</h4>
+<div class="outline-text-4" id="text-org9055489">
+<p>
+The following package is required to use CSL with org-mode citations
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'oc-csl)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7887cca" class="outline-4">
+<h4 id="org7887cca">Writing prose</h4>
+<div class="outline-text-4" id="text-org7887cca">
+<p>
+The following can be used to hide extra markup symbols
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-hide-emphasis-markers t)
+</pre>
+</div>
+
+<p>
+We can use a hook to switch to proportional font for org-mode, because lines now
+become a bit tricky we need to include <code>visual-line-mode</code> otherwise things look
+weird.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'visual-line-mode)
+</pre>
+</div>
+
+<p>
+To make sure that code blocks are still rendered with a fixed width font we need
+to specify this. Note that the <code>describe-char</code> function is super helpful for
+linking to further fine tuning via the customisation interface. Currently I am
+using Noto with serifs for text and sans for headers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"> (custom-set-faces
+'(org-block ((t (:inherit fixed-pitch))))
+'(org-block-begin-line ((t (:inherit fixed-pitch :extend t :background "#ddd8eb" :foreground "#9380b2"))))
+'(org-block-end-line ((t (:inherit fixed-pitch :extend t :background "#ddd8eb" :foreground "#9380b2"))))
+'(org-code ((t (:inherit (shadow fixed-pitch)))))
+'(org-document-info ((t (:inherit fixed-pitch))))
+'(org-document-info-keyword ((t (:inherit fixed-pitch))))
+'(org-document-title ((t (:inherit nil :foreground "#6c3163" :underline t :weight bold :height 2.0 :family "Noto Sans"))))
+'(org-level-1 ((t (:inherit nil :extend nil :foreground "#3a81c3" :weight bold :height 1.4 :family "Noto Sans"))))
+'(org-level-2 ((t (:inherit nil :extend nil :foreground "#2d9574" :weight bold :height 1.2 :width normal :family "Noto Sans"))))
+'(org-level-3 ((t (:extend nil :foreground "#67b11d" :weight normal :height 1.1 :family "Noto Sans"))))
+'(org-level-4 ((t (:extend nil :foreground "#b1951d" :weight normal :height 1.0 :family "Noto Sans"))))
+'(org-link ((t (:underline t))))
+'(org-meta-line ((t (:inherit fixed-pitch))))
+'(org-property-value ((t (:inherit fixed-pitch))) t)
+'(org-special-keyword ((t (:inherit fixed-pitch))))
+'(org-table ((t (:inherit fixed-pitch))))
+'(org-tag ((t (:inherit fixed-pitch))))
+'(org-verbatim ((t (:inherit fixed-pitch))))
+'(font-lock-comment-face ((t (:inherit fixed-pitch))))
+'(variable-pitch ((t (:family "Noto Serif")))))
+</pre>
+</div>
+
+<p>
+The <code>writeroom-mode</code> provides a clean setup for writing prose. It centres the
+text and removes visual distractions. The following little function sets up a
+toggle to turn this on and off. There is a variable <code>writeroom-width</code> to specify
+how wide the display should be.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'writeroom-mode)
+
+(defvar writeroom-active t "variable to say if writeroom is active")
+
+(defun toggle-writeroom ()
+  "Toggle the writeroom-mode on the current buffer."
+  (interactive)
+  (if writeroom-active
+      (writeroom--enable)
+    (writeroom--disable))
+  (setq writeroom-active (not writeroom-active))
+  )
+
+(spacemacs/set-leader-keys "ootw" 'toggle-writeroom)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6b22c4c" class="outline-4">
+<h4 id="org6b22c4c">Literate programming</h4>
+<div class="outline-text-4" id="text-org6b22c4c">
+<p>
+The <code>org-babel-tangle</code> function will tangle the current org-mode file. This is
+bound to <code>SPC m b t</code>. You can tangle to multiple files by adding multiple
+<code>:tangle</code> variables to the source environment.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7eae519" class="outline-4">
+<h4 id="org7eae519">Notebook programming</h4>
+<div class="outline-text-4" id="text-org7eae519">
+<p>
+To use org-mode as a notebook, you need to have the corresponding language
+included in <code>org-babel-load-languages</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(org-babel-do-load-languages
+'org-babel-load-languages
+'((maxima . t)))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>There is an example of using org-mode for Maxima notebooks <a href="https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-maxima.html">here</a>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0efe147" class="outline-4">
+<h4 id="org0efe147">Nicemacs journal</h4>
+<div class="outline-text-4" id="text-org0efe147">
+<p>
+I want a directory just for my journal which potentially will vary between
+machines so a variable to describe where they live is useful. To make it clear
+that these are my variables and functions I will try to maintain <code>nicemacs-</code>
+prefixes. We will also define some decent settings here.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defvar nicemacs-journal-directory "" "The directory for nicemacs journal files.")
+(setq nicemacs-journal-directory "~/Documents/journal")
+
+(setq org-agenda-start-day "-5d")
+(setq org-agenda-span 30)
+(setq org-agenda-start-on-weekday nil)
+</pre>
+</div>
+
+<p>
+I need a way to talk about what the particular journal file is on any given
+date. Updating the file about monthly seems sensible, so the filenames can
+follow the pattern <code>journal-YYYY-MM</code>. <b>NOTE</b> that this function will set the
+agenda file to the correct value whenever it is called and that the
+<code>org-agenda-files</code> variable needs to be bound to a <i>list</i> or files rather than
+the name of a single file, otherwise it will interpret that single file as a
+list of files to use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun nicemacs-journal-filepath ()
+  "The filepath of the current journal file."
+  (interactive)
+  (let* ((filepath-template (concat nicemacs-journal-directory "/journal-%s.org"))
+	 (time-string (format-time-string "%Y-%m"))
+	 (agenda-file (format filepath-template time-string)))
+    (setq org-agenda-files (list agenda-file))
+    agenda-file))
+
+(defun nicemacs-journal-previous-filepath ()
+  "The filepath of the /previous/ journal file."
+  (interactive)
+  (let* ((filepath-template (concat nicemacs-journal-directory "/journal-%s.org"))
+	 (seconds-in-week (* 7 (* 24 (* 60 (* 60 1)))))
+	 (time-string (format-time-string "%Y-%m" (time-subtract (current-time) seconds-in-week)))
+	 (agenda-file (format filepath-template time-string)))
+    agenda-file))
+</pre>
+</div>
+
+<p>
+I want functions to quickly visit our current journal file and to visit the
+current agenda because this is something I do several times a day. If the
+journal file does not exist then we just need to copy over the previous one. To
+do this we look for one with a date from a week ago.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun nicemacs-visit-journal ()
+  "Opens the current journal file. If it does not yet exist it
+makes a copy of the one from one week ago."
+  (interactive)
+  (let* ((current-journal-file (nicemacs-journal-filepath))
+	(previous-journal-file (nicemacs-journal-previous-filepath)))
+    (if (not (file-exists-p current-journal-file))
+	(progn
+	  (message "creating new journal file")
+	  (copy-file previous-journal-file current-journal-file))
+      (message "opening journal file"))
+	  (find-file current-journal-file)
+	  (goto-char 1)
+	  (recenter-top-bottom)))
+
+(defun nicemacs-visit-agenda ()
+  "Opens the agenda after checking it has been set correctly."
+  (interactive)
+  (let ((agenda-file (nicemacs-journal-filepath)))
+    (org-agenda-list)))
+</pre>
+</div>
+
+<p>
+To make it easy to access these we will bind them to come convenient keys.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "ooa" 'nicemacs-visit-agenda)
+(spacemacs/set-leader-keys "oos" 'org-schedule)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6300c03" class="outline-4">
+<h4 id="org6300c03">Website</h4>
+<div class="outline-text-4" id="text-org6300c03">
+</div>
+<ul class="org-ul">
+<li><a id="orgc298db8"></a>Declare which files need to be published<br />
+<div class="outline-text-5" id="text-orgc298db8">
+<p>
+Set up for publishing my website, note that this will write the output directly
+to the github repository for the site. Note that the <code>:exclude</code> variable can be
+used to specify which files to ignore using a regular expression.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'ox-publish)
+
+(setq org-publish-project-alist
+      '(
+	("org-notes"
+	 :base-directory "~/public-site/org/"
+	 :base-extension "org"
+	 :publishing-directory "~/aezarebski.github.io/"
+	 :recursive t
+	 :publishing-function org-html-publish-to-html
+	 :headline-levels 4
+	 :auto-preamble t
+	 )
+	("org-static"
+	 :base-directory "~/public-site/org/"
+	 :base-extension "css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|txt\\|cur\\|svg\\|csv\\|html\\|json\\|webp"
+	 :exclude "~/public-site/org/misc/matplotlib/ven.*"
+	 :publishing-directory "~/aezarebski.github.io/"
+	 :recursive t
+	 :publishing-function org-publish-attachment
+	 )
+	("org-nicemacs"
+	 :base-directory "~/Documents/nicemacs/"
+	 :base-extension "org"
+	 :publishing-directory "~/aezarebski.github.io/misc/nicemacs/"
+	 :recursive ()
+	 :publishing-function org-html-publish-to-html
+	 )
+	("org-bibliography"
+	 :base-directory "~/Documents/bibliography/"
+	 :base-extension "png"
+	 :publishing-directory "~/aezarebski.github.io/resources/"
+	 :recursive ()
+	 :publishing-function org-publish-attachment
+	 )
+	("review2-org"
+	 :base-directory "~/Documents/bibliography/review2"
+	 :base-extension "org"
+	 :publishing-directory "~/aezarebski.github.io/notes/review2"
+	 :recursive ()
+	 :publishing-function org-html-publish-to-html
+	 )
+	("review2-static"
+	 :base-directory "~/Documents/bibliography/review2"
+	 :base-extension "css\\|png"
+	 :publishing-directory "~/aezarebski.github.io/notes/review2"
+	 :recursive t
+	 :publishing-function org-publish-attachment
+	 )
+	("org" :components ("org-notes"
+			    "org-static"
+			    "org-nicemacs"
+			    "org-bibliography"
+			    "review2-org"
+			    "review2-static"))))
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org124f73c"></a>Declare how to trigger the publishing<br />
+<div class="outline-text-5" id="text-org124f73c">
+<p>
+The following function simplifies the process of compiling the site and
+committing it to github so it goes live. To enable this page to be copied to a
+file with a more sensible name and to have easier access to the logo there are
+some additional commands.
+</p>
+
+<p>
+There are two functions here, the first, <code>publish-my-site</code>, is bound to <code>SPC oop</code>
+runs the publishing (and moves a couple of files around in a sensible way) and
+the second, <code>publish-my-site-and-magit</code>, bound to <code>SPC ooP</code> runs the publishing and
+opens the magit buffer to commit and push the changes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun publish-my-site ()
+  (interactive)
+  (org-publish "org" nil t)
+  (copy-file "~/Documents/nicemacs/resources/nicemacs-logo.png"
+	     "~/aezarebski.github.io/misc/nicemacs/resources/nicemacs-logo.png"
+	     t)
+  (copy-file "~/public-site/org/scratch.html"
+	     "~/aezarebski.github.io/index.html"
+	     t)
+  (copy-file "~/.aspell.en.pws"
+	     "~/Documents/nicemacs/resources/aspell.en.pws"
+	     t)
+  (copy-file "~/.spacemacs"
+	     "~/Documents/nicemacs/resources/spacemacs"
+	     t)
+  )
+
+(defun force-publish-and-magit ()
+  (interactive)
+  (publish-my-site)
+  (org-publish "org" t nil)
+  (magit-status "~/aezarebski.github.io")
+  )
+
+(spacemacs/set-leader-keys "oop" 'publish-my-site)
+(spacemacs/set-leader-keys "ooP" 'force-publish-and-magit)
+</pre>
+</div>
+
+<p>
+The following function is useful for going to the root of my notes site which is
+a sensible starting point for looking up material without the browser.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun visit-my-site-index ()
+  (interactive)
+  (find-file "~/public-site/org/index.org"))
+(spacemacs/set-leader-keys "oov" 'visit-my-site-index)
+</pre>
+</div>
+
+<p>
+I used to have some commands for inserting tables and source code blocks into
+org-mode files, but this functionality (and more) is all provided by
+<code>yasnippet</code>. Just run <code>SPC i s</code> and it will start a search for the relevant
+snippet: "source" and "table" are in there for example.
+</p>
+
+<p>
+As of org-mode version about 9.3 the default behaviour appears to be that new
+lines will be indented to the level of the current header. I would prefer that
+new lines of text start at the start of the line. This can be achieved by
+setting <code>org-adapt-indentation</code> to <code>nil</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq org-adapt-indentation nil)
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org6a7b1b1" class="outline-4">
+<h4 id="org6a7b1b1">Miscellaneous</h4>
+<div class="outline-text-4" id="text-org6a7b1b1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; open the export menu
+(spacemacs/set-leader-keys "ooe" 'org-export-dispatch)
+
+;; Make sure org files open with lines truncated
+(add-hook 'org-mode-hook 'spacemacs/toggle-truncate-lines-on)
+</pre>
+</div>
+
+<p>
+There is a variable in spacemacs, <code>dotspacemacs-whitespace-cleanup</code>, which if
+you set to <code>'trailing</code> will remove trailing whitespace each time a file is
+saved. It appears in the <code>.spacemacs</code> file with some documentation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec4e69f" class="outline-4">
+<h4 id="orgec4e69f">Tables</h4>
+<div class="outline-text-4" id="text-orgec4e69f">
+<p>
+The org-mode support for tables is strong. There is the a neat snippet for
+inserting tables and then in spacemacs, using <code>, t</code> will bring up some available
+functions (including <code>, t n</code> which creates a new table for those that don't like
+yasnippet). There is also <code>org-table-transpose-table-at-point</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1fa294a" class="outline-4">
+<h4 id="org1fa294a">Inline Latex and image display</h4>
+<div class="outline-text-4" id="text-org1fa294a">
+<p>
+Orgmode can display images inline, however it is useful to be able to toggle
+this feature occassionally, particularly if there are large images which take up
+too much space. There is a function <code>org-toggle-inline-images</code> which does this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "ooi" 'org-toggle-inline-images)
+</pre>
+</div>
+
+<p>
+The <code>org-latex-preview</code> function will show a preview of the latex fragment under
+the mark. Running the command a second time will revert to the plain text.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "ool" 'org-latex-preview)
+</pre>
+</div>
+
+<p>
+To adjust the size of the figures, adjust the attribute <code>:scale</code> in the variable
+<code>org-format-latex-options</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org46d54ac" class="outline-4">
+<h4 id="org46d54ac">Hyperlinking in org-mode</h4>
+<div class="outline-text-4" id="text-org46d54ac">
+<p>
+By default, when you follow a link it will open in a new window in the current
+frame. To follow links in the same window, you need to adjust the
+<code>org-link-frame-setup</code> variable<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'ol)
+
+(add-to-list 'org-link-frame-setup '(file . find-file))
+</pre>
+</div>
+
+<p>
+We know that we need to <code>(require 'ol)</code> here by looking at the end of the file
+in which <code>org-link-frame-setup</code> is defined and seeing what it "provides" at the
+end.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb78df9" class="outline-3">
+<h3 id="orgfb78df9">Shells and REPLs</h3>
+<div class="outline-text-3" id="text-orgfb78df9">
+<p>
+It is useful to have a prefix for more involved shell related commands
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "os" "sheila-menu")
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgea291c4" class="outline-4">
+<h4 id="orgea291c4">Bash</h4>
+<div class="outline-text-4" id="text-orgea291c4">
+<p>
+Sometimes it is useful to just be able to open a regular bash shell. The
+following binding helps with this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "osb" 'shell)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org230ce15" class="outline-4">
+<h4 id="org230ce15">Eshell</h4>
+<div class="outline-text-4" id="text-org230ce15">
+<p>
+To make <code>eshell</code> the default shell in spacemacs add the following to the
+<code>dotspacemacs-configuration-layers</code>. The position and width might need a bit of
+tweaking to get something you like, but it is pretty easy to adjust the window
+set up anyway.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(shell :variables
+       shell-default-shell 'eshell
+       shell-default-position 'right
+       shell-default-width 50)
+</pre>
+</div>
+
+<p>
+Sometimes it is nice to be able to quickly open a larger terminal window, the
+following does this. The mnemonic here is that we are using the bigger quote
+mark so it opens the bigger terminal window.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun shell-and-delete-windows ()
+  (interactive)
+  (spacemacs/default-pop-shell)
+  (delete-other-windows)
+  )
+
+(spacemacs/set-leader-keys "\"" 'shell-and-delete-windows)
+</pre>
+</div>
+
+<p>
+The following is for searching the shell history, but I rarely use it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "osh" 'helm-eshell-history)
+</pre>
+</div>
+
+<p>
+It is useful to be able to look at what aliases are currently defined for
+Eshell. The following function visits this file. Although the preferred way to
+edit the aliases in the Eshell is using the definitions below!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">  (defun eshell-aliases ()
+    "Visit the file containing the eshell aliases."
+    (interactive)
+    (find-file-other-window eshell-aliases-file))
+
+(spacemacs/set-leader-keys "osa" 'eshell-aliases)
+</pre>
+</div>
+
+<p>
+The following expressions set up some useful aliases to have in the shell. Note
+that while the shell is indispensable, <code>dired</code> is also a good solution in many
+situations.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'em-alias)
+(eshell/alias "cdk" "cd ..")
+(eshell/alias "cdkk" "cd ../..")
+(eshell/alias "cdkkk" "cd ../../..")
+(eshell/alias "ls1" "ls -1 $1")
+(eshell/alias "ff" "find-file $1")
+</pre>
+</div>
+
+<p>
+Because no one has time for typing capital letters we will set the completion
+variable in the shell to ignore case during tab completion.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq eshell-cmpl-ignore-case t)
+</pre>
+</div>
+
+<p>
+The value of <code>exec-path</code> is the list of locations that Emacs will look for
+executables on. The <code>executable-find</code> function plays the role of <code>which</code> for Emacs.
+We need to add <code>~/.local/bin</code> so that it knows where to find Haskell executables
+and the <code>.nvm</code> path is so that it knows where to find JavaScript programs that
+have been installed from npm.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq exec-path (append exec-path '("/home/aez/.local/bin")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org464b874" class="outline-4">
+<h4 id="org464b874"><code>ielm</code></h4>
+<div class="outline-text-4" id="text-org464b874">
+<p>
+Yes, Eshell can handle Emacs lisp, but it would also be nice to be able to have
+a binding to open <code>ielm</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "osi" 'ielm)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75cf80b" class="outline-4">
+<h4 id="org75cf80b">R</h4>
+<div class="outline-text-4" id="text-org75cf80b">
+<p>
+Sometimes you just need an R REPL!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "osr" 'R)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c2de93" class="outline-3">
+<h3 id="org9c2de93">Monitoring processes</h3>
+<div class="outline-text-3" id="text-org9c2de93">
+<p>
+There is an emacs function for monitoring the processes you are running called
+<code>proced</code>. In spacemacs this is bound to <code>SPC a P</code>. The following configuration
+specifies that the display should be updated every second.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq proced-auto-update-flag t)
+(setq proced-auto-update-interval 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc4dd86b" class="outline-3">
+<h3 id="orgc4dd86b">Emacs Speaks Statistics (ESS)</h3>
+<div class="outline-text-3" id="text-orgc4dd86b">
+<p>
+There are some useful materials about ESS which I have contributed to in the <a href="https://ess-intro.github.io/">ESS
+intro</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq spacemacs/ess-config
+      '(progn
+	 ;; Follow Hadley Wickham's R style guide
+	 (setq ess-first-continued-statement-offset 2
+	       ess-continued-statement-offset 0
+	       ess-expression-offset 2
+	       ess-nuke-trailing-whitespace-p t
+	       ess-default-style 'DEFAULT)
+	 (when ess-disable-underscore-assign
+	   (setq ess-smart-S-assign-key nil))
+
+	 ;; (define-key ess-doc-map "h" 'ess-display-help-on-object)
+	 ;; (define-key ess-doc-map "p" 'ess-R-dv-pprint)
+	 ;; (define-key ess-doc-map "t" 'ess-R-dv-ctable)
+	 (dolist (mode '(ess-r-mode ess-mode)))))
+
+;; make documentation open in a useful mode in ess
+(evil-set-initial-state 'ess-r-help-mode 'motion)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org85fbba2" class="outline-4">
+<h4 id="org85fbba2">LSP with ESS</h4>
+<div class="outline-text-4" id="text-org85fbba2">
+<p>
+Spacemacs provides good keybindings out of the box, and after setting up LSP
+there is very little need to do any additional configuration for a nice R
+experience. You just need to remember to install <code>languageserver</code> from CRAN.
+</p>
+
+<p>
+<b>HOWEVER</b> I have found it laggy so if you want to disable this and use a
+different backend adjust your layer config with the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(ess :variables
+     ess-r-backend 'ess)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd99afea" class="outline-4">
+<h4 id="orgd99afea"><span class="todo TODO">TODO</span> Fix the buffer display settings so that help covers the REPL</h4>
+<div class="outline-text-4" id="text-orgd99afea">
+<p>
+The following might be useful as a starting point for this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(info "(ess) Controlling buffer display")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f132b3" class="outline-4">
+<h4 id="org9f132b3">Setting the REPL starting directory</h4>
+<div class="outline-text-4" id="text-org9f132b3">
+<p>
+The following might be useful as a starting point for this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq ess-startup-directory-function '(lambda nil default-directory))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71c9f28" class="outline-4">
+<h4 id="org71c9f28">Swithing REPL linked to source file</h4>
+<div class="outline-text-4" id="text-org71c9f28">
+<p>
+Suppose you have a couple of REPLs going and you want to use a different one
+with a particular buffer. The <code>ess-switch-process</code> has you covered.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org92cd8ca" class="outline-4">
+<h4 id="org92cd8ca">Restarting the REPL</h4>
+<div class="outline-text-4" id="text-org92cd8ca">
+<p>
+Run <code>inferior-ess-reload</code> to reset the REPL.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf4eebc4" class="outline-4">
+<h4 id="orgf4eebc4">Setting up <code>lintr</code> for static analysis</h4>
+<div class="outline-text-4" id="text-orgf4eebc4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq ess-use-flymake nil)
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org46a8adc" class="outline-3">
+<h3 id="org46a8adc">Version control via magit</h3>
+<div class="outline-text-3" id="text-org46a8adc">
+<p>
+The following setting makes magit use the full frame when visiting the status.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+</pre>
+</div>
+
+<p>
+There are a few projects where the same commit message use used often. It would
+be nice to have a macro to fill this in each time for me. Since this is working
+with commits I will use the prefix "c" followed by an indicator of the appropriate
+commit message to use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "oc" "commits-menu")
+</pre>
+</div>
+
+<p>
+Apparently, this is <a href="https://xkcd.com/1205/">worth the time&#x2026;</a> so let's write a macro to make these
+easier to define.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defmacro nicemacs-commits (fname cmessage)
+  (list 'defun (intern (format "ncf-%s" fname)) ()
+	(list 'interactive)
+	(list 'magit-commit-create `(list "--edit" ,(list 'format "-m %s %s" cmessage (list 'downcase (list 'format-time-string "%A %l:%M %p")))))))
+</pre>
+</div>
+
+<p>
+And some useful examples should be bound to shortcuts.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(nicemacs-commits network "update citation network")
+(spacemacs/set-leader-keys "ocn" 'ncf-network)
+
+(nicemacs-commits review "update reading list")
+(spacemacs/set-leader-keys "ocr" 'ncf-review)
+
+(nicemacs-commits website "update website")
+(spacemacs/set-leader-keys "ocw" 'ncf-website)
+
+(nicemacs-commits journal "update journal")
+(spacemacs/set-leader-keys "ocj" 'ncf-journal)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7fc1083" class="outline-3">
+<h3 id="org7fc1083"><span class="todo TODO">TODO</span> File and buffer manipulation</h3>
+<div class="outline-text-3" id="text-org7fc1083">
+<p>
+If you want to kill buffers with names that match a regex there is the
+<code>kill-matching-buffers</code> function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun kill-all-other-buffers ()
+  "Kill all the buffers other than the current one."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+
+;; Define a short cut to close all windows except the current one without killing
+;; their buffers.
+(spacemacs/set-leader-keys "wD" 'spacemacs/window-manipulation-transient-state/delete-other-windows)
+
+;; Define a short cut for following files
+(spacemacs/declare-prefix "of" "file-stuff")
+(spacemacs/set-leader-keys "off" 'find-file-at-point)
+(spacemacs/set-leader-keys "ofp" 'helm-projectile-find-file)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge4c9817" class="outline-4">
+<h4 id="orge4c9817">Time stamping files</h4>
+<div class="outline-text-4" id="text-orge4c9817">
+<p>
+Add <code>Time-stamp: &lt;&gt;</code> somewhere in the first eight lines of a file and add the
+<code>time-stamp</code> function as a before save hook and it will put the current time on
+that line before saving. This way you will know when you last edited a file in a
+way that is a bit simpler than git.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq time-stamp-format "Last modified: %Y-%02m-%02d %02H:%02M:%02S")
+(add-hook 'before-save-hook 'time-stamp)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge0108cd" class="outline-4">
+<h4 id="orge0108cd">Handling large files</h4>
+<div class="outline-text-4" id="text-orge0108cd">
+<p>
+Visiting large or sensitive files is unpleasant. There is <code>find-file-literally</code> to
+open a file in fundamental mode, following this up with <code>font-lock-fontify-buffer</code>
+will make things look a bit nicer. This is a decent option if you have a massive
+file and want to avoid crashing emacs. There is <code>view-file</code> which opens the file
+in read-only mode but somehow manages to get syntax highlighting correct despite
+the file being in fundamental mode.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "ofv" 'view-file)
+(spacemacs/set-leader-keys "ofl" 'find-file-literally)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbdf4dd5" class="outline-4">
+<h4 id="orgbdf4dd5">Dired</h4>
+<div class="outline-text-4" id="text-orgbdf4dd5">
+<p>
+By default dired displays the size of files in bytes, a more human friendly
+description can be obtained by modifying the <code>dired-listing-switches</code> variable.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq dired-listing-switches "-alh")
+</pre>
+</div>
+
+<p>
+A very useful keybinding to know about in dired is <code>W</code> which will open the file
+under the cursor using an external program suggested by the OS. Surprisingly
+this calls the function <code>browse-url-of-dired-file</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdffd1d6" class="outline-4">
+<h4 id="orgdffd1d6">Visiting friends</h4>
+<div class="outline-text-4" id="text-orgdffd1d6">
+<p>
+There is a package, <code>treemacs</code>, which provides a graphical way to visit frequently
+used directories, but after using it for a little while I did not find it that
+comfortable. The following method combined with dired seems much nicer. The
+following functionality is useful for defining visitors of frequently needed
+files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "ov" "visit friendly files")
+
+(defmacro nicemacs-visit (fname pname path)
+  (list 'defun (intern (format "nvf-%s" fname)) ()
+	(list 'interactive)
+	(list 'progn
+	      (list 'message (format "Visiting %s" pname))
+	      (list 'find-file path))))
+</pre>
+</div>
+
+<p>
+Then we need to define the actual files that we want listed
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(nicemacs-visit beast-notes "BEAST2 notes" "/home/aez/public-site/org/notes/beast2-notes.org")
+(nicemacs-visit colleagues "Colleagues notes" "~/Documents/professional/colleague-details.org")
+(nicemacs-visit git-notes "Git notes" "/home/aez/public-site/org/notes/git-notes.org")
+(nicemacs-visit haskell-notes "Haskell notes" "/home/aez/public-site/org/notes/haskell-notes.org")
+(nicemacs-visit java-notes "Java notes" "/home/aez/public-site/org/notes/java-notes.org")
+(nicemacs-visit latex-notes "LaTeX notes" "/home/aez/public-site/org/notes/latex-notes.org")
+(nicemacs-visit maxima-notes "Maxima notes" "/home/aez/public-site/org/notes/maxima-notes.org")
+(nicemacs-visit nicemacs "nicemacs" "~/Documents/nicemacs/nicemacs.org")
+(nicemacs-visit nicemacs-el "nicemacs emacs lisp" "~/Documents/nicemacs/nicemacs.el")
+(nicemacs-visit nix-notes "Nix notes" "/home/aez/public-site/org/notes/nix-notes.org")
+(nicemacs-visit org-mode-notes "org-mode notes" "/home/aez/public-site/org/notes/org-mode-notes.org")
+(nicemacs-visit python-notes "Python notes" "/home/aez/public-site/org/notes/python-notes.org")
+(nicemacs-visit r-notes "R notes" "/home/aez/public-site/org/notes/r-notes.org")
+(nicemacs-visit ubuntu-notes "Ubuntu/Linux notes" "/home/aez/public-site/org/notes/linux-notes.org")
+(nicemacs-visit reading-list "Reading list" "/home/aez/Documents/bibliography/review2/reading-list.org")
+(nicemacs-visit review-2 "Review 2" "/home/aez/Documents/bibliography/review2/review.org")
+(nicemacs-visit review-engineering "Literature review: Software engineering" "/home/aez/Documents/bibliography/review/software.tex")
+(nicemacs-visit review-phylodynamics "Literature review: Phylodynamics" "/home/aez/Documents/bibliography/review/phylodynamics.tex")
+(nicemacs-visit review-references "Bibtex references" "/home/aez/Documents/bibliography/references.bib")
+(nicemacs-visit spelling "Spelling list" "/home/aez/public-site/org/misc/spelling.org")
+(nicemacs-visit statistics-notes "Statistics notes" "/home/aez/public-site/org/notes/statistics-notes.org")
+(nicemacs-visit wikipedia-notes "Wikipedia notes" "/home/aez/public-site/org/notes/wikipedia-notes.org")
+</pre>
+</div>
+</div>
+
+<ul class="org-ul">
+<li><a id="org9ef186e"></a>Special visiting functions<br />
+<div class="outline-text-5" id="text-org9ef186e">
+<p>
+There are some visitor functions that we want that are easier just to define
+manually because they require slightly different behaviour.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun nvf-journal ()
+  (interactive)
+  (nicemacs-visit-journal))
+
+(defun nvf-last-bib ()
+  (interactive)
+  (last-bib))
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org3a72780"></a>Visiting directories<br />
+<div class="outline-text-5" id="text-org3a72780">
+<p>
+Then there are some visitor functions where we do not want to visit a particular
+file but are more interested in navigating to a particular directory in either
+dired or magit.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; TODO This code could certainly be abstracted with a macro similar to the
+;; visitors above!
+
+(defun nvf-library ()
+  (interactive)
+  (dired-jump nil "/home/aez/Documents/library/README.org"))
+
+(defun nvf-website ()
+  (interactive)
+  (dired-jump nil "/home/aez/public-site/org/index.org"))
+
+(defun nvf-website-github ()
+  (interactive)
+  (magit-status "/home/aez/aezarebski.github.io"))
+
+(defun nvf-professional ()
+  (interactive)
+  (dired-jump nil "/home/aez/Documents/professional/README.org"))
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org7fda4e1"></a>Keybindings<br />
+<div class="outline-text-5" id="text-org7fda4e1">
+<p>
+And finally we need to writing keybindings for these.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys
+  "ovb" 'nvf-last-bib
+  "ovc" 'nvf-colleagues
+  "ove" 'nvf-nicemacs
+  "ovE" 'nvf-nicemacs-el
+  "ovj" 'nvf-journal
+  "ovl" 'nvf-library
+  "ovnb" 'nvf-beast-notes
+  "ovng" 'nvf-git-notes
+  "ovnh" 'nvf-haskell-notes
+  "ovnj" 'nvf-java-notes
+  "ovnl" 'nvf-latex-notes
+  "ovnm" 'nvf-maxima-notes
+  "ovnn" 'nvf-nix-notes
+  "ovno" 'nvf-org-mode-notes
+  "ovnp" 'nvf-python-notes
+  "ovnr" 'nvf-r-notes
+  "ovns" 'nvf-statistics-notes
+  "ovnu" 'nvf-ubuntu-notes
+  "ovnw" 'nvf-wikipedia-notes
+  "ovp" 'nvf-professional
+  "ovre" 'nvf-review-engineering
+  "ovrl" 'nvf-reading-list
+  "ovr2" 'nvf-review-2
+  "ovrr" 'nvf-review-references
+  "ovrp" 'nvf-review-phylodynamics
+  "ovs" 'nvf-spelling
+  "ovW" 'nvf-website-github
+  "ovw" 'nvf-website)
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org0278cce" class="outline-4">
+<h4 id="org0278cce"><span class="todo TODO">TODO</span> Searching by filename</h4>
+<div class="outline-text-4" id="text-org0278cce">
+<p>
+There is the <code>find-dired</code> function to help with this.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8072284" class="outline-4">
+<h4 id="org8072284"><span class="todo TODO">TODO</span> Searching within files</h4>
+<div class="outline-text-4" id="text-org8072284">
+<p>
+Here is an example of a nifty little function to help search my notes. It would
+be nice to abstract this into a macro so we can write similar searches for other
+directories.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun nsg-notes ()
+  (interactive)
+  (let ((search-terms (read-string "Search term: ")))
+    (progn
+      (message search-terms)
+      (rgrep search-terms "*.org" "/home/aez/public-site/org/notes/"))))
+
+(defun nsg-journal ()
+  (interactive)
+  (let ((search-terms (read-string "Search term: ")))
+    (progn
+      (message search-terms)
+      (rgrep search-terms "*.org" "/home/aez/Documents/journal/"))))
+
+(defun nsg-review ()
+  (interactive)
+  (let ((search-terms (read-string "Search term: ")))
+    (progn
+      (message search-terms)
+      (rgrep search-terms "*.tex" "/home/aez/Documents/bibliography/"))))
+</pre>
+</div>
+
+<p>
+And then we need to bind it to some keys to make it easier to use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "oS" "Search")
+
+(spacemacs/set-leader-keys
+  "oSn" 'nsg-notes
+  "oSj" 'nsg-journal
+  "oSr" 'nsg-review)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf168220" class="outline-4">
+<h4 id="orgf168220">Ibuffer</h4>
+<div class="outline-text-4" id="text-orgf168220">
+<p>
+The Ibuffer menu provides a more featureful dired-like menu for buffers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "ofb" 'ibuffer)
+;; Open Ibuffer in the motion state rather than as the default emacs mode.
+(evil-set-initial-state 'ibuffer-mode 'motion)
+</pre>
+</div>
+
+<p>
+The navigation mode for ibuffer needs to be adjusted to work nicely with vim
+keybindings.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org721c43b" class="outline-4">
+<h4 id="org721c43b"><span class="todo TODO">TODO</span> Misc</h4>
+<div class="outline-text-4" id="text-org721c43b">
+<p>
+Sometimes it is useful to get the fullpath of the file shown in a buffer. This
+is bound to <code>SPC o f d</code> for owner-files-directory. This also writes the path to
+the kill ring because often when you need this information it is because you are
+about to include it in a buffer.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun message-buffer-file-name ()
+  "Print the full path of the current buffer and store this on the kill ring."
+  (interactive)
+  (kill-new buffer-file-name)
+  (message buffer-file-name))
+
+(spacemacs/set-leader-keys "ofd" 'message-buffer-file-name)
+</pre>
+</div>
+
+<p>
+Suppose that you want to get a copy of the last file you downloaded in the
+current directory, this is a pretty common thing to do so a function would be
+helpful. This will probably be most useful to call from eshell so I won't give
+it a key binding just yet.
+</p>
+</div>
+
+<ul class="org-ul">
+<li><a id="orgec5ec03"></a><span class="todo TODO">TODO</span> Clean up this rather ugly function and consider merging with <code>last-bib</code>.<br />
+<div class="outline-text-5" id="text-orgec5ec03">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun cp-most-recent-download ()
+  (interactive)
+  (let* ((all-files (directory-files-and-attributes "~/Downloads"
+						    t ".*" "ctime"))
+	 (path-and-time (lambda (x)
+			  (list (first x)
+				(eighth x))))
+	 (time-order (lambda (a b)
+		       (time-less-p (second b)
+				    (second a))))
+	 (most-recent (lambda (files)
+			(car (car (sort (mapcar path-and-time files)
+					time-order))))))
+    (if (not (null all-files))
+	(let ((most-recent-file (funcall most-recent all-files)))
+	  (progn
+	    (message (concat "copying file: " most-recent-file))
+	    (copy-file most-recent-file
+		       (concat default-directory
+			       (file-name-nondirectory most-recent-file))
+		       1)))
+      (message "No file found in ~/Downloads/"))))
+
+(defun ls-most-recent-download ()
+  (interactive)
+  (let* ((all-files (directory-files-and-attributes "~/Downloads"
+						    t ".*" "ctime"))
+	 (path-and-time (lambda (x)
+			  (list (first x)
+				(eighth x))))
+	 (time-order (lambda (a b)
+		       (time-less-p (second b)
+				    (second a))))
+	 (most-recent (car (car (sort (mapcar path-and-time all-files)
+				      time-order)))))
+    (if (not (null all-files))
+	(progn (message (concat "newest file in ~/Downloads: " most-recent))
+	       most-recent)
+      (message "No file found in ~/Downloads/"))))
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6092667" class="outline-3">
+<h3 id="org6092667">Unicode and Greek letters</h3>
+<div class="outline-text-3" id="text-org6092667">
+<p>
+To insert a unicode character based on its name use <code>C-x 8 RET</code>. Since typically
+this is just the Greek letters we can define key bindings for them. A macro
+makes this code a little cleaner.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defmacro nicemacs-greek (lname)
+    (list 'progn
+	  (list 'defun (intern (format "nag-%s-small" lname)) ()
+		(list 'interactive)
+		(list 'insert (char-from-name (upcase (format "greek small letter %s" lname)))))
+	  (list 'defun (intern (format "nag-%s-capital" lname)) ()
+		(list 'interactive)
+		(list 'insert (char-from-name (upcase (format "greek capital letter %s" lname)))))))
+
+(nicemacs-greek alpha)
+(nicemacs-greek beta)
+(nicemacs-greek gamma)
+(nicemacs-greek delta)
+(nicemacs-greek theta)
+(nicemacs-greek lambda)
+(nicemacs-greek mu)
+(nicemacs-greek nu)
+(nicemacs-greek rho)
+(nicemacs-greek sigma)
+(nicemacs-greek psi)
+(nicemacs-greek omega)
+</pre>
+</div>
+
+<p>
+And now to specify the actual keybindings
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/declare-prefix "ou" "unicode-stuff")
+
+(spacemacs/set-leader-keys
+  "oua" 'nag-alpha-small
+  "ouA" 'nag-alpha-capital
+  "oub" 'nag-beta-small
+  "ouB" 'nag-beta-capital
+  "oug" 'nag-gamma-small
+  "ouG" 'nag-gamma-capital
+  "oud" 'nag-delta-small
+  "ouD" 'nag-delta-capital
+  "outh" 'nag-theta-small
+  "ouTh" 'nag-theta-capital
+  "oul" 'nag-lambda-small
+  "ouL" 'nag-lambda-capital
+  "oum" 'nag-mu-small
+  "ouM" 'nag-mu-capital
+  "oun" 'nag-nu-small
+  "ouN" 'nag-nu-capital
+  "our" 'nag-rho-small
+  "ouR" 'nag-rho-capital
+  "ous" 'nag-sigma-small
+  "ouS" 'nag-sigma-capital
+  "oup" 'nag-psi-small
+  "ouo" 'nag-omega-small)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org74f7725" class="outline-3">
+<h3 id="org74f7725"><span class="todo TODO">TODO</span> XML editing</h3>
+<div class="outline-text-3" id="text-org74f7725">
+</div>
+<div id="outline-container-orgf01a1ec" class="outline-4">
+<h4 id="orgf01a1ec">Useful bindings</h4>
+<div class="outline-text-4" id="text-orgf01a1ec">
+<ul class="org-ul">
+<li><code>M = =</code> will run the relevant web-beautify function<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.</li>
+<li><code>, z</code> will do code folding for web-mode.</li>
+<li><code>%</code> will jump between matching tags: evil-mode provides it.</li>
+<li><code>SPC t l</code> will toggle long lines.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4aa372a" class="outline-3">
+<h3 id="org4aa372a">Yasnippet snippets</h3>
+<div class="outline-text-3" id="text-org4aa372a">
+<p>
+Snippets usually live in <code>~/.emacs.d/private/snippets</code> in a directory which is
+named after the major mode for them to be used in. You need to
+<code>yas-recompile-all</code> and <code>yas-reload-all</code> for any changes to the snippets to take
+effect.
+</p>
+
+<p>
+<b>WARNING!</b> Tangling this file will write the snippets to your private snippet
+directory which is convenient for me but may not be desirable for everyone. It
+is set this way so that I don't have to remember to copy the tangled files over
+all the time. To generate the directories that the snippets will be tangled to
+you can run the following.
+</p>
+
+<p>
+The <code>files--ensure-directory</code> function will create these directories if they do
+not already exist.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(files--ensure-directory "~/.emacs.d/private/snippets/ess-r-mode")
+(files--ensure-directory "~/.emacs.d/private/snippets/python-mode")
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org66cd459" class="outline-4">
+<h4 id="org66cd459">Yasnippet configuration</h4>
+<div class="outline-text-4" id="text-org66cd459">
+<p>
+For some unknown reason, when I try to insert a snippet in the JSON mode I get
+an error, "No JavaScript AST available". Things are working fine in other modes
+so this might be something javascript specific, in which case, it is probably
+easier just to call <code>yas-insert-snippet</code> directly when editing JSON.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd6ed62a" class="outline-4">
+<h4 id="orgd6ed62a"><span class="todo TODO">TODO</span> Org-mode</h4>
+<div class="outline-text-4" id="text-orgd6ed62a">
+<p>
+For some reason I found it difficult to get this to load and still have the
+default snippets&#x2026;
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Include image with caption and label
+# key: include-image
+# --
+\#+caption: WRITE A CAPTION!
+\#+name: fig:thing
+\#+attr_org: :width 500px
+\#+attr_html: :width 400px
+[[./path/to/image.png]]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2a2a2aa" class="outline-4">
+<h4 id="org2a2a2aa">Python</h4>
+<div class="outline-text-4" id="text-org2a2a2aa">
+<p>
+Here are a bunch of standard packages for statistical work
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Standard python packages
+# key: pypacks
+# --
+import pandas as pd
+import numpy as np
+import scipy.stats as stats
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import matplotlib.pyplot as plt
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org577519e" class="outline-4">
+<h4 id="org577519e">R</h4>
+<div class="outline-text-4" id="text-org577519e">
+<p>
+The R snippets can be roughly devided into those that provide useful <a href="#org3afc58c">Useful package collections</a> and those that provide <a href="#org6c53911">Useful programming snippets</a>. Those
+that provide packages have a key which starts with <code>rpack-</code> and those that
+provide programming constructs start with <code>rhelp-</code>.
+</p>
+</div>
+
+<ul class="org-ul">
+<li><a id="org3afc58c"></a>Useful package collections<br />
+<div class="outline-text-5" id="text-org3afc58c">
+<p>
+A snippet to include the basic packages which are pretty safe to import by
+default.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Standard R packages
+# key: rpacks
+# --
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+library(magrittr)
+library(purrr)
+</pre>
+</div>
+
+<p>
+A snippet to include some extra packages that are often useful but probably
+aren't needed enough to be imported by default.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Extra R packages
+# key: rpacks-extra
+# --
+library(jsonlite)
+library(stringr)
+library(cowplot)
+library(whisker)
+</pre>
+</div>
+
+<p>
+A snippet to include packages that are useful when working with geographic data
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: R packages for computational geography
+# key: rpacks-geo
+# --
+library(countrycode)
+library(sf)
+</pre>
+</div>
+
+<p>
+A snippet to include packages that are useful for doing MCMC
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: R packages for MCMC
+# key: rpacks-mcmc
+# --
+library(mcmc)
+library(coda)
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org6c53911"></a>Useful programming snippets<br />
+<ul class="org-ul">
+<li><a id="org760a9b2"></a>Saving ggplot2 figures<br />
+<div class="outline-text-6" id="text-org760a9b2">
+<p>
+This snippet offers some sensible default values for saving <code>ggplot2</code> figures.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Save a ggplot2 figure to default paper sizes
+# key: rhelp-ggsave
+# --
+
+ggsave(filename = $1,
+       plot = $2,
+       ## A5 height = 14.8, width = 21.0,
+       ## A6 height = 10.5, width = 14.8,
+       ## A7 height = 7.4, width = 10.5,
+       units = "cm")
+
+$0
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="orgaf7c628"></a>Writing CSV<br />
+<div class="outline-text-6" id="text-orgaf7c628">
+<p>
+A snippet with sensible defaults for writing a data frame to CSV
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: CSV output from R using write.table
+# key: rhelp-table
+# --
+
+write.table(x = $1,
+	    file = $2,
+	    sep = ",",
+	    row.names = FALSE)
+
+$0
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org3d1b1b5"></a>Writing JSON<br />
+<div class="outline-text-6" id="text-org3d1b1b5">
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: JSON output from R using jsonlite
+# key: rhelp-json-output
+# --
+
+jsonlite::write_json(
+  x = $1,
+  path = $2,
+  auto_unbox = T
+)
+
+$0
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org7b0a8b3"></a>Writing HTML<br />
+<div class="outline-text-6" id="text-org7b0a8b3">
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Programmatically generating HTML
+# key: rhelp-html
+# --
+library(htmltools)
+library(base64enc)
+
+#' An HTML tag encoding an image stored in a PNG.
+#'
+#' This uses the \code{base64enc} and \code{htmltools} packages.
+#'
+#' @param filepath is the path to the PNG
+#' @param ... is additional arguments to \code{tags$img} such as style.
+#'
+png_as_img &lt;- function(filepath, ...) {
+  if (tools::file_ext(filepath) == "png") {
+    b64 &lt;- base64enc::base64encode(what = filepath)
+    tags$img(
+      src = paste("data:image/png;base64", b64, sep = ","),
+      ...
+    )
+  } else {
+    stop("Filepath given to png_as_img must be a PNG.")
+  }
+}
+
+html_body &lt;-
+  tags$body(
+    tags$h1("Hello World!")
+  )
+
+save_html(html_body, file = "index.html")
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org24d4a73"></a>Main function<br />
+<div class="outline-text-6" id="text-org24d4a73">
+<p>
+A snippet to provide a main function which only runs when the script is called
+from the command line and passes any command line arguments through.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Main function for an R script to be used at the command line
+# key: rhelp-main
+# --
+
+main &lt;- function(args) {
+  $0
+}
+
+if (!interactive()) {
+  args &lt;- commandArgs(trailingOnly = TRUE)
+  # if you are using argparse this might help...
+  # args &lt;- parser$parse_args()
+  main(args)
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org3607f9c"></a>Parse command line arguments<br />
+<div class="outline-text-6" id="text-org3607f9c">
+<p>
+The <a href="https://cran.r-project.org/web/packages/argparse/index.html">argparse</a> library, inspired by the python equivalent, provides a simple way
+to build up CLIs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Example of how to use the argparse library
+# key: rhelp-argparse
+# --
+
+library(argparse)
+
+# create parser object
+parser &lt;- ArgumentParser()
+
+parser$add_argument(
+	 "-v",
+	 "--verbose",
+	 action = "store_true",
+	 default = FALSE,
+	 help = "Verbose output"
+       )
+parser$add_argument(
+	 "-s",
+	 "--seed",
+	 type = "integer",
+	 default = 1,
+	 help = "PRNG seed"
+       )
+parser$add_argument(
+	 "-p",
+	 "--parameters",
+	 type = "character",
+	 help = "Filepath to parameters JSON"
+       )
+
+args &lt;- parser$parse_args()
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The <code>add-to-list</code> function is used to add elements to the start of a
+list, this should only be used in configuration code; use <code>push</code> to add elements
+to a list in emacs-lisp.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+You can use a <code>.jsbeautifyrc</code> file to configure the formatting.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2022-04-27 Wed 11:17</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
