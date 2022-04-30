@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-27 Wed 11:27 -->
+<!-- 2022-04-30 Sat 17:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-notes-js4ds</title>
@@ -212,16 +212,233 @@
 </div>
 <div id="outline-container-orgc5aadf6" class="outline-3">
 <h3 id="orgc5aadf6">Notes</h3>
+<div class="outline-text-3" id="text-orgc5aadf6">
+<p>
+Here is a little example of how to define a class and how inheritance works in
+JavaScript
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">class Shape {
+    constructor (name, area) {
+	this.name = name;
+	this.area = area;
+    }
+
+    greet () {
+	console.log(`Hello, my name is ${this.name}.`);
+	console.log(`My area is ${this.area}`);
+    }
+}
+
+class Square extends Shape {
+    constructor (sideLength) {
+	super('square', sideLength * sideLength);
+	this.sideLength = sideLength;
+    }
+
+    elaborate () {
+	console.log(`My side length is ${this.sideLength}`);
+    }
+}
+
+const sq = new Square(3);
+sq.greet();
+sq.elaborate();
+</pre>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org589943a" class="outline-3">
 <h3 id="org589943a">Exercises</h3>
+<div class="outline-text-3" id="text-org589943a">
+</div>
+<div id="outline-container-org80c32f1" class="outline-4">
+<h4 id="org80c32f1">Delays</h4>
+<div class="outline-text-4" id="text-org80c32f1">
+<div class="org-src-container">
+<pre class="src src-javascript">// delays.js
+class Delay {
+    constructor (x) {
+	this.nextX = x;
+	this.currX = null;
+    }
+
+    call (newX) {
+	this.currX = this.nextX;
+	this.nextX = newX;
+	return this.currX;
+    }
+}
+
+const example = new Delay('a');
+for (let value of ['b', 'c', 'd']) {
+    console.log(value, '-&gt;', example.call(value));
+}
+</pre>
+</div>
+
+<pre class="example" id="org8fce135">
+$ node delays.js
+b -&gt; a
+c -&gt; b
+d -&gt; c
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9ad0236" class="outline-4">
+<h4 id="org9ad0236">Filtering</h4>
+<div class="outline-text-4" id="text-org9ad0236">
+<div class="org-src-container">
+<pre class="src src-javascript">// filtering.js
+class Filter {
+    constructor (...values) {
+	this.values = values;
+    }
+    call (x) {
+	return this.values.some((v) =&gt; x === v) ? null : x;
+    }
+}
+
+const example = new Filter('a', 'e', 'i', 'o', 'u');
+for (let value of ['a', 'b', 'c', 'd', 'e']) {
+    console.log(value, '-&gt;', example.call(value));
+}
+</pre>
+</div>
+
+<pre class="example" id="orgbf41927">
+$ node filetering.js
+a -&gt; null
+b -&gt; b
+c -&gt; c
+d -&gt; d
+e -&gt; null
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org4312264" class="outline-4">
+<h4 id="org4312264">Pipelines</h4>
+<div class="outline-text-4" id="text-org4312264">
+<p>
+My first attempt at this reduced the array of callable objects but the
+requirement to short circuit upon a null result complicated things. The loop
+seems more readable and simpler.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">// pipeline.js
+
+// class Delay { } as before
+
+// class Filter {} as before
+
+class Pipeline {
+    constructor (...callables) {
+	this.callables = callables;
+    }
+
+    call (x) {
+	var y = x;
+	for (let obj of this.callables) {
+	    y = obj.call(y);
+	    if (y == null) {
+		return null;
+	    }
+	}
+	return y;
+    }
+}
+
+const example = new Pipeline(new Filter('a', 'e', 'i', 'o', 'u'),
+			     new Delay('a'));
+for (let value of ['a' ,'b', 'c', 'd', 'e']) {
+    console.log(value, '-&gt;', example.call(value));
+}
+</pre>
+</div>
+
+<pre class="example" id="orgbb7fc9d">
+$ node pipeline.js
+a -&gt; null
+b -&gt; a
+c -&gt; b
+d -&gt; c
+e -&gt; null
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org65b21db" class="outline-4">
+<h4 id="org65b21db">Active Expressions</h4>
+<div class="outline-text-4" id="text-org65b21db">
+<p>
+The last part of this question looking at the delayed data just requires using
+the result above and if you want to get fancy, you can have it inherit from
+Active and overwrite some of the methods.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">// active.js
+
+class Active {
+
+    constructor (name, transFunc = null) {
+	this.name = name;
+	this.transFunc = transFunc;
+	this.subscribers = [];
+    }
+
+    subscribe (someone) {
+	this.subscribers.push(someone);
+    }
+
+    transform (input) {
+	return Math.sqrt(input);
+    }
+
+    update (input) {
+	console.log(this.name, 'got', input);
+	const output = this.transFunc == null ? this.transform(input) : this.transFunc(input);
+	for (let s of this.subscribers) {
+	    s.update(output);
+	}
+    }
+}
+
+const start = new Active('start', (x) =&gt; Math.min(x, 10));
+// const left = new Active('left', (x) =&gt; 2 * x);
+const left = new Active('left');
+const right = new Active('right', (x) =&gt; x + 1);
+const final = new Active('final', (x) =&gt; x);
+start.subscribe(left);
+start.subscribe(right);
+left.subscribe(final);
+right.subscribe(final);
+
+start.update(123);
+</pre>
+</div>
+
+<pre class="example" id="org092b00f">
+$ node active.js
+start got 123
+left got 10
+final got 3.1622776601683795
+right got 10
+final got 11
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-04-27 Wed 11:27</p>
+<p class="date">Created: 2022-04-30 Sat 17:44</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
