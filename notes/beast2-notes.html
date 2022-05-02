@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-27 Wed 11:27 -->
+<!-- 2022-05-02 Mon 14:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>beast2-aez-notes</title>
@@ -224,7 +224,7 @@
 </p>
 
 
-<div id="org1fd13f2" class="figure">
+<div id="org69d41ad" class="figure">
 <p><img src="../images/beast2-logo.png" alt="beast2-logo.png" width="250px" />
 </p>
 </div>
@@ -234,12 +234,12 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org400303b">Links</a></li>
-<li><a href="#org4dc07b4">Notes</a>
+<li><a href="#orgf6e4a5d">Notes</a>
 <ul>
 <li><a href="#orgaaafcc6">Build a BEAST2</a></li>
 <li><a href="#org8526999"><span class="todo TODO">TODO</span> Understanding Packages</a></li>
 <li><a href="#orgc29e0be">Understanding BEAST2</a></li>
-<li><a href="#org4d0ccc8"><span class="todo TODO">TODO</span> Understanding the XML</a></li>
+<li><a href="#org4d0ccc8">Understanding the XML</a></li>
 <li><a href="#orgd866461">Understanding <code>bdsky</code></a></li>
 </ul>
 </li>
@@ -277,9 +277,9 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 </div>
 </div>
 
-<div id="outline-container-org4dc07b4" class="outline-2">
-<h2 id="org4dc07b4">Notes</h2>
-<div class="outline-text-2" id="text-org4dc07b4">
+<div id="outline-container-orgf6e4a5d" class="outline-2">
+<h2 id="orgf6e4a5d">Notes</h2>
+<div class="outline-text-2" id="text-orgf6e4a5d">
 </div>
 <div id="outline-container-orgaaafcc6" class="outline-3">
 <h3 id="orgaaafcc6">Build a BEAST2</h3>
@@ -307,9 +307,9 @@ packages are stored at.
 </p>
 </div>
 
-<div id="outline-container-org8acfe19" class="outline-4">
-<h4 id="org8acfe19">Notes</h4>
-<div class="outline-text-4" id="text-org8acfe19">
+<div id="outline-container-org67e1a6f" class="outline-4">
+<h4 id="org67e1a6f">Notes</h4>
+<div class="outline-text-4" id="text-org67e1a6f">
 <ul class="org-ul">
 <li><code>v2.6.7</code>:</li>
 </ul>
@@ -365,28 +365,177 @@ need to add JAR files in the same way.</li>
 <h3 id="orgc29e0be">Understanding BEAST2</h3>
 <div class="outline-text-3" id="text-orgc29e0be">
 <ul class="org-ul">
+<li>The <code>BEASTInterface</code> is an interface which all BEAST-objects must implement, the
+<code>BEASTObject</code> class implements that interface and most objects we care about
+will derive from <code>BEASTObject</code>.</li>
 <li>The <code>StateNode</code> is akin to the <i>stochastic node</i> of H\"{o}hna <i>et al</i> (2014), ie it
-is a random variable.</li>
+is a random variable. State nodes can be changed by operators.</li>
 <li>The <code>CalculationNode</code> is akin to the <i>deterministic</i> node of H\"{o}hna <i>et al</i>
 (2014), ie it is a deterministic function of its input.</li>
 <li>The <code>TreeDistribution</code> (which extends the <code>Distribution</code> abstract class) is the
 foundation for both the classes deriving from <code>SpeciesTreeDistribution</code> (which
 are the birth-death models) and various coalescent models.</li>
+<li>There is a <code>ModelBuilder</code> application for visualising a computation.</li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-org4d0ccc8" class="outline-3">
-<h3 id="org4d0ccc8"><span class="todo TODO">TODO</span> Understanding the XML</h3>
+<h3 id="org4d0ccc8">Understanding the XML</h3>
 <div class="outline-text-3" id="text-org4d0ccc8">
 <p>
-The following tag can be used as a way to initialise values in an analysis&#x2026; I
-think. For example, this can be used to specify the starting tree.
+Chapter 13 of (, ) focuses on how BEAST uses XML to
+specify a computation.
+</p>
+
+<ul class="org-ul">
+<li>There are some reserved attributes (<a href="#org5444dc0">this table</a>) and element names (<a href="#orgd9fbcd9">this table</a>)
+that BEAST attributes special meaning to.</li>
+<li>The <code>namespace</code> attribute of the <code>beast</code> element specifies where classes are
+looked for. The comma-separated list is searched in order, but you can use the
+full name in cases where there could be a name-clash.</li>
+<li>The <code>input</code> can be replaced with the <code>name</code> to simplify the specification.</li>
+</ul>
+
+<table id="org5444dc0" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Reserved attributes</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Attribute name</th>
+<th scope="col" class="org-left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>id</code></td>
+<td class="org-left">Unique identifier</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>idref</code></td>
+<td class="org-left">Reference to another element</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>name</code></td>
+<td class="org-left">The part of the parent it plugs into</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>spec</code></td>
+<td class="org-left">The Java class to use</td>
+</tr>
+</tbody>
+</table>
+
+<table id="orgd9fbcd9" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Reserved tags</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Tag name</th>
+<th scope="col" class="org-left">Associated BEAST-object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>run</code></td>
+<td class="org-left"><code>beast.core.Runnable</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>distribution</code></td>
+<td class="org-left"><code>beast.core.Distribution</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>operator</code></td>
+<td class="org-left"><code>beast.core.Operator</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>logger</code></td>
+<td class="org-left"><code>beast.core.Logger</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>data</code></td>
+<td class="org-left"><code>beast.evolution.alignment.Alignment</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>sequence</code></td>
+<td class="org-left"><code>beast.evolution.alignment.Sequence</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>state</code></td>
+<td class="org-left"><code>beast.core.State</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>parameter</code></td>
+<td class="org-left"><code>beast.core.parameter.RealParameter</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tree</code></td>
+<td class="org-left"><code>beast.evolution.tree.Tree</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>input</code></td>
+<td class="org-left">reserved name</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>map</code></td>
+<td class="org-left">macro to simplify <code>spec</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>plate</code></td>
+<td class="org-left">for-loop style macro</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org5484b3d" class="outline-4">
+<h4 id="org5484b3d">The plate macro</h4>
+<div class="outline-text-4" id="text-org5484b3d">
+<p>
+The XML
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;init spec="PUT THE CLASS HERE" id="PUT A UNIQUE IDENTIFIER HERE" /&gt;
+<pre class="src src-xml">&lt;plate var="n" range="v1,v2,v3" &gt;
+    &lt;parameter id="value.$(n)" a="foo" b="$(n)" /&gt;
+&lt;/plate&gt;
 </pre>
+</div>
+
+<p>
+becomes
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;parameter id="value.v1" a="foo" b="v1" /&gt;
+&lt;parameter id="value.v2" a="foo" b="v2" /&gt;
+&lt;parameter id="value.v3" a="foo" b="v3" /&gt;
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -592,7 +741,7 @@ likely to go out of date <i>very</i> quickly.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption class="t-above"><span class="table-number">Table 1:</span> BEAST2 packages</caption>
+<caption class="t-above"><span class="table-number">Table 3:</span> BEAST2 packages</caption>
 
 <colgroup>
 <col  class="org-left" />
@@ -848,9 +997,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-orgca2cbda" class="outline-4">
-<h4 id="orgca2cbda">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgca2cbda">
+<div id="outline-container-org4b5fd60" class="outline-4">
+<h4 id="org4b5fd60">Running the sampler</h4>
+<div class="outline-text-4" id="text-org4b5fd60">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -867,16 +1016,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-orgf19697d" class="outline-4">
-<h4 id="orgf19697d">Visualising the results</h4>
-<div class="outline-text-4" id="text-orgf19697d">
+<div id="outline-container-orgd534e41" class="outline-4">
+<h4 id="orgd534e41">Visualising the results</h4>
+<div class="outline-text-4" id="text-orgd534e41">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org9e105db" class="figure">
+<div id="orgb02cbd5" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -974,9 +1123,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-org22e6afb" class="outline-4">
-<h4 id="org22e6afb">Running the sampler</h4>
-<div class="outline-text-4" id="text-org22e6afb">
+<div id="outline-container-org1ae5e30" class="outline-4">
+<h4 id="org1ae5e30">Running the sampler</h4>
+<div class="outline-text-4" id="text-org1ae5e30">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -993,16 +1142,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-org4dc9327" class="outline-4">
-<h4 id="org4dc9327">Visualising the results</h4>
-<div class="outline-text-4" id="text-org4dc9327">
+<div id="outline-container-org80195f7" class="outline-4">
+<h4 id="org80195f7">Visualising the results</h4>
+<div class="outline-text-4" id="text-org80195f7">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org4c9cb31" class="figure">
+<div id="orgc2549ce" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -1260,9 +1409,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-org4bc6b92" class="outline-4">
-<h4 id="org4bc6b92">Running the sampler</h4>
-<div class="outline-text-4" id="text-org4bc6b92">
+<div id="outline-container-org7b043fc" class="outline-4">
+<h4 id="org7b043fc">Running the sampler</h4>
+<div class="outline-text-4" id="text-org7b043fc">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -1348,7 +1497,7 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="org426e9a3" class="figure">
+<div id="org4fe6d83" class="figure">
 <p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
@@ -1671,7 +1820,7 @@ of sampling proportions is close to the true ratio.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-04-27 Wed 11:27</p>
+<p class="date">Created: 2022-05-02 Mon 14:01</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
