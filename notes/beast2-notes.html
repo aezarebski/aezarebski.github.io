@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-05-03 Tue 18:55 -->
+<!-- 2022-05-04 Wed 15:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>beast2-aez-notes</title>
@@ -224,7 +224,7 @@
 </p>
 
 
-<div id="org0fb5335" class="figure">
+<div id="org37632f1" class="figure">
 <p><img src="../images/beast2-logo.png" alt="beast2-logo.png" width="250px" />
 </p>
 </div>
@@ -234,7 +234,7 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org400303b">Links</a></li>
-<li><a href="#org67e1a6f">Notes</a>
+<li><a href="#org0f9320a">Notes</a>
 <ul>
 <li><a href="#orgaaafcc6">Build a BEAST2</a></li>
 <li><a href="#org8526999"><span class="todo TODO">TODO</span> Understanding Packages</a></li>
@@ -244,9 +244,10 @@
 </ul>
 </li>
 <li><a href="#orgd833c21">Packages</a></li>
-<li><a href="#org08763f1">Tools</a>
+<li><a href="#org9ef4138">Tools and useful R functions</a>
 <ul>
 <li><a href="#orgc4baf73">Web beautify</a></li>
+<li><a href="#org1e97459">Read BEAST2 log file</a></li>
 <li><a href="#org4910f4c">Pretty printing Tracer output</a></li>
 </ul>
 </li>
@@ -277,9 +278,9 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 </div>
 </div>
 
-<div id="outline-container-org67e1a6f" class="outline-2">
-<h2 id="org67e1a6f">Notes</h2>
-<div class="outline-text-2" id="text-org67e1a6f">
+<div id="outline-container-org0f9320a" class="outline-2">
+<h2 id="org0f9320a">Notes</h2>
+<div class="outline-text-2" id="text-org0f9320a">
 </div>
 <div id="outline-container-orgaaafcc6" class="outline-3">
 <h3 id="orgaaafcc6">Build a BEAST2</h3>
@@ -307,9 +308,9 @@ packages are stored at.
 </p>
 </div>
 
-<div id="outline-container-org0f9320a" class="outline-4">
-<h4 id="org0f9320a">Notes</h4>
-<div class="outline-text-4" id="text-org0f9320a">
+<div id="outline-container-org71402d0" class="outline-4">
+<h4 id="org71402d0">Notes</h4>
+<div class="outline-text-4" id="text-org71402d0">
 <ul class="org-ul">
 <li><code>v2.6.7</code>:</li>
 </ul>
@@ -795,9 +796,9 @@ likely to go out of date <i>very</i> quickly.
 </div>
 </div>
 
-<div id="outline-container-org08763f1" class="outline-2">
-<h2 id="org08763f1">Tools</h2>
-<div class="outline-text-2" id="text-org08763f1">
+<div id="outline-container-org9ef4138" class="outline-2">
+<h2 id="org9ef4138">Tools and useful R functions</h2>
+<div class="outline-text-2" id="text-org9ef4138">
 <ul class="org-ul">
 <li>You can run both <code>beast</code> and <code>beauti</code> from the command line as they are both
 available in the <code>beast.jar</code>. In the case of <code>beauti</code> it will be something like
@@ -824,6 +825,43 @@ Just add the following as <code>.jsbeautifyrc</code> in the root of your project
     "indent_size": 4,
     "preserve_newlines": true,
     "wrap_attributes": "force-aligned"
+}
+</pre>
+</div>
+
+<p>
+The following function handles calling the beautifier from within R
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">#' Run js-beautify on the given file.
+#'
+#' @param x is the path to the XML file.
+#'
+beautify_xml &lt;- function(x) {
+  system2(command = "html-beautify", args = c("-f", x, "-r"))
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1e97459" class="outline-3">
+<h3 id="org1e97459">Read BEAST2 log file</h3>
+<div class="outline-text-3" id="text-org1e97459">
+<p>
+The following function reads a log file into a suitable dataframe.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">#' Read a BEAST2 log file into a data frame.
+#'
+#' @param filename is the path to the log file.
+#'
+#' @return data frame containing the samples.
+#'
+read_beast2_log &lt;- function(filename) {
+  read.csv(filename, sep = "\t", comment.char = "#")
 }
 </pre>
 </div>
@@ -999,9 +1037,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-org7b043fc" class="outline-4">
-<h4 id="org7b043fc">Running the sampler</h4>
-<div class="outline-text-4" id="text-org7b043fc">
+<div id="outline-container-orgfb9b17a" class="outline-4">
+<h4 id="orgfb9b17a">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgfb9b17a">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -1018,16 +1056,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-org80195f7" class="outline-4">
-<h4 id="org80195f7">Visualising the results</h4>
-<div class="outline-text-4" id="text-org80195f7">
+<div id="outline-container-org108c08d" class="outline-4">
+<h4 id="org108c08d">Visualising the results</h4>
+<div class="outline-text-4" id="text-org108c08d">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org5138485" class="figure">
+<div id="org6f3494d" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -1125,9 +1163,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-orgd38a755" class="outline-4">
-<h4 id="orgd38a755">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgd38a755">
+<div id="outline-container-orgee36e50" class="outline-4">
+<h4 id="orgee36e50">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgee36e50">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -1144,16 +1182,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-org108c08d" class="outline-4">
-<h4 id="org108c08d">Visualising the results</h4>
-<div class="outline-text-4" id="text-org108c08d">
+<div id="outline-container-org4fb1ff9" class="outline-4">
+<h4 id="org4fb1ff9">Visualising the results</h4>
+<div class="outline-text-4" id="text-org4fb1ff9">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org11380c2" class="figure">
+<div id="orga8c9e35" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -1411,9 +1449,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-orgfb9b17a" class="outline-4">
-<h4 id="orgfb9b17a">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgfb9b17a">
+<div id="outline-container-orgec4baa2" class="outline-4">
+<h4 id="orgec4baa2">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgec4baa2">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -1499,7 +1537,7 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="orgd4f058f" class="figure">
+<div id="orgfcb3b74" class="figure">
 <p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
@@ -1822,7 +1860,7 @@ of sampling proportions is close to the true ratio.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-05-03 Tue 18:55</p>
+<p class="date">Created: 2022-05-04 Wed 15:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
