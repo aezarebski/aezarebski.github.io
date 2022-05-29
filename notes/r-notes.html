@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-05-04 Wed 15:08 -->
+<!-- 2022-05-25 Wed 11:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -223,6 +223,12 @@
 <a href="../index.html">Home</a>
 </p>
 
+
+<div id="orgfbe745f" class="figure">
+<p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
+</p>
+</div>
+
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
@@ -233,13 +239,14 @@
 <li><a href="#org4dece1e">Programming in R (installation and administration)</a>
 <ul>
 <li><a href="#orgc04dff1">Installing and updating R</a></li>
+<li><a href="#orgd900119">Managing R installations</a></li>
 </ul>
 </li>
 <li><a href="#orgda9ab0b">Programming in R (software development)</a>
 <ul>
 <li><a href="#orgfe75c95">Scripting with R</a></li>
 <li><a href="#orgf8bd3ba">Error handling</a></li>
-<li><a href="#org8170bd2">R Packages by Wickham and Bryan</a></li>
+<li><a href="#org2af2e8b"><i>R Packages</i> by Wickham and Bryan</a></li>
 <li><a href="#org784f6b1">High performance computing</a></li>
 <li><a href="#orgd6c5943">Packages I like</a></li>
 <li><a href="#orgc7fb6ac">Reshaping dataframes with <code>reshape2</code></a></li>
@@ -247,8 +254,7 @@
 <li><a href="#orga5507cd">Command line arguments with <code>argparse</code></a></li>
 <li><a href="#org9c42770">Working with JSON</a></li>
 <li><a href="#org7071643">Working with HTML</a></li>
-<li><a href="#orge72a685">Working with XML with <code>XML</code></a></li>
-<li><a href="#orgfd56841">Working with XML with <code>xml2</code></a></li>
+<li><a href="#orga38b0cd">OUTDATED: Working with XML with <code>XML</code></a></li>
 <li><a href="#org807c2b8">Working with Mustache templates</a></li>
 <li><a href="#org6cef048">Unit testing with <code>testthat</code></a></li>
 <li><a href="#orgc401b55">Dependency management with <code>packrat</code></a></li>
@@ -264,6 +270,7 @@
 </li>
 <li><a href="#orgeca91f4">Data munging</a>
 <ul>
+<li><a href="#org6d6b4cd">Working with XML</a></li>
 <li><a href="#org02b8428">Joins</a></li>
 <li><a href="#org3442c37">Aggregation</a></li>
 </ul>
@@ -299,12 +306,6 @@
 </div>
 </div>
 
-
-<div id="org1f66a5f" class="figure">
-<p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
-</p>
-</div>
-
 <div id="outline-container-orgbe7db07" class="outline-3">
 <h3 id="orgbe7db07">Further reading</h3>
 <div class="outline-text-3" id="text-orgbe7db07">
@@ -323,6 +324,16 @@
 <div class="outline-text-4" id="text-org9012ce0">
 <ul class="org-ul">
 <li><a href="https://rviews.rstudio.com/about/">R Views</a> (the RStudio blog about R).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd809659" class="outline-4">
+<h4 id="orgd809659">Books</h4>
+<div class="outline-text-4" id="text-orgd809659">
+<ul class="org-ul">
+<li><a href="https://r4ds.hadley.nz/index.html">R for Data Science</a> by Hadley Wickham has a second (and substantially expanded)
+edition.</li>
 </ul>
 </div>
 </div>
@@ -356,22 +367,25 @@
 <h3 id="orgc04dff1">Installing and updating R</h3>
 <div class="outline-text-3" id="text-orgc04dff1">
 <p>
-<b>Last update was to 4.1.2 &#x2013; Bird Hippie</b>
+<b>Last update was to 4.2.0 &#x2013; Vigorous Calisthenics</b>
 </p>
 
 <p>
-R updates frequently and things break, so it is a good idea to keep your version
-of R reasonably up to date. You can obtain the source code for every version of
-R from <a href="https://cran.r-project.org/src/base/">CRAN</a>. The steps involved in getting a particular version of R are as
-follows.
+R updates frequently and things can break, so it is a good idea to keep your
+version of R reasonably up to date. You can obtain the source code for every
+version of R from <a href="https://cran.r-project.org/src/base/">CRAN</a>. The steps involved in getting a particular version of R
+are as follows.
 </p>
 
 <ol class="org-ol">
-<li>Ensure you have the nessessary dependencies with <code>sudo apt-get r-base</code>.</li>
-<li>Download the relevant source, e.g. <code>R-4.1.2.tar.gz</code>, and unzip it: <code>tar -xvf
+<li>Ensure you have the necessary dependencies with <code>sudo apt-get r-base</code>.</li>
+<li>Download the relevant source, e.g. <code>R-4.2.0.tar.gz</code>, and unzip it: <code>tar -xvf
    R-X.Y.Z.tar.gz</code>.</li>
-<li>Run <code>./configure</code> and then <code>make</code> and <code>make info</code> to compile R and the
-documentation.</li>
+<li>Run <code>./configure</code> be sure to double check the output for configuration errors.
+<ul class="org-ul">
+<li>If you are using this with RStudio, you will need to use <code>--enable-R-shlib</code>.</li>
+</ul></li>
+<li>Run <code>make</code> and <code>make info</code> to compile R and the documentation.</li>
 <li>Check that the compilation has worked properly with <code>make check</code> and address
 any issues that arise.</li>
 <li>Install the executable with <code>sudo make install</code> and <code>sudo make install-info</code>.</li>
@@ -389,15 +403,23 @@ packages, the following command can help with this.
 <pre class="src src-R">my_pkgs &lt;- c("ape",
 	     "argparse",
 	     "coda",
+	     "cowplot",
 	     "dplyr",
+	     "devtools",
+	     "future",
+	     "furrr",
+	     "htmltools",
+	     "jsonlite",
+	     "phangorn",
+	     "purrr",
 	     "purrr",
 	     "magrittr",
+	     "mcmc",
 	     "ggplot2",
 	     "remotes",
 	     "reshape2",
-	     "future",
-	     "furrr",
-	     "stringr")
+	     "stringr",
+	     "xml2")
 install.packages(my_pkgs)
 </pre>
 </div>
@@ -413,6 +435,8 @@ fixed this. Old package versions hanging around can be found with <code>.libPath
 <h4 id="orgade5990">Notes</h4>
 <div class="outline-text-4" id="text-orgade5990">
 <ul class="org-ul">
+<li><code>R.4.2.0</code> extends the pipe syntax, and some cases where <code>if</code> and <code>while</code> previously
+threw a warning now throw and error.</li>
 <li><code>R-4.1.2</code></li>
 <li><code>R-4.1.0</code> introduces some new syntax: <code>|&gt;</code> for piping and some sugar for
 anonymous functions, eg <code>\(x) x + 1</code> becomes <code>function(x) x+1</code>. After
@@ -430,6 +454,15 @@ command didn't work as expected this time, which prompted the installation
 list. I also needed to install a package <code>build-dep</code> before building this.</li>
 </ul>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgd900119" class="outline-3">
+<h3 id="orgd900119">Managing R installations</h3>
+<div class="outline-text-3" id="text-orgd900119">
+<p>
+There is an R package, <a href="https://github.com/r-lib/rim">rim</a>, which manages installations: R installation manager.
+</p>
 </div>
 </div>
 </div>
@@ -530,12 +563,14 @@ show_condition(10) # evalates to the numeric 10
 </div>
 </div>
 
-<div id="outline-container-org8170bd2" class="outline-3">
-<h3 id="org8170bd2">R Packages by Wickham and Bryan</h3>
-<div class="outline-text-3" id="text-org8170bd2">
+<div id="outline-container-org2af2e8b" class="outline-3">
+<h3 id="org2af2e8b"><i>R Packages</i> by Wickham and Bryan</h3>
+<div class="outline-text-3" id="text-org2af2e8b">
 <p>
-There is a new edition of the <a href="https://r-pkgs.org/">R packages book available online</a>.
-Here are some notes about package creation based on reading through that book.
+There is a new edition of the <a href="https://r-pkgs.org/">R packages book available online</a>. Here are some
+notes about package creation based on reading through that book. The <a href="https://cran.r-project.org/doc/manuals/R-exts.html#Top">Writing R
+Extensions</a> book is the definitive reference, but <i>R Packages</i> is intended to be
+more friendly for those getting started.
 </p>
 </div>
 
@@ -739,7 +774,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org80cedf1" class="figure">
+<div id="orgbc55083" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -857,9 +892,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org5348102" class="outline-4">
-<h4 id="org5348102">Example</h4>
-<div class="outline-text-4" id="text-org5348102">
+<div id="outline-container-org1dee0b4" class="outline-4">
+<h4 id="org1dee0b4">Example</h4>
+<div class="outline-text-4" id="text-org1dee0b4">
 <div class="org-src-container">
 <pre class="src src-R">library(htmltools)
 
@@ -971,12 +1006,11 @@ df_as_table &lt;- function(df, ...) {
 </div>
 </div>
 
-<div id="outline-container-orge72a685" class="outline-3">
-<h3 id="orge72a685">Working with XML with <code>XML</code></h3>
-<div class="outline-text-3" id="text-orge72a685">
+<div id="outline-container-orga38b0cd" class="outline-3">
+<h3 id="orga38b0cd">OUTDATED: Working with XML with <code>XML</code></h3>
+<div class="outline-text-3" id="text-orga38b0cd">
 <p>
-<b>NOTE:</b> It looks like <code>xml2</code> might be a better choice for XML work, please see <a href="#orgfd56841">these
-notes</a> instead.
+<b>NOTE:</b> It looks like <code>xml2</code> might be a better choice for XML work, please see <a href="#org6d6b4cd">these notes</a> instead.
 </p>
 </div>
 
@@ -1096,187 +1130,13 @@ xmlGetAttr(kappa_node, "idref")
 </div>
 </div>
 
-<div id="outline-container-orgfd56841" class="outline-3">
-<h3 id="orgfd56841">Working with XML with <code>xml2</code></h3>
-<div class="outline-text-3" id="text-orgfd56841">
-<ul class="org-ul">
-<li><code>read_xml</code> and <code>write_xml</code> for IO or start a new node from text.</li>
-<li><code>xml_text</code> (and <code>xml_set_text</code>) to get the text out of a node (and to modify it).</li>
-<li><code>xml_set_attr</code> to set attributes on a node.</li>
-<li><code>xml_add_child</code> to add a child node to a parent.</li>
-</ul>
-</div>
-
-<div id="outline-container-orge33487b" class="outline-4">
-<h4 id="orge33487b">Example I: creating a node and adding it to existing XML</h4>
-<div class="outline-text-4" id="text-orge33487b">
-<p>
-Start with the following XML in <code>demo.xml</code>
-</p>
-
-<div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-    &lt;book&gt;
-	&lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-	&lt;author&gt;J K. Rowling&lt;/author&gt;
-	&lt;year&gt;2005&lt;/year&gt;
-	&lt;price&gt;29.99&lt;/price&gt;
-    &lt;/book&gt;
-&lt;/bookstore&gt;
-</pre>
-</div>
-
-<p>
-then run the following script
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R">library(xml2)
-
-bs &lt;- read_xml("demo.xml")
-
-new_book &lt;- read_xml("&lt;book&gt;&lt;title/&gt;&lt;author/&gt;&lt;year/&gt;&lt;price/&gt;&lt;/book&gt;")
-
-xml_set_attr(
-  x = xml_find_first(new_book, "//title"),
-  attr = "lang",
-  value = "en")
-xml_set_text(
-  x = xml_find_first(new_book, "//title"),
-  value = "Nineteen Eighty-Four"
-)
-xml_set_text(
-  x = xml_find_first(new_book, "//author"),
-  value = "G Orwell"
-)
-xml_set_text(
-  x = xml_find_first(new_book, "//year"),
-  value = "1949"
-)
-xml_set_text(
-  x = xml_find_first(new_book, "//price"),
-  value = "8.99"
-)
-
-xml_add_child(bs, new_book)
-write_xml(bs, "demo2.xml")
-</pre>
-</div>
-
-<p>
-to get the new file <code>demo2.xml</code>
-</p>
-
-<div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-    &lt;author&gt;J K. Rowling&lt;/author&gt;
-    &lt;year&gt;2005&lt;/year&gt;
-    &lt;price&gt;29.99&lt;/price&gt;
-  &lt;/book&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgb281b29" class="outline-4">
-<h4 id="orgb281b29">Example II: swapping a node for a new one in existing XML</h4>
-<div class="outline-text-4" id="text-orgb281b29">
-<p>
-Starting with <code>demo2.xml</code> from the <a href="#orge33487b">previous example</a>
-</p>
-
-<div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-    &lt;author&gt;J K. Rowling&lt;/author&gt;
-    &lt;year&gt;2005&lt;/year&gt;
-    &lt;price&gt;29.99&lt;/price&gt;
-  &lt;/book&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
-</pre>
-</div>
-
-<p>
-we can use the script
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R">library(xml2)
-
-bs &lt;- read_xml("demo2.xml")
-
-new_cd &lt;- read_xml("&lt;cd&gt;&lt;title/&gt;&lt;artist/&gt;&lt;year/&gt;&lt;/cd&gt;")
-
-xml_set_text(
-  x = xml_find_first(new_cd, "//title"),
-  value = "Lateralus"
-)
-xml_set_text(
-  x = xml_find_first(new_cd, "//artist"),
-  value = "Tool"
-)
-xml_set_text(
-  x = xml_find_first(new_cd, "//year"),
-  value = "2001"
-)
-
-old_book &lt;- xml_find_first(bs, "//book[title='Harry Potter']")
-xml_replace(old_book, new_cd)
-write_xml(bs, "demo3.xml")
-</pre>
-</div>
-
-<p>
-which produces <code>demo3.xml</code> shown below
-</p>
-
-<div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;cd&gt;
-    &lt;title&gt;Lateralus&lt;/title&gt;
-    &lt;artist&gt;Tool&lt;/artist&gt;
-    &lt;year&gt;2001&lt;/year&gt;
-  &lt;/cd&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
-</pre>
-</div>
-</div>
-</div>
-</div>
-
 <div id="outline-container-org807c2b8" class="outline-3">
 <h3 id="org807c2b8">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org807c2b8">
 </div>
-<div id="outline-container-org086765e" class="outline-4">
-<h4 id="org086765e">Example</h4>
-<div class="outline-text-4" id="text-org086765e">
+<div id="outline-container-org774ddd0" class="outline-4">
+<h4 id="org774ddd0">Example</h4>
+<div class="outline-text-4" id="text-org774ddd0">
 <div class="org-src-container">
 <pre class="src src-R">library(whisker)
 
@@ -1713,6 +1573,249 @@ my_dict[["key"]] # will return 2.
 <h2 id="orgeca91f4">Data munging</h2>
 <div class="outline-text-2" id="text-orgeca91f4">
 </div>
+<div id="outline-container-org6d6b4cd" class="outline-3">
+<h3 id="org6d6b4cd">Working with XML</h3>
+<div class="outline-text-3" id="text-org6d6b4cd">
+<p>
+The modern way for working with XML is via the <code>xml2</code> package.
+</p>
+
+<ul class="org-ul">
+<li><code>read_xml</code> and <code>write_xml</code> for IO or start a new node from text.</li>
+<li><code>xml_text</code> (and <code>xml_set_text</code>) to get the text out of a node (and to modify it).</li>
+<li><code>xml_set_attr</code> to set attributes on a node. Note that if you want to set
+multiple attributes in a single command there is the function <code>xml_set_attrs</code>
+which takes a node and a named vector.</li>
+<li><code>xml_add_child</code> to add a child node to a parent.</li>
+</ul>
+</div>
+
+<div id="outline-container-orge33487b" class="outline-4">
+<h4 id="orge33487b">Example I: creating a node and adding it to existing XML</h4>
+<div class="outline-text-4" id="text-orge33487b">
+<p>
+Start with the following XML in <code>demo.xml</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;bookstore&gt;
+    &lt;book&gt;
+	&lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
+	&lt;author&gt;J K. Rowling&lt;/author&gt;
+	&lt;year&gt;2005&lt;/year&gt;
+	&lt;price&gt;29.99&lt;/price&gt;
+    &lt;/book&gt;
+&lt;/bookstore&gt;
+</pre>
+</div>
+
+<p>
+then run the following script
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">library(xml2)
+
+bs &lt;- read_xml("demo.xml")
+
+new_book &lt;- read_xml("&lt;book&gt;&lt;title/&gt;&lt;author/&gt;&lt;year/&gt;&lt;price/&gt;&lt;/book&gt;")
+
+xml_set_attr(
+  x = xml_find_first(new_book, "//title"),
+  attr = "lang",
+  value = "en")
+xml_set_text(
+  x = xml_find_first(new_book, "//title"),
+  value = "Nineteen Eighty-Four"
+)
+xml_set_text(
+  x = xml_find_first(new_book, "//author"),
+  value = "G Orwell"
+)
+xml_set_text(
+  x = xml_find_first(new_book, "//year"),
+  value = "1949"
+)
+xml_set_text(
+  x = xml_find_first(new_book, "//price"),
+  value = "8.99"
+)
+
+xml_add_child(bs, new_book)
+write_xml(bs, "demo2.xml")
+</pre>
+</div>
+
+<p>
+to get the new file <code>demo2.xml</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;bookstore&gt;
+  &lt;book&gt;
+    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
+    &lt;author&gt;J K. Rowling&lt;/author&gt;
+    &lt;year&gt;2005&lt;/year&gt;
+    &lt;price&gt;29.99&lt;/price&gt;
+  &lt;/book&gt;
+  &lt;book&gt;
+    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
+    &lt;author&gt;G Orwell&lt;/author&gt;
+    &lt;year&gt;1949&lt;/year&gt;
+    &lt;price&gt;8.99&lt;/price&gt;
+  &lt;/book&gt;
+&lt;/bookstore&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb281b29" class="outline-4">
+<h4 id="orgb281b29">Example II: swapping a node for a new one in existing XML</h4>
+<div class="outline-text-4" id="text-orgb281b29">
+<p>
+Starting with <code>demo2.xml</code> from the <a href="#orge33487b">previous example</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;bookstore&gt;
+  &lt;book&gt;
+    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
+    &lt;author&gt;J K. Rowling&lt;/author&gt;
+    &lt;year&gt;2005&lt;/year&gt;
+    &lt;price&gt;29.99&lt;/price&gt;
+  &lt;/book&gt;
+  &lt;book&gt;
+    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
+    &lt;author&gt;G Orwell&lt;/author&gt;
+    &lt;year&gt;1949&lt;/year&gt;
+    &lt;price&gt;8.99&lt;/price&gt;
+  &lt;/book&gt;
+&lt;/bookstore&gt;
+</pre>
+</div>
+
+<p>
+we can use the script
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">library(xml2)
+
+bs &lt;- read_xml("demo2.xml")
+
+new_cd &lt;- read_xml("&lt;cd&gt;&lt;title/&gt;&lt;artist/&gt;&lt;year/&gt;&lt;/cd&gt;")
+
+xml_set_text(
+  x = xml_find_first(new_cd, "//title"),
+  value = "Lateralus"
+)
+xml_set_text(
+  x = xml_find_first(new_cd, "//artist"),
+  value = "Tool"
+)
+xml_set_text(
+  x = xml_find_first(new_cd, "//year"),
+  value = "2001"
+)
+
+old_book &lt;- xml_find_first(bs, "//book[title='Harry Potter']")
+xml_replace(old_book, new_cd)
+write_xml(bs, "demo3.xml")
+</pre>
+</div>
+
+<p>
+which produces <code>demo3.xml</code> shown below
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;bookstore&gt;
+  &lt;cd&gt;
+    &lt;title&gt;Lateralus&lt;/title&gt;
+    &lt;artist&gt;Tool&lt;/artist&gt;
+    &lt;year&gt;2001&lt;/year&gt;
+  &lt;/cd&gt;
+  &lt;book&gt;
+    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
+    &lt;author&gt;G Orwell&lt;/author&gt;
+    &lt;year&gt;1949&lt;/year&gt;
+    &lt;price&gt;8.99&lt;/price&gt;
+  &lt;/book&gt;
+&lt;/bookstore&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e5bf24" class="outline-4">
+<h4 id="org9e5bf24">Example III: A helpful function for getting and setting attributes</h4>
+<div class="outline-text-4" id="text-org9e5bf24">
+<p>
+The functions in this snippet allows you to look up a node with XPath syntax and
+then read one of the attributes or set its value. There is an optional argument
+in the former to get the value returned as a numeric.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">#' Find the first matching node and return the named attribute
+#'
+#' @param x the XML document
+#' @param xp the xpath
+#' @param the attribute
+#' @param as_numeric boolean for casting to numeric (default is FALSE)
+#'
+xml_find_attr &lt;- function(x, xp, attr, as_numeric=FALSE) {
+  a &lt;- xml_attr(xml_find_first(x, xpath = xp), attr)
+  if (!as_numeric) {
+    a
+  } else {
+    as.numeric(a)
+  }
+}
+
+#' Find the first matching node and set the named attribute
+#'
+#' @param x the XML document
+#' @param xp the xpath
+#' @param attr the attribute
+#' @param v the value for the attribute
+#'
+xml_find_set_attr &lt;- function(x, xp, attr, v) {
+  n &lt;- xml_find_first(x, xpath = xp)
+  xml_set_attr(n, attr, v)
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3cb63b7" class="outline-4">
+<h4 id="org3cb63b7">Example IV: linting/formatting/beautifying XML</h4>
+<div class="outline-text-4" id="text-org3cb63b7">
+<p>
+If you have the <code>js-beautify</code> node package installed, the following function will
+lint a file in place.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">#' Format an XML file in place using js-beautify
+#'
+#' @param x is the filepath
+#'
+beautify_xml &lt;- function(x) {
+  system2(command = "html-beautify", args = c("-f", x, "-r"))
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org02b8428" class="outline-3">
 <h3 id="org02b8428">Joins</h3>
 <div class="outline-text-3" id="text-org02b8428">
@@ -2458,7 +2561,7 @@ j_day &lt;- function(date_string, first_day_of_year_string) {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-05-04 Wed 15:08</p>
+<p class="date">Created: 2022-05-25 Wed 11:38</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
