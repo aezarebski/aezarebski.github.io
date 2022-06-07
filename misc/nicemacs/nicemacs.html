@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-05-25 Wed 11:38 -->
+<!-- 2022-06-07 Tue 11:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -199,7 +199,7 @@
 <div id="content" class="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="org050d7e4" class="figure">
+<div id="org12d4f4c" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -227,9 +227,10 @@
 <li><a href="#org05045c1">Haskell</a></li>
 <li><a href="#orgaf0e06f">Maxima</a></li>
 <li><a href="#orgd74aaac">JavaScript and Typescript</a></li>
-<li><a href="#orgef7b9aa"><span class="todo TODO">TODO</span> Miscellaneous configuration for prose</a></li>
+<li><a href="#org2408ede">Miscellaneous configuration for writing</a></li>
+<li><a href="#orgd6f34a2">Spelling and Dictionaries</a></li>
 <li><a href="#orgffecc1d">Latex and Bibtex</a></li>
-<li><a href="#orga7bdf0d">Org-mode</a></li>
+<li><a href="#org43b96dd">Org-mode</a></li>
 <li><a href="#orgfb78df9">Shells and REPLs</a></li>
 <li><a href="#org9c2de93">Monitoring processes</a></li>
 <li><a href="#orgc4dd86b">Emacs Speaks Statistics (ESS)</a></li>
@@ -297,7 +298,7 @@ The following command demonstrates how to run emacs as a daemon in the
 foreground (use <code>--daemon</code> to run it in the background)
 </p>
 
-<pre class="example" id="org0b03bb2">
+<pre class="example" id="orgf66d0e6">
 emacs --fg-daemon
 </pre>
 
@@ -305,7 +306,7 @@ emacs --fg-daemon
 Then to create a new frame (or visit a file)
 </p>
 
-<pre class="example" id="org24e46fd">
+<pre class="example" id="org40d5c02">
 emacsclient --no-wait --create-frame
 </pre>
 </div>
@@ -847,9 +848,9 @@ called.
 </div>
 </div>
 
-<div id="outline-container-orgef7b9aa" class="outline-3">
-<h3 id="orgef7b9aa"><span class="todo TODO">TODO</span> Miscellaneous configuration for prose</h3>
-<div class="outline-text-3" id="text-orgef7b9aa">
+<div id="outline-container-org2408ede" class="outline-3">
+<h3 id="org2408ede">Miscellaneous configuration for writing</h3>
+<div class="outline-text-3" id="text-org2408ede">
 <ul class="org-ul">
 <li>A neat way to change a block of text from upper to lower case is to select the
 appropriate region and use <code>u</code> and <code>U</code> to toggle the case.</li>
@@ -874,15 +875,16 @@ for unfill.
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org614c685" class="outline-4">
-<h4 id="org614c685"><span class="todo TODO">TODO</span> Dictionary</h4>
-<div class="outline-text-4" id="text-org614c685">
+<div id="outline-container-orgd6f34a2" class="outline-3">
+<h3 id="orgd6f34a2">Spelling and Dictionaries</h3>
+<div class="outline-text-3" id="text-orgd6f34a2">
 <p>
 There is a dictionary mode which provides the <code>dictionary</code> function and the
-<code>dictionary-tooltip-mode</code>.
+<code>dictionary-tooltip-mode</code>. Finding a suitable offline dictionary is challenging
+though.
 </p>
-</div>
 </div>
 
 <div id="outline-container-org4e2a06f" class="outline-4">
@@ -890,11 +892,12 @@ There is a dictionary mode which provides the <code>dictionary</code> function a
 <div class="outline-text-4" id="text-org4e2a06f">
 <ul class="org-ul">
 <li>Highlight the text and use <code>SPC S r</code> to spellcheck that region.</li>
-<li>Use <code>SPC S b</code> to spellcheck the buffer.</li>
+<li>Use <code>SPC S b</code> to spellcheck the buffer (it calls <code>flyspell-buffer</code>)</li>
 <li>Use <code>SPC S s</code> to open spelling suggestions for the work under the cursor.</li>
-<li>It appears that when you add a word to a personal dictionary it is saved in
+<li>When you add a word to a personal dictionary it is saved in
 <code>~/.aspell.en.pws</code>. A (probably outdated) version of my personal dictionary is
-<a href="./resources/aspell.en.pws">here</a>.</li>
+<a href="./resources/aspell.en.pws">here</a>. Alternatively you can add it to a buffer specific list of words at the
+bottom of the file.</li>
 </ul>
 </div>
 </div>
@@ -1101,20 +1104,23 @@ we have the following configuration
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(custom-set-faces
- '(font-lock-comment-face ((t (:inherit fixed-pitch))))
- '(font-lock-keyword-face ((t (:inherit fixed-pitch))))
- '(font-latex-sectioning-2-face ((t (:inherit bold :foreground "#3a81c3" :height 1.3 :family "Noto Sans"))))
- '(font-latex-sectioning-3-face ((t (:inherit bold :foreground "#2d9574" :height 1.2 :family "Noto Sans")))))
+<pre class="src src-emacs-lisp">(custom-set-faces '(font-lock-comment-face ((t (:inherit fixed-pitch))))
+		  '(font-lock-keyword-face ((t (:inherit fixed-pitch))))
+		  '(font-latex-sectioning-2-face ((t (:inherit bold :foreground "#3a81c3"
+							       :height 1.3
+							       :family "Noto Sans"))))
+		  '(font-latex-sectioning-3-face ((t (:inherit bold :foreground "#2d9574"
+							       :height 1.2
+							       :family "Noto Sans")))))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga7bdf0d" class="outline-3">
-<h3 id="orga7bdf0d">Org-mode</h3>
-<div class="outline-text-3" id="text-orga7bdf0d">
+<div id="outline-container-org43b96dd" class="outline-3">
+<h3 id="org43b96dd">Org-mode</h3>
+<div class="outline-text-3" id="text-org43b96dd">
 <p>
 Bindings for org-mode functionality start with <code>o o</code> for "owner org".
 </p>
@@ -1134,9 +1140,12 @@ for toggle style functions we will have a sub-menu.
 </div>
 </div>
 
-<div id="outline-container-org9055489" class="outline-4">
-<h4 id="org9055489"><span class="todo TODO">TODO</span> Citation engine</h4>
-<div class="outline-text-4" id="text-org9055489">
+<div id="outline-container-orge32cb09" class="outline-4">
+<h4 id="orge32cb09">Writing</h4>
+<div class="outline-text-4" id="text-orge32cb09">
+</div>
+<li><a id="org9055489"></a>Citation engine<br />
+<div class="outline-text-5" id="text-org9055489">
 <p>
 The following package is required to use CSL with org-mode citations
 </p>
@@ -1146,17 +1155,16 @@ The following package is required to use CSL with org-mode citations
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org7887cca" class="outline-4">
-<h4 id="org7887cca">Writing prose</h4>
-<div class="outline-text-4" id="text-org7887cca">
+<li><a id="org1860669"></a>Fonts<br />
+<div class="outline-text-5" id="text-org1860669">
 <p>
-The following can be used to hide extra markup symbols
+The following can be used to hide extra markup symbols<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(setq org-hide-emphasis-markers t)
+<pre class="src src-emacs-lisp">(setq org-hide-emphasis-markers nil)
 </pre>
 </div>
 
@@ -1229,6 +1237,8 @@ how wide the display should be.
 </pre>
 </div>
 </div>
+</li>
+</ul>
 </div>
 
 <div id="outline-container-org6b22c4c" class="outline-4">
@@ -1586,7 +1596,7 @@ To adjust the size of the figures, adjust the attribute <code>:scale</code> in t
 <p>
 By default, when you follow a link it will open in a new window in the current
 frame. To follow links in the same window, you need to adjust the
-<code>org-link-frame-setup</code> variable<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
+<code>org-link-frame-setup</code> variable<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
 </p>
 
 <div class="org-src-container">
@@ -1749,9 +1759,9 @@ a binding to open <code>ielm</code>.
 </div>
 </div>
 
-<div id="outline-container-org942ebf9" class="outline-4">
-<h4 id="org942ebf9">R</h4>
-<div class="outline-text-4" id="text-org942ebf9">
+<div id="outline-container-org9d93453" class="outline-4">
+<h4 id="org9d93453">R</h4>
+<div class="outline-text-4" id="text-org9d93453">
 <p>
 Sometimes you just need an R REPL!
 </p>
@@ -1900,14 +1910,32 @@ Run <code>inferior-ess-reload</code> to reset the REPL.
 <h3 id="org46a8adc">Version control via magit</h3>
 <div class="outline-text-3" id="text-org46a8adc">
 <p>
-The following setting makes magit use the full frame when visiting the status.
+The following setting makes magit use the full frame when visiting the status. I
+like this because it helps me to focus on this particular task.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
 </pre>
 </div>
+</div>
 
+<div id="outline-container-orgd650188" class="outline-4">
+<h4 id="orgd650188">Resolving conflicts</h4>
+<div class="outline-text-4" id="text-orgd650188">
+<p>
+There is functionality to help you resolve merge conflicts. When in the magit
+buffer, put the cursor over the offending conflict and us <code>x</code>, as you might to
+discard the chunk normally. This should then prompt you to choose between the
+available options. The "ours"/"theirs" terminology I find a little unclear, but
+they also let you know "upper" or "lower" to select which version.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org82fae6b" class="outline-4">
+<h4 id="org82fae6b">Commit helper functions</h4>
+<div class="outline-text-4" id="text-org82fae6b">
 <p>
 There are a few projects where the same commit message use used often. It would
 be nice to have a macro to fill this in each time for me. Since this is working
@@ -1927,9 +1955,17 @@ easier to define.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(defmacro nicemacs-commits (fname cmessage)
-  (list 'defun (intern (format "ncf-%s" fname)) ()
+  (list 'defun
+	(intern (format "ncf-%s" fname))
+	()
 	(list 'interactive)
-	(list 'magit-commit-create `(list "--edit" ,(list 'format "-m %s %s" cmessage (list 'downcase (list 'format-time-string "%A %l:%M %p")))))))
+	(list 'magit-commit-create
+	      `(list "--edit"
+		     ,(list 'format
+			    "-m %s %s"
+			    cmessage
+			    (list 'downcase
+				  (list 'format-time-string "%A %l:%M %p")))))))
 </pre>
 </div>
 
@@ -1950,6 +1986,7 @@ And some useful examples should be bound to shortcuts.
 (nicemacs-commits journal "update journal")
 (spacemacs/set-leader-keys "ocj" 'ncf-journal)
 </pre>
+</div>
 </div>
 </div>
 </div>
@@ -2063,10 +2100,13 @@ files.
 <pre class="src src-emacs-lisp">(spacemacs/declare-prefix "ov" "visit friendly files")
 
 (defmacro nicemacs-visit (fname pname path)
-  (list 'defun (intern (format "nvf-%s" fname)) ()
+  (list 'defun
+	(intern (format "nvf-%s" fname))
+	()
 	(list 'interactive)
 	(list 'progn
-	      (list 'message (format "Visiting %s" pname))
+	      (list 'message
+		    (format "Visiting %s" pname))
 	      (list 'find-file path))))
 </pre>
 </div>
@@ -2434,7 +2474,7 @@ And now to specify the actual keybindings
 <h4 id="orgf01a1ec">Useful bindings</h4>
 <div class="outline-text-4" id="text-orgf01a1ec">
 <ul class="org-ul">
-<li><code>M = =</code> will run the relevant web-beautify function<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.</li>
+<li><code>M = =</code> will run the relevant web-beautify function<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>.</li>
 <li><code>, z</code> will do code folding for web-mode.</li>
 <li><code>%</code> will jump between matching tags: evil-mode provides it.</li>
 <li><code>SPC t l</code> will toggle long lines.</li>
@@ -2486,9 +2526,9 @@ easier just to call <code>yas-insert-snippet</code> directly when editing JSON.
 </div>
 </div>
 
-<div id="outline-container-org43b96dd" class="outline-4">
-<h4 id="org43b96dd">Org-mode</h4>
-<div class="outline-text-4" id="text-org43b96dd">
+<div id="outline-container-org5853044" class="outline-4">
+<h4 id="org5853044">Org-mode</h4>
+<div class="outline-text-4" id="text-org5853044">
 <p>
 I have had trouble getting my own org-mode snippets to play well with the
 default ones in the past. The solution I arrived at was to just copy all of the
@@ -2542,9 +2582,9 @@ import matplotlib.pyplot as plt
 </div>
 </div>
 
-<div id="outline-container-org9d93453" class="outline-4">
-<h4 id="org9d93453">R</h4>
-<div class="outline-text-4" id="text-org9d93453">
+<div id="outline-container-org125908f" class="outline-4">
+<h4 id="org125908f">R</h4>
+<div class="outline-text-4" id="text-org125908f">
 <p>
 The R snippets can be roughly devided into those that provide useful <a href="#org3afc58c">Useful package collections</a> and those that provide <a href="#org6c53911">Useful programming snippets</a>.
 </p>
@@ -2790,12 +2830,18 @@ args &lt;- parser$parse_args()
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+While hiding the delimiters improves the reading experience, I found that
+while editing text having them there but not visible was frustrating.
+Consequently I now have them visible.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 The <code>add-to-list</code> function is used to add elements to the start of a
 list, this should only be used in configuration code; use <code>push</code> to add elements
 to a list in emacs-lisp.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 You can use a <code>.jsbeautifyrc</code> file to configure the formatting.
 </p></div></div>
 
@@ -2804,7 +2850,7 @@ You can use a <code>.jsbeautifyrc</code> file to configure the formatting.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-05-25 Wed 11:38</p>
+<p class="date">Created: 2022-06-07 Tue 11:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
