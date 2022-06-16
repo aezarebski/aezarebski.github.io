@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-06-07 Tue 11:51 -->
+<!-- 2022-06-16 Thu 18:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -199,7 +199,7 @@
 <div id="content" class="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="org12d4f4c" class="figure">
+<div id="org627135b" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -230,7 +230,7 @@
 <li><a href="#org2408ede">Miscellaneous configuration for writing</a></li>
 <li><a href="#orgd6f34a2">Spelling and Dictionaries</a></li>
 <li><a href="#orgffecc1d">Latex and Bibtex</a></li>
-<li><a href="#org43b96dd">Org-mode</a></li>
+<li><a href="#orge095879">Org-mode</a></li>
 <li><a href="#orgfb78df9">Shells and REPLs</a></li>
 <li><a href="#org9c2de93">Monitoring processes</a></li>
 <li><a href="#orgc4dd86b">Emacs Speaks Statistics (ESS)</a></li>
@@ -298,7 +298,7 @@ The following command demonstrates how to run emacs as a daemon in the
 foreground (use <code>--daemon</code> to run it in the background)
 </p>
 
-<pre class="example" id="orgf66d0e6">
+<pre class="example" id="org73c7900">
 emacs --fg-daemon
 </pre>
 
@@ -306,7 +306,7 @@ emacs --fg-daemon
 Then to create a new frame (or visit a file)
 </p>
 
-<pre class="example" id="org40d5c02">
+<pre class="example" id="orga59dfd3">
 emacsclient --no-wait --create-frame
 </pre>
 </div>
@@ -854,6 +854,10 @@ called.
 <ul class="org-ul">
 <li>A neat way to change a block of text from upper to lower case is to select the
 appropriate region and use <code>u</code> and <code>U</code> to toggle the case.</li>
+<li>If you want a word count there is the <code>count-words</code> function. This is used so
+infrequently though that it is not really worth adding a binding for it. By
+default it counts the words in the current buffer, but if you have selected a
+region of text it will count the words and characters there.</li>
 </ul>
 </div>
 
@@ -861,10 +865,10 @@ appropriate region and use <code>u</code> and <code>U</code> to toggle the case.
 <h4 id="org52f4f14">Toggling paragraph filling</h4>
 <div class="outline-text-4" id="text-org52f4f14">
 <p>
-There are the <code>org-fill-paragraph</code> and <code>unfill-paragraph</code> functions which are useful
-to switch between representations of paragraphs when copying between editors. I
-think a suitable binding for these command is <code>SPC o p f</code> for fill and <code>SPC o p u</code>
-for unfill.
+There are the <code>org-fill-paragraph</code> and <code>unfill-paragraph</code> functions which are
+useful to switch between representations of paragraphs when copying between
+editors. I think a suitable binding for these command is <code>SPC o p f</code> for fill
+and <code>SPC o p u</code> for unfill.
 </p>
 
 <div class="org-src-container">
@@ -923,49 +927,29 @@ to explicitly request this
 </div>
 
 <p>
-There are a couple of files that I want to have easy access to for reference and
-to make minor edits. Having a function to access such a file easily is useful
-for this.
+Here are the keybindings for the bibtex functionality, the leader sequence is
+<b>Owner</b> <b>Bibtex</b> <b>X</b> where
 </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(defun visit-bib-and-tex-file (path-template)
-  (interactive)
-  (progn
-    (find-file path-template)
-    (goto-char 1)
-    (recenter-top-bottom)))
-</pre>
-</div>
-
-<p>
-This is a <i>latex</i> file for my <i>reviews</i> so the binding is <code>olr</code>.
-</p>
+<ul class="org-ul">
+<li><b>B</b> for <i>braces</i> around upper case characters,</li>
+<li><b>C</b> for <i>convert</i> between RIS and bibtex,</li>
+<li><b>F</b> for <i>format</i> the current buffer,</li>
+<li><b>L</b> for <i>last</i> bibtex file in <code>Downloads</code> and</li>
+</ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(defun review-tex-file ()
-  "Open my review.tex file"
-  (interactive)
-  (visit-bib-and-tex-file "~/Documents/bibliography/review/review.tex"))
-
-(spacemacs/set-leader-keys "olr" 'review-tex-file)
+<pre class="src src-emacs-lisp" id="org8e7bf78">(spacemacs/set-leader-keys "obl" 'last-bib)
+(spacemacs/set-leader-keys "obf" 'bibtex-reformat)
+(spacemacs/set-leader-keys "obb" 'bibtex-braces)
+(spacemacs/set-leader-keys "obc" 'bibtex-ris2bib)
 </pre>
 </div>
-
-<p>
-This is a <i>Bibtex</i> file for my <i>references</i> so the binding is <code>obr</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(defun references-bib-file ()
-  "Opens my bibtex references."
-  (interactive)
-  (visit-bib-and-tex-file "~/Documents/bibliography/references.bib"))
-
-(spacemacs/set-leader-keys "obr" 'references-bib-file)
-</pre>
 </div>
 
+<div id="outline-container-orgf80985c" class="outline-4">
+<h4 id="orgf80985c">Visiting most recent bib file</h4>
+<div class="outline-text-4" id="text-orgf80985c">
 <p>
 The <code>last-bib</code> function opens the most recent Bibtex file in the Downloads
 directory in a new buffer. If there is no such file then a message is given to
@@ -974,6 +958,10 @@ indicate this.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(defun last-bib ()
+  "Visit the most recent BIB file in Downloads. TODO There should
+be a fall back such that if there is a TXT file that is younger
+than the last BIB file then copy it to a new file with the same
+basename but a BIB extension and open that instead."
   (interactive)
   (let* ((bib-files (directory-files-and-attributes "~/Downloads"
 						    t ".*bib" "ctime"))
@@ -991,7 +979,12 @@ indicate this.
       (message "No bib files found in ~/Downloads/"))))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org0830a60" class="outline-4">
+<h4 id="org0830a60">Formatting references</h4>
+<div class="outline-text-4" id="text-org0830a60">
 <p>
 Bibtex requires that capital letters in the title be surrounded by braces to
 ensure that they are capitalised correctly. The following function is a way to
@@ -1006,7 +999,12 @@ run the function.
   (evil-ex "'&lt;,'&gt;s/\\([A-Z]+\\)/\\{\\1\\}/g"))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgabc171a" class="outline-4">
+<h4 id="orgabc171a">Converting RIS files</h4>
+<div class="outline-text-4" id="text-orgabc171a">
 <p>
 Some places seem reluctant to provide a bibtex file for a citation, but they all
 seem to have RIS files available for download. There are tools to convert
@@ -1035,52 +1033,7 @@ file. TODO Add error message if there are no RIS files."
     (shell-command ris2xml-command)))
 </pre>
 </div>
-
-<p>
-Now we need some sensible key-bindings for this functionality. The following aim
-to follow the naming used for the functionality because this is easier to
-remember. <b>Owner</b> <b>Bibtex</b> <b>X</b> where
-</p>
-
-<ul class="org-ul">
-<li><b>B</b> for <i>braces</i> around upper case characters,</li>
-<li><b>C</b> for <i>convert</i> between RIS and bibtex,</li>
-<li><b>F</b> for <i>format</i> the current buffer,</li>
-<li><b>L</b> for <i>last</i> bibtex file in <code>Downloads</code> and</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "obl" 'last-bib)
-(spacemacs/set-leader-keys "obf" 'bibtex-reformat)
-(spacemacs/set-leader-keys "obb" 'bibtex-braces)
-(spacemacs/set-leader-keys "obc" 'bibtex-ris2bib)
-</pre>
 </div>
-
-<p>
-I often want to be able to open my reading notes quickly so it would be useful
-to have a function to do that. This will be bound to <code>olp</code> because it is opening
-<i>the</i> PDF.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(defun nicemacs-open-review-pdf ()
-  "Open PDF of reading notes in evince."
-  (interactive)
-  (let ((pdf-viewer "evince")
-	(review-path "/home/aez/Documents/bibliography/review/review.pdf"))
-    (shell-command (concat pdf-viewer " " review-path " &amp;"))))
-
-(spacemacs/set-leader-keys "olp" 'nicemacs-open-review-pdf)
-</pre>
-</div>
-
-<p>
-If you want a word count there is the <code>count-words</code> function. This is used so
-infrequently though that it is not really worth adding a binding for it. By
-default it counts the words in the current buffer, but if you have selected a
-region of text it will count the words and characters there.
-</p>
 </div>
 
 <div id="outline-container-orgc97a5cf" class="outline-4">
@@ -1116,11 +1069,24 @@ we have the following configuration
 </div>
 </div>
 </div>
+
+<div id="outline-container-orga4491e2" class="outline-4">
+<h4 id="orga4491e2">Miscellaneous</h4>
+<div class="outline-text-4" id="text-orga4491e2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "obl" 'last-bib)
+(spacemacs/set-leader-keys "obf" 'bibtex-reformat)
+(spacemacs/set-leader-keys "obb" 'bibtex-braces)
+(spacemacs/set-leader-keys "obc" 'bibtex-ris2bib)
+</pre>
+</div>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org43b96dd" class="outline-3">
-<h3 id="org43b96dd">Org-mode</h3>
-<div class="outline-text-3" id="text-org43b96dd">
+<div id="outline-container-orge095879" class="outline-3">
+<h3 id="orge095879">Org-mode</h3>
+<div class="outline-text-3" id="text-orge095879">
 <p>
 Bindings for org-mode functionality start with <code>o o</code> for "owner org".
 </p>
@@ -1527,9 +1493,9 @@ setting <code>org-adapt-indentation</code> to <code>nil</code>.
 </ul>
 </div>
 
-<div id="outline-container-org6a7b1b1" class="outline-4">
-<h4 id="org6a7b1b1">Miscellaneous</h4>
-<div class="outline-text-4" id="text-org6a7b1b1">
+<div id="outline-container-org7bb98aa" class="outline-4">
+<h4 id="org7bb98aa">Miscellaneous</h4>
+<div class="outline-text-4" id="text-org7bb98aa">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">;; open the export menu
 (spacemacs/set-leader-keys "ooe" 'org-export-dispatch)
@@ -1759,9 +1725,9 @@ a binding to open <code>ielm</code>.
 </div>
 </div>
 
-<div id="outline-container-org9d93453" class="outline-4">
-<h4 id="org9d93453">R</h4>
-<div class="outline-text-4" id="text-org9d93453">
+<div id="outline-container-org970f49a" class="outline-4">
+<h4 id="org970f49a">R</h4>
+<div class="outline-text-4" id="text-org970f49a">
 <p>
 Sometimes you just need an R REPL!
 </p>
@@ -2526,9 +2492,9 @@ easier just to call <code>yas-insert-snippet</code> directly when editing JSON.
 </div>
 </div>
 
-<div id="outline-container-org5853044" class="outline-4">
-<h4 id="org5853044">Org-mode</h4>
-<div class="outline-text-4" id="text-org5853044">
+<div id="outline-container-org8d02fb0" class="outline-4">
+<h4 id="org8d02fb0">Org-mode</h4>
+<div class="outline-text-4" id="text-org8d02fb0">
 <p>
 I have had trouble getting my own org-mode snippets to play well with the
 default ones in the past. The solution I arrived at was to just copy all of the
@@ -2582,9 +2548,9 @@ import matplotlib.pyplot as plt
 </div>
 </div>
 
-<div id="outline-container-org125908f" class="outline-4">
-<h4 id="org125908f">R</h4>
-<div class="outline-text-4" id="text-org125908f">
+<div id="outline-container-org8379f89" class="outline-4">
+<h4 id="org8379f89">R</h4>
+<div class="outline-text-4" id="text-org8379f89">
 <p>
 The R snippets can be roughly devided into those that provide useful <a href="#org3afc58c">Useful package collections</a> and those that provide <a href="#org6c53911">Useful programming snippets</a>.
 </p>
@@ -2639,6 +2605,20 @@ library(sf)
 
 <li><a id="org6c53911"></a>Useful programming snippets<br />
 <ul class="org-ul">
+<li><a id="orgb4c754a"></a>Comment to break up sections of a file<br />
+<div class="outline-text-6" id="text-orgb4c754a">
+<div class="org-src-container">
+<pre class="src src-snippet"># -*- mode: snippet -*-
+# name: Use a comment to put a horizontal line across the file
+# key: rhelp-horizontal-line
+# --
+
+# ==============================================================================
+</pre>
+</div>
+</div>
+</li>
+
 <li><a id="org760a9b2"></a>Saving ggplot2 figures<br />
 <div class="outline-text-6" id="text-org760a9b2">
 <p>
@@ -2850,7 +2830,7 @@ You can use a <code>.jsbeautifyrc</code> file to configure the formatting.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-06-07 Tue 11:51</p>
+<p class="date">Created: 2022-06-16 Thu 18:00</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

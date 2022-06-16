@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-15 Fri 12:29 -->
+<!-- 2022-06-09 Thu 12:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>js-lang-aez-notes</title>
@@ -193,7 +193,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 </head>
 <body>
 <div id="content" class="content">
@@ -202,37 +202,83 @@
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="toggleStyle()">Light/Dark</button>
-<script src="./main.js"></script>
+
+<div id="org08c666b" class="figure">
+<p><img src="../images/javascript-logo.png" alt="javascript-logo.png" width="250px" />
+</p>
+</div>
 
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org212b0a8">JavaScript notes</a>
+<li><a href="#org2cafbae">JavaScript notes</a>
 <ul>
-<li><a href="#org7b20f08">Example</a></li>
-<li><a href="#orgf6c4065">Resources</a></li>
-<li><a href="#orgfd4dbf4"><code>npm</code> for package management</a></li>
+<li><a href="#orge94c50b">Example</a></li>
+<li><a href="#org1112935">Example</a></li>
+<li><a href="#org93d4e4f">Resources</a></li>
+<li><a href="#org05150cb"><code>npm</code> for package management</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-
-<div id="orgd37bc2b" class="figure">
-<p><img src="../images/javascript-logo.png" alt="javascript-logo.png" width="250px" />
+<div id="outline-container-org2cafbae" class="outline-2">
+<h2 id="org2cafbae">JavaScript notes</h2>
+<div class="outline-text-2" id="text-org2cafbae">
+</div>
+<div id="outline-container-orge94c50b" class="outline-3">
+<h3 id="orge94c50b">Example</h3>
+<div class="outline-text-3" id="text-orge94c50b">
+<p>
+Here is a very simple HTML file that can be used to make a visual library, just
+drag and drop your PDFs. It comes from <a href="https://cristobal.space/writing/folk">Folk (Browser) Interfaces</a>.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-html">/* pdf-viewer.html */
+
+&lt;style&gt;
+    html {
+	background-color: #fdf6e3;
+	margin: 20px
+    }
+
+    body {
+	display: flex;
+	flex-wrap: wrap;
+    }
+&lt;/style&gt;
+
+&lt;script&gt;
+    const previewPdf = (name, url) =&gt; `
+    &lt;div style="width: 300; height: 425; margin: 40px"&gt;
+      &lt;embed width="100%" height="100%" type="application/pdf" src="${url}"&gt;&lt;/embed&gt;
+      &lt;p&gt;${name}&lt;/p&gt;
+    &lt;/div&gt;
+ `;
+
+    window.addEventListener("dragover", e =&gt; e.preventDefault());
+    window.addEventListener("drop", e =&gt; {
+	e.preventDefault();
+	[...e.dataTransfer.items].forEach(item =&gt; {
+	    if (item.type === "application/pdf") {
+		const file = item.getAsFile();
+		const url = URL.createObjectURL(file);
+		document.body.innerHTML += previewPdf(file.name, url);
+	    }
+	});
+    });
+&lt;/script&gt;
+</pre>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org212b0a8" class="outline-2">
-<h2 id="org212b0a8">JavaScript notes</h2>
-<div class="outline-text-2" id="text-org212b0a8">
-</div>
-<div id="outline-container-org7b20f08" class="outline-3">
-<h3 id="org7b20f08">Example</h3>
-<div class="outline-text-3" id="text-org7b20f08">
+<div id="outline-container-org1112935" class="outline-3">
+<h3 id="org1112935">Example</h3>
+<div class="outline-text-3" id="text-org1112935">
 <p>
 Here is the output of this example
 </p>
@@ -286,17 +332,17 @@ Start by including the UI which consists of couple of <code>textarea</code> for 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">textarea</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"xvals"</span> <span style="color: #715ab1;">rows</span>=<span style="color: #2d9574;">"4"</span> <span style="color: #715ab1;">cols</span>=<span style="color: #2d9574;">"50"</span>&gt;
+<pre class="src src-html">&lt;textarea id="xvals" rows="4" cols="50"&gt;
 1,3,2,4,3,5,1,2,3
-&lt;/<span style="color: #6c3163; font-weight: bold;">textarea</span>&gt;
+&lt;/textarea&gt;
 
- &lt;<span style="color: #6c3163; font-weight: bold;">textarea</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"lvals"</span> <span style="color: #715ab1;">rows</span>=<span style="color: #2d9574;">"4"</span> <span style="color: #715ab1;">cols</span>=<span style="color: #2d9574;">"50"</span>&gt;
+ &lt;textarea id="lvals" rows="4" cols="50"&gt;
 'a','b','c','d','e','f','g','h','i'
-&lt;/<span style="color: #6c3163; font-weight: bold;">textarea</span>&gt;
+&lt;/textarea&gt;
 
-&lt;<span style="color: #6c3163; font-weight: bold;">button</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"myButton"</span>&gt;Click Me!&lt;/<span style="color: #6c3163; font-weight: bold;">button</span>&gt;
+&lt;button id="myButton"&gt;Click Me!&lt;/button&gt;
 
-&lt;<span style="color: #6c3163; font-weight: bold;">div</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"vis"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+&lt;div id="vis"&gt;&lt;/div&gt;
 </pre>
 </div>
 
@@ -305,10 +351,10 @@ Then we can load the relevant packages, where I've included <a href="https://lod
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/vega@5"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/vega-lite@4"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/vega-embed@6"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+<pre class="src src-html">&lt;script src="https://cdn.jsdelivr.net/npm/vega@5"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/vega-lite@4"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/vega-embed@6"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"&gt;&lt;/script&gt;
 </pre>
 </div>
 
@@ -317,9 +363,9 @@ Finally we will write a little script which causes the chart to be updated when 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">type</span>=<span style="color: #2d9574;">"text/javascript"</span>&gt;
-    <span style="color: #2aa1ae; background-color: #ecf3ec;">&lt;!-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Add the JavaScript code here!</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> --&gt;</span>
-&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+<pre class="src src-html">&lt;script type="text/javascript"&gt;
+    &lt;!-- Add the JavaScript code here! --&gt;
+&lt;/script&gt;
 </pre>
 </div>
 
@@ -328,29 +374,29 @@ where the actual JavaScript code that needs to be included here is the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js">document.getElementById<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"myButton"</span><span style="color: #3a81c3;">)</span>.addEventListener<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"click"</span>,
-  <span style="color: #6c3163;">(</span>event<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
-     betas = document.getElementById<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"xvals"</span><span style="color: #2d9574;">)</span>.value.split<span style="color: #2d9574;">(</span><span style="color: #2d9574;">","</span><span style="color: #2d9574;">)</span>.map<span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span> =&gt; parseInt<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-     alphas = document.getElementById<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"lvals"</span><span style="color: #2d9574;">)</span>.value.split<span style="color: #2d9574;">(</span><span style="color: #2d9574;">","</span><span style="color: #2d9574;">)</span>
-     <span style="color: #3a81c3;">var</span> <span style="color: #715ab1;">yourVlSpec</span> = <span style="color: #2d9574;">{</span>
-       $schema: <span style="color: #2d9574;">'https://vega.github.io/schema/vega-lite/v2.0.json'</span>,
-       description: <span style="color: #2d9574;">'A simple bar chart with embedded data.'</span>,
-       data: <span style="color: #67b11d;">{</span>
-         values: dataValues<span style="color: #b1951d;">(</span>alphas,betas<span style="color: #b1951d;">)</span>
-       <span style="color: #67b11d;">}</span>,
-       mark: <span style="color: #2d9574;">'bar'</span>,
-       encoding: <span style="color: #67b11d;">{</span>
-         x: <span style="color: #b1951d;">{</span>field: <span style="color: #2d9574;">'a'</span>, type: <span style="color: #2d9574;">'ordinal'</span><span style="color: #b1951d;">}</span>,
-         y: <span style="color: #b1951d;">{</span>field: <span style="color: #2d9574;">'b'</span>, type: <span style="color: #2d9574;">'quantitative'</span><span style="color: #b1951d;">}</span>
-       <span style="color: #67b11d;">}</span>
-     <span style="color: #2d9574;">}</span>;
-     vegaEmbed<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'#vis'</span>, yourVlSpec<span style="color: #2d9574;">)</span>;
-     document.getElementById<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"myButton"</span><span style="color: #2d9574;">)</span>.innerHTML = <span style="color: #2d9574;">"Woo!"</span>;
-<span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>;
+<pre class="src src-js">document.getElementById("myButton").addEventListener("click",
+  (event) =&gt; {
+     betas = document.getElementById("xvals").value.split(",").map((x) =&gt; parseInt(x))
+     alphas = document.getElementById("lvals").value.split(",")
+     var yourVlSpec = {
+       $schema: 'https://vega.github.io/schema/vega-lite/v2.0.json',
+       description: 'A simple bar chart with embedded data.',
+       data: {
+	 values: dataValues(alphas,betas)
+       },
+       mark: 'bar',
+       encoding: {
+	 x: {field: 'a', type: 'ordinal'},
+	 y: {field: 'b', type: 'quantitative'}
+       }
+     };
+     vegaEmbed('#vis', yourVlSpec);
+     document.getElementById("myButton").innerHTML = "Woo!";
+});
 
-<span style="color: #3a81c3;">function</span> <span style="color: #6c3163; font-weight: bold;">dataValues</span><span style="color: #3a81c3;">(</span><span style="color: #715ab1;">as</span>, <span style="color: #715ab1;">bs</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3;">return</span> _.zipWith<span style="color: #6c3163;">(</span>as,bs, <span style="color: #2d9574;">(</span>a,b<span style="color: #2d9574;">)</span> =&gt; <span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>a:a,b:b<span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
+function dataValues(as, bs) {
+  return _.zipWith(as,bs, (a,b) =&gt; ({a:a,b:b}))
+}
 </pre>
 </div>
 
@@ -361,18 +407,18 @@ to include all of this directly in the <code>.org</code> file.
 </div>
 </div>
 
-<div id="outline-container-orgf6c4065" class="outline-3">
-<h3 id="orgf6c4065">Resources</h3>
-<div class="outline-text-3" id="text-orgf6c4065">
+<div id="outline-container-org93d4e4f" class="outline-3">
+<h3 id="org93d4e4f">Resources</h3>
+<div class="outline-text-3" id="text-org93d4e4f">
 <ul class="org-ul">
 <li><a href="https://sourceacademy.org/sicpjs/index">Structure and Interpretation of Computer Programs &#x2013; JavaScript Edition</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfd4dbf4" class="outline-3">
-<h3 id="orgfd4dbf4"><code>npm</code> for package management</h3>
-<div class="outline-text-3" id="text-orgfd4dbf4">
+<div id="outline-container-org05150cb" class="outline-3">
+<h3 id="org05150cb"><code>npm</code> for package management</h3>
+<div class="outline-text-3" id="text-org05150cb">
 <ul class="org-ul">
 <li><code>npm init</code> to initialise a project, the important file is the <code>package.json</code> that
 gets produced.</li>
@@ -382,9 +428,9 @@ There is an example below shows how to compile the typescript to javascript
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #3a81c3;">"scripts"</span>: <span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3;">"compile"</span>: <span style="color: #2d9574;">"./node_modules/typescript/bin/tsc --target es5 bibread.ts"</span>
-<span style="color: #3a81c3;">}</span>,
+<pre class="src src-json">"scripts": {
+  "compile": "./node_modules/typescript/bin/tsc --target es5 bibread.ts"
+},
 </pre>
 </div>
 
@@ -398,7 +444,7 @@ There is an example below shows how to compile the typescript to javascript
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-04-15 Fri 12:29</p>
+<p class="date">Created: 2022-06-09 Thu 12:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
