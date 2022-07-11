@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-06-07 Tue 11:50 -->
+<!-- 2022-07-11 Mon 11:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>statistics-aez-notes</title>
@@ -252,7 +252,11 @@
 <li><a href="#org0a86a90">Further reading</a></li>
 </ul>
 </li>
-<li><a href="#orgc9bd398">Machine learning notes</a></li>
+<li><a href="#orgc9bd398">Machine learning notes</a>
+<ul>
+<li><a href="#orgd0fd016">Using neural networks to solve differential equations</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -552,7 +556,7 @@ efficiently.
 </p>
 
 
-<div id="orged97369" class="figure">
+<div id="org2e116b3" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -960,11 +964,187 @@ The first rule of machine learning: Start without machine learning
 </p>
 </blockquote>
 </div>
+
+<div id="outline-container-orgd0fd016" class="outline-3">
+<h3 id="orgd0fd016">Using neural networks to solve differential equations</h3>
+<div class="outline-text-3" id="text-orgd0fd016">
+<p>
+Lagaris <i>et al</i> (1998) describe a method to solve differential equations
+numerically with neural networks. The simplest example they use is the following
+differential equation:
+</p>
+
+<p>
+\[
+\frac{d\Psi}{dx} + \left(x + \frac{1 + 3x^{2}}{1 + x + x^{3}}\right) \Psi = x^{3} + 2x+x^{2}\frac{1 +3x^{2}}{1 + x + x^{3}}
+\]
+</p>
+
+<p>
+with the initial condition that \(\Psi(0) = A\) for \(0\leq x\leq 1\). The
+solution to this equation is available in closed form:
+</p>
+
+<p>
+\[
+\Psi = \frac{e^{-x^{2} / 2}}{1 + x + x^{3}} + x^{2}.
+\]
+</p>
+
+<p>
+The trial solution proposed is
+</p>
+
+<p>
+\[
+\Psi_{t} = A + x N(x,p)
+\]
+</p>
+
+<p>
+where \(N\) is a neural network parameterised by \(p\). This trial solution
+satisfied the initial condition for all values of \(p\) which leads to an
+unconstrained optimisation problem. The loss function is
+</p>
+
+<p>
+\[
+\text{loss}(p) = \sum_{i} \left\{ \frac{d\Psi_{t}}{dx_{i}} + \left(x_{i} + \frac{1 + 3x_{i}^{2}}{1 + x_{i} + x_{i}^{3}}\right) \Psi_{t} - \left[ x_{i}^{3} + 2x_{i}+x_{i}^{2}\frac{1 +3x_{i}^{2}}{1 + x_{i} + x_{i}^{3}} \right] \right\}^{2}
+\]
+</p>
+
+<p>
+for some set of trial points \(x_{i}\). There are closed forms available for
+both the loss function and its gradient which opens the way for multiple
+optimisation routines to be applied.
+</p>
+
+<p>
+Figure <a href="#orgb0286b3">1</a> shows the result of less than a minute of training with
+gradient descent with only ten test points.
+</p>
+
+
+<div id="orgb0286b3" class="figure">
+<p><img src="./img/lagaris-1998.png" alt="lagaris-1998.png" width="900px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Replication of the first example problem from Lagaris <i>et al</i> (1998)</p>
+</div>
+
+<p>
+The script that generated the image in Figure <a href="#orgb0286b3">1</a> is shown below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(1)
+
+H = 10
+mesh_size = 10
+# We need to select some points to train the model on and some to test it on.
+# It looks like you need to have this as a mutable value if you want to compute
+# gradients.
+train_mesh = tf.Variable(np.linspace(0, 1, mesh_size), dtype=np.float64)
+test_mesh = tf.Variable(np.linspace(0.01, 0.99, mesh_size), dtype=np.float64)
+# We need to select some points to plot the resulting approximation on.
+plt_mesh = np.linspace(0, 2, 100)
+# We need to record the solution at multiple points of the training loop to
+# test that it is infact converging so something sensible.
+psi_val_stash = []
+iter_stash = []
+loss_stash = []
+vldt_stash = []
+
+@tf.function
+def psi_truth(x):
+    """Solution of the differential equation."""
+    return tf.exp(-0.5 * x**2) / (1 + x + x**3) + x**2
+
+
+class MyModel(tf.Module):
+    """This class respresents the approximation to the solution."""
+
+    def __init__(self, psi_0, num_units, **kwargs):
+	"""Construct approximate solution with a hard-coded IC."""
+	super().__init__(**kwargs)
+	self.IC_A = psi_0
+	self.w = tf.Variable(np.random.randn(num_units))
+	self.u = tf.Variable(np.random.randn(num_units))
+	self.v = tf.Variable(np.random.randn(num_units))
+
+    def __call__(self, x):
+	"""Evaluate the approximation."""
+	# matrix with one datum per row
+	l1 = tf.math.sigmoid(tf.tensordot(x, self.w, 0) + self.u)
+	# We have encoded the IC using the method from Lagaris et al (1998),
+	# although there are other formulations that are used in contemporary
+	# implementations. Attempting to use a 1-exp(-x) function to get the IC
+	# constraint did not yield any improvement.
+	l2 = self.IC_A + x * tf.tensordot(l1, self.v, 1)
+	return l2
+
+
+psi_model = MyModel(tf.constant(1.0, dtype=np.float64), H)
+
+num_iters = 2000
+learning_rate = 0.050
+x = train_mesh
+
+
+def loss_fn(psi_dash, psi, x):
+    return tf.reduce_sum((psi_trial_dash + (x + (1 + 3 * x**2) / (1 + x + x**3)) * psi_trial - (x**3 + 2 * x + x**2 * (1 + 3 * x**2) / (1 + x + x**3)))**2)
+
+
+for iter_num in range(num_iters):
+    # The gradient evaluations need to be within to the loop for TF to
+    # understand how they work.
+    with tf.GradientTape() as t2:
+	with tf.GradientTape() as t1:
+	    psi_trial = psi_model(x)
+	psi_trial_dash = t1.gradient(psi_trial, x)
+	# The loss function needs to know the differential equation.
+	loss = loss_fn(psi_trial_dash, psi_trial, x)
+	vldt_val = loss_fn(psi_trial_dash, psi_trial, test_mesh)
+    loss_w_dash, loss_u_dash, loss_v_dash = t2.gradient(loss, [psi_model.w, psi_model.u, psi_model.v])
+    psi_val_stash.append(psi_model(plt_mesh).numpy())
+    psi_model.w.assign_sub(learning_rate * loss_w_dash)
+    psi_model.u.assign_sub(learning_rate * loss_u_dash)
+    psi_model.v.assign_sub(learning_rate * loss_v_dash)
+    if iter_num % 10 == 0:
+	iter_stash.append(iter_num)
+	loss_stash.append(loss.numpy())
+	vldt_stash.append(vldt_val.numpy())
+	print("iteration: {i}\tloss: {l}\tlearning rate: {r}".format(i=iter_num, l=loss.numpy(), r=learning_rate))
+    if iter_num % 1000 == 0 and iter_num &gt; 0:
+	learning_rate /= 1.5
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+axs[0].plot(plt_mesh, psi_truth(plt_mesh), label="True solution")
+for ix in range(1, num_iters, num_iters // 3):
+    axs[0].plot(plt_mesh, psi_val_stash[ix], label="Iteration {n}".format(n=ix+1))
+axs[0].scatter(train_mesh, psi_truth(train_mesh), label="Training data")
+axs[0].legend(loc="upper left")
+axs[0].set_title("Approximate solutions of ODE")
+
+axs[1].plot(iter_stash, loss_stash, label="Training")
+axs[1].plot(iter_stash, vldt_stash, label="Validation")
+axs[1].set_title("Loss functions")
+axs[1].set_xlabel("Iteration")
+axs[1].legend(loc="upper right")
+# fig.show()
+fig.savefig("out/lagaris-1998.png", dpi=300)
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-06-07 Tue 11:50</p>
+<p class="date">Created: 2022-07-11 Mon 11:35</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
