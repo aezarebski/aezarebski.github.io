@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-06-16 Thu 18:00 -->
+<!-- 2022-07-06 Wed 12:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -199,7 +199,7 @@
 <div id="content" class="content">
 <h1 class="title">NICEMACS</h1>
 
-<div id="org627135b" class="figure">
+<div id="org96794d7" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -208,9 +208,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orga3cda2d">Build you an Emacs</a>
+<li><a href="#orgdad6b85">Vanilla Emacs</a>
 <ul>
+<li><a href="#orga3cda2d">Build you an Emacs</a></li>
 <li><a href="#orgd8bdceb">Running you an Emacs</a></li>
+<li><a href="#org7ae10f9">Recording keyboard macros</a></li>
+<li><a href="#org1bb556e">Jargon</a></li>
 <li><a href="#org808177e">Getting HELP</a></li>
 </ul>
 </li>
@@ -230,11 +233,12 @@
 <li><a href="#org2408ede">Miscellaneous configuration for writing</a></li>
 <li><a href="#orgd6f34a2">Spelling and Dictionaries</a></li>
 <li><a href="#orgffecc1d">Latex and Bibtex</a></li>
-<li><a href="#orge095879">Org-mode</a></li>
+<li><a href="#org8d02fb0">Org-mode</a></li>
 <li><a href="#orgfb78df9">Shells and REPLs</a></li>
 <li><a href="#org9c2de93">Monitoring processes</a></li>
 <li><a href="#orgc4dd86b">Emacs Speaks Statistics (ESS)</a></li>
 <li><a href="#org46a8adc">Version control via magit</a></li>
+<li><a href="#orgd0dd1b5">Spray</a></li>
 <li><a href="#org7fc1083"><span class="todo TODO">TODO</span> File and buffer manipulation</a></li>
 <li><a href="#org6092667">Unicode and Greek letters</a></li>
 <li><a href="#org74f7725"><span class="todo TODO">TODO</span> XML editing</a></li>
@@ -245,9 +249,13 @@
 </div>
 </div>
 
-<div id="outline-container-orga3cda2d" class="outline-2">
-<h2 id="orga3cda2d">Build you an Emacs</h2>
-<div class="outline-text-2" id="text-orga3cda2d">
+<div id="outline-container-orgdad6b85" class="outline-2">
+<h2 id="orgdad6b85">Vanilla Emacs</h2>
+<div class="outline-text-2" id="text-orgdad6b85">
+</div>
+<div id="outline-container-orga3cda2d" class="outline-3">
+<h3 id="orga3cda2d">Build you an Emacs</h3>
+<div class="outline-text-3" id="text-orga3cda2d">
 <p>
 Get the source code from <a href="http://git.savannah.gnu.org/cgit/emacs.git/">here</a> with
 </p>
@@ -289,6 +297,7 @@ to be an up to date version anyway.</li>
 </ul>
 </div>
 </div>
+</div>
 
 <div id="outline-container-orgd8bdceb" class="outline-3">
 <h3 id="orgd8bdceb">Running you an Emacs</h3>
@@ -298,7 +307,7 @@ The following command demonstrates how to run emacs as a daemon in the
 foreground (use <code>--daemon</code> to run it in the background)
 </p>
 
-<pre class="example" id="org73c7900">
+<pre class="example" id="org5f48be4">
 emacs --fg-daemon
 </pre>
 
@@ -306,9 +315,35 @@ emacs --fg-daemon
 Then to create a new frame (or visit a file)
 </p>
 
-<pre class="example" id="orga59dfd3">
+<pre class="example" id="orgd7fe9c3">
 emacsclient --no-wait --create-frame
 </pre>
+</div>
+</div>
+
+<div id="outline-container-org7ae10f9" class="outline-3">
+<h3 id="org7ae10f9">Recording keyboard macros</h3>
+<div class="outline-text-3" id="text-org7ae10f9">
+<ol class="org-ol">
+<li>Start recording with <code>C-x (</code> (which calls <code>kmacro-start-macro</code>).</li>
+<li>Stop recording with <code>C-x )</code> (which calls <code>kmacro-end-macro</code>).</li>
+<li>Execute the recording with <code>C-x e</code> (which calls <code>kmacro-end-and-call-macro</code>).</li>
+</ol>
+
+<p>
+If you want to save a macro for later use, you can get a emacs-lisp definition
+of it with <code>insert-kbd-macro</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1bb556e" class="outline-3">
+<h3 id="org1bb556e">Jargon</h3>
+<div class="outline-text-3" id="text-org1bb556e">
+<p>
+There is a <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Glossary.html">glossary</a> in the manuals, the nodes are <code>Emacs &gt; Glossary</code>. The regex
+search entered with <code>s</code> is very useful here.
+</p>
 </div>
 </div>
 
@@ -323,7 +358,34 @@ There are a couple of help menus that are useful to be able to access easily:
 <li><i>GNU Emacs NEWS</i> can be summoned with <code>view-emacs-news</code>.</li>
 <li><i>Spacemacs documentation</i> can be summoned with <code>helm-spacemacs-help-docs</code>.</li>
 <li><i>GNU Emacs Manual</i> can be summoned with <code>info-display-manual</code>.</li>
+<li><i>Emacs Lisp Intro</i> has a section on debugging.</li>
 </ul>
+
+<p>
+Running the <code>info</code> function will load the manuals. Although, <code>C-h i</code> brings you
+there much quicker. To start with you are in vim keybindings so can move around
+with <code>hjkl</code>, but apart from that you'll want to jump to emacs keybindings so you
+can use <code>dubnpmlrsf[]&lt;SPC&gt;</code> for greater flexibility navigation.
+</p>
+</div>
+
+<div id="outline-container-orga795a51" class="outline-4">
+<h4 id="orga795a51">Info navigation</h4>
+<div class="outline-text-4" id="text-orga795a51">
+<ul class="org-ul">
+<li><code>n</code> next node</li>
+<li><code>p</code> previous node</li>
+<li><code>[</code> and <code>]</code> are for up and down levels of nodes</li>
+<li><code>b</code> to go to the start of a node</li>
+<li><code>SPC</code> to go to the end o a node</li>
+<li><code>l</code> last node before this one</li>
+<li><code>s</code> search with a regex</li>
+<li><code>f</code> find a node linked from here</li>
+<li><code>m</code> is a menu of linked nodes</li>
+<li><code>u</code> up a level of nodes</li>
+<li><code>d</code> go to the root node</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -609,6 +671,43 @@ icons displayed, the following can be used.
 <pre class="src src-emacs-lisp">(setq dotspacemacs-startup-buffer-show-icons nil)
 </pre>
 </div>
+
+<p>
+To put your own image on the splash screen you need to modify
+<code>dotspacemacs/init</code>, specifically you need to set the variable
+<code>dotspacemacs-startup=banner</code> to be a string of the full path to the desired
+PNG. A sensible place to put the image is <code>~/.emacs.d/core/banners/img</code>. You can
+reduce the size of PNG to get a better fit with the following command.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">convert -resize 50% foo.png bar.png
+</pre>
+</div>
+
+<p>
+This is a banner that I like.
+</p>
+
+<pre class="example">
+Welcome to
+███████╗███╗   ███╗ █████╗  ██████╗███████╗
+██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝
+█████╗  ██╔████╔██║███████║██║     ███████╗
+██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║
+███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║
+╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga2094f1" class="outline-4">
+<h4 id="orga2094f1">Default colour schemes</h4>
+<div class="outline-text-4" id="text-orga2094f1">
+<p>
+The hexcodes for the default colour schemes used by Spacemacs can be found in
+<code>spacemacs/core/libs/spacemacs-theme/spacemacs-common.el</code>
+</p>
 </div>
 </div>
 
@@ -1070,9 +1169,9 @@ we have the following configuration
 </div>
 </div>
 
-<div id="outline-container-orga4491e2" class="outline-4">
-<h4 id="orga4491e2">Miscellaneous</h4>
-<div class="outline-text-4" id="text-orga4491e2">
+<div id="outline-container-org7bb98aa" class="outline-4">
+<h4 id="org7bb98aa">Miscellaneous</h4>
+<div class="outline-text-4" id="text-org7bb98aa">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(spacemacs/set-leader-keys "obl" 'last-bib)
 (spacemacs/set-leader-keys "obf" 'bibtex-reformat)
@@ -1084,9 +1183,9 @@ we have the following configuration
 </div>
 </div>
 
-<div id="outline-container-orge095879" class="outline-3">
-<h3 id="orge095879">Org-mode</h3>
-<div class="outline-text-3" id="text-orge095879">
+<div id="outline-container-org8d02fb0" class="outline-3">
+<h3 id="org8d02fb0">Org-mode</h3>
+<div class="outline-text-3" id="text-org8d02fb0">
 <p>
 Bindings for org-mode functionality start with <code>o o</code> for "owner org".
 </p>
@@ -1493,9 +1592,9 @@ setting <code>org-adapt-indentation</code> to <code>nil</code>.
 </ul>
 </div>
 
-<div id="outline-container-org7bb98aa" class="outline-4">
-<h4 id="org7bb98aa">Miscellaneous</h4>
-<div class="outline-text-4" id="text-org7bb98aa">
+<div id="outline-container-org16a44f2" class="outline-4">
+<h4 id="org16a44f2">Miscellaneous</h4>
+<div class="outline-text-4" id="text-org16a44f2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">;; open the export menu
 (spacemacs/set-leader-keys "ooe" 'org-export-dispatch)
@@ -1725,9 +1824,9 @@ a binding to open <code>ielm</code>.
 </div>
 </div>
 
-<div id="outline-container-org970f49a" class="outline-4">
-<h4 id="org970f49a">R</h4>
-<div class="outline-text-4" id="text-org970f49a">
+<div id="outline-container-org8379f89" class="outline-4">
+<h4 id="org8379f89">R</h4>
+<div class="outline-text-4" id="text-org8379f89">
 <p>
 Sometimes you just need an R REPL!
 </p>
@@ -1954,6 +2053,68 @@ And some useful examples should be bound to shortcuts.
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgd0dd1b5" class="outline-3">
+<h3 id="orgd0dd1b5">Spray</h3>
+<div class="outline-text-3" id="text-orgd0dd1b5">
+<p>
+Speed reader for emacs.
+Enable this by adding <code>speed-reading</code> to your configuration.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Keys</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>SPC a R</code></td>
+<td class="org-left">Start spray</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC</code></td>
+<td class="org-left">Pause</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>f</code></td>
+<td class="org-left">faster</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s</code></td>
+<td class="org-left">slower</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>h</code></td>
+<td class="org-left">back (vim left)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>l</code></td>
+<td class="org-left">forward (vim right)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>q</code></td>
+<td class="org-left">quit</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -2492,9 +2653,9 @@ easier just to call <code>yas-insert-snippet</code> directly when editing JSON.
 </div>
 </div>
 
-<div id="outline-container-org8d02fb0" class="outline-4">
-<h4 id="org8d02fb0">Org-mode</h4>
-<div class="outline-text-4" id="text-org8d02fb0">
+<div id="outline-container-orgaa2e90a" class="outline-4">
+<h4 id="orgaa2e90a">Org-mode</h4>
+<div class="outline-text-4" id="text-orgaa2e90a">
 <p>
 I have had trouble getting my own org-mode snippets to play well with the
 default ones in the past. The solution I arrived at was to just copy all of the
@@ -2548,9 +2709,9 @@ import matplotlib.pyplot as plt
 </div>
 </div>
 
-<div id="outline-container-org8379f89" class="outline-4">
-<h4 id="org8379f89">R</h4>
-<div class="outline-text-4" id="text-org8379f89">
+<div id="outline-container-orgf6b34d5" class="outline-4">
+<h4 id="orgf6b34d5">R</h4>
+<div class="outline-text-4" id="text-orgf6b34d5">
 <p>
 The R snippets can be roughly devided into those that provide useful <a href="#org3afc58c">Useful package collections</a> and those that provide <a href="#org6c53911">Useful programming snippets</a>.
 </p>
@@ -2830,7 +2991,7 @@ You can use a <code>.jsbeautifyrc</code> file to configure the formatting.
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-06-16 Thu 18:00</p>
+<p class="date">Created: 2022-07-06 Wed 12:34</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
