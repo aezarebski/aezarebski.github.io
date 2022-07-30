@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-25 Mon 10:06 -->
+<!-- 2022-07-30 Sat 14:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>beast2-aez-notes</title>
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -191,7 +191,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
+  .org-svg { }
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 <script type="text/x-mathjax-config">
@@ -224,7 +224,7 @@
 </p>
 
 
-<div id="orgb440f0f" class="figure">
+<div id="org188c601" class="figure">
 <p><img src="../images/beast2-logo.png" alt="beast2-logo.png" width="250px" />
 </p>
 </div>
@@ -233,45 +233,44 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org400303b">Links</a></li>
-<li><a href="#org71402d0">Notes</a>
+<li><a href="#org08d6e41">Links</a></li>
+<li><a href="#orgfef031f">Notes</a>
 <ul>
-<li><a href="#orgaaafcc6">Build a BEAST2</a></li>
-<li><a href="#org8526999"><span class="todo TODO">TODO</span> Understanding Packages</a></li>
-<li><a href="#orgc29e0be">Understanding BEAST2</a></li>
-<li><a href="#org4d0ccc8">Understanding the XML</a></li>
-<li><a href="#orgd866461">Understanding <code>bdsky</code></a></li>
+<li><a href="#orga1f78ff">Build a BEAST2</a></li>
+<li><a href="#org2ea7207"><span class="todo TODO">TODO</span> Understanding Packages</a></li>
+<li><a href="#org6ca4b11">Understanding BEAST2</a></li>
+<li><a href="#orgac3f3de">Understanding the XML</a></li>
 </ul>
 </li>
-<li><a href="#orgd833c21">Packages</a></li>
-<li><a href="#orgbac7027">Simulating data</a>
+<li><a href="#orgb108187">Packages</a></li>
+<li><a href="#org9164c0b">Simulating data</a>
 <ul>
-<li><a href="#org8193c64">MASTER</a></li>
+<li><a href="#org3e98a11">MASTER</a></li>
 </ul>
 </li>
-<li><a href="#org9ef4138">Tools and useful R functions</a>
+<li><a href="#orgc3cbade">Tools and useful R functions</a>
 <ul>
-<li><a href="#orgc4baf73">Web beautify</a></li>
-<li><a href="#org1e97459">Read BEAST2 log file</a></li>
-<li><a href="#org4910f4c">Pretty printing Tracer output</a></li>
+<li><a href="#org90d6fc1">Web beautify</a></li>
+<li><a href="#org03ec907">Read BEAST2 log file</a></li>
+<li><a href="#org201634f">Pretty printing Tracer output</a></li>
 </ul>
 </li>
-<li><a href="#orgbf86600">Examples</a>
+<li><a href="#orgbb219a4">Examples</a>
 <ul>
-<li><a href="#orgc18e4a5">BEAST2 as an MCMC engine: part I</a></li>
-<li><a href="#orgdcc938c">BEAST2 as an MCMC engine: part II</a></li>
-<li><a href="#org2ce02e1">Birth-death simulation: Example I</a></li>
-<li><a href="#org45be3f3">Birth-death simulation: Example II</a></li>
-<li><a href="#org69f109d">Simulating sequences</a></li>
+<li><a href="#orgd2f1228">BEAST2 as an MCMC engine: part I</a></li>
+<li><a href="#orgeb6885b">BEAST2 as an MCMC engine: part II</a></li>
+<li><a href="#org02bca49">Birth-death simulation: Example I</a></li>
+<li><a href="#org1999e42">Birth-death simulation: Example II</a></li>
+<li><a href="#org8fc844a">Simulating sequences</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org400303b" class="outline-2">
-<h2 id="org400303b">Links</h2>
-<div class="outline-text-2" id="text-org400303b">
+<div id="outline-container-org08d6e41" class="outline-2">
+<h2 id="org08d6e41">Links</h2>
+<div class="outline-text-2" id="text-org08d6e41">
 <ul class="org-ul">
 <li><a href="https://linguaphylo.github.io/about/">LinguaPhylo</a> is a scripting language that can be transpiled to BEAST2 XML</li>
 <li><a href="https://www.beast2.org/xml/index.html">BEAST2 Documentation</a> for "the user who wants to edit BEAST2 XML manually."</li>
@@ -285,13 +284,13 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 </div>
 </div>
 
-<div id="outline-container-org71402d0" class="outline-2">
-<h2 id="org71402d0">Notes</h2>
-<div class="outline-text-2" id="text-org71402d0">
+<div id="outline-container-orgfef031f" class="outline-2">
+<h2 id="orgfef031f">Notes</h2>
+<div class="outline-text-2" id="text-orgfef031f">
 </div>
-<div id="outline-container-orgaaafcc6" class="outline-3">
-<h3 id="orgaaafcc6">Build a BEAST2</h3>
-<div class="outline-text-3" id="text-orgaaafcc6">
+<div id="outline-container-orga1f78ff" class="outline-3">
+<h3 id="orga1f78ff">Build a BEAST2</h3>
+<div class="outline-text-3" id="text-orga1f78ff">
 <ol class="org-ol">
 <li>Clone the BEAST2 repository.
 <ul class="org-ul">
@@ -315,9 +314,9 @@ packages are stored at.
 </p>
 </div>
 
-<div id="outline-container-org5566b34" class="outline-4">
-<h4 id="org5566b34">Notes</h4>
-<div class="outline-text-4" id="text-org5566b34">
+<div id="outline-container-orgf0709be" class="outline-4">
+<h4 id="orgf0709be">Notes</h4>
+<div class="outline-text-4" id="text-orgf0709be">
 <ul class="org-ul">
 <li><code>v2.6.7</code>:</li>
 </ul>
@@ -325,9 +324,9 @@ packages are stored at.
 </div>
 </div>
 
-<div id="outline-container-org8526999" class="outline-3">
-<h3 id="org8526999"><span class="todo TODO">TODO</span> Understanding Packages</h3>
-<div class="outline-text-3" id="text-org8526999">
+<div id="outline-container-org2ea7207" class="outline-3">
+<h3 id="org2ea7207"><span class="todo TODO">TODO</span> Understanding Packages</h3>
+<div class="outline-text-3" id="text-org2ea7207">
 <p>
 Bouckaert has a <a href="https://www.beast2.org/2021/06/21/building-from-source.html">blog post</a> about building package from source from mid-2021. The
 following line from the Babel <code>build.xml</code> (which is the example package used in
@@ -335,7 +334,7 @@ the blog post)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;property name="beast2path" location="../beast2" /&gt;
+<pre class="src src-xml">&lt;<span style="color: #6c3163; font-weight: bold;">property</span> <span style="color: #715ab1;">name</span>=<span style="color: #2d9574;">"beast2path"</span> <span style="color: #715ab1;">location</span>=<span style="color: #2d9574;">"../beast2"</span> /&gt;
 </pre>
 </div>
 
@@ -345,9 +344,9 @@ packages during compilation.
 </p>
 </div>
 
-<div id="outline-container-orgc466019" class="outline-4">
-<h4 id="orgc466019"><span class="todo TODO">TODO</span> Configuring IntelliJ for writing a package</h4>
-<div class="outline-text-4" id="text-orgc466019">
+<div id="outline-container-org0616a0f" class="outline-4">
+<h4 id="org0616a0f"><span class="todo TODO">TODO</span> Configuring IntelliJ for writing a package</h4>
+<div class="outline-text-4" id="text-org0616a0f">
 <p>
 I have no idea if this is the correct way that BEAST2 packages should be set up,
 but this has worked for me in the past, and provided there are a sufficient
@@ -369,10 +368,12 @@ need to add JAR files in the same way.</li>
 </div>
 </div>
 
-<div id="outline-container-orgc29e0be" class="outline-3">
-<h3 id="orgc29e0be">Understanding BEAST2</h3>
-<div class="outline-text-3" id="text-orgc29e0be">
+<div id="outline-container-org6ca4b11" class="outline-3">
+<h3 id="org6ca4b11">Understanding BEAST2</h3>
+<div class="outline-text-3" id="text-org6ca4b11">
 <ul class="org-ul">
+<li>A class diagram showing the relationship between the various classes that are
+relevant to tree priors are shown in Figure <a href="#org0980e7e">2</a>.</li>
 <li>The <code>BEASTInterface</code> is an interface which all BEAST-objects must implement, the
 <code>BEASTObject</code> class implements that interface and most objects we care about
 will derive from <code>BEASTObject</code>.</li>
@@ -380,6 +381,8 @@ will derive from <code>BEASTObject</code>.</li>
 is a random variable. State nodes can be changed by operators.</li>
 <li>The <code>CalculationNode</code> is akin to the <i>deterministic</i> node of H\"{o}hna <i>et al</i>
 (2014), ie it is a deterministic function of its input.</li>
+<li>See Figure <a href="#orgb63cafb">1</a> which is helpful for understanding where
+state and calculations nodes sit in this formulation.</li>
 <li>The <code>TreeDistribution</code> (which extends the <code>Distribution</code> abstract class) is the
 foundation for both the classes deriving from <code>SpeciesTreeDistribution</code> (which
 are the birth-death models) and various coalescent models.</li>
@@ -387,19 +390,241 @@ are the birth-death models) and various coalescent models.</li>
 <li><code>Operator</code> s are used to change the value of <code>StateNode</code> (of which <code>RealParameter</code>
 is an example).</li>
 </ul>
+
+
+<div id="orgb63cafb" class="figure">
+<p><img src="../images/drummond2015bayesian-state-and-calc-nodes.png" alt="drummond2015bayesian-state-and-calc-nodes.png" width="900px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Figure from Drummond and Bouckaert (2015).</p>
+</div>
+
+
+<div id="org0980e7e" class="figure">
+<p><img src="../resources/beast2p6p6-class-diagram.png" alt="beast2p6p6-class-diagram.png" width="900px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Class diagram relating to tree priors in BEAST2</p>
 </div>
 </div>
 
-<div id="outline-container-org4d0ccc8" class="outline-3">
-<h3 id="org4d0ccc8">Understanding the XML</h3>
-<div class="outline-text-3" id="text-org4d0ccc8">
+<div id="outline-container-orge911bd7" class="outline-4">
+<h4 id="orge911bd7">Packages provided by BEAST2</h4>
+<div class="outline-text-4" id="text-orge911bd7">
+</div>
+<div id="outline-container-org09b3df8" class="outline-5">
+<h5 id="org09b3df8">Inference</h5>
+<div class="outline-text-5" id="text-org09b3df8">
+<p>
+The <code>beast.inference.distribution</code> package (which previously was part of either
+the <code>beast.core</code> or <code>beast.math</code> packages) contains the classes from the <a href="https://commons.apache.org/proper/commons-math/">Apache
+Commons Mathematics Library</a>, (it appears to use version 2.x). Since the
+triangular distribution was not added until 3.0 it is not part of BEAST2.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf413a20" class="outline-4">
+<h4 id="orgf413a20">Understanding <code>bdsky</code></h4>
+<div class="outline-text-4" id="text-orgf413a20">
+<p>
+To understand the implementation of time varying parameters see the following:
+</p>
+
+<ul class="org-ul">
+<li><a href="#orgd116020">Skyline (interface)</a></li>
+<li><a href="#orgb92c36c">SkylineSegement (class)</a></li>
+<li><a href="#orga8d7935">SimpleSkyline (class)</a></li>
+<li><a href="#org8945e37">MultiSkyline (class)</a></li>
+</ul>
+
+<p>
+To understand how this implements the BDSky model see the following:
+</p>
+
+<ul class="org-ul">
+<li><a href="#orgce37662">BDSSkylineSegment (class)</a></li>
+<li><a href="#org4fdccc2">BDSParameterization (abstract class)</a></li>
+<li><a href="#org9c2489d">CanonicalParameterization (class)</a></li>
+<li><a href="#org3d38579">R0Parameterization (class)</a></li>
+</ul>
+
+<p>
+which all culminates in <a href="#org0884e56">ParameterizedBirthDeathSkylineModel (class)</a> which is the
+class that actually does the main calculation.
+</p>
+</div>
+
+<div id="outline-container-orgd116020" class="outline-5">
+<h5 id="orgd116020">Skyline (interface)</h5>
+<div class="outline-text-5" id="text-orgd116020">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">interface</span> <span style="color: #ba2f59; font-weight: bold;">Skyline</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/master/src/bdsky/Skyline.java"><code>Skyline</code></a> is an <i>interface</i> provided by the <code>bdsky</code> package
+</p>
+
+<ul class="org-ul">
+<li>This represents a multivariate right continuous function on a domain
+\([a,\infty)\).</li>
+<li>The interface requires the methods <code>getSegments</code>, <code>getValue</code>, <code>getValues</code>, <code>getTimes</code>
+and <code>getDimension</code>.</li>
+<li>Things that implement <code>Skyline</code> look like lists of</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb92c36c" class="outline-5">
+<h5 id="orgb92c36c">SkylineSegment (class)</h5>
+<div class="outline-text-5" id="text-orgb92c36c">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">SkylineSegment</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/master/src/bdsky/SkylineSegment.java"><code>SkylineSegment</code></a> is a <i>class</i> provided by the <code>bdsky</code> package
+</p>
+
+<ul class="org-ul">
+<li>This represents an interval of time, \([a,b)\), and a vector of values
+assigned to that time.</li>
+<li>There are methods <code>start</code> and <code>end</code> to get the start, \(a\), and end, \(b\) times
+of the interval.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga8d7935" class="outline-5">
+<h5 id="orga8d7935">SimpleSkyline (class)</h5>
+<div class="outline-text-5" id="text-orga8d7935">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">SimpleSkyline</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">CalculationNode</span> <span style="color: #3a81c3;">implements</span> <span style="color: #ba2f59; font-weight: bold;">Skyline</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/master/src/bdsky/SimpleSkyline.java"><code>SimpleSkyline</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which represents a
+piece-wise constant function (with a one dimensional range).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8945e37" class="outline-5">
+<h5 id="org8945e37">MultiSkyline (class)</h5>
+<div class="outline-text-5" id="text-org8945e37">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">MultiSkyline</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">CalculationNode</span> <span style="color: #3a81c3;">implements</span> <span style="color: #ba2f59; font-weight: bold;">Skyline</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/MultiSkyline.java"><code>MultiSkyline</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which is really just a
+wrapper around a list of <a href="#orga8d7935">=SimpleSkyline=s</a>, which takes care of splitting up time
+into the required number of segments.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgce37662" class="outline-5">
+<h5 id="orgce37662">BDSSkylineSegment (class)</h5>
+<div class="outline-text-5" id="text-orgce37662">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">BDSSkylineSegment</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">SkylineSegment</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/BDSSkylineSegment.java#L6"><code>BDSSkylineSegment</code></a> is a class that wraps the <code>SkylineSegment</code> and specialises it
+for use as the parameterisation of the BDS model. Both the
+<code>CanonicalParameterization</code> and the <code>R0Parameterization</code> make use of this class,
+constructing their skyline segments with it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4fdccc2" class="outline-5">
+<h5 id="org4fdccc2">BDSParameterization (abstract class)</h5>
+<div class="outline-text-5" id="text-org4fdccc2">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">abstract</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">BDSParameterization</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">CalculationNode</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/BDSParameterization.java"><code>BDSParameterization</code></a> is an <i>abstract class</i> provided by the <code>bdsky</code> package which
+provides a template for writing classes which provide novel parameterisations of
+the model. The <code>CanonicalParamterization</code> and <code>R0Parameterization</code> are two classes
+that inherit from this.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9c2489d" class="outline-5">
+<h5 id="org9c2489d">CanonicalParameterization (class)</h5>
+<div class="outline-text-5" id="text-org9c2489d">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">CanonicalParameterization</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">BDSParameterization</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/CanonicalParameterization.java"><code>CanonicalParameterization</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which
+extends (ie inherits from) the <code>BDSParameterization</code> abstract class and represents
+the parameterisation in terms of the birth rate, death rate, sampling rate, and
+removal probability (which is important for sampled ancestors).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d38579" class="outline-5">
+<h5 id="org3d38579">R0Parameterization (class)</h5>
+<div class="outline-text-5" id="text-org3d38579">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">R0Parameterization</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">BDSParameterization</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/R0Parameterization.java"><code>R0Parameterization</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which extends (ie
+inherits from) the <code>BDSParameterization</code> abstract class and represents the
+parameterisation in terms of the reproductive number, total becoming
+uninfectious rate, the sampling proportion and the removal probability upon
+sampling.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0884e56" class="outline-5">
+<h5 id="org0884e56">ParameterizedBirthDeathSkylineModel (class)</h5>
+<div class="outline-text-5" id="text-org0884e56">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">ParameterizedBirthDeathSkylineModel</span> <span style="color: #3a81c3;">extends</span> <span style="color: #ba2f59; font-weight: bold;">SpeciesTreeDistribution</span> <span style="color: #3a81c3;">{</span> <span style="color: #3a81c3;">}</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/ParameterizedBirthDeathSkylineModel.java"><code>ParameterizedBirthDeathSkylineModel</code></a> is a <i>class</i> provided by the <code>bdsky</code> package
+which does the actual calculation, ie it has a <code>calculateTreeLogLikelihood</code>
+method.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac3f3de" class="outline-3">
+<h3 id="orgac3f3de">Understanding the XML</h3>
+<div class="outline-text-3" id="text-orgac3f3de">
 <p>
 Chapter 13 of (, ) focuses on how BEAST uses XML to
 specify a computation.
 </p>
 
 <ul class="org-ul">
-<li>There are some reserved attributes (<a href="#org5444dc0">this table</a>) and element names (<a href="#orgd9fbcd9">this table</a>)
+<li>There are some reserved attributes (<a href="#org6e74944">this table</a>) and element names (<a href="#orgee71189">this table</a>)
 that BEAST attributes special meaning to.</li>
 <li>The <code>namespace</code> attribute of the <code>beast</code> element specifies where classes are
 looked for. The comma-separated list is searched in order, but you can use the
@@ -407,7 +632,7 @@ full name in cases where there could be a name-clash.</li>
 <li>The <code>input</code> can be replaced with the <code>name</code> to simplify the specification.</li>
 </ul>
 
-<table id="org5444dc0" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="org6e74944" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 1:</span> Reserved attributes</caption>
 
 <colgroup>
@@ -444,7 +669,7 @@ full name in cases where there could be a name-clash.</li>
 </tbody>
 </table>
 
-<table id="orgd9fbcd9" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgee71189" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 2:</span> Reserved tags</caption>
 
 <colgroup>
@@ -522,17 +747,17 @@ full name in cases where there could be a name-clash.</li>
 </table>
 </div>
 
-<div id="outline-container-org5484b3d" class="outline-4">
-<h4 id="org5484b3d">The plate macro</h4>
-<div class="outline-text-4" id="text-org5484b3d">
+<div id="outline-container-orga5c8b43" class="outline-4">
+<h4 id="orga5c8b43">The plate macro</h4>
+<div class="outline-text-4" id="text-orga5c8b43">
 <p>
 The XML
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;plate var="n" range="v1,v2,v3" &gt;
-    &lt;parameter id="value.$(n)" a="foo" b="$(n)" /&gt;
-&lt;/plate&gt;
+<pre class="src src-xml">&lt;<span style="color: #6c3163; font-weight: bold;">plate</span> <span style="color: #715ab1;">var</span>=<span style="color: #2d9574;">"n"</span> <span style="color: #715ab1;">range</span>=<span style="color: #2d9574;">"v1,v2,v3"</span> &gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"value.$(n)"</span> <span style="color: #715ab1;">a</span>=<span style="color: #2d9574;">"foo"</span> <span style="color: #715ab1;">b</span>=<span style="color: #2d9574;">"$(n)"</span> /&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">plate</span>&gt;
 </pre>
 </div>
 
@@ -541,210 +766,28 @@ becomes
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;parameter id="value.v1" a="foo" b="v1" /&gt;
-&lt;parameter id="value.v2" a="foo" b="v2" /&gt;
-&lt;parameter id="value.v3" a="foo" b="v3" /&gt;
+<pre class="src src-xml">&lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"value.v1"</span> <span style="color: #715ab1;">a</span>=<span style="color: #2d9574;">"foo"</span> <span style="color: #715ab1;">b</span>=<span style="color: #2d9574;">"v1"</span> /&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"value.v2"</span> <span style="color: #715ab1;">a</span>=<span style="color: #2d9574;">"foo"</span> <span style="color: #715ab1;">b</span>=<span style="color: #2d9574;">"v2"</span> /&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"value.v3"</span> <span style="color: #715ab1;">a</span>=<span style="color: #2d9574;">"foo"</span> <span style="color: #715ab1;">b</span>=<span style="color: #2d9574;">"v3"</span> /&gt;
 </pre>
 </div>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgd866461" class="outline-3">
-<h3 id="orgd866461">Understanding <code>bdsky</code></h3>
-<div class="outline-text-3" id="text-orgd866461">
+<div id="outline-container-orgb108187" class="outline-2">
+<h2 id="orgb108187">Packages</h2>
+<div class="outline-text-2" id="text-orgb108187">
 <p>
-To understand the implementation of time varying parameters see the following:
-</p>
-
-<ul class="org-ul">
-<li><a href="#orgc9a82aa">Skyline (interface)</a></li>
-<li><a href="#orgffaed93">SkylineSegement (class)</a></li>
-<li><a href="#org29a1656">SimpleSkyline (class)</a></li>
-<li><a href="#org3fd2761">MultiSkyline (class)</a></li>
-</ul>
-
-<p>
-To understand how this implements the BDSky model see the following:
-</p>
-
-<ul class="org-ul">
-<li><a href="#org2a4c01d">BDSSkylineSegment (class)</a></li>
-<li><a href="#org1a03ed7">BDSParameterization (abstract class)</a></li>
-<li><a href="#org9885ef0">CanonicalParameterization (class)</a></li>
-<li><a href="#orge79f908">R0Parameterization (class)</a></li>
-</ul>
-
-<p>
-which all culminates in <a href="#org8a20cbe">ParameterizedBirthDeathSkylineModel (class)</a> which is the
-class that actually does the main calculation.
+I have some notes on configuring IntelliJ for package development <a href="../misc/beast2/package-development-intellij.html">here</a>. There
+are notes on Java and IntelliJ <a href="./java-notes.html">here</a>.
 </p>
 </div>
 
-<div id="outline-container-orgc9a82aa" class="outline-4">
-<h4 id="orgc9a82aa">Skyline (interface)</h4>
-<div class="outline-text-4" id="text-orgc9a82aa">
-<div class="org-src-container">
-<pre class="src src-java">public interface Skyline { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/master/src/bdsky/Skyline.java"><code>Skyline</code></a> is an <i>interface</i> provided by the <code>bdsky</code> package
-</p>
-
-<ul class="org-ul">
-<li>This represents a multivariate right continuous function on a domain
-\([a,\infty)\).</li>
-<li>The interface requires the methods <code>getSegments</code>, <code>getValue</code>, <code>getValues</code>, <code>getTimes</code>
-and <code>getDimension</code>.</li>
-<li>Things that implement <code>Skyline</code> look like lists of</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgffaed93" class="outline-4">
-<h4 id="orgffaed93">SkylineSegment (class)</h4>
-<div class="outline-text-4" id="text-orgffaed93">
-<div class="org-src-container">
-<pre class="src src-java">public class SkylineSegment { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/master/src/bdsky/SkylineSegment.java"><code>SkylineSegment</code></a> is a <i>class</i> provided by the <code>bdsky</code> package
-</p>
-
-<ul class="org-ul">
-<li>This represents an interval of time, \([a,b)\), and a vector of values
-assigned to that time.</li>
-<li>There are methods <code>start</code> and <code>end</code> to get the start, \(a\), and end, \(b\) times
-of the interval.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org29a1656" class="outline-4">
-<h4 id="org29a1656">SimpleSkyline (class)</h4>
-<div class="outline-text-4" id="text-org29a1656">
-<div class="org-src-container">
-<pre class="src src-java">public class SimpleSkyline extends CalculationNode implements Skyline { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/master/src/bdsky/SimpleSkyline.java"><code>SimpleSkyline</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which represents a
-piece-wise constant function (with a one dimensional range).
-</p>
-</div>
-</div>
-
-<div id="outline-container-org3fd2761" class="outline-4">
-<h4 id="org3fd2761">MultiSkyline (class)</h4>
-<div class="outline-text-4" id="text-org3fd2761">
-<div class="org-src-container">
-<pre class="src src-java">public class MultiSkyline extends CalculationNode implements Skyline { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/MultiSkyline.java"><code>MultiSkyline</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which is really just a
-wrapper around a list of <a href="#org29a1656">=SimpleSkyline=s</a>, which takes care of splitting up time
-into the required number of segments.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org2a4c01d" class="outline-4">
-<h4 id="org2a4c01d">BDSSkylineSegment (class)</h4>
-<div class="outline-text-4" id="text-org2a4c01d">
-<div class="org-src-container">
-<pre class="src src-java">public class BDSSkylineSegment extends SkylineSegment { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/BDSSkylineSegment.java#L6"><code>BDSSkylineSegment</code></a> is a class that wraps the <code>SkylineSegment</code> and specialises it
-for use as the parameterisation of the BDS model. Both the
-<code>CanonicalParameterization</code> and the <code>R0Parameterization</code> make use of this class,
-constructing their skyline segments with it.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org1a03ed7" class="outline-4">
-<h4 id="org1a03ed7">BDSParameterization (abstract class)</h4>
-<div class="outline-text-4" id="text-org1a03ed7">
-<div class="org-src-container">
-<pre class="src src-java">public abstract class BDSParameterization extends CalculationNode { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/BDSParameterization.java"><code>BDSParameterization</code></a> is an <i>abstract class</i> provided by the <code>bdsky</code> package which
-provides a template for writing classes which provide novel parameterisations of
-the model. The <code>CanonicalParamterization</code> and <code>R0Parameterization</code> are two classes
-that inherit from this.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org9885ef0" class="outline-4">
-<h4 id="org9885ef0">CanonicalParameterization (class)</h4>
-<div class="outline-text-4" id="text-org9885ef0">
-<div class="org-src-container">
-<pre class="src src-java">public class CanonicalParameterization extends BDSParameterization { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/CanonicalParameterization.java"><code>CanonicalParameterization</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which
-extends (ie inherits from) the <code>BDSParameterization</code> abstract class and represents
-the parameterisation in terms of the birth rate, death rate, sampling rate, and
-removal probability (which is important for sampled ancestors).
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge79f908" class="outline-4">
-<h4 id="orge79f908">R0Parameterization (class)</h4>
-<div class="outline-text-4" id="text-orge79f908">
-<div class="org-src-container">
-<pre class="src src-java">public class R0Parameterization extends BDSParameterization { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/R0Parameterization.java"><code>R0Parameterization</code></a> is a <i>class</i> provided by the <code>bdsky</code> package which extends (ie
-inherits from) the <code>BDSParameterization</code> abstract class and represents the
-parameterisation in terms of the reproductive number, total becoming
-uninfectious rate, the sampling proportion and the removal probability upon
-sampling.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org8a20cbe" class="outline-4">
-<h4 id="org8a20cbe">ParameterizedBirthDeathSkylineModel (class)</h4>
-<div class="outline-text-4" id="text-org8a20cbe">
-<div class="org-src-container">
-<pre class="src src-java">public class ParameterizedBirthDeathSkylineModel extends SpeciesTreeDistribution { }
-</pre>
-</div>
-
-<p>
-<a href="https://github.com/BEAST2-Dev/bdsky/blob/ec2caf66a58b59cc82a7b8391dbd06b25fe67ca6/src/bdsky/ParameterizedBirthDeathSkylineModel.java"><code>ParameterizedBirthDeathSkylineModel</code></a> is a <i>class</i> provided by the <code>bdsky</code> package
-which does the actual calculation, ie it has a <code>calculateTreeLogLikelihood</code>
-method.
-</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd833c21" class="outline-2">
-<h2 id="orgd833c21">Packages</h2>
-<div class="outline-text-2" id="text-orgd833c21">
+<div id="outline-container-org0825c46" class="outline-4">
+<h4 id="org0825c46">BEAST2 Packages</h4>
+<div class="outline-text-4" id="text-org0825c46">
 <p>
 Here are some links to BEAST2 packages that may be of interest. This table is
 likely to go out of date <i>very</i> quickly.
@@ -802,18 +845,19 @@ likely to go out of date <i>very</i> quickly.
 </table>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgbac7027" class="outline-2">
-<h2 id="orgbac7027">Simulating data</h2>
-<div class="outline-text-2" id="text-orgbac7027">
+<div id="outline-container-org9164c0b" class="outline-2">
+<h2 id="org9164c0b">Simulating data</h2>
+<div class="outline-text-2" id="text-org9164c0b">
 </div>
-<div id="outline-container-org8193c64" class="outline-3">
-<h3 id="org8193c64">MASTER</h3>
-<div class="outline-text-3" id="text-org8193c64">
+<div id="outline-container-org3e98a11" class="outline-3">
+<h3 id="org3e98a11">MASTER</h3>
+<div class="outline-text-3" id="text-org3e98a11">
 </div>
-<div id="outline-container-orgee966d0" class="outline-4">
-<h4 id="orgee966d0">Piece-wise constant rates</h4>
-<div class="outline-text-4" id="text-orgee966d0">
+<div id="outline-container-org44dd0d8" class="outline-4">
+<h4 id="org44dd0d8">Piece-wise constant rates</h4>
+<div class="outline-text-4" id="text-org44dd0d8">
 <p>
 The <a href="https://github.com/tgvaughan/MASTER/wiki/Reaction">Reaction</a> page on the MASTER Wiki describes how to use time varying rates.
 </p>
@@ -822,10 +866,9 @@ The <a href="https://github.com/tgvaughan/MASTER/wiki/Reaction">Reaction</a> pag
 </div>
 </div>
 
-
-<div id="outline-container-org9ef4138" class="outline-2">
-<h2 id="org9ef4138">Tools and useful R functions</h2>
-<div class="outline-text-2" id="text-org9ef4138">
+<div id="outline-container-orgc3cbade" class="outline-2">
+<h2 id="orgc3cbade">Tools and useful R functions</h2>
+<div class="outline-text-2" id="text-orgc3cbade">
 <ul class="org-ul">
 <li>You can run both <code>beast</code> and <code>beauti</code> from the command line as they are both
 available in the <code>beast.jar</code>. In the case of <code>beauti</code> it will be something like
@@ -833,14 +876,14 @@ available in the <code>beast.jar</code>. In the case of <code>beauti</code> it w
 <li>Tracer, FigTree, TempEst and TreeAnnotator all comes as a separate jar files.
 You can just click on the jar file and it should run the program correctly.
 <ul class="org-ul">
-<li><a href="./phylogenetics-notes.html#org2f9ebe8">My TempEst notes</a></li>
+<li><a href="./phylogenetics-notes.html#org5016b20">My TempEst notes</a></li>
 </ul></li>
 </ul>
 </div>
 
-<div id="outline-container-orgc4baf73" class="outline-3">
-<h3 id="orgc4baf73">Web beautify</h3>
-<div class="outline-text-3" id="text-orgc4baf73">
+<div id="outline-container-org90d6fc1" class="outline-3">
+<h3 id="org90d6fc1">Web beautify</h3>
+<div class="outline-text-3" id="text-org90d6fc1">
 <p>
 Having a linter for XML is helpful. The tool js-beautify seems decent: <a href="https://beautifier.io/">LINK</a> and
 <a href="https://github.com/beautify-web/js-beautify">GitHub</a>. You can configure this if you do not like the default style it uses.
@@ -848,11 +891,11 @@ Just add the following as <code>.jsbeautifyrc</code> in the root of your project
 </p>
 
 <div class="org-src-container">
-<pre class="src src-json">{
-    "indent_size": 4,
-    "preserve_newlines": true,
-    "wrap_attributes": "force-aligned"
-}
+<pre class="src src-json"><span style="color: #3a81c3;">{</span>
+    <span style="color: #3a81c3;">"indent_size"</span>: <span style="color: #4e3163;">4</span>,
+    <span style="color: #3a81c3;">"preserve_newlines"</span>: <span style="color: #4e3163;">true</span>,
+    <span style="color: #3a81c3;">"wrap_attributes"</span>: <span style="color: #2d9574;">"force-aligned"</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
@@ -861,170 +904,170 @@ The following function handles calling the beautifier from within R
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' Run js-beautify on the given file.
-#'
-#' @param x is the path to the XML file.
-#'
-beautify_xml &lt;- function(x) {
-  system2(command = "html-beautify", args = c("-f", x, "-r"))
-}
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Run js-beautify on the given file.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">x</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> is the path to the XML file.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">beautify_xml</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  system2<span style="color: #6c3163;">(</span>command = <span style="color: #2d9574;">"html-beautify"</span>, args = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"-f"</span>, x, <span style="color: #2d9574;">"-r"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1e97459" class="outline-3">
-<h3 id="org1e97459">Read BEAST2 log file</h3>
-<div class="outline-text-3" id="text-org1e97459">
+<div id="outline-container-org03ec907" class="outline-3">
+<h3 id="org03ec907">Read BEAST2 log file</h3>
+<div class="outline-text-3" id="text-org03ec907">
 <p>
 The following function reads a log file into a suitable dataframe.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' Read a BEAST2 log file into a data frame.
-#'
-#' @param filename is the path to the log file.
-#'
-#' @return data frame containing the samples.
-#'
-read_beast2_log &lt;- function(filename) {
-  read.csv(filename, sep = "\t", comment.char = "#")
-}
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Read a BEAST2 log file into a data frame.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@param</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #715ab1; background-color: #ecf3ec;">filename</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> is the path to the log file.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> </span><span style="color: #3a81c3; background-color: #ecf3ec;">@return</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> data frame containing the samples.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #6c3163; font-weight: bold;">read_beast2_log</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>filename<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  read.csv<span style="color: #6c3163;">(</span>filename, sep = <span style="color: #2d9574;">"\t"</span>, comment.char = <span style="color: #2d9574;">"#"</span><span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4910f4c" class="outline-3">
-<h3 id="org4910f4c">Pretty printing Tracer output</h3>
-<div class="outline-text-3" id="text-org4910f4c">
+<div id="outline-container-org201634f" class="outline-3">
+<h3 id="org201634f">Pretty printing Tracer output</h3>
+<div class="outline-text-3" id="text-org201634f">
 <p>
 The following little script can be used to translate a summary produced by
 Tracer into something that is easier to use in documents.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#!/usr/bin/env Rscript
-# -*- mode:ess-mode; -*-
-#'
-#' tracer-table
-#' ============
-#'
-#' Tool to convert tracer summary to an org-mode/markdown style table.
-#'
-#' Usage
-#' -----
-#'
-#' ./tracer-table --input &lt;demo.txt&gt; --output demo.org
-#'
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">!/usr/bin/env Rscript</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">-*- mode:ess-mode; -*-</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> tracer-table</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> ============</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Tool to convert tracer summary to an org-mode/markdown style table.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> Usage</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> -----</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> ./tracer-table --input &lt;demo.txt&gt; --output demo.org</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec; font-weight: bold;">'</span>
 
-suppressPackageStartupMessages(library(argparse))
+suppressPackageStartupMessages<span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">library</span><span style="color: #6c3163;">(</span>argparse<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 
-parser &lt;- ArgumentParser()
+parser <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ArgumentParser<span style="color: #3a81c3;">()</span>
 
-parser$add_argument(
-	 "-v",
-	 "--verbose",
-	 action = "store_true",
-	 default = FALSE,
-	 help = "Verbose output"
-       )
-parser$add_argument(
-	 "-i",
-	 "--input",
-	 type = "character",
-	 help = "Input file"
-       )
-parser$add_argument(
-	 "-o",
-	 "--output",
-	 type = "character",
-	 help = "Output file"
-       )
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-v"</span>,
+         <span style="color: #2d9574;">"--verbose"</span>,
+         action = <span style="color: #2d9574;">"store_true"</span>,
+         default = <span style="color: #4e3163;">FALSE</span>,
+         help = <span style="color: #2d9574;">"Verbose output"</span>
+       <span style="color: #3a81c3;">)</span>
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-i"</span>,
+         <span style="color: #2d9574;">"--input"</span>,
+         type = <span style="color: #2d9574;">"character"</span>,
+         help = <span style="color: #2d9574;">"Input file"</span>
+       <span style="color: #3a81c3;">)</span>
+parser$add_argument<span style="color: #3a81c3;">(</span>
+         <span style="color: #2d9574;">"-o"</span>,
+         <span style="color: #2d9574;">"--output"</span>,
+         type = <span style="color: #2d9574;">"character"</span>,
+         help = <span style="color: #2d9574;">"Output file"</span>
+       <span style="color: #3a81c3;">)</span>
 
-args &lt;- parser$parse_args()
+args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> parser$parse_args<span style="color: #3a81c3;">()</span>
 
 
-main &lt;- function(args) {
-  foo &lt;- readLines(args$input) |&gt;
-    gsub(pattern = "\t", replacement = " | ") |&gt;
-    gsub(pattern = "^", replacement = "| ") |&gt;
-    gsub(pattern = "$", replacement = " |")
-  tbl_header &lt;- head(foo, 1)
-  tbl_hline &lt;- tbl_header |&gt;
-    gsub(pattern = "[_\ a-zA-Z]", replacement = "-") |&gt;
-    gsub(pattern = "-\\|-", replacement = "-+-")
-  tbl_body &lt;- tail(foo, -1)
-  bar &lt;- c(tbl_header, tbl_hline, tbl_body)
-  writeLines(text = bar, con = args$output)
-}
+<span style="color: #6c3163; font-weight: bold;">main</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>args<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  foo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> readLines<span style="color: #6c3163;">(</span>args$input<span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"\t"</span>, replacement = <span style="color: #2d9574;">" | "</span><span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"^"</span>, replacement = <span style="color: #2d9574;">"| "</span><span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"$"</span>, replacement = <span style="color: #2d9574;">" |"</span><span style="color: #6c3163;">)</span>
+  tbl_header <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> head<span style="color: #6c3163;">(</span>foo, <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  tbl_hline <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tbl_header |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"[_\ a-zA-Z]"</span>, replacement = <span style="color: #2d9574;">"-"</span><span style="color: #6c3163;">)</span> |&gt;
+    gsub<span style="color: #6c3163;">(</span>pattern = <span style="color: #2d9574;">"-\\|-"</span>, replacement = <span style="color: #2d9574;">"-+-"</span><span style="color: #6c3163;">)</span>
+  tbl_body <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tail<span style="color: #6c3163;">(</span>foo, -<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>
+  bar <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #6c3163;">(</span>tbl_header, tbl_hline, tbl_body<span style="color: #6c3163;">)</span>
+  writeLines<span style="color: #6c3163;">(</span>text = bar, con = args$output<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-if (!interactive()) {
-  args &lt;- parser$parse_args()
-  main(args)
-}
+<span style="color: #3a81c3;">if</span> <span style="color: #3a81c3;">(</span>!interactive<span style="color: #6c3163;">()</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  args <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> parser$parse_args<span style="color: #6c3163;">()</span>
+  main<span style="color: #6c3163;">(</span>args<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbf86600" class="outline-2">
-<h2 id="orgbf86600">Examples</h2>
-<div class="outline-text-2" id="text-orgbf86600">
+<div id="outline-container-orgbb219a4" class="outline-2">
+<h2 id="orgbb219a4">Examples</h2>
+<div class="outline-text-2" id="text-orgbb219a4">
 <ul class="org-ul">
-<li><a href="#orgc18e4a5">BEAST2 as an MCMC engine: part I</a></li>
-<li><a href="#orgdcc938c">BEAST2 as an MCMC engine: part II</a></li>
-<li><a href="#org2ce02e1">Birth-death simulation: Example I</a></li>
-<li><a href="#org45be3f3">Birth-death simulation: Example II</a></li>
+<li><a href="#orgd2f1228">BEAST2 as an MCMC engine: part I</a></li>
+<li><a href="#orgeb6885b">BEAST2 as an MCMC engine: part II</a></li>
+<li><a href="#org02bca49">Birth-death simulation: Example I</a></li>
+<li><a href="#org1999e42">Birth-death simulation: Example II</a></li>
 </ul>
 </div>
 
-<div id="outline-container-orgc18e4a5" class="outline-3">
-<h3 id="orgc18e4a5">BEAST2 as an MCMC engine: part I</h3>
-<div class="outline-text-3" id="text-orgc18e4a5">
+<div id="outline-container-orgd2f1228" class="outline-3">
+<h3 id="orgd2f1228">BEAST2 as an MCMC engine: part I</h3>
+<div class="outline-text-3" id="text-orgd2f1228">
 <p>
 This example looks at how to use BEAST2 to simulate from a standard normal
 distribution using MCMC. The XML for this has the following structure
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;beast version="2.0"&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">beast</span> <span style="color: #715ab1;">version</span>=<span style="color: #2d9574;">"2.0"</span>&gt;
 
-  &lt;&lt;targetDistribution&gt;&gt;
+  &lt;&lt;<span style="color: #6c3163; font-weight: bold;">targetDistribution</span>&gt;&gt;
 
-  &lt;&lt;mcmc&gt;&gt;
+  &lt;&lt;<span style="color: #6c3163; font-weight: bold;">mcmc</span>&gt;&gt;
 
-&lt;/beast&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">beast</span>&gt;
 </pre>
 </div>
 
 <p>
-The <a href="#org79c905a"><code>targetDistribution</code></a> specifies the distribution we will sample from and the <a href="#org81fb137">mcmc</a> specifies how details of the MCMC algorithm.
+The <a href="#org5296858"><code>targetDistribution</code></a> specifies the distribution we will sample from and the <a href="#orgcb56873">mcmc</a> specifies how details of the MCMC algorithm.
 </p>
 </div>
 
-<div id="outline-container-org79c905a" class="outline-4">
-<h4 id="org79c905a">The target distribution</h4>
-<div class="outline-text-4" id="text-org79c905a">
+<div id="outline-container-org5296858" class="outline-4">
+<h4 id="org5296858">The target distribution</h4>
+<div class="outline-text-4" id="text-org5296858">
 <p>
 We use a <code>Prior</code> to represent the distribution because this makes it easy to
 evaluate the distribution at a particular value.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml" id="org8a6e8e0">&lt;distribution id="posterior" spec="beast.math.distributions.Prior" x="@x"&gt;
-  &lt;distr spec="beast.math.distributions.Normal" mean="0.0" sigma="1.0" /&gt;
-&lt;/distribution&gt;
+<pre class="src src-xml" id="org5bcaa6b">&lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"posterior"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.math.distributions.Prior"</span> <span style="color: #715ab1;">x</span>=<span style="color: #2d9574;">"@x"</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">distr</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.math.distributions.Normal"</span> <span style="color: #715ab1;">mean</span>=<span style="color: #2d9574;">"0.0"</span> <span style="color: #715ab1;">sigma</span>=<span style="color: #2d9574;">"1.0"</span> /&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">distribution</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org81fb137" class="outline-4">
-<h4 id="org81fb137">MCMC</h4>
-<div class="outline-text-4" id="text-org81fb137">
+<div id="outline-container-orgcb56873" class="outline-4">
+<h4 id="orgcb56873">MCMC</h4>
+<div class="outline-text-4" id="text-orgcb56873">
 <p>
 We use a <code>run</code> tag to specify the MCMC. This requires a <code>state</code> object to
 describe the parameters we are sampling, the <code>distribution</code> over the state, and
@@ -1032,47 +1075,47 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml" id="orge57fa79">&lt;run chainLength="10000000" id="mcmc" preBurnin="100" spec="beast.core.MCMC"&gt;
+<pre class="src src-xml" id="org16413ba">&lt;<span style="color: #6c3163; font-weight: bold;">run</span> <span style="color: #715ab1;">chainLength</span>=<span style="color: #2d9574;">"10000000"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"mcmc"</span> <span style="color: #715ab1;">preBurnin</span>=<span style="color: #2d9574;">"100"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.core.MCMC"</span>&gt;
 
-    &lt;state id="state" storeEvery="1000"&gt;
-	&lt;parameter estimate="true" id="x" name="stateNode" value="1.0" /&gt;
-    &lt;/state&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">state</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"state"</span> <span style="color: #715ab1;">storeEvery</span>=<span style="color: #2d9574;">"1000"</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">estimate</span>=<span style="color: #2d9574;">"true"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"x"</span> <span style="color: #715ab1;">name</span>=<span style="color: #2d9574;">"stateNode"</span> <span style="color: #715ab1;">value</span>=<span style="color: #2d9574;">"1.0"</span> /&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">state</span>&gt;
 
-    &lt;distribution idref="posterior" /&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"posterior"</span> /&gt;
 
-    &lt;operator spec="beast.evolution.operators.RealRandomWalkOperator"
-	      windowSize="0.1"
-	      useGaussian="true"
-	      weight="1.0"
-	      parameter="@x" /&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">operator</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.evolution.operators.RealRandomWalkOperator"</span>
+              <span style="color: #715ab1;">windowSize</span>=<span style="color: #2d9574;">"0.1"</span>
+              <span style="color: #715ab1;">useGaussian</span>=<span style="color: #2d9574;">"true"</span>
+              <span style="color: #715ab1;">weight</span>=<span style="color: #2d9574;">"1.0"</span>
+              <span style="color: #715ab1;">parameter</span>=<span style="color: #2d9574;">"@x"</span> /&gt;
 
-    &lt;logger id="screenlog" logEvery="1000000"&gt;
-	&lt;log idref="x" /&gt;
-    &lt;/logger&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">logger</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"screenlog"</span> <span style="color: #715ab1;">logEvery</span>=<span style="color: #2d9574;">"1000000"</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">log</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"x"</span> /&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">logger</span>&gt;
 
-    &lt;logger fileName="beast.csv"
-	    id="tracelog"
-	    logEvery="10000"
-	    model="@posterior"&gt;
-	&lt;log idref="posterior" /&gt;
-	&lt;log idref="x" /&gt;
-    &lt;/logger&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">logger</span> <span style="color: #715ab1;">fileName</span>=<span style="color: #2d9574;">"beast.csv"</span>
+            <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"tracelog"</span>
+            <span style="color: #715ab1;">logEvery</span>=<span style="color: #2d9574;">"10000"</span>
+            <span style="color: #715ab1;">model</span>=<span style="color: #2d9574;">"@posterior"</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">log</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"posterior"</span> /&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">log</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"x"</span> /&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">logger</span>&gt;
 
-&lt;/run&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">run</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgec4baa2" class="outline-4">
-<h4 id="orgec4baa2">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgec4baa2">
+<div id="outline-container-org27f4809" class="outline-4">
+<h4 id="org27f4809">Running the sampler</h4>
+<div class="outline-text-4" id="text-org27f4809">
 <p>
 Here is the command to actually run this program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">java -jar beast.jar -seed 1 -overwrite example-01.xml
+<pre class="src src-sh">java -jar beast.jar -seed <span style="color: #4e3163;">1</span> -overwrite example-01.xml
 </pre>
 </div>
 
@@ -1083,67 +1126,67 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-org4fb1ff9" class="outline-4">
-<h4 id="org4fb1ff9">Visualising the results</h4>
-<div class="outline-text-4" id="text-org4fb1ff9">
+<div id="outline-container-org3c48d8d" class="outline-4">
+<h4 id="org3c48d8d">Visualising the results</h4>
+<div class="outline-text-4" id="text-org3c48d8d">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="orgd46a831" class="figure">
+<div id="orgc9e054c" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R">library(ggplot2)
-library(cowplot)
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
 
-beast_samples &lt;- read.table("beast.csv",
-  sep = "\t",
-  comment.char = "#",
-  header = TRUE
-)
+beast_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.table<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"beast.csv"</span>,
+  sep = <span style="color: #2d9574;">"\t"</span>,
+  comment.char = <span style="color: #2d9574;">"#"</span>,
+  header = <span style="color: #4e3163;">TRUE</span>
+<span style="color: #3a81c3;">)</span>
 
-g1 &lt;- ggplot() +
-  geom_line(
+g1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_line<span style="color: #3a81c3;">(</span>
     data = beast_samples,
-    mapping = aes(x = Sample, y = x)
-  ) +
-  labs(x = "Sample", y = "X") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = Sample, y = x<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Sample"</span>, y = <span style="color: #2d9574;">"X"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g2 &lt;- ggplot() +
-  geom_histogram(
+g2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = beast_samples,
-    mapping = aes(x = x, y = ..density..),
-    bins = 10
-  ) +
-  stat_function(
-    fun = \(x) dnorm(x),
-    geom = "line"
-  ) +
-  labs(x = "X", y = "Density") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = x, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">10</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = \<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dnorm<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"X"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g &lt;- plot_grid(g1, g2)
+g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_grid<span style="color: #3a81c3;">(</span>g1, g2<span style="color: #3a81c3;">)</span>
 
-ggsave("beast-demo.png",
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"beast-demo.png"</span>,
        g,
-       height = 10.5,
-       width = 14.8,
-       units = "cm")
+       height = <span style="color: #4e3163;">10.5</span>,
+       width = <span style="color: #4e3163;">14.8</span>,
+       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdcc938c" class="outline-3">
-<h3 id="orgdcc938c">BEAST2 as an MCMC engine: part II</h3>
-<div class="outline-text-3" id="text-orgdcc938c">
+<div id="outline-container-orgeb6885b" class="outline-3">
+<h3 id="orgeb6885b">BEAST2 as an MCMC engine: part II</h3>
+<div class="outline-text-3" id="text-orgeb6885b">
 <p>
 This example looks at estimating the probability of heads in coin flips. We
 start with at beta prior distribution and take values of the number of observed
@@ -1151,54 +1194,54 @@ heads and tails from the command line.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;beast version="2.0"&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">beast</span> <span style="color: #715ab1;">version</span>=<span style="color: #2d9574;">"2.0"</span>&gt;
 
-    &lt;distribution id="posterior" spec="beast.core.util.CompoundDistribution" &gt;
-	&lt;distribution id="prior" spec="beast.math.distributions.Prior" x="@p"&gt;
-	    &lt;distr spec="beast.math.distributions.Beta" alpha="0.5" beta="0.5" /&gt;
-	&lt;/distribution&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"posterior"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.core.util.CompoundDistribution"</span> &gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"prior"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.math.distributions.Prior"</span> <span style="color: #715ab1;">x</span>=<span style="color: #2d9574;">"@p"</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">distr</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.math.distributions.Beta"</span> <span style="color: #715ab1;">alpha</span>=<span style="color: #2d9574;">"0.5"</span> <span style="color: #715ab1;">beta</span>=<span style="color: #2d9574;">"0.5"</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">distribution</span>&gt;
 
-	&lt;distribution id="likelihood" spec="beast.math.distributions.Prior" x="@p"&gt;
-	    &lt;distr spec="beast.math.distributions.Beta" alpha="$(heads)" beta="$(tails)" /&gt;
-	&lt;/distribution&gt;
-    &lt;/distribution&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"likelihood"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.math.distributions.Prior"</span> <span style="color: #715ab1;">x</span>=<span style="color: #2d9574;">"@p"</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">distr</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.math.distributions.Beta"</span> <span style="color: #715ab1;">alpha</span>=<span style="color: #2d9574;">"$(heads)"</span> <span style="color: #715ab1;">beta</span>=<span style="color: #2d9574;">"$(tails)"</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">distribution</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">distribution</span>&gt;
 
-    &lt;run chainLength="10000000" id="mcmc" preBurnin="100" spec="beast.core.MCMC"&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">run</span> <span style="color: #715ab1;">chainLength</span>=<span style="color: #2d9574;">"10000000"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"mcmc"</span> <span style="color: #715ab1;">preBurnin</span>=<span style="color: #2d9574;">"100"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.core.MCMC"</span>&gt;
 
-	&lt;state id="state" storeEvery="1000"&gt;
-	    &lt;parameter estimate="true" id="p" name="stateNode" value="0.5" /&gt;
-	&lt;/state&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">state</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"state"</span> <span style="color: #715ab1;">storeEvery</span>=<span style="color: #2d9574;">"1000"</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">estimate</span>=<span style="color: #2d9574;">"true"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"p"</span> <span style="color: #715ab1;">name</span>=<span style="color: #2d9574;">"stateNode"</span> <span style="color: #715ab1;">value</span>=<span style="color: #2d9574;">"0.5"</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">state</span>&gt;
 
-	&lt;distribution idref="posterior" /&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">distribution</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"posterior"</span> /&gt;
 
-	&lt;operator spec="beast.evolution.operators.RealRandomWalkOperator" windowSize="0.1" useGaussian="true" weight="1.0" parameter="@p" /&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">operator</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.evolution.operators.RealRandomWalkOperator"</span> <span style="color: #715ab1;">windowSize</span>=<span style="color: #2d9574;">"0.1"</span> <span style="color: #715ab1;">useGaussian</span>=<span style="color: #2d9574;">"true"</span> <span style="color: #715ab1;">weight</span>=<span style="color: #2d9574;">"1.0"</span> <span style="color: #715ab1;">parameter</span>=<span style="color: #2d9574;">"@p"</span> /&gt;
 
-	&lt;logger id="screenlog" logEvery="1000000"&gt;
-	    &lt;log idref="p" /&gt;
-	&lt;/logger&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">logger</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"screenlog"</span> <span style="color: #715ab1;">logEvery</span>=<span style="color: #2d9574;">"1000000"</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">log</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"p"</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">logger</span>&gt;
 
-	&lt;logger fileName="beast-02.csv" id="tracelog" logEvery="10000" model="@posterior"&gt;
-	    &lt;log idref="posterior" /&gt;
-	    &lt;log idref="p" /&gt;
-	&lt;/logger&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">logger</span> <span style="color: #715ab1;">fileName</span>=<span style="color: #2d9574;">"beast-02.csv"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"tracelog"</span> <span style="color: #715ab1;">logEvery</span>=<span style="color: #2d9574;">"10000"</span> <span style="color: #715ab1;">model</span>=<span style="color: #2d9574;">"@posterior"</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">log</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"posterior"</span> /&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">log</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"p"</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">logger</span>&gt;
 
-    &lt;/run&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">run</span>&gt;
 
-&lt;/beast&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">beast</span>&gt;
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org956f011" class="outline-4">
-<h4 id="org956f011">Running the sampler</h4>
-<div class="outline-text-4" id="text-org956f011">
+<div id="outline-container-orgb5e6089" class="outline-4">
+<h4 id="orgb5e6089">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgb5e6089">
 <p>
 Here is the command to actually run this program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">java -jar beast.jar -seed 1 -overwrite -D "heads=3,tails=7" example-02.xml
+<pre class="src src-sh">java -jar beast.jar -seed <span style="color: #4e3163;">1</span> -overwrite -D <span style="color: #2d9574;">"heads=3,tails=7"</span> example-02.xml
 </pre>
 </div>
 
@@ -1209,67 +1252,67 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-org2af67a0" class="outline-4">
-<h4 id="org2af67a0">Visualising the results</h4>
-<div class="outline-text-4" id="text-org2af67a0">
+<div id="outline-container-org1d358a3" class="outline-4">
+<h4 id="org1d358a3">Visualising the results</h4>
+<div class="outline-text-4" id="text-org1d358a3">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org7d1cecb" class="figure">
+<div id="org355ed7d" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R">library(ggplot2)
-library(cowplot)
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
 
-beast_samples &lt;- read.table("beast-02.csv",
-  sep = "\t",
-  comment.char = "#",
-  header = TRUE
-)
+beast_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.table<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"beast-02.csv"</span>,
+  sep = <span style="color: #2d9574;">"\t"</span>,
+  comment.char = <span style="color: #2d9574;">"#"</span>,
+  header = <span style="color: #4e3163;">TRUE</span>
+<span style="color: #3a81c3;">)</span>
 
-g1 &lt;- ggplot() +
-  geom_line(
+g1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_line<span style="color: #3a81c3;">(</span>
     data = beast_samples,
-    mapping = aes(x = Sample, y = p)
-  ) +
-  labs(x = "Sample", y = "p") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = Sample, y = p<span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Sample"</span>, y = <span style="color: #2d9574;">"p"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g2 &lt;- ggplot() +
-  geom_histogram(
+g2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = beast_samples,
-    mapping = aes(x = p, y = ..density..),
-    bins = 15
-  ) +
-  stat_function(
-    fun = \(x) dbeta(x, 0.5 + 3, 0.5 + 7),
-    geom = "line"
-  ) +
-  labs(x = "X", y = "Density") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = p, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">15</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = \<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dbeta<span style="color: #6c3163;">(</span>x, <span style="color: #4e3163;">0.5</span> + <span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">0.5</span> + <span style="color: #4e3163;">7</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"X"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g &lt;- plot_grid(g1, g2)
+g <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_grid<span style="color: #3a81c3;">(</span>g1, g2<span style="color: #3a81c3;">)</span>
 
-ggsave("beast-02.png",
+ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"beast-02.png"</span>,
        g,
-       height = 10.5,
-       width = 14.8,
-       units = "cm")
+       height = <span style="color: #4e3163;">10.5</span>,
+       width = <span style="color: #4e3163;">14.8</span>,
+       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2ce02e1" class="outline-3">
-<h3 id="org2ce02e1">Birth-death simulation: Example I</h3>
-<div class="outline-text-3" id="text-org2ce02e1">
+<div id="outline-container-org02bca49" class="outline-3">
+<h3 id="org02bca49">Birth-death simulation: Example I</h3>
+<div class="outline-text-3" id="text-org02bca49">
 <p>
 In this example we will simulate sequences on a realisation of the birth-death
 process and then attempt to estimate the birth rate from these sequences. We
@@ -1279,9 +1322,9 @@ the XML for the analysis. Finally, we will use <code>tracer</code> to check the 
 </p>
 </div>
 
-<div id="outline-container-org92e476e" class="outline-4">
-<h4 id="org92e476e">Simulating the tree</h4>
-<div class="outline-text-4" id="text-org92e476e">
+<div id="outline-container-org696373d" class="outline-4">
+<h4 id="org696373d">Simulating the tree</h4>
+<div class="outline-text-4" id="text-org696373d">
 <p>
 We will use years as our unit of time. Assuming that an individual is infectious
 for 7 days (\(1/52\) of a year) on average, and that \(1\%\) of infections are
@@ -1292,10 +1335,10 @@ sequenced we end up with the following equations for the rates: \(\mu + \psi =
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org28e4cff">birth_rate &lt;- 104
-death_rate &lt;- 5148 / 100
-sampling_rate &lt;- 52 / 100
-sim_duration &lt;- 0.15 # year
+<pre class="src src-R" id="org7a400ca">birth_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">104</span>
+death_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">5148</span> / <span style="color: #4e3163;">100</span>
+sampling_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">52</span> / <span style="color: #4e3163;">100</span>
+sim_duration <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.15</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">year</span>
 </pre>
 </div>
 
@@ -1305,10 +1348,10 @@ The <code>rlineage</code> function returns a realisation of the birth-death proc
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org1503d55">net_removal_rate &lt;- death_rate + sampling_rate
-sim_tree &lt;- rlineage(birth_rate,
-		     net_removal_rate,
-		     Tmax = sim_duration)
+<pre class="src src-R" id="org735482f">net_removal_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> death_rate + sampling_rate
+sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #3a81c3;">(</span>birth_rate,
+                     net_removal_rate,
+                     Tmax = sim_duration<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1319,11 +1362,11 @@ top labels.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="orgab96185">num_tips &lt;- length(sim_tree$tip.label)
-tip_fwd_times &lt;- node.depth.edgelength(sim_tree)[1:num_tips]
-sim_tree$tip.label &lt;- sprintf("%s_%f",
-			      sim_tree$tip.label,
-			      2021 + tip_fwd_times)
+<pre class="src src-R" id="orgfab0480">num_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #3a81c3;">(</span>sim_tree$tip.label<span style="color: #3a81c3;">)</span>
+tip_fwd_times <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> node.depth.edgelength<span style="color: #3a81c3;">(</span>sim_tree<span style="color: #3a81c3;">)[</span><span style="color: #4e3163;">1</span>:num_tips<span style="color: #3a81c3;">]</span>
+sim_tree$tip.label <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sprintf<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"%s_%f"</span>,
+                              sim_tree$tip.label,
+                              <span style="color: #4e3163;">2021</span> + tip_fwd_times<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1334,15 +1377,15 @@ The reconstructed tree is the tree that remains when we sample the extinct tips
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org653c758">extant_mask &lt;- tip_fwd_times &gt;= sim_duration
-num_removed &lt;- sum(!extant_mask)
-num_sampled &lt;- rbinom(n = 1,
-		      size = num_removed,
-		      prob = sampling_rate / net_removal_rate)
-sampled_tips &lt;- sample(x = sim_tree$tip.label[!extant_mask],
-		       size = num_sampled)
-reconstructed_tree &lt;- keep.tip(phy = sim_tree,
-			       tip = sampled_tips)
+<pre class="src src-R" id="orgda9f42a">extant_mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tip_fwd_times &gt;= sim_duration
+num_removed <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sum<span style="color: #3a81c3;">(</span>!extant_mask<span style="color: #3a81c3;">)</span>
+num_sampled <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rbinom<span style="color: #3a81c3;">(</span>n = <span style="color: #4e3163;">1</span>,
+                      size = num_removed,
+                      prob = sampling_rate / net_removal_rate<span style="color: #3a81c3;">)</span>
+sampled_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span>x = sim_tree$tip.label<span style="color: #6c3163;">[</span>!extant_mask<span style="color: #6c3163;">]</span>,
+                       size = num_sampled<span style="color: #3a81c3;">)</span>
+reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> keep.tip<span style="color: #3a81c3;">(</span>phy = sim_tree,
+                               tip = sampled_tips<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1351,33 +1394,33 @@ We can combine all of this into a function
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org41f19e9">rand_reconstructed_tree &lt;- function(birth_rate,
-				    death_rate,
-				    sampling_rate,
-				    duration) {
-  net_removal_rate &lt;- death_rate + sampling_rate
-  sim_tree &lt;- rlineage(birth_rate,
-		       net_removal_rate,
-		       Tmax = sim_duration)
+<pre class="src src-R" id="org130f84f"><span style="color: #6c3163; font-weight: bold;">rand_reconstructed_tree</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>birth_rate,
+                                    death_rate,
+                                    sampling_rate,
+                                    duration<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  net_removal_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> death_rate + sampling_rate
+  sim_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rlineage<span style="color: #6c3163;">(</span>birth_rate,
+                       net_removal_rate,
+                       Tmax = sim_duration<span style="color: #6c3163;">)</span>
 
-  num_tips &lt;- length(sim_tree$tip.label)
-  tip_fwd_times &lt;- node.depth.edgelength(sim_tree)[1:num_tips]
-  sim_tree$tip.label &lt;- sprintf("%s_%f",
-				sim_tree$tip.label,
-				2021 + tip_fwd_times)
+  num_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>sim_tree$tip.label<span style="color: #6c3163;">)</span>
+  tip_fwd_times <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> node.depth.edgelength<span style="color: #6c3163;">(</span>sim_tree<span style="color: #6c3163;">)[</span><span style="color: #4e3163;">1</span>:num_tips<span style="color: #6c3163;">]</span>
+  sim_tree$tip.label <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sprintf<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"%s_%f"</span>,
+                                sim_tree$tip.label,
+                                <span style="color: #4e3163;">2021</span> + tip_fwd_times<span style="color: #6c3163;">)</span>
 
-  extant_mask &lt;- tip_fwd_times &gt;= sim_duration
-  num_removed &lt;- sum(!extant_mask)
-  num_sampled &lt;- rbinom(n = 1,
-			size = num_removed,
-			prob = sampling_rate / net_removal_rate)
-  sampled_tips &lt;- sample(x = sim_tree$tip.label[!extant_mask],
-			 size = num_sampled)
-  reconstructed_tree &lt;- keep.tip(phy = sim_tree,
-				 tip = sampled_tips)
+  extant_mask <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tip_fwd_times &gt;= sim_duration
+  num_removed <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sum<span style="color: #6c3163;">(</span>!extant_mask<span style="color: #6c3163;">)</span>
+  num_sampled <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rbinom<span style="color: #6c3163;">(</span>n = <span style="color: #4e3163;">1</span>,
+                        size = num_removed,
+                        prob = sampling_rate / net_removal_rate<span style="color: #6c3163;">)</span>
+  sampled_tips <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #6c3163;">(</span>x = sim_tree$tip.label<span style="color: #2d9574;">[</span>!extant_mask<span style="color: #2d9574;">]</span>,
+                         size = num_sampled<span style="color: #6c3163;">)</span>
+  reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> keep.tip<span style="color: #6c3163;">(</span>phy = sim_tree,
+                                 tip = sampled_tips<span style="color: #6c3163;">)</span>
 
-  return(reconstructed_tree)
-}
+  <span style="color: #3a81c3;">return</span><span style="color: #6c3163;">(</span>reconstructed_tree<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
@@ -1387,17 +1430,17 @@ generate random trees until we have one with at least \(20\) tips.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">iter_count &lt;- 0
-num_seqs &lt;- 0
-while (iter_count &lt; 100 &amp;&amp; num_seqs &lt; 20) {
-  reconstructed_tree &lt;- rand_reconstructed_tree(birth_rate,
-						death_rate,
-						sampling_rate,
-						sim_duration)
-  iter_count &lt;- iter_count + 1
-  num_seqs &lt;- length(reconstructed_tree$tip.label)
-  print(iter_count)
-}
+<pre class="src src-R">iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3;">while</span> <span style="color: #3a81c3;">(</span>iter_count &lt; <span style="color: #4e3163;">100</span> &amp;&amp; num_seqs &lt; <span style="color: #4e3163;">20</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  reconstructed_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rand_reconstructed_tree<span style="color: #6c3163;">(</span>birth_rate,
+                                                death_rate,
+                                                sampling_rate,
+                                                sim_duration<span style="color: #6c3163;">)</span>
+  iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> iter_count + <span style="color: #4e3163;">1</span>
+  num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>reconstructed_tree$tip.label<span style="color: #6c3163;">)</span>
+  print<span style="color: #6c3163;">(</span>iter_count<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 
@@ -1406,16 +1449,16 @@ This tree should be saved for later use.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">write.tree(phy = reconstructed_tree,
-	   file = "reconstructed-tree.newick")
+<pre class="src src-R">write.tree<span style="color: #3a81c3;">(</span>phy = reconstructed_tree,
+           file = <span style="color: #2d9574;">"reconstructed-tree.newick"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4ec5d61" class="outline-4">
-<h4 id="org4ec5d61">Simulating the sequences</h4>
-<div class="outline-text-4" id="text-org4ec5d61">
+<div id="outline-container-org3751d86" class="outline-4">
+<h4 id="org3751d86">Simulating the sequences</h4>
+<div class="outline-text-4" id="text-org3751d86">
 <p>
 Then we use the <code>simSeq</code> function to simulate a set of genomes for the leaves of
 this tree. By default this function uses the JC model for the sequence
@@ -1427,10 +1470,10 @@ influenza.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">sim_seqs &lt;- simSeq(x = reconstructed_tree,
-		   rate = 1e-3,
-		   l = 2000,
-		   type = "DNA")
+<pre class="src src-R">sim_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> simSeq<span style="color: #3a81c3;">(</span>x = reconstructed_tree,
+                   rate = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
+                   l = <span style="color: #4e3163;">2000</span>,
+                   type = <span style="color: #2d9574;">"DNA"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1439,17 +1482,17 @@ Then we write this to a file so we can read it into Beauti.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">write.phyDat(x = sim_seqs,
-	     file = "sequences.fasta",
-	     format = "fasta")
+<pre class="src src-R">write.phyDat<span style="color: #3a81c3;">(</span>x = sim_seqs,
+             file = <span style="color: #2d9574;">"sequences.fasta"</span>,
+             format = <span style="color: #2d9574;">"fasta"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0471480" class="outline-4">
-<h4 id="org0471480">Constructing the XML</h4>
-<div class="outline-text-4" id="text-org0471480">
+<div id="outline-container-orgb4be4be" class="outline-4">
+<h4 id="orgb4be4be">Constructing the XML</h4>
+<div class="outline-text-4" id="text-orgb4be4be">
 <div class="org-src-container">
 <pre class="src src-sh">java -cp ~/Documents/beast2/build/dist/beast.jar beast.app.beauti.Beauti
 </pre>
@@ -1476,9 +1519,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-org7bcecec" class="outline-4">
-<h4 id="org7bcecec">Running the sampler</h4>
-<div class="outline-text-4" id="text-org7bcecec">
+<div id="outline-container-orgf6cf990" class="outline-4">
+<h4 id="orgf6cf990">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgf6cf990">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -1488,12 +1531,12 @@ size to \(10^{7}\).
 </div>
 </div>
 
-<div id="outline-container-orga34635e" class="outline-4">
-<h4 id="orga34635e">Analysing the posterior samples</h4>
-<div class="outline-text-4" id="text-orga34635e">
+<div id="outline-container-org4a5e74e" class="outline-4">
+<h4 id="org4a5e74e">Analysing the posterior samples</h4>
+<div class="outline-text-4" id="text-org4a5e74e">
 <p>
 Tracer can be used for preliminary investigation of the posterior samples as
-shown in the following table (generated using <a href="#org4910f4c"><code>tracer-table</code></a>).
+shown in the following table (generated using <a href="#org201634f"><code>tracer-table</code></a>).
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1564,160 +1607,160 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="org30b2277" class="figure">
+<div id="org75e173d" class="figure">
 <p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R">library(dplyr)
-library(ggplot2)
-library(magrittr)
-library(purrr)
-library(cowplot)
+<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>magrittr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>purrr<span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
 
 &lt;&lt;define-parameters&gt;&gt;
 
-mcmc_samples &lt;- read.csv(
-  "sequences.log",
-  comment.char = "#",
-  sep = "\t"
-) |&gt;
-  rename(
+mcmc_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.csv<span style="color: #3a81c3;">(</span>
+  <span style="color: #2d9574;">"sequences.log"</span>,
+  comment.char = <span style="color: #2d9574;">"#"</span>,
+  sep = <span style="color: #2d9574;">"\t"</span>
+<span style="color: #3a81c3;">)</span> |&gt;
+  rename<span style="color: #3a81c3;">(</span>
     clock_rate = clockRate,
     origin = origin_BDSKY_Serial,
     net_removal_rate = becomeUninfectiousRate_BDSKY_Serial,
     r_naught = reproductiveNumber_BDSKY_Serial,
     sampling_proportion = samplingProportion_BDSKY_Serial
-  ) |&gt;
-  select(
+  <span style="color: #3a81c3;">)</span> |&gt;
+  select<span style="color: #3a81c3;">(</span>
     clock_rate,
     origin,
     net_removal_rate,
     r_naught,
     sampling_proportion
-  ) |&gt;
-  tail(-1000)
+  <span style="color: #3a81c3;">)</span> |&gt;
+  tail<span style="color: #3a81c3;">(</span>-<span style="color: #4e3163;">1000</span><span style="color: #3a81c3;">)</span>
 
 
-g1 &lt;- ggplot() +
-  geom_histogram(
+g1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = mcmc_samples,
-    mapping = aes(x = r_naught, y = ..density..),
-    bins = 40
-  ) +
-  stat_function(
-    fun = function(x) dlnorm(x, meanlog = 0.0, sdlog = 1.0),
-    geom = "line"
-  ) +
-  geom_vline(
-    xintercept = birth_rate / (death_rate + sampling_rate),
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  xlim(c(0.1, 3)) +
-  labs(x = "R-naught", y = "Density") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = r_naught, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">40</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = <span style="color: #4e3163;">0.0</span>, sdlog = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = birth_rate / <span style="color: #6c3163;">(</span>death_rate + sampling_rate<span style="color: #6c3163;">)</span>,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0.1</span>, <span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"R-naught"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g2 &lt;- ggplot() +
-  geom_histogram(
+g2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = mcmc_samples,
-    mapping = aes(
+    mapping = aes<span style="color: #6c3163;">(</span>
       x = net_removal_rate,
       y = ..density..
-    )
-  ) +
-  stat_function(
-    fun = function(x) dnorm(x, mean = 52, sd = 1.0),
-    geom = "line"
-  ) +
-  geom_vline(
+    <span style="color: #6c3163;">)</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dnorm<span style="color: #6c3163;">(</span>x, mean = <span style="color: #4e3163;">52</span>, sd = <span style="color: #4e3163;">1.0</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
     xintercept = death_rate + sampling_rate,
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  xlim(c(48, 56)) +
-  labs(x = "Net removal rate", y = "Density") +
-  theme_classic()
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">48</span>, <span style="color: #4e3163;">56</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Net removal rate"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g3 &lt;- ggplot() +
-  geom_histogram(
+g3 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = mcmc_samples,
-    mapping = aes(x = sampling_proportion, y = ..density..),
-    bins = 20
-  ) +
-  stat_function(
-    fun = function(x) dbeta(x, shape1 = 2.0, shape2 = 97.0),
-    geom = "line"
-  ) +
-  geom_vline(
-    xintercept = sampling_rate / (death_rate + sampling_rate),
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  xlim(c(0, 0.1)) +
-  labs(x = "Sampling proportion", y = "Density") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = sampling_proportion, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">20</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dbeta<span style="color: #6c3163;">(</span>x, shape1 = <span style="color: #4e3163;">2.0</span>, shape2 = <span style="color: #4e3163;">97.0</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = sampling_rate / <span style="color: #6c3163;">(</span>death_rate + sampling_rate<span style="color: #6c3163;">)</span>,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0.1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Sampling proportion"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g4 &lt;- ggplot() +
-  geom_histogram(
+g4 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = mcmc_samples,
-    mapping = aes(x = origin, y = ..density..),
-    bins = 20
-  ) +
-  stat_function(
-    fun = function(x) dlnorm(x, meanlog = log(0.1), sdlog = 1.25),
-    geom = "line"
-  ) +
-  geom_vline(
+    mapping = aes<span style="color: #6c3163;">(</span>x = origin, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">20</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dlnorm<span style="color: #6c3163;">(</span>x, meanlog = log<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0.1</span><span style="color: #2d9574;">)</span>, sdlog = <span style="color: #4e3163;">1.25</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
     xintercept = sim_duration,
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  xlim(c(0, 0.3)) +
-  labs(x = "Origin", y = "Density") +
-  theme_classic()
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0.3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Origin"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g5 &lt;- ggplot() +
-  geom_histogram(
+g5 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
+  geom_histogram<span style="color: #3a81c3;">(</span>
     data = mcmc_samples,
-    mapping = aes(x = clock_rate, y = ..density..),
-    bins = 40
-  ) +
-  stat_function(
-    fun = function(x) dgamma(x, 10, 1e4),
-    geom = "line"
-  ) +
-  geom_vline(
-    xintercept = 1e-3,
-    linetype = "dashed",
-    colour = "red"
-  ) +
-  xlim(c(1e-5, 3e-3)) +
-  labs(x = "Clock rate", y = "Density") +
-  theme_classic()
+    mapping = aes<span style="color: #6c3163;">(</span>x = clock_rate, y = ..density..<span style="color: #6c3163;">)</span>,
+    bins = <span style="color: #4e3163;">40</span>
+  <span style="color: #3a81c3;">)</span> +
+  stat_function<span style="color: #3a81c3;">(</span>
+    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> dgamma<span style="color: #6c3163;">(</span>x, <span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">1e4</span><span style="color: #6c3163;">)</span>,
+    geom = <span style="color: #2d9574;">"line"</span>
+  <span style="color: #3a81c3;">)</span> +
+  geom_vline<span style="color: #3a81c3;">(</span>
+    xintercept = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
+    linetype = <span style="color: #2d9574;">"dashed"</span>,
+    colour = <span style="color: #2d9574;">"red"</span>
+  <span style="color: #3a81c3;">)</span> +
+  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">5</span>, <span style="color: #4e3163;">3e</span>-<span style="color: #4e3163;">3</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
+  labs<span style="color: #3a81c3;">(</span>x = <span style="color: #2d9574;">"Clock rate"</span>, y = <span style="color: #2d9574;">"Density"</span><span style="color: #3a81c3;">)</span> +
+  theme_classic<span style="color: #3a81c3;">()</span>
 
-g_comb &lt;- plot_grid(
-  plot_grid(g1, g2, g3, nrow = 1, labels = LETTERS[1:3]),
-  plot_grid(g4, g5, nrow = 1, labels = LETTERS[4:5]),
-  nrow = 2
-)
+g_comb <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_grid<span style="color: #3a81c3;">(</span>
+  plot_grid<span style="color: #6c3163;">(</span>g1, g2, g3, nrow = <span style="color: #4e3163;">1</span>, labels = LETTERS<span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>,
+  plot_grid<span style="color: #6c3163;">(</span>g4, g5, nrow = <span style="color: #4e3163;">1</span>, labels = LETTERS<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span>:<span style="color: #4e3163;">5</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span>,
+  nrow = <span style="color: #4e3163;">2</span>
+<span style="color: #3a81c3;">)</span>
 
-ggsave(
-  filename = "combined-results.png",
+ggsave<span style="color: #3a81c3;">(</span>
+  filename = <span style="color: #2d9574;">"combined-results.png"</span>,
   plot = g_comb,
-  height = 14.8, width = 21.0,
-  units = "cm"
-)
+  height = <span style="color: #4e3163;">14.8</span>, width = <span style="color: #4e3163;">21.0</span>,
+  units = <span style="color: #2d9574;">"cm"</span>
+<span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org45be3f3" class="outline-3">
-<h3 id="org45be3f3">Birth-death simulation: Example II</h3>
-<div class="outline-text-3" id="text-org45be3f3">
+<div id="outline-container-org1999e42" class="outline-3">
+<h3 id="org1999e42">Birth-death simulation: Example II</h3>
+<div class="outline-text-3" id="text-org1999e42">
 <p>
 In this example we will do pretty much the same thing as above, but will
 simulate a second smaller epidemic in a different location where the sampling
@@ -1729,61 +1772,61 @@ the individual parameters.
 <div class="org-src-container">
 <pre class="src src-R">&lt;&lt;import-libraries&gt;&gt;
 
-birth_rate &lt;- 104
-death_rate &lt;- 5148 / 100
-sampling_rate_1 &lt;- 52 / 100
-sampling_rate_2 &lt;- 0.66 * 52 / 100
-sim_duration &lt;- 0.15 # year
+birth_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">104</span>
+death_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">5148</span> / <span style="color: #4e3163;">100</span>
+sampling_rate_1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">52</span> / <span style="color: #4e3163;">100</span>
+sampling_rate_2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.66</span> * <span style="color: #4e3163;">52</span> / <span style="color: #4e3163;">100</span>
+sim_duration <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.15</span> <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">year</span>
 
 &lt;&lt;define-random-sampler&gt;&gt;
 
-iter_count &lt;- 0
-num_seqs &lt;- 0
-while (iter_count &lt; 100 &amp;&amp; num_seqs &lt; 20) {
-  reconstructed_tree_1 &lt;- rand_reconstructed_tree(
+iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3;">while</span> <span style="color: #3a81c3;">(</span>iter_count &lt; <span style="color: #4e3163;">100</span> &amp;&amp; num_seqs &lt; <span style="color: #4e3163;">20</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  reconstructed_tree_1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rand_reconstructed_tree<span style="color: #6c3163;">(</span>
     birth_rate,
     death_rate,
     sampling_rate_1,
-    sim_duration)
-  iter_count &lt;- iter_count + 1
-  num_seqs &lt;- length(reconstructed_tree_1$tip.label)
-}
+    sim_duration<span style="color: #6c3163;">)</span>
+  iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> iter_count + <span style="color: #4e3163;">1</span>
+  num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>reconstructed_tree_1$tip.label<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-write.tree(phy = reconstructed_tree_1,
-	   file = "reconstructed-tree-1.newick")
+write.tree<span style="color: #3a81c3;">(</span>phy = reconstructed_tree_1,
+           file = <span style="color: #2d9574;">"reconstructed-tree-1.newick"</span><span style="color: #3a81c3;">)</span>
 
-sim_seqs_1 &lt;- simSeq(x = reconstructed_tree_1,
-		     rate = 1e-3,
-		     l = 2000,
-		     type = "DNA")
+sim_seqs_1 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> simSeq<span style="color: #3a81c3;">(</span>x = reconstructed_tree_1,
+                     rate = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
+                     l = <span style="color: #4e3163;">2000</span>,
+                     type = <span style="color: #2d9574;">"DNA"</span><span style="color: #3a81c3;">)</span>
 
-write.phyDat(x = sim_seqs_1,
-	     file = "sequences-1.fasta",
-	     format = "fasta")
+write.phyDat<span style="color: #3a81c3;">(</span>x = sim_seqs_1,
+             file = <span style="color: #2d9574;">"sequences-1.fasta"</span>,
+             format = <span style="color: #2d9574;">"fasta"</span><span style="color: #3a81c3;">)</span>
 
-iter_count &lt;- 0
-num_seqs &lt;- 0
-while (iter_count &lt; 100 &amp;&amp; num_seqs &lt; (0.66 * 20)) {
-  reconstructed_tree_2 &lt;- rand_reconstructed_tree(
+iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0</span>
+<span style="color: #3a81c3;">while</span> <span style="color: #3a81c3;">(</span>iter_count &lt; <span style="color: #4e3163;">100</span> &amp;&amp; num_seqs &lt; <span style="color: #6c3163;">(</span><span style="color: #4e3163;">0.66</span> * <span style="color: #4e3163;">20</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  reconstructed_tree_2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> rand_reconstructed_tree<span style="color: #6c3163;">(</span>
     birth_rate,
     death_rate,
     sampling_rate_2,
-    sim_duration)
-  iter_count &lt;- iter_count + 1
-  num_seqs &lt;- length(reconstructed_tree_2$tip.label)
-}
+    sim_duration<span style="color: #6c3163;">)</span>
+  iter_count <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> iter_count + <span style="color: #4e3163;">1</span>
+  num_seqs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> length<span style="color: #6c3163;">(</span>reconstructed_tree_2$tip.label<span style="color: #6c3163;">)</span>
+<span style="color: #3a81c3;">}</span>
 
-write.tree(phy = reconstructed_tree_2,
-	   file = "reconstructed-tree-2.newick")
+write.tree<span style="color: #3a81c3;">(</span>phy = reconstructed_tree_2,
+           file = <span style="color: #2d9574;">"reconstructed-tree-2.newick"</span><span style="color: #3a81c3;">)</span>
 
-sim_seqs_2 &lt;- simSeq(x = reconstructed_tree_2,
-		     rate = 1e-3,
-		     l = 2000,
-		     type = "DNA")
+sim_seqs_2 <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> simSeq<span style="color: #3a81c3;">(</span>x = reconstructed_tree_2,
+                     rate = <span style="color: #4e3163;">1e</span>-<span style="color: #4e3163;">3</span>,
+                     l = <span style="color: #4e3163;">2000</span>,
+                     type = <span style="color: #2d9574;">"DNA"</span><span style="color: #3a81c3;">)</span>
 
-write.phyDat(x = sim_seqs_2,
-	     file = "sequences-2.fasta",
-	     format = "fasta")
+write.phyDat<span style="color: #3a81c3;">(</span>x = sim_seqs_2,
+             file = <span style="color: #2d9574;">"sequences-2.fasta"</span>,
+             format = <span style="color: #2d9574;">"fasta"</span><span style="color: #3a81c3;">)</span>
 </pre>
 </div>
 
@@ -1884,9 +1927,9 @@ of sampling proportions is close to the true ratio.
 </div>
 </div>
 
-<div id="outline-container-org69f109d" class="outline-3">
-<h3 id="org69f109d">Simulating sequences</h3>
-<div class="outline-text-3" id="text-org69f109d">
+<div id="outline-container-org8fc844a" class="outline-3">
+<h3 id="org8fc844a">Simulating sequences</h3>
+<div class="outline-text-3" id="text-org8fc844a">
 <p>
 The following XML will simulate sequences for the taxons in the data tag based
 on a tree read from a Newick file (this requires feast to be installed.) The
@@ -1895,33 +1938,33 @@ you might use in subsequent analyses.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;beast version='2.0' namespace='beast.base.evolution.alignment:beast.pkgmgmt:beast.base.core:beast.base.inference:beast.base.evolution.tree.coalescent:beast.pkgmgmt:beast.base.core:beast.base.inference.util:beast.evolution.nuc:beast.base.evolution.operator:beast.base.inference.operator:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.base.evolution.likelihood'&gt;
+<pre class="src src-xml">&lt;<span style="color: #6c3163; font-weight: bold;">beast</span> <span style="color: #715ab1;">version</span>=<span style="color: #2d9574;">'2.0'</span> <span style="color: #715ab1;">namespace</span>=<span style="color: #2d9574;">'beast.base.evolution.alignment:beast.pkgmgmt:beast.base.core:beast.base.inference:beast.base.evolution.tree.coalescent:beast.pkgmgmt:beast.base.core:beast.base.inference.util:beast.evolution.nuc:beast.base.evolution.operator:beast.base.inference.operator:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.base.evolution.likelihood'</span>&gt;
 
 
-    &lt;data id="alignment" dataType="nucleotide"&gt;
-	&lt;sequence taxon="human"&gt;?&lt;/sequence&gt;
-	&lt;sequence taxon="chimp"&gt;?&lt;/sequence&gt;
-	&lt;sequence taxon="bonobo"&gt;?&lt;/sequence&gt;
-	&lt;sequence taxon="gorilla"&gt;?&lt;/sequence&gt;
-	&lt;sequence taxon="orangutan"&gt;?&lt;/sequence&gt;
-	&lt;sequence taxon="siamang"&gt;?&lt;/sequence&gt;
-    &lt;/data&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">data</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"alignment"</span> <span style="color: #715ab1;">dataType</span>=<span style="color: #2d9574;">"nucleotide"</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">sequence</span> <span style="color: #715ab1;">taxon</span>=<span style="color: #2d9574;">"human"</span>&gt;?&lt;/<span style="color: #6c3163; font-weight: bold;">sequence</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">sequence</span> <span style="color: #715ab1;">taxon</span>=<span style="color: #2d9574;">"chimp"</span>&gt;?&lt;/<span style="color: #6c3163; font-weight: bold;">sequence</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">sequence</span> <span style="color: #715ab1;">taxon</span>=<span style="color: #2d9574;">"bonobo"</span>&gt;?&lt;/<span style="color: #6c3163; font-weight: bold;">sequence</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">sequence</span> <span style="color: #715ab1;">taxon</span>=<span style="color: #2d9574;">"gorilla"</span>&gt;?&lt;/<span style="color: #6c3163; font-weight: bold;">sequence</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">sequence</span> <span style="color: #715ab1;">taxon</span>=<span style="color: #2d9574;">"orangutan"</span>&gt;?&lt;/<span style="color: #6c3163; font-weight: bold;">sequence</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">sequence</span> <span style="color: #715ab1;">taxon</span>=<span style="color: #2d9574;">"siamang"</span>&gt;?&lt;/<span style="color: #6c3163; font-weight: bold;">sequence</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">data</span>&gt;
 
 
-    &lt;tree spec='feast.fileio.TreeFromNewickFile' fileName="demo-tree.newick" IsLabelledNewick="true" adjustTipHeights="false" id='tree' /&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">tree</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">'feast.fileio.TreeFromNewickFile'</span> <span style="color: #715ab1;">fileName</span>=<span style="color: #2d9574;">"demo-tree.newick"</span> <span style="color: #715ab1;">IsLabelledNewick</span>=<span style="color: #2d9574;">"true"</span> <span style="color: #715ab1;">adjustTipHeights</span>=<span style="color: #2d9574;">"false"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">'tree'</span> /&gt;
 
 
-    &lt;run spec="beast.app.seqgen.SequenceSimulator" id="seqgen" data='@alignment' tree='@tree' sequencelength='100' outputFileName="demo-seqgen-output.xml"&gt;
-	&lt;siteModel spec='SiteModel'&gt;
-	    &lt;substModel spec='JukesCantor' /&gt;
-	&lt;/siteModel&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">run</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.app.seqgen.SequenceSimulator"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"seqgen"</span> <span style="color: #715ab1;">data</span>=<span style="color: #2d9574;">'@alignment'</span> <span style="color: #715ab1;">tree</span>=<span style="color: #2d9574;">'@tree'</span> <span style="color: #715ab1;">sequencelength</span>=<span style="color: #2d9574;">'100'</span> <span style="color: #715ab1;">outputFileName</span>=<span style="color: #2d9574;">"demo-seqgen-output.xml"</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">siteModel</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">'SiteModel'</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">substModel</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">'JukesCantor'</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">siteModel</span>&gt;
 
-	&lt;branchRateModel id="StrictClock" spec="beast.evolution.branchratemodel.StrictClockModel"&gt;
-	    &lt;parameter dimension="1" estimate="false" id="clockRate" minordimension="1" name="clock.rate" value="1.0" /&gt;
-	&lt;/branchRateModel&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">branchRateModel</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"StrictClock"</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"beast.evolution.branchratemodel.StrictClockModel"</span>&gt;
+            &lt;<span style="color: #6c3163; font-weight: bold;">parameter</span> <span style="color: #715ab1;">dimension</span>=<span style="color: #2d9574;">"1"</span> <span style="color: #715ab1;">estimate</span>=<span style="color: #2d9574;">"false"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"clockRate"</span> <span style="color: #715ab1;">minordimension</span>=<span style="color: #2d9574;">"1"</span> <span style="color: #715ab1;">name</span>=<span style="color: #2d9574;">"clock.rate"</span> <span style="color: #715ab1;">value</span>=<span style="color: #2d9574;">"1.0"</span> /&gt;
+        &lt;/<span style="color: #6c3163; font-weight: bold;">branchRateModel</span>&gt;
 
-    &lt;/run&gt;
-&lt;/beast&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">run</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">beast</span>&gt;
 </pre>
 </div>
 </div>
@@ -1929,8 +1972,8 @@ you might use in subsequent analyses.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-07-25 Mon 10:06</p>
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2022-07-30 Sat 14:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
