@@ -1,0 +1,97 @@
+<project name="cogsworth" basedir=".">
+
+    <description>
+         _________________________________________________________________________
+        |                                                                         |
+        | COGSWORTH                                                               |
+        | =========                                                               |
+        |                                                                         |
+        | This build script contains some useful tasks for working with BEAST.    |
+        |                                                                         |
+        | Usage                                                                   |
+        | -----                                                                   |
+        |                                                                         |
+        | To run the MCMC analysis in demo.xml                                    |
+        |                                                                         |
+        | $ ant -DbeastXML=demo.xml mcmc                                          |
+        |                                                                         |
+        | To start tracer there is                                                |
+        |                                                                         |
+        | $ ant tracer                                                            |
+        |                                                                         |
+        | To print this help message                                              |
+        |                                                                         |
+        | $ ant -p                                                                |
+        |                                                                         |
+        | Libraries                                                               |
+        | ---------                                                               |
+        |                                                                         |
+        | This script assumes there is a directory called lib containing some of  |
+        | the following JAR files:                                                |
+        |                                                                         |
+        | - beast.jar from https://github.com/CompEvol/beast2/releases            |
+        | - DensiTree.v2.2.7.jar from                                             |
+        |   https://www.cs.auckland.ac.nz/~remco/DensiTree/                       |
+        | - figtree.jar from https://github.com/rambaut/figtree/releases          |
+        | - tracer.jar from https://github.com/beast-dev/tracer/releases          |
+        |                                                                         |
+        | You only need the JAR files for the programs that you want to run. The  |
+        | ant manual may be helpful for understanding and extending this script   |
+        |                                                                         |
+        | - https://ant.apache.org/manual/index.html                              |
+        |                                                                         |
+        |_________________________________________________________________________|
+    </description>
+
+    <path id="classpath">
+        <fileset dir="lib" includes="**/*.jar" />
+    </path>
+
+    <target name="beauti">
+        <java fork="true" classname="beast.app.beauti.Beauti">
+            <classpath>
+                <path refid="classpath" />
+            </classpath>
+        </java>
+    </target>
+
+    <target name="mcmc">
+        <echo>Running the MCMC sampler defined in ${beastXML}</echo>
+        <java fork="true" classname="beast.app.beastapp.BeastMain">
+            <classpath>
+                <path refid="classpath" />
+            </classpath>
+            <arg line="-seed 1" />
+            <arg path="${beastXML}" />
+        </java>
+    </target>
+
+    <target name="mcmc-keep-going">
+        <java fork="true" classname="beast.app.beastapp.BeastMain">
+            <classpath>
+                <path refid="classpath" />
+            </classpath>
+            <arg line="-seed 1 -resume" />
+            <arg path="${beastXML}" />
+        </java>
+    </target>
+
+    <target name="figtree">
+        <java fork="true" jar="lib/figtree.jar">
+        </java>
+    </target>
+
+    <target name="densitree">
+        <java fork="true" jar="lib/DensiTree.v2.2.7.jar">
+        </java>
+    </target>
+
+    <target name="tracer">
+        <java fork="true" jar="lib/tracer.jar">
+        </java>
+    </target>
+
+    <target name="clean">
+        <delete file="fake.txt" />
+    </target>
+</project>
