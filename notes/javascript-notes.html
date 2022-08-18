@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-30 Sat 14:32 -->
+<!-- 2022-08-18 Thu 10:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>js-lang-aez-notes</title>
-<meta name="author" content="Alexander E. Zarebski" />
+<meta name="author" content="Alex Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -191,7 +191,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { }
+  .org-svg { width: 90%; }
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 </head>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgfa938b5" class="figure">
+<div id="org0e6a11a" class="figure">
 <p><img src="../images/javascript-logo.png" alt="javascript-logo.png" width="250px" />
 </p>
 </div>
@@ -212,25 +212,164 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8d3dd15">JavaScript notes</a>
+<li><a href="#orge9fb6ce">Notes</a>
 <ul>
-<li><a href="#orgba7276e">Example</a></li>
-<li><a href="#org4d246b3">Example</a></li>
-<li><a href="#org93a485f">Resources</a></li>
-<li><a href="#org026df4f"><code>npm</code> for package management</a></li>
+<li><a href="#org93d4e4f">Resources</a></li>
+<li><a href="#org05150cb"><code>npm</code> for package management</a></li>
+<li><a href="#orgc13dbc7">D3 notes</a></li>
+</ul>
+</li>
+<li><a href="#org3501437">Examples</a>
+<ul>
+<li><a href="#org1112935">Example</a></li>
+<li><a href="#org752b148">Example</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8d3dd15" class="outline-2">
-<h2 id="org8d3dd15">JavaScript notes</h2>
-<div class="outline-text-2" id="text-org8d3dd15">
+<div id="outline-container-orge9fb6ce" class="outline-2">
+<h2 id="orge9fb6ce">Notes</h2>
+<div class="outline-text-2" id="text-orge9fb6ce">
+<p>
+I also have some <a href="./html-notes.html">notes on HTML and CSS</a>, this includes some notes on <a href="./html-notes.html#org2bf0e86">SVG</a>.
+</p>
 </div>
-<div id="outline-container-orgba7276e" class="outline-3">
-<h3 id="orgba7276e">Example</h3>
-<div class="outline-text-3" id="text-orgba7276e">
+
+<div id="outline-container-org93d4e4f" class="outline-3">
+<h3 id="org93d4e4f">Resources</h3>
+<div class="outline-text-3" id="text-org93d4e4f">
+<ul class="org-ul">
+<li><a href="https://sourceacademy.org/sicpjs/index">Structure and Interpretation of Computer Programs &#x2013; JavaScript Edition</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org05150cb" class="outline-3">
+<h3 id="org05150cb"><code>npm</code> for package management</h3>
+<div class="outline-text-3" id="text-org05150cb">
+<ul class="org-ul">
+<li><code>npm init</code> to initialise a project, the important file is the <code>package.json</code> that
+gets produced.</li>
+<li><code>npm run &lt;xxx&gt;</code> will run the command called <code>&lt;xxx&gt;</code> as defined in <code>package.json</code>.
+There is an example below shows how to compile the typescript to javascript
+(of course, you need to have installed typescript first).</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-json">"scripts": {
+  "compile": "./node_modules/typescript/bin/tsc --target es5 bibread.ts"
+},
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>npm install -D</code> to install packages needed for the development process.</li>
+<li><code>npm outdated</code> will list any outdated packages in the current project.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc13dbc7" class="outline-3">
+<h3 id="orgc13dbc7">D3 notes</h3>
+<div class="outline-text-3" id="text-orgc13dbc7">
+<ul class="org-ul">
+<li><a href="https://learning.oreilly.com/library/view/d3-for-the/9781492046783/">D3 for the Impatient</a> is good.</li>
+<li>Because D3 generates figures by manipulating the DOM rather than operating on
+a canvas it can seem weird if you are coming from more traditional plotting
+libraries.</li>
+<li><code>Selections</code> are collections of DOM elements, they can be generated using <a href="./html-notes.html#css-selectors">CSS
+selectors</a>.
+<ul class="org-ul">
+<li><code>select</code> returns the first match and <code>selectAll</code> returns all matches.</li>
+<li>You can iterate the <code>select</code> methods to refine your query.</li>
+<li><code>Selection</code> objects have an API similar to what you would expect for list
+handling, eg, sorting, searching, and insertion.</li>
+</ul></li>
+<li>The <code>data</code> method of a <code>Selection</code> is used to <i>bind</i> pieces of data to
+elements of the DOM. If there is a mismatch between the number of pieces of
+data or DOM elements, the <code>enter</code> and <code>exit</code> methods are used to specify how
+to handle the extras.</li>
+<li>Recall I have some notes on <a href="./html-notes.html#org2bf0e86">SVG</a>.</li>
+<li><code>g</code> elements in SVG are <i>groups</i> of graphical elements. You will use one of
+these for each part of a figure.</li>
+<li><code>path</code> elements in SVG provide a way to draw lines and shapes.</li>
+<li>Use <code>htl.html</code> and literal <code>`&lt;svg&gt;...&lt;/svg&gt;`</code> to build up the figure.</li>
+</ul>
+</div>
+
+<div id="outline-container-org34545c9" class="outline-4">
+<h4 id="org34545c9">Basic setup</h4>
+<div class="outline-text-4" id="text-org34545c9">
+<p>
+The following steps will set up a single page using a server to simplify the
+process of incorporating data.
+</p>
+
+<ol class="org-ol">
+<li>Create a new directory for your project.</li>
+<li>Get a copy of <code>d3.js</code> or <code>d3.min.js</code> from the <a href="https://d3js.org/">D3 website</a>.</li>
+<li>Create an <code>index.html</code> page similar to <a href="#orgb14f4dd">this</a>.
+<ul class="org-ul">
+<li>Note the use of <code>onload</code> in the <code>body</code>.</li>
+</ul></li>
+<li>Create a <code>script.js</code> which will construct the figure; <a href="#org042846e">here</a> is a skeleton.
+<ul class="org-ul">
+<li>Data is read from a file <code>super-cool-data.tsv</code>.</li>
+</ul></li>
+<li>Start a <a href="#orge9dca95">server</a> and point your browser at it.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-js" id="org042846e">function makeDemo() {
+    d3.tsv("super-cool-data.tsv")
+	.then(
+	    function(data) {
+		var svg = d3.select("svg");
+		// do all the stuff to make the figure...
+	    }
+	);
+};
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-html" id="orgb14f4dd">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+	&lt;meta charset="utf-8"&gt;
+	&lt;title&gt;Alex learns D3&lt;/title&gt;
+
+	&lt;script src="d3.js"&gt;&lt;/script&gt;
+	&lt;script src="script.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+
+    &lt;body onload="makeDemo()"&gt;
+	&lt;svg id="demo" width="600" height="300"
+	     style="background: lightgrey" /&gt;
+    &lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh" id="orge9dca95">busybox httpd -h &lt;path/to/project&gt; -p 8080
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3501437" class="outline-2">
+<h2 id="org3501437">Examples</h2>
+<div class="outline-text-2" id="text-org3501437">
+</div>
+<div id="outline-container-org1112935" class="outline-3">
+<h3 id="org1112935">Example</h3>
+<div class="outline-text-3" id="text-org1112935">
 <p>
 Here is a very simple HTML file that can be used to make a visual library, just
 drag and drop your PDFs. It comes from <a href="https://cristobal.space/writing/folk">Folk (Browser) Interfaces</a>.
@@ -239,46 +378,46 @@ drag and drop your PDFs. It comes from <a href="https://cristobal.space/writing/
 <div class="org-src-container">
 <pre class="src src-html">/* pdf-viewer.html */
 
-&lt;<span style="color: #6c3163; font-weight: bold;">style</span>&gt;
+&lt;style&gt;
     html {
-        background-color: #fdf6e3;
-        margin: 20px
+	background-color: #fdf6e3;
+	margin: 20px
     }
 
     body {
-        display: flex;
-        flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
     }
-&lt;/<span style="color: #6c3163; font-weight: bold;">style</span>&gt;
+&lt;/style&gt;
 
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+&lt;script&gt;
     const previewPdf = (name, url) =&gt; `
-    &lt;<span style="color: #6c3163; font-weight: bold;">div</span> <span style="color: #715ab1;">style</span>=<span style="color: #2d9574;">"width: 300; height: 425; margin: 40px"</span>&gt;
-      &lt;<span style="color: #6c3163; font-weight: bold;">embed</span> <span style="color: #715ab1;">width</span>=<span style="color: #2d9574;">"100%"</span> <span style="color: #715ab1;">height</span>=<span style="color: #2d9574;">"100%"</span> <span style="color: #715ab1;">type</span>=<span style="color: #2d9574;">"application/pdf"</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"${url}"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">embed</span>&gt;
-      &lt;<span style="color: #6c3163; font-weight: bold;">p</span>&gt;${name}&lt;/<span style="color: #6c3163; font-weight: bold;">p</span>&gt;
-    &lt;/<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+    &lt;div style="width: 300; height: 425; margin: 40px"&gt;
+      &lt;embed width="100%" height="100%" type="application/pdf" src="${url}"&gt;&lt;/embed&gt;
+      &lt;p&gt;${name}&lt;/p&gt;
+    &lt;/div&gt;
  `;
 
     window.addEventListener("dragover", e =&gt; e.preventDefault());
     window.addEventListener("drop", e =&gt; {
-        e.preventDefault();
-        [...e.dataTransfer.items].forEach(item =&gt; {
-            if (item.type === "application/pdf") {
-                const file = item.getAsFile();
-                const url = URL.createObjectURL(file);
-                document.body.innerHTML += previewPdf(file.name, url);
-            }
-        });
+	e.preventDefault();
+	[...e.dataTransfer.items].forEach(item =&gt; {
+	    if (item.type === "application/pdf") {
+		const file = item.getAsFile();
+		const url = URL.createObjectURL(file);
+		document.body.innerHTML += previewPdf(file.name, url);
+	    }
+	});
     });
-&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+&lt;/script&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4d246b3" class="outline-3">
-<h3 id="org4d246b3">Example</h3>
-<div class="outline-text-3" id="text-org4d246b3">
+<div id="outline-container-org752b148" class="outline-3">
+<h3 id="org752b148">Example</h3>
+<div class="outline-text-3" id="text-org752b148">
 <p>
 Here is the output of this example
 </p>
@@ -332,17 +471,17 @@ Start by including the UI which consists of couple of <code>textarea</code> for 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">textarea</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"xvals"</span> <span style="color: #715ab1;">rows</span>=<span style="color: #2d9574;">"4"</span> <span style="color: #715ab1;">cols</span>=<span style="color: #2d9574;">"50"</span>&gt;
+<pre class="src src-html">&lt;textarea id="xvals" rows="4" cols="50"&gt;
 1,3,2,4,3,5,1,2,3
-&lt;/<span style="color: #6c3163; font-weight: bold;">textarea</span>&gt;
+&lt;/textarea&gt;
 
- &lt;<span style="color: #6c3163; font-weight: bold;">textarea</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"lvals"</span> <span style="color: #715ab1;">rows</span>=<span style="color: #2d9574;">"4"</span> <span style="color: #715ab1;">cols</span>=<span style="color: #2d9574;">"50"</span>&gt;
+ &lt;textarea id="lvals" rows="4" cols="50"&gt;
 'a','b','c','d','e','f','g','h','i'
-&lt;/<span style="color: #6c3163; font-weight: bold;">textarea</span>&gt;
+&lt;/textarea&gt;
 
-&lt;<span style="color: #6c3163; font-weight: bold;">button</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"myButton"</span>&gt;Click Me!&lt;/<span style="color: #6c3163; font-weight: bold;">button</span>&gt;
+&lt;button id="myButton"&gt;Click Me!&lt;/button&gt;
 
-&lt;<span style="color: #6c3163; font-weight: bold;">div</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"vis"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+&lt;div id="vis"&gt;&lt;/div&gt;
 </pre>
 </div>
 
@@ -351,10 +490,10 @@ Then we can load the relevant packages, where I've included <a href="https://lod
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/vega@5"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/vega-lite@4"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/vega-embed@6"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
-&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"</span>&gt;&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+<pre class="src src-html">&lt;script src="https://cdn.jsdelivr.net/npm/vega@5"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/vega-lite@4"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/vega-embed@6"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"&gt;&lt;/script&gt;
 </pre>
 </div>
 
@@ -363,9 +502,9 @@ Finally we will write a little script which causes the chart to be updated when 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #6c3163; font-weight: bold;">script</span> <span style="color: #715ab1;">type</span>=<span style="color: #2d9574;">"text/javascript"</span>&gt;
-    <span style="color: #2aa1ae; background-color: #ecf3ec;">&lt;!-- </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Add the JavaScript code here!</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> --&gt;</span>
-&lt;/<span style="color: #6c3163; font-weight: bold;">script</span>&gt;
+<pre class="src src-html">&lt;script type="text/javascript"&gt;
+    &lt;!-- Add the JavaScript code here! --&gt;
+&lt;/script&gt;
 </pre>
 </div>
 
@@ -374,29 +513,29 @@ where the actual JavaScript code that needs to be included here is the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js">document.getElementById<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"myButton"</span><span style="color: #3a81c3;">)</span>.addEventListener<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"click"</span>,
-  <span style="color: #6c3163;">(</span>event<span style="color: #6c3163;">)</span> =&gt; <span style="color: #6c3163;">{</span>
-     betas = document.getElementById<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"xvals"</span><span style="color: #2d9574;">)</span>.value.split<span style="color: #2d9574;">(</span><span style="color: #2d9574;">","</span><span style="color: #2d9574;">)</span>.map<span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span> =&gt; parseInt<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-     alphas = document.getElementById<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"lvals"</span><span style="color: #2d9574;">)</span>.value.split<span style="color: #2d9574;">(</span><span style="color: #2d9574;">","</span><span style="color: #2d9574;">)</span>
-     <span style="color: #3a81c3;">var</span> <span style="color: #715ab1;">yourVlSpec</span> = <span style="color: #2d9574;">{</span>
-       $schema: <span style="color: #2d9574;">'https://vega.github.io/schema/vega-lite/v2.0.json'</span>,
-       description: <span style="color: #2d9574;">'A simple bar chart with embedded data.'</span>,
-       data: <span style="color: #67b11d;">{</span>
-         values: dataValues<span style="color: #b1951d;">(</span>alphas,betas<span style="color: #b1951d;">)</span>
-       <span style="color: #67b11d;">}</span>,
-       mark: <span style="color: #2d9574;">'bar'</span>,
-       encoding: <span style="color: #67b11d;">{</span>
-         x: <span style="color: #b1951d;">{</span>field: <span style="color: #2d9574;">'a'</span>, type: <span style="color: #2d9574;">'ordinal'</span><span style="color: #b1951d;">}</span>,
-         y: <span style="color: #b1951d;">{</span>field: <span style="color: #2d9574;">'b'</span>, type: <span style="color: #2d9574;">'quantitative'</span><span style="color: #b1951d;">}</span>
-       <span style="color: #67b11d;">}</span>
-     <span style="color: #2d9574;">}</span>;
-     vegaEmbed<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'#vis'</span>, yourVlSpec<span style="color: #2d9574;">)</span>;
-     document.getElementById<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"myButton"</span><span style="color: #2d9574;">)</span>.innerHTML = <span style="color: #2d9574;">"Woo!"</span>;
-<span style="color: #6c3163;">}</span><span style="color: #3a81c3;">)</span>;
+<pre class="src src-js">document.getElementById("myButton").addEventListener("click",
+  (event) =&gt; {
+     betas = document.getElementById("xvals").value.split(",").map((x) =&gt; parseInt(x))
+     alphas = document.getElementById("lvals").value.split(",")
+     var yourVlSpec = {
+       $schema: 'https://vega.github.io/schema/vega-lite/v2.0.json',
+       description: 'A simple bar chart with embedded data.',
+       data: {
+	 values: dataValues(alphas,betas)
+       },
+       mark: 'bar',
+       encoding: {
+	 x: {field: 'a', type: 'ordinal'},
+	 y: {field: 'b', type: 'quantitative'}
+       }
+     };
+     vegaEmbed('#vis', yourVlSpec);
+     document.getElementById("myButton").innerHTML = "Woo!";
+});
 
-<span style="color: #3a81c3;">function</span> <span style="color: #6c3163; font-weight: bold;">dataValues</span><span style="color: #3a81c3;">(</span><span style="color: #715ab1;">as</span>, <span style="color: #715ab1;">bs</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3;">return</span> _.zipWith<span style="color: #6c3163;">(</span>as,bs, <span style="color: #2d9574;">(</span>a,b<span style="color: #2d9574;">)</span> =&gt; <span style="color: #2d9574;">(</span><span style="color: #67b11d;">{</span>a:a,b:b<span style="color: #67b11d;">}</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
+function dataValues(as, bs) {
+  return _.zipWith(as,bs, (a,b) =&gt; ({a:a,b:b}))
+}
 </pre>
 </div>
 
@@ -406,45 +545,11 @@ to include all of this directly in the <code>.org</code> file.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org93a485f" class="outline-3">
-<h3 id="org93a485f">Resources</h3>
-<div class="outline-text-3" id="text-org93a485f">
-<ul class="org-ul">
-<li><a href="https://sourceacademy.org/sicpjs/index">Structure and Interpretation of Computer Programs &#x2013; JavaScript Edition</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org026df4f" class="outline-3">
-<h3 id="org026df4f"><code>npm</code> for package management</h3>
-<div class="outline-text-3" id="text-org026df4f">
-<ul class="org-ul">
-<li><code>npm init</code> to initialise a project, the important file is the <code>package.json</code> that
-gets produced.</li>
-<li><code>npm run &lt;xxx&gt;</code> will run the command called <code>&lt;xxx&gt;</code> as defined in <code>package.json</code>.
-There is an example below shows how to compile the typescript to javascript
-(of course, you need to have installed typescript first).</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-json"><span style="color: #3a81c3;">"scripts"</span>: <span style="color: #3a81c3;">{</span>
-  <span style="color: #3a81c3;">"compile"</span>: <span style="color: #2d9574;">"./node_modules/typescript/bin/tsc --target es5 bibread.ts"</span>
-<span style="color: #3a81c3;">}</span>,
-</pre>
-</div>
-
-<ul class="org-ul">
-<li><code>npm install -D</code> to install packages needed for the development process.</li>
-<li><code>npm outdated</code> will list any outdated packages in the current project.</li>
-</ul>
-</div>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2022-07-30 Sat 14:32</p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2022-08-18 Thu 10:30</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
