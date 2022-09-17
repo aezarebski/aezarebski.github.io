@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-09-07 Wed 13:50 -->
+<!-- 2022-09-17 Sat 14:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ggplot2-gallery-aez</title>
-<meta name="author" content="Alexander E. Zarebski" />
+<meta name="author" content="Alex Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -191,7 +191,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
+  .org-svg { }
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet.css" />
 </head>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org59dacdf" class="figure">
+<div id="orgfbbd582" class="figure">
 <p><img src="../../images/ggplot2-logo.png" alt="ggplot2-logo.png" width="250px" />
 </p>
 </div>
@@ -216,6 +216,7 @@
 <div class="grid-figure"><a href="#fig-05"><img src="./fig05.png" height="200px" /></a></div>
 <div class="grid-figure"><a href="#fig-06"><img src="./fig06.png" height="200px" /></a></div>
 <div class="grid-figure"><a href="#fig-07"><img src="./fig07.png" height="200px" /></a></div>
+<div class="grid-figure"><a href="#fig-08"><img src="./fig08.png" height="200px" /></a></div>
 </div>
 
 <h3 id="fig-01">Figure 1</h3>
@@ -226,34 +227,34 @@
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>cowplot<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(ggplot2)
+library(cowplot)
 
-a <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
-  geom_point<span style="color: #3a81c3;">(</span>data = iris,
-             mapping = aes<span style="color: #6c3163;">(</span>x = Sepal.Length,
-                           y = Sepal.Width,
-                           colour = Species<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+a &lt;- ggplot() +
+  geom_point(data = iris,
+	     mapping = aes(x = Sepal.Length,
+			   y = Sepal.Width,
+			   colour = Species))
 
-b <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
-  geom_point<span style="color: #3a81c3;">(</span>data = iris,
-             mapping = aes<span style="color: #6c3163;">(</span>x = Petal.Length,
-                           y = Petal.Width,
-                           colour = Species<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+b &lt;- ggplot() +
+  geom_point(data = iris,
+	     mapping = aes(x = Petal.Length,
+			   y = Petal.Width,
+			   colour = Species))
 
-legend <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> get_legend<span style="color: #3a81c3;">(</span>b + theme<span style="color: #6c3163;">(</span>legend.box.margin = margin<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">12</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+legend &lt;- get_legend(b + theme(legend.box.margin = margin(0, 0, 0, 12)))
 
-example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> plot_grid<span style="color: #3a81c3;">(</span>a + theme<span style="color: #6c3163;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #6c3163;">)</span>,
-                          b + theme<span style="color: #6c3163;">(</span>legend.position = <span style="color: #2d9574;">"none"</span><span style="color: #6c3163;">)</span>,
-                          legend,
-                          ncol = <span style="color: #4e3163;">3</span>,
-                          rel_widths = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">0.35</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+example_plot &lt;- plot_grid(a + theme(legend.position = "none"),
+			  b + theme(legend.position = "none"),
+			  legend,
+			  ncol = 3,
+			  rel_widths = c(1, 1, 0.35))
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig01.png"</span>,
+ggsave("fig01.png",
        example_plot,
-       width = <span style="color: #4e3163;">20</span>,
-       height = <span style="color: #4e3163;">10</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       width = 20,
+       height = 10,
+       units = "cm")
 </pre>
 </div>
 
@@ -265,29 +266,29 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig01
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(ggplot2)
 
-x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> LETTERS<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">10</span><span style="color: #3a81c3;">]</span>
-y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> letters<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">15</span><span style="color: #3a81c3;">]</span>
-plot_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> expand.grid<span style="color: #3a81c3;">(</span>x=x, y=y<span style="color: #3a81c3;">)</span>
-plot_df$z <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> runif<span style="color: #3a81c3;">(</span>length<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> * length<span style="color: #6c3163;">(</span>y<span style="color: #6c3163;">)</span>, <span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">5</span><span style="color: #3a81c3;">)</span>
+x &lt;- LETTERS[1:10]
+y &lt;- letters[1:15]
+plot_df &lt;- expand.grid(x=x, y=y)
+plot_df$z &lt;- runif(length(x) * length(y), 0, 5)
 
-example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
-  geom_tile<span style="color: #3a81c3;">(</span>
+example_plot &lt;- ggplot() +
+  geom_tile(
     data = plot_df,
-    mapping = aes<span style="color: #6c3163;">(</span>x = x, y = y, fill = z<span style="color: #6c3163;">)</span>
-  <span style="color: #3a81c3;">)</span> +
-  labs<span style="color: #3a81c3;">(</span>
-    x = <span style="color: #2d9574;">"Upper case"</span>,
-    y = <span style="color: #2d9574;">"Lower case"</span>,
-    fill = <span style="color: #2d9574;">"Temperature"</span><span style="color: #3a81c3;">)</span>
-  theme_minimal<span style="color: #3a81c3;">()</span>
+    mapping = aes(x = x, y = y, fill = z)
+  ) +
+  labs(
+    x = "Upper case",
+    y = "Lower case",
+    fill = "Temperature")
+  theme_minimal()
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig02.png"</span>,
+ggsave("fig02.png",
        example_plot,
-       width = <span style="color: #4e3163;">13</span>,
-       height = <span style="color: #4e3163;">10</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       width = 13,
+       height = 10,
+       units = "cm")
 </pre>
 </div>
 
@@ -299,51 +300,51 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig02
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggtree<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>treeio<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>tidytree<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(ggplot2)
+library(ggtree)
+library(treeio)
+library(tidytree)
 
-set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+set.seed(1)
 
-newick_str <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"((((t7:0.21,(t2:0.12,t3:0.26):0.65):0.93,t8:0.38):0.77,((t1:0.86,t5:0.34):0.38,(t6:0.59,(t9:0.18,t10:0.82):0.49):0.48):0.01):0.38,t4:0.66);"</span>
+newick_str &lt;- "((((t7:0.21,(t2:0.12,t3:0.26):0.65):0.93,t8:0.38):0.77,((t1:0.86,t5:0.34):0.38,(t6:0.59,(t9:0.18,t10:0.82):0.49):0.48):0.01):0.38,t4:0.66);"
 
-my_phylo <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> read.tree<span style="color: #3a81c3;">(</span>text = newick_str<span style="color: #3a81c3;">)</span>
+my_phylo &lt;- read.tree(text = newick_str)
 
-human_names <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span>
-  <span style="color: #2d9574;">"James"</span>,
-  <span style="color: #2d9574;">"Mary"</span>,
-  <span style="color: #2d9574;">"Robert"</span>,
-  <span style="color: #2d9574;">"Patricia"</span>,
-  <span style="color: #2d9574;">"John"</span>,
-  <span style="color: #2d9574;">"Jennifer"</span>,
-  <span style="color: #2d9574;">"Michael"</span>,
-  <span style="color: #2d9574;">"Linda"</span>,
-  <span style="color: #2d9574;">"William"</span>,
-  <span style="color: #2d9574;">"Elizabeth"</span>
-<span style="color: #3a81c3;">)</span>
+human_names &lt;- c(
+  "James",
+  "Mary",
+  "Robert",
+  "Patricia",
+  "John",
+  "Jennifer",
+  "Michael",
+  "Linda",
+  "William",
+  "Elizabeth"
+)
 
-annotations <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tibble<span style="color: #3a81c3;">(</span>
-  node = seq.int<span style="color: #6c3163;">(</span>length<span style="color: #2d9574;">(</span>my_phylo$tip.label<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>,
-  trait1 = sample<span style="color: #6c3163;">(</span>letters<span style="color: #2d9574;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span>, <span style="color: #4e3163;">10</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #6c3163;">)</span>,
+annotations &lt;- tibble(
+  node = seq.int(length(my_phylo$tip.label)),
+  trait1 = sample(letters[1:3], 10, replace = TRUE),
   trait2 = human_names
-<span style="color: #3a81c3;">)</span>
+)
 
-my_tree <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> treedata<span style="color: #3a81c3;">(</span>phylo = my_phylo, data = annotations<span style="color: #3a81c3;">)</span>
+my_tree &lt;- treedata(phylo = my_phylo, data = annotations)
 
-example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>my_tree, mapping = aes<span style="color: #6c3163;">(</span>x, y<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-  geom_tree<span style="color: #3a81c3;">()</span> +
-  geom_tippoint<span style="color: #3a81c3;">(</span>mapping = aes<span style="color: #6c3163;">(</span>colour = trait1<span style="color: #6c3163;">)</span>,
-                size = <span style="color: #4e3163;">5</span><span style="color: #3a81c3;">)</span> +
-  geom_tiplab<span style="color: #3a81c3;">(</span>mapping = aes<span style="color: #6c3163;">(</span>label = trait2<span style="color: #6c3163;">)</span>,
-              hjust = -<span style="color: #4e3163;">0.5</span><span style="color: #3a81c3;">)</span> +
-  theme_tree2<span style="color: #3a81c3;">(</span>legend.position=<span style="color: #2d9574;">'top'</span><span style="color: #3a81c3;">)</span>
+example_plot &lt;- ggplot(my_tree, mapping = aes(x, y)) +
+  geom_tree() +
+  geom_tippoint(mapping = aes(colour = trait1),
+		size = 5) +
+  geom_tiplab(mapping = aes(label = trait2),
+	      hjust = -0.5) +
+  theme_tree2(legend.position='top')
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig03.png"</span>,
+ggsave("fig03.png",
        example_plot,
-       width = <span style="color: #4e3163;">40</span>,
-       height = <span style="color: #4e3163;">20</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       width = 40,
+       height = 20,
+       units = "cm")
 </pre>
 </div>
 
@@ -355,54 +356,54 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig03
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggtree<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>treeio<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>tidytree<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>tibble<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ape<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(ggplot2)
+library(ggtree)
+library(treeio)
+library(tidytree)
+library(tibble)
+library(ape)
 
-set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+set.seed(1)
 
-newick_str <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #2d9574;">"((t1:0.1,t2:0.1):0.1,(t3:0.1)t4:0.1);"</span>
+newick_str &lt;- "((t1:0.1,t2:0.1):0.1,(t3:0.1)t4:0.1);"
 
-leaf_names <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"t1"</span>, <span style="color: #2d9574;">"t2"</span>, <span style="color: #2d9574;">"t3"</span><span style="color: #3a81c3;">)</span>
-burr_names <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"t4"</span><span style="color: #3a81c3;">)</span>
+leaf_names &lt;- c("t1", "t2", "t3")
+burr_names &lt;- c("t4")
 
-<span style="color: #6c3163; font-weight: bold;">label_type</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>label<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-  ifelse<span style="color: #6c3163;">(</span>
-    is.element<span style="color: #2d9574;">(</span>label, leaf_names<span style="color: #2d9574;">)</span>,
-    <span style="color: #2d9574;">"leaf"</span>,
-  ifelse<span style="color: #2d9574;">(</span>
-    is.element<span style="color: #67b11d;">(</span>label, burr_names<span style="color: #67b11d;">)</span>,
-    <span style="color: #2d9574;">"burr"</span>,
-    <span style="color: #2d9574;">"branch"</span><span style="color: #2d9574;">)</span>
-  <span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
+label_type &lt;- function(label) {
+  ifelse(
+    is.element(label, leaf_names),
+    "leaf",
+  ifelse(
+    is.element(label, burr_names),
+    "burr",
+    "branch")
+  )
+}
 
-my_phylo_tbl <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> as_tibble<span style="color: #3a81c3;">(</span>read.tree<span style="color: #6c3163;">(</span>text = newick_str<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+my_phylo_tbl &lt;- as_tibble(read.tree(text = newick_str))
 
-my_data_tbl <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> tibble<span style="color: #3a81c3;">(</span>
+my_data_tbl &lt;- tibble(
   node = my_phylo_tbl$node,
-  label_type = label_type<span style="color: #6c3163;">(</span>my_phylo_tbl$label<span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">)</span>
+  label_type = label_type(my_phylo_tbl$label)
+)
 
 
-my_td <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> as.treedata<span style="color: #3a81c3;">(</span>
-  full_join<span style="color: #6c3163;">(</span>my_phylo_tbl, my_data_tbl, by = <span style="color: #2d9574;">"node"</span><span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">)</span>
+my_td &lt;- as.treedata(
+  full_join(my_phylo_tbl, my_data_tbl, by = "node")
+)
 
-example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>my_td, mapping = aes<span style="color: #6c3163;">(</span>x, y<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-  geom_tree<span style="color: #3a81c3;">()</span> +
-  geom_tippoint<span style="color: #3a81c3;">(</span>aes<span style="color: #6c3163;">(</span>colour = label_type<span style="color: #6c3163;">)</span>, size = <span style="color: #4e3163;">4</span><span style="color: #3a81c3;">)</span> +
-  geom_nodepoint<span style="color: #3a81c3;">(</span>aes<span style="color: #6c3163;">(</span>colour = label_type<span style="color: #6c3163;">)</span>, size = <span style="color: #4e3163;">4</span><span style="color: #3a81c3;">)</span> +
-  theme_tree2<span style="color: #3a81c3;">(</span>legend.position = <span style="color: #2d9574;">"top"</span><span style="color: #3a81c3;">)</span>
+example_plot &lt;- ggplot(my_td, mapping = aes(x, y)) +
+  geom_tree() +
+  geom_tippoint(aes(colour = label_type), size = 4) +
+  geom_nodepoint(aes(colour = label_type), size = 4) +
+  theme_tree2(legend.position = "top")
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig04.png"</span>,
+ggsave("fig04.png",
        example_plot,
-       width = <span style="color: #4e3163;">20</span>,
-       height = <span style="color: #4e3163;">10</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       width = 20,
+       height = 10,
+       units = "cm")
 </pre>
 </div>
 
@@ -414,36 +415,36 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig04
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(ggplot2)
 
-example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>data.frame<span style="color: #6c3163;">(</span>x = c<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">2</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>, aes<span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-  stat_function<span style="color: #3a81c3;">(</span>
+example_plot &lt;- ggplot(data.frame(x = c(0, 2)), aes(x)) +
+  stat_function(
     fun = identity,
-    geom = <span style="color: #2d9574;">"line"</span>,
-    mapping = aes<span style="color: #6c3163;">(</span>colour = <span style="color: #2d9574;">"Foo"</span><span style="color: #6c3163;">)</span>
-  <span style="color: #3a81c3;">)</span> +
-  stat_function<span style="color: #3a81c3;">(</span>
-    fun = <span style="color: #3a81c3;">function</span><span style="color: #6c3163;">(</span>x<span style="color: #6c3163;">)</span> exp<span style="color: #6c3163;">(</span>-<span style="color: #2d9574;">(</span>x - <span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>^<span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span> * sin<span style="color: #6c3163;">(</span>x * <span style="color: #4e3163;">8</span><span style="color: #6c3163;">)</span>,
-    geom = <span style="color: #2d9574;">"line"</span>,
-    mapping = aes<span style="color: #6c3163;">(</span>colour = <span style="color: #2d9574;">"Bar"</span><span style="color: #6c3163;">)</span>
-  <span style="color: #3a81c3;">)</span> +
-  geom_point<span style="color: #3a81c3;">(</span>
-    data = data.frame<span style="color: #6c3163;">(</span>
-      x = seq<span style="color: #2d9574;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">2</span>, length = <span style="color: #4e3163;">10</span><span style="color: #2d9574;">)</span>,
-      y = rnorm<span style="color: #2d9574;">(</span><span style="color: #4e3163;">10</span><span style="color: #2d9574;">)</span>
-    <span style="color: #6c3163;">)</span>,
-    mapping = aes<span style="color: #6c3163;">(</span>colour = <span style="color: #2d9574;">"Baz"</span>, y = y<span style="color: #6c3163;">)</span>
-  <span style="color: #3a81c3;">)</span> +
-  scale_colour_manual<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Function"</span>,
-    values = c<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"blue"</span>, <span style="color: #2d9574;">"red"</span>, <span style="color: #2d9574;">"green"</span><span style="color: #6c3163;">)</span>,
-    breaks = c<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"Foo"</span>, <span style="color: #2d9574;">"Bar"</span>, <span style="color: #2d9574;">"Baz"</span><span style="color: #6c3163;">)</span>
-  <span style="color: #3a81c3;">)</span>
+    geom = "line",
+    mapping = aes(colour = "Foo")
+  ) +
+  stat_function(
+    fun = function(x) exp(-(x - 1)^2) * sin(x * 8),
+    geom = "line",
+    mapping = aes(colour = "Bar")
+  ) +
+  geom_point(
+    data = data.frame(
+      x = seq(0, 2, length = 10),
+      y = rnorm(10)
+    ),
+    mapping = aes(colour = "Baz", y = y)
+  ) +
+  scale_colour_manual("Function",
+    values = c("blue", "red", "green"),
+    breaks = c("Foo", "Bar", "Baz")
+  )
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig05.png"</span>,
+ggsave("fig05.png",
        example_plot,
-       width = <span style="color: #4e3163;">12</span>,
-       height = <span style="color: #4e3163;">10</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       width = 12,
+       height = 10,
+       units = "cm")
 </pre>
 </div>
 
@@ -455,33 +456,33 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig05
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(dplyr)
+library(ggplot2)
 
-plot_df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> iris <span style="color: #715ab1;">%&gt;%</span> select<span style="color: #3a81c3;">(</span>Petal.Length, Species<span style="color: #3a81c3;">)</span>
+plot_df &lt;- iris %&gt;% select(Petal.Length, Species)
 
-facet_labels <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> c<span style="color: #3a81c3;">(</span>
-  setosa = <span style="color: #2d9574;">"Setosa"</span>,
-  versicolor = <span style="color: #2d9574;">"Versicolor"</span>,
-  virginica = <span style="color: #2d9574;">"Verginica"</span>
-<span style="color: #3a81c3;">)</span>
+facet_labels &lt;- c(
+  setosa = "Setosa",
+  versicolor = "Versicolor",
+  virginica = "Verginica"
+)
 
-example_plot <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">(</span>plot_df, aes<span style="color: #6c3163;">(</span>x = Petal.Length<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-  geom_histogram<span style="color: #3a81c3;">(</span>
-    mapping = aes<span style="color: #6c3163;">(</span>y = ..density..<span style="color: #6c3163;">)</span>,
-    bins = <span style="color: #4e3163;">7</span>
-  <span style="color: #3a81c3;">)</span> +
-  geom_density<span style="color: #3a81c3;">()</span> +
-  facet_wrap<span style="color: #3a81c3;">(</span>~Species,
-             scales = <span style="color: #2d9574;">"free"</span>,
-             labeller = labeller<span style="color: #6c3163;">(</span>Species = facet_labels<span style="color: #6c3163;">)</span>
-             <span style="color: #3a81c3;">)</span>
+example_plot &lt;- ggplot(plot_df, aes(x = Petal.Length)) +
+  geom_histogram(
+    mapping = aes(y = ..density..),
+    bins = 7
+  ) +
+  geom_density() +
+  facet_wrap(~Species,
+	     scales = "free",
+	     labeller = labeller(Species = facet_labels)
+	     )
 
-ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig06.png"</span>,
+ggsave("fig06.png",
        example_plot,
-       width = <span style="color: #4e3163;">12</span>,
-       height = <span style="color: #4e3163;">10</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       width = 12,
+       height = 10,
+       units = "cm")
 </pre>
 </div>
 
@@ -493,87 +494,129 @@ ggsave<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"fig06
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>ggplot2<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>dplyr<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">library(ggplot2)
+library(dplyr)
 
-<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Some hex codes to use as a colour scheme. These are from</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">## </span><span style="color: #2aa1ae; background-color: #ecf3ec;">\code{https://colorbrewer2.org/?type=diverging&amp;scheme=RdYlBu&amp;n=7}</span>
-my_colours <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> list<span style="color: #3a81c3;">(</span>
-  truth = list<span style="color: #6c3163;">(</span>dark = <span style="color: #2d9574;">"#d73027"</span>, light = <span style="color: #2d9574;">"#fee090"</span><span style="color: #6c3163;">)</span>,
-  estimate = list<span style="color: #6c3163;">(</span>dark = <span style="color: #2d9574;">"#4575b4"</span>, light = <span style="color: #2d9574;">"#e0f3f8"</span><span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">)</span>
+## Some hex codes to use as a colour scheme. These are from
+## \code{https://colorbrewer2.org/?type=diverging&amp;scheme=RdYlBu&amp;n=7}
+my_colours &lt;- list(
+  truth = list(dark = "#d73027", light = "#fee090"),
+  estimate = list(dark = "#4575b4", light = "#e0f3f8")
+)
 
-exp_rate <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">0.2</span>
-x_max <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">10</span>
-xs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> seq<span style="color: #3a81c3;">(</span>from = <span style="color: #4e3163;">0</span>, to = x_max, length = <span style="color: #4e3163;">100</span><span style="color: #3a81c3;">)</span>
-pdf_xs <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> dexp<span style="color: #3a81c3;">(</span>x = xs, rate = exp_rate<span style="color: #3a81c3;">)</span>
+exp_rate &lt;- 0.2
+x_max &lt;- 10
+xs &lt;- seq(from = 0, to = x_max, length = 100)
+pdf_xs &lt;- dexp(x = xs, rate = exp_rate)
 
-delta <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">1.0</span>
-p_hat <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #4e3163;">2</span> * exp_rate * delta / <span style="color: #3a81c3;">(</span>exp_rate * delta + <span style="color: #4e3163;">2</span><span style="color: #3a81c3;">)</span>
+delta &lt;- 1.0
+p_hat &lt;- 2 * exp_rate * delta / (exp_rate * delta + 2)
 
-n_max <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ceiling<span style="color: #3a81c3;">(</span>x_max / delta - <span style="color: #4e3163;">0.5</span><span style="color: #3a81c3;">)</span>
-ns <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> seq.int<span style="color: #3a81c3;">(</span>from = <span style="color: #4e3163;">0</span>, to = n_max<span style="color: #3a81c3;">)</span>
-ys <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> delta * <span style="color: #3a81c3;">(</span>ns + <span style="color: #4e3163;">0.5</span><span style="color: #3a81c3;">)</span>
-pmf_ys <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> dgeom<span style="color: #3a81c3;">(</span>x = ns, prob = p_hat<span style="color: #3a81c3;">)</span>
+n_max &lt;- ceiling(x_max / delta - 0.5)
+ns &lt;- seq.int(from = 0, to = n_max)
+ys &lt;- delta * (ns + 0.5)
+pmf_ys &lt;- dgeom(x = ns, prob = p_hat)
 
-my_fig <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> ggplot<span style="color: #3a81c3;">()</span> +
-    geom_line<span style="color: #3a81c3;">(</span>
-        data.frame<span style="color: #6c3163;">(</span>x = xs, y = pdf_xs<span style="color: #6c3163;">)</span>,
-        mapping = aes<span style="color: #6c3163;">(</span>x = x, y = y<span style="color: #6c3163;">)</span>,
-        colour = my_colours$truth$dark
-    <span style="color: #3a81c3;">)</span> +
-    geom_point<span style="color: #3a81c3;">(</span>
-        filter<span style="color: #6c3163;">(</span>data.frame<span style="color: #2d9574;">(</span>x = ys, y = pmf_ys<span style="color: #2d9574;">)</span>, x &lt; x_max<span style="color: #6c3163;">)</span>,
-        mapping = aes<span style="color: #6c3163;">(</span>x = x, y = y<span style="color: #6c3163;">)</span>,
-        colour = my_colours$estimate$dark,
-        size = <span style="color: #4e3163;">3</span>
-    <span style="color: #3a81c3;">)</span> +
-    annotate<span style="color: #3a81c3;">(</span>
-        geom = <span style="color: #2d9574;">"curve"</span>,
-        xend = ys<span style="color: #6c3163;">[</span><span style="color: #4e3163;">2</span><span style="color: #6c3163;">]</span> + <span style="color: #4e3163;">0.05</span>, yend = pmf_ys<span style="color: #6c3163;">[</span><span style="color: #4e3163;">2</span><span style="color: #6c3163;">]</span> + <span style="color: #4e3163;">0.005</span>,
-        x = ys<span style="color: #6c3163;">[</span><span style="color: #4e3163;">2</span><span style="color: #6c3163;">]</span> + <span style="color: #4e3163;">2</span>, y = pmf_ys<span style="color: #6c3163;">[</span><span style="color: #4e3163;">2</span><span style="color: #6c3163;">]</span> + <span style="color: #4e3163;">0.05</span>,
-        curvature = <span style="color: #4e3163;">0.3</span>,
-        arrow = arrow<span style="color: #6c3163;">(</span>length = unit<span style="color: #2d9574;">(</span><span style="color: #4e3163;">2</span>, <span style="color: #2d9574;">"mm"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>,
-        colour = my_colours$estimate$dark
-    <span style="color: #3a81c3;">)</span> +
-    annotate<span style="color: #3a81c3;">(</span>
-        geom = <span style="color: #2d9574;">"text"</span>,
-        x = ys<span style="color: #6c3163;">[</span><span style="color: #4e3163;">2</span><span style="color: #6c3163;">]</span> + <span style="color: #4e3163;">2</span> + <span style="color: #4e3163;">0.10</span>, y = pmf_ys<span style="color: #6c3163;">[</span><span style="color: #4e3163;">2</span><span style="color: #6c3163;">]</span> + <span style="color: #4e3163;">0.05</span>,
-        label = <span style="color: #2d9574;">"Geometric approximation"</span>,
-        hjust = <span style="color: #2d9574;">"left"</span>,
-        colour = my_colours$estimate$dark,
-        size = <span style="color: #4e3163;">5</span>
-    <span style="color: #3a81c3;">)</span> +
-    annotate<span style="color: #3a81c3;">(</span>
-        geom = <span style="color: #2d9574;">"curve"</span>,
-        xend = <span style="color: #4e3163;">0.5</span>*<span style="color: #6c3163;">(</span>ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span> + ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">0.05</span>, yend = <span style="color: #4e3163;">0.5</span>*<span style="color: #6c3163;">(</span>pmf_ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span> + pmf_ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">0.002</span>,
-        x = <span style="color: #4e3163;">0.5</span>*<span style="color: #6c3163;">(</span>ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span> + ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">2</span>, y = <span style="color: #4e3163;">0.5</span>*<span style="color: #6c3163;">(</span>pmf_ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span> + pmf_ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">0.05</span>,
-        curvature = <span style="color: #4e3163;">0.3</span>,
-        arrow = arrow<span style="color: #6c3163;">(</span>length = unit<span style="color: #2d9574;">(</span><span style="color: #4e3163;">2</span>, <span style="color: #2d9574;">"mm"</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>,
-        colour = my_colours$truth$dark
-    <span style="color: #3a81c3;">)</span> +
-    annotate<span style="color: #3a81c3;">(</span>
-        geom = <span style="color: #2d9574;">"text"</span>,
-        x = <span style="color: #4e3163;">0.5</span>*<span style="color: #6c3163;">(</span>ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span> + ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">2</span> + <span style="color: #4e3163;">0.10</span>, y = <span style="color: #4e3163;">0.5</span>*<span style="color: #6c3163;">(</span>pmf_ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">3</span><span style="color: #2d9574;">]</span> + pmf_ys<span style="color: #2d9574;">[</span><span style="color: #4e3163;">4</span><span style="color: #2d9574;">]</span><span style="color: #6c3163;">)</span> + <span style="color: #4e3163;">0.05</span>,
-        label = <span style="color: #2d9574;">"Exponential distribution"</span>,
-        hjust = <span style="color: #2d9574;">"left"</span>,
-        colour = my_colours$truth$dark,
-        size = <span style="color: #4e3163;">5</span>
-    <span style="color: #3a81c3;">)</span> +
-    ylim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0.02</span>, <span style="color: #4e3163;">0.23</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-    theme_classic<span style="color: #3a81c3;">()</span> +
-    theme<span style="color: #3a81c3;">(</span>axis.title = element_blank<span style="color: #6c3163;">()</span><span style="color: #3a81c3;">)</span>
+my_fig &lt;- ggplot() +
+    geom_line(
+	data.frame(x = xs, y = pdf_xs),
+	mapping = aes(x = x, y = y),
+	colour = my_colours$truth$dark
+    ) +
+    geom_point(
+	filter(data.frame(x = ys, y = pmf_ys), x &lt; x_max),
+	mapping = aes(x = x, y = y),
+	colour = my_colours$estimate$dark,
+	size = 3
+    ) +
+    annotate(
+	geom = "curve",
+	xend = ys[2] + 0.05, yend = pmf_ys[2] + 0.005,
+	x = ys[2] + 2, y = pmf_ys[2] + 0.05,
+	curvature = 0.3,
+	arrow = arrow(length = unit(2, "mm")),
+	colour = my_colours$estimate$dark
+    ) +
+    annotate(
+	geom = "text",
+	x = ys[2] + 2 + 0.10, y = pmf_ys[2] + 0.05,
+	label = "Geometric approximation",
+	hjust = "left",
+	colour = my_colours$estimate$dark,
+	size = 5
+    ) +
+    annotate(
+	geom = "curve",
+	xend = 0.5*(ys[3] + ys[4]) + 0.05, yend = 0.5*(pmf_ys[3] + pmf_ys[4]) + 0.002,
+	x = 0.5*(ys[3] + ys[4]) + 2, y = 0.5*(pmf_ys[3] + pmf_ys[4]) + 0.05,
+	curvature = 0.3,
+	arrow = arrow(length = unit(2, "mm")),
+	colour = my_colours$truth$dark
+    ) +
+    annotate(
+	geom = "text",
+	x = 0.5*(ys[3] + ys[4]) + 2 + 0.10, y = 0.5*(pmf_ys[3] + pmf_ys[4]) + 0.05,
+	label = "Exponential distribution",
+	hjust = "left",
+	colour = my_colours$truth$dark,
+	size = 5
+    ) +
+    ylim(c(0.02, 0.23)) +
+    theme_classic() +
+    theme(axis.title = element_blank())
 
-ggsave<span style="color: #3a81c3;">(</span>filename = <span style="color: #2d9574;">"fig07.png"</span>,
+ggsave(filename = "fig07.png",
        plot = my_fig,
-       height = <span style="color: #4e3163;">10.5</span>, width = <span style="color: #4e3163;">14.8</span>,
-       units = <span style="color: #2d9574;">"cm"</span><span style="color: #3a81c3;">)</span>
+       height = 10.5, width = 14.8,
+       units = "cm")
+</pre>
+</div>
+
+<h3 id="fig-08">Figure 8</h3>
+<div><img src="./fig08.png" width="900px" /></div>
+
+<p>
+<b>Keywords:</b> Scales, colours, legends
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">library(ggplot2)
+
+hex_cols &lt;- c('#fc8d59','#ffffbf','#91bfdb')
+
+gg &lt;-
+  ggplot() +
+  geom_point(
+    data = iris,
+    mapping = aes(x = Sepal.Length,
+		  y = Sepal.Width,
+		  colour = Species)
+  ) +
+  scale_color_manual(
+    values = hex_cols,
+    breaks = c("setosa", "versicolor", "virginica"),
+    labels = c("Setosa", "Versicolor", "Virginica")
+  ) +
+  labs(
+    x = "Sepal Length",
+    y = "Sepal Width"
+  ) +
+  theme_dark() +
+  theme(
+    legend.background = element_rect(fill = "white", colour = "green"),
+    legend.position = c(0.7, 0.8)
+  )
+
+ggsave("fig08.png",
+       gg,
+       height = 10.5, width = 14.8,
+       units = "cm")
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2022-09-07 Wed 13:50</p>
+<p class="author">Author: Alex Zarebski</p>
+<p class="date">Created: 2022-09-17 Sat 14:33</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
