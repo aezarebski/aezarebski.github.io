@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-15 Fri 12:28 -->
+<!-- 2022-09-30 Fri 19:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-notes</title>
-<meta name="author" content="Alex Zarebski" />
+<title>emacs-lisp-aez-notes</title>
+<meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -191,93 +191,110 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
+  .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet-dark.css" />
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">aez-notes</h1>
+<h1 class="title">emacs-lisp-aez-notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
 
-<button type="button" onclick="setStyleSheet('../css/stylesheet.css')">Light</button>
-<button type="button" onclick="setStyleSheet('../css/stylesheet-dark.css')">Dark</button>
-
-<script>
-    function setStyleSheet(url){
-       var stylesheet = document.getElementById("stylesheet");
-       stylesheet.setAttribute('href', url);
-    }
-</script>
+<img width=500px src="https://imgs.xkcd.com/comics/lisp_cycles.png" title="https://xkcd.com/297/">
 
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org90a02ea">Emacs Lisp</a>
+<li><a href="#org32690c6">Emacs Lisp the language</a>
 <ul>
-<li><a href="#orgf306f17">Variables</a></li>
-<li><a href="#orgcc3679f">Program flow</a></li>
-<li><a href="#orgf0e72e4">String handling</a></li>
-<li><a href="#org72f2d2a">Working with dates and times</a></li>
-<li><a href="#orgb4227ab">Working with files</a></li>
-<li><a href="#orge7d0359">Working with passwords</a></li>
-<li><a href="#orga43f697">System command</a></li>
+<li><a href="#org8ad64bf">Variables</a></li>
+<li><a href="#orgcfc5216">Nonstandard evaluation</a></li>
+<li><a href="#org9ffe927">Program flow</a></li>
+<li><a href="#orgcf345f3">String handling</a></li>
+<li><a href="#org6b45e8a">Working with dates and times</a></li>
+<li><a href="#org010cddd">Working with files</a></li>
+<li><a href="#orgaac92f6">Working with passwords</a></li>
+<li><a href="#orgefe512e">System command</a></li>
 </ul>
 </li>
-<li><a href="#org08e2494">Emacs Lisp Packages</a>
+<li><a href="#org8c20d20">Emacs Lisp Packages</a>
 <ul>
-<li><a href="#org032b122">JSON</a></li>
-<li><a href="#org03181a8">String</a></li>
+<li><a href="#org428eaa5">JSON</a></li>
+<li><a href="#org33041ce">String</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<img width=780px src="https://imgs.xkcd.com/comics/lisp_cycles.png" title="https://xkcd.com/297/">
-
-<div id="outline-container-org90a02ea" class="outline-2">
-<h2 id="org90a02ea">Emacs Lisp</h2>
-<div class="outline-text-2" id="text-org90a02ea">
+<div id="outline-container-org32690c6" class="outline-2">
+<h2 id="org32690c6">Emacs Lisp the language</h2>
+<div class="outline-text-2" id="text-org32690c6">
 </div>
-<div id="outline-container-orgf306f17" class="outline-3">
-<h3 id="orgf306f17">Variables</h3>
-<div class="outline-text-3" id="text-orgf306f17">
+<div id="outline-container-org8ad64bf" class="outline-3">
+<h3 id="org8ad64bf">Variables</h3>
+<div class="outline-text-3" id="text-org8ad64bf">
 <p>
 Use <code>defvar</code> to define a variable along with <i>optionally</i> an initial value and a
-docstring. Use <code>setq</code> to set the value of a variable.
+docstring. Use <code>setq</code> to set the value of an existing variable.
 </p>
+</div>
+</div>
+
+<div id="outline-container-orgcfc5216" class="outline-3">
+<h3 id="orgcfc5216">Nonstandard evaluation</h3>
+<div class="outline-text-3" id="text-orgcfc5216">
+<p>
+If you want to evaulate an element of a quoted list you can use <code>,</code> as in the
+following example:
+</p>
+
+<pre class="example" id="org15a7b97">
+`(a list of ,(+ 2 3) elements)
+     =&gt; (a list of 5 elements)
+</pre>
 
 <p>
-Keep in mind that if you want to evaulate an element of a quoted list you can
-use <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote.html">backquotes</a>.
+If you want to expand a list out in a quoted list you can use <code>,@</code> as in the
+following example:
 </p>
+
+<pre class="example" id="orgda9c06d">
+(setq some-list '(2 3))
+     =&gt; (2 3)
+
+(cons 1 (append some-list '(4) some-list))
+     =&gt; (1 2 3 4 2 3)
+
+`(1 ,@some-list 4 ,@some-list)
+     =&gt; (1 2 3 4 2 3)
+</pre>
 </div>
 </div>
 
-<div id="outline-container-orgcc3679f" class="outline-3">
-<h3 id="orgcc3679f">Program flow</h3>
-<div class="outline-text-3" id="text-orgcc3679f">
+<div id="outline-container-org9ffe927" class="outline-3">
+<h3 id="org9ffe927">Program flow</h3>
+<div class="outline-text-3" id="text-org9ffe927">
 <ul class="org-ul">
 <li><code>progn</code> to sequence commands and return the value of the last one.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf0e72e4" class="outline-3">
-<h3 id="orgf0e72e4">String handling</h3>
-<div class="outline-text-3" id="text-orgf0e72e4">
+<div id="outline-container-orgcf345f3" class="outline-3">
+<h3 id="orgcf345f3">String handling</h3>
+<div class="outline-text-3" id="text-orgcf345f3">
 <p>
-The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see the <a href="#org03181a8">notes below</a>.
+The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see the <a href="#org33041ce">notes below</a>.
 </p>
 </div>
 
-<div id="outline-container-org3778559" class="outline-4">
-<h4 id="org3778559">string interpolation</h4>
-<div class="outline-text-4" id="text-org3778559">
+<div id="outline-container-org95c8407" class="outline-4">
+<h4 id="org95c8407">string interpolation</h4>
+<div class="outline-text-4" id="text-org95c8407">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>s-format <span style="color: #2d9574;">"foo ${bar}"</span> 'aget `<span style="color: #6c3163;">(</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"bar"</span> . ,<span style="color: #67b11d;">(</span>+ <span style="color: #4e3163;">1</span> <span style="color: #4e3163;">1</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
 </pre>
@@ -286,9 +303,9 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 </div>
 </div>
 
-<div id="outline-container-org72f2d2a" class="outline-3">
-<h3 id="org72f2d2a">Working with dates and times</h3>
-<div class="outline-text-3" id="text-org72f2d2a">
+<div id="outline-container-org6b45e8a" class="outline-3">
+<h3 id="org6b45e8a">Working with dates and times</h3>
+<div class="outline-text-3" id="text-org6b45e8a">
 <ul class="org-ul">
 <li><code>format-time-string</code> to get datetime as a string</li>
 <li><code>current-time</code> for the current time as a list of integers</li>
@@ -297,9 +314,9 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 </div>
 </div>
 
-<div id="outline-container-orgb4227ab" class="outline-3">
-<h3 id="orgb4227ab">Working with files</h3>
-<div class="outline-text-3" id="text-orgb4227ab">
+<div id="outline-container-org010cddd" class="outline-3">
+<h3 id="org010cddd">Working with files</h3>
+<div class="outline-text-3" id="text-org010cddd">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -324,9 +341,9 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 </div>
 </div>
 
-<div id="outline-container-orge7d0359" class="outline-3">
-<h3 id="orge7d0359">Working with passwords</h3>
-<div class="outline-text-3" id="text-orge7d0359">
+<div id="outline-container-orgaac92f6" class="outline-3">
+<h3 id="orgaac92f6">Working with passwords</h3>
+<div class="outline-text-3" id="text-orgaac92f6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #3a81c3;">(</span>read-passwd <span style="color: #2d9574;">"magic word: "</span><span style="color: #3a81c3;">)</span>
 </pre>
@@ -338,9 +355,9 @@ More details are available in the <a href="https://www.gnu.org/software/emacs/ma
 </div>
 </div>
 
-<div id="outline-container-orga43f697" class="outline-3">
-<h3 id="orga43f697">System command</h3>
-<div class="outline-text-3" id="text-orga43f697">
+<div id="outline-container-orgefe512e" class="outline-3">
+<h3 id="orgefe512e">System command</h3>
+<div class="outline-text-3" id="text-orgefe512e">
 <p>
 To run a system command/shell command there is <code>shell-command</code>.
 </p>
@@ -348,21 +365,21 @@ To run a system command/shell command there is <code>shell-command</code>.
 </div>
 </div>
 
-<div id="outline-container-org08e2494" class="outline-2">
-<h2 id="org08e2494">Emacs Lisp Packages</h2>
-<div class="outline-text-2" id="text-org08e2494">
+<div id="outline-container-org8c20d20" class="outline-2">
+<h2 id="org8c20d20">Emacs Lisp Packages</h2>
+<div class="outline-text-2" id="text-org8c20d20">
 </div>
-<div id="outline-container-org032b122" class="outline-3">
-<h3 id="org032b122">JSON</h3>
-<div class="outline-text-3" id="text-org032b122">
+<div id="outline-container-org428eaa5" class="outline-3">
+<h3 id="org428eaa5">JSON</h3>
+<div class="outline-text-3" id="text-org428eaa5">
 <p>
 For parsing and encoding to JSON there is the <a href="https://github.com/emacs-mirror/emacs/blob/master/lisp/json.el"><code>json.el</code></a> package.
 </p>
 </div>
 
-<div id="outline-container-orgafab0eb" class="outline-4">
-<h4 id="orgafab0eb">Examples to and from a string</h4>
-<div class="outline-text-4" id="text-orgafab0eb">
+<div id="outline-container-orgd8af82d" class="outline-4">
+<h4 id="orgd8af82d">Examples to and from a string</h4>
+<div class="outline-text-4" id="text-orgd8af82d">
 <p>
 Open up a REPL in emacs and try the following
 </p>
@@ -375,9 +392,9 @@ Open up a REPL in emacs and try the following
 </div>
 </div>
 
-<div id="outline-container-orge482ecc" class="outline-4">
-<h4 id="orge482ecc">Examples reading from file</h4>
-<div class="outline-text-4" id="text-orge482ecc">
+<div id="outline-container-orgf8fe79a" class="outline-4">
+<h4 id="orgf8fe79a">Examples reading from file</h4>
+<div class="outline-text-4" id="text-orgf8fe79a">
 <p>
 <code>json-read-file</code> to read from the given file.
 </p>
@@ -385,11 +402,11 @@ Open up a REPL in emacs and try the following
 </div>
 </div>
 
-<div id="outline-container-org03181a8" class="outline-3">
-<h3 id="org03181a8">String</h3>
-<div class="outline-text-3" id="text-org03181a8">
+<div id="outline-container-org33041ce" class="outline-3">
+<h3 id="org33041ce">String</h3>
+<div class="outline-text-3" id="text-org33041ce">
 <p>
-The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see <a href="#orgf0e72e4">these notes</a> for a
+The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see <a href="#orgcf345f3">these notes</a> for a
 table of commonly used functions.
 </p>
 
@@ -441,8 +458,8 @@ table of commonly used functions.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-04-15 Fri 12:28</p>
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2022-09-30 Fri 19:03</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

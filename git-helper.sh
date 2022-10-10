@@ -24,5 +24,15 @@ do
 done
 
 # A bunch of notes files
+git add notes/academic-journal-notes.html
+git add notes/beast2-notes.html
+git add notes/colour-notes.html
+git add notes/docker-notes.html
+git add notes/emacs-lisp-notes.html
+git add notes/git-notes.html
+git add notes/glossary-biology.html
+git add notes/glossary-mathematics-and-statistics.html
+git add notes/probability-notes.html
+git add notes/python-notes.html
 git add notes/r-notes.html
 git add notes/tutoring-notes.html
