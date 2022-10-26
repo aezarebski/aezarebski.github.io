@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git add index.html
+
 # A bunch of boring lists
 git add lists/books.html
 git add lists/links.html

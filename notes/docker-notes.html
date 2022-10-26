@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-04 Tue 13:58 -->
+<!-- 2022-10-26 Wed 18:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>docker-aez-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org5a38581" class="figure">
+<div id="org4e9c264" class="figure">
 <p><img src="../images/docker-logo.png" alt="docker-logo.png" width="250px" />
 </p>
 </div>
@@ -219,6 +219,11 @@
 <li><a href="#org4f97ca4">Jupyter docker stacks</a></li>
 <li><a href="#orgfcd7395"><code>rocker/geospatial</code></a></li>
 <li><a href="#orgbd50c85">Silly little notes</a></li>
+</ul>
+</li>
+<li><a href="#orgd45f6cf">Examples</a>
+<ul>
+<li><a href="#orga789c1e">LaTeX</a></li>
 </ul>
 </li>
 </ul>
@@ -347,8 +352,8 @@ Here are some notes I took while listening to a tutorial on docker:
 <ul class="org-ul">
 <li>Lots of containerised programs available on <a href="https://hub.docker.com/">Docker Hub</a>.</li>
 <li>An <i>image</i> is the template and a <i>container</i> is a running instance of an
-image.</li>
-<li>There is a <i>Docker Desktop for Mac</i> product for those not using Linux.</li>
+image. The docker file describes an image.</li>
+<li>There are community and enterprise editions.</li>
 <li>Installation is a bit finky but <code>docs.docker.com</code> has detailed instructions to
 help you with this.
 <ul class="org-ul">
@@ -357,7 +362,8 @@ help you with this.
 </ul></li>
 <li>Once you have installed docker <code>docker run docker/whalesay cowsay "hello
   world"</code> which is the docker version of <code>cowsay</code> which uses a whale</li>
-<li><code>docker ps</code> to see what docker containers are running.</li>
+<li><code>docker ps</code> to see what docker containers are running, and <code>docker ps -a</code> to
+see previously run dockers which may now have been exited.</li>
 <li><code>docker stop &lt;container-name&gt;</code> to stop a container.</li>
 <li><code>docker rm &lt;container-name&gt;</code> to remove a container.</li>
 <li><code>docker images</code> to print the available images on the machine.</li>
@@ -410,10 +416,66 @@ you can just specify it once.</li>
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgd45f6cf" class="outline-2">
+<h2 id="orgd45f6cf">Examples</h2>
+<div class="outline-text-2" id="text-orgd45f6cf">
+</div>
+<div id="outline-container-orga789c1e" class="outline-3">
+<h3 id="orga789c1e">LaTeX</h3>
+<div class="outline-text-3" id="text-orga789c1e">
+<p>
+The following two line dockerfile sets up a way to call <code>pdflatex</code>.
+</p>
+
+<pre class="example">
+FROM pandoc/latex
+
+# optional CTAN packages
+RUN tlmgr install enumitem
+RUN tlmgr install mathtools
+
+ENTRYPOINT ["./compile.sh"]
+</pre>
+
+<p>
+And then have a file <code>compile.sh</code> that looks something like the following, make
+sure it has the correct permissions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">#!/bin/sh
+
+pdflatex stuff.tex
+pdflatex stuff.tex
+</pre>
+</div>
+
+<p>
+To build this image and tag it as <code>aez/foobar</code> use the following command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker build -r aez/foobar - &lt; &lt;PATH/TO/DOCKERFILE&gt;
+</pre>
+</div>
+
+<p>
+To run the image while sharing the current directory with the container use the
+following command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker run --rm --volume "$(pwd):/data" aez/foobar
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-10-04 Tue 13:58</p>
+<p class="date">Created: 2022-10-26 Wed 18:01</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

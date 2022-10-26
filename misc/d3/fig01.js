@@ -71,13 +71,18 @@ function makeFig01() {
             .style("stroke-width", "2px")
             .attr("fill", "none");
 
-        // The text annotation is a bit boring, but this demonstrates how you
-        // might go about making it a bit more interesting and tweaking the
-        // appearance.
+        /* The text annotation is a bit boring, but this demonstrates how you
+        might go about making it a bit more interesting and tweaking the
+        appearance.
+
+        One thing to note here is that we use an additional transparent
+        rectangle on top of the text so that you can click anywhere in the
+        rectangle and still get the link. If you do not do this, it will assume
+        you are trying to select the text. */
+
         var yRect = 3.5;
 
         fig.append("a")
-            .attr("xlink:href", "https://en.wikipedia.org/wiki/Doge_(meme)")
             .append("rect")
             .attr("x", x(6.5))
             .attr("y", y(yRect))
@@ -98,5 +103,13 @@ function makeFig01() {
             .style("font-style", "italic")
             .text("Wow! Click Me!");
 
+        fig.append("a")
+            .attr("xlink:href", "https://en.wikipedia.org/wiki/Doge_(meme)")
+            .append("rect")
+            .attr("x", x(6.5))
+            .attr("y", y(yRect))
+            .attr("width", x(8.1) - x(6.5))
+            .attr("height", y(yRect) - y(yRect + 1.0))
+            .style("fill", "transparent");
     });
 };
