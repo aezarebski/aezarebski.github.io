@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Hackernews
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  Make Hackernews a bit easier on the eyes.
+// @version      0.1.1
+// @description  Make Hackernews a bit more friendly.
 // @author       Alexander E. Zarebski
 // @match        https://news.ycombinator.com/
 // @grant        none
@@ -41,14 +41,24 @@ const tagsHaveColor = (tagName,colorHex) => {
         e.style.color = space.purpleBackgroundDark;
 
     });
-    Array.from(document.querySelectorAll("a.titlelink")).forEach((e) => {
-        e.style.fontSize = space.mediumFontSize;
-        e.style.color = space.purpleBackgroundDark;
+
+    /*
+      By default the titles are all black which contrasts too much with the new
+      colours so the following uses the same purple as the numbers to be a bit
+      more gentle and increases the font size to make it easier to read.
+    */
+    Array.from(document.getElementsByClassName("titleline")).forEach((e) => {
+        e.children[0].style.fontSize = space.mediumFontSize;
+        e.children[0].style.color = space.purpleBackgroundDark;
     });
 
-    document.styleSheets[0].insertRule('a.titlelink:hover { background-color: ' + space.purpleBackgroundLight + ';}');
+    /*
+      To make it clearer which things are links, we want their background colour
+      to change when hovered over.
+     */
+    document.styleSheets[0].insertRule('a:hover { background-color: ' + space.purpleBackgroundLight + ';}');
 
-    document.getElementsByClassName("itemlist")[0].cellSpacing = 2
+    document.getElementsByClassName("itemlist")[0].cellSpacing = 2;
     document.querySelectorAll(".subtext").forEach(el => el.remove());
 
     document.getElementsByTagName("tbody")[0].childNodes[0].remove();
@@ -57,6 +67,14 @@ const tagsHaveColor = (tagName,colorHex) => {
 
     Array.from(document.getElementsByTagName("a")).forEach((e) => {
         e.setAttribute("target", "_blank");
+    });
+
+    /*
+      Remove indications that there is voting on this site to make it slightly
+      less addictive.
+     */
+    Array.from(document.querySelectorAll('.itemlist > tbody > .athing')).forEach((e) => {
+        e.children[1].remove();
     });
 
     var hnmain = document.getElementById("hnmain");

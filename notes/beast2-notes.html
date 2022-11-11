@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-26 Wed 18:01 -->
+<!-- 2022-11-11 Fri 19:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>beast2-aez-notes</title>
@@ -224,7 +224,7 @@
 </p>
 
 
-<div id="orgd63595e" class="figure">
+<div id="org99fe0b7" class="figure">
 <p><img src="../images/beast2-logo.png" alt="beast2-logo.png" width="250px" />
 </p>
 </div>
@@ -234,7 +234,7 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org7ea58cb">Links</a></li>
-<li><a href="#org4ad914c">Notes</a>
+<li><a href="#org084b5b5">Notes</a>
 <ul>
 <li><a href="#org24becf4">Understanding BEAUti</a></li>
 <li><a href="#org4d37055">Build a BEAST2</a></li>
@@ -252,7 +252,7 @@
 </li>
 <li><a href="#org41943f6">Tools and useful R functions</a>
 <ul>
-<li><a href="#orgbf89963">ANT build script</a></li>
+<li><a href="#org84aead9">Cogsworth</a></li>
 <li><a href="#org9e9dfa9">Web beautify</a></li>
 <li><a href="#org806b684">Read BEAST2 log file</a></li>
 <li><a href="#org1d5e033">Pretty printing Tracer output</a></li>
@@ -287,9 +287,9 @@ functionality, (the <code>DateParser</code> constructor has a nifty trick.)</li>
 </div>
 </div>
 
-<div id="outline-container-org4ad914c" class="outline-2">
-<h2 id="org4ad914c">Notes</h2>
-<div class="outline-text-2" id="text-org4ad914c">
+<div id="outline-container-org084b5b5" class="outline-2">
+<h2 id="org084b5b5">Notes</h2>
+<div class="outline-text-2" id="text-org084b5b5">
 </div>
 <div id="outline-container-org24becf4" class="outline-3">
 <h3 id="org24becf4">Understanding BEAUti</h3>
@@ -331,9 +331,9 @@ packages are stored at.
 </p>
 </div>
 
-<div id="outline-container-org084b5b5" class="outline-4">
-<h4 id="org084b5b5">Notes</h4>
-<div class="outline-text-4" id="text-org084b5b5">
+<div id="outline-container-orgb231c33" class="outline-4">
+<h4 id="orgb231c33">Notes</h4>
+<div class="outline-text-4" id="text-orgb231c33">
 <ul class="org-ul">
 <li><code>v2.6.7</code>:</li>
 </ul>
@@ -999,126 +999,13 @@ You can just click on the jar file and it should run the program correctly.
 </ul>
 </div>
 
-<div id="outline-container-orgbf89963" class="outline-3">
-<h3 id="orgbf89963">ANT build script</h3>
-<div class="outline-text-3" id="text-orgbf89963">
+<div id="outline-container-org84aead9" class="outline-3">
+<h3 id="org84aead9">Cogsworth</h3>
+<div class="outline-text-3" id="text-org84aead9">
 <p>
-A starting point for a build script is given below with targets for running the
-sampler and BEAUti. Note that this assumes that you have the following JAR files
-in the <code>lib</code> directory:
+The <b>cogsworth</b> ANT file is intended to simplify some of the typical tasks
+involved in running BEAST2 from the command line. You can get a copy <a href="https://github.com/aezarebski/beasts-castle/blob/main/cogsworth.org">here</a>!
 </p>
-
-<ul class="org-ul">
-<li><code>beast.jar</code> from <a href="https://github.com/CompEvol/beast2/releases">https://github.com/CompEvol/beast2/releases</a></li>
-<li><code>DensiTree.v2.2.7.jar</code> from <a href="https://www.cs.auckland.ac.nz/~remco/DensiTree/">https://www.cs.auckland.ac.nz/~remco/DensiTree/</a></li>
-<li><code>figtree.jar</code> from <a href="https://github.com/rambaut/figtree/releases">https://github.com/rambaut/figtree/releases</a></li>
-<li><code>tracer.jar</code> from <a href="https://github.com/beast-dev/tracer/releases">https://github.com/beast-dev/tracer/releases</a></li>
-</ul>
-
-<p>
-The <a href="https://ant.apache.org/manual/index.html">ANT manual</a> is helpful for understanding this.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-xml">&lt;project name="cogsworth" basedir="."&gt;
-
-    &lt;description&gt;
-	 _________________________________________________________________________
-	|                                                                         |
-	| COGSWORTH                                                               |
-	| =========                                                               |
-	|                                                                         |
-	| This build script contains some useful tasks for working with BEAST.    |
-	|                                                                         |
-	| Usage                                                                   |
-	| -----                                                                   |
-	|                                                                         |
-	| To run the MCMC analysis in demo.xml                                    |
-	|                                                                         |
-	| $ ant -DbeastXML=demo.xml mcmc                                          |
-	|                                                                         |
-	| To start tracer there is                                                |
-	|                                                                         |
-	| $ ant tracer                                                            |
-	|                                                                         |
-	| To print this help message                                              |
-	|                                                                         |
-	| $ ant -p                                                                |
-	|                                                                         |
-	| Libraries                                                               |
-	| ---------                                                               |
-	|                                                                         |
-	| This script assumes there is a directory called lib containing some of  |
-	| the following JAR files:                                                |
-	|                                                                         |
-	| - beast.jar from https://github.com/CompEvol/beast2/releases            |
-	| - DensiTree.v2.2.7.jar from                                             |
-	|   https://www.cs.auckland.ac.nz/~remco/DensiTree/                       |
-	| - figtree.jar from https://github.com/rambaut/figtree/releases          |
-	| - tracer.jar from https://github.com/beast-dev/tracer/releases          |
-	|                                                                         |
-	| You only need the JAR files for the programs that you want to run. The  |
-	| ant manual may be helpful for understanding and extending this script   |
-	|                                                                         |
-	| - https://ant.apache.org/manual/index.html                              |
-	|                                                                         |
-	|_________________________________________________________________________|
-    &lt;/description&gt;
-
-    &lt;path id="classpath"&gt;
-	&lt;fileset dir="lib" includes="**/*.jar" /&gt;
-    &lt;/path&gt;
-
-    &lt;target name="beauti"&gt;
-	&lt;java fork="true" classname="beast.app.beauti.Beauti"&gt;
-	    &lt;classpath&gt;
-		&lt;path refid="classpath" /&gt;
-	    &lt;/classpath&gt;
-	&lt;/java&gt;
-    &lt;/target&gt;
-
-    &lt;target name="mcmc"&gt;
-	&lt;echo&gt;Running the MCMC sampler defined in ${beastXML}&lt;/echo&gt;
-	&lt;java fork="true" classname="beast.app.beastapp.BeastMain"&gt;
-	    &lt;classpath&gt;
-		&lt;path refid="classpath" /&gt;
-	    &lt;/classpath&gt;
-	    &lt;arg line="-seed 1" /&gt;
-	    &lt;arg path="${beastXML}" /&gt;
-	&lt;/java&gt;
-    &lt;/target&gt;
-
-    &lt;target name="mcmc-keep-going"&gt;
-	&lt;java fork="true" classname="beast.app.beastapp.BeastMain"&gt;
-	    &lt;classpath&gt;
-		&lt;path refid="classpath" /&gt;
-	    &lt;/classpath&gt;
-	    &lt;arg line="-seed 1 -resume" /&gt;
-	    &lt;arg path="${beastXML}" /&gt;
-	&lt;/java&gt;
-    &lt;/target&gt;
-
-    &lt;target name="figtree"&gt;
-	&lt;java fork="true" jar="lib/figtree.jar"&gt;
-	&lt;/java&gt;
-    &lt;/target&gt;
-
-    &lt;target name="densitree"&gt;
-	&lt;java fork="true" jar="lib/DensiTree.v2.2.7.jar"&gt;
-	&lt;/java&gt;
-    &lt;/target&gt;
-
-    &lt;target name="tracer"&gt;
-	&lt;java fork="true" jar="lib/tracer.jar"&gt;
-	&lt;/java&gt;
-    &lt;/target&gt;
-
-    &lt;target name="clean"&gt;
-	&lt;delete file="fake.txt" /&gt;
-    &lt;/target&gt;
-&lt;/project&gt;
-</pre>
-</div>
 </div>
 </div>
 
@@ -1357,9 +1244,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-org32ac131" class="outline-4">
-<h4 id="org32ac131">Running the sampler</h4>
-<div class="outline-text-4" id="text-org32ac131">
+<div id="outline-container-org92f3c4d" class="outline-4">
+<h4 id="org92f3c4d">Running the sampler</h4>
+<div class="outline-text-4" id="text-org92f3c4d">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -1376,16 +1263,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-orgf0d18fb" class="outline-4">
-<h4 id="orgf0d18fb">Visualising the results</h4>
-<div class="outline-text-4" id="text-orgf0d18fb">
+<div id="outline-container-orgfbc9a11" class="outline-4">
+<h4 id="orgfbc9a11">Visualising the results</h4>
+<div class="outline-text-4" id="text-orgfbc9a11">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org748af31" class="figure">
+<div id="org93d8fca" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -1483,9 +1370,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-orgfbc81b3" class="outline-4">
-<h4 id="orgfbc81b3">Running the sampler</h4>
-<div class="outline-text-4" id="text-orgfbc81b3">
+<div id="outline-container-orgef1cb7f" class="outline-4">
+<h4 id="orgef1cb7f">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgef1cb7f">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -1502,16 +1389,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-orgfbc9a11" class="outline-4">
-<h4 id="orgfbc9a11">Visualising the results</h4>
-<div class="outline-text-4" id="text-orgfbc9a11">
+<div id="outline-container-orgb87606f" class="outline-4">
+<h4 id="orgb87606f">Visualising the results</h4>
+<div class="outline-text-4" id="text-orgb87606f">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org38c8237" class="figure">
+<div id="orgcc0043b" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -1769,9 +1656,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-org92f3c4d" class="outline-4">
-<h4 id="org92f3c4d">Running the sampler</h4>
-<div class="outline-text-4" id="text-org92f3c4d">
+<div id="outline-container-org8bca1c4" class="outline-4">
+<h4 id="org8bca1c4">Running the sampler</h4>
+<div class="outline-text-4" id="text-org8bca1c4">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -1857,7 +1744,7 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="org6b7110e" class="figure">
+<div id="orgb6964c7" class="figure">
 <p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
@@ -2223,7 +2110,7 @@ you might use in subsequent analyses.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-10-26 Wed 18:01</p>
+<p class="date">Created: 2022-11-11 Fri 19:38</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
