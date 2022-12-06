@@ -34,6 +34,8 @@ git add notes/emacs-lisp-notes.html
 git add notes/git-notes.html
 git add notes/glossary-biology.html
 git add notes/glossary-mathematics-and-statistics.html
+git add notes/latex-notes.html
+git add notes/org-mode-notes.html
 git add notes/probability-notes.html
 git add notes/python-notes.html
 git add notes/r-notes.html
