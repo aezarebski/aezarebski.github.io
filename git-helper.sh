@@ -40,3 +40,6 @@ git add notes/probability-notes.html
 git add notes/python-notes.html
 git add notes/r-notes.html
 git add notes/tutoring-notes.html
+
+# The nicemacs stuff
+git add misc/nicemacs/nicemacs.html
