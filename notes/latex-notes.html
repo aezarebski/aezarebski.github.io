@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-12-06 Tue 16:57 -->
+<!-- 2023-01-16 Mon 16:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>latex-aez-notes</title>
@@ -194,27 +194,38 @@
   .org-svg { }
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -259,6 +270,7 @@
 <li><a href="#org06c34f6">Table of contents</a></li>
 <li><a href="#org67218bd">Table of special characters</a></li>
 <li><a href="#orgdc9a694">Authors and affiliations</a></li>
+<li><a href="#orgb1b638b">Toggles with the <code>ifthen</code> package</a></li>
 </ul>
 </li>
 <li><a href="#org76d2fa3">Bibtex notes</a>
@@ -277,7 +289,7 @@
 </div>
 
 
-<div id="org6ff78e6" class="figure">
+<div id="org9ebefe7" class="figure">
 <p><img src="../images/latex-logo.png" alt="latex-logo.png" width="500px" />
 </p>
 </div>
@@ -420,7 +432,7 @@ columns so you may need to adjust it if you are using a single column.
 <h3 id="org419a291">Basic document II</h3>
 <div class="outline-text-3" id="text-org419a291">
 
-<div id="org5fe3b10" class="figure">
+<div id="org3122fa4" class="figure">
 <p><img src="../resources/latex-basic-document-ii.png" alt="latex-basic-document-ii.png" width="400px" />
 </p>
 </div>
@@ -1471,13 +1483,38 @@ Here is some text
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgb1b638b" class="outline-3">
+<h3 id="orgb1b638b">Toggles with the <code>ifthen</code> package</h3>
+<div class="outline-text-3" id="text-orgb1b638b">
 </div>
+<div id="outline-container-org7fc48ad" class="outline-4">
+<h4 id="org7fc48ad">Example of using a conditional to determine what is included</h4>
+<div class="outline-text-4" id="text-org7fc48ad">
+<div class="org-src-container">
+<pre class="src src-latex"><span style="color: #3a81c3;">\documentclass</span>{<span style="color: #6c3163; font-weight: bold;">article</span>}
+<span style="color: #3a81c3;">\usepackage</span>{<span style="color: #6c3163; font-weight: bold;">ifthen</span>}
+<span style="color: #696969;">\newboolean</span>{islong}
+<span style="color: #696969;">\setboolean</span>{islong}{false}
+
+<span style="color: #3a81c3;">\begin</span>{<span style="color: #6c3163; font-weight: bold;">document</span>}
+
+<span style="color: #696969;">\ifthenelse</span>{<span style="color: #696969;">\boolean</span>{islong}}{long version}{short version}
+
+<span style="color: #3a81c3;">\end</span>{<span style="color: #6c3163; font-weight: bold;">document</span>}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-org76d2fa3" class="outline-2">
 <h2 id="org76d2fa3">Bibtex notes</h2>
 <div class="outline-text-2" id="text-org76d2fa3">
 
-<div id="orgd7abe12" class="figure">
+<div id="org4a3ff29" class="figure">
 <p><img src="../images/bibtex-logo.png" alt="bibtex-logo.png" />
 </p>
 </div>
@@ -1739,7 +1776,7 @@ If you are getting errors about there being non-ASCII characters in your
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2022-12-06 Tue 16:57</p>
+<p class="date">Created: 2023-01-16 Mon 16:03</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
