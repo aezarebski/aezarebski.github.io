@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-26 Wed 18:01 -->
+<!-- 2023-04-06 Thu 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
-<meta name="author" content="Alex Zarebski" />
+<meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -194,27 +194,38 @@
   .org-svg { }
 </style>
 <link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -224,7 +235,7 @@
 </p>
 
 
-<div id="orgc7b3ea0" class="figure">
+<div id="org01f5ea2" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -233,97 +244,98 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1e306fe">Programming in R (installation and administration)</a>
+<li><a href="#org15eafb5">Programming in R (installation and administration)</a>
 <ul>
-<li><a href="#org05cfc6a">Installing and updating R</a></li>
-<li><a href="#orga40e25a">Managing R installations</a></li>
+<li><a href="#org040c5fe">Installing and updating R</a></li>
+<li><a href="#org1469c96">Managing R installations</a></li>
 </ul>
 </li>
-<li><a href="#org1ff94c9">Programming in R (software development)</a>
+<li><a href="#org0f891d8">Programming in R (software development)</a>
 <ul>
-<li><a href="#org347149f">Scripting with R</a></li>
-<li><a href="#org500fb31">Error handling</a></li>
-<li><a href="#orgd07cec8"><i>R Packages</i> by Wickham and Bryan</a></li>
-<li><a href="#org3b4430f">High performance computing</a></li>
-<li><a href="#orga7d58c7">Packages I like</a></li>
-<li><a href="#orgf815d66">Reshaping dataframes with <code>reshape2</code></a></li>
-<li><a href="#org0e5f9ee">Command line arguments</a></li>
-<li><a href="#org2caf2c6">Command line arguments with <code>argparse</code></a></li>
-<li><a href="#orgb163758">Working with JSON</a></li>
-<li><a href="#org46c5d42">Working with HTML</a></li>
-<li><a href="#org0f85338">OUTDATED: Working with XML with <code>XML</code></a></li>
-<li><a href="#org9e710dd">Working with Mustache templates</a></li>
-<li><a href="#org085ad8d">Unit testing with <code>testthat</code></a></li>
-<li><a href="#orga829b72">Dependency management with <code>packrat</code></a></li>
-<li><a href="#org0f60713">Package and project management with <code>usethis</code></a></li>
-<li><a href="#orgf69533a">Date handling with <code>lubridate</code></a></li>
-<li><a href="#org2bbd079">String handling with <code>stringr</code></a></li>
-<li><a href="#orgdea579a">Documentation with <code>roxygen2</code></a></li>
-<li><a href="#org4530930">Dates and times</a></li>
-<li><a href="#org5283ac8"><code>Rmath.h</code></a></li>
-<li><a href="#org23a842f">Cheat sheets</a></li>
-<li><a href="#orgd1b9373">Data frames</a></li>
-<li><a href="#orgd865446">Data structures</a></li>
+<li><a href="#org564e751">Scripting with R</a></li>
+<li><a href="#org2ef9789">Working with files</a></li>
+<li><a href="#org0c567ca">Error handling</a></li>
+<li><a href="#org965c800"><i>R Packages</i> by Wickham and Bryan</a></li>
+<li><a href="#org9fae96b">High performance computing</a></li>
+<li><a href="#orgd9d44b4">Packages I like</a></li>
+<li><a href="#org64076ae">Reshaping dataframes with <code>reshape2</code></a></li>
+<li><a href="#org13455bb">Command line arguments</a></li>
+<li><a href="#orgd1e3a81">Command line arguments with <code>argparse</code></a></li>
+<li><a href="#org2a934a3">Working with JSON</a></li>
+<li><a href="#orga07cf69">Working with HTML</a></li>
+<li><a href="#org10288b7">OUTDATED: Working with XML with <code>XML</code></a></li>
+<li><a href="#org94e7bc6">Working with Mustache templates</a></li>
+<li><a href="#org8293f07">Unit testing with <code>testthat</code></a></li>
+<li><a href="#org6f40c21">Dependency management with <code>packrat</code></a></li>
+<li><a href="#org7c29a55">Package and project management with <code>usethis</code></a></li>
+<li><a href="#orgf7759e0">Date handling with <code>lubridate</code></a></li>
+<li><a href="#org5386d35">String handling with <code>stringr</code></a></li>
+<li><a href="#orgca593b8">Documentation with <code>roxygen2</code></a></li>
+<li><a href="#org149d732">Dates and times</a></li>
+<li><a href="#org68d6600"><code>Rmath.h</code></a></li>
+<li><a href="#org70c5394">Cheat sheets</a></li>
+<li><a href="#org3df83a7">Data frames</a></li>
+<li><a href="#org546d441">Data structures</a></li>
 </ul>
 </li>
-<li><a href="#orgd41d8d4">Data munging</a>
+<li><a href="#orgeaa6ea0">Data munging</a>
 <ul>
-<li><a href="#org8228161">Working with XML</a></li>
-<li><a href="#org39a662d">Joins</a></li>
-<li><a href="#orgdc792b0">Aggregation</a></li>
+<li><a href="#orga9af408">Working with XML</a></li>
+<li><a href="#org03bc624">Joins</a></li>
+<li><a href="#orgea3b22d">Aggregation</a></li>
 </ul>
 </li>
-<li><a href="#orgbd01886">Programming in R (language and evaluation)</a>
+<li><a href="#orgdcb2b47">Programming in R (language and evaluation)</a>
 <ul>
-<li><a href="#org515ca82">Recommended reading</a></li>
-<li><a href="#org382cbf1">Functional programming support</a></li>
-<li><a href="#org48a7ab9">R/Haskell Prelude</a></li>
-<li><a href="#org7bb7031">Program flow and control</a></li>
-<li><a href="#org7fc8034">Numbers</a></li>
-<li><a href="#orgf94e0a3">Metaprogramming and nonstandard evaluation</a></li>
-<li><a href="#org7db8823">R6 and OOP</a></li>
+<li><a href="#org24f613e">Recommended reading</a></li>
+<li><a href="#org2ab2491">Functional programming support</a></li>
+<li><a href="#orge5c70df">R/Haskell Prelude</a></li>
+<li><a href="#org6650134">Program flow and control</a></li>
+<li><a href="#org937941b">Numbers</a></li>
+<li><a href="#orgf9a9eb5">Metaprogramming and nonstandard evaluation</a></li>
+<li><a href="#orgdddc300">Object-oriented programming</a></li>
 </ul>
 </li>
-<li><a href="#org8c67a91">Statistics with R</a>
+<li><a href="#org6542a9d">Statistics with R</a>
 <ul>
-<li><a href="#org0ce9935">Linear regression <code>lm</code></a></li>
-<li><a href="#orgd4be952">Zero-inflated regression</a></li>
-<li><a href="#org493b977"><span class="todo TODO">TODO</span> Mathematical optimisation</a></li>
-<li><a href="#org2485161">Computational geography and cartography</a></li>
-<li><a href="#org8ee369d">Differential equations with <code>deSolve</code></a></li>
-<li><a href="#orgcbdbff8">MCMC (without <code>Stan</code>)</a></li>
-<li><a href="#org30a16ed">(Nonparametric) density estimation with <code>KernSmooth</code></a></li>
+<li><a href="#org1c02152">Linear regression <code>lm</code></a></li>
+<li><a href="#org990e9a5">Zero-inflated regression</a></li>
+<li><a href="#orge771747"><span class="todo TODO">TODO</span> Mathematical optimisation</a></li>
+<li><a href="#org764bd73">Computational geography and cartography</a></li>
+<li><a href="#org6a3c896">Differential equations with <code>deSolve</code></a></li>
+<li><a href="#org2a3e3e0">MCMC (without <code>Stan</code>)</a></li>
+<li><a href="#orge5ea2d5">(Nonparametric) density estimation with <code>KernSmooth</code></a></li>
 </ul>
 </li>
-<li><a href="#org1a4a5e0">Miscellaneous functions</a>
+<li><a href="#orgbccc8c0">Miscellaneous functions</a>
 <ul>
-<li><a href="#org5aeecc7">Step function</a></li>
-<li><a href="#orgd10874a">Number of lines in a file</a></li>
-<li><a href="#org99b0e54">Julian day of the year</a></li>
+<li><a href="#orgca493cc">Step function</a></li>
+<li><a href="#orgf0c6901">Number of lines in a file</a></li>
+<li><a href="#org1f87986">Julian day of the year</a></li>
 </ul>
 </li>
-<li><a href="#org0c5b6b9">Further reading</a>
+<li><a href="#orge244fb4">Further reading</a>
 <ul>
-<li><a href="#org301b64d">Articles</a></li>
-<li><a href="#org42b5699">Blogs</a></li>
-<li><a href="#org562f9c1">Books</a></li>
-<li><a href="#org0e1ed4b">Documentation</a></li>
-<li><a href="#org43fc8eb">Curated packages</a></li>
+<li><a href="#org03666b1">Articles</a></li>
+<li><a href="#org2068dcf">Blogs</a></li>
+<li><a href="#org6cb8af5">Books</a></li>
+<li><a href="#org48499cd">Documentation</a></li>
+<li><a href="#org2d4f823">Curated packages</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1e306fe" class="outline-2">
-<h2 id="org1e306fe">Programming in R (installation and administration)</h2>
-<div class="outline-text-2" id="text-org1e306fe">
+<div id="outline-container-org15eafb5" class="outline-2">
+<h2 id="org15eafb5">Programming in R (installation and administration)</h2>
+<div class="outline-text-2" id="text-org15eafb5">
 </div>
-<div id="outline-container-org05cfc6a" class="outline-3">
-<h3 id="org05cfc6a">Installing and updating R</h3>
-<div class="outline-text-3" id="text-org05cfc6a">
+<div id="outline-container-org040c5fe" class="outline-3">
+<h3 id="org040c5fe">Installing and updating R</h3>
+<div class="outline-text-3" id="text-org040c5fe">
 <p>
-<b>Last update was to 4.2.1 &#x2013; Funny-Looking Kid</b>
+<b>Last update was to 4.2.3 &#x2013; Shortstop Beagle</b>
 </p>
 
 <p>
@@ -341,6 +353,7 @@ are as follows.
 <ul class="org-ul">
 <li>If you are using this with RStudio, you will need to use <code>--enable-R-shlib</code>.</li>
 <li>If you are using SVG you may need to include <code>--with-cairo</code>.</li>
+<li>If you are using Wayland you might need <code>--with-x=no</code>.</li>
 </ul></li>
 <li>Run <code>make</code> and <code>make info</code> to compile R and the documentation.</li>
 <li>Check that the compilation has worked properly with <code>make check</code> and address
@@ -358,25 +371,26 @@ packages, the following command can help with this.
 
 <div class="org-src-container">
 <pre class="src src-R">my_pkgs &lt;- c("ape",
-	     "argparse",
-	     "coda",
-	     "cowplot",
-	     "dplyr",
-	     "devtools",
-	     "future",
-	     "furrr",
-	     "htmltools",
-	     "jsonlite",
-	     "phangorn",
-	     "purrr",
-	     "purrr",
-	     "magrittr",
-	     "mcmc",
-	     "ggplot2",
-	     "remotes",
-	     "reshape2",
-	     "stringr",
-	     "xml2")
+             "argparse",
+             "coda",
+             "cowplot",
+             "dplyr",
+             "devtools",
+             "future",
+             "furrr",
+             "htmltools",
+             "jsonlite",
+             "phangorn",
+             "purrr",
+             "purrr",
+             "magrittr",
+             "mcmc",
+             "ggplot2",
+             "remotes",
+             "reshape2",
+             "stringr",
+             "targets",
+             "xml2")
 install.packages(my_pkgs)
 </pre>
 </div>
@@ -388,10 +402,14 @@ fixed this. Old package versions hanging around can be found with <code>.libPath
 </p>
 </div>
 
-<div id="outline-container-org4a3163a" class="outline-4">
-<h4 id="org4a3163a">Notes</h4>
-<div class="outline-text-4" id="text-org4a3163a">
+<div id="outline-container-orga00e12e" class="outline-4">
+<h4 id="orga00e12e">Notes</h4>
+<div class="outline-text-4" id="text-orga00e12e">
 <ul class="org-ul">
+<li><code>R.4.2.3</code> I needed to use <code>--with-x=no</code> because I don't have X on the new
+laptop. Sadly, this seems to break plots. Also, <code>make install</code> put the binary
+in <code>/usr/local/bin</code> which appeared on the path after the location where the
+default installation is.</li>
 <li><code>R.4.2.1</code></li>
 <li><code>R.4.2.0</code> extends the pipe syntax, and some cases where <code>if</code> and <code>while</code> previously
 threw a warning now throw and error.</li>
@@ -415,9 +433,9 @@ list. I also needed to install a package <code>build-dep</code> before building 
 </div>
 </div>
 
-<div id="outline-container-orga40e25a" class="outline-3">
-<h3 id="orga40e25a">Managing R installations</h3>
-<div class="outline-text-3" id="text-orga40e25a">
+<div id="outline-container-org1469c96" class="outline-3">
+<h3 id="org1469c96">Managing R installations</h3>
+<div class="outline-text-3" id="text-org1469c96">
 <p>
 There is an R package, <a href="https://github.com/r-lib/rim">rim</a>, which manages installations: R installation manager.
 </p>
@@ -425,21 +443,21 @@ There is an R package, <a href="https://github.com/r-lib/rim">rim</a>, which man
 </div>
 </div>
 
-<div id="outline-container-org1ff94c9" class="outline-2">
-<h2 id="org1ff94c9">Programming in R (software development)</h2>
-<div class="outline-text-2" id="text-org1ff94c9">
+<div id="outline-container-org0f891d8" class="outline-2">
+<h2 id="org0f891d8">Programming in R (software development)</h2>
+<div class="outline-text-2" id="text-org0f891d8">
 </div>
-<div id="outline-container-org347149f" class="outline-3">
-<h3 id="org347149f">Scripting with R</h3>
-<div class="outline-text-3" id="text-org347149f">
+<div id="outline-container-org564e751" class="outline-3">
+<h3 id="org564e751">Scripting with R</h3>
+<div class="outline-text-3" id="text-org564e751">
 </div>
-<div id="outline-container-org5188f9b" class="outline-4">
-<h4 id="org5188f9b">Running system commands</h4>
-<div class="outline-text-4" id="text-org5188f9b">
+<div id="outline-container-org9e0a036" class="outline-4">
+<h4 id="org9e0a036">Running system commands with <code>base</code></h4>
+<div class="outline-text-4" id="text-org9e0a036">
 <div class="org-src-container">
 <pre class="src src-R">system2(command, args = character(),
-	wait = TRUE,
-	timeout = 0)
+        wait = TRUE,
+        timeout = 0)
 </pre>
 </div>
 
@@ -456,9 +474,19 @@ after that amount of time if it has not finished.</li>
 </div>
 </div>
 
-<div id="outline-container-org2bd3305" class="outline-4">
-<h4 id="org2bd3305">Helper function for system commands</h4>
-<div class="outline-text-4" id="text-org2bd3305">
+<div id="outline-container-orgb8fef1d" class="outline-4">
+<h4 id="orgb8fef1d">Running system commands with <code>processx</code></h4>
+<div class="outline-text-4" id="text-orgb8fef1d">
+<p>
+There is the <code>run</code> command (from the library) which is a convenience function,
+otherwise you can use <code>process$new(...)</code> to create an instance of a new process.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6f0ec05" class="outline-4">
+<h4 id="org6f0ec05">Helper function for system commands</h4>
+<div class="outline-text-4" id="text-org6f0ec05">
 <p>
 The following can be saved to a file and imported if you just need that one
 function.
@@ -501,9 +529,56 @@ run_command &lt;- function(cmd, silent = TRUE, ...) {
 </div>
 </div>
 
-<div id="outline-container-org500fb31" class="outline-3">
-<h3 id="org500fb31">Error handling</h3>
-<div class="outline-text-3" id="text-org500fb31">
+<div id="outline-container-org2ef9789" class="outline-3">
+<h3 id="org2ef9789">Working with files</h3>
+<div class="outline-text-3" id="text-org2ef9789">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Some functions for working with filepaths.</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Function</th>
+<th scope="col" class="org-left">Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>tempfile</code></td>
+<td class="org-left">create temporary file</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>basename</code></td>
+<td class="org-left">get the file's name</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dirname</code></td>
+<td class="org-left">get the file's directory</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>file.exists</code></td>
+<td class="org-left">predicate for file existance</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dir.exists</code></td>
+<td class="org-left">predicate for directory existance</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org0c567ca" class="outline-3">
+<h3 id="org0c567ca">Error handling</h3>
+<div class="outline-text-3" id="text-org0c567ca">
 <p>
 Hadley has a nice <a href="http://adv-r.had.co.nz/Exceptions-Debugging.html#condition-handling">description</a> of how to handle these things in more detail, but here is a small example (from him)
 </p>
@@ -521,9 +596,9 @@ show_condition(10) # evalates to the numeric 10
 </div>
 </div>
 
-<div id="outline-container-orgd07cec8" class="outline-3">
-<h3 id="orgd07cec8"><i>R Packages</i> by Wickham and Bryan</h3>
-<div class="outline-text-3" id="text-orgd07cec8">
+<div id="outline-container-org965c800" class="outline-3">
+<h3 id="org965c800"><i>R Packages</i> by Wickham and Bryan</h3>
+<div class="outline-text-3" id="text-org965c800">
 <p>
 There is a new edition of the <a href="https://r-pkgs.org/">R packages book available online</a>. Here are some
 notes about package creation based on reading through that book. The <a href="https://cran.r-project.org/doc/manuals/R-exts.html#Top">Writing R
@@ -532,9 +607,9 @@ more friendly for those getting started.
 </p>
 </div>
 
-<div id="outline-container-orge830378" class="outline-4">
-<h4 id="orge830378">Package development loop</h4>
-<div class="outline-text-4" id="text-orge830378">
+<div id="outline-container-orgaec6e93" class="outline-4">
+<h4 id="orgaec6e93">Package development loop</h4>
+<div class="outline-text-4" id="text-orgaec6e93">
 <ol class="org-ol">
 <li><code>library(devtools)</code></li>
 <li><code>create_package("~/path/to/my/package")</code></li>
@@ -556,9 +631,9 @@ more friendly for those getting started.
 </div>
 </div>
 
-<div id="outline-container-orgdca3b15" class="outline-4">
-<h4 id="orgdca3b15">Package dependencies</h4>
-<div class="outline-text-4" id="text-orgdca3b15">
+<div id="outline-container-org5e2aa01" class="outline-4">
+<h4 id="org5e2aa01">Package dependencies</h4>
+<div class="outline-text-4" id="text-org5e2aa01">
 <p>
 The <code>DESCRIPTION</code> file is the place to go!
 <i>Hadley says:</i> use <del><code>use_package("foo", "bar")</code></del> to have <code>foo</code> and <code>bar</code> added to the dependencies of the package being developed.
@@ -594,9 +669,9 @@ If the package depends on a specific version of the package this can be added to
 </div>
 </div>
 
-<div id="outline-container-org5d73c01" class="outline-4">
-<h4 id="org5d73c01">Vignettes</h4>
-<div class="outline-text-4" id="text-org5d73c01">
+<div id="outline-container-orgbd9bf45" class="outline-4">
+<h4 id="orgbd9bf45">Vignettes</h4>
+<div class="outline-text-4" id="text-orgbd9bf45">
 <p>
 Create a template vignette with <code>usethis::use_vignette</code>.
 There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">R Markdown Cheat Sheet</a>
@@ -605,9 +680,9 @@ There is an <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdow
 </div>
 </div>
 
-<div id="outline-container-org3b4430f" class="outline-3">
-<h3 id="org3b4430f">High performance computing</h3>
-<div class="outline-text-3" id="text-org3b4430f">
+<div id="outline-container-org9fae96b" class="outline-3">
+<h3 id="org9fae96b">High performance computing</h3>
+<div class="outline-text-3" id="text-org9fae96b">
 <p>
 <a href="https://cran.r-project.org/view=HighPerformanceComputing">CRAN Task View for High Performance Computing</a>
 </p>
@@ -632,27 +707,27 @@ any IO. It's a good way to force the use of pure functions.
 </div>
 </div>
 
-<div id="outline-container-orga7d58c7" class="outline-3">
-<h3 id="orga7d58c7">Packages I like</h3>
-<div class="outline-text-3" id="text-orga7d58c7">
+<div id="outline-container-orgd9d44b4" class="outline-3">
+<h3 id="orgd9d44b4">Packages I like</h3>
+<div class="outline-text-3" id="text-orgd9d44b4">
 </div>
-<div id="outline-container-org2c5b1da" class="outline-4">
-<h4 id="org2c5b1da"><a href="https://cran.r-project.org/web/packages/ape/ape.pdf">ape</a> Analyses of Phylogenetics and Evolution</h4>
+<div id="outline-container-org4f1a9de" class="outline-4">
+<h4 id="org4f1a9de"><a href="https://cran.r-project.org/web/packages/ape/ape.pdf">ape</a> Analyses of Phylogenetics and Evolution</h4>
 </div>
-<div id="outline-container-org700fcec" class="outline-4">
-<h4 id="org700fcec"><a href="https://cran.r-project.org/web/packages/deSolve/index.html">deSolve</a> Solvers for Initial Value Problems of Differential Equations</h4>
+<div id="outline-container-org8a785f2" class="outline-4">
+<h4 id="org8a785f2"><a href="https://cran.r-project.org/web/packages/deSolve/index.html">deSolve</a> Solvers for Initial Value Problems of Differential Equations</h4>
 </div>
-<div id="outline-container-org5b7c5e8" class="outline-4">
-<h4 id="org5b7c5e8"><a href="https://cran.r-project.org/web/packages/lhs/vignettes/lhs_basics.html">lhs</a> Latin Hypercube Samples</h4>
-<div class="outline-text-4" id="text-org5b7c5e8">
+<div id="outline-container-orgd6d36ac" class="outline-4">
+<h4 id="orgd6d36ac"><a href="https://cran.r-project.org/web/packages/lhs/vignettes/lhs_basics.html">lhs</a> Latin Hypercube Samples</h4>
+<div class="outline-text-4" id="text-orgd6d36ac">
 <ul class="org-ul">
 <li><code>randomLHS(n,k)</code> generates \(n\) samples from \([0,1]^{k}\).</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9beb62a" class="outline-4">
-<h4 id="org9beb62a"><a href="https://cran.r-project.org/web/packages/magrittr/magrittr.pdf">magrittr</a> a forward pipe operator for R</h4>
-<div class="outline-text-4" id="text-org9beb62a">
+<div id="outline-container-org6616b58" class="outline-4">
+<h4 id="org6616b58"><a href="https://cran.r-project.org/web/packages/magrittr/magrittr.pdf">magrittr</a> a forward pipe operator for R</h4>
+<div class="outline-text-4" id="text-org6616b58">
 <p>
 There are many useful aliases exported by <code>magrittr</code>, the table below has some examples.
 </p>
@@ -706,33 +781,33 @@ There are many useful aliases exported by <code>magrittr</code>, the table below
 </div>
 </div>
 
-<div id="outline-container-orga3287c5" class="outline-4">
-<h4 id="orga3287c5"><a href="https://cran.r-project.org/web/packages/stringr/stringr.pdf">stringr</a> Simple, Consistent Wrappers for Common String Operations</h4>
+<div id="outline-container-org2628d38" class="outline-4">
+<h4 id="org2628d38"><a href="https://cran.r-project.org/web/packages/stringr/stringr.pdf">stringr</a> Simple, Consistent Wrappers for Common String Operations</h4>
 </div>
-<div id="outline-container-orgd5fb6b2" class="outline-4">
-<h4 id="orgd5fb6b2"><a href="https://cran.r-project.org/web/packages/styler/styler.pdf">styler</a> Non-Invasive Pretty Printing of R Code</h4>
+<div id="outline-container-org8b21543" class="outline-4">
+<h4 id="org8b21543"><a href="https://cran.r-project.org/web/packages/styler/styler.pdf">styler</a> Non-Invasive Pretty Printing of R Code</h4>
 </div>
-<div id="outline-container-orgd54ae56" class="outline-4">
-<h4 id="orgd54ae56"><a href="https://cran.r-project.org/web/packages/testthat/testthat.pdf">testthat</a> Unit Testing for R</h4>
+<div id="outline-container-org3cf951b" class="outline-4">
+<h4 id="org3cf951b"><a href="https://cran.r-project.org/web/packages/testthat/testthat.pdf">testthat</a> Unit Testing for R</h4>
 </div>
-<div id="outline-container-orgf20caeb" class="outline-4">
-<h4 id="orgf20caeb"><a href="https://cran.r-project.org/web/packages/truncnorm/truncnorm.pdf">truncnorm</a> Truncated Normal Distribution</h4>
+<div id="outline-container-orga531926" class="outline-4">
+<h4 id="orga531926"><a href="https://cran.r-project.org/web/packages/truncnorm/truncnorm.pdf">truncnorm</a> Truncated Normal Distribution</h4>
 </div>
 </div>
 
-<div id="outline-container-orgf815d66" class="outline-3">
-<h3 id="orgf815d66">Reshaping dataframes with <code>reshape2</code></h3>
-<div class="outline-text-3" id="text-orgf815d66">
+<div id="outline-container-org64076ae" class="outline-3">
+<h3 id="org64076ae">Reshaping dataframes with <code>reshape2</code></h3>
+<div class="outline-text-3" id="text-org64076ae">
 </div>
-<div id="outline-container-orge2fa136" class="outline-4">
-<h4 id="orge2fa136">Casting</h4>
-<div class="outline-text-4" id="text-orge2fa136">
+<div id="outline-container-orgb1df9e8" class="outline-4">
+<h4 id="orgb1df9e8">Casting</h4>
+<div class="outline-text-4" id="text-orgb1df9e8">
 <p>
 Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/10/19/reshape/">Sean C. Anderson</a> helps
 </p>
 
 
-<div id="org0b26764" class="figure">
+<div id="org666046b" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -740,9 +815,9 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </div>
 </div>
 
-<div id="outline-container-org0e5f9ee" class="outline-3">
-<h3 id="org0e5f9ee">Command line arguments</h3>
-<div class="outline-text-3" id="text-org0e5f9ee">
+<div id="outline-container-org13455bb" class="outline-3">
+<h3 id="org13455bb">Command line arguments</h3>
+<div class="outline-text-3" id="text-org13455bb">
 <p>
 The simplest example is probably what you'll need most of the time
 </p>
@@ -769,9 +844,9 @@ Be careful when passing in numbers because they are read in as strings.
 </div>
 </div>
 
-<div id="outline-container-org2caf2c6" class="outline-3">
-<h3 id="org2caf2c6">Command line arguments with <code>argparse</code></h3>
-<div class="outline-text-3" id="text-org2caf2c6">
+<div id="outline-container-orgd1e3a81" class="outline-3">
+<h3 id="orgd1e3a81">Command line arguments with <code>argparse</code></h3>
+<div class="outline-text-3" id="text-orgd1e3a81">
 <p>
 See the <a href="https://cran.r-project.org/web/packages/argparse/vignettes/argparse.html">vignette</a>.
 </p>
@@ -783,24 +858,24 @@ See the <a href="https://cran.r-project.org/web/packages/argparse/vignettes/argp
 parser &lt;- ArgumentParser()
 
 parser$add_argument(
-	 "-v",
-	 "--verbose",
-	 action = "store_true",
-	 default = FALSE,
-	 help = "Verbose output"
+         "-v",
+         "--verbose",
+         action = "store_true",
+         default = FALSE,
+         help = "Verbose output"
        )
 parser$add_argument(
-	 "-s",
-	 "--seed",
-	 type = "integer",
-	 default = 1,
-	 help = "PRNG seed"
+         "-s",
+         "--seed",
+         type = "integer",
+         default = 1,
+         help = "PRNG seed"
        )
 parser$add_argument(
-	 "-p",
-	 "--parameters",
-	 type = "character",
-	 help = "Filepath to parameters JSON"
+         "-p",
+         "--parameters",
+         type = "character",
+         help = "Filepath to parameters JSON"
        )
 
 args &lt;- parser$parse_args()
@@ -810,9 +885,9 @@ args &lt;- parser$parse_args()
 </div>
 
 
-<div id="outline-container-orgb163758" class="outline-3">
-<h3 id="orgb163758">Working with JSON</h3>
-<div class="outline-text-3" id="text-orgb163758">
+<div id="outline-container-org2a934a3" class="outline-3">
+<h3 id="org2a934a3">Working with JSON</h3>
+<div class="outline-text-3" id="text-org2a934a3">
 <p>
 For parsing and encoding JSON there is the <code>jsonlite</code> package.
 </p>
@@ -824,9 +899,9 @@ it is probably better to set <code>digits = 16</code>.
 </p>
 </div>
 
-<div id="outline-container-org6dbe886" class="outline-4">
-<h4 id="org6dbe886">Examples</h4>
-<div class="outline-text-4" id="text-org6dbe886">
+<div id="outline-container-org08b3a19" class="outline-4">
+<h4 id="org08b3a19">Examples</h4>
+<div class="outline-text-4" id="text-org08b3a19">
 <div class="org-src-container">
 <pre class="src src-R">library(jsonlite)
 read_json(&lt;filepath&gt;)
@@ -842,31 +917,31 @@ the time.
 </div>
 </div>
 
-<div id="outline-container-org46c5d42" class="outline-3">
-<h3 id="org46c5d42">Working with HTML</h3>
-<div class="outline-text-3" id="text-org46c5d42">
+<div id="outline-container-orga07cf69" class="outline-3">
+<h3 id="orga07cf69">Working with HTML</h3>
+<div class="outline-text-3" id="text-orga07cf69">
 <p>
 There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-orgc7187c2" class="outline-4">
-<h4 id="orgc7187c2">Example</h4>
-<div class="outline-text-4" id="text-orgc7187c2">
+<div id="outline-container-orga75abfb" class="outline-4">
+<h4 id="orga75abfb">Example</h4>
+<div class="outline-text-4" id="text-orga75abfb">
 <div class="org-src-container">
 <pre class="src src-R">library(htmltools)
 
 my_html &lt;-
   tags$html(
-	 tags$head(tags$title("My Title")),
-	 tags$body(
-		tags$h1("Hello"),
-		tags$div(
-		       tags$h3("Hello World"),
-		       tags$img(src = "the-world.png"),
-		       tags$p("What a wonderful world!")
-		     )
-	      )
+         tags$head(tags$title("My Title")),
+         tags$body(
+                tags$h1("Hello"),
+                tags$div(
+                       tags$h3("Hello World"),
+                       tags$img(src = "the-world.png"),
+                       tags$p("What a wonderful world!")
+                     )
+              )
        )
 
 save_html(
@@ -881,36 +956,36 @@ produces the following HTML
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-&lt;meta charset="utf-8"/&gt;
-&lt;style&gt;body{background-color:white;}&lt;/style&gt;
+<pre class="src src-html">&lt;<span style="color: #3a81c3;">!DOCTYPE</span> html&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">html</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">meta</span> <span style="color: #715ab1;">charset</span>=<span style="color: #2d9574;">"utf-8"</span>/&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">style</span>&gt;body{background-color:white;}&lt;/<span style="color: #6c3163; font-weight: bold;">style</span>&gt;
 
 
-&lt;/head&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;My Title&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Hello&lt;/h1&gt;
-    &lt;div&gt;
-      &lt;h3&gt;Hello World&lt;/h3&gt;
-      &lt;img src="the-world.png"/&gt;
-      &lt;p&gt;What a wonderful world!&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-&lt;/html&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">My Title</span>&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">head</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">body</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Hello</span>&lt;/<span style="color: #6c3163; font-weight: bold;">h1</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+      &lt;<span style="color: #6c3163; font-weight: bold;">h3</span>&gt;<span style="font-style: italic; text-decoration: underline;">Hello World</span>&lt;/<span style="color: #6c3163; font-weight: bold;">h3</span>&gt;
+      &lt;<span style="color: #6c3163; font-weight: bold;">img</span> <span style="color: #715ab1;">src</span>=<span style="color: #2d9574;">"the-world.png"</span>/&gt;
+      &lt;<span style="color: #6c3163; font-weight: bold;">p</span>&gt;What a wonderful world!&lt;/<span style="color: #6c3163; font-weight: bold;">p</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">div</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">body</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">html</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc80ada0" class="outline-4">
-<h4 id="orgc80ada0">Example: embedding PNG as string in HTML</h4>
-<div class="outline-text-4" id="text-orgc80ada0">
+<div id="outline-container-org58e3f7c" class="outline-4">
+<h4 id="org58e3f7c">Example: embedding PNG as string in HTML</h4>
+<div class="outline-text-4" id="text-org58e3f7c">
 <p>
 The following function is useful if you want to avoid referencing external files
 in your HTML but still want to include figures.
@@ -928,9 +1003,9 @@ png_as_img &lt;- function(filepath, ...) {
   if (tools::file_ext(filepath) == "png") {
     b64 &lt;- base64enc::base64encode(what = filepath)
     tags$img(
-	   src = paste("data:image/png;base64", b64, sep = ","),
-	   ...
-	 )
+           src = paste("data:image/png;base64", b64, sep = ","),
+           ...
+         )
   } else {
     stop("Filepath given to png_as_img must be a PNG.")
   }
@@ -940,9 +1015,9 @@ png_as_img &lt;- function(filepath, ...) {
 </div>
 </div>
 
-<div id="outline-container-org9f05e01" class="outline-4">
-<h4 id="org9f05e01">Example: including a table representation of a dataframe</h4>
-<div class="outline-text-4" id="text-org9f05e01">
+<div id="outline-container-orge8f7930" class="outline-4">
+<h4 id="orge8f7930">Example: including a table representation of a dataframe</h4>
+<div class="outline-text-4" id="text-orge8f7930">
 <div class="org-src-container">
 <pre class="src src-R">#' An HTML tag encoding a data frame as a basic table.
 #'
@@ -954,8 +1029,8 @@ png_as_img &lt;- function(filepath, ...) {
 df_as_table &lt;- function(df, ...) {
   tmp_file &lt;- tempfile()
   print(xtable::xtable(df, ...),
-	type = "html",
-	file = tmp_file)
+        type = "html",
+        file = tmp_file)
   return(tags$div(includeHTML(tmp_file)))
 }
 </pre>
@@ -964,17 +1039,17 @@ df_as_table &lt;- function(df, ...) {
 </div>
 </div>
 
-<div id="outline-container-org0f85338" class="outline-3">
-<h3 id="org0f85338">OUTDATED: Working with XML with <code>XML</code></h3>
-<div class="outline-text-3" id="text-org0f85338">
+<div id="outline-container-org10288b7" class="outline-3">
+<h3 id="org10288b7">OUTDATED: Working with XML with <code>XML</code></h3>
+<div class="outline-text-3" id="text-org10288b7">
 <p>
-<b>NOTE:</b> It looks like <code>xml2</code> might be a better choice for XML work, please see <a href="#org8228161">these notes</a> instead.
+<b>NOTE:</b> It looks like <code>xml2</code> might be a better choice for XML work, please see <a href="#orga9af408">these notes</a> instead.
 </p>
 </div>
 
-<div id="outline-container-orgcdedbf5" class="outline-4">
-<h4 id="orgcdedbf5">Example I</h4>
-<div class="outline-text-4" id="text-orgcdedbf5">
+<div id="outline-container-orgcc9a84c" class="outline-4">
+<h4 id="orgcc9a84c">Example I</h4>
+<div class="outline-text-4" id="text-orgcc9a84c">
 <p>
 The following snippet produces a file <code>demo.xml</code>
 </p>
@@ -997,7 +1072,7 @@ z &lt;- xmlNode(
   "beast",
   input_node,
   attrs = list(version = "2.0",
-	       namespace = "beast.core:beast.evolution.operators")
+               namespace = "beast.core:beast.evolution.operators")
 )
 
 saveXML(
@@ -1013,20 +1088,20 @@ And here is the result
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;beast version="2.0" namespace="beast.core:beast.evolution.operators"&gt;
- &lt;input spec="HKY" id="hky"&gt;
-  &lt;kappa idref="hky.kappa"/&gt;
- &lt;/input&gt;
-&lt;/beast&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">beast</span> <span style="color: #715ab1;">version</span>=<span style="color: #2d9574;">"2.0"</span> <span style="color: #715ab1;">namespace</span>=<span style="color: #2d9574;">"beast.core:beast.evolution.operators"</span>&gt;
+ &lt;<span style="color: #6c3163; font-weight: bold;">input</span> <span style="color: #715ab1;">spec</span>=<span style="color: #2d9574;">"HKY"</span> <span style="color: #715ab1;">id</span>=<span style="color: #2d9574;">"hky"</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">kappa</span> <span style="color: #715ab1;">idref</span>=<span style="color: #2d9574;">"hky.kappa"</span>/&gt;
+ &lt;/<span style="color: #6c3163; font-weight: bold;">input</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">beast</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge0ecfa9" class="outline-4">
-<h4 id="orge0ecfa9">Example II</h4>
-<div class="outline-text-4" id="text-orge0ecfa9">
+<div id="outline-container-org1c4cd28" class="outline-4">
+<h4 id="org1c4cd28">Example II</h4>
+<div class="outline-text-4" id="text-org1c4cd28">
 <p>
 Given an XML file, <code>demo.xml</code>, we can read that into a list-like object:
 </p>
@@ -1040,9 +1115,9 @@ xmlToList(xmlParse("demo.xml"))
 </div>
 </div>
 
-<div id="outline-container-org6f5e832" class="outline-4">
-<h4 id="org6f5e832">Example III</h4>
-<div class="outline-text-4" id="text-org6f5e832">
+<div id="outline-container-orge501d8c" class="outline-4">
+<h4 id="orge501d8c">Example III</h4>
+<div class="outline-text-4" id="text-orge501d8c">
 <p>
 We can read in the XML, edit one of the nodes by indexing into the object and
 replacing it, and then write it back to another file.
@@ -1070,9 +1145,9 @@ saveXML(
 </div>
 </div>
 
-<div id="outline-container-org7e354f9" class="outline-4">
-<h4 id="org7e354f9">Example IV</h4>
-<div class="outline-text-4" id="text-org7e354f9">
+<div id="outline-container-orgc083bf3" class="outline-4">
+<h4 id="orgc083bf3">Example IV</h4>
+<div class="outline-text-4" id="text-orgc083bf3">
 <p>
 We can use <a href="https://www.w3schools.com/xml/xpath_syntax.asp">XPath syntax</a> to extract a particular node and then query its
 attributes.
@@ -1088,22 +1163,22 @@ xmlGetAttr(kappa_node, "idref")
 </div>
 </div>
 
-<div id="outline-container-org9e710dd" class="outline-3">
-<h3 id="org9e710dd">Working with Mustache templates</h3>
-<div class="outline-text-3" id="text-org9e710dd">
+<div id="outline-container-org94e7bc6" class="outline-3">
+<h3 id="org94e7bc6">Working with Mustache templates</h3>
+<div class="outline-text-3" id="text-org94e7bc6">
 </div>
-<div id="outline-container-org7972174" class="outline-4">
-<h4 id="org7972174">Example</h4>
-<div class="outline-text-4" id="text-org7972174">
+<div id="outline-container-org24129ab" class="outline-4">
+<h4 id="org24129ab">Example</h4>
+<div class="outline-text-4" id="text-org24129ab">
 <div class="org-src-container">
 <pre class="src src-R">library(whisker)
 
 template &lt;- readLines("./template.html")
 data &lt;- list( name = "Chris"
-	    , value = 10000
-	    , taxed_value = 10000 - (10000 * 0.4)
-	    , in_ca = TRUE
-	    )
+            , value = 10000
+            , taxed_value = 10000 - (10000 * 0.4)
+            , in_ca = TRUE
+            )
 
 writeLines(whisker.render(template, data), "./output.html")
 </pre>
@@ -1124,9 +1199,9 @@ Well, ${{taxed_value}}, after taxes.
 </div>
 </div>
 
-<div id="outline-container-org085ad8d" class="outline-3">
-<h3 id="org085ad8d">Unit testing with <code>testthat</code></h3>
-<div class="outline-text-3" id="text-org085ad8d">
+<div id="outline-container-org8293f07" class="outline-3">
+<h3 id="org8293f07">Unit testing with <code>testthat</code></h3>
+<div class="outline-text-3" id="text-org8293f07">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1160,9 +1235,9 @@ Well, ${{taxed_value}}, after taxes.
 </div>
 </div>
 
-<div id="outline-container-orga829b72" class="outline-3">
-<h3 id="orga829b72">Dependency management with <code>packrat</code></h3>
-<div class="outline-text-3" id="text-orga829b72">
+<div id="outline-container-org6f40c21" class="outline-3">
+<h3 id="org6f40c21">Dependency management with <code>packrat</code></h3>
+<div class="outline-text-3" id="text-org6f40c21">
 <p>
 Packrat is developed by the team at RStudio. It relies on the notion of a
 <i>project</i>, which we might think of as a single analysis or collection of related
@@ -1170,9 +1245,9 @@ analyses. A project should live in a single directory.
 </p>
 </div>
 
-<div id="outline-container-orgd9d7d6d" class="outline-4">
-<h4 id="orgd9d7d6d">Usage</h4>
-<div class="outline-text-4" id="text-orgd9d7d6d">
+<div id="outline-container-orgc2645f6" class="outline-4">
+<h4 id="orgc2645f6">Usage</h4>
+<div class="outline-text-4" id="text-orgc2645f6">
 <p>
 To start a packrat project use
 </p>
@@ -1223,9 +1298,9 @@ the packages so they can be <i>restored</i>.
 </div>
 </div>
 
-<div id="outline-container-org08ea38a" class="outline-4">
-<h4 id="org08ea38a">Version control</h4>
-<div class="outline-text-4" id="text-org08ea38a">
+<div id="outline-container-org0358272" class="outline-4">
+<h4 id="org0358272">Version control</h4>
+<div class="outline-text-4" id="text-org0358272">
 <p>
 The following files should be included into version control:
 </p>
@@ -1266,9 +1341,9 @@ from the project directory).</li>
 </div>
 </div>
 
-<div id="outline-container-org0f60713" class="outline-3">
-<h3 id="org0f60713">Package and project management with <code>usethis</code></h3>
-<div class="outline-text-3" id="text-org0f60713">
+<div id="outline-container-org7c29a55" class="outline-3">
+<h3 id="org7c29a55">Package and project management with <code>usethis</code></h3>
+<div class="outline-text-3" id="text-org7c29a55">
 <ul class="org-ul">
 <li>Add dependencies to packages with <code>usethis::use_package</code> instead of
 <code>devtools::use_package</code> which is now deprecated. It is the same deal with
@@ -1277,9 +1352,9 @@ from the project directory).</li>
 </div>
 </div>
 
-<div id="outline-container-orgf69533a" class="outline-3">
-<h3 id="orgf69533a">Date handling with <code>lubridate</code></h3>
-<div class="outline-text-3" id="text-orgf69533a">
+<div id="outline-container-orgf7759e0" class="outline-3">
+<h3 id="orgf7759e0">Date handling with <code>lubridate</code></h3>
+<div class="outline-text-3" id="text-orgf7759e0">
 <p>
 You may think you don't need to use this, but you are probably wrong. It won't
 take long before you need something that is painful to do in base date types,
@@ -1288,9 +1363,9 @@ you may as well start out using this. It's part of the tidyverse, so it's safe.
 </div>
 </div>
 
-<div id="outline-container-org2bbd079" class="outline-3">
-<h3 id="org2bbd079">String handling with <code>stringr</code></h3>
-<div class="outline-text-3" id="text-org2bbd079">
+<div id="outline-container-org5386d35" class="outline-3">
+<h3 id="org5386d35">String handling with <code>stringr</code></h3>
+<div class="outline-text-3" id="text-org5386d35">
 <p>
 Strings are another place where the built-in support is sufficient, but
 unpleasant to work with. The <code>stringr</code> package from the tidyverse makes this
@@ -1356,9 +1431,9 @@ much easier and is organised to work well with the modern piping style.
 </div>
 </div>
 
-<div id="outline-container-orgdea579a" class="outline-3">
-<h3 id="orgdea579a">Documentation with <code>roxygen2</code></h3>
-<div class="outline-text-3" id="text-orgdea579a">
+<div id="outline-container-orgca593b8" class="outline-3">
+<h3 id="orgca593b8">Documentation with <code>roxygen2</code></h3>
+<div class="outline-text-3" id="text-orgca593b8">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1393,9 +1468,9 @@ much easier and is organised to work well with the modern piping style.
 </div>
 </div>
 
-<div id="outline-container-org4530930" class="outline-3">
-<h3 id="org4530930">Dates and times</h3>
-<div class="outline-text-3" id="text-org4530930">
+<div id="outline-container-org149d732" class="outline-3">
+<h3 id="org149d732">Dates and times</h3>
+<div class="outline-text-3" id="text-org149d732">
 <p>
 <code>as.Date</code> is your friend.
 </p>
@@ -1449,59 +1524,59 @@ much easier and is organised to work well with the modern piping style.
 </div>
 </div>
 
-<div id="outline-container-org5283ac8" class="outline-3">
-<h3 id="org5283ac8"><code>Rmath.h</code></h3>
-<div class="outline-text-3" id="text-org5283ac8">
+<div id="outline-container-org68d6600" class="outline-3">
+<h3 id="org68d6600"><code>Rmath.h</code></h3>
+<div class="outline-text-3" id="text-org68d6600">
 <div class="org-src-container">
-<pre class="src src-C">/*
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #ecf3ec;">/*</span>
 
-  To compile and run this I used the following...
-
-
-  $ sudo apt update
-  $ sudo apt install r-mathlib
-  $ sudo apt install r-base-dev
-  $ gcc -o mathlibtest demo.c -lRmath -lm
-  $ ./mathlibtest
-
- */
-
-#include &lt;stdio.h&gt;
-
-#define MATHLIB_STANDALONE 1
-#include "Rmath.h"
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  To compile and run this I used the following...</span>
 
 
-int fib(int n) {
-  if (n &lt; 2) {
-    return(1);
-  } else {
-    return(fib(n-1) + fib(n-2));
-  }
-}
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt update</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt install r-mathlib</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ sudo apt install r-base-dev</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ gcc -o mathlibtest demo.c -lRmath -lm</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">  $ ./mathlibtest</span>
 
-int main(int ac, char** av)
-{
-  int n;
-  double foo;
+<span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
 
-  for ( n = 0; n &lt; 10; n = n + 1 ) {
-    printf("%d\n", fib(n));
-    foo = dnorm(1.0, 0.0, 1.0, 0);
-    printf("%f\n", foo);
-  }
+<span style="color: #6c3163;">#include</span> <span style="color: #3a81c3;">&lt;</span><span style="color: #2d9574;">stdio.h</span><span style="color: #3a81c3;">&gt;</span>
 
-  printf("hello, %s\n", "world");
-  return 0;
-}
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">MATHLIB_STANDALONE</span> <span style="color: #4e3163;">1</span>
+<span style="color: #6c3163;">#include</span> <span style="color: #2d9574;">"Rmath.h"</span>
+
+
+<span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">fib</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span><span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3;">if</span> <span style="color: #6c3163;">(</span>n &lt; <span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3;">return</span><span style="color: #2d9574;">(</span><span style="color: #4e3163;">1</span><span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span> <span style="color: #3a81c3;">else</span> <span style="color: #6c3163;">{</span>
+    <span style="color: #3a81c3;">return</span><span style="color: #2d9574;">(</span>fib<span style="color: #67b11d;">(</span>n-<span style="color: #4e3163;">1</span><span style="color: #67b11d;">)</span> + fib<span style="color: #67b11d;">(</span>n-<span style="color: #4e3163;">2</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span>
+<span style="color: #3a81c3;">}</span>
+
+<span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #6c3163; font-weight: bold;">main</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">ac</span>, <span style="color: #ba2f59; font-weight: bold;">char</span>** <span style="color: #715ab1;">av</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span>;
+  <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">foo</span>;
+
+  <span style="color: #3a81c3;">for</span> <span style="color: #6c3163;">(</span> n = <span style="color: #4e3163;">0</span>; n &lt; <span style="color: #4e3163;">10</span>; n = n + <span style="color: #4e3163;">1</span> <span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
+    printf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"%d\n"</span>, fib<span style="color: #67b11d;">(</span>n<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>;
+    foo = dnorm<span style="color: #2d9574;">(</span><span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">0.0</span>, <span style="color: #4e3163;">1.0</span>, <span style="color: #4e3163;">0</span><span style="color: #2d9574;">)</span>;
+    printf<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"%f\n"</span>, foo<span style="color: #2d9574;">)</span>;
+  <span style="color: #6c3163;">}</span>
+
+  printf<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"hello, %s\n"</span>, <span style="color: #2d9574;">"world"</span><span style="color: #6c3163;">)</span>;
+  <span style="color: #3a81c3;">return</span> <span style="color: #4e3163;">0</span>;
+<span style="color: #3a81c3;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org23a842f" class="outline-3">
-<h3 id="org23a842f">Cheat sheets</h3>
-<div class="outline-text-3" id="text-org23a842f">
+<div id="outline-container-org70c5394" class="outline-3">
+<h3 id="org70c5394">Cheat sheets</h3>
+<div class="outline-text-3" id="text-org70c5394">
 <ul class="org-ul">
 <li><a href="../resources/r-cheatsheet-regex.pdf">Regex cheatsheet for <code>stringr</code></a></li>
 <li><a href="https://stuff.mit.edu/afs/athena/software/r/current/RStudio/resources/roxygen_help.html">roxygen(2)</a></li>
@@ -1512,13 +1587,13 @@ int main(int ac, char** av)
 </div>
 </div>
 
-<div id="outline-container-orgd1b9373" class="outline-3">
-<h3 id="orgd1b9373">Data frames</h3>
-<div class="outline-text-3" id="text-orgd1b9373">
+<div id="outline-container-org3df83a7" class="outline-3">
+<h3 id="org3df83a7">Data frames</h3>
+<div class="outline-text-3" id="text-org3df83a7">
 </div>
-<div id="outline-container-org38cf767" class="outline-4">
-<h4 id="org38cf767">Sorting rows of a data frame</h4>
-<div class="outline-text-4" id="text-org38cf767">
+<div id="outline-container-orgc6f3950" class="outline-4">
+<h4 id="orgc6f3950">Sorting rows of a data frame</h4>
+<div class="outline-text-4" id="text-orgc6f3950">
 <div class="org-src-container">
 <pre class="src src-R">iris[order(iris$Sepal.Length),]
 </pre>
@@ -1527,13 +1602,13 @@ int main(int ac, char** av)
 </div>
 </div>
 
-<div id="outline-container-orgd865446" class="outline-3">
-<h3 id="orgd865446">Data structures</h3>
-<div class="outline-text-3" id="text-orgd865446">
+<div id="outline-container-org546d441" class="outline-3">
+<h3 id="org546d441">Data structures</h3>
+<div class="outline-text-3" id="text-org546d441">
 </div>
-<div id="outline-container-org870eb65" class="outline-4">
-<h4 id="org870eb65">Hashmap</h4>
-<div class="outline-text-4" id="text-org870eb65">
+<div id="outline-container-orgac2d066" class="outline-4">
+<h4 id="orgac2d066">Hashmap</h4>
+<div class="outline-text-4" id="text-orgac2d066">
 <p>
 The environment builtin data structure can be used as a hashmap (since it hashes
 by default), a.k.a. map, dictionary, loopkup&#x2026;
@@ -1550,13 +1625,13 @@ my_dict[["key"]] # will return 2.
 </div>
 </div>
 
-<div id="outline-container-orgd41d8d4" class="outline-2">
-<h2 id="orgd41d8d4">Data munging</h2>
-<div class="outline-text-2" id="text-orgd41d8d4">
+<div id="outline-container-orgeaa6ea0" class="outline-2">
+<h2 id="orgeaa6ea0">Data munging</h2>
+<div class="outline-text-2" id="text-orgeaa6ea0">
 </div>
-<div id="outline-container-org8228161" class="outline-3">
-<h3 id="org8228161">Working with XML</h3>
-<div class="outline-text-3" id="text-org8228161">
+<div id="outline-container-orga9af408" class="outline-3">
+<h3 id="orga9af408">Working with XML</h3>
+<div class="outline-text-3" id="text-orga9af408">
 <p>
 The modern way for working with XML is via the <code>xml2</code> package.
 </p>
@@ -1571,23 +1646,23 @@ which takes a node and a named vector.</li>
 </ul>
 </div>
 
-<div id="outline-container-org2a94f9f" class="outline-4">
-<h4 id="org2a94f9f">Example I: creating a node and adding it to existing XML</h4>
-<div class="outline-text-4" id="text-org2a94f9f">
+<div id="outline-container-org6a6df2f" class="outline-4">
+<h4 id="org6a6df2f">Example I: creating a node and adding it to existing XML</h4>
+<div class="outline-text-4" id="text-org6a6df2f">
 <p>
 Start with the following XML in <code>demo.xml</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-    &lt;book&gt;
-	&lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-	&lt;author&gt;J K. Rowling&lt;/author&gt;
-	&lt;year&gt;2005&lt;/year&gt;
-	&lt;price&gt;29.99&lt;/price&gt;
-    &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">title</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;Harry Potter&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">author</span>&gt;J K. Rowling&lt;/<span style="color: #6c3163; font-weight: bold;">author</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;2005&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+        &lt;<span style="color: #6c3163; font-weight: bold;">price</span>&gt;29.99&lt;/<span style="color: #6c3163; font-weight: bold;">price</span>&gt;
+    &lt;/<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
 </pre>
 </div>
 
@@ -1633,49 +1708,49 @@ to get the new file <code>demo2.xml</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-    &lt;author&gt;J K. Rowling&lt;/author&gt;
-    &lt;year&gt;2005&lt;/year&gt;
-    &lt;price&gt;29.99&lt;/price&gt;
-  &lt;/book&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;Harry Potter&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">author</span>&gt;J K. Rowling&lt;/<span style="color: #6c3163; font-weight: bold;">author</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;2005&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">price</span>&gt;29.99&lt;/<span style="color: #6c3163; font-weight: bold;">price</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;Nineteen Eighty-Four&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">author</span>&gt;G Orwell&lt;/<span style="color: #6c3163; font-weight: bold;">author</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;1949&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">price</span>&gt;8.99&lt;/<span style="color: #6c3163; font-weight: bold;">price</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdaeaf24" class="outline-4">
-<h4 id="orgdaeaf24">Example II: swapping a node for a new one in existing XML</h4>
-<div class="outline-text-4" id="text-orgdaeaf24">
+<div id="outline-container-org9972329" class="outline-4">
+<h4 id="org9972329">Example II: swapping a node for a new one in existing XML</h4>
+<div class="outline-text-4" id="text-org9972329">
 <p>
-Starting with <code>demo2.xml</code> from the <a href="#org2a94f9f">previous example</a>
+Starting with <code>demo2.xml</code> from the <a href="#org6a6df2f">previous example</a>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-    &lt;author&gt;J K. Rowling&lt;/author&gt;
-    &lt;year&gt;2005&lt;/year&gt;
-    &lt;price&gt;29.99&lt;/price&gt;
-  &lt;/book&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;Harry Potter&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">author</span>&gt;J K. Rowling&lt;/<span style="color: #6c3163; font-weight: bold;">author</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;2005&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">price</span>&gt;29.99&lt;/<span style="color: #6c3163; font-weight: bold;">price</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;Nineteen Eighty-Four&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">author</span>&gt;G Orwell&lt;/<span style="color: #6c3163; font-weight: bold;">author</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;1949&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">price</span>&gt;8.99&lt;/<span style="color: #6c3163; font-weight: bold;">price</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
 </pre>
 </div>
 
@@ -1714,28 +1789,28 @@ which produces <code>demo3.xml</code> shown below
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;cd&gt;
-    &lt;title&gt;Lateralus&lt;/title&gt;
-    &lt;artist&gt;Tool&lt;/artist&gt;
-    &lt;year&gt;2001&lt;/year&gt;
-  &lt;/cd&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #3a81c3;">xml</span> <span style="color: #da8b55;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">cd</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span>&gt;Lateralus&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">artist</span>&gt;Tool&lt;/<span style="color: #6c3163; font-weight: bold;">artist</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;2001&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">cd</span>&gt;
+  &lt;<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">title</span> <span style="color: #715ab1;">lang</span>=<span style="color: #2d9574;">"en"</span>&gt;Nineteen Eighty-Four&lt;/<span style="color: #6c3163; font-weight: bold;">title</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">author</span>&gt;G Orwell&lt;/<span style="color: #6c3163; font-weight: bold;">author</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">year</span>&gt;1949&lt;/<span style="color: #6c3163; font-weight: bold;">year</span>&gt;
+    &lt;<span style="color: #6c3163; font-weight: bold;">price</span>&gt;8.99&lt;/<span style="color: #6c3163; font-weight: bold;">price</span>&gt;
+  &lt;/<span style="color: #6c3163; font-weight: bold;">book</span>&gt;
+&lt;/<span style="color: #6c3163; font-weight: bold;">bookstore</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd4a6bcd" class="outline-4">
-<h4 id="orgd4a6bcd">Example III: A helpful function for getting and setting attributes</h4>
-<div class="outline-text-4" id="text-orgd4a6bcd">
+<div id="outline-container-orgb2769ed" class="outline-4">
+<h4 id="orgb2769ed">Example III: A helpful function for getting and setting attributes</h4>
+<div class="outline-text-4" id="text-orgb2769ed">
 <p>
 The functions in this snippet allows you to look up a node with XPath syntax and
 then read one of the attributes or set its value. There is an optional argument
@@ -1775,9 +1850,9 @@ xml_find_set_attr &lt;- function(x, xp, attr, v) {
 </div>
 </div>
 
-<div id="outline-container-org7772964" class="outline-4">
-<h4 id="org7772964">Example IV: linting/formatting/beautifying XML</h4>
-<div class="outline-text-4" id="text-org7772964">
+<div id="outline-container-orgb52625c" class="outline-4">
+<h4 id="orgb52625c">Example IV: linting/formatting/beautifying XML</h4>
+<div class="outline-text-4" id="text-orgb52625c">
 <p>
 If you have the <code>js-beautify</code> node package installed, the following function will
 lint a file in place.
@@ -1797,9 +1872,9 @@ beautify_xml &lt;- function(x) {
 </div>
 </div>
 
-<div id="outline-container-org39a662d" class="outline-3">
-<h3 id="org39a662d">Joins</h3>
-<div class="outline-text-3" id="text-org39a662d">
+<div id="outline-container-org03bc624" class="outline-3">
+<h3 id="org03bc624">Joins</h3>
+<div class="outline-text-3" id="text-org03bc624">
 <p>
 There are several ways to join data frames using <code>dplyr</code>, the folling snippet
 demonstrates a full join which duplicates records where necessary and will fill
@@ -1828,9 +1903,9 @@ Joining, by = "x"
 </div>
 </div>
 
-<div id="outline-container-orgdc792b0" class="outline-3">
-<h3 id="orgdc792b0">Aggregation</h3>
-<div class="outline-text-3" id="text-orgdc792b0">
+<div id="outline-container-orgea3b22d" class="outline-3">
+<h3 id="orgea3b22d">Aggregation</h3>
+<div class="outline-text-3" id="text-orgea3b22d">
 <div class="org-src-container">
 <pre class="src src-R">aggregate(formula = Petal.Length ~ Species, FUN = mean, data = iris)
 </pre>
@@ -1851,13 +1926,13 @@ iris %&gt;%
 </div>
 </div>
 
-<div id="outline-container-orgbd01886" class="outline-2">
-<h2 id="orgbd01886">Programming in R (language and evaluation)</h2>
-<div class="outline-text-2" id="text-orgbd01886">
+<div id="outline-container-orgdcb2b47" class="outline-2">
+<h2 id="orgdcb2b47">Programming in R (language and evaluation)</h2>
+<div class="outline-text-2" id="text-orgdcb2b47">
 </div>
-<div id="outline-container-org515ca82" class="outline-3">
-<h3 id="org515ca82">Recommended reading</h3>
-<div class="outline-text-3" id="text-org515ca82">
+<div id="outline-container-org24f613e" class="outline-3">
+<h3 id="org24f613e">Recommended reading</h3>
+<div class="outline-text-3" id="text-org24f613e">
 <ul class="org-ul">
 <li><a href="https://www.r-bloggers.com/2019/07/bang-bang-how-to-program-with-dplyr/">Bang Bang - How to program with dplyr</a> (explains quotation stuff for dyplr)</li>
 <li><a href="https://www.r-bloggers.com/2019/06/curly-curly-the-successor-of-bang-bang-2/">Curly-Curly, the successor of Bang-Bang</a> (new rlang syntax for extending dplyr)</li>
@@ -1865,9 +1940,9 @@ iris %&gt;%
 </div>
 </div>
 
-<div id="outline-container-org382cbf1" class="outline-3">
-<h3 id="org382cbf1">Functional programming support</h3>
-<div class="outline-text-3" id="text-org382cbf1">
+<div id="outline-container-org2ab2491" class="outline-3">
+<h3 id="org2ab2491">Functional programming support</h3>
+<div class="outline-text-3" id="text-org2ab2491">
 <div class="org-src-container">
 <pre class="src src-R">library(magrittr)
 library(purrr)
@@ -1917,9 +1992,9 @@ analogue in R. These are mainly for use with lists of vectors.
 </table>
 </div>
 
-<div id="outline-container-org5f1c549" class="outline-4">
-<h4 id="org5f1c549"><span class="todo TODO">TODO</span> Built-in functionality</h4>
-<div class="outline-text-4" id="text-org5f1c549">
+<div id="outline-container-org97e8558" class="outline-4">
+<h4 id="org97e8558"><span class="todo TODO">TODO</span> Built-in functionality</h4>
+<div class="outline-text-4" id="text-org97e8558">
 <ul class="org-ul">
 <li><code>|&gt;</code> pipes with <code>_</code> for named arguments.</li>
 </ul>
@@ -1927,9 +2002,9 @@ analogue in R. These are mainly for use with lists of vectors.
 </div>
 </div>
 
-<div id="outline-container-org48a7ab9" class="outline-3">
-<h3 id="org48a7ab9">R/Haskell Prelude</h3>
-<div class="outline-text-3" id="text-org48a7ab9">
+<div id="outline-container-orge5c70df" class="outline-3">
+<h3 id="orge5c70df">R/Haskell Prelude</h3>
+<div class="outline-text-3" id="text-orge5c70df">
 <div class="org-src-container">
 <pre class="src src-R">## See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile
 drop_while &lt;- function(p, xs) {
@@ -1965,13 +2040,13 @@ take_while &lt;- function(p, xs) {
 </div>
 </div>
 
-<div id="outline-container-org7bb7031" class="outline-3">
-<h3 id="org7bb7031">Program flow and control</h3>
-<div class="outline-text-3" id="text-org7bb7031">
+<div id="outline-container-org6650134" class="outline-3">
+<h3 id="org6650134">Program flow and control</h3>
+<div class="outline-text-3" id="text-org6650134">
 </div>
-<div id="outline-container-org22ec842" class="outline-4">
-<h4 id="org22ec842">Ternary operator</h4>
-<div class="outline-text-4" id="text-org22ec842">
+<div id="outline-container-org6ddb4cb" class="outline-4">
+<h4 id="org6ddb4cb">Ternary operator</h4>
+<div class="outline-text-4" id="text-org6ddb4cb">
 <div class="org-src-container">
 <pre class="src src-R">ifelse(test, yes, no)
 </pre>
@@ -1979,15 +2054,15 @@ take_while &lt;- function(p, xs) {
 </div>
 </div>
 
-<div id="outline-container-orgf47bb50" class="outline-4">
-<h4 id="orgf47bb50">Switch/case/which</h4>
-<div class="outline-text-4" id="text-orgf47bb50">
+<div id="outline-container-org37f17de" class="outline-4">
+<h4 id="org37f17de">Switch/case/which</h4>
+<div class="outline-text-4" id="text-org37f17de">
 <div class="org-src-container">
 <pre class="src src-R">centre &lt;- function(x, type) {
   switch(type,
-	 mean = mean(x),
-	 median = median(x),
-	 trimmed = mean(x, trim = .1))
+         mean = mean(x),
+         median = median(x),
+         trimmed = mean(x, trim = .1))
 }
 </pre>
 </div>
@@ -1995,9 +2070,9 @@ take_while &lt;- function(p, xs) {
 </div>
 </div>
 
-<div id="outline-container-org7fc8034" class="outline-3">
-<h3 id="org7fc8034">Numbers</h3>
-<div class="outline-text-3" id="text-org7fc8034">
+<div id="outline-container-org937941b" class="outline-3">
+<h3 id="org937941b">Numbers</h3>
+<div class="outline-text-3" id="text-org937941b">
 <ul class="org-ul">
 <li><code>options(digits = 20)</code> will cause the REPL to start printing 20 digits of the
 number.</li>
@@ -2008,9 +2083,9 @@ be used to specify the number of digits to use.</li>
 </div>
 </div>
 
-<div id="outline-container-orgf94e0a3" class="outline-3">
-<h3 id="orgf94e0a3">Metaprogramming and nonstandard evaluation</h3>
-<div class="outline-text-3" id="text-orgf94e0a3">
+<div id="outline-container-orgf9a9eb5" class="outline-3">
+<h3 id="orgf9a9eb5">Metaprogramming and nonstandard evaluation</h3>
+<div class="outline-text-3" id="text-orgf9a9eb5">
 <p>
 The following snippet demonstrates how to get the value of a variable given a string containing its symbol.
 There is a synonym <code>as.name</code> which derives from S terminology while "symbol" is LISP lingo.
@@ -2037,9 +2112,9 @@ eval(parse(text = sprintf("data.frame(%s = 2)", letters[1])))
 </div>
 </div>
 
-<div id="outline-container-org6f8018e" class="outline-4">
-<h4 id="org6f8018e">Local aliases</h4>
-<div class="outline-text-4" id="text-org6f8018e">
+<div id="outline-container-org5190cc0" class="outline-4">
+<h4 id="org5190cc0">Local aliases</h4>
+<div class="outline-text-4" id="text-org5190cc0">
 <p>
 The <code>with</code> function provides a way to define local variables based on a data frame
 or list, etc.
@@ -2055,9 +2130,22 @@ mtcars$mpg[mtcars$cyl == 8  &amp;  mtcars$disp &gt; 350]
 </div>
 </div>
 
-<div id="outline-container-org7db8823" class="outline-3">
-<h3 id="org7db8823">R6 and OOP</h3>
-<div class="outline-text-3" id="text-org7db8823">
+<div id="outline-container-orgdddc300" class="outline-3">
+<h3 id="orgdddc300">Object-oriented programming</h3>
+<div class="outline-text-3" id="text-orgdddc300">
+</div>
+<div id="outline-container-org02587db" class="outline-4">
+<h4 id="org02587db">S3</h4>
+<div class="outline-text-4" id="text-org02587db">
+<ul class="org-ul">
+<li>You can use the <code>methods</code> function which takes the name of a class as an argument to find a list of the methods available for that class.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2e4dcbe" class="outline-4">
+<h4 id="org2e4dcbe">R6 system</h4>
+<div class="outline-text-4" id="text-org2e4dcbe">
 <ul class="org-ul">
 <li>R6 classes are a popular way to bring traditional OOP to R, they have reference semantics.</li>
 <li>R6 is available on CRAN</li>
@@ -2073,23 +2161,24 @@ mtcars$mpg[mtcars$cyl == 8  &amp;  mtcars$disp &gt; 350]
 </div>
 </div>
 </div>
-
-<div id="outline-container-org8c67a91" class="outline-2">
-<h2 id="org8c67a91">Statistics with R</h2>
-<div class="outline-text-2" id="text-org8c67a91">
 </div>
-<div id="outline-container-org0ce9935" class="outline-3">
-<h3 id="org0ce9935">Linear regression <code>lm</code></h3>
-<div class="outline-text-3" id="text-org0ce9935">
+
+<div id="outline-container-org6542a9d" class="outline-2">
+<h2 id="org6542a9d">Statistics with R</h2>
+<div class="outline-text-2" id="text-org6542a9d">
+</div>
+<div id="outline-container-org1c02152" class="outline-3">
+<h3 id="org1c02152">Linear regression <code>lm</code></h3>
+<div class="outline-text-3" id="text-org1c02152">
 <p>
 <a href="./statistics-notes.html">NOTES</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd4be952" class="outline-3">
-<h3 id="orgd4be952">Zero-inflated regression</h3>
-<div class="outline-text-3" id="text-orgd4be952">
+<div id="outline-container-org990e9a5" class="outline-3">
+<h3 id="org990e9a5">Zero-inflated regression</h3>
+<div class="outline-text-3" id="text-org990e9a5">
 <p>
 The following snippet demonstrates how to perform a zero-inflated Poisson
 regression.
@@ -2107,22 +2196,22 @@ z1 &lt;- rnorm(n = n)
 z2 &lt;- rnorm(n = n)
 true_prob_zinf &lt;- inv.logit(2 * z1 + 0 * z2)
 zero_inflation &lt;- rbernoulli(n = n,
-			     p = true_prob_zinf)
+                             p = true_prob_zinf)
 
 true_count_means &lt;- exp(2 * x1 - 1 * x2 + 1)
 maybe_count &lt;- rpois(n = n,
-		     lambda = true_count_means)
+                     lambda = true_count_means)
 
 y &lt;- ifelse(zero_inflation, 0, maybe_count)
 
 df &lt;- data.frame(y = y,
-		 x1 = x1,
-		 x2 = x2,
-		 z1 = z1,
-		 z2 = z2)
+                 x1 = x1,
+                 x2 = x2,
+                 z1 = z1,
+                 z2 = z2)
 
 my_zinb &lt;- zeroinfl(formula = y ~ x1 + x2 | z1 + z2,
-		    data = df, dist = "poisson")
+                    data = df, dist = "poisson")
 
 true_mean &lt;- true_prob_zinf * 0 + (1 - true_prob_zinf) * true_count_means
 
@@ -2133,31 +2222,31 @@ abline(0,1)
 </div>
 </div>
 
-<div id="outline-container-org493b977" class="outline-3">
-<h3 id="org493b977"><span class="todo TODO">TODO</span> Mathematical optimisation</h3>
-<div class="outline-text-3" id="text-org493b977">
+<div id="outline-container-orge771747" class="outline-3">
+<h3 id="orge771747"><span class="todo TODO">TODO</span> Mathematical optimisation</h3>
+<div class="outline-text-3" id="text-orge771747">
 <p>
 <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/nlm.html"><code>nlm</code></a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2485161" class="outline-3">
-<h3 id="org2485161">Computational geography and cartography</h3>
-<div class="outline-text-3" id="text-org2485161">
+<div id="outline-container-org764bd73" class="outline-3">
+<h3 id="org764bd73">Computational geography and cartography</h3>
+<div class="outline-text-3" id="text-org764bd73">
 <p>
 See <a href="./computational-geography-notes.html">my other notes on this</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8ee369d" class="outline-3">
-<h3 id="org8ee369d">Differential equations with <code>deSolve</code></h3>
-<div class="outline-text-3" id="text-org8ee369d">
+<div id="outline-container-org6a3c896" class="outline-3">
+<h3 id="org6a3c896">Differential equations with <code>deSolve</code></h3>
+<div class="outline-text-3" id="text-org6a3c896">
 </div>
-<div id="outline-container-org20e0502" class="outline-4">
-<h4 id="org20e0502">Basic SIR example</h4>
-<div class="outline-text-4" id="text-org20e0502">
+<div id="outline-container-org39b0ea1" class="outline-4">
+<h4 id="org39b0ea1">Basic SIR example</h4>
+<div class="outline-text-4" id="text-org39b0ea1">
 <p>
 Simple SIR model
 </p>
@@ -2177,9 +2266,9 @@ The following demonstrates how to solve this system with <code>deSolve</code>.
 
 sir_diff &lt;- function(time, state, params) {
     with(as.list(c(params, state)), {
-	ds &lt;- - beta * susceptible * infectious
-	di &lt;- beta * susceptible * infectious - gamma * infectious
-	list(c(ds, di))
+        ds &lt;- - beta * susceptible * infectious
+        di &lt;- beta * susceptible * infectious - gamma * infectious
+        list(c(ds, di))
     })
 }
 
@@ -2193,38 +2282,38 @@ out1 &lt;- deSolve::ode(state, times, sir_diff, parms = params)
 </div>
 </div>
 
-<div id="outline-container-org55c2ba9" class="outline-4">
-<h4 id="org55c2ba9">SIR example with C implementation</h4>
-<div class="outline-text-4" id="text-org55c2ba9">
+<div id="outline-container-orge17b32c" class="outline-4">
+<h4 id="orge17b32c">SIR example with C implementation</h4>
+<div class="outline-text-4" id="text-orge17b32c">
 <p>
 Then we can implement the differential in C as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">/* file sirmod.c */
-#include &lt;R.h&gt;
+<pre class="src src-C"><span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">file sirmod.c</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+<span style="color: #6c3163;">#include</span> <span style="color: #3a81c3;">&lt;</span><span style="color: #2d9574;">R.h</span><span style="color: #3a81c3;">&gt;</span>
 
-static double params[2];
-#define beta params[0]
-#define gamma params[1]
+<span style="color: #3a81c3;">static</span> <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">params</span><span style="color: #3a81c3;">[</span><span style="color: #4e3163;">2</span><span style="color: #3a81c3;">]</span>;
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">beta</span> params<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>
+<span style="color: #6c3163;">#define</span> <span style="color: #715ab1;">gamma</span> params<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>
 
-/* initializer */
-void initmod(void (* odeparams)(int *, double *))
-{
-  int N=2;
-  odeparams(&amp;N, params);
-}
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">initializer</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+<span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">initmod</span><span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163;">(</span>* <span style="color: #6c3163; font-weight: bold;">odeparams</span><span style="color: #6c3163;">)(</span><span style="color: #ba2f59; font-weight: bold;">int</span> *, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">N</span>=<span style="color: #4e3163;">2</span>;
+  odeparams<span style="color: #6c3163;">(</span>&amp;N, params<span style="color: #6c3163;">)</span>;
+<span style="color: #3a81c3;">}</span>
 
-/* Derivatives and 1 output variable */
-void derivs (int *neq, double *t, double *y, double *ydot,
-	     double *yout, int *ip)
-{
-  if (ip[0] &lt;1) error("nout should be at least 1");
-  ydot[0] = -beta*y[0]*y[1];
-  ydot[1] = beta*y[0]*y[1] - gamma*y[1];
-  yout[0] = 1.0-y[0]+y[1];
-}
-/* END file sirmod.c */
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Derivatives and 1 output variable</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
+<span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">derivs</span> <span style="color: #3a81c3;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> *<span style="color: #715ab1;">neq</span>, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">t</span>, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">y</span>, <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">ydot</span>,
+             <span style="color: #ba2f59; font-weight: bold;">double</span> *<span style="color: #715ab1;">yout</span>, <span style="color: #ba2f59; font-weight: bold;">int</span> *<span style="color: #715ab1;">ip</span><span style="color: #3a81c3;">)</span>
+<span style="color: #3a81c3;">{</span>
+  <span style="color: #3a81c3;">if</span> <span style="color: #6c3163;">(</span>ip<span style="color: #2d9574;">[</span><span style="color: #4e3163;">0</span><span style="color: #2d9574;">]</span> &lt;<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span> error<span style="color: #6c3163;">(</span><span style="color: #2d9574;">"nout should be at least 1"</span><span style="color: #6c3163;">)</span>;
+  ydot<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span> = -beta*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>;
+  ydot<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span> = beta*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span> - gamma*y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>;
+  yout<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span> = <span style="color: #4e3163;">1.0</span>-y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">0</span><span style="color: #6c3163;">]</span>+y<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span><span style="color: #6c3163;">]</span>;
+<span style="color: #3a81c3;">}</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">/* </span><span style="color: #2aa1ae; background-color: #ecf3ec;">END file sirmod.c</span><span style="color: #2aa1ae; background-color: #ecf3ec;"> */</span>
 </pre>
 </div>
 
@@ -2236,17 +2325,17 @@ Then we need to compile this and load the object for use of <code>deSovle</code>
 <pre class="src src-R">system("R CMD SHLIB sirmod.c")
 dyn.load("sirmod.so")
 out2 &lt;- deSolve::ode(state, times, func = "derivs", parms = params,
-		     dllname = "sirmod", initfunc = "initmod", nout = 1,
-		     outnames = "recovered")
+                     dllname = "sirmod", initfunc = "initmod", nout = 1,
+                     outnames = "recovered")
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcbdbff8" class="outline-3">
-<h3 id="orgcbdbff8">MCMC (without <code>Stan</code>)</h3>
-<div class="outline-text-3" id="text-orgcbdbff8">
+<div id="outline-container-org2a3e3e0" class="outline-3">
+<h3 id="org2a3e3e0">MCMC (without <code>Stan</code>)</h3>
+<div class="outline-text-3" id="text-org2a3e3e0">
 <p>
 There is the package <code>mcmc</code> which looks like it does a solid job of the basics,
 although it takes an opinionated stance on how this should be done. Be careful
@@ -2261,9 +2350,9 @@ diagnostic plots.
 </p>
 </div>
 
-<div id="outline-container-org406b797" class="outline-4">
-<h4 id="org406b797">Thinning (destructive)</h4>
-<div class="outline-text-4" id="text-org406b797">
+<div id="outline-container-orgdc3b353" class="outline-4">
+<h4 id="orgdc3b353">Thinning (destructive)</h4>
+<div class="outline-text-4" id="text-orgdc3b353">
 <p>
 This snippet demonstrates how to subset a data frame. It is a destructive
 change, but since MCMC samples can be large you may not want the additional cost
@@ -2283,9 +2372,9 @@ demo_df &lt;- demo_df[seq(from = 1, to = nrow(demo_df), by = thinning_factor), ]
 </div>
 </div>
 
-<div id="outline-container-org30a16ed" class="outline-3">
-<h3 id="org30a16ed">(Nonparametric) density estimation with <code>KernSmooth</code></h3>
-<div class="outline-text-3" id="text-org30a16ed">
+<div id="outline-container-orge5ea2d5" class="outline-3">
+<h3 id="orge5ea2d5">(Nonparametric) density estimation with <code>KernSmooth</code></h3>
+<div class="outline-text-3" id="text-orge5ea2d5">
 <p>
 Here is an example looking at how to use <code>KernSmooth</code>.
 </p>
@@ -2300,7 +2389,7 @@ x &lt;- c(rpois(n = 500, lambda=10),
 
 f_x &lt;- function(x, ...) {
   0.5 * (dpois(x = x, lambda = 10, ...) +
-	 dpois(x = x, lambda = 30, ...))
+         dpois(x = x, lambda = 30, ...))
 }
 
 x_mesh &lt;- 0:100
@@ -2310,45 +2399,45 @@ y_mesh &lt;- f_x(x_mesh)
 kde_obj &lt;- bkde(x, bandwidth = 3, range.x = c(0,100), gridsize = 101)
 
 r_kde_samples &lt;- sample(x = kde_obj$x,
-		       size = length(x),
-		       replace = TRUE,
-		       prob = pmax(0, kde_obj$y))
+                       size = length(x),
+                       replace = TRUE,
+                       prob = pmax(0, kde_obj$y))
 
 type_char &lt;- c("true", "estimate")
 
 density_df &lt;- data.frame(x = c(x_mesh, x_mesh),
-			 y = c(y_mesh, pmax(0, kde_obj$y)),
-			 type = rep(type_char, each = 101))
+                         y = c(y_mesh, pmax(0, kde_obj$y)),
+                         type = rep(type_char, each = 101))
 
 sample_df &lt;- data.frame(x = c(x, r_kde_samples),
-			type = rep(type_char,
-				   each = length(x)))
+                        type = rep(type_char,
+                                   each = length(x)))
 
 ggplot() +
   geom_histogram(data = sample_df,
-		 mapping = aes(x = x, y = ..density.., fill = type),
-		 bins = 25,
-		 size = 3,
-		 position = "dodge") +
+                 mapping = aes(x = x, y = ..density.., fill = type),
+                 bins = 25,
+                 size = 3,
+                 position = "dodge") +
   geom_line(data = density_df,
-	    mapping = aes(x = x, y = y, colour = type))
+            mapping = aes(x = x, y = y, colour = type))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1a4a5e0" class="outline-2">
-<h2 id="org1a4a5e0">Miscellaneous functions</h2>
-<div class="outline-text-2" id="text-org1a4a5e0">
+<div id="outline-container-orgbccc8c0" class="outline-2">
+<h2 id="orgbccc8c0">Miscellaneous functions</h2>
+<div class="outline-text-2" id="text-orgbccc8c0">
 </div>
-<div id="outline-container-org5aeecc7" class="outline-3">
-<h3 id="org5aeecc7">Step function</h3>
-<div class="outline-text-3" id="text-org5aeecc7">
+<div id="outline-container-orgca493cc" class="outline-3">
+<h3 id="orgca493cc">Step function</h3>
+<div class="outline-text-3" id="text-orgca493cc">
 </div>
-<div id="outline-container-orge73c008" class="outline-4">
-<h4 id="orge73c008">Step function construction</h4>
-<div class="outline-text-4" id="text-orge73c008">
+<div id="outline-container-org6610d2b" class="outline-4">
+<h4 id="org6610d2b">Step function construction</h4>
+<div class="outline-text-4" id="text-org6610d2b">
 <p>
 The following snippet defines a vectorised step function.
 </p>
@@ -2376,8 +2465,8 @@ step_function_factory &lt;- function(ts, vs) {
     y[mask] &lt;- vs[1]
     if (n &gt; 1) {
       for (ix in seq.int(2, n)) {
-	mask &lt;- (ts[ix-1] &lt;= x) &amp; (x &lt; ts[ix])
-	y[mask] &lt;- vs[ix]
+        mask &lt;- (ts[ix-1] &lt;= x) &amp; (x &lt; ts[ix])
+        y[mask] &lt;- vs[ix]
       }
     }
     mask &lt;- x &gt;= ts[n]
@@ -2397,7 +2486,7 @@ step_function_factory &lt;- function(ts, vs) {
 </div>
 
 <p>
-Here is a demonstration of it in action producing Figure <a href="#org2393fe2">X</a>
+Here is a demonstration of it in action producing Figure <a href="#orga49b2ad">X</a>
 </p>
 
 <div class="org-src-container">
@@ -2427,7 +2516,7 @@ dev.off()
 </div>
 
 
-<div id="org2393fe2" class="figure">
+<div id="orga49b2ad" class="figure">
 <p><img src="../images/step-function-demo.png" alt="step-function-demo.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Example of step function result.</p>
@@ -2435,9 +2524,9 @@ dev.off()
 </div>
 </div>
 
-<div id="outline-container-org6a5b8e4" class="outline-4">
-<h4 id="org6a5b8e4">Applying binary functions to step functions</h4>
-<div class="outline-text-4" id="text-org6a5b8e4">
+<div id="outline-container-org435ad5b" class="outline-4">
+<h4 id="org435ad5b">Applying binary functions to step functions</h4>
+<div class="outline-text-4" id="text-org435ad5b">
 <p>
 The class of step functions is closed under the point-wise application of binary
 functions. What? This means if you have two functions \(f(x)\) and \(g(x)\)
@@ -2493,7 +2582,7 @@ dev.off()
 </div>
 
 
-<div id="org70cc9fa" class="figure">
+<div id="orgccc230c" class="figure">
 <p><img src="../images/step-function-binary-demo.png" alt="step-function-binary-demo.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The result of combining two step functions.</p>
@@ -2502,9 +2591,9 @@ dev.off()
 </div>
 </div>
 
-<div id="outline-container-orgd10874a" class="outline-3">
-<h3 id="orgd10874a">Number of lines in a file</h3>
-<div class="outline-text-3" id="text-orgd10874a">
+<div id="outline-container-orgf0c6901" class="outline-3">
+<h3 id="orgf0c6901">Number of lines in a file</h3>
+<div class="outline-text-3" id="text-orgf0c6901">
 <p>
 The <code>num_lines_in_file</code> function returns the number of lines in a file which is
 useful to help guard against attempting to parse an empty file with <code>read.csv</code>.
@@ -2520,9 +2609,9 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 </div>
 </div>
 
-<div id="outline-container-org99b0e54" class="outline-3">
-<h3 id="org99b0e54">Julian day of the year</h3>
-<div class="outline-text-3" id="text-org99b0e54">
+<div id="outline-container-org1f87986" class="outline-3">
+<h3 id="org1f87986">Julian day of the year</h3>
+<div class="outline-text-3" id="text-org1f87986">
 <div class="org-src-container">
 <pre class="src src-R">#' Julian day of the year
 #'
@@ -2536,31 +2625,31 @@ j_day &lt;- function(date_string, first_day_of_year_string) {
 </div>
 </div>
 </div>
-<div id="outline-container-org0c5b6b9" class="outline-2">
-<h2 id="org0c5b6b9">Further reading</h2>
-<div class="outline-text-2" id="text-org0c5b6b9">
+<div id="outline-container-orge244fb4" class="outline-2">
+<h2 id="orge244fb4">Further reading</h2>
+<div class="outline-text-2" id="text-orge244fb4">
 </div>
-<div id="outline-container-org301b64d" class="outline-3">
-<h3 id="org301b64d">Articles</h3>
-<div class="outline-text-3" id="text-org301b64d">
+<div id="outline-container-org03666b1" class="outline-3">
+<h3 id="org03666b1">Articles</h3>
+<div class="outline-text-3" id="text-org03666b1">
 <ul class="org-ul">
 <li><a href="https://doi.org/10.1371/journal.pcbi.1009884"><i>Ten simple rules for finding and selecting R packages</i></a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org42b5699" class="outline-3">
-<h3 id="org42b5699">Blogs</h3>
-<div class="outline-text-3" id="text-org42b5699">
+<div id="outline-container-org2068dcf" class="outline-3">
+<h3 id="org2068dcf">Blogs</h3>
+<div class="outline-text-3" id="text-org2068dcf">
 <ul class="org-ul">
 <li><a href="https://rviews.rstudio.com/about/">R Views</a> (the RStudio blog about R).</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org562f9c1" class="outline-3">
-<h3 id="org562f9c1">Books</h3>
-<div class="outline-text-3" id="text-org562f9c1">
+<div id="outline-container-org6cb8af5" class="outline-3">
+<h3 id="org6cb8af5">Books</h3>
+<div class="outline-text-3" id="text-org6cb8af5">
 <ul class="org-ul">
 <li><a href="https://r4ds.hadley.nz/index.html">R for Data Science</a> by Hadley Wickham has a second (and substantially expanded)
 edition.</li>
@@ -2568,9 +2657,9 @@ edition.</li>
 </div>
 </div>
 
-<div id="outline-container-org0e1ed4b" class="outline-3">
-<h3 id="org0e1ed4b">Documentation</h3>
-<div class="outline-text-3" id="text-org0e1ed4b">
+<div id="outline-container-org48499cd" class="outline-3">
+<h3 id="org48499cd">Documentation</h3>
+<div class="outline-text-3" id="text-org48499cd">
 <ul class="org-ul">
 <li><a href="https://cran.r-project.org/doc/manuals/R-exts.html">Writing R Extensions</a></li>
 <li><a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-R.html">R Source Code Blocks in Org Mode</a></li>
@@ -2578,9 +2667,9 @@ edition.</li>
 </div>
 </div>
 
-<div id="outline-container-org43fc8eb" class="outline-3">
-<h3 id="org43fc8eb">Curated packages</h3>
-<div class="outline-text-3" id="text-org43fc8eb">
+<div id="outline-container-org2d4f823" class="outline-3">
+<h3 id="org2d4f823">Curated packages</h3>
+<div class="outline-text-3" id="text-org2d4f823">
 <ul class="org-ul">
 <li><a href="https://cran.r-project.org/web/views/">CRAN Task Views</a></li>
 <li><a href="https://www.bioconductor.org/packages/release/BiocViews.html">BioConductor BiocViews</a></li>
@@ -2590,8 +2679,8 @@ edition.</li>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Alex Zarebski</p>
-<p class="date">Created: 2022-10-26 Wed 18:01</p>
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2023-04-06 Thu 18:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
