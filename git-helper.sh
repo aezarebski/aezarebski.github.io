@@ -9,10 +9,18 @@ git add lists/movies-and-series.html
 git add lists/quotes.html
 git add lists/zarebski.bib
 
+# The basegraphicsR gallery
+git add misc/basegraphicsR/gallery.html
+
+for ix in $(seq -f "%02g" 1 5);
+do
+    git add ./misc/basegraphicsR/fig$ix.png
+done
+
 # The ggplot2 gallery
 git add misc/ggplot2/gallery.html
 
-for ix in $(seq -f "%02g" 1 8);
+for ix in $(seq -f "%02g" 1 11);
 do
     git add ./misc/ggplot2/fig$ix.png
 done
