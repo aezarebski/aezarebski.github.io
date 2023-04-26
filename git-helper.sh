@@ -9,6 +9,14 @@ git add lists/movies-and-series.html
 git add lists/quotes.html
 git add lists/zarebski.bib
 
+# The TikZ gallery
+git add misc/tikz/gallery.html
+
+for ix in $(seq -f "%02g" 1 2);
+do
+    git add ./misc/tikz/fig$ix.png
+done
+
 # The basegraphicsR gallery
 git add misc/basegraphicsR/gallery.html
 
