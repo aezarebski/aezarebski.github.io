@@ -1,0 +1,1732 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-05-09 Tue 14:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NICEMACS</title>
+<meta name="author" content="Alexander E. Zarebski" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">NICEMACS</h1>
+<p>
+<a href="../../index.html">Home</a>
+</p>
+
+
+<div id="org1036a6e" class="figure">
+<p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
+</p>
+</div>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgd687039">Nicemacs v2</a>
+<ul>
+<li><a href="#orgea80e0d">STUFF 1</a></li>
+<li><a href="#org7df5ba1">Shells</a></li>
+<li><a href="#orgabab8d2">STUFF 2</a></li>
+<li><a href="#org97b3e6b">Magit</a></li>
+<li><a href="#org1449b89">STUFF 3</a></li>
+</ul>
+</li>
+<li><a href="#org5170ca2">GNU Emacs</a>
+<ul>
+<li><a href="#orgf41e1c8">Build you an Emacs</a></li>
+<li><a href="#org39020bb">Recording keyboard macros</a></li>
+<li><a href="#orgc48db6b">Buffer specific variables</a></li>
+<li><a href="#org4c7e516">Jargon</a></li>
+<li><a href="#org9b9d17d">Mastering Emacs</a></li>
+<li><a href="#org4635828">Getting HELP</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd687039" class="outline-2">
+<h2 id="orgd687039">Nicemacs v2</h2>
+<div class="outline-text-2" id="text-orgd687039">
+</div>
+<div id="outline-container-orgea80e0d" class="outline-3">
+<h3 id="orgea80e0d">STUFF 1</h3>
+<div class="outline-text-3" id="text-orgea80e0d">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;;; </span><span style="color: #98a6a6;">Nicemacs.v2 -*- lexical-binding: t -*-</span>
+<span style="color: #98a6a6;">;;; </span><span style="color: #98a6a6;">==================================================================</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">&#9608;&#9608;&#9608;&#9559;   &#9608;&#9608;&#9559;&#9608;&#9608;&#9559; &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;&#9608;&#9608;&#9608;&#9559;   &#9608;&#9608;&#9608;&#9559; &#9608;&#9608;&#9608;&#9608;&#9608;&#9559;  &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">&#9608;&#9608;&#9608;&#9608;&#9559;  &#9608;&#9608;&#9553;&#9608;&#9608;&#9553;&#9608;&#9608;&#9556;&#9552;&#9552;&#9552;&#9552;&#9565;&#9608;&#9608;&#9556;&#9552;&#9552;&#9552;&#9552;&#9565;&#9608;&#9608;&#9608;&#9608;&#9559; &#9608;&#9608;&#9608;&#9608;&#9553;&#9608;&#9608;&#9556;&#9552;&#9552;&#9608;&#9608;&#9559;&#9608;&#9608;&#9556;&#9552;&#9552;&#9552;&#9552;&#9565;&#9608;&#9608;&#9556;&#9552;&#9552;&#9552;&#9552;&#9565;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">&#9608;&#9608;&#9556;&#9608;&#9608;&#9559; &#9608;&#9608;&#9553;&#9608;&#9608;&#9553;&#9608;&#9608;&#9553;     &#9608;&#9608;&#9608;&#9608;&#9608;&#9559;  &#9608;&#9608;&#9556;&#9608;&#9608;&#9608;&#9608;&#9556;&#9608;&#9608;&#9553;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9553;&#9608;&#9608;&#9553;     &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">&#9608;&#9608;&#9553;&#9562;&#9608;&#9608;&#9559;&#9608;&#9608;&#9553;&#9608;&#9608;&#9553;&#9608;&#9608;&#9553;     &#9608;&#9608;&#9556;&#9552;&#9552;&#9565;  &#9608;&#9608;&#9553;&#9562;&#9608;&#9608;&#9556;&#9565;&#9608;&#9608;&#9553;&#9608;&#9608;&#9556;&#9552;&#9552;&#9608;&#9608;&#9553;&#9608;&#9608;&#9553;     &#9562;&#9552;&#9552;&#9552;&#9552;&#9608;&#9608;&#9553;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">&#9608;&#9608;&#9553; &#9562;&#9608;&#9608;&#9608;&#9608;&#9553;&#9608;&#9608;&#9553;&#9562;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;&#9608;&#9608;&#9553; &#9562;&#9552;&#9565; &#9608;&#9608;&#9553;&#9608;&#9608;&#9553;  &#9608;&#9608;&#9553;&#9562;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9559;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9553;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">&#9562;&#9552;&#9565;  &#9562;&#9552;&#9552;&#9552;&#9565;&#9562;&#9552;&#9565; &#9562;&#9552;&#9552;&#9552;&#9552;&#9552;&#9565;&#9562;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9565;&#9562;&#9552;&#9565;     &#9562;&#9552;&#9565;&#9562;&#9552;&#9565;  &#9562;&#9552;&#9565; &#9562;&#9552;&#9552;&#9552;&#9552;&#9552;&#9565;&#9562;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9565;</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">To update your packages carry out the following steps:</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">1. M-x list-packages</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">2. Press `</span><span style="color: #007ec4; font-weight: bold;">r</span><span style="color: #98a6a6;">' to refresh</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">3. Press `</span><span style="color: #007ec4; font-weight: bold;">U</span><span style="color: #98a6a6;">' to mark upgradable packages</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">4. Press `</span><span style="color: #007ec4; font-weight: bold;">x</span><span style="color: #98a6a6;">' to execute the upgrades</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;;  </span><span style="color: #98a6a6;">Maybe just: don't neglect the Elisp manual.  I've read it _far_</span>
+<span style="color: #98a6a6;">;;  </span><span style="color: #98a6a6;">more than the regular Emacs manual, and it's surprisingly fun.</span>
+<span style="color: #98a6a6;">;;  </span><span style="color: #98a6a6;">Seeing Emacs as an interactive lisp machine to be programmed</span>
+<span style="color: #98a6a6;">;;  </span><span style="color: #98a6a6;">rather than an editor to be configured makes many things easier.</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;;  </span><span style="color: #98a6a6;">~ Tim Vaughan (2023)</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Packages used</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-------------</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">cl-lib</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">copilot</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">dired</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">ess</span><span style="color: #98a6a6;">' Emacs Speaks Statistics</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">ess-site</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">evil</span><span style="color: #98a6a6;">' Extensible Vi layer for Emacs.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">evil-collection</span><span style="color: #98a6a6;">' A set of keybindings for Evil mode</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">evil-leader</span><span style="color: #98a6a6;">' let there be &lt;leader&gt;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">evil-mc</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">evil-mc-extras</span><span style="color: #98a6a6;">' Extra functionality for evil-mc</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">evil-surround</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">flyspell</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">hl-todo</span><span style="color: #98a6a6;">' Highlight </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> and similar keywords</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">htmlize</span><span style="color: #98a6a6;">' Convert buffer text and decorations to HTML.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">magit</span><span style="color: #98a6a6;">' A Git porcelain inside Emacs.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">markdown-mode</span><span style="color: #98a6a6;">' Major mode for Markdown-formatted text</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">multiple-cursors</span><span style="color: #98a6a6;">' Multiple cursors for Emacs.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">ligature</span><span style="color: #98a6a6;">' Ligature support for Emacs.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">quarto-mode</span><span style="color: #98a6a6;">' A (poly)mode for https://quarto.org</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">racket-mode</span><span style="color: #98a6a6;">' Racket editing, REPL, and more</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">rainbow-mode</span><span style="color: #98a6a6;">' Colorize color names in buffers</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">s</span><span style="color: #98a6a6;">' The long lost Emacs string manipulation library.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">solarized-theme</span><span style="color: #98a6a6;">' The Solarized color theme</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">which-key</span><span style="color: #98a6a6;">' Display available keybindings in popup</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">winum</span><span style="color: #98a6a6;">' Navigate windows and frames using numbers.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">writegood-mode</span><span style="color: #98a6a6;">' Polish up poor writing on the fly</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">yasnippet</span><span style="color: #98a6a6;">' Yet another snippet extension for Emacs</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">yasnippet-snippets</span><span style="color: #98a6a6;">' Collection of yasnippet snippets</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Changelog</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-05</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Use the `</span><span style="color: #007ec4; font-weight: bold;">unfill</span><span style="color: #98a6a6;">' package for better paragraph un/filling.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Use the `</span><span style="color: #007ec4; font-weight: bold;">lorem-ipsum</span><span style="color: #98a6a6;">' package for convenient dummy text.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include python configuration.</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-04</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Set up an org-mode file for documentation with tangling and</span>
+<span style="color: #98a6a6;">;;     </span><span style="color: #98a6a6;">detangling.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Use `S &lt;x&gt;` in visual mode to surround the region in &lt;x&gt;.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Use `SPC b s &lt;x&gt;` to open a scratch buffer in mode&lt;x&gt;</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Edit `</span><span style="color: #007ec4; font-weight: bold;">message-buffer-file-name</span><span style="color: #98a6a6;">' so it works in `</span><span style="color: #007ec4; font-weight: bold;">dired</span><span style="color: #98a6a6;">'.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Extend `</span><span style="color: #007ec4; font-weight: bold;">before-save-hook</span><span style="color: #98a6a6;">' to avoid accidental trailing</span>
+<span style="color: #98a6a6;">;;     </span><span style="color: #98a6a6;">whitespace.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Use JetBrains Mono as the font with ligatures.</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;;; </span><span style="color: #98a6a6;">==================================================================</span>
+
+
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">package</span>)
+(add-to-list 'package-archives '(<span style="color: #11948b;">"melpa"</span> . <span style="color: #11948b;">"https://melpa.org/packages/"</span>) t)
+(add-to-list 'package-archives  '(<span style="color: #11948b;">"nongnu"</span> . <span style="color: #11948b;">"https://elpa.nongnu.org/nongnu/"</span>) t)
+(add-to-list 'package-archives '(<span style="color: #11948b;">"gnu"</span> . <span style="color: #11948b;">"https://elpa.gnu.org/packages/"</span>) t)
+
+(package-initialize)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> user-full-name <span style="color: #11948b;">"Alexander E. Zarebski"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">defvar</span> <span style="color: #007ec4;">nice-journal-directory</span> <span style="color: #11948b;">"~/Documents/journal/"</span>
+  <span style="color: #11948b;">"The directory for nicemacs journal files."</span>)
+(<span style="color: #778c00; font-weight: bold;">defvar</span> <span style="color: #007ec4;">nice-notes-directory</span> <span style="color: #11948b;">"~/public-site/org/notes"</span>
+  <span style="color: #11948b;">"The directory for nicemacs notes files."</span>)
+(<span style="color: #778c00; font-weight: bold;">defvar</span> <span style="color: #007ec4;">nice-resources-dir</span> <span style="color: #11948b;">"~/Documents/nicemacs/resources"</span>
+  <span style="color: #11948b;">"The path to the nicemacs resources directory on this machine."</span>)
+(<span style="color: #778c00; font-weight: bold;">defvar</span> <span style="color: #007ec4;">nice-nicemacs-directory</span> <span style="color: #11948b;">"~/Documents/nicemacs"</span>
+  <span style="color: #11948b;">"The path to the nicemacs directory on this machine."</span>)
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">cl-lib</span>)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Be evil</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-------</span>
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> evil-want-keybinding ())
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">evil</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">evil-leader</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">evil-collection</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">evil-surround</span>)
+
+(evil-mode 1)
+(evil-leader-mode 1)
+(global-evil-leader-mode 1)
+(evil-collection-init)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Evil surroundings</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">1. Enter visual mode and select the text as the region.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">2. Press `</span><span style="color: #007ec4; font-weight: bold;">S</span><span style="color: #98a6a6;">'.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">3. Type the symbol to surround it (note, if it is part of a opening</span>
+<span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">and closing pair, the opening includes a space and the closing</span>
+<span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">does not.)</span>
+(global-evil-surround-mode 1)
+(evil-leader/set-key <span style="color: #11948b;">"t s"</span> 'evil-surround-mode)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Look stunning</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">=============</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">To install JetBrains Mono, or any other font, follow these steps:</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">1. Download and extract the font, you should have a "ttf" directory</span>
+<span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">containing the font files.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">2. Create a font directory if you don't already have one</span>
+<span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">$ mkdir -p ~/.local/share/fonts</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">3. Copy the font files to the font directory:</span>
+<span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">$ cp path/to/extracted/ttf/*.ttf ~/.local/share/fonts</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">4. Update the font cache:</span>
+<span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">$ fc-cache -f -v</span>
+<span style="color: #98a6a6;">;;</span>
+
+(set-frame-font <span style="color: #11948b;">"JetBrains Mono"</span> nil t)
+(ligature-set-ligatures 'prog-mode '(<span style="color: #11948b;">"-|"</span> <span style="color: #11948b;">"-~"</span> <span style="color: #11948b;">"---"</span> <span style="color: #11948b;">"-&lt;&lt;"</span> <span style="color: #11948b;">"-&lt;"</span> <span style="color: #11948b;">"--"</span> <span style="color: #11948b;">"-&gt;"</span> <span style="color: #11948b;">"-&gt;&gt;"</span> <span style="color: #11948b;">"--&gt;"</span> <span style="color: #11948b;">"///"</span> <span style="color: #11948b;">"/="</span> <span style="color: #11948b;">"/=="</span>
+                                     <span style="color: #11948b;">"/&gt;"</span> <span style="color: #11948b;">"//"</span> <span style="color: #11948b;">"/*"</span> <span style="color: #11948b;">"*&gt;"</span> <span style="color: #11948b;">"***"</span> <span style="color: #11948b;">"*/"</span> <span style="color: #11948b;">"&lt;-"</span> <span style="color: #11948b;">"&lt;&lt;-"</span> <span style="color: #11948b;">"&lt;=&gt;"</span> <span style="color: #11948b;">"&lt;="</span> <span style="color: #11948b;">"&lt;|"</span> <span style="color: #11948b;">"&lt;||"</span>
+                                     <span style="color: #11948b;">"&lt;|||"</span> <span style="color: #11948b;">"&lt;|&gt;"</span> <span style="color: #11948b;">"&lt;:"</span> <span style="color: #11948b;">"&lt;&gt;"</span> <span style="color: #11948b;">"&lt;-&lt;"</span> <span style="color: #11948b;">"&lt;&lt;&lt;"</span> <span style="color: #11948b;">"&lt;=="</span> <span style="color: #11948b;">"&lt;&lt;="</span> <span style="color: #11948b;">"&lt;=&lt;"</span> <span style="color: #11948b;">"&lt;==&gt;"</span> <span style="color: #11948b;">"&lt;-|"</span>
+                                     <span style="color: #11948b;">"&lt;&lt;"</span> <span style="color: #11948b;">"&lt;~&gt;"</span> <span style="color: #11948b;">"&lt;=|"</span> <span style="color: #11948b;">"&lt;~~"</span> <span style="color: #11948b;">"&lt;~"</span> <span style="color: #11948b;">"&lt;$&gt;"</span> <span style="color: #11948b;">"&lt;$"</span> <span style="color: #11948b;">"&lt;+&gt;"</span> <span style="color: #11948b;">"&lt;+"</span> <span style="color: #11948b;">"&lt;/&gt;"</span> <span style="color: #11948b;">"&lt;/"</span> <span style="color: #11948b;">"&lt;*"</span>
+                                     <span style="color: #11948b;">"&lt;*&gt;"</span> <span style="color: #11948b;">"&lt;-&gt;"</span> <span style="color: #11948b;">"&lt;!--"</span> <span style="color: #11948b;">":&gt;"</span> <span style="color: #11948b;">":&lt;"</span> <span style="color: #11948b;">":::"</span> <span style="color: #11948b;">"::"</span> <span style="color: #11948b;">":?"</span> <span style="color: #11948b;">":?&gt;"</span> <span style="color: #11948b;">":="</span> <span style="color: #11948b;">"::="</span> <span style="color: #11948b;">"=&gt;&gt;"</span>
+                                     <span style="color: #11948b;">"==&gt;"</span> <span style="color: #11948b;">"=/="</span> <span style="color: #11948b;">"=!="</span> <span style="color: #11948b;">"=&gt;"</span> <span style="color: #11948b;">"==="</span> <span style="color: #11948b;">"=:="</span> <span style="color: #11948b;">"=="</span> <span style="color: #11948b;">"!=="</span> <span style="color: #11948b;">"!!"</span> <span style="color: #11948b;">"!="</span> <span style="color: #11948b;">"&gt;]"</span> <span style="color: #11948b;">"&gt;:"</span>
+                                     <span style="color: #11948b;">"&gt;&gt;-"</span> <span style="color: #11948b;">"&gt;&gt;="</span> <span style="color: #11948b;">"&gt;=&gt;"</span> <span style="color: #11948b;">"&gt;&gt;&gt;"</span> <span style="color: #11948b;">"&gt;-"</span> <span style="color: #11948b;">"&gt;="</span> <span style="color: #11948b;">"&amp;&amp;&amp;"</span> <span style="color: #11948b;">"&amp;&amp;"</span> <span style="color: #11948b;">"|||&gt;"</span> <span style="color: #11948b;">"||&gt;"</span> <span style="color: #11948b;">"|&gt;"</span> <span style="color: #11948b;">"|]"</span>
+                                     <span style="color: #11948b;">"|}"</span> <span style="color: #11948b;">"|=&gt;"</span> <span style="color: #11948b;">"|-&gt;"</span> <span style="color: #11948b;">"|="</span> <span style="color: #11948b;">"||-"</span> <span style="color: #11948b;">"|-"</span> <span style="color: #11948b;">"||="</span> <span style="color: #11948b;">"||"</span> <span style="color: #11948b;">".."</span> <span style="color: #11948b;">".?"</span> <span style="color: #11948b;">".="</span> <span style="color: #11948b;">".-"</span> <span style="color: #11948b;">"..&lt;"</span>
+                                     <span style="color: #11948b;">"..."</span> <span style="color: #11948b;">"+++"</span> <span style="color: #11948b;">"+&gt;"</span> <span style="color: #11948b;">"++"</span> <span style="color: #11948b;">"[||]"</span> <span style="color: #11948b;">"[&lt;"</span> <span style="color: #11948b;">"[|"</span> <span style="color: #11948b;">"{|"</span> <span style="color: #11948b;">"??"</span> <span style="color: #11948b;">"?."</span> <span style="color: #11948b;">"?="</span> <span style="color: #11948b;">"?:"</span> <span style="color: #11948b;">"##"</span>
+                                     <span style="color: #11948b;">"###"</span> <span style="color: #11948b;">"####"</span> <span style="color: #11948b;">"#["</span> <span style="color: #11948b;">"#{"</span> <span style="color: #11948b;">"#="</span> <span style="color: #11948b;">"#!"</span> <span style="color: #11948b;">"#:"</span> <span style="color: #11948b;">"#_("</span> <span style="color: #11948b;">"#_"</span> <span style="color: #11948b;">"#?"</span> <span style="color: #11948b;">"#("</span> <span style="color: #11948b;">";;"</span> <span style="color: #11948b;">"_|_"</span>
+                                     <span style="color: #11948b;">"__"</span> <span style="color: #11948b;">"~~"</span> <span style="color: #11948b;">"~~&gt;"</span> <span style="color: #11948b;">"~&gt;"</span> <span style="color: #11948b;">"~-"</span> <span style="color: #11948b;">"~@"</span> <span style="color: #11948b;">"$&gt;"</span> <span style="color: #11948b;">"^="</span> <span style="color: #11948b;">"]#"</span>))
+(global-ligature-mode t)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">toggle-ligatures</span> ()
+  <span style="color: #11948b;">"Toggle ligatures on and off."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">if</span> (<span style="color: #778c00; font-weight: bold;">bound-and-true-p</span> global-ligature-mode)
+      (global-ligature-mode -1)
+    (global-ligature-mode 1)))
+(evil-leader/set-key <span style="color: #11948b;">"t l"</span> 'toggle-ligatures)
+
+(<span style="color: #778c00; font-weight: bold;">setq-default</span> scroll-bar-width 10)
+(<span style="color: #778c00; font-weight: bold;">setq-default</span> left-fringe-width 10)
+(<span style="color: #778c00; font-weight: bold;">setq-default</span> right-fringe-width 10)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">I dislike trailing whitespace creeping into my files so the</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">following will make it visible and automatically remove it upon</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">saving. </span><span style="color: #00ffff; font-weight: bold;">NOTE</span><span style="color: #98a6a6;"> setting `</span><span style="color: #007ec4; font-weight: bold;">show-trailing-whitespace</span><span style="color: #98a6a6;">' globally leads to</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">some things being highlighted in other buffers such as `</span><span style="color: #007ec4; font-weight: bold;">calendar</span><span style="color: #98a6a6;">'</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">where they should not be hightlight. Doing it with</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">`</span><span style="color: #007ec4; font-weight: bold;">nice-show-trailing-whitespace</span><span style="color: #98a6a6;">' ensures it is set locally as</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">appropriate.</span>
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-show-trailing-whitespace</span> ()
+  <span style="color: #11948b;">"Enable trailing whitespace highlighting only when editing a file."</span>
+  (<span style="color: #778c00; font-weight: bold;">setq</span> show-trailing-whitespace (buffer-file-name)))
+(add-hook 'find-file-hook 'nice-show-trailing-whitespace)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">hl-todo</span>)
+(global-hl-todo-mode)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> nice-colours-alist
+      '((strong-warning . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #11948b;">"</span>)
+        (weak-warning . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #11948b;">"</span>)
+        (weak-note . <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #00ffff;">cyan</span><span style="color: #11948b;">"</span>)
+        (strong-note . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #0000ff;">blue</span><span style="color: #11948b;">"</span>)
+        (light-theme-comment-background . <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #e4ecda;">#e4ecda</span><span style="color: #11948b;">"</span>)
+        (light-theme-comment-foreground . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #207e7b;">#207e7b</span><span style="color: #11948b;">"</span>)
+        (light-theme-shadow-background . <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #eee8d5;">#eee8d5</span><span style="color: #11948b;">"</span>)
+        (light-theme-shadow-foreground . <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #93a1a1;">#93a1a1</span><span style="color: #11948b;">"</span>)
+        (dark-theme-comment-background . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #207e7b;">#207e7b</span><span style="color: #11948b;">"</span>)
+        (dark-theme-comment-foreground . <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #e4ecda;">#e4ecda</span><span style="color: #11948b;">"</span>)
+        (dark-theme-shadow-background . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #202c2a;">#202c2a</span><span style="color: #11948b;">"</span>)
+        (dark-theme-shadow-foreground . <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #254d48;">#254d48</span><span style="color: #11948b;">"</span>)))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-colour</span> (colour)
+  <span style="color: #11948b;">"Return the colour associated with the symbol COLOUR."</span>
+  (cdr (assoc colour nice-colours-alist)))
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> hl-todo-keyword-faces
+      `((<span style="color: #11948b;">"</span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #11948b;">"</span>   . ,(nice-colour 'strong-warning))
+        (<span style="color: #11948b;">"</span><span style="color: #ff00ff; font-weight: bold;">FIXME</span><span style="color: #11948b;">"</span>  . ,(nice-colour 'weak-warning))
+        (<span style="color: #11948b;">"</span><span style="color: #00ffff; font-weight: bold;">NOTE</span><span style="color: #11948b;">"</span>   . ,(nice-colour 'weak-note))
+        (<span style="color: #11948b;">"</span><span style="color: #0000ff; font-weight: bold;">DONE</span><span style="color: #11948b;">"</span>   . ,(nice-colour 'strong-note))))
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> fill-column 70)
+<span style="color: #98a6a6;">;; </span><span style="color: #ff00ff; font-weight: bold;">FIXME</span><span style="color: #98a6a6;"> the fill column is a bit hard to see, it should be clearer.</span>
+(evil-leader/set-key <span style="color: #11948b;">"t f"</span> 'display-fill-column-indicator-mode)
+
+(add-to-list `custom-theme-load-path <span style="color: #11948b;">"~/.emacs.d/themes/"</span>)
+(load-theme 'solarized-light-high-contrast t)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-modeline-dark-theme</span> ()
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (set-face-background 'mode-line (nice-colour 'dark-theme-comment-background))
+  (set-face-foreground 'mode-line (nice-colour 'dark-theme-comment-foreground))
+  (set-face-background 'mode-line-inactive (nice-colour 'dark-theme-shadow-background))
+  (set-face-foreground 'mode-line-inactive (nice-colour 'dark-theme-shadow-foreground)))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-modeline-light-theme</span> ()
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (set-face-background 'mode-line (nice-colour 'light-theme-comment-background))
+  (set-face-foreground 'mode-line (nice-colour 'light-theme-comment-foreground))
+  (set-face-background 'mode-line-inactive (nice-colour 'light-theme-shadow-background))
+  (set-face-foreground 'mode-line-inactive (nice-colour 'light-theme-shadow-foreground)))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-toggle-themes</span> ()
+  <span style="color: #11948b;">"Toggle between two themes: solarized-light-high-contrast and</span>
+<span style="color: #11948b;">solarized-dark-high-contrast and adjust the comment face to one</span>
+<span style="color: #11948b;">that is visible in both."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">if</span> (eq (car custom-enabled-themes) 'solarized-light-high-contrast)
+      (<span style="color: #778c00; font-weight: bold;">progn</span>
+        (disable-theme 'solarized-light-high-contrast)
+        (load-theme 'solarized-dark-high-contrast t)
+        (<span style="color: #778c00; font-weight: bold;">setq</span> font-lock-comment-delimiter-face
+              `((t (
+                    <span style="color: #596e76; font-weight: bold;">:background</span> ,(nice-colour 'dark-theme-comment-background)
+                                <span style="color: #596e76; font-weight: bold;">:foreground</span> ,(nice-colour 'dark-theme-comment-foreground)
+                                <span style="color: #596e76; font-weight: bold;">:slant</span> normal))))
+        (<span style="color: #778c00; font-weight: bold;">setq</span> font-lock-comment-face
+              `((t (
+                    <span style="color: #596e76; font-weight: bold;">:background</span> ,(nice-colour 'dark-theme-comment-background)
+                                <span style="color: #596e76; font-weight: bold;">:foreground</span> ,(nice-colour 'dark-theme-comment-foreground)
+                                <span style="color: #596e76; font-weight: bold;">:slant</span> normal))))
+        (nice-modeline-dark-theme))
+    (<span style="color: #778c00; font-weight: bold;">progn</span>
+      (disable-theme 'solarized-dark-high-contrast)
+      (load-theme 'solarized-light-high-contrast t)
+      (<span style="color: #778c00; font-weight: bold;">setq</span> font-lock-comment-delimiter-face
+            `((t (
+                  <span style="color: #596e76; font-weight: bold;">:background</span> ,(nice-colour 'light-theme-comment-background)
+                              <span style="color: #596e76; font-weight: bold;">:foreground</span> ,(nice-colour 'light-theme-comment-foreground)
+                              <span style="color: #596e76; font-weight: bold;">:slant</span> normal))))
+      (<span style="color: #778c00; font-weight: bold;">setq</span> font-lock-comment-face
+            `((t (
+                  <span style="color: #596e76; font-weight: bold;">:background</span> ,(nice-colour 'light-theme-comment-background)
+                              <span style="color: #596e76; font-weight: bold;">:foreground</span> ,(nice-colour 'light-theme-comment-foreground)
+                              <span style="color: #596e76; font-weight: bold;">:slant</span> normal)))))
+    (nice-modeline-light-theme)))
+
+(evil-leader/set-key <span style="color: #11948b;">"t t"</span> 'nice-toggle-themes)
+
+(tool-bar-mode -1)
+
+(global-hl-line-mode t)
+(set-face-attribute 'hl-line nil <span style="color: #596e76; font-weight: bold;">:background</span> <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #eee8d5;">#eee8d5</span><span style="color: #11948b;">"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">next-window-and-pulse</span> ()
+  <span style="color: #11948b;">"Switch to another window and pulse the current window."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (other-window 1)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((orig-color (face-background 'mode-line)))
+    (set-face-background 'mode-line <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #dc322f;">#dc322f</span><span style="color: #11948b;">"</span>)
+    (sit-for 0.1)
+    (set-face-background 'mode-line orig-color)))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">previous-window-and-pulse</span> ()
+  <span style="color: #11948b;">"Switch to another window and pulse the current window."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (other-window -1)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((orig-color (face-background 'mode-line)))
+    (set-face-background 'mode-line <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #dc322f;">#dc322f</span><span style="color: #11948b;">"</span>)
+    (sit-for 0.1)
+    (set-face-background 'mode-line orig-color)))
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Rainbow-mode will highlight strings indicating colours,</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">e.g. hexcodes in their corresponding colour.</span>
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">rainbow-mode</span>)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+(add-hook 'ess-mode-hook 'rainbow-mode)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> inhibit-splash-screen t)
+
+(evil-leader/set-key <span style="color: #11948b;">"z j"</span> 'text-scale-decrease)
+(evil-leader/set-key <span style="color: #11948b;">"z k"</span> 'text-scale-increase)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Be sensible</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">===========</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">unfill</span>)
+(global-set-key (kbd <span style="color: #11948b;">"M-q"</span>) 'unfill-toggle)
+
+(global-evil-leader-mode)
+
+(evil-leader/set-leader <span style="color: #11948b;">"&lt;SPC&gt;"</span>)
+(evil-leader/set-key <span style="color: #11948b;">"&lt;SPC&gt;"</span> 'execute-extended-command)
+
+(evil-leader/set-key <span style="color: #11948b;">"q r"</span> 'restart-emacs)
+(evil-leader/set-key <span style="color: #11948b;">"q q"</span> 'save-buffers-kill-emacs)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Frame related commands will have keys starting with `</span><span style="color: #007ec4; font-weight: bold;">F</span><span style="color: #98a6a6;">'.</span>
+(evil-leader/set-key <span style="color: #11948b;">"F f"</span> 'toggle-frame-fullscreen)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-pop-out-window</span> ()
+  <span style="color: #11948b;">"Pop the current window out into a new frame.</span>
+
+<span style="color: #11948b;">If there is only a single window then do nothing because it is</span>
+<span style="color: #11948b;">already in its own frame."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">unless</span> (one-window-p)
+    (<span style="color: #778c00; font-weight: bold;">let</span> ((current-buffer (current-buffer)))
+      (delete-window)
+      (display-buffer-pop-up-frame current-buffer nil))))
+
+(evil-leader/set-key <span style="color: #11948b;">"F p"</span> 'nice-pop-out-window)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">The which-key package is a great way to be reminded of what keys</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">are available from the start of a key sequence.</span>
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">which-key</span>)
+(which-key-mode)
+(<span style="color: #778c00; font-weight: bold;">setq</span> which-key-idle-delay 0.3)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">which-key</span>)
+(which-key-mode)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> key-description-pairs
+      '((<span style="color: #11948b;">"SPC a"</span> . <span style="color: #11948b;">"Agenda (org-mode)"</span>)
+        (<span style="color: #11948b;">"SPC b"</span> . <span style="color: #11948b;">"Buffers"</span>)
+        (<span style="color: #11948b;">"SPC c"</span> . <span style="color: #11948b;">"Cursors"</span>)
+        (<span style="color: #11948b;">"SPC c"</span> . <span style="color: #11948b;">"Delete"</span>)
+        (<span style="color: #11948b;">"SPC f"</span> . <span style="color: #11948b;">"Files/Dired"</span>)
+        (<span style="color: #11948b;">"SPC F"</span> . <span style="color: #11948b;">"Frame"</span>)
+        (<span style="color: #11948b;">"SPC g"</span> . <span style="color: #11948b;">"Git (magit)"</span>)
+        (<span style="color: #11948b;">"SPC g c"</span> . <span style="color: #11948b;">"Commits"</span>)
+        (<span style="color: #11948b;">"SPC h"</span> . <span style="color: #11948b;">"HELP!!!"</span>)
+        (<span style="color: #11948b;">"SPC m"</span> . <span style="color: #11948b;">"Major"</span>)
+        (<span style="color: #11948b;">"SPC m s"</span> . <span style="color: #11948b;">"REPL"</span>)
+        (<span style="color: #11948b;">"SPC q"</span> . <span style="color: #11948b;">"Quit/Exit"</span>)
+        (<span style="color: #11948b;">"SPC s"</span> . <span style="color: #11948b;">"Shell/Search"</span>)
+        (<span style="color: #11948b;">"SPC S"</span> . <span style="color: #11948b;">"Spelling"</span>)
+        (<span style="color: #11948b;">"SPC t"</span> . <span style="color: #11948b;">"Toggles"</span>)
+        (<span style="color: #11948b;">"SPC v"</span> . <span style="color: #11948b;">"Visitors"</span>)
+        (<span style="color: #11948b;">"SPC v b"</span> . <span style="color: #11948b;">"Bibtex"</span>)
+        (<span style="color: #11948b;">"SPC v f"</span> . <span style="color: #11948b;">"Files"</span>)
+        (<span style="color: #11948b;">"SPC v d"</span> . <span style="color: #11948b;">"Directories"</span>)
+        (<span style="color: #11948b;">"SPC w"</span> . <span style="color: #11948b;">"Windows"</span>)
+        (<span style="color: #11948b;">"SPC y"</span> . <span style="color: #11948b;">"Yasnippet"</span>)
+        (<span style="color: #11948b;">"SPC z"</span> . <span style="color: #11948b;">"Zoom (without a mouse)"</span>)))
+
+(<span style="color: #778c00; font-weight: bold;">dolist</span> (pair key-description-pairs)
+  (which-key-add-key-based-replacements (car pair) (cdr pair)))
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">nice-meld-files</span> (name fa fb key)
+  <span style="color: #11948b;">"Generate function named nice-meld-NAME which opens meld diff for</span>
+<span style="color: #11948b;">files FA and FB using SPC f m KEY."</span>
+  `(<span style="color: #778c00; font-weight: bold;">progn</span>
+     (<span style="color: #778c00; font-weight: bold;">defun</span> ,(intern (format <span style="color: #11948b;">"nice-meld-%s"</span> name)) ()
+       (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+       (async-shell-command ,(format <span style="color: #11948b;">"meld %s %s &amp;"</span> fa fb)))
+     (evil-leader/set-key ,(concat <span style="color: #11948b;">"f m "</span> key) (intern ,(format <span style="color: #11948b;">"nice-meld-%s"</span> name)))))
+
+(<span style="color: #778c00; font-weight: bold;">nice-meld-files</span> <span style="color: #11948b;">"init"</span> <span style="color: #11948b;">"~/.emacs.d/init.el"</span> <span style="color: #11948b;">"~/Documents/nicemacs/nicemacs-v2.el"</span> <span style="color: #11948b;">"i"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-meld-files</span> <span style="color: #11948b;">"aspell"</span> <span style="color: #11948b;">"~/.aspell.en.pws"</span> <span style="color: #11948b;">"~/Documents/nicemacs/resources/aspell.en.pws"</span> <span style="color: #11948b;">"a"</span>)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">The `</span><span style="color: #007ec4; font-weight: bold;">winum</span><span style="color: #98a6a6;">' package facilitates switching between windows using</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">numbers which appear in the bottom left hand of the window, at the</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">start of the mode-line.</span>
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">winum</span>)
+(winum-mode)
+(<span style="color: #778c00; font-weight: bold;">setq</span> winum-format <span style="color: #11948b;">" %s "</span>)
+(custom-set-faces
+ `(winum-face
+   ((t
+     (<span style="color: #596e76; font-weight: bold;">:foreground</span> ,(nice-colour 'weak-warning)
+      <span style="color: #596e76; font-weight: bold;">:weight</span> bold
+      <span style="color: #596e76; font-weight: bold;">:underline</span> nil
+      <span style="color: #596e76; font-weight: bold;">:height</span> 1.1)))))
+(evil-leader/set-key
+  <span style="color: #11948b;">"0"</span> 'winum-select-window-0
+  <span style="color: #11948b;">"1"</span> 'winum-select-window-1
+  <span style="color: #11948b;">"2"</span> 'winum-select-window-2
+  <span style="color: #11948b;">"3"</span> 'winum-select-window-3
+  <span style="color: #11948b;">"4"</span> 'winum-select-window-4
+  <span style="color: #11948b;">"5"</span> 'winum-select-window-5
+  <span style="color: #11948b;">"6"</span> 'winum-select-window-6
+  <span style="color: #11948b;">"7"</span> 'winum-select-window-7
+  <span style="color: #11948b;">"8"</span> 'winum-select-window-8
+  <span style="color: #11948b;">"9"</span> 'winum-select-window-9)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Adjust the windows so that they are all the same size.</span>
+(evil-leader/set-key <span style="color: #11948b;">"w b"</span> 'balance-windows)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-balance-windows-alt</span> ()
+  <span style="color: #11948b;">"Balance windows such that the current window receives a certain</span>
+<span style="color: #11948b;">amount of the of the frame's width and height."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (balance-windows)
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((proportion 0.7)
+         (frame-width (frame-width))
+         (frame-height (frame-height))
+         (desired-width (floor (* proportion frame-width)))
+         (desired-height (floor (* proportion frame-height))))
+    (enlarge-window-horizontally (- desired-width (window-width)))
+    (enlarge-window (- desired-height (window-height)))))
+(evil-leader/set-key <span style="color: #11948b;">"w a"</span> 'nice-balance-windows-alt)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7df5ba1" class="outline-3">
+<h3 id="org7df5ba1">Shells</h3>
+<div class="outline-text-3" id="text-org7df5ba1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Shell stuff</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-----------</span>
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> eshell-cmpl-ignore-case t)
+(evil-leader/set-key <span style="color: #11948b;">"s e"</span> 'eshell)
+(evil-leader/set-key <span style="color: #11948b;">"s b"</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> () (<span style="color: #778c00; font-weight: bold;">interactive</span>) (ansi-term <span style="color: #11948b;">"/bin/bash"</span>)))
+(evil-leader/set-key <span style="color: #11948b;">"s i"</span> 'ielm)
+(evil-leader/set-key <span style="color: #11948b;">"s r"</span> 'R)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgabab8d2" class="outline-3">
+<h3 id="orgabab8d2">STUFF 2</h3>
+<div class="outline-text-3" id="text-orgabab8d2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Buffer stuff</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------------</span>
+
+(evil-leader/set-key <span style="color: #11948b;">"b r"</span> 'revert-buffer)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">File stuff</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----------</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Configure functions to move/copy the most recent file in the</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">~/Downloads directory to the current directory so that they can be</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">used from eshell.</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">dired</span>)
+(define-key dired-mode-map <span style="color: #11948b;">"-"</span> 'dired-up-directory)
+(<span style="color: #778c00; font-weight: bold;">setq</span> dired-listing-switches <span style="color: #11948b;">"-alh"</span>)
+
+(evil-leader/set-key
+  <span style="color: #11948b;">"f f"</span> 'find-file
+  <span style="color: #11948b;">"f F"</span> 'find-file-other-frame
+  <span style="color: #11948b;">"f s"</span> 'save-buffer
+  <span style="color: #11948b;">"f d"</span> 'nice-dired
+  <span style="color: #11948b;">"b b"</span> 'switch-to-buffer
+  <span style="color: #11948b;">"d b"</span> 'kill-buffer
+  <span style="color: #11948b;">"d f"</span> 'delete-frame)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-dired</span> ()
+  <span style="color: #11948b;">"Open dired for the current buffer's directory if it</span>
+<span style="color: #11948b;"> corresponds to a file, the working directory of the shell if</span>
+<span style="color: #11948b;"> the current buffer is a shell, or the home directory otherwise."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((buffer-mode (<span style="color: #778c00; font-weight: bold;">with-current-buffer</span> (current-buffer) major-mode))
+         (dir (<span style="color: #778c00; font-weight: bold;">cond</span> ((buffer-file-name)
+                     (file-name-directory (buffer-file-name)))
+                    ((<span style="color: #778c00; font-weight: bold;">or</span> (eq buffer-mode 'term-mode)
+                         (eq buffer-mode 'eshell-mode)
+                         (eq buffer-mode 'inferior-ess-r-mode))
+                     (<span style="color: #778c00; font-weight: bold;">with-current-buffer</span> (<span style="color: #778c00; font-weight: bold;">if</span> (eq buffer-mode 'inferior-ess-r-mode)
+                                              (process-buffer (ess-get-process ess-current-process-name))
+                                            (current-buffer))
+                       (file-name-directory default-directory)))
+                    (t (expand-file-name <span style="color: #11948b;">"~/"</span>)))))
+    (dired dir)))
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">nice-scratch-buffer</span> (mode key)
+  <span style="color: #11948b;">"Create a nice-scratch-buffer function for MODE and bind it to KEY."</span>
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((func-name (intern (format <span style="color: #11948b;">"nice-scratch-buffer-%s"</span> (symbol-name mode))))
+        (docstring (format <span style="color: #11948b;">"Open the scratch buffer and set the major mode to `</span><span style="color: #007ec4; font-weight: bold;">%s</span><span style="color: #11948b;">'."</span> mode)))
+    `(<span style="color: #778c00; font-weight: bold;">progn</span>
+       (<span style="color: #778c00; font-weight: bold;">defun</span> ,func-name ()
+         ,docstring
+         (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+         (switch-to-buffer <span style="color: #11948b;">"*scratch*"</span>)
+         (,mode))
+       (evil-leader/set-key ,key ',func-name))))
+(<span style="color: #778c00; font-weight: bold;">nice-scratch-buffer</span> text-mode <span style="color: #11948b;">"b s t"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-scratch-buffer</span> org-mode <span style="color: #11948b;">"b s o"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-scratch-buffer</span> emacs-lisp-mode <span style="color: #11948b;">"b s e"</span>)
+
+(evil-leader/set-key
+  <span style="color: #11948b;">"w s"</span> 'split-window-below
+  <span style="color: #11948b;">"w v"</span> 'split-window-right
+  <span style="color: #11948b;">"TAB"</span> 'next-window-and-pulse
+  <span style="color: #11948b;">"&lt;backtab&gt;"</span> 'previous-window-and-pulse
+  <span style="color: #11948b;">"w d"</span> 'delete-window
+  <span style="color: #11948b;">"w L"</span> 'evil-window-move-far-right
+  <span style="color: #11948b;">"w H"</span> 'evil-window-move-far-left
+  <span style="color: #11948b;">"w J"</span> 'evil-window-move-very-bottom
+  <span style="color: #11948b;">"w K"</span> 'evil-window-move-very-top)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Consult the oracle</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------------------</span>
+
+(evil-leader/set-key
+  <span style="color: #11948b;">"h s"</span> 'apropos
+  <span style="color: #11948b;">"h d b"</span> 'message-buffer-file-name
+  <span style="color: #11948b;">"h d f"</span> 'describe-function
+  <span style="color: #11948b;">"h d m"</span> 'describe-mode
+  <span style="color: #11948b;">"h d p"</span> 'describe-package
+  <span style="color: #11948b;">"h d k"</span> 'describe-key
+  <span style="color: #11948b;">"h d v"</span> 'describe-variable)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">message-buffer-file-name</span> ()
+  <span style="color: #11948b;">"Print the full path of the current buffer's file or directory to the</span>
+<span style="color: #11948b;">minibuffer and store this on the kill ring."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((path (<span style="color: #778c00; font-weight: bold;">or</span> buffer-file-name
+                  (<span style="color: #778c00; font-weight: bold;">and</span> (eq major-mode 'dired-mode)
+                       (dired-current-directory)))))
+    (<span style="color: #778c00; font-weight: bold;">when</span> path
+      (kill-new path)
+      (message path))))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">message-link-at-point</span> ()
+  <span style="color: #11948b;">"Print the full path of a link at the point so we know where this</span>
+<span style="color: #11948b;">will take us."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((link (org-element-context))
+         (link-file-name (org-element-property <span style="color: #596e76; font-weight: bold;">:path</span> link)))
+    (<span style="color: #778c00; font-weight: bold;">when</span> (eq (org-element-type link) 'link)
+      (kill-new link-file-name)
+      (message <span style="color: #11948b;">"%s"</span> link-file-name))))
+
+(evil-leader/set-key <span style="color: #11948b;">"h l m"</span> 'message-link-at-point)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Learn from your past</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">--------------------</span>
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">nice-rgrep-directory</span> (dname path pattern key)
+  <span style="color: #11948b;">"Create a function that calls `</span><span style="color: #007ec4; font-weight: bold;">rgrep</span><span style="color: #11948b;">' on the specified DIRECTORY</span>
+<span style="color: #11948b;">and binds it to a KEY.</span>
+
+<span style="color: #11948b;">DNAME is the name of the directory used to generate the function</span>
+<span style="color: #11948b;">name.</span>
+<span style="color: #11948b;">PATH is the path to the directory to be searched.</span>
+<span style="color: #11948b;">KEY is the keybinding (as a string) to trigger the rgrep function."</span>
+  `(<span style="color: #778c00; font-weight: bold;">progn</span>
+     (<span style="color: #778c00; font-weight: bold;">defun</span> ,(intern (format <span style="color: #11948b;">"nice-rgrep-%s"</span> dname)) ()
+       ,(format <span style="color: #11948b;">"Search for a string in %s using rgrep."</span> dname)
+       (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+       (rgrep (read-string <span style="color: #11948b;">"Search terms: "</span>) ,pattern ,path))
+     (evil-leader/set-key ,(concat <span style="color: #11948b;">"s g "</span> key) (intern ,(format <span style="color: #11948b;">"nice-rgrep-%s"</span> dname)))))
+
+(<span style="color: #778c00; font-weight: bold;">nice-rgrep-directory</span> <span style="color: #11948b;">"website"</span> <span style="color: #11948b;">"~/public-site/org"</span> <span style="color: #11948b;">"*"</span> <span style="color: #11948b;">"w"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-rgrep-directory</span> <span style="color: #11948b;">"notes"</span> <span style="color: #11948b;">"~/public-site/org/notes"</span> <span style="color: #11948b;">"*"</span> <span style="color: #11948b;">"n"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-rgrep-directory</span> <span style="color: #11948b;">"journal"</span> <span style="color: #11948b;">"~/Documents/journal"</span> <span style="color: #11948b;">"*.org"</span> <span style="color: #11948b;">"j"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-rgrep-directory</span> <span style="color: #11948b;">"reviews"</span> <span style="color: #11948b;">"~/Documents/bibliography"</span> <span style="color: #11948b;">"*"</span> <span style="color: #11948b;">"r"</span>)
+
+(evil-leader/set-key <span style="color: #11948b;">"s g ."</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> () (<span style="color: #778c00; font-weight: bold;">interactive</span>) (rgrep (read-string <span style="color: #11948b;">"Search terms: "</span>) <span style="color: #11948b;">"*"</span>)))
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Be virtuous and lead by example</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">===============================</span>
+
+(<span style="color: #778c00; font-weight: bold;">setq-default</span> major-mode
+              (<span style="color: #778c00; font-weight: bold;">lambda</span> ()
+                (<span style="color: #778c00; font-weight: bold;">unless</span> buffer-file-name
+                  (<span style="color: #778c00; font-weight: bold;">let</span> ((buffer-file-name (buffer-name)))
+                    (set-auto-mode)))))
+(<span style="color: #778c00; font-weight: bold;">setq</span> confirm-kill-emacs #'yes-or-no-p)
+(recentf-mode t)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> read-buffer-completion-ignore-case t
+      read-file-name-completion-ignore-case t
+      completion-ignore-case t)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Write well</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----------</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Configure the =dictionary= command so that it works off of a</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">local copy of Webster's</span>
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> sentence-end-double-space nil)
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">flyspell</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">writegood-mode</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">lorem-ipsum</span>)                  <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">provide dummy text</span>
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> ispell-program-name <span style="color: #11948b;">"aspell"</span>)
+(<span style="color: #778c00; font-weight: bold;">setq</span> ispell-personal-dictionary <span style="color: #11948b;">"~/.aspell.en.pws"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-diff-dictionaries</span> ()
+  <span style="color: #11948b;">"Run ediff on the current ispell-personal-dictionary and the</span>
+<span style="color: #11948b;">backup dictionary."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((backup-dictionary (concat nice-resources-dir <span style="color: #11948b;">"/aspell.en.pws"</span>)))
+    (ediff-files ispell-personal-dictionary backup-dictionary)))
+
+(set-face-attribute 'flyspell-duplicate nil
+                    <span style="color: #596e76; font-weight: bold;">:underline</span> nil
+                    <span style="color: #596e76; font-weight: bold;">:foreground</span> <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #11948b;">"</span>
+                    <span style="color: #596e76; font-weight: bold;">:background</span> <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #11948b;">"</span>)
+(set-face-attribute 'flyspell-incorrect nil
+                    <span style="color: #596e76; font-weight: bold;">:underline</span> nil
+                    <span style="color: #596e76; font-weight: bold;">:foreground</span> <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #11948b;">"</span>
+                    <span style="color: #596e76; font-weight: bold;">:background</span> <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #11948b;">"</span>)
+
+(evil-leader/set-key <span style="color: #11948b;">"t S"</span> 'flyspell-mode) <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">toggle flyspell on/off.</span>
+(evil-leader/set-key <span style="color: #11948b;">"S b"</span> 'flyspell-buffer)
+(evil-leader/set-key <span style="color: #11948b;">"S r"</span> 'flyspell-region)
+(evil-leader/set-key <span style="color: #11948b;">"S c"</span> 'flyspell-correct-word-before-point)
+(evil-leader/set-key <span style="color: #11948b;">"S d"</span> 'nice-diff-dictionaries)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> words-to-add
+      '(<span style="color: #11948b;">"many"</span> <span style="color: #11948b;">"various"</span> <span style="color: #11948b;">"very"</span> <span style="color: #11948b;">"quite"</span> <span style="color: #11948b;">"somewhat"</span> <span style="color: #11948b;">"several"</span>
+        <span style="color: #11948b;">"extremely"</span> <span style="color: #11948b;">"exceedingly"</span> <span style="color: #11948b;">"fairly"</span> <span style="color: #11948b;">"rather"</span> <span style="color: #11948b;">"remarkably"</span> <span style="color: #11948b;">"few"</span>
+        <span style="color: #11948b;">"surprisingly"</span> <span style="color: #11948b;">"mostly"</span> <span style="color: #11948b;">"largely"</span> <span style="color: #11948b;">"almost"</span> <span style="color: #11948b;">"nearly"</span>
+        <span style="color: #11948b;">"generally"</span> <span style="color: #11948b;">"virtually"</span> <span style="color: #11948b;">"essentially"</span> <span style="color: #11948b;">"often"</span> <span style="color: #11948b;">"substantially"</span>
+        <span style="color: #11948b;">"significantly"</span> <span style="color: #11948b;">"considerably"</span> <span style="color: #11948b;">"typically"</span> <span style="color: #11948b;">"widely"</span> <span style="color: #11948b;">"really"</span>
+        <span style="color: #11948b;">"actually"</span> <span style="color: #11948b;">"basically"</span> <span style="color: #11948b;">"certainly"</span> <span style="color: #11948b;">"possibly"</span> <span style="color: #11948b;">"probably"</span>
+        <span style="color: #11948b;">"arguably"</span> <span style="color: #11948b;">"likely"</span> <span style="color: #11948b;">"apparently"</span> <span style="color: #11948b;">"clearly"</span> <span style="color: #11948b;">"naturally"</span>
+        <span style="color: #11948b;">"obviously"</span> <span style="color: #11948b;">"seemingly"</span> <span style="color: #11948b;">"surely"</span> <span style="color: #11948b;">"somewhat"</span> <span style="color: #11948b;">"allegedly"</span>
+        <span style="color: #11948b;">"supposedly"</span> <span style="color: #11948b;">"purportedly"</span> <span style="color: #11948b;">"perhaps"</span> <span style="color: #11948b;">"maybe"</span> <span style="color: #11948b;">"kind of"</span>
+        <span style="color: #11948b;">"sort of"</span> <span style="color: #11948b;">"potentially"</span> <span style="color: #11948b;">"ultimately"</span> <span style="color: #11948b;">"respectively"</span>))
+(<span style="color: #778c00; font-weight: bold;">cl-loop</span> for word in words-to-add
+         unless (member word writegood-weasel-words)
+         do (add-to-list 'writegood-weasel-words word))
+
+(evil-leader/set-key <span style="color: #11948b;">"t w"</span> 'writegood-mode)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Be powerful with packages</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">=========================</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">NXML</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Install and configure nxml-mode.</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Yasnippet</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">yasnippet</span>)
+(yas-global-mode 1)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-load-snippets</span> ()
+  <span style="color: #11948b;">"Load the snippets in ~/.emacs.d/snippets."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((snippets-dir <span style="color: #11948b;">"~/.emacs.d/snippets"</span>))
+    (<span style="color: #778c00; font-weight: bold;">unless</span> (file-exists-p snippets-dir)
+      (make-directory snippets-dir))
+    (yas-load-directory snippets-dir)))
+
+(nice-load-snippets)
+
+(evil-leader/set-key
+  <span style="color: #11948b;">"y i"</span> 'yas-insert-snippet     <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Insert a snippet</span>
+  <span style="color: #11948b;">"y n"</span> 'yas-new-snippet        <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Create a new snippet</span>
+  <span style="color: #11948b;">"y v"</span> 'yas-visit-snippet-file <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Visit the snippet file for the current mode</span>
+  <span style="color: #11948b;">"y r"</span> 'yas-reload-all         <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Reload all snippets</span>
+  <span style="color: #11948b;">"y c"</span> 'yas-compile-directory  <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Compile all snippets</span>
+  <span style="color: #11948b;">"y l"</span> 'nice-load-snippets     <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Load your custom snippets</span>
+  <span style="color: #11948b;">"y g"</span> 'nice-go-to-snippets-dir)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-go-to-snippets-dir</span> ()
+  <span style="color: #11948b;">"Open the snippets directory in dired."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (dired <span style="color: #11948b;">"~/.emacs.d/snippets"</span>))
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Multiple cursors</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----------------</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Using mutiple cursors is a little bit tricky but here are some</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">simple steps you can try on the following example text.</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">```</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">the cat sat on the mat</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">catch this ball said pat</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">the food was eaten by the cat</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">```</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">1. Select the an instance of "cat" with the cursor at the start</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">2. Use the keys below, e.g. `SPC c n` to select occurrences</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">3. Use `</span><span style="color: #007ec4; font-weight: bold;">evil-insert</span><span style="color: #98a6a6;">' (`SPC c i`) to start editing.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">4. Exit using `</span><span style="color: #007ec4; font-weight: bold;">mc/keyboard-quit</span><span style="color: #98a6a6;">' (`SPC c q`)</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">multiple-cursors</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">evil-mc</span>)
+(global-evil-mc-mode 1)
+
+(evil-leader/set-key
+  <span style="color: #11948b;">"c n"</span> 'mc/mark-next-like-this        <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Mark next occurrence</span>
+  <span style="color: #11948b;">"c p"</span> 'mc/mark-previous-like-this    <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Mark previous occurrence</span>
+  <span style="color: #11948b;">"c N"</span> 'mc/skip-to-next-like-this     <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Skip and mark next occurrence</span>
+  <span style="color: #11948b;">"c P"</span> 'mc/skip-to-previous-like-this <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Skip and mark previous occurrence</span>
+  <span style="color: #11948b;">"c u"</span> 'mc/unmark-next-like-this      <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Unmark next cursor</span>
+  <span style="color: #11948b;">"c U"</span> 'mc/unmark-previous-like-this  <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Unmark previous cursor</span>
+  <span style="color: #11948b;">"c i"</span> 'evil-insert                   <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Drop into using the cursors</span>
+  <span style="color: #11948b;">"c q"</span> 'mc/keyboard-quit              <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">Quit multiple-cursors mode</span>
+  )
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97b3e6b" class="outline-3">
+<h3 id="org97b3e6b">Magit</h3>
+<div class="outline-text-3" id="text-org97b3e6b">
+</div>
+<div id="outline-container-orgec9e9dd" class="outline-4">
+<h4 id="orgec9e9dd">Staging and unstaging multiple files</h4>
+<div class="outline-text-4" id="text-orgec9e9dd">
+<p>
+You can select multiple files to unstage in one go using the region.
+To do this, follow these steps:
+</p>
+
+<ol class="org-ol">
+<li>Navigate to the "Staged changes" section in the Magit status
+buffer.</li>
+<li>Move the cursor to the first file you want to unstage.</li>
+<li>Set the mark by pressing <code>C-SPC</code> (Control + Space).</li>
+<li>Move the cursor to the last file you want to unstage. This will
+create a region that includes all the files you want to unstage.</li>
+<li>Press <code>u</code> to unstage all the files in the region.</li>
+</ol>
+
+<p>
+You can also use the same method to stage multiple files in the
+"Unstaged changes" section. Just follow the same steps, but press <code>s</code>
+instead of <code>u</code> in step 5 to stage the files in the region.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12f60e1" class="outline-4">
+<h4 id="org12f60e1">Configuration</h4>
+<div class="outline-text-4" id="text-org12f60e1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Magit</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-----</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">magit</span>)
+
+(evil-leader/set-key <span style="color: #11948b;">"g s"</span> 'magit-status)
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">nice-canned-commit-message</span> (fname cmessage key)
+  <span style="color: #11948b;">"Define a canned commit message function with an Evil key binding.</span>
+
+<span style="color: #11948b;">  This macro takes in three arguments:</span>
+<span style="color: #11948b;">  - FNAME: A string that will be used to construct the function name.</span>
+<span style="color: #11948b;">  - CMESSAGE: A string that represents the canned commit message.</span>
+<span style="color: #11948b;">  - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
+
+<span style="color: #11948b;">  The function created by this macro generates a commit message with a timestamp by</span>
+<span style="color: #11948b;">  concatenating the specified CMESSAGE string with the current day and time. The commit</span>
+<span style="color: #11948b;">  is created using `</span><span style="color: #007ec4; font-weight: bold;">magit-commit-create</span><span style="color: #11948b;">', which is invoked with the `--edit` option to</span>
+<span style="color: #11948b;">  open the commit message in an editor. The function is bound to the Evil leader key</span>
+<span style="color: #11948b;">  sequence `g c KEY`, where `KEY` is the specified key string.</span>
+
+<span style="color: #11948b;">  Example usage:</span>
+<span style="color: #11948b;">  (nice-canned-commit-message \"my-canned-commit\" \"Fix some bugs\" \"c\")"</span>
+  `(<span style="color: #778c00; font-weight: bold;">progn</span>
+     (<span style="color: #778c00; font-weight: bold;">defun</span> ,(intern (format <span style="color: #11948b;">"nccm-%s"</span> fname)) ()
+       <span style="color: #11948b;">"Generate a canned commit message with a timestamp."</span>
+       (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+       (<span style="color: #778c00; font-weight: bold;">let</span> ((commit-message (format <span style="color: #11948b;">"%s %s"</span>
+                                     ,cmessage
+                                     (downcase (format-time-string <span style="color: #11948b;">"%A %l:%M %p"</span>)))))
+         (magit-commit-create (list <span style="color: #11948b;">"--edit"</span> (concat <span style="color: #11948b;">"-m \""</span> commit-message <span style="color: #11948b;">"\""</span>)))))
+     (evil-leader/set-key ,(concat <span style="color: #11948b;">"g c "</span> key) (intern ,(format <span style="color: #11948b;">"nccm-%s"</span> fname)))))
+
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> emacs <span style="color: #11948b;">"update emacs config"</span> <span style="color: #11948b;">"e"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> notes <span style="color: #11948b;">"update notes"</span> <span style="color: #11948b;">"n"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> review <span style="color: #11948b;">"update reading list"</span> <span style="color: #11948b;">"r"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> website <span style="color: #11948b;">"update website"</span> <span style="color: #11948b;">"w"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> journal <span style="color: #11948b;">"update journal"</span> <span style="color: #11948b;">"j"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+
+(evil-leader/set-key <span style="color: #11948b;">"g q"</span> 'with-editor-cancel)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1449b89" class="outline-3">
+<h3 id="org1449b89">STUFF 3</h3>
+<div class="outline-text-3" id="text-org1449b89">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Emacs Lisp</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----------</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Configure a linter</span>
+
+(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"m s c"</span> 'eval-last-sexp)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"m s b"</span> 'eval-buffer)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"m s r"</span> 'eval-region)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Emacs Speaks Statistics (ESS)</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-----------------------------</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">ess-site</span>)
+(<span style="color: #778c00; font-weight: bold;">setq</span> ess-default-style 'DEFAULT)
+
+(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m s b"</span> 'ess-eval-buffer)
+(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m s r"</span> 'ess-eval-region)
+(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m '"</span> 'ess-switch-to-inferior-or-script-buffer)
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">quarto-mode</span>)
+
+(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m s c"</span> 'ess-eval-region-or-line-visibly-and-step)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Python</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Use `</span><span style="color: #007ec4; font-weight: bold;">pyvenv-activate</span><span style="color: #98a6a6;">' to activate a virtual environment.</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">pyvenv</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">python</span>)
+
+(evil-leader/set-key-for-mode 'python-mode
+  <span style="color: #11948b;">"m s b"</span> 'python-shell-send-buffer
+  <span style="color: #11948b;">"m s r"</span> 'python-shell-send-region
+  <span style="color: #11948b;">"m '"</span> 'python-shell-switch-to-shell)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> python-shell-interpreter <span style="color: #11948b;">"python3"</span>)
+(<span style="color: #778c00; font-weight: bold;">setq</span> python-indent-offset 4)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Scheme/Racket</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-------------</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Work out how to start a repl properly, running the key does</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">not seem to work, I need to run the command via M-x directly.</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">racket-mode</span>)
+(add-to-list 'auto-mode-alist '(<span style="color: #11948b;">"\\.rkt\\'"</span> . racket-mode))
+(<span style="color: #778c00; font-weight: bold;">setq</span> racket-program <span style="color: #11948b;">"/usr/bin/racket"</span>)
+
+(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m h d"</span> 'racket-describe-search)
+(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m s b"</span> 'racket-run)
+(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m s r"</span> 'racket-send-region)
+(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m s c"</span> 'racket-send-last-sexp)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">LaTeX/BibTeX</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------------</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Configure this so that there is a good way to search the key</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">bibtex files, perhaps with a SQL type search</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Configure this so there is the command to convert ris to bib.</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Find a better way to search BIB files.</span>
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">most-recent-file</span> (files)
+  <span style="color: #11948b;">"Return the most recent file from a list of FILES.</span>
+<span style="color: #11948b;">FILES should be a list of file paths as strings."</span>
+  (<span style="color: #778c00; font-weight: bold;">when</span> (<span style="color: #778c00; font-weight: bold;">and</span> files (seq-every-p #'stringp files))
+    (<span style="color: #778c00; font-weight: bold;">cl-flet*</span> ((file-mod-time (file)
+                 (nth 5 (file-attributes file)))
+               (mod-time-less-p (a b)
+                 (time-less-p (file-mod-time b)
+                              (file-mod-time a))))
+      (car (sort files #'mod-time-less-p)))))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">copy-file-with-bib-extension</span> (file-path)
+  <span style="color: #11948b;">"Create a copy of the file at FILE-PATH with a .bib extension."</span>
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((file-name (file-name-nondirectory file-path))
+         (file-base-name (file-name-sans-extension file-name))
+         (new-file-name (concat file-base-name <span style="color: #11948b;">".bib"</span>))
+         (new-file-path (concat (file-name-directory file-path) new-file-name)))
+    (copy-file file-path new-file-path t)
+    new-file-path))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-visit-last-bib</span> ()
+  <span style="color: #11948b;">"Visit the most recent BIB file in Downloads. If there is a TXT</span>
+<span style="color: #11948b;">file that is younger than the last BIB file, send a message to</span>
+<span style="color: #11948b;">indicate this."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((bib-files (directory-files <span style="color: #11948b;">"~/Downloads"</span> t <span style="color: #11948b;">".*bib"</span> <span style="color: #11948b;">"ctime"</span>))
+         (most-recent-bib (most-recent-file bib-files))
+         (txt-files (directory-files <span style="color: #11948b;">"~/Downloads"</span> t <span style="color: #11948b;">".*txt"</span> <span style="color: #11948b;">"ctime"</span>))
+         (most-recent-txt (most-recent-file txt-files)))
+    (<span style="color: #778c00; font-weight: bold;">if</span> most-recent-bib
+        (<span style="color: #778c00; font-weight: bold;">if</span> (<span style="color: #778c00; font-weight: bold;">and</span> most-recent-txt
+                 (time-less-p (nth 5 (file-attributes most-recent-bib))
+                              (nth 5 (file-attributes most-recent-txt))))
+            (<span style="color: #778c00; font-weight: bold;">progn</span> (message (concat <span style="color: #11948b;">"A more recent .txt file exists: "</span> most-recent-txt))
+                   (find-file (copy-file-with-bib-extension most-recent-txt)))
+          (find-file most-recent-bib))
+      (message <span style="color: #11948b;">"No bib files found in ~/Downloads/"</span>))))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-bibtex-braces</span> ()
+  <span style="color: #11948b;">"Wrap upper case letters with brackets for bibtex titles within</span>
+<span style="color: #11948b;">the selected region."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">if</span> (use-region-p)
+      (<span style="color: #778c00; font-weight: bold;">let</span> ((start (region-beginning))
+            (end (region-end))
+            (case-fold-search nil))
+        (<span style="color: #778c00; font-weight: bold;">save-excursion</span>
+          (goto-char start)
+          (<span style="color: #778c00; font-weight: bold;">while</span> (re-search-forward <span style="color: #11948b;">"</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">(</span><span style="color: #11948b;">[A-Z]+</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">)</span><span style="color: #11948b;">"</span> end t)
+            (replace-match (format <span style="color: #11948b;">"{%s}"</span> (match-string 0)) t))))
+    (message <span style="color: #11948b;">"No region selected."</span>)))
+
+(evil-leader/set-key <span style="color: #11948b;">"v b l"</span> 'nice-visit-last-bib)
+
+(evil-leader/set-key-for-mode 'bibtex-mode <span style="color: #11948b;">"m b b"</span> 'nice-bibtex-braces)
+(evil-leader/set-key-for-mode 'bibtex-mode <span style="color: #11948b;">"m b f"</span> 'bibtex-reformat)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Markdown-mode</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-------------</span>
+
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">markdown-mode</span>)
+
+(add-to-list 'auto-mode-alist '(<span style="color: #11948b;">"\\.md\\'"</span> . markdown-mode))
+(add-to-list 'auto-mode-alist '(<span style="color: #11948b;">"\\.markdown\\'"</span> . markdown-mode))
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Org-Mode</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">--------</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #00ffff; font-weight: bold;">NOTE</span><span style="color: #98a6a6;"> It would be nice to have an additional command and key for</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">moving from level n+1 headers their parent level n header.</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff00ff; font-weight: bold;">FIXME</span><span style="color: #98a6a6;"> Work out why the configuration based approach does not work!</span>
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-return-follows-link t)
+(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"RET"</span> 'org-open-at-point)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-org-mode-hook</span> ()
+  <span style="color: #11948b;">"Set up org-mode specific keybindings."</span>
+  (local-set-key (kbd <span style="color: #11948b;">"&lt;tab&gt;"</span>) #'org-cycle))
+
+(add-hook 'org-mode-hook #'nice-org-mode-hook)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Org-agenda</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- To navigate up and down lines in the agend view use =n/p=.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v d= will show the day view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v w= the week view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v m= the month view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v SPC= resets the view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =.= goes to today.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =j= will /jump/ to a date (selected via calendar).</span>
+<span style="color: #98a6a6;">;;</span>
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #11948b;">"-7d"</span>)
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-span 30)
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil)
+
+(evil-leader/set-key <span style="color: #11948b;">"a a"</span> 'org-agenda)
+(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"a s"</span> 'org-schedule)
+(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"b t"</span> 'org-babel-tangle)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-org-agenda-goto-today-advice-after</span> (<span style="color: #a67c00;">&amp;rest</span> _args)
+  <span style="color: #11948b;">"Adjust the window after calling `</span><span style="color: #007ec4; font-weight: bold;">org-agenda-goto-today</span><span style="color: #11948b;">'."</span>
+  (recenter-top-bottom 4))
+
+(advice-add 'org-agenda-goto-today
+            <span style="color: #596e76; font-weight: bold;">:after</span> #'nice-org-agenda-goto-today-advice-after)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Literate programming</span>
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-detangle-nicemacs-v2</span> ()
+  <span style="color: #11948b;">"Detangle the nicemacs-v2.el file."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((nicemacs-v2-source (concat nice-nicemacs-directory <span style="color: #11948b;">"/nicemacs-v2.el"</span>)))
+    (org-babel-detangle nicemacs-v2-source)))
+
+(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"b d"</span> 'nice-detangle-nicemacs-v2)
+
+(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"o t l"</span> 'org-latex-preview)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-image-actual-width 500)
+(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"o t i"</span> 'org-toggle-inline-images)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-publish-homepage</span> ()
+  <span style="color: #11948b;">"Copy my website homepage if it exists."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((local <span style="color: #11948b;">"~/public-site/org/scratch.html"</span>)
+        (remote <span style="color: #11948b;">"~/aezarebski.github.io/index.html"</span>))
+    (<span style="color: #778c00; font-weight: bold;">unless</span> (not (file-exists-p local))
+      (copy-file local remote t)
+      (message <span style="color: #11948b;">"Copied %s to %s"</span> local remote))))
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">The following projects are available for publishing when the</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">`</span><span style="color: #007ec4; font-weight: bold;">org-publish</span><span style="color: #98a6a6;">' command is given.</span>
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-publish-project-alist
+      `((<span style="color: #11948b;">"website-notes-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/notes/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/notes/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-images-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/images/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/images/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"website-misc-ggplot2-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/ggplot2/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/ggplot2/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-misc-ggplot2-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/ggplot2/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/ggplot2/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"website-misc-basegraphicsR-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/basegraphicsR/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/basegraphicsR/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-misc-basegraphicsR-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/basegraphicsR/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/basegraphicsR/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"website-misc-latex-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/latex/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/latex/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-misc-latex-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/latex/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/latex/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"website-misc-tikz-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/tikz/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/tikz/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-misc-tikz-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/tikz/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/tikz/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"nicemacs-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/Documents/nicemacs/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/nicemacs/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"R"</span>
+         <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-misc-basegraphicsR-org-files"</span>
+                      <span style="color: #11948b;">"website-misc-basegraphicsR-static"</span>
+                      <span style="color: #11948b;">"website-misc-ggplot2-org-files"</span>
+                      <span style="color: #11948b;">"website-misc-ggplot2-static"</span>))
+        (<span style="color: #11948b;">"latex"</span>
+         <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-misc-latex-org-files"</span>
+                      <span style="color: #11948b;">"website-misc-latex-static"</span>
+                      <span style="color: #11948b;">"website-misc-tikz-org-files"</span>
+                      <span style="color: #11948b;">"website-misc-tikz-static"</span>))
+        (<span style="color: #11948b;">"website"</span>
+         <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-notes-org-files"</span>
+                      <span style="color: #11948b;">"website-images-static"</span>
+                      <span style="color: #11948b;">"nicemacs-org-files"</span>
+                      <span style="color: #11948b;">"latex"</span>
+                      <span style="color: #11948b;">"R"</span>))))
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Visitors</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">========</span>
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">NVNF</span> (fname pname file key)
+  <span style="color: #11948b;">"Macro to define a function for visiting a notes file and set an Evil leader key binding.</span>
+
+<span style="color: #11948b;">  This macro takes in four arguments:</span>
+<span style="color: #11948b;">  - FNAME: A string that will be used to construct the function name.</span>
+<span style="color: #11948b;">  - PNAME: A string that will be used in the message displayed to the user.</span>
+<span style="color: #11948b;">  - FILE: A string that represents the name of the notes file.</span>
+<span style="color: #11948b;">  - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
+
+<span style="color: #11948b;">  The function created by this macro opens the notes file specified by FILE in</span>
+<span style="color: #11948b;">  the directory specified by `</span><span style="color: #007ec4; font-weight: bold;">nice-notes-directory</span><span style="color: #11948b;">'. The keybinding is set using</span>
+<span style="color: #11948b;">  the Evil leader, and is constructed using the specified KEY string.</span>
+
+<span style="color: #11948b;">  Example usage:</span>
+<span style="color: #11948b;">  (NVNF \"my-notes\" \"My Notes\" \"my-notes.org\" \"n\")"</span>
+
+  `(<span style="color: #778c00; font-weight: bold;">progn</span>
+     (<span style="color: #778c00; font-weight: bold;">defun</span> ,(intern (format <span style="color: #11948b;">"nice-visit-%s"</span> fname)) ()
+       <span style="color: #11948b;">"Visit a notes file."</span>
+       (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+       (<span style="color: #778c00; font-weight: bold;">progn</span>
+         (message ,(format <span style="color: #11948b;">"Visiting %s"</span> pname))
+         (find-file ,(concat nice-notes-directory <span style="color: #11948b;">"/"</span> file))))
+     (evil-leader/set-key ,(concat <span style="color: #11948b;">"v n "</span> key) (intern ,(format <span style="color: #11948b;">"nice-visit-%s"</span> fname)))))
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">NVF</span> (fname pname file key)
+  `(<span style="color: #778c00; font-weight: bold;">progn</span>
+     (<span style="color: #778c00; font-weight: bold;">defun</span> ,(intern (format <span style="color: #11948b;">"nice-visit-%s"</span> fname)) ()
+       <span style="color: #11948b;">"Visit a file."</span>
+       (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+       (<span style="color: #778c00; font-weight: bold;">progn</span>
+         (message ,(format <span style="color: #11948b;">"Visiting %s"</span> pname))
+         (find-file ,file)))
+     (evil-leader/set-key ,(concat <span style="color: #11948b;">"v f"</span> key) (intern ,(format <span style="color: #11948b;">"nice-visit-%s"</span> fname)))))
+
+(<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">NVD</span> (dname pname path key)
+  <span style="color: #11948b;">"Macro to define a function for visiting a directory and set an Evil leader key binding.</span>
+
+<span style="color: #11948b;">  This macro takes in four arguments:</span>
+<span style="color: #11948b;">  - DNAME: A string that will be used to construct the function name.</span>
+<span style="color: #11948b;">  - PNAME: A string that will be used in the message displayed to the user.</span>
+<span style="color: #11948b;">  - PATH: A string that represents the path of the directory.</span>
+<span style="color: #11948b;">  - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
+
+<span style="color: #11948b;">  The function created by this macro jumps to the directory specified by PATH using `</span><span style="color: #007ec4; font-weight: bold;">dired-jump</span><span style="color: #11948b;">'.</span>
+<span style="color: #11948b;">  The keybinding is set using the Evil leader, and is constructed using the specified KEY string.</span>
+
+<span style="color: #11948b;">  Example usage:</span>
+<span style="color: #11948b;">  (NVD \"my-dir\" \"My Directory\" \"/path/to/directory\" \"d\")"</span>
+
+  `(<span style="color: #778c00; font-weight: bold;">progn</span>
+     (<span style="color: #778c00; font-weight: bold;">defun</span> ,(intern (format <span style="color: #11948b;">"nice-visit-%s"</span> dname)) ()
+       <span style="color: #11948b;">"Visit a directory."</span>
+       (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+       (<span style="color: #778c00; font-weight: bold;">progn</span>
+         (message ,(format <span style="color: #11948b;">"Visiting %s"</span> pname))
+         (dired-jump nil ,path)
+         (revert-buffer)))
+     (evil-leader/set-key ,(concat <span style="color: #11948b;">"v d "</span> key) (intern ,(format <span style="color: #11948b;">"nice-visit-%s"</span> dname)))))
+
+(<span style="color: #778c00; font-weight: bold;">NVF</span> nicemacs2-init <span style="color: #11948b;">"Nicemacs v2 init.el"</span> <span style="color: #11948b;">"~/.emacs.d/init.el"</span> <span style="color: #11948b;">"e 2"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVF</span> nicemacs-init <span style="color: #11948b;">"Nicemacs v1 nicemacs.el"</span> <span style="color: #11948b;">"~/Documents/nicemacs/nicemacs.el"</span> <span style="color: #11948b;">"e 1"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVF</span> nicemacs-org <span style="color: #11948b;">"Nicemacs v1 nicemacs.org"</span> <span style="color: #11948b;">"~/Documents/nicemacs/nicemacs.org"</span> <span style="color: #11948b;">"e 1"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVF</span> review-2 <span style="color: #11948b;">"Review 2"</span> <span style="color: #11948b;">"~/Documents/bibliography/review2/review.org"</span> <span style="color: #11948b;">"r 2"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVF</span> review-references <span style="color: #11948b;">"Bibtex references"</span> <span style="color: #11948b;">"~/Documents/bibliography/references.bib"</span> <span style="color: #11948b;">"r r"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> academia-notes <span style="color: #11948b;">"Academia notes"</span> <span style="color: #11948b;">"academic-journal-notes.org"</span> <span style="color: #11948b;">"a"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> beast-notes <span style="color: #11948b;">"BEAST2 notes"</span> <span style="color: #11948b;">"beast2-notes.org"</span> <span style="color: #11948b;">"b"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> git-notes <span style="color: #11948b;">"Git notes"</span> <span style="color: #11948b;">"git-notes.org"</span> <span style="color: #11948b;">"g"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> haskell-notes <span style="color: #11948b;">"Haskell notes"</span> <span style="color: #11948b;">"haskell-notes.org"</span> <span style="color: #11948b;">"h"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> java-notes <span style="color: #11948b;">"Java notes"</span> <span style="color: #11948b;">"java-notes.org"</span> <span style="color: #11948b;">"j"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> latex-notes <span style="color: #11948b;">"LaTeX notes"</span> <span style="color: #11948b;">"latex-notes.org"</span> <span style="color: #11948b;">"l"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> maxima-notes <span style="color: #11948b;">"Maxima notes"</span> <span style="color: #11948b;">"maxima-notes.org"</span> <span style="color: #11948b;">"m"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> org-mode-notes <span style="color: #11948b;">"org-mode notes"</span> <span style="color: #11948b;">"org-mode-notes.org"</span> <span style="color: #11948b;">"o"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> python-notes <span style="color: #11948b;">"Python notes"</span> <span style="color: #11948b;">"python-notes.org"</span> <span style="color: #11948b;">"p"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> r-notes <span style="color: #11948b;">"R notes"</span> <span style="color: #11948b;">"r-notes.org"</span> <span style="color: #11948b;">"r"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVNF</span> ubuntu-notes <span style="color: #11948b;">"Ubuntu/Linux notes"</span> <span style="color: #11948b;">"linux-notes.org"</span> <span style="color: #11948b;">"u"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">NVD</span> library <span style="color: #11948b;">"Library"</span> <span style="color: #11948b;">"~/Documents/library/fake.org"</span> <span style="color: #11948b;">"l"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> manuscripts <span style="color: #11948b;">"Manuscripts"</span> <span style="color: #11948b;">"~/Documents/manuscripts/fake.org"</span> <span style="color: #11948b;">"m"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> music <span style="color: #11948b;">"Music"</span> <span style="color: #11948b;">"~/Music/fake.org"</span> <span style="color: #11948b;">"M"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> documents <span style="color: #11948b;">"Documents"</span> <span style="color: #11948b;">"~/Documents/fake.org"</span> <span style="color: #11948b;">"d"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> downloads <span style="color: #11948b;">"Downloads"</span> <span style="color: #11948b;">"~/Downloads/fake.org"</span> <span style="color: #11948b;">"D"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> professional <span style="color: #11948b;">"Professional"</span> <span style="color: #11948b;">"~/Documents/professional/README.org"</span> <span style="color: #11948b;">"p"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> projects <span style="color: #11948b;">"Projects"</span> <span style="color: #11948b;">"~/projects/fake.org"</span> <span style="color: #11948b;">"P"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> teaching <span style="color: #11948b;">"Teaching"</span> <span style="color: #11948b;">"~/Documents/teaching/fake.org"</span> <span style="color: #11948b;">"t"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> website-org <span style="color: #11948b;">"Website (org files)"</span> <span style="color: #11948b;">"~/public-site/org/fake.org"</span> <span style="color: #11948b;">"w"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> website-html <span style="color: #11948b;">"Website (HTML files)"</span> <span style="color: #11948b;">"~/aezarebski.github.io/fake.org"</span> <span style="color: #11948b;">"W"</span>)
+(<span style="color: #778c00; font-weight: bold;">NVD</span> notes <span style="color: #11948b;">"My notes"</span> <span style="color: #11948b;">"~/public-site/org/notes/fake.org"</span> <span style="color: #11948b;">"n"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-files
+      (list (concat nice-journal-directory <span style="color: #11948b;">"bike.org"</span>)))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-visit-journal</span> ()
+  <span style="color: #11948b;">"Opens the current journal file. If it does not yet exist, it</span>
+<span style="color: #11948b;">  makes a copy of the one from one week ago. This will also</span>
+<span style="color: #11948b;">  ensure that the current journal file is among the org agenda</span>
+<span style="color: #11948b;">  files and that a previous one is not."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((filepath-template (concat nice-journal-directory <span style="color: #11948b;">"journal-%s.org"</span>))
+         (curr-file (format filepath-template (format-time-string <span style="color: #11948b;">"%Y-%m"</span>)))
+         (prev-file (format filepath-template (format-time-string <span style="color: #11948b;">"%Y-%m"</span> (time-subtract (current-time) (* 7 24 60 60))))))
+    (<span style="color: #778c00; font-weight: bold;">unless</span> (file-exists-p curr-file)
+      (message <span style="color: #11948b;">"Creating new journal file"</span>)
+      (copy-file prev-file curr-file))
+    (message <span style="color: #11948b;">"Opening journal file"</span>)
+    (<span style="color: #778c00; font-weight: bold;">when</span> (member prev-file org-agenda-files)
+      (<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-files (remove prev-file org-agenda-files)))
+    (<span style="color: #778c00; font-weight: bold;">unless</span> (member curr-file org-agenda-files)
+      (add-to-list 'org-agenda-files curr-file))
+    (find-file curr-file)
+    (goto-char (point-min))
+    (recenter-top-bottom)))
+
+(evil-leader/set-key <span style="color: #11948b;">"v f j"</span> 'nice-visit-journal)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Copilot</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">=======</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">To install this you need to clone the repository and a couple of</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">dependencies yourself: s, editorconfig which are emacs packages and</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">node.js.</span>
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> There should really be an option to accept suggestions on a</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">line by line basis.</span>
+<span style="color: #98a6a6;">;;</span>
+
+(add-to-list 'load-path <span style="color: #11948b;">"~/.emacs.d/copilot.el/"</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">copilot</span>)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">(setq copilot-node-executable "~/.nvm/versions/node/v17.3.1/bin/node")</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">(setq copilot-node-executable "/usr/bin/node")</span>
+(add-hook 'python-mode-hook 'copilot-mode)
+(add-hook 'ess-r-mode-hook 'copilot-mode)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice/copilot-tab</span> ()
+  <span style="color: #11948b;">"Accept the current suggestion from copilot"</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">or</span> (copilot-accept-completion)
+      (indent-for-tab-command)))
+
+(<span style="color: #778c00; font-weight: bold;">with-eval-after-load</span> 'copilot
+  (<span style="color: #778c00; font-weight: bold;">evil-define-key</span> 'insert copilot-mode-map
+    (kbd <span style="color: #11948b;">"&lt;tab&gt;"</span>) #'nice/copilot-tab))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice/copilot-cycle</span> ()
+  <span style="color: #11948b;">"Cycle through suggested completions"</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (copilot-next-completion))
+
+(<span style="color: #778c00; font-weight: bold;">with-eval-after-load</span> 'copilot
+  (<span style="color: #778c00; font-weight: bold;">evil-define-key</span> 'insert copilot-mode-map
+    (kbd <span style="color: #11948b;">"&lt;backtab&gt;"</span>) #'nice/copilot-cycle))
+
+(evil-leader/set-key <span style="color: #11948b;">"t c"</span> 'copilot-mode)
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Explore new worlds</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">==================</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Work out how to browse gopher with =gopher.el=.</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Work out how to configure auth-source.</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Work out how to use mediawiki-mode to read and edit wikipedia.</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Explore running spotify through emacs</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Work out how to search for yasnippets with keywords: do they</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">have a keyword field?</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Customization</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">=============</span>
+
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">There be dragons here</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------------------</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5170ca2" class="outline-2">
+<h2 id="org5170ca2">GNU Emacs</h2>
+<div class="outline-text-2" id="text-org5170ca2">
+<p>
+The notes here are intended to deal exclusively with GNU emacs without
+the use of packages other than those that are provided with emacs.
+</p>
+</div>
+
+<div id="outline-container-orgf41e1c8" class="outline-3">
+<h3 id="orgf41e1c8">Build you an Emacs</h3>
+<div class="outline-text-3" id="text-orgf41e1c8">
+<p>
+Get the source code from <a href="http://git.savannah.gnu.org/cgit/emacs.git/">here</a> with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">wget http://git.savannah.gnu.org/cgit/emacs.git/snapshot/emacs-VERSION.tar.gz
+tar -xf emacs-VERSION.tar.xz
+</pre>
+</div>
+
+<p>
+Alternatively, you can get clone the <a href="https://github.com/emacs-mirror/emacs">emacs mirror</a> from GitHub and check out the
+<code>emacs-28</code> branch (or whatever version you want).
+</p>
+
+<p>
+Follow the instructions in the <code>INSTALL</code> file to build emacs.
+</p>
+<ul class="org-ul">
+<li>This seems to just be <code>./configure</code> then <code>make</code> then <code>sudo make install</code>.
+<ul class="org-ul">
+<li><code>./configure --with-native-compilation --with-rsvg</code>.</li>
+</ul></li>
+<li>If you cannot find the <code>configure</code> script, you may need to run <code>autogen.sh</code> first.</li>
+<li>If you have spare compute you can use multiple jobs to speed up the
+compilation with <code>make -j [N]</code> to use <code>N</code> jobs during compilation</li>
+</ul>
+</div>
+
+<div id="outline-container-orgcbbfe39" class="outline-4">
+<h4 id="orgcbbfe39">Notes</h4>
+<div class="outline-text-4" id="text-orgcbbfe39">
+<ul class="org-ul">
+<li><code>emacs-29.0.60</code> on a new laptop:
+<code>./configure --with-native-compilation --with-tree-sitter --without-x --with-pgtk</code>
+because it uses Wayland.</li>
+<li><code>emacs-29.0.60</code> configured with <code>--with-native-compilation</code>, and
+<code>--with-tree-sitter</code> . This took a bit of fiddling because it couldn't find
+the correct version of the JIT library which turned out to be
+<code>libgccjit-11-dev</code> and I couldn't work out how to compile tree-sitter from
+source.</li>
+<li><code>emacs-28.2</code></li>
+<li><code>emacs-28.1.90</code> configured with <code>--with-native-compilation</code> and <code>--with-rsvg</code>.
+Building this one seemed to take longer than normal.</li>
+<li><code>emacs-28.1</code>. I also installed <code>libgccjit</code> and used <code>./configure
+  --with-native-compilation</code> during the compilation, it does feel snappier.</li>
+<li><code>emacs-28.0.91</code> requested <code>mailutils</code> to be installed during configuration.</li>
+<li><code>emacs-28.0.60</code> requested <code>libacl1-dev</code> and <code>libharfbuzz-dev</code> be installed during
+configuration. It does feel snappier. It told me that my current version of
+GTK+ leads to a bug but I couldn't figure out how to update GTK+ and it seemed
+to be an up to date version anyway.</li>
+<li><code>emacs-27.2</code> build and installs without issue.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39020bb" class="outline-3">
+<h3 id="org39020bb">Recording keyboard macros</h3>
+<div class="outline-text-3" id="text-org39020bb">
+<ol class="org-ol">
+<li>Start recording with <code>C-x (</code> (which calls <code>kmacro-start-macro</code>).</li>
+<li>Stop recording with <code>C-x )</code> (which calls <code>kmacro-end-macro</code>).</li>
+<li>Execute the recording with <code>C-x e</code> (which calls <code>kmacro-end-and-call-macro</code>).</li>
+</ol>
+
+<p>
+If you want to save a macro for later use, you can get a emacs-lisp definition
+of it with <code>insert-kbd-macro</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc48db6b" class="outline-3">
+<h3 id="orgc48db6b">Buffer specific variables</h3>
+<div class="outline-text-3" id="text-orgc48db6b">
+<p>
+Suppose you wanted to set the <code>fill-column</code> for a specific file, add
+the following to the end of the file to set it to 80 for this file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span style="color: #98a6a6;">% </span><span style="color: #98a6a6;">Local Variables&#58;</span>
+<span style="color: #98a6a6;">% </span><span style="color: #98a6a6;">fill-column: 80</span>
+<span style="color: #98a6a6;">% </span><span style="color: #98a6a6;">End:</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c7e516" class="outline-3">
+<h3 id="org4c7e516">Jargon</h3>
+<div class="outline-text-3" id="text-org4c7e516">
+<p>
+There is a <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Glossary.html">glossary</a> in the manuals, the nodes are <code>Emacs &gt; Glossary</code>. The regex
+search entered with <code>s</code> is very useful here.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b9d17d" class="outline-3">
+<h3 id="org9b9d17d">Mastering Emacs</h3>
+<div class="outline-text-3" id="text-org9b9d17d">
+<p>
+Here are some notes from reading <i>Mastering Emacs</i>.
+</p>
+</div>
+
+<div id="outline-container-org95b629c" class="outline-4">
+<h4 id="org95b629c">Chapter 2</h4>
+<div class="outline-text-4" id="text-org95b629c">
+<ul class="org-ul">
+<li>"In Emacs, <i>the buffer is the data structure</i>."</li>
+<li>A <i>window</i> is a tiled portion of a <i>frame</i>.</li>
+<li>The <i>modeline</i> is the portion at the bottom of a window that displays
+information such as the name of the buffer displayed and the major mode.</li>
+<li>The <i>minibuffer</i> is the below the modeline and displays messages.</li>
+<li>The <i>point</i> is the current position of the cursor.</li>
+<li>The <i>region</i> is a selection of text which has the point at one end and the
+<i>mark</i> at the other. The region is visually displayed with the <i>transient mark
+mode</i> (TMM).</li>
+<li><i>killing</i> is cutting text, <i>yanking</i> is pasting it, and <i>saving to the kill
+ring</i> is copying.</li>
+<li><i>font locking</i> is syntax highlighting.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0457e6e" class="outline-4">
+<h4 id="org0457e6e">Chapter 3</h4>
+<div class="outline-text-4" id="text-org0457e6e">
+<ul class="org-ul">
+<li>In order for a function to be executed by <code>M-x</code>, it needs to be made
+<i>interactive</i>.</li>
+<li><i>apropos</i> is a system to for discovery:
+<ul class="org-ul">
+<li><code>apropos</code> searches everything,</li>
+<li><code>apropos-command</code> searches commands,</li>
+<li>and <code>apropos-documentation</code> searches documentation.</li>
+</ul></li>
+<li>The <i>describe</i> system is a collection of functions that allow you to obtain
+information about known items:
+<ul class="org-ul">
+<li><code>describe-mode</code>,</li>
+<li><code>describe-function</code>,</li>
+<li><code>describe-variable</code>,</li>
+<li>and <code>describe-key</code>.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc292fe8" class="outline-4">
+<h4 id="orgc292fe8">Chapter 4</h4>
+</div>
+
+<div id="outline-container-org5dfeb8a" class="outline-4">
+<h4 id="org5dfeb8a">Chapter 5</h4>
+</div>
+
+<div id="outline-container-org3e000c9" class="outline-4">
+<h4 id="org3e000c9">Chapter 6</h4>
+<div class="outline-text-4" id="text-org3e000c9">
+<ul class="org-ul">
+<li>There is the function <code>read-only-mode</code> which toggles read only mode, which
+replaces the obsolete <code>toggle-read-only</code> function.
+<ul class="org-ul">
+<li>In Spacemacs this is bound to <code>SPC b w</code> which seems strange.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0099447" class="outline-4">
+<h4 id="org0099447">Chapter 7</h4>
+</div>
+</div>
+
+<div id="outline-container-org4635828" class="outline-3">
+<h3 id="org4635828">Getting HELP</h3>
+<div class="outline-text-3" id="text-org4635828">
+<p>
+There are a couple of help menus that are useful to be able to access easily:
+</p>
+
+<ul class="org-ul">
+<li><i>GNU Emacs NEWS</i> can be summoned with <code>view-emacs-news</code>.</li>
+<li><i>Spacemacs documentation</i> can be summoned with <code>helm-spacemacs-help-docs</code>.</li>
+<li><i>GNU Emacs Manual</i> can be summoned with <code>info-display-manual</code>.</li>
+<li><i>Emacs Lisp Intro</i> has a section on debugging.</li>
+</ul>
+</div>
+
+<div id="outline-container-org917343b" class="outline-4">
+<h4 id="org917343b">Info navigation</h4>
+<div class="outline-text-4" id="text-org917343b">
+<p>
+The following are key-bindings for emacs mode (use <code>\</code> to call
+<code>evil-execute-in-emacs-state</code>):
+</p>
+
+<ul class="org-ul">
+<li><code>n</code> next node</li>
+<li><code>p</code> previous node</li>
+<li><code>^</code> will move up</li>
+<li><code>RET</code> will follow a link</li>
+<li><code>l</code> return to the last node visited</li>
+<li><code>s</code> search with a regex</li>
+<li><code>f</code> find a node linked from here</li>
+<li><code>d</code> go to the root node</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2023-05-09 Tue 14:24</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
