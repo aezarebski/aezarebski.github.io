@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git add git-helper.sh
 git add index.html
 
 # A bunch of boring lists
@@ -60,3 +61,4 @@ git add notes/tutoring-notes.html
 
 # The nicemacs stuff
 git add misc/nicemacs/nicemacs.html
+git add misc/nicemacs/nicemacs-v2.html

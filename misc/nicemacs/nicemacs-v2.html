@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-05-09 Tue 14:24 -->
+<!-- 2023-05-16 Tue 11:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org1036a6e" class="figure">
+<div id="orgf9992d4" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -366,6 +366,9 @@
 <span style="color: #98a6a6;">;;    </span><span style="color: #98a6a6;">does not.)</span>
 (global-evil-surround-mode 1)
 (evil-leader/set-key <span style="color: #11948b;">"t s"</span> 'evil-surround-mode)
+
+(evil-leader/set-leader <span style="color: #11948b;">"&lt;SPC&gt;"</span>)
+(evil-leader/set-key <span style="color: #11948b;">"&lt;SPC&gt;"</span> 'execute-extended-command)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Look stunning</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">=============</span>
@@ -537,8 +540,9 @@
 
 (<span style="color: #778c00; font-weight: bold;">setq</span> inhibit-splash-screen t)
 
-(evil-leader/set-key <span style="color: #11948b;">"z j"</span> 'text-scale-decrease)
-(evil-leader/set-key <span style="color: #11948b;">"z k"</span> 'text-scale-increase)
+(evil-leader/set-key
+  <span style="color: #11948b;">"z j"</span> 'text-scale-decrease
+  <span style="color: #11948b;">"z k"</span> 'text-scale-increase)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Be sensible</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">===========</span>
@@ -546,13 +550,9 @@
 (<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">unfill</span>)
 (global-set-key (kbd <span style="color: #11948b;">"M-q"</span>) 'unfill-toggle)
 
-(global-evil-leader-mode)
-
-(evil-leader/set-leader <span style="color: #11948b;">"&lt;SPC&gt;"</span>)
-(evil-leader/set-key <span style="color: #11948b;">"&lt;SPC&gt;"</span> 'execute-extended-command)
-
-(evil-leader/set-key <span style="color: #11948b;">"q r"</span> 'restart-emacs)
-(evil-leader/set-key <span style="color: #11948b;">"q q"</span> 'save-buffers-kill-emacs)
+(evil-leader/set-key
+  <span style="color: #11948b;">"q r"</span> 'restart-emacs
+  <span style="color: #11948b;">"q q"</span> 'save-buffers-kill-emacs)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Frame related commands will have keys starting with `</span><span style="color: #007ec4; font-weight: bold;">F</span><span style="color: #98a6a6;">'.</span>
 (evil-leader/set-key <span style="color: #11948b;">"F f"</span> 'toggle-frame-fullscreen)
@@ -671,10 +671,11 @@
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-----------</span>
 
 (<span style="color: #778c00; font-weight: bold;">setq</span> eshell-cmpl-ignore-case t)
-(evil-leader/set-key <span style="color: #11948b;">"s e"</span> 'eshell)
-(evil-leader/set-key <span style="color: #11948b;">"s b"</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> () (<span style="color: #778c00; font-weight: bold;">interactive</span>) (ansi-term <span style="color: #11948b;">"/bin/bash"</span>)))
-(evil-leader/set-key <span style="color: #11948b;">"s i"</span> 'ielm)
-(evil-leader/set-key <span style="color: #11948b;">"s r"</span> 'R)
+(evil-leader/set-key
+  <span style="color: #11948b;">"s e"</span> 'eshell
+  <span style="color: #11948b;">"s b"</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> () (<span style="color: #778c00; font-weight: bold;">interactive</span>) (ansi-term <span style="color: #11948b;">"/bin/bash"</span>))
+  <span style="color: #11948b;">"s i"</span> 'ielm
+  <span style="color: #11948b;">"s r"</span> 'R)
 </pre>
 </div>
 </div>
@@ -702,11 +703,13 @@
 
 (evil-leader/set-key
   <span style="color: #11948b;">"f f"</span> 'find-file
+  <span style="color: #11948b;">"f t"</span> 'nice-touch-file
   <span style="color: #11948b;">"f F"</span> 'find-file-other-frame
   <span style="color: #11948b;">"f s"</span> 'save-buffer
   <span style="color: #11948b;">"f d"</span> 'nice-dired
   <span style="color: #11948b;">"b b"</span> 'switch-to-buffer
   <span style="color: #11948b;">"d b"</span> 'kill-buffer
+  <span style="color: #11948b;">"d w"</span> 'delete-window
   <span style="color: #11948b;">"d f"</span> 'delete-frame)
 
 (<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-dired</span> ()
@@ -726,6 +729,16 @@
                        (file-name-directory default-directory)))
                     (t (expand-file-name <span style="color: #11948b;">"~/"</span>)))))
     (dired dir)))
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-touch-file</span> ()
+  <span style="color: #11948b;">"In the current dired buffer touch a new file with a name</span>
+<span style="color: #11948b;">retreived from the prompt."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">if</span> (not (eq major-mode 'dired-mode))
+      (<span style="color: #bb3e06; font-weight: bold;">error</span> <span style="color: #11948b;">"Not in dired mode"</span>))
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((filename (read-string <span style="color: #11948b;">"Filename: "</span>)))
+    (shell-command (format <span style="color: #11948b;">"touch %s"</span> filename))
+    (revert-buffer)))
 
 (<span style="color: #778c00; font-weight: bold;">defmacro</span> <span style="color: #007ec4;">nice-scratch-buffer</span> (mode key)
   <span style="color: #11948b;">"Create a nice-scratch-buffer function for MODE and bind it to KEY."</span>
@@ -747,7 +760,6 @@
   <span style="color: #11948b;">"w v"</span> 'split-window-right
   <span style="color: #11948b;">"TAB"</span> 'next-window-and-pulse
   <span style="color: #11948b;">"&lt;backtab&gt;"</span> 'previous-window-and-pulse
-  <span style="color: #11948b;">"w d"</span> 'delete-window
   <span style="color: #11948b;">"w L"</span> 'evil-window-move-far-right
   <span style="color: #11948b;">"w H"</span> 'evil-window-move-far-left
   <span style="color: #11948b;">"w J"</span> 'evil-window-move-very-bottom
@@ -859,11 +871,12 @@
                     <span style="color: #596e76; font-weight: bold;">:foreground</span> <span style="color: #11948b;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #11948b;">"</span>
                     <span style="color: #596e76; font-weight: bold;">:background</span> <span style="color: #11948b;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #11948b;">"</span>)
 
-(evil-leader/set-key <span style="color: #11948b;">"t S"</span> 'flyspell-mode) <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">toggle flyspell on/off.</span>
-(evil-leader/set-key <span style="color: #11948b;">"S b"</span> 'flyspell-buffer)
-(evil-leader/set-key <span style="color: #11948b;">"S r"</span> 'flyspell-region)
-(evil-leader/set-key <span style="color: #11948b;">"S c"</span> 'flyspell-correct-word-before-point)
-(evil-leader/set-key <span style="color: #11948b;">"S d"</span> 'nice-diff-dictionaries)
+(evil-leader/set-key
+  <span style="color: #11948b;">"t S"</span> 'flyspell-mode <span style="color: #98a6a6;">; </span><span style="color: #98a6a6;">toggle flyspell on/off.</span>
+  <span style="color: #11948b;">"S b"</span> 'flyspell-buffer
+  <span style="color: #11948b;">"S r"</span> 'flyspell-region
+  <span style="color: #11948b;">"S c"</span> 'flyspell-correct-word-before-point
+  <span style="color: #11948b;">"S d"</span> 'nice-diff-dictionaries)
 
 (<span style="color: #778c00; font-weight: bold;">setq</span> words-to-add
       '(<span style="color: #11948b;">"many"</span> <span style="color: #11948b;">"various"</span> <span style="color: #11948b;">"very"</span> <span style="color: #11948b;">"quite"</span> <span style="color: #11948b;">"somewhat"</span> <span style="color: #11948b;">"several"</span>
@@ -1055,15 +1068,14 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-----------------------------</span>
 
 (<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">ess-site</span>)
+(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">quarto-mode</span>)
 (<span style="color: #778c00; font-weight: bold;">setq</span> ess-default-style 'DEFAULT)
 
-(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m s b"</span> 'ess-eval-buffer)
-(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m s r"</span> 'ess-eval-region)
-(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m '"</span> 'ess-switch-to-inferior-or-script-buffer)
-
-(<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">quarto-mode</span>)
-
-(evil-leader/set-key-for-mode 'ess-r-mode <span style="color: #11948b;">"m s c"</span> 'ess-eval-region-or-line-visibly-and-step)
+(evil-leader/set-key-for-mode 'ess-r-mode
+  <span style="color: #11948b;">"m s b"</span> 'ess-eval-buffer
+  <span style="color: #11948b;">"m s r"</span> 'ess-eval-region
+  <span style="color: #11948b;">"m s c"</span> 'ess-eval-region-or-line-visibly-and-step
+  <span style="color: #11948b;">"m '"</span> 'ess-switch-to-inferior-or-script-buffer)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Python</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------</span>
@@ -1091,10 +1103,11 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 (add-to-list 'auto-mode-alist '(<span style="color: #11948b;">"\\.rkt\\'"</span> . racket-mode))
 (<span style="color: #778c00; font-weight: bold;">setq</span> racket-program <span style="color: #11948b;">"/usr/bin/racket"</span>)
 
-(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m h d"</span> 'racket-describe-search)
-(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m s b"</span> 'racket-run)
-(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m s r"</span> 'racket-send-region)
-(evil-leader/set-key-for-mode 'racket-mode <span style="color: #11948b;">"m s c"</span> 'racket-send-last-sexp)
+(evil-leader/set-key-for-mode 'racket-mode
+  <span style="color: #11948b;">"m h d"</span> 'racket-describe-search
+  <span style="color: #11948b;">"m s b"</span> 'racket-run
+  <span style="color: #11948b;">"m s r"</span> 'racket-send-region
+  <span style="color: #11948b;">"m s c"</span> 'racket-send-last-sexp)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">LaTeX/BibTeX</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------------</span>
@@ -1160,8 +1173,9 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 
 (evil-leader/set-key <span style="color: #11948b;">"v b l"</span> 'nice-visit-last-bib)
 
-(evil-leader/set-key-for-mode 'bibtex-mode <span style="color: #11948b;">"m b b"</span> 'nice-bibtex-braces)
-(evil-leader/set-key-for-mode 'bibtex-mode <span style="color: #11948b;">"m b f"</span> 'bibtex-reformat)
+(evil-leader/set-key-for-mode 'bibtex-mode
+  <span style="color: #11948b;">"m b b"</span> 'nice-bibtex-braces
+  <span style="color: #11948b;">"m b f"</span> 'bibtex-reformat)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Markdown-mode</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-------------</span>
@@ -1725,7 +1739,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-05-09 Tue 14:24</p>
+<p class="date">Created: 2023-05-16 Tue 11:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
