@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-13 Thu 17:13 -->
+<!-- 2023-05-23 Tue 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="orge76a2e3" class="figure">
+<div id="org4eb2fa6" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -335,7 +335,7 @@
 <h3 id="orgd0702c5">Installing and updating R</h3>
 <div class="outline-text-3" id="text-orgd0702c5">
 <p>
-<b>Last update was to 4.2.3 &#x2013; Shortstop Beagle</b>
+<b>Last update was to 4.3.0 &#x2013; Already Tomorrow</b>
 </p>
 
 <p>
@@ -354,8 +354,13 @@ are as follows.
 <li>If you are using this with RStudio, you will need to use <code>--enable-R-shlib</code>.</li>
 <li>If you are using SVG you may need to include <code>--with-cairo</code>.</li>
 <li>If you are using Wayland you might need <code>--with-x=no</code>.</li>
+<li>If you want extra optimisations add <code>CFLAGS='-O3' CXXFLAGS='-O3' FFLAGS='-O3'</code></li>
 </ul></li>
-<li>Run <code>make</code> and <code>make info</code> to compile R and the documentation.</li>
+<li>Run <code>make</code> and <code>make info</code> to compile R and the documentation.
+<ul class="org-ul">
+<li>If you want to speed up compilation, <code>make -j4</code> runs it in
+parallel across 4 coures.</li>
+</ul></li>
 <li>Check that the compilation has worked properly with <code>make check</code> and address
 any issues that arise.</li>
 <li>Install the executable with <code>sudo make install</code> and <code>sudo make install-info</code>.</li>
@@ -370,27 +375,27 @@ packages, the following command can help with this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">my_pkgs &lt;- c("ape",
-             "argparse",
-             "coda",
-             "cowplot",
-             "dplyr",
-             "devtools",
-             "future",
-             "furrr",
-             "htmltools",
-             "jsonlite",
-             "phangorn",
-             "purrr",
-             "purrr",
-             "magrittr",
-             "mcmc",
-             "ggplot2",
-             "remotes",
-             "reshape2",
-             "stringr",
-             "targets",
-             "xml2")
+<pre class="src src-R">my_pkgs <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(<span style="color: #11948b;">"ape"</span>,
+             <span style="color: #11948b;">"argparse"</span>,
+             <span style="color: #11948b;">"coda"</span>,
+             <span style="color: #11948b;">"cowplot"</span>,
+             <span style="color: #11948b;">"dplyr"</span>,
+             <span style="color: #11948b;">"devtools"</span>,
+             <span style="color: #11948b;">"deSolve"</span>,
+             <span style="color: #11948b;">"future"</span>,
+             <span style="color: #11948b;">"furrr"</span>,
+             <span style="color: #11948b;">"ggplot2"</span>,
+             <span style="color: #11948b;">"htmltools"</span>,
+             <span style="color: #11948b;">"jsonlite"</span>,
+             <span style="color: #11948b;">"phangorn"</span>,
+             <span style="color: #11948b;">"purrr"</span>,
+             <span style="color: #11948b;">"magrittr"</span>,
+             <span style="color: #11948b;">"mcmc"</span>,
+             <span style="color: #11948b;">"remotes"</span>,
+             <span style="color: #11948b;">"reshape2"</span>,
+             <span style="color: #11948b;">"stringr"</span>,
+             <span style="color: #11948b;">"targets"</span>,
+             <span style="color: #11948b;">"xml2"</span>)
 install.packages(my_pkgs)
 </pre>
 </div>
@@ -406,6 +411,8 @@ fixed this. Old package versions hanging around can be found with <code>.libPath
 <h4 id="orga4dc88a">Notes</h4>
 <div class="outline-text-4" id="text-orga4dc88a">
 <ul class="org-ul">
+<li><code>R.4.3.0</code> I needed to install <code>xorg-dev</code> prior to configuration to
+get this working with X.</li>
 <li><code>R.4.2.3</code> I needed to use <code>--with-x=no</code> because I don't have X on the new
 laptop. Sadly, this seems to break plots. Also, <code>make install</code> put the binary
 in <code>/usr/local/bin</code> which appeared on the path after the location where the
@@ -456,7 +463,7 @@ There is an R package, <a href="https://github.com/r-lib/rim">rim</a>, which man
 <div class="outline-text-4" id="text-orgd1b7411">
 <div class="org-src-container">
 <pre class="src src-R">system2(command, args = character(),
-        wait = TRUE,
+        wait = <span style="color: #a67c00;">TRUE</span>,
         timeout = 0)
 </pre>
 </div>
@@ -468,7 +475,7 @@ after that amount of time if it has not finished.</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-R">system2("ls", args = "/home/aez/Documents")
+<pre class="src src-R">system2(<span style="color: #11948b;">"ls"</span>, args = <span style="color: #11948b;">"/home/aez/Documents"</span>)
 </pre>
 </div>
 </div>
@@ -493,35 +500,35 @@ function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">message("loading the run_command function.")
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">message</span>(<span style="color: #11948b;">"loading the run_command function."</span>)
 
-#' Helper function for running system commands.
-#'
-#' Example
-#' &gt; run_command("stack build")
-#' &gt; run_command("Rscript R/make-simulation-configuration-1.R")
-#'
-run_command &lt;- function(cmd, silent = TRUE, ...) {
-  message(sprintf("\nRunning command:\n\t%s", cmd))
-  tmp &lt;- unlist(strsplit(cmd, " "))
-  cmd_name &lt;- head(tmp, 1)
-  cmd_args &lt;- tail(tmp, -1)
-  std_val &lt;- if (silent) {
-    FALSE
-  } else {
-    ""
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Helper function for running system commands.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Example</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> &gt; run_command("stack build")</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> &gt; run_command("Rscript R/make-simulation-configuration-1.R")</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">run_command</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(cmd, silent = <span style="color: #a67c00;">TRUE</span>, ...) {
+  <span style="color: #007ec4; font-weight: bold;">message</span>(sprintf(<span style="color: #11948b;">"\nRunning command:\n\t%s"</span>, cmd))
+  tmp <span style="color: #007ec4; font-weight: bold;">&lt;-</span> unlist(strsplit(cmd, <span style="color: #11948b;">" "</span>))
+  cmd_name <span style="color: #007ec4; font-weight: bold;">&lt;-</span> head(tmp, 1)
+  cmd_args <span style="color: #007ec4; font-weight: bold;">&lt;-</span> tail(tmp, -1)
+  std_val <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">if</span> (silent) {
+    <span style="color: #a67c00;">FALSE</span>
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    <span style="color: #11948b;">""</span>
   }
-  result &lt;- system2(
+  result <span style="color: #007ec4; font-weight: bold;">&lt;-</span> system2(
     cmd_name,
     args = cmd_args,
     stdout = std_val,
     stderr = std_val,
     ...
   )
-  if (result != 0) {
-    stop(sprintf("command %s failed!", cmd))
+  <span style="color: #778c00; font-weight: bold;">if</span> (result != 0) {
+    <span style="color: #778c00; font-weight: bold;">stop</span>(sprintf(<span style="color: #11948b;">"command %s failed!"</span>, cmd))
   }
-  return(NULL)
+  <span style="color: #778c00; font-weight: bold;">return</span>(<span style="color: #a67c00;">NULL</span>)
 }
 </pre>
 </div>
@@ -584,13 +591,13 @@ Hadley has a nice <a href="http://adv-r.had.co.nz/Exceptions-Debugging.html#cond
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">show_condition &lt;- function(code) {
-  tryCatch(code,
-    error = function(c) "error"
+<pre class="src src-R"><span style="color: #007ec4;">show_condition</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(code) {
+  <span style="color: #778c00; font-weight: bold;">tryCatch</span>(code,
+    error = <span style="color: #778c00; font-weight: bold;">function</span>(c) <span style="color: #11948b;">"error"</span>
   )
 }
-show_condition(stop("!")) # evaluates to the string "error"
-show_condition(10) # evalates to the numeric 10
+show_condition(<span style="color: #778c00; font-weight: bold;">stop</span>(<span style="color: #11948b;">"!"</span>)) <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">evaluates to the string "error"</span>
+show_condition(10) <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">evalates to the numeric 10</span>
 </pre>
 </div>
 </div>
@@ -641,7 +648,7 @@ The <code>devtools::use_packag</code> function has been deprecated in favour of 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">usethis::use_package("foo", "bar")
+<pre class="src src-R">usethis::use_package(<span style="color: #11948b;">"foo"</span>, <span style="color: #11948b;">"bar"</span>)
 </pre>
 </div>
 
@@ -693,10 +700,10 @@ the following snippet for an example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(future)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(future)
 plan(multiprocess)
 
-y &lt;- furrr::future_map(x, ~ f(.x))
+y <span style="color: #007ec4; font-weight: bold;">&lt;-</span> furrr::future_map(x, ~ f(.x))
 </pre>
 </div>
 
@@ -807,7 +814,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org65f0a5e" class="figure">
+<div id="org63424b6" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -823,8 +830,8 @@ The simplest example is probably what you'll need most of the time
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">## demo.R
-args &lt;- commandArgs(trailingOnly = TRUE)
+<pre class="src src-R"><span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">demo.R</span>
+args <span style="color: #007ec4; font-weight: bold;">&lt;-</span> commandArgs(trailingOnly = <span style="color: #a67c00;">TRUE</span>)
 print(args)
 </pre>
 </div>
@@ -852,33 +859,33 @@ See the <a href="https://cran.r-project.org/web/packages/argparse/vignettes/argp
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(argparse)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(argparse)
 
-# create parser object
-parser &lt;- ArgumentParser()
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">create parser object</span>
+parser <span style="color: #007ec4; font-weight: bold;">&lt;-</span> ArgumentParser()
 
 parser$add_argument(
-         "-v",
-         "--verbose",
-         action = "store_true",
-         default = FALSE,
-         help = "Verbose output"
+         <span style="color: #11948b;">"-v"</span>,
+         <span style="color: #11948b;">"--verbose"</span>,
+         action = <span style="color: #11948b;">"store_true"</span>,
+         default = <span style="color: #a67c00;">FALSE</span>,
+         help = <span style="color: #11948b;">"Verbose output"</span>
        )
 parser$add_argument(
-         "-s",
-         "--seed",
-         type = "integer",
+         <span style="color: #11948b;">"-s"</span>,
+         <span style="color: #11948b;">"--seed"</span>,
+         type = <span style="color: #11948b;">"integer"</span>,
          default = 1,
-         help = "PRNG seed"
+         help = <span style="color: #11948b;">"PRNG seed"</span>
        )
 parser$add_argument(
-         "-p",
-         "--parameters",
-         type = "character",
-         help = "Filepath to parameters JSON"
+         <span style="color: #11948b;">"-p"</span>,
+         <span style="color: #11948b;">"--parameters"</span>,
+         type = <span style="color: #11948b;">"character"</span>,
+         help = <span style="color: #11948b;">"Filepath to parameters JSON"</span>
        )
 
-args &lt;- parser$parse_args()
+args <span style="color: #007ec4; font-weight: bold;">&lt;-</span> parser$parse_args()
 </pre>
 </div>
 </div>
@@ -903,9 +910,9 @@ it is probably better to set <code>digits = 16</code>.
 <h4 id="orge70213b">Examples</h4>
 <div class="outline-text-4" id="text-orge70213b">
 <div class="org-src-container">
-<pre class="src src-R">library(jsonlite)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(jsonlite)
 read_json(&lt;filepath&gt;)
-write_json(&lt;object&gt;, &lt;filepath&gt;, pretty = TRUE)
+write_json(&lt;object&gt;, &lt;filepath&gt;, pretty = <span style="color: #a67c00;">TRUE</span>)
 </pre>
 </div>
 
@@ -925,28 +932,28 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org033a2c9" class="outline-4">
-<h4 id="org033a2c9">Example</h4>
-<div class="outline-text-4" id="text-org033a2c9">
+<div id="outline-container-org8a17158" class="outline-4">
+<h4 id="org8a17158">Example</h4>
+<div class="outline-text-4" id="text-org8a17158">
 <div class="org-src-container">
-<pre class="src src-R">library(htmltools)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(htmltools)
 
-my_html &lt;-
+my_html <span style="color: #007ec4; font-weight: bold;">&lt;-</span>
   tags$html(
-         tags$head(tags$title("My Title")),
+         tags$head(tags$title(<span style="color: #11948b;">"My Title"</span>)),
          tags$body(
-                tags$h1("Hello"),
+                tags$h1(<span style="color: #11948b;">"Hello"</span>),
                 tags$div(
-                       tags$h3("Hello World"),
-                       tags$img(src = "the-world.png"),
-                       tags$p("What a wonderful world!")
+                       tags$h3(<span style="color: #11948b;">"Hello World"</span>),
+                       tags$img(src = <span style="color: #11948b;">"the-world.png"</span>),
+                       tags$p(<span style="color: #11948b;">"What a wonderful world!"</span>)
                      )
               )
        )
 
 save_html(
   doRenderTags(my_html),
-  file = "world.html"
+  file = <span style="color: #11948b;">"world.html"</span>
 )
 </pre>
 </div>
@@ -956,28 +963,28 @@ produces the following HTML
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-&lt;meta charset="utf-8"/&gt;
-&lt;style&gt;body{background-color:white;}&lt;/style&gt;
+<pre class="src src-html">&lt;<span style="color: #778c00; font-weight: bold;">!DOCTYPE</span> html&gt;
+&lt;<span style="color: #007ec4;">html</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;
+&lt;<span style="color: #007ec4;">head</span>&gt;
+&lt;<span style="color: #007ec4;">meta</span> <span style="color: #007ec4;">charset</span>=<span style="color: #11948b;">"utf-8"</span>/&gt;
+&lt;<span style="color: #007ec4;">style</span>&gt;body{background-color:white;}&lt;/<span style="color: #007ec4;">style</span>&gt;
 
 
-&lt;/head&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;My Title&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Hello&lt;/h1&gt;
-    &lt;div&gt;
-      &lt;h3&gt;Hello World&lt;/h3&gt;
-      &lt;img src="the-world.png"/&gt;
-      &lt;p&gt;What a wonderful world!&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-&lt;/html&gt;
+&lt;/<span style="color: #007ec4;">head</span>&gt;
+&lt;<span style="color: #007ec4;">html</span>&gt;
+  &lt;<span style="color: #007ec4;">head</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">My Title</span>&lt;/<span style="color: #007ec4;">title</span>&gt;
+  &lt;/<span style="color: #007ec4;">head</span>&gt;
+  &lt;<span style="color: #007ec4;">body</span>&gt;
+    &lt;<span style="color: #007ec4;">h1</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Hello</span>&lt;/<span style="color: #007ec4;">h1</span>&gt;
+    &lt;<span style="color: #007ec4;">div</span>&gt;
+      &lt;<span style="color: #007ec4;">h3</span>&gt;<span style="font-style: italic; text-decoration: underline;">Hello World</span>&lt;/<span style="color: #007ec4;">h3</span>&gt;
+      &lt;<span style="color: #007ec4;">img</span> <span style="color: #007ec4;">src</span>=<span style="color: #11948b;">"the-world.png"</span>/&gt;
+      &lt;<span style="color: #007ec4;">p</span>&gt;What a wonderful world!&lt;/<span style="color: #007ec4;">p</span>&gt;
+    &lt;/<span style="color: #007ec4;">div</span>&gt;
+  &lt;/<span style="color: #007ec4;">body</span>&gt;
+&lt;/<span style="color: #007ec4;">html</span>&gt;
+&lt;/<span style="color: #007ec4;">html</span>&gt;
 </pre>
 </div>
 </div>
@@ -992,22 +999,22 @@ in your HTML but still want to include figures.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' An HTML tag encoding an image stored in a PNG.
-#'
-#' This uses the \code{base64enc} and \code{htmltools} packages.
-#'
-#' @param filepath is the path to the PNG
-#' @param ... is additional arguments to \code{tags$img} such as style.
-#'
-png_as_img &lt;- function(filepath, ...) {
-  if (tools::file_ext(filepath) == "png") {
-    b64 &lt;- base64enc::base64encode(what = filepath)
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> An HTML tag encoding an image stored in a PNG.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> This uses the \code{base64enc} and \code{htmltools} packages.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">filepath</span><span style="color: #98a6a6;"> is the path to the PNG</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">...</span><span style="color: #98a6a6;"> is additional arguments to \code{tags$img} such as style.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">png_as_img</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(filepath, ...) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (tools::file_ext(filepath) == <span style="color: #11948b;">"png"</span>) {
+    b64 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> base64enc::base64encode(what = filepath)
     tags$img(
-           src = paste("data:image/png;base64", b64, sep = ","),
+           src = paste(<span style="color: #11948b;">"data:image/png;base64"</span>, b64, sep = <span style="color: #11948b;">","</span>),
            ...
          )
-  } else {
-    stop("Filepath given to png_as_img must be a PNG.")
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    <span style="color: #778c00; font-weight: bold;">stop</span>(<span style="color: #11948b;">"Filepath given to png_as_img must be a PNG."</span>)
   }
 }
 </pre>
@@ -1019,19 +1026,19 @@ png_as_img &lt;- function(filepath, ...) {
 <h4 id="org9c76b63">Example: including a table representation of a dataframe</h4>
 <div class="outline-text-4" id="text-org9c76b63">
 <div class="org-src-container">
-<pre class="src src-R">#' An HTML tag encoding a data frame as a basic table.
-#'
-#' This uses the \code{xtable} package to generate the HTML for the table.
-#'
-#' @param df data.frame to create an table from
-#' @param ... additional parameters for \code{xtable::xtable}.
-#'
-df_as_table &lt;- function(df, ...) {
-  tmp_file &lt;- tempfile()
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> An HTML tag encoding a data frame as a basic table.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> This uses the \code{xtable} package to generate the HTML for the table.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">df</span><span style="color: #98a6a6;"> data.frame to create an table from</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">...</span><span style="color: #98a6a6;"> additional parameters for \code{xtable::xtable}.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">df_as_table</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(df, ...) {
+  tmp_file <span style="color: #007ec4; font-weight: bold;">&lt;-</span> tempfile()
   print(xtable::xtable(df, ...),
-        type = "html",
+        type = <span style="color: #11948b;">"html"</span>,
         file = tmp_file)
-  return(tags$div(includeHTML(tmp_file)))
+  <span style="color: #778c00; font-weight: bold;">return</span>(tags$div(includeHTML(tmp_file)))
 }
 </pre>
 </div>
@@ -1055,30 +1062,30 @@ The following snippet produces a file <code>demo.xml</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(XML)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(XML)
 
-kappa_node &lt;- xmlNode(
-  "kappa",
-  attrs = list(idref = "hky.kappa")
+kappa_node <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xmlNode(
+  <span style="color: #11948b;">"kappa"</span>,
+  attrs = list(idref = <span style="color: #11948b;">"hky.kappa"</span>)
 )
 
-input_node &lt;- xmlNode(
-  "input",
+input_node <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xmlNode(
+  <span style="color: #11948b;">"input"</span>,
   kappa_node,
-  attrs = list(spec = "HKY", id = "hky")
+  attrs = list(spec = <span style="color: #11948b;">"HKY"</span>, id = <span style="color: #11948b;">"hky"</span>)
 )
 
-z &lt;- xmlNode(
-  "beast",
+z <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xmlNode(
+  <span style="color: #11948b;">"beast"</span>,
   input_node,
-  attrs = list(version = "2.0",
-               namespace = "beast.core:beast.evolution.operators")
+  attrs = list(version = <span style="color: #11948b;">"2.0"</span>,
+               namespace = <span style="color: #11948b;">"beast.core:beast.evolution.operators"</span>)
 )
 
 saveXML(
   z,
-  file = "demo.xml",
-  prefix = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?&gt;\n"
+  file = <span style="color: #11948b;">"demo.xml"</span>,
+  prefix = <span style="color: #11948b;">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?&gt;\n"</span>
 )
 </pre>
 </div>
@@ -1088,12 +1095,12 @@ And here is the result
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;beast version="2.0" namespace="beast.core:beast.evolution.operators"&gt;
- &lt;input spec="HKY" id="hky"&gt;
-  &lt;kappa idref="hky.kappa"/&gt;
- &lt;/input&gt;
-&lt;/beast&gt;
+<pre class="src src-xml">&lt;?<span style="color: #778c00; font-weight: bold;">xml</span> <span style="color: #11948b;">version="1.0" encoding="UTF-8" standalone="no"</span>?&gt;
+&lt;<span style="color: #007ec4;">beast</span> <span style="color: #007ec4;">version</span>=<span style="color: #11948b;">"2.0"</span> <span style="color: #007ec4;">namespace</span>=<span style="color: #11948b;">"beast.core:beast.evolution.operators"</span>&gt;
+ &lt;<span style="color: #007ec4;">input</span> <span style="color: #007ec4;">spec</span>=<span style="color: #11948b;">"HKY"</span> <span style="color: #007ec4;">id</span>=<span style="color: #11948b;">"hky"</span>&gt;
+  &lt;<span style="color: #007ec4;">kappa</span> <span style="color: #007ec4;">idref</span>=<span style="color: #11948b;">"hky.kappa"</span>/&gt;
+ &lt;/<span style="color: #007ec4;">input</span>&gt;
+&lt;/<span style="color: #007ec4;">beast</span>&gt;
 </pre>
 </div>
 </div>
@@ -1107,9 +1114,9 @@ Given an XML file, <code>demo.xml</code>, we can read that into a list-like obje
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(XML)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(XML)
 
-xmlToList(xmlParse("demo.xml"))
+xmlToList(xmlParse(<span style="color: #11948b;">"demo.xml"</span>))
 </pre>
 </div>
 </div>
@@ -1124,21 +1131,21 @@ replacing it, and then write it back to another file.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(XML)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(XML)
 
-foo &lt;- xmlTreeParse("demo.xml")$doc$children
+foo <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xmlTreeParse(<span style="color: #11948b;">"demo.xml"</span>)$doc$children
 
-bappa_node &lt;- xmlNode(
-  "bappa",
-  attrs = list(idref = "hky.bappa")
+bappa_node <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xmlNode(
+  <span style="color: #11948b;">"bappa"</span>,
+  attrs = list(idref = <span style="color: #11948b;">"hky.bappa"</span>)
 )
 
-foo[["beast"]][["input"]][["kappa"]] &lt;- bappa_node
+foo[[<span style="color: #11948b;">"beast"</span>]][[<span style="color: #11948b;">"input"</span>]][[<span style="color: #11948b;">"kappa"</span>]] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> bappa_node
 
 saveXML(
-  foo$beast, # &lt;-- need to specify the node.
-  file = "demo-again.xml",
-  prefix = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?&gt;\n"
+  foo$beast, <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">&lt;-- need to specify the node.</span>
+  file = <span style="color: #11948b;">"demo-again.xml"</span>,
+  prefix = <span style="color: #11948b;">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?&gt;\n"</span>
 )
 </pre>
 </div>
@@ -1154,9 +1161,9 @@ attributes.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">foo &lt;- xmlTreeParse("demo.xml")$doc$children$beast
-kappa_node &lt;- getNodeSet(foo, "//kappa[@idref='hky.kappa']")[[1]]
-xmlGetAttr(kappa_node, "idref")
+<pre class="src src-R">foo <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xmlTreeParse(<span style="color: #11948b;">"demo.xml"</span>)$doc$children$beast
+kappa_node <span style="color: #007ec4; font-weight: bold;">&lt;-</span> getNodeSet(foo, <span style="color: #11948b;">"//kappa[@idref='hky.kappa']"</span>)[[1]]
+xmlGetAttr(kappa_node, <span style="color: #11948b;">"idref"</span>)
 </pre>
 </div>
 </div>
@@ -1167,20 +1174,20 @@ xmlGetAttr(kappa_node, "idref")
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-org8a17158" class="outline-4">
-<h4 id="org8a17158">Example</h4>
-<div class="outline-text-4" id="text-org8a17158">
+<div id="outline-container-org1d72691" class="outline-4">
+<h4 id="org1d72691">Example</h4>
+<div class="outline-text-4" id="text-org1d72691">
 <div class="org-src-container">
-<pre class="src src-R">library(whisker)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(whisker)
 
-template &lt;- readLines("./template.html")
-data &lt;- list( name = "Chris"
+template <span style="color: #007ec4; font-weight: bold;">&lt;-</span> readLines(<span style="color: #11948b;">"./template.html"</span>)
+data <span style="color: #007ec4; font-weight: bold;">&lt;-</span> list( name = <span style="color: #11948b;">"Chris"</span>
             , value = 10000
             , taxed_value = 10000 - (10000 * 0.4)
-            , in_ca = TRUE
+            , in_ca = <span style="color: #a67c00;">TRUE</span>
             )
 
-writeLines(whisker.render(template, data), "./output.html")
+writeLines(whisker.render(template, data), <span style="color: #11948b;">"./output.html"</span>)
 </pre>
 </div>
 
@@ -1281,7 +1288,7 @@ they live
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">packrat::set_opts(local.repos = "&lt;path/to/package&gt;")
+<pre class="src src-R">packrat::set_opts(local.repos = <span style="color: #11948b;">"&lt;path/to/package&gt;"</span>)
 </pre>
 </div>
 
@@ -1528,46 +1535,46 @@ much easier and is organised to work well with the modern piping style.
 <h3 id="org8dc6437"><code>Rmath.h</code></h3>
 <div class="outline-text-3" id="text-org8dc6437">
 <div class="org-src-container">
-<pre class="src src-C">/*
+<pre class="src src-C"><span style="color: #98a6a6;">/*</span>
 
-  To compile and run this I used the following...
-
-
-  $ sudo apt update
-  $ sudo apt install r-mathlib
-  $ sudo apt install r-base-dev
-  $ gcc -o mathlibtest demo.c -lRmath -lm
-  $ ./mathlibtest
-
- */
-
-#include &lt;stdio.h&gt;
-
-#define MATHLIB_STANDALONE 1
-#include "Rmath.h"
+<span style="color: #98a6a6;">  To compile and run this I used the following...</span>
 
 
-int fib(int n) {
-  if (n &lt; 2) {
-    return(1);
-  } else {
-    return(fib(n-1) + fib(n-2));
+<span style="color: #98a6a6;">  $ sudo apt update</span>
+<span style="color: #98a6a6;">  $ sudo apt install r-mathlib</span>
+<span style="color: #98a6a6;">  $ sudo apt install r-base-dev</span>
+<span style="color: #98a6a6;">  $ gcc -o mathlibtest demo.c -lRmath -lm</span>
+<span style="color: #98a6a6;">  $ ./mathlibtest</span>
+
+<span style="color: #98a6a6;"> */</span>
+
+<span style="color: #007ec4;">#include</span> <span style="color: #11948b;">&lt;stdio.h&gt;</span>
+
+<span style="color: #007ec4;">#define</span> <span style="color: #007ec4;">MATHLIB_STANDALONE</span> 1
+<span style="color: #007ec4;">#include</span> <span style="color: #11948b;">"Rmath.h"</span>
+
+
+<span style="color: #a67c00;">int</span> <span style="color: #007ec4;">fib</span>(<span style="color: #a67c00;">int</span> <span style="color: #007ec4;">n</span>) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (n &lt; 2) {
+    <span style="color: #778c00; font-weight: bold;">return</span>(1);
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    <span style="color: #778c00; font-weight: bold;">return</span>(fib(n-1) + fib(n-2));
   }
 }
 
-int main(int ac, char** av)
+<span style="color: #a67c00;">int</span> <span style="color: #007ec4;">main</span>(<span style="color: #a67c00;">int</span> <span style="color: #007ec4;">ac</span>, <span style="color: #a67c00;">char</span>** <span style="color: #007ec4;">av</span>)
 {
-  int n;
-  double foo;
+  <span style="color: #a67c00;">int</span> <span style="color: #007ec4;">n</span>;
+  <span style="color: #a67c00;">double</span> <span style="color: #007ec4;">foo</span>;
 
-  for ( n = 0; n &lt; 10; n = n + 1 ) {
-    printf("%d\n", fib(n));
+  <span style="color: #778c00; font-weight: bold;">for</span> ( n = 0; n &lt; 10; n = n + 1 ) {
+    printf(<span style="color: #11948b;">"%d\n"</span>, fib(n));
     foo = dnorm(1.0, 0.0, 1.0, 0);
-    printf("%f\n", foo);
+    printf(<span style="color: #11948b;">"%f\n"</span>, foo);
   }
 
-  printf("hello, %s\n", "world");
-  return 0;
+  printf(<span style="color: #11948b;">"hello, %s\n"</span>, <span style="color: #11948b;">"world"</span>);
+  <span style="color: #778c00; font-weight: bold;">return</span> 0;
 }
 </pre>
 </div>
@@ -1615,9 +1622,9 @@ by default), a.k.a. map, dictionary, loopkup&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">my_dict &lt;- new.env(hash = TRUE)
-my_dict[["key"]] &lt;- 2
-my_dict[["key"]] # will return 2.
+<pre class="src src-R">my_dict <span style="color: #007ec4; font-weight: bold;">&lt;-</span> new.env(hash = <span style="color: #a67c00;">TRUE</span>)
+my_dict[[<span style="color: #11948b;">"key"</span>]] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 2
+my_dict[[<span style="color: #11948b;">"key"</span>]] <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">will return 2.</span>
 </pre>
 </div>
 </div>
@@ -1654,15 +1661,15 @@ Start with the following XML in <code>demo.xml</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-    &lt;book&gt;
-        &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-        &lt;author&gt;J K. Rowling&lt;/author&gt;
-        &lt;year&gt;2005&lt;/year&gt;
-        &lt;price&gt;29.99&lt;/price&gt;
-    &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #778c00; font-weight: bold;">xml</span> <span style="color: #11948b;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #007ec4;">bookstore</span>&gt;
+    &lt;<span style="color: #007ec4;">book</span>&gt;
+        &lt;<span style="color: #007ec4;">title</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;Harry Potter&lt;/<span style="color: #007ec4;">title</span>&gt;
+        &lt;<span style="color: #007ec4;">author</span>&gt;J K. Rowling&lt;/<span style="color: #007ec4;">author</span>&gt;
+        &lt;<span style="color: #007ec4;">year</span>&gt;2005&lt;/<span style="color: #007ec4;">year</span>&gt;
+        &lt;<span style="color: #007ec4;">price</span>&gt;29.99&lt;/<span style="color: #007ec4;">price</span>&gt;
+    &lt;/<span style="color: #007ec4;">book</span>&gt;
+&lt;/<span style="color: #007ec4;">bookstore</span>&gt;
 </pre>
 </div>
 
@@ -1671,35 +1678,35 @@ then run the following script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(xml2)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(xml2)
 
-bs &lt;- read_xml("demo.xml")
+bs <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read_xml(<span style="color: #11948b;">"demo.xml"</span>)
 
-new_book &lt;- read_xml("&lt;book&gt;&lt;title/&gt;&lt;author/&gt;&lt;year/&gt;&lt;price/&gt;&lt;/book&gt;")
+new_book <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read_xml(<span style="color: #11948b;">"&lt;book&gt;&lt;title/&gt;&lt;author/&gt;&lt;year/&gt;&lt;price/&gt;&lt;/book&gt;"</span>)
 
 xml_set_attr(
-  x = xml_find_first(new_book, "//title"),
-  attr = "lang",
-  value = "en")
+  x = xml_find_first(new_book, <span style="color: #11948b;">"//title"</span>),
+  attr = <span style="color: #11948b;">"lang"</span>,
+  value = <span style="color: #11948b;">"en"</span>)
 xml_set_text(
-  x = xml_find_first(new_book, "//title"),
-  value = "Nineteen Eighty-Four"
+  x = xml_find_first(new_book, <span style="color: #11948b;">"//title"</span>),
+  value = <span style="color: #11948b;">"Nineteen Eighty-Four"</span>
 )
 xml_set_text(
-  x = xml_find_first(new_book, "//author"),
-  value = "G Orwell"
+  x = xml_find_first(new_book, <span style="color: #11948b;">"//author"</span>),
+  value = <span style="color: #11948b;">"G Orwell"</span>
 )
 xml_set_text(
-  x = xml_find_first(new_book, "//year"),
-  value = "1949"
+  x = xml_find_first(new_book, <span style="color: #11948b;">"//year"</span>),
+  value = <span style="color: #11948b;">"1949"</span>
 )
 xml_set_text(
-  x = xml_find_first(new_book, "//price"),
-  value = "8.99"
+  x = xml_find_first(new_book, <span style="color: #11948b;">"//price"</span>),
+  value = <span style="color: #11948b;">"8.99"</span>
 )
 
 xml_add_child(bs, new_book)
-write_xml(bs, "demo2.xml")
+write_xml(bs, <span style="color: #11948b;">"demo2.xml"</span>)
 </pre>
 </div>
 
@@ -1708,21 +1715,21 @@ to get the new file <code>demo2.xml</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-    &lt;author&gt;J K. Rowling&lt;/author&gt;
-    &lt;year&gt;2005&lt;/year&gt;
-    &lt;price&gt;29.99&lt;/price&gt;
-  &lt;/book&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #778c00; font-weight: bold;">xml</span> <span style="color: #11948b;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #007ec4;">bookstore</span>&gt;
+  &lt;<span style="color: #007ec4;">book</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;Harry Potter&lt;/<span style="color: #007ec4;">title</span>&gt;
+    &lt;<span style="color: #007ec4;">author</span>&gt;J K. Rowling&lt;/<span style="color: #007ec4;">author</span>&gt;
+    &lt;<span style="color: #007ec4;">year</span>&gt;2005&lt;/<span style="color: #007ec4;">year</span>&gt;
+    &lt;<span style="color: #007ec4;">price</span>&gt;29.99&lt;/<span style="color: #007ec4;">price</span>&gt;
+  &lt;/<span style="color: #007ec4;">book</span>&gt;
+  &lt;<span style="color: #007ec4;">book</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;Nineteen Eighty-Four&lt;/<span style="color: #007ec4;">title</span>&gt;
+    &lt;<span style="color: #007ec4;">author</span>&gt;G Orwell&lt;/<span style="color: #007ec4;">author</span>&gt;
+    &lt;<span style="color: #007ec4;">year</span>&gt;1949&lt;/<span style="color: #007ec4;">year</span>&gt;
+    &lt;<span style="color: #007ec4;">price</span>&gt;8.99&lt;/<span style="color: #007ec4;">price</span>&gt;
+  &lt;/<span style="color: #007ec4;">book</span>&gt;
+&lt;/<span style="color: #007ec4;">bookstore</span>&gt;
 </pre>
 </div>
 </div>
@@ -1736,21 +1743,21 @@ Starting with <code>demo2.xml</code> from the <a href="#orgeaeea58">previous exa
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
-    &lt;author&gt;J K. Rowling&lt;/author&gt;
-    &lt;year&gt;2005&lt;/year&gt;
-    &lt;price&gt;29.99&lt;/price&gt;
-  &lt;/book&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #778c00; font-weight: bold;">xml</span> <span style="color: #11948b;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #007ec4;">bookstore</span>&gt;
+  &lt;<span style="color: #007ec4;">book</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;Harry Potter&lt;/<span style="color: #007ec4;">title</span>&gt;
+    &lt;<span style="color: #007ec4;">author</span>&gt;J K. Rowling&lt;/<span style="color: #007ec4;">author</span>&gt;
+    &lt;<span style="color: #007ec4;">year</span>&gt;2005&lt;/<span style="color: #007ec4;">year</span>&gt;
+    &lt;<span style="color: #007ec4;">price</span>&gt;29.99&lt;/<span style="color: #007ec4;">price</span>&gt;
+  &lt;/<span style="color: #007ec4;">book</span>&gt;
+  &lt;<span style="color: #007ec4;">book</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;Nineteen Eighty-Four&lt;/<span style="color: #007ec4;">title</span>&gt;
+    &lt;<span style="color: #007ec4;">author</span>&gt;G Orwell&lt;/<span style="color: #007ec4;">author</span>&gt;
+    &lt;<span style="color: #007ec4;">year</span>&gt;1949&lt;/<span style="color: #007ec4;">year</span>&gt;
+    &lt;<span style="color: #007ec4;">price</span>&gt;8.99&lt;/<span style="color: #007ec4;">price</span>&gt;
+  &lt;/<span style="color: #007ec4;">book</span>&gt;
+&lt;/<span style="color: #007ec4;">bookstore</span>&gt;
 </pre>
 </div>
 
@@ -1759,28 +1766,28 @@ we can use the script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(xml2)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(xml2)
 
-bs &lt;- read_xml("demo2.xml")
+bs <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read_xml(<span style="color: #11948b;">"demo2.xml"</span>)
 
-new_cd &lt;- read_xml("&lt;cd&gt;&lt;title/&gt;&lt;artist/&gt;&lt;year/&gt;&lt;/cd&gt;")
+new_cd <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read_xml(<span style="color: #11948b;">"&lt;cd&gt;&lt;title/&gt;&lt;artist/&gt;&lt;year/&gt;&lt;/cd&gt;"</span>)
 
 xml_set_text(
-  x = xml_find_first(new_cd, "//title"),
-  value = "Lateralus"
+  x = xml_find_first(new_cd, <span style="color: #11948b;">"//title"</span>),
+  value = <span style="color: #11948b;">"Lateralus"</span>
 )
 xml_set_text(
-  x = xml_find_first(new_cd, "//artist"),
-  value = "Tool"
+  x = xml_find_first(new_cd, <span style="color: #11948b;">"//artist"</span>),
+  value = <span style="color: #11948b;">"Tool"</span>
 )
 xml_set_text(
-  x = xml_find_first(new_cd, "//year"),
-  value = "2001"
+  x = xml_find_first(new_cd, <span style="color: #11948b;">"//year"</span>),
+  value = <span style="color: #11948b;">"2001"</span>
 )
 
-old_book &lt;- xml_find_first(bs, "//book[title='Harry Potter']")
+old_book <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xml_find_first(bs, <span style="color: #11948b;">"//book[title='Harry Potter']"</span>)
 xml_replace(old_book, new_cd)
-write_xml(bs, "demo3.xml")
+write_xml(bs, <span style="color: #11948b;">"demo3.xml"</span>)
 </pre>
 </div>
 
@@ -1789,20 +1796,20 @@ which produces <code>demo3.xml</code> shown below
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;bookstore&gt;
-  &lt;cd&gt;
-    &lt;title&gt;Lateralus&lt;/title&gt;
-    &lt;artist&gt;Tool&lt;/artist&gt;
-    &lt;year&gt;2001&lt;/year&gt;
-  &lt;/cd&gt;
-  &lt;book&gt;
-    &lt;title lang="en"&gt;Nineteen Eighty-Four&lt;/title&gt;
-    &lt;author&gt;G Orwell&lt;/author&gt;
-    &lt;year&gt;1949&lt;/year&gt;
-    &lt;price&gt;8.99&lt;/price&gt;
-  &lt;/book&gt;
-&lt;/bookstore&gt;
+<pre class="src src-xml">&lt;?<span style="color: #778c00; font-weight: bold;">xml</span> <span style="color: #11948b;">version="1.0" encoding="UTF-8"</span>?&gt;
+&lt;<span style="color: #007ec4;">bookstore</span>&gt;
+  &lt;<span style="color: #007ec4;">cd</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span>&gt;Lateralus&lt;/<span style="color: #007ec4;">title</span>&gt;
+    &lt;<span style="color: #007ec4;">artist</span>&gt;Tool&lt;/<span style="color: #007ec4;">artist</span>&gt;
+    &lt;<span style="color: #007ec4;">year</span>&gt;2001&lt;/<span style="color: #007ec4;">year</span>&gt;
+  &lt;/<span style="color: #007ec4;">cd</span>&gt;
+  &lt;<span style="color: #007ec4;">book</span>&gt;
+    &lt;<span style="color: #007ec4;">title</span> <span style="color: #007ec4;">lang</span>=<span style="color: #11948b;">"en"</span>&gt;Nineteen Eighty-Four&lt;/<span style="color: #007ec4;">title</span>&gt;
+    &lt;<span style="color: #007ec4;">author</span>&gt;G Orwell&lt;/<span style="color: #007ec4;">author</span>&gt;
+    &lt;<span style="color: #007ec4;">year</span>&gt;1949&lt;/<span style="color: #007ec4;">year</span>&gt;
+    &lt;<span style="color: #007ec4;">price</span>&gt;8.99&lt;/<span style="color: #007ec4;">price</span>&gt;
+  &lt;/<span style="color: #007ec4;">book</span>&gt;
+&lt;/<span style="color: #007ec4;">bookstore</span>&gt;
 </pre>
 </div>
 </div>
@@ -1818,31 +1825,31 @@ in the former to get the value returned as a numeric.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' Find the first matching node and return the named attribute
-#'
-#' @param x the XML document
-#' @param xp the xpath
-#' @param the attribute
-#' @param as_numeric boolean for casting to numeric (default is FALSE)
-#'
-xml_find_attr &lt;- function(x, xp, attr, as_numeric=FALSE) {
-  a &lt;- xml_attr(xml_find_first(x, xpath = xp), attr)
-  if (!as_numeric) {
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Find the first matching node and return the named attribute</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">x</span><span style="color: #98a6a6;"> the XML document</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">xp</span><span style="color: #98a6a6;"> the xpath</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">the</span><span style="color: #98a6a6;"> attribute</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">as_numeric</span><span style="color: #98a6a6;"> boolean for casting to numeric (default is FALSE)</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">xml_find_attr</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x, xp, attr, as_numeric=<span style="color: #a67c00;">FALSE</span>) {
+  a <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xml_attr(xml_find_first(x, xpath = xp), attr)
+  <span style="color: #778c00; font-weight: bold;">if</span> (!as_numeric) {
     a
-  } else {
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
     as.numeric(a)
   }
 }
 
-#' Find the first matching node and set the named attribute
-#'
-#' @param x the XML document
-#' @param xp the xpath
-#' @param attr the attribute
-#' @param v the value for the attribute
-#'
-xml_find_set_attr &lt;- function(x, xp, attr, v) {
-  n &lt;- xml_find_first(x, xpath = xp)
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Find the first matching node and set the named attribute</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">x</span><span style="color: #98a6a6;"> the XML document</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">xp</span><span style="color: #98a6a6;"> the xpath</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">attr</span><span style="color: #98a6a6;"> the attribute</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">v</span><span style="color: #98a6a6;"> the value for the attribute</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">xml_find_set_attr</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x, xp, attr, v) {
+  n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> xml_find_first(x, xpath = xp)
   xml_set_attr(n, attr, v)
 }
 </pre>
@@ -1859,12 +1866,12 @@ lint a file in place.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' Format an XML file in place using js-beautify
-#'
-#' @param x is the filepath
-#'
-beautify_xml &lt;- function(x) {
-  system2(command = "html-beautify", args = c("-f", x, "-r"))
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Format an XML file in place using js-beautify</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">x</span><span style="color: #98a6a6;"> is the filepath</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">beautify_xml</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x) {
+  system2(command = <span style="color: #11948b;">"html-beautify"</span>, args = c(<span style="color: #11948b;">"-f"</span>, x, <span style="color: #11948b;">"-r"</span>))
 }
 </pre>
 </div>
@@ -1883,8 +1890,8 @@ the order of the arguments, the ordering of the rows does.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">foo &lt;- data.frame(x = 1:3, y = letters[1:3])
-bar &lt;- data.frame(x = c(2:4,2:4), z = LETTERS[1:6])
+<pre class="src src-R">foo <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(x = 1:3, y = letters[1:3])
+bar <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(x = c(2:4,2:4), z = LETTERS[1:6])
 dplyr::full_join(foo,bar)
 </pre>
 </div>
@@ -1916,9 +1923,9 @@ is equivalent to
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(dplyr)
-iris %&gt;%
-  group_by(Species) %&gt;%
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(dplyr)
+iris <span style="color: #007ec4; font-weight: bold;">%&gt;%</span>
+  group_by(Species) <span style="color: #007ec4; font-weight: bold;">%&gt;%</span>
   summarise(mean_petal_length = mean(Petal.Length))
 </pre>
 </div>
@@ -1944,8 +1951,8 @@ iris %&gt;%
 <h3 id="org2992392">Functional programming support</h3>
 <div class="outline-text-3" id="text-org2992392">
 <div class="org-src-container">
-<pre class="src src-R">library(magrittr)
-library(purrr)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(magrittr)
+<span style="color: #007ec4; font-weight: bold;">library</span>(purrr)
 </pre>
 </div>
 
@@ -2006,31 +2013,31 @@ analogue in R. These are mainly for use with lists of vectors.
 <h3 id="org2a7746c">R/Haskell Prelude</h3>
 <div class="outline-text-3" id="text-org2a7746c">
 <div class="org-src-container">
-<pre class="src src-R">## See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile
-drop_while &lt;- function(p, xs) {
-  if (length(xs) == 0) {
+<pre class="src src-R"><span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile</span>
+<span style="color: #007ec4;">drop_while</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(p, xs) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (length(xs) == 0) {
     xs
-  } else {
-    x &lt;- head(xs, 1)
-    remaining &lt;- tail(xs, -1)
-    if (p(x)) {
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> head(xs, 1)
+    remaining <span style="color: #007ec4; font-weight: bold;">&lt;-</span> tail(xs, -1)
+    <span style="color: #778c00; font-weight: bold;">if</span> (p(x)) {
       drop_while(p, remaining)
-    } else {
+    } <span style="color: #778c00; font-weight: bold;">else</span> {
       remaining
     }
   }
 }
 
-## See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile
-take_while &lt;- function(p, xs) {
-  if (length(xs) == 0) {
+<span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile</span>
+<span style="color: #007ec4;">take_while</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(p, xs) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (length(xs) == 0) {
     xs
-  } else {
-    x &lt;- head(xs, 1)
-    remaining &lt;- tail(xs, -1)
-    if (p(x)) {
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> head(xs, 1)
+    remaining <span style="color: #007ec4; font-weight: bold;">&lt;-</span> tail(xs, -1)
+    <span style="color: #778c00; font-weight: bold;">if</span> (p(x)) {
       c(x, take_while(p, remaining))
-    } else {
+    } <span style="color: #778c00; font-weight: bold;">else</span> {
       c()
     }
   }
@@ -2058,8 +2065,8 @@ take_while &lt;- function(p, xs) {
 <h4 id="org7ce83b5">Switch/case/which</h4>
 <div class="outline-text-4" id="text-org7ce83b5">
 <div class="org-src-container">
-<pre class="src src-R">centre &lt;- function(x, type) {
-  switch(type,
+<pre class="src src-R"><span style="color: #007ec4;">centre</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x, type) {
+  <span style="color: #778c00; font-weight: bold;">switch</span>(type,
          mean = mean(x),
          median = median(x),
          trimmed = mean(x, trim = .1))
@@ -2092,8 +2099,8 @@ There is a synonym <code>as.name</code> which derives from S terminology while "
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">a &lt;- 1
-eval(as.symbol("a"))
+<pre class="src src-R">a <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 1
+eval(as.symbol(<span style="color: #11948b;">"a"</span>))
 </pre>
 </div>
 
@@ -2103,11 +2110,11 @@ Instead we can do the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"># this has a syntax error
+<pre class="src src-R"><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">this has a syntax error</span>
 data.frame(letters[1] = 2)
 
-# this works!
-eval(parse(text = sprintf("data.frame(%s = 2)", letters[1])))
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">this works!</span>
+eval(parse(text = sprintf(<span style="color: #11948b;">"data.frame(%s = 2)"</span>, letters[1])))
 </pre>
 </div>
 </div>
@@ -2122,7 +2129,7 @@ or list, etc.
 
 <div class="org-src-container">
 <pre class="src src-R">with(mtcars, mpg[cyl == 8  &amp;  disp &gt; 350])
-# is the same as, but nicer than
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">is the same as, but nicer than</span>
 mtcars$mpg[mtcars$cyl == 8  &amp;  mtcars$disp &gt; 350]
 </pre>
 </div>
@@ -2185,35 +2192,35 @@ regression.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(pscl)
-library(boot)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(pscl)
+<span style="color: #007ec4; font-weight: bold;">library</span>(boot)
 set.seed(1)
 
-n &lt;- 1000
-x1 &lt;- rnorm(n = n)
-x2 &lt;- rnorm(n = n)
-z1 &lt;- rnorm(n = n)
-z2 &lt;- rnorm(n = n)
-true_prob_zinf &lt;- inv.logit(2 * z1 + 0 * z2)
-zero_inflation &lt;- rbernoulli(n = n,
+n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 1000
+x1 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rnorm(n = n)
+x2 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rnorm(n = n)
+z1 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rnorm(n = n)
+z2 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rnorm(n = n)
+true_prob_zinf <span style="color: #007ec4; font-weight: bold;">&lt;-</span> inv.logit(2 * z1 + 0 * z2)
+zero_inflation <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rbernoulli(n = n,
                              p = true_prob_zinf)
 
-true_count_means &lt;- exp(2 * x1 - 1 * x2 + 1)
-maybe_count &lt;- rpois(n = n,
+true_count_means <span style="color: #007ec4; font-weight: bold;">&lt;-</span> exp(2 * x1 - 1 * x2 + 1)
+maybe_count <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rpois(n = n,
                      lambda = true_count_means)
 
-y &lt;- ifelse(zero_inflation, 0, maybe_count)
+y <span style="color: #007ec4; font-weight: bold;">&lt;-</span> ifelse(zero_inflation, 0, maybe_count)
 
-df &lt;- data.frame(y = y,
+df <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(y = y,
                  x1 = x1,
                  x2 = x2,
                  z1 = z1,
                  z2 = z2)
 
-my_zinb &lt;- zeroinfl(formula = y ~ x1 + x2 | z1 + z2,
-                    data = df, dist = "poisson")
+my_zinb <span style="color: #007ec4; font-weight: bold;">&lt;-</span> zeroinfl(formula = y ~ x1 + x2 | z1 + z2,
+                    data = df, dist = <span style="color: #11948b;">"poisson"</span>)
 
-true_mean &lt;- true_prob_zinf * 0 + (1 - true_prob_zinf) * true_count_means
+true_mean <span style="color: #007ec4; font-weight: bold;">&lt;-</span> true_prob_zinf * 0 + (1 - true_prob_zinf) * true_count_means
 
 plot(log(true_mean), log(fitted(my_zinb)))
 abline(0,1)
@@ -2262,21 +2269,21 @@ The following demonstrates how to solve this system with <code>deSolve</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(deSolve)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(deSolve)
 
-sir_diff &lt;- function(time, state, params) {
+<span style="color: #007ec4;">sir_diff</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(time, state, params) {
     with(as.list(c(params, state)), {
-        ds &lt;- - beta * susceptible * infectious
-        di &lt;- beta * susceptible * infectious - gamma * infectious
+        ds <span style="color: #007ec4; font-weight: bold;">&lt;-</span> - beta * susceptible * infectious
+        di <span style="color: #007ec4; font-weight: bold;">&lt;-</span> beta * susceptible * infectious - gamma * infectious
         list(c(ds, di))
     })
 }
 
-params &lt;- c(beta = 1.2, gamma = 1)
-state &lt;- c(susceptible = 0.99, infectious = 0.01)
-times &lt;- seq(from = 0, to = 20, length = 100)
-pd &lt;- matrix(nrow = 2, ncol = 2, data = 0)
-out1 &lt;- deSolve::ode(state, times, sir_diff, parms = params)
+params <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(beta = 1.2, gamma = 1)
+state <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(susceptible = 0.99, infectious = 0.01)
+times <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(from = 0, to = 20, length = 100)
+pd <span style="color: #007ec4; font-weight: bold;">&lt;-</span> matrix(nrow = 2, ncol = 2, data = 0)
+out1 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> deSolve::ode(state, times, sir_diff, parms = params)
 </pre>
 </div>
 </div>
@@ -2290,30 +2297,30 @@ Then we can implement the differential in C as
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">/* file sirmod.c */
-#include &lt;R.h&gt;
+<pre class="src src-C"><span style="color: #98a6a6;">/* </span><span style="color: #98a6a6;">file sirmod.c</span><span style="color: #98a6a6;"> */</span>
+<span style="color: #007ec4;">#include</span> <span style="color: #11948b;">&lt;R.h&gt;</span>
 
-static double params[2];
-#define beta params[0]
-#define gamma params[1]
+<span style="color: #778c00; font-weight: bold;">static</span> <span style="color: #a67c00;">double</span> <span style="color: #007ec4;">params</span>[2];
+<span style="color: #007ec4;">#define</span> <span style="color: #007ec4;">beta</span> params[0]
+<span style="color: #007ec4;">#define</span> <span style="color: #007ec4;">gamma</span> params[1]
 
-/* initializer */
-void initmod(void (* odeparams)(int *, double *))
+<span style="color: #98a6a6;">/* </span><span style="color: #98a6a6;">initializer</span><span style="color: #98a6a6;"> */</span>
+<span style="color: #a67c00;">void</span> <span style="color: #007ec4;">initmod</span>(<span style="color: #a67c00;">void</span> (* <span style="color: #007ec4;">odeparams</span>)(<span style="color: #a67c00;">int</span> *, <span style="color: #a67c00;">double</span> *))
 {
-  int N=2;
+  <span style="color: #a67c00;">int</span> <span style="color: #007ec4;">N</span>=2;
   odeparams(&amp;N, params);
 }
 
-/* Derivatives and 1 output variable */
-void derivs (int *neq, double *t, double *y, double *ydot,
-             double *yout, int *ip)
+<span style="color: #98a6a6;">/* </span><span style="color: #98a6a6;">Derivatives and 1 output variable</span><span style="color: #98a6a6;"> */</span>
+<span style="color: #a67c00;">void</span> <span style="color: #007ec4;">derivs</span> (<span style="color: #a67c00;">int</span> *<span style="color: #007ec4;">neq</span>, <span style="color: #a67c00;">double</span> *<span style="color: #007ec4;">t</span>, <span style="color: #a67c00;">double</span> *<span style="color: #007ec4;">y</span>, <span style="color: #a67c00;">double</span> *<span style="color: #007ec4;">ydot</span>,
+             <span style="color: #a67c00;">double</span> *<span style="color: #007ec4;">yout</span>, <span style="color: #a67c00;">int</span> *<span style="color: #007ec4;">ip</span>)
 {
-  if (ip[0] &lt;1) error("nout should be at least 1");
+  <span style="color: #778c00; font-weight: bold;">if</span> (ip[0] &lt;1) error(<span style="color: #11948b;">"nout should be at least 1"</span>);
   ydot[0] = -beta*y[0]*y[1];
   ydot[1] = beta*y[0]*y[1] - gamma*y[1];
   yout[0] = 1.0-y[0]+y[1];
 }
-/* END file sirmod.c */
+<span style="color: #98a6a6;">/* </span><span style="color: #98a6a6;">END file sirmod.c</span><span style="color: #98a6a6;"> */</span>
 </pre>
 </div>
 
@@ -2322,11 +2329,11 @@ Then we need to compile this and load the object for use of <code>deSovle</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">system("R CMD SHLIB sirmod.c")
-dyn.load("sirmod.so")
-out2 &lt;- deSolve::ode(state, times, func = "derivs", parms = params,
-                     dllname = "sirmod", initfunc = "initmod", nout = 1,
-                     outnames = "recovered")
+<pre class="src src-R">system(<span style="color: #11948b;">"R CMD SHLIB sirmod.c"</span>)
+dyn.load(<span style="color: #11948b;">"sirmod.so"</span>)
+out2 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> deSolve::ode(state, times, func = <span style="color: #11948b;">"derivs"</span>, parms = params,
+                     dllname = <span style="color: #11948b;">"sirmod"</span>, initfunc = <span style="color: #11948b;">"initmod"</span>, nout = 1,
+                     outnames = <span style="color: #11948b;">"recovered"</span>)
 </pre>
 </div>
 </div>
@@ -2360,12 +2367,12 @@ of creating a copy.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">demo_df &lt;- data.frame(x = 1:100, y = rnorm(100))
+<pre class="src src-R">demo_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(x = 1:100, y = rnorm(100))
 
-## take every third sample
-thinning_factor &lt;- 3
+<span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">take every third sample</span>
+thinning_factor <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 3
 
-demo_df &lt;- demo_df[seq(from = 1, to = nrow(demo_df), by = thinning_factor), ]
+demo_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo_df[seq(from = 1, to = nrow(demo_df), by = thinning_factor), ]
 </pre>
 </div>
 </div>
@@ -2380,36 +2387,36 @@ Here is an example looking at how to use <code>KernSmooth</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">library(KernSmooth)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(KernSmooth)
 
 set.seed(1)
 
-x &lt;- c(rpois(n = 500, lambda=10),
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(rpois(n = 500, lambda=10),
        rpois(n = 500, lambda = 30))
 
-f_x &lt;- function(x, ...) {
+<span style="color: #007ec4;">f_x</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x, ...) {
   0.5 * (dpois(x = x, lambda = 10, ...) +
          dpois(x = x, lambda = 30, ...))
 }
 
-x_mesh &lt;- 0:100
-y_mesh &lt;- f_x(x_mesh)
+x_mesh <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 0:100
+y_mesh <span style="color: #007ec4; font-weight: bold;">&lt;-</span> f_x(x_mesh)
 
 
-kde_obj &lt;- bkde(x, bandwidth = 3, range.x = c(0,100), gridsize = 101)
+kde_obj <span style="color: #007ec4; font-weight: bold;">&lt;-</span> bkde(x, bandwidth = 3, range.x = c(0,100), gridsize = 101)
 
-r_kde_samples &lt;- sample(x = kde_obj$x,
+r_kde_samples <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sample(x = kde_obj$x,
                        size = length(x),
-                       replace = TRUE,
+                       replace = <span style="color: #a67c00;">TRUE</span>,
                        prob = pmax(0, kde_obj$y))
 
-type_char &lt;- c("true", "estimate")
+type_char <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(<span style="color: #11948b;">"true"</span>, <span style="color: #11948b;">"estimate"</span>)
 
-density_df &lt;- data.frame(x = c(x_mesh, x_mesh),
+density_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(x = c(x_mesh, x_mesh),
                          y = c(y_mesh, pmax(0, kde_obj$y)),
                          type = rep(type_char, each = 101))
 
-sample_df &lt;- data.frame(x = c(x, r_kde_samples),
+sample_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(x = c(x, r_kde_samples),
                         type = rep(type_char,
                                    each = length(x)))
 
@@ -2418,7 +2425,7 @@ ggplot() +
                  mapping = aes(x = x, y = ..density.., fill = type),
                  bins = 25,
                  size = 3,
-                 position = "dodge") +
+                 position = <span style="color: #11948b;">"dodge"</span>) +
   geom_line(data = density_df,
             mapping = aes(x = x, y = y, colour = type))
 </pre>
@@ -2443,38 +2450,38 @@ The following snippet defines a vectorised step function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' Return a vectorised step function.
-#'
-#' @param ts the times at which there is a step.
-#' @param vs the value of the function at the step.
-#'
-step_function_factory &lt;- function(ts, vs) {
-  n &lt;- length(ts)
-  if (n &lt; 1) {
-    stop("need at least one step time.")
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Return a vectorised step function.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">ts</span><span style="color: #98a6a6;"> the times at which there is a step.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">vs</span><span style="color: #98a6a6;"> the value of the function at the step.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">step_function_factory</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(ts, vs) {
+  n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> length(ts)
+  <span style="color: #778c00; font-weight: bold;">if</span> (n &lt; 1) {
+    <span style="color: #778c00; font-weight: bold;">stop</span>(<span style="color: #11948b;">"need at least one step time."</span>)
   }
-  if (length(vs) != (1 + n)) {
-    stop("if there are n step times there must be n+1 values.")
+  <span style="color: #778c00; font-weight: bold;">if</span> (length(vs) != (1 + n)) {
+    <span style="color: #778c00; font-weight: bold;">stop</span>(<span style="color: #11948b;">"if there are n step times there must be n+1 values."</span>)
   }
 
-  step_func &lt;- function(x) {
-    m &lt;- length(x)
-    y &lt;- numeric(m)
-    mask &lt;- logical(m)
-    mask &lt;- x &lt; ts[1]
-    y[mask] &lt;- vs[1]
-    if (n &gt; 1) {
-      for (ix in seq.int(2, n)) {
-        mask &lt;- (ts[ix-1] &lt;= x) &amp; (x &lt; ts[ix])
-        y[mask] &lt;- vs[ix]
+  <span style="color: #007ec4;">step_func</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x) {
+    m <span style="color: #007ec4; font-weight: bold;">&lt;-</span> length(x)
+    y <span style="color: #007ec4; font-weight: bold;">&lt;-</span> numeric(m)
+    mask <span style="color: #007ec4; font-weight: bold;">&lt;-</span> logical(m)
+    mask <span style="color: #007ec4; font-weight: bold;">&lt;-</span> x &lt; ts[1]
+    y[mask] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> vs[1]
+    <span style="color: #778c00; font-weight: bold;">if</span> (n &gt; 1) {
+      <span style="color: #778c00; font-weight: bold;">for</span> (ix <span style="color: #778c00; font-weight: bold;">in</span> seq.int(2, n)) {
+        mask <span style="color: #007ec4; font-weight: bold;">&lt;-</span> (ts[ix-1] &lt;= x) &amp; (x &lt; ts[ix])
+        y[mask] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> vs[ix]
       }
     }
-    mask &lt;- x &gt;= ts[n]
-    y[mask] &lt;- vs[n+1]
-    return(y)
+    mask <span style="color: #007ec4; font-weight: bold;">&lt;-</span> x &gt;= ts[n]
+    y[mask] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> vs[n+1]
+    <span style="color: #778c00; font-weight: bold;">return</span>(y)
   }
 
-  return(
+  <span style="color: #778c00; font-weight: bold;">return</span>(
     list(
       func = step_func,
       times = ts,
@@ -2490,27 +2497,27 @@ Here is a demonstration of it in action producing Figure <a href="#orge894e31">X
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">t1s &lt;- c(2.0, 3.0)
-v1s &lt;- c(3.0, 2.5, 3.5)
-demo1 &lt;- step_function_factory(t1s, v1s)
-t2s &lt;- c(1.0)
-v2s &lt;- c(1.0, 2.0)
-demo2 &lt;- step_function_factory(t2s, v2s)
+<pre class="src src-R">t1s <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(2.0, 3.0)
+v1s <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(3.0, 2.5, 3.5)
+demo1 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> step_function_factory(t1s, v1s)
+t2s <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(1.0)
+v2s <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(1.0, 2.0)
+demo2 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> step_function_factory(t2s, v2s)
 
-x &lt;- seq(from = 0, to = 4, length = 200)
-y1 &lt;- demo1$func(x)
-y2 &lt;- demo2$func(x)
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(from = 0, to = 4, length = 200)
+y1 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo1$func(x)
+y2 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo2$func(x)
 
-png('step-function-demo.png',
+png(<span style="color: #11948b;">'step-function-demo.png'</span>,
     width = 1.618 * 300,
     height = 300,
-    units = "px")
-plot(x, y1, 'l', col = 'black', ylab = "", ylim = c(0.5, 3.5))
-lines(x, y2, col = 'black')
-points(t1s, demo1$func(t1s), col = 'blue', cex = 3, pch = 16)
-points(t1s, demo1$func(t1s - 1e-10), col = 'red', cex = 3, pch = 1)
-points(t2s, demo2$func(t2s), col = 'blue', cex = 3, pch = 16)
-points(t2s, demo2$func(t2s - 1e-10), col = 'red', cex = 3, pch = 1)
+    units = <span style="color: #11948b;">"px"</span>)
+plot(x, y1, <span style="color: #11948b;">'l'</span>, col = <span style="color: #11948b;">'black'</span>, ylab = <span style="color: #11948b;">""</span>, ylim = c(0.5, 3.5))
+lines(x, y2, col = <span style="color: #11948b;">'black'</span>)
+points(t1s, demo1$func(t1s), col = <span style="color: #11948b;">'blue'</span>, cex = 3, pch = 16)
+points(t1s, demo1$func(t1s - 1e-10), col = <span style="color: #11948b;">'red'</span>, cex = 3, pch = 1)
+points(t2s, demo2$func(t2s), col = <span style="color: #11948b;">'blue'</span>, cex = 3, pch = 16)
+points(t2s, demo2$func(t2s - 1e-10), col = <span style="color: #11948b;">'red'</span>, cex = 3, pch = 1)
 dev.off()
 </pre>
 </div>
@@ -2536,28 +2543,28 @@ binary function \(F\). This can be implemented as follows
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">#' Return a vectorised step function resulting from the point-wise application
-#' of a binary function to two step functions.
-#'
-#' @param step_func_a a step function (see \code{step_function_factory}.)
-#' @param step_func_b a step function (see \code{step_function_factory}.)
-#' @param binary_func a binary function.
-#'
-map_step_function &lt;- function(step_func_a, step_func_b, binary_func) {
-  times_c &lt;- sort(union(step_func_a$times, step_func_b$times))
-  n &lt;- length(times_c)
-  values_c &lt;- numeric(n + 1)
-  values_c[1] &lt;- binary_func(
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Return a vectorised step function resulting from the point-wise application</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> of a binary function to two step functions.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">step_func_a</span><span style="color: #98a6a6;"> a step function (see \code{step_function_factory}.)</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">step_func_b</span><span style="color: #98a6a6;"> a step function (see \code{step_function_factory}.)</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">binary_func</span><span style="color: #98a6a6;"> a binary function.</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #007ec4;">map_step_function</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(step_func_a, step_func_b, binary_func) {
+  times_c <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sort(union(step_func_a$times, step_func_b$times))
+  n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> length(times_c)
+  values_c <span style="color: #007ec4; font-weight: bold;">&lt;-</span> numeric(n + 1)
+  values_c[1] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> binary_func(
     step_func_a$func(step_func_a$times[1] - 1),
     step_func_b$func(step_func_b$times[1] - 1)
   )
-  for (ix in seq.int(n)) {
-    values_c[ix+1] &lt;- binary_func(
+  <span style="color: #778c00; font-weight: bold;">for</span> (ix <span style="color: #778c00; font-weight: bold;">in</span> seq.int(n)) {
+    values_c[ix+1] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> binary_func(
       step_func_a$func(times_c[ix]),
       step_func_b$func(times_c[ix])
     )
   }
-  return(step_function_factory(times_c, values_c))
+  <span style="color: #778c00; font-weight: bold;">return</span>(step_function_factory(times_c, values_c))
 }
 </pre>
 </div>
@@ -2567,16 +2574,16 @@ Here is a demonstration of it in action producing Figure [[fig:step-function-bin
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">demo3 &lt;- map_step_function(demo1, demo2, function(x, y) { x / y })
-y3 &lt;- demo3$func(x)
+<pre class="src src-R">demo3 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> map_step_function(demo1, demo2, <span style="color: #778c00; font-weight: bold;">function</span>(x, y) { x / y })
+y3 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo3$func(x)
 
-png('step-function-binary-demo.png',
+png(<span style="color: #11948b;">'step-function-binary-demo.png'</span>,
     width = 1.618 * 300,
     height = 300,
-    units = "px")
-plot(x, y3, 'l', col = 'black', ylab = "")
-points(t3s, demo3$func(t3s), col = 'blue', cex = 3, pch = 16)
-points(t3s, demo3$func(t3s - 1e-10), col = 'red', cex = 3, pch = 1)
+    units = <span style="color: #11948b;">"px"</span>)
+plot(x, y3, <span style="color: #11948b;">'l'</span>, col = <span style="color: #11948b;">'black'</span>, ylab = <span style="color: #11948b;">""</span>)
+points(t3s, demo3$func(t3s), col = <span style="color: #11948b;">'blue'</span>, cex = 3, pch = 16)
+points(t3s, demo3$func(t3s - 1e-10), col = <span style="color: #11948b;">'red'</span>, cex = 3, pch = 1)
 dev.off()
 </pre>
 </div>
@@ -2600,9 +2607,9 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">num_lines_in_file &lt;- function(fp) {
-  wc_stdout &lt;- system2(command = "wc", args = c("-l", fp), stdout = TRUE)
-  as.numeric(head(unlist(strsplit(x = wc_stdout, split = " ")),1))
+<pre class="src src-R"><span style="color: #007ec4;">num_lines_in_file</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(fp) {
+  wc_stdout <span style="color: #007ec4; font-weight: bold;">&lt;-</span> system2(command = <span style="color: #11948b;">"wc"</span>, args = c(<span style="color: #11948b;">"-l"</span>, fp), stdout = <span style="color: #a67c00;">TRUE</span>)
+  as.numeric(head(unlist(strsplit(x = wc_stdout, split = <span style="color: #11948b;">" "</span>)),1))
 }
 </pre>
 </div>
@@ -2613,11 +2620,11 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 <h3 id="org09ee3e3">Julian day of the year</h3>
 <div class="outline-text-3" id="text-org09ee3e3">
 <div class="org-src-container">
-<pre class="src src-R">#' Julian day of the year
-#'
-#' &gt; j_day("2014-01-03", "2014-01-01")
-#' 3
-j_day &lt;- function(date_string, first_day_of_year_string) {
+<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Julian day of the year</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> &gt; j_day("2014-01-03", "2014-01-01")</span>
+<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> 3</span>
+<span style="color: #007ec4;">j_day</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(date_string, first_day_of_year_string) {
   as.integer(as.Date(date_string) - as.Date(first_day_of_year_string)) + 1
 }
 </pre>
@@ -2680,7 +2687,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-04-13 Thu 17:13</p>
+<p class="date">Created: 2023-05-23 Tue 11:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
