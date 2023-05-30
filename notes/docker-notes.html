@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-13 Thu 17:13 -->
+<!-- 2023-05-30 Tue 10:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>docker-aez-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org74b3040" class="figure">
+<div id="orgf0b41b1" class="figure">
 <p><img src="../images/docker-logo.png" alt="docker-logo.png" width="250px" />
 </p>
 </div>
@@ -214,6 +214,7 @@
 <ul>
 <li><a href="#org3a7eb8d">Docker notes</a>
 <ul>
+<li><a href="#org5c3c18e">daemon</a></li>
 <li><a href="#org298026e">Permissions</a></li>
 <li><a href="#orgb3079c7"><code>gibiansky/ihaskell</code></a></li>
 <li><a href="#orgaaf80be">Jupyter docker stacks</a></li>
@@ -234,6 +235,36 @@
 <h2 id="org3a7eb8d">Docker notes</h2>
 <div class="outline-text-2" id="text-org3a7eb8d">
 </div>
+<div id="outline-container-org5c3c18e" class="outline-3">
+<h3 id="org5c3c18e">daemon</h3>
+<div class="outline-text-3" id="text-org5c3c18e">
+<p>
+To start the docker daemon running in the background issue the
+following command
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sudo systemctl start docker
+</pre>
+</div>
+
+<p>
+and to stop it running
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sudo systemctl stop docker
+</pre>
+</div>
+
+<p>
+If you want it to start on boot (or not) you can toggle this behaviour
+with <code>sudo systemctl enable docker</code> and <code>sudo systemctl disable
+docker</code>.
+</p>
+</div>
+</div>
+
 <div id="outline-container-org298026e" class="outline-3">
 <h3 id="org298026e">Permissions</h3>
 <div class="outline-text-3" id="text-org298026e">
@@ -245,8 +276,8 @@ commands
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sudo groupadd docker            # create docker group
-sudo usermod -aG docker $USER     # add yourself as a member
+<pre class="src src-sh">sudo groupadd docker            <span style="color: #e4ecda; background-color: #207e7b;"># create docker group</span>
+sudo usermod -aG docker $<span style="color: #3c98e0;">USER</span>     <span style="color: #e4ecda; background-color: #207e7b;"># add yourself as a member</span>
 </pre>
 </div>
 
@@ -296,7 +327,7 @@ JupyterLab.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">docker run --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v "$PWD":/home/jovyan/work jupyter/datascience-notebook:9b06df75e445
+<pre class="src src-sh">docker run --rm -p 8888:8888 -e <span style="color: #3c98e0;">JUPYTER_ENABLE_LAB</span>=yes -v <span style="color: #3cafa5;">"$PWD"</span>:/home/jovyan/work jupyter/datascience-notebook:9b06df75e445
 </pre>
 </div>
 
@@ -444,7 +475,7 @@ sure it has the correct permissions.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">#!/bin/sh
+<pre class="src src-sh"><span style="color: #e4ecda; background-color: #207e7b;">#!/bin/</span><span style="color: #93a61a; font-weight: bold;">sh</span>
 
 pdflatex stuff.tex
 pdflatex stuff.tex
@@ -466,7 +497,7 @@ following command:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">docker run --rm --volume "$(pwd):/data" aez/foobar
+<pre class="src src-sh">docker run --rm --volume <span style="color: #3cafa5;">"$(</span><span style="color: #7a7ed2; font-weight: bold;">pwd</span><span style="color: #3cafa5;">):/data"</span> aez/foobar
 </pre>
 </div>
 </div>
@@ -475,7 +506,7 @@ following command:
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-04-13 Thu 17:13</p>
+<p class="date">Created: 2023-05-30 Tue 10:19</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
