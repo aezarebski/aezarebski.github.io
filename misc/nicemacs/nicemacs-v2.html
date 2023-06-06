@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-05-30 Tue 10:19 -->
+<!-- 2023-06-06 Tue 16:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org9dacbb8" class="figure">
+<div id="org118ff88" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -312,6 +312,8 @@
 <span style="color: #e4ecda; background-color: #207e7b;">;; ---------</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;; - 2023-05</span>
+<span style="color: #e4ecda; background-color: #207e7b;">;;   + Use the `</span><span style="color: #3c98e0; background-color: #207e7b; font-weight: bold;">use-package</span><span style="color: #e4ecda; background-color: #207e7b;">' macro.</span>
+<span style="color: #e4ecda; background-color: #207e7b;">;;   + Use the `</span><span style="color: #3c98e0; background-color: #207e7b; font-weight: bold;">calfw</span><span style="color: #e4ecda; background-color: #207e7b;">' package for a calendar view of my agenda</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;   + Remove racket/scheme pacakge</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;   + Include option to accept AI suggestions line by line.</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;   + Include a linter function for R (using `</span><span style="color: #3c98e0; background-color: #207e7b; font-weight: bold;">formatR</span><span style="color: #e4ecda; background-color: #207e7b;">').</span>
@@ -335,10 +337,17 @@
 
 (<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">package</span>)
 (add-to-list 'package-archives '(<span style="color: #3cafa5;">"melpa"</span> . <span style="color: #3cafa5;">"https://melpa.org/packages/"</span>) t)
-(add-to-list 'package-archives  '(<span style="color: #3cafa5;">"nongnu"</span> . <span style="color: #3cafa5;">"https://elpa.nongnu.org/nongnu/"</span>) t)
+(add-to-list 'package-archives '(<span style="color: #3cafa5;">"nongnu"</span> . <span style="color: #3cafa5;">"https://elpa.nongnu.org/nongnu/"</span>) t)
 (add-to-list 'package-archives '(<span style="color: #3cafa5;">"gnu"</span> . <span style="color: #3cafa5;">"https://elpa.gnu.org/packages/"</span>) t)
 
 (package-initialize)
+(<span style="color: #93a61a; font-weight: bold;">unless</span> (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(<span style="color: #93a61a; font-weight: bold;">eval-when-compile</span>
+  (<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">use-package</span>))
+(<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">bind-key</span>)
 
 (<span style="color: #93a61a; font-weight: bold;">setq</span> user-full-name <span style="color: #3cafa5;">"Alexander E. Zarebski"</span>)
 
@@ -351,23 +360,12 @@
 (<span style="color: #93a61a; font-weight: bold;">defvar</span> <span style="color: #3c98e0;">nice-nicemacs-directory</span> <span style="color: #3cafa5;">"~/Documents/nicemacs"</span>
   <span style="color: #3cafa5;">"The path to the nicemacs directory on this machine."</span>)
 
-(<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">cl-lib</span>)
+(<span style="color: #93a61a; font-weight: bold;">use-package</span> <span style="color: #3c98e0; font-weight: bold;">cl-lib</span>
+  <span style="color: #8d9fa1; font-weight: bold;">:ensure</span> t)
 
 <span style="color: #e4ecda; background-color: #207e7b;">;; Be evil</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;; -------</span>
-
-(<span style="color: #93a61a; font-weight: bold;">setq</span> evil-want-keybinding ())
-
-(<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">evil</span>)
-(<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">evil-leader</span>)
-(<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">evil-collection</span>)
-(<span style="color: #93a61a; font-weight: bold;">require</span> '<span style="color: #3c98e0; font-weight: bold;">evil-surround</span>)
-
-(evil-mode 1)
-(evil-leader-mode 1)
-(global-evil-leader-mode 1)
-(evil-collection-init)
-
+<span style="color: #e4ecda; background-color: #207e7b;">;;</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;; Evil surroundings</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;; 1. Enter visual mode and select the text as the region.</span>
@@ -375,11 +373,33 @@
 <span style="color: #e4ecda; background-color: #207e7b;">;; 3. Type the symbol to surround it (note, if it is part of a opening</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;    and closing pair, the opening includes a space and the closing</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;;    does not.)</span>
-(global-evil-surround-mode 1)
-(evil-leader/set-key <span style="color: #3cafa5;">"t s"</span> 'evil-surround-mode)
+<span style="color: #e4ecda; background-color: #207e7b;">;;</span>
 
-(evil-leader/set-leader <span style="color: #3cafa5;">"&lt;SPC&gt;"</span>)
-(evil-leader/set-key <span style="color: #3cafa5;">"&lt;SPC&gt;"</span> 'execute-extended-command)
+(<span style="color: #93a61a; font-weight: bold;">setq</span> evil-want-keybinding nil)
+
+(<span style="color: #93a61a; font-weight: bold;">use-package</span> <span style="color: #3c98e0; font-weight: bold;">evil</span>
+  <span style="color: #8d9fa1; font-weight: bold;">:ensure</span> t
+  <span style="color: #8d9fa1; font-weight: bold;">:init</span>
+  (evil-mode 1))
+
+(<span style="color: #93a61a; font-weight: bold;">use-package</span> <span style="color: #3c98e0; font-weight: bold;">evil-leader</span>
+  <span style="color: #8d9fa1; font-weight: bold;">:ensure</span> t
+  <span style="color: #8d9fa1; font-weight: bold;">:config</span>
+  (evil-leader-mode 1)
+  (global-evil-leader-mode 1)
+  (evil-leader/set-key <span style="color: #3cafa5;">"t s"</span> 'evil-surround-mode)
+  (evil-leader/set-leader <span style="color: #3cafa5;">"&lt;SPC&gt;"</span>)
+  (evil-leader/set-key <span style="color: #3cafa5;">"&lt;SPC&gt;"</span> 'execute-extended-command))
+
+(<span style="color: #93a61a; font-weight: bold;">use-package</span> <span style="color: #3c98e0; font-weight: bold;">evil-collection</span>
+  <span style="color: #8d9fa1; font-weight: bold;">:ensure</span> t
+  <span style="color: #8d9fa1; font-weight: bold;">:config</span>
+  (evil-collection-init))
+
+(<span style="color: #93a61a; font-weight: bold;">use-package</span> <span style="color: #3c98e0; font-weight: bold;">evil-surround</span>
+  <span style="color: #8d9fa1; font-weight: bold;">:ensure</span> t
+  <span style="color: #8d9fa1; font-weight: bold;">:config</span>
+  (global-evil-surround-mode 1))
 
 <span style="color: #e4ecda; background-color: #207e7b;">;; Look stunning</span>
 <span style="color: #e4ecda; background-color: #207e7b;">;; =============</span>
@@ -715,6 +735,7 @@
 
 (evil-leader/set-key
   <span style="color: #3cafa5;">"f f"</span> 'find-file
+  <span style="color: #3cafa5;">"f l"</span> 'find-file-literally
   <span style="color: #3cafa5;">"f t"</span> 'nice-touch-file
   <span style="color: #3cafa5;">"f F"</span> 'find-file-other-frame
   <span style="color: #3cafa5;">"f s"</span> 'save-buffer
@@ -1891,7 +1912,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-05-30 Tue 10:19</p>
+<p class="date">Created: 2023-06-06 Tue 16:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
