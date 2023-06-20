@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-06-13 Tue 12:06 -->
+<!-- 2023-06-20 Tue 10:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgbd22801" class="figure">
+<div id="org6e83ebc" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -323,6 +323,7 @@
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------</span>
 <span style="color: #98a6a6;">;;</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-06</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Add some configuration for `</span><span style="color: #007ec4; font-weight: bold;">nxml-mode</span><span style="color: #98a6a6;">'.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Start using `</span><span style="color: #007ec4; font-weight: bold;">polymode</span><span style="color: #98a6a6;">' (and friends) so I can write R with from</span>
 <span style="color: #98a6a6;">;;     </span><span style="color: #98a6a6;">within `</span><span style="color: #007ec4; font-weight: bold;">org-mode</span><span style="color: #98a6a6;">'.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Configure the `</span><span style="color: #007ec4; font-weight: bold;">fill-column</span><span style="color: #98a6a6;">' to use a clearer face.</span>
@@ -663,8 +664,25 @@
        (async-shell-command ,(format <span style="color: #11948b;">"meld %s %s &amp;"</span> fa fb)))
      (evil-leader/set-key ,(concat <span style="color: #11948b;">"f m "</span> key) (intern ,(format <span style="color: #11948b;">"nice-meld-%s"</span> name)))))
 
-(<span style="color: #778c00; font-weight: bold;">nice-meld-files</span> <span style="color: #11948b;">"init"</span> <span style="color: #11948b;">"~/.emacs.d/init.el"</span> <span style="color: #11948b;">"~/Documents/nicemacs/nicemacs-v2.el"</span> <span style="color: #11948b;">"i"</span>)
-(<span style="color: #778c00; font-weight: bold;">nice-meld-files</span> <span style="color: #11948b;">"aspell"</span> <span style="color: #11948b;">"~/.aspell.en.pws"</span> <span style="color: #11948b;">"~/Documents/nicemacs/resources/aspell.en.pws"</span> <span style="color: #11948b;">"a"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-meld-files</span> <span style="color: #11948b;">"init"</span> <span style="color: #11948b;">"~/.emacs.d/init.el"</span>
+                 <span style="color: #11948b;">"~/Documents/nicemacs/nicemacs-v2.el"</span>
+                 <span style="color: #11948b;">"i"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-meld-files</span> <span style="color: #11948b;">"aspell"</span> <span style="color: #11948b;">"~/.aspell.en.pws"</span>
+                 <span style="color: #11948b;">"~/Documents/nicemacs/resources/aspell.en.pws"</span>
+                 <span style="color: #11948b;">"a"</span>)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-meld</span> ()
+  <span style="color: #11948b;">"Prompt for two files and show the difference between them using</span>
+<span style="color: #11948b;">`meld`."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((file1 (read-file-name <span style="color: #11948b;">"First file: "</span>))
+        (file2 (read-file-name <span style="color: #11948b;">"Second file: "</span>)))
+    (<span style="color: #778c00; font-weight: bold;">progn</span>
+      (message file1)
+      (message (shell-quote-argument file1))
+      (shell-command (format <span style="color: #11948b;">"meld %s %s &amp;"</span> file1 file2)))))
+
+(evil-leader/set-key <span style="color: #11948b;">"f m m"</span> 'nice-meld)
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">The `</span><span style="color: #007ec4; font-weight: bold;">winum</span><span style="color: #98a6a6;">' package facilitates switching between windows using</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">numbers which appear in the bottom left hand of the window, at the</span>
@@ -718,7 +736,12 @@
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Shell stuff</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">-----------</span>
-
+<span style="color: #98a6a6;">;;</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> When running `git branch' in eshell there is a warning about</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">the terminal not being fully functional which requires the user to</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">type RET, it would be nice to disable the requirement to type RET,</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">or even ignore the warning altogether.</span>
+<span style="color: #98a6a6;">;;</span>
 (<span style="color: #778c00; font-weight: bold;">setq</span> eshell-cmpl-ignore-case t)
 (evil-leader/set-key
   <span style="color: #11948b;">"s e"</span> 'eshell
@@ -873,7 +896,10 @@
 (<span style="color: #778c00; font-weight: bold;">nice-rgrep-directory</span> <span style="color: #11948b;">"journal"</span> <span style="color: #11948b;">"~/Documents/journal"</span> <span style="color: #11948b;">"*.org"</span> <span style="color: #11948b;">"j"</span>)
 (<span style="color: #778c00; font-weight: bold;">nice-rgrep-directory</span> <span style="color: #11948b;">"reviews"</span> <span style="color: #11948b;">"~/Documents/bibliography"</span> <span style="color: #11948b;">"*"</span> <span style="color: #11948b;">"r"</span>)
 
-(evil-leader/set-key <span style="color: #11948b;">"s g ."</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> () (<span style="color: #778c00; font-weight: bold;">interactive</span>) (rgrep (read-string <span style="color: #11948b;">"Search terms: "</span>) <span style="color: #11948b;">"*"</span>)))
+(evil-leader/set-key <span style="color: #11948b;">"s g ."</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> ()
+                               (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+                               (rgrep (read-string <span style="color: #11948b;">"Search terms: "</span>)
+                                      <span style="color: #11948b;">"*"</span>)))
 
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Be virtuous and lead by example</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">===============================</span>
@@ -909,7 +935,8 @@
   <span style="color: #11948b;">"Run ediff on the current ispell-personal-dictionary and the</span>
 <span style="color: #11948b;">backup dictionary."</span>
   (<span style="color: #778c00; font-weight: bold;">interactive</span>)
-  (<span style="color: #778c00; font-weight: bold;">let</span> ((backup-dictionary (concat nice-resources-dir <span style="color: #11948b;">"/aspell.en.pws"</span>)))
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((backup-dictionary
+         (concat nice-resources-dir <span style="color: #11948b;">"/aspell.en.pws"</span>)))
     (ediff-files ispell-personal-dictionary backup-dictionary)))
 
 (set-face-attribute 'flyspell-duplicate nil
@@ -951,7 +978,13 @@
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">NXML</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----</span>
 
-<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Install and configure nxml-mode.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">u - up to parent.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">p - previous tag.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">n - next tag.</span>
+(evil-leader/set-key-for-mode 'nxml-mode
+  <span style="color: #11948b;">"m u"</span> 'nxml-backward-up-element
+  <span style="color: #11948b;">"m p"</span> 'nxml-backward-element
+  <span style="color: #11948b;">"m n"</span> 'forward-sexp)
 </pre>
 </div>
 </div>
@@ -1118,7 +1151,8 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> journal <span style="color: #11948b;">"update journal"</span> <span style="color: #11948b;">"j"</span>)
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> yasnippet <span style="color: #11948b;">"yasnippet"</span> <span style="color: #11948b;">"y"</span>)
 
-(<span style="color: #778c00; font-weight: bold;">setq</span> magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+(<span style="color: #778c00; font-weight: bold;">setq</span> magit-display-buffer-function
+      #'magit-display-buffer-fullframe-status-v1)
 
 (evil-leader/set-key <span style="color: #11948b;">"g q"</span> 'with-editor-cancel)
 </pre>
@@ -1130,15 +1164,35 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 <div id="outline-container-orgc635e5d" class="outline-3">
 <h3 id="orgc635e5d">Emacs lisp</h3>
 <div class="outline-text-3" id="text-orgc635e5d">
+<p>
+The <code>pp-sexp-to-kill-ring</code> function is there to help pretty print code. It uses
+a new pretty printer function included in 29.1 and puts the pretty-printed
+version of an S-expression on the kill ring.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Emacs Lisp</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----------</span>
 
-<span style="color: #98a6a6;">;; </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;"> Configure a linter</span>
+(<span style="color: #778c00; font-weight: bold;">setq</span> pp-max-width 70)
+(<span style="color: #778c00; font-weight: bold;">setq</span> pp-use-max-width t)
 
-(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"m s c"</span> 'eval-last-sexp)
-(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"m s b"</span> 'eval-buffer)
-(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"m s r"</span> 'eval-region)
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">pp-sexp-to-kill-ring</span> ()
+  <span style="color: #11948b;">"Pretty-print the S-expression under the cursor and add it to the</span>
+<span style="color: #11948b;">kill ring."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((sexp (read (thing-at-point 'sexp)))
+        (temp-buffer (generate-new-buffer <span style="color: #11948b;">"*temp*"</span>)))
+    (<span style="color: #778c00; font-weight: bold;">with-current-buffer</span> temp-buffer
+      (pp-emacs-lisp-code sexp)
+      (kill-new (buffer-string)))
+    (kill-buffer temp-buffer)))
+
+(evil-leader/set-key-for-mode 'emacs-lisp-mode
+  <span style="color: #11948b;">"m s c"</span> 'eval-last-sexp
+  <span style="color: #11948b;">"m s b"</span> 'eval-buffer
+  <span style="color: #11948b;">"m s r"</span> 'eval-region
+  <span style="color: #11948b;">"m c l"</span> 'pp-sexp-to-kill-ring)
 </pre>
 </div>
 </div>
@@ -1280,6 +1334,23 @@ instead of <code>u</code> in step 5 to stage the files in the region.
           (find-file most-recent-bib))
       (message <span style="color: #11948b;">"No bib files found in ~/Downloads/"</span>))))
 
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-ris2bib</span> ()
+  <span style="color: #11948b;">"Convert the most recent RIS file in my downloads to a BIB</span>
+<span style="color: #11948b;">file. Signal an error if there are no RIS files or if the</span>
+<span style="color: #11948b;">conversion fails."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span> <span style="color: #11948b;">"*"</span>)
+
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((all-ris-files (directory-files <span style="color: #11948b;">"~/Downloads"</span> t <span style="color: #11948b;">".*ris"</span>))
+         (ris-filepath (most-recent-file all-ris-files))
+         (target-bib <span style="color: #11948b;">"~/Downloads/new.bib"</span>)
+         (ris2xml-command (format <span style="color: #11948b;">"ris2xml \"%s\" | xml2bib &gt; %s"</span> ris-filepath
+                                  target-bib))
+         (command-result (shell-command ris2xml-command)))
+    (<span style="color: #778c00; font-weight: bold;">unless</span> ris-filepath
+      (<span style="color: #bb3e06; font-weight: bold;">error</span> <span style="color: #11948b;">"No RIS files found in the directory"</span>))
+    (<span style="color: #778c00; font-weight: bold;">unless</span> (zerop command-result)
+      (<span style="color: #bb3e06; font-weight: bold;">error</span> <span style="color: #11948b;">"Conversion from RIS to BIB failed with error code: %s"</span> command-result))))
+
 (<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-bibtex-braces</span> ()
   <span style="color: #11948b;">"Wrap upper case letters with brackets for bibtex titles within</span>
 <span style="color: #11948b;">the selected region."</span>
@@ -1326,7 +1397,8 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 
 (evil-leader/set-key
   <span style="color: #11948b;">"v b l"</span> 'nice-visit-last-bib
-  <span style="color: #11948b;">"v b d"</span> 'nice-browse-url-of-doi)
+  <span style="color: #11948b;">"v b d"</span> 'nice-browse-url-of-doi
+  <span style="color: #11948b;">"v b r"</span> 'nice-ris2bib)
 
 (evil-leader/set-key-for-mode 'bibtex-mode
   <span style="color: #11948b;">"m b b"</span> 'nice-bibtex-braces
@@ -1393,7 +1465,7 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =.= goes to today.</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =j= will /jump/ to a date (selected via calendar).</span>
 <span style="color: #98a6a6;">;;</span>
-(<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #11948b;">"-7d"</span>)
+(<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #11948b;">"-14d"</span>)
 (<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-span 30)
 (<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-start-on-weekday nil)
 
@@ -1451,15 +1523,17 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 (<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-detangle-nicemacs-v2</span> ()
   <span style="color: #11948b;">"Detangle the nicemacs-v2.el file."</span>
   (<span style="color: #778c00; font-weight: bold;">interactive</span>)
-  (<span style="color: #778c00; font-weight: bold;">let</span> ((nicemacs-v2-source (concat nice-nicemacs-directory <span style="color: #11948b;">"/nicemacs-v2.el"</span>)))
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((nicemacs-v2-source (concat nice-nicemacs-directory
+                                    <span style="color: #11948b;">"/nicemacs-v2.el"</span>)))
     (org-babel-detangle nicemacs-v2-source)))
 
-(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"b d"</span> 'nice-detangle-nicemacs-v2)
-
-(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"o t l"</span> 'org-latex-preview)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode <span style="color: #11948b;">"b d"</span>
+  'nice-detangle-nicemacs-v2)
 
 (<span style="color: #778c00; font-weight: bold;">setq</span> org-image-actual-width 300)
-(evil-leader/set-key-for-mode 'org-mode <span style="color: #11948b;">"o t i"</span> 'org-toggle-inline-images)
+(evil-leader/set-key-for-mode 'org-mode
+  <span style="color: #11948b;">"o t l"</span> 'org-latex-preview
+  <span style="color: #11948b;">"o t i"</span> 'org-toggle-inline-images)
 </pre>
 </div>
 </div>
@@ -1485,6 +1559,11 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
          <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/notes/"</span>
          <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/notes/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-lists-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/lists/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/lists/"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
         (<span style="color: #11948b;">"website-images-static"</span>
          <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/images/"</span>
@@ -1531,6 +1610,20 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
          <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/tikz/"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"review2-org"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/Documents/bibliography/review2"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/notes/review2"</span>
+         <span style="color: #596e76; font-weight: bold;">:recursive</span> ()
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html
+         )
+        (<span style="color: #11948b;">"review2-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/Documents/bibliography/review2"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"css</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">png"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/notes/review2"</span>
+         <span style="color: #596e76; font-weight: bold;">:recursive</span> t
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment
+         )
         (<span style="color: #11948b;">"nicemacs-org-files"</span>
          <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/Documents/nicemacs/"</span>
          <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
@@ -1541,6 +1634,9 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
                       <span style="color: #11948b;">"website-misc-basegraphicsR-static"</span>
                       <span style="color: #11948b;">"website-misc-ggplot2-org-files"</span>
                       <span style="color: #11948b;">"website-misc-ggplot2-static"</span>))
+        (<span style="color: #11948b;">"review"</span>
+         <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"review2-org"</span>
+                      <span style="color: #11948b;">"review2-static"</span>))
         (<span style="color: #11948b;">"latex"</span>
          <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-misc-latex-org-files"</span>
                       <span style="color: #11948b;">"website-misc-latex-static"</span>
@@ -1549,7 +1645,9 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
         (<span style="color: #11948b;">"website"</span>
          <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-notes-org-files"</span>
                       <span style="color: #11948b;">"website-images-static"</span>
+                      <span style="color: #11948b;">"website-lists-org-files"</span>
                       <span style="color: #11948b;">"nicemacs-org-files"</span>
+                      <span style="color: #11948b;">"review"</span>
                       <span style="color: #11948b;">"latex"</span>
                       <span style="color: #11948b;">"R"</span>))))
 </pre>
@@ -1981,7 +2079,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-06-13 Tue 12:06</p>
+<p class="date">Created: 2023-06-20 Tue 10:40</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
