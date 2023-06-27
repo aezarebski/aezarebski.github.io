@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-06-20 Tue 10:40 -->
+<!-- 2023-06-27 Tue 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org6e83ebc" class="figure">
+<div id="orgf9360bd" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -323,6 +323,8 @@
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------</span>
 <span style="color: #98a6a6;">;;</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-06</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include keys for ESS devtools integration.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include wrapper around `</span><span style="color: #007ec4; font-weight: bold;">pp-emacs-lisp-code</span><span style="color: #98a6a6;">'.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Add some configuration for `</span><span style="color: #007ec4; font-weight: bold;">nxml-mode</span><span style="color: #98a6a6;">'.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Start using `</span><span style="color: #007ec4; font-weight: bold;">polymode</span><span style="color: #98a6a6;">' (and friends) so I can write R with from</span>
 <span style="color: #98a6a6;">;;     </span><span style="color: #98a6a6;">within `</span><span style="color: #007ec4; font-weight: bold;">org-mode</span><span style="color: #98a6a6;">'.</span>
@@ -638,7 +640,8 @@
         (<span style="color: #11948b;">"SPC g c"</span> . <span style="color: #11948b;">"Commits"</span>)
         (<span style="color: #11948b;">"SPC h"</span> . <span style="color: #11948b;">"HELP!!!"</span>)
         (<span style="color: #11948b;">"SPC m"</span> . <span style="color: #11948b;">"Major"</span>)
-        (<span style="color: #11948b;">"SPC m s"</span> . <span style="color: #11948b;">"REPL"</span>)
+        (<span style="color: #11948b;">"SPC m d"</span> . <span style="color: #11948b;">"devtools (ESS)"</span>)
+        (<span style="color: #11948b;">"SPC m s"</span> . <span style="color: #11948b;">"REPL (prog)/Sort (dired)"</span>)
         (<span style="color: #11948b;">"SPC m c"</span> . <span style="color: #11948b;">"Code lint/format"</span>)
         (<span style="color: #11948b;">"SPC q"</span> . <span style="color: #11948b;">"Quit/Exit"</span>)
         (<span style="color: #11948b;">"SPC s"</span> . <span style="color: #11948b;">"Shell/Search"</span>)
@@ -772,6 +775,9 @@
 (<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">dired</span>)
 (define-key dired-mode-map <span style="color: #11948b;">"-"</span> 'dired-up-directory)
 (<span style="color: #778c00; font-weight: bold;">setq</span> dired-listing-switches <span style="color: #11948b;">"-alh"</span>)
+
+(evil-leader/set-key-for-mode 'dired-mode
+  <span style="color: #11948b;">"m s"</span> 'dired-sort-toggle-or-edit)
 
 (evil-leader/set-key
   <span style="color: #11948b;">"f f"</span> 'find-file
@@ -1211,6 +1217,12 @@ version of an S-expression on the kill ring.
   <span style="color: #596e76; font-weight: bold;">:config</span>
   (<span style="color: #778c00; font-weight: bold;">setq</span> ess-default-style 'DEFAULT)
   (evil-leader/set-key-for-mode 'ess-r-mode
+    <span style="color: #11948b;">"m d t"</span> 'ess-r-devtools-test-package
+    <span style="color: #11948b;">"m d l"</span> 'ess-r-devtools-load-package
+    <span style="color: #11948b;">"m d b"</span> 'ess-r-devtools-build-package
+    <span style="color: #11948b;">"m d i"</span> 'ess-r-devtools-install-package
+    <span style="color: #11948b;">"m d c"</span> 'ess-r-devtools-check-package
+    <span style="color: #11948b;">"m d d"</span> 'ess-r-devtools-document-package
     <span style="color: #11948b;">"m s b"</span> 'ess-eval-buffer
     <span style="color: #11948b;">"m s r"</span> 'ess-eval-region
     <span style="color: #11948b;">"m s c"</span> 'ess-eval-region-or-line-visibly-and-step
@@ -2079,7 +2091,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-06-20 Tue 10:40</p>
+<p class="date">Created: 2023-06-27 Tue 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
