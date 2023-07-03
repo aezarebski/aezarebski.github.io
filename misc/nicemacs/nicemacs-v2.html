@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-06-27 Tue 17:51 -->
+<!-- 2023-07-03 Mon 18:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgf9360bd" class="figure">
+<div id="org89c62e5" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -323,6 +323,7 @@
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------</span>
 <span style="color: #98a6a6;">;;</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-06</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include the `</span><span style="color: #007ec4; font-weight: bold;">cdf</span><span style="color: #98a6a6;">' function for easier eshell navigation.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include keys for ESS devtools integration.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include wrapper around `</span><span style="color: #007ec4; font-weight: bold;">pp-emacs-lisp-code</span><span style="color: #98a6a6;">'.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Add some configuration for `</span><span style="color: #007ec4; font-weight: bold;">nxml-mode</span><span style="color: #98a6a6;">'.</span>
@@ -680,10 +681,7 @@
   (<span style="color: #778c00; font-weight: bold;">interactive</span>)
   (<span style="color: #778c00; font-weight: bold;">let</span> ((file1 (read-file-name <span style="color: #11948b;">"First file: "</span>))
         (file2 (read-file-name <span style="color: #11948b;">"Second file: "</span>)))
-    (<span style="color: #778c00; font-weight: bold;">progn</span>
-      (message file1)
-      (message (shell-quote-argument file1))
-      (shell-command (format <span style="color: #11948b;">"meld %s %s &amp;"</span> file1 file2)))))
+    (shell-command (format <span style="color: #11948b;">"meld %s %s &amp;"</span> file1 file2))))
 
 (evil-leader/set-key <span style="color: #11948b;">"f m m"</span> 'nice-meld)
 
@@ -751,6 +749,13 @@
   <span style="color: #11948b;">"s b"</span> (<span style="color: #778c00; font-weight: bold;">lambda</span> () (<span style="color: #778c00; font-weight: bold;">interactive</span>) (ansi-term <span style="color: #11948b;">"/bin/bash"</span>))
   <span style="color: #11948b;">"s i"</span> 'ielm
   <span style="color: #11948b;">"s r"</span> 'R)
+
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">cdf</span> (filepath)
+  <span style="color: #11948b;">"Change the current directory in Eshell to the directory of</span>
+<span style="color: #11948b;"> FILEPATH."</span>
+  (<span style="color: #778c00; font-weight: bold;">let</span> ((dir (file-name-directory filepath)))
+    (<span style="color: #778c00; font-weight: bold;">when</span> (file-directory-p dir)
+      (eshell/cd dir))))
 </pre>
 </div>
 </div>
@@ -1170,6 +1175,11 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 <div id="outline-container-orgc635e5d" class="outline-3">
 <h3 id="orgc635e5d">Emacs lisp</h3>
 <div class="outline-text-3" id="text-orgc635e5d">
+<ul class="org-ul">
+<li><a href="https://github.com/p3r7/awesome-elisp">Awesome Elisp</a> sounds like it would be a good place to go to learn a bit more
+elisp.</li>
+</ul>
+
 <p>
 The <code>pp-sexp-to-kill-ring</code> function is there to help pretty print code. It uses
 a new pretty printer function included in 29.1 and puts the pretty-printed
@@ -1468,14 +1478,18 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <div class="outline-text-4" id="text-orgdf8321f">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Org-agenda</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">----------</span>
 <span style="color: #98a6a6;">;;</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- To navigate up and down lines in the agend view use =n/p=.</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v d= will show the day view.</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v w= the week view.</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v m= the month view.</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =v SPC= resets the view.</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =.= goes to today.</span>
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- =j= will /jump/ to a date (selected via calendar).</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">n/p</span><span style="color: #98a6a6;">' to move up and down lines.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">v-d</span><span style="color: #98a6a6;">' will show the day view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">v-w</span><span style="color: #98a6a6;">' the week view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">v-m</span><span style="color: #98a6a6;">' the month view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">v-SPC</span><span style="color: #98a6a6;">' resets the view.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">.</span><span style="color: #98a6a6;">' goes to today.</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">j</span><span style="color: #98a6a6;">' will /jump/ to a date (selected via calendar).</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">t</span><span style="color: #98a6a6;">' will cycle through </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #98a6a6;">/</span><span style="color: #0000ff; font-weight: bold;">DONE</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">S-&lt;left/right&gt;</span><span style="color: #98a6a6;">' moves the scheduled date backwards/forwards</span>
+<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- `</span><span style="color: #007ec4; font-weight: bold;">r</span><span style="color: #98a6a6;">' rebuilds the agenda view</span>
 <span style="color: #98a6a6;">;;</span>
 (<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-start-day <span style="color: #11948b;">"-14d"</span>)
 (<span style="color: #778c00; font-weight: bold;">setq</span> org-agenda-span 30)
@@ -1560,7 +1574,7 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
   (<span style="color: #778c00; font-weight: bold;">interactive</span>)
   (<span style="color: #778c00; font-weight: bold;">let</span> ((local <span style="color: #11948b;">"~/public-site/org/scratch.html"</span>)
         (remote <span style="color: #11948b;">"~/aezarebski.github.io/index.html"</span>))
-    (<span style="color: #778c00; font-weight: bold;">unless</span> (not (file-exists-p local))
+    (<span style="color: #778c00; font-weight: bold;">when</span> (file-exists-p local)
       (copy-file local remote t)
       (message <span style="color: #11948b;">"Copied %s to %s"</span> local remote))))
 
@@ -2091,7 +2105,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-06-27 Tue 17:51</p>
+<p class="date">Created: 2023-07-03 Mon 18:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
