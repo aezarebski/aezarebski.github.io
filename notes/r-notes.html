@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-07-03 Mon 18:48 -->
+<!-- 2023-07-11 Tue 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="orgcf06117" class="figure">
+<div id="org108fde8" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -288,6 +288,7 @@
 <li><a href="#org61cbc65">Programming in R (language and evaluation)</a>
 <ul>
 <li><a href="#org885527d">Recommended reading</a></li>
+<li><a href="#org0bc1307">Benchmarking and optimising impementations</a></li>
 <li><a href="#org2992392">Functional programming support</a></li>
 <li><a href="#org2a7746c">R/Haskell Prelude</a></li>
 <li><a href="#orgbb5d35a">Program flow and control</a></li>
@@ -824,7 +825,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org1d53690" class="figure">
+<div id="org6ef031c" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -941,9 +942,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org8e0102a" class="outline-4">
-<h4 id="org8e0102a">Example</h4>
-<div class="outline-text-4" id="text-org8e0102a">
+<div id="outline-container-org53675dc" class="outline-4">
+<h4 id="org53675dc">Example</h4>
+<div class="outline-text-4" id="text-org53675dc">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(htmltools)
 
@@ -1183,9 +1184,9 @@ xmlGetAttr(kappa_node, <span style="color: #11948b;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-org53675dc" class="outline-4">
-<h4 id="org53675dc">Example</h4>
-<div class="outline-text-4" id="text-org53675dc">
+<div id="outline-container-org354a9e5" class="outline-4">
+<h4 id="org354a9e5">Example</h4>
+<div class="outline-text-4" id="text-org354a9e5">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(whisker)
 
@@ -1989,6 +1990,101 @@ iris <span style="color: #007ec4; font-weight: bold;">%&gt;%</span>
 </div>
 </div>
 
+<div id="outline-container-org0bc1307" class="outline-3">
+<h3 id="org0bc1307">Benchmarking and optimising impementations</h3>
+<div class="outline-text-3" id="text-org0bc1307">
+<p>
+This script demonstrates how to use the microbenchmark package in R to
+compare the performance of different implementations of the Fibonacci
+sequence. There are three different implementations of a function:
+<code>fib_recursive</code>, <code>fib_iterative</code>, and <code>fib_memoised</code>.
+</p>
+
+<p>
+The script runs two sets of benchmarks:
+</p>
+
+<ul class="org-ul">
+<li><code>mb_small</code>: It runs each function 100 times on the input value
+of 20.</li>
+<li><code>mb_large</code>: Measures the performance of the iterative and memoized
+versions when computing the 150th Fibonacci number. The recursive
+version is not included because it would take an impractical amount
+of time to compute.</li>
+</ul>
+
+<p>
+This demonstrates that the memoized version is faster than the
+iterative (<sub>when</sub> evaluated multiple times_).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(microbenchmark)
+
+fib_true <span style="color: #007ec4; font-weight: bold;">&lt;-</span> c(1,1,2,3,5,8,13)
+
+<span style="color: #007ec4;">fib_recursive</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(n) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (n &lt;= 2) {
+    <span style="color: #778c00; font-weight: bold;">return</span>(1)
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    <span style="color: #778c00; font-weight: bold;">return</span>(fib_recursive(n - 1) + fib_recursive(n - 2))
+  }
+}
+
+<span style="color: #007ec4;">fib_iterative</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(n) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (n &lt;= 2) {
+    <span style="color: #778c00; font-weight: bold;">return</span>(1)
+  }
+  fib_values <span style="color: #007ec4; font-weight: bold;">&lt;-</span> numeric(n)
+  fib_values[1:2] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 1
+  <span style="color: #778c00; font-weight: bold;">for</span> (i <span style="color: #778c00; font-weight: bold;">in</span> 3:n) {
+    fib_values[i] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> fib_values[i - 1] + fib_values[i - 2]
+  }
+  <span style="color: #778c00; font-weight: bold;">return</span>(fib_values[n])
+}
+
+
+<span style="color: #007ec4;">memoise</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(f) {
+  memo <span style="color: #007ec4; font-weight: bold;">&lt;-</span> new.env(parent = emptyenv())
+  <span style="color: #778c00; font-weight: bold;">function</span>(n) {
+    <span style="color: #778c00; font-weight: bold;">if</span> (!exists(as.character(n), where = memo, inherits = <span style="color: #a67c00;">FALSE</span>)) {
+      memo[[as.character(n)]] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> f(n)
+    }
+    memo[[as.character(n)]]
+  }
+}
+
+fib_memoised <span style="color: #007ec4; font-weight: bold;">&lt;-</span> memoise(<span style="color: #778c00; font-weight: bold;">function</span>(n) {
+  <span style="color: #778c00; font-weight: bold;">if</span> (n &lt;= 2) {
+    <span style="color: #778c00; font-weight: bold;">return</span>(1)
+  } <span style="color: #778c00; font-weight: bold;">else</span> {
+    <span style="color: #778c00; font-weight: bold;">return</span>(fib_memoised(n - 1) + fib_memoised(n - 2))
+  }
+})
+
+stopifnot(all(sapply(X = 1:7, FUN = fib_recursive) == fib_true))
+stopifnot(all(sapply(X = 1:7, FUN = fib_iterative) == fib_true))
+stopifnot(all(sapply(X = 1:7, FUN = fib_memoised) == fib_true))
+
+mb_small <span style="color: #007ec4; font-weight: bold;">&lt;-</span> microbenchmark(
+  fib_recursive(20),
+  fib_iterative(20),
+  fib_memoised(20),
+  times = 100L
+)
+print(mb_small)
+
+mb_large <span style="color: #007ec4; font-weight: bold;">&lt;-</span> microbenchmark(
+  fib_iterative(150),
+  fib_memoised(150),
+  times = 1000L
+)
+print(mb_large)
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org2992392" class="outline-3">
 <h3 id="org2992392">Functional programming support</h3>
 <div class="outline-text-3" id="text-org2992392">
@@ -2761,7 +2857,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-07-03 Mon 18:48</p>
+<p class="date">Created: 2023-07-11 Tue 10:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

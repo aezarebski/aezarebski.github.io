@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-13 Thu 17:13 -->
+<!-- 2023-07-11 Tue 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-python-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org06535a9" class="figure">
+<div id="orgf1bc376" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -229,6 +229,7 @@
 </li>
 <li><a href="#org49dac90">Python packages</a>
 <ul>
+<li><a href="#org1ac579d">VLC</a></li>
 <li><a href="#org107604f">Numpy</a></li>
 <li><a href="#org55e5d09">Pandas</a></li>
 <li><a href="#org5052579">Matplotlib</a></li>
@@ -262,7 +263,7 @@
 <h4 id="orgae3a942">Assertions</h4>
 <div class="outline-text-4" id="text-orgae3a942">
 <div class="org-src-container">
-<pre class="src src-python">assert 1 == 1
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">assert</span> 1 == 1
 </pre>
 </div>
 </div>
@@ -272,7 +273,7 @@
 <h4 id="orga80d1d8">Dictionary</h4>
 <div class="outline-text-4" id="text-orga80d1d8">
 <div class="org-src-container">
-<pre class="src src-python">my_dict = {"foo": 1, "bar": 'a'}
+<pre class="src src-python"><span style="color: #007ec4;">my_dict</span> = {<span style="color: #11948b;">"foo"</span>: 1, <span style="color: #11948b;">"bar"</span>: <span style="color: #11948b;">'a'</span>}
 </pre>
 </div>
 </div>
@@ -282,7 +283,7 @@
 <h4 id="org68b9e25">List comprehension</h4>
 <div class="outline-text-4" id="text-org68b9e25">
 <div class="org-src-container">
-<pre class="src src-sh">[f(x) for x in xs if p(x)]
+<pre class="src src-sh">[f(x) <span style="color: #778c00; font-weight: bold;">for</span> x<span style="color: #778c00; font-weight: bold;"> in</span> xs if p(x)]
 </pre>
 </div>
 </div>
@@ -294,8 +295,8 @@
 <div class="outline-text-3" id="text-orgabba2b4">
 <div class="org-src-container">
 <pre class="src src-sh">python3 -m venv venv
-source venv/bin/activate
-pip install -U pip   # update pip
+<span style="color: #596e76; font-weight: bold;">source</span> venv/bin/activate
+pip install -U pip   <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">update pip</span>
 pip install -r requirements.txt
 deactivate
 </pre>
@@ -355,7 +356,7 @@ useful for reading files from Github.
 <h3 id="org8bde66d">Jupyter via Nix</h3>
 <div class="outline-text-3" id="text-org8bde66d">
 <div class="org-src-container">
-<pre class="src src-sh">nix-shell --command "jupyter lab"
+<pre class="src src-sh">nix-shell --command <span style="color: #11948b;">"jupyter lab"</span>
 </pre>
 </div>
 
@@ -483,6 +484,57 @@ For notes on installation of packages see the notes above about <a href="#orgb91
 </p>
 </div>
 
+<div id="outline-container-org1ac579d" class="outline-3">
+<h3 id="org1ac579d">VLC</h3>
+<div class="outline-text-3" id="text-org1ac579d">
+<p>
+The following makes use of the <code>python-vlc</code> library to stream radio.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">import</span> vlc
+<span style="color: #778c00; font-weight: bold;">import</span> time
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">For finding more radio stations, you may want to check out websites</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">such as Internet-Radio or TuneIn, which offer thousands of free</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">online radio stations. Most of these stations provide their</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">streaming URL which you can use to listen in your favorite media</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">player.</span>
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">When you navigate these websites, you typically select a station</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">you're interested in and look for an option that says something like</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">"play in your own player" or "manual streaming". This usually leads</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">contain the actual URL(s) for the stream, and can be opened in a</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">text editor to view the stream URL.</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------</span>
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">BBC World Service</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"</span>
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Majestic Jukebox Radio</span>
+<span style="color: #007ec4;">url</span> = <span style="color: #11948b;">"http://uk3.internet-radio.com:8405/live"</span>
+
+
+<span style="color: #007ec4;">instance</span> = vlc.Instance()
+<span style="color: #007ec4;">player</span> = instance.media_player_new()
+<span style="color: #007ec4;">media</span> = instance.media_new(url)
+player.set_media(media)
+player.play()
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Keep the program running while the radio plays</span>
+<span style="color: #778c00; font-weight: bold;">try</span>:
+    <span style="color: #778c00; font-weight: bold;">while</span> <span style="color: #007ec4; font-weight: bold;">True</span>:
+        time.sleep(1)
+<span style="color: #778c00; font-weight: bold;">except</span> <span style="color: #a67c00;">KeyboardInterrupt</span>:
+    <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">On Ctrl+C, stop the player and quit</span>
+    player.stop()
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org107604f" class="outline-3">
 <h3 id="org107604f">Numpy</h3>
 <div class="outline-text-3" id="text-org107604f">
@@ -559,8 +611,8 @@ The pandas data frame has a <code>rename</code> method to rename the columns:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">my_df.rename(columns={"old_name_1": "new_name_1",
-                      "old_name_2": "new_name_2"})
+<pre class="src src-python">my_df.rename(columns={<span style="color: #11948b;">"old_name_1"</span>: <span style="color: #11948b;">"new_name_1"</span>,
+                      <span style="color: #11948b;">"old_name_2"</span>: <span style="color: #11948b;">"new_name_2"</span>})
 </pre>
 </div>
 </div>
@@ -611,7 +663,7 @@ select only the rows corresponding to the year 2002.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">gapminder_not_2002 = gapminder[gapminder.year != 2002]
+<pre class="src src-python"><span style="color: #007ec4;">gapminder_not_2002</span> = gapminder[gapminder.year != 2002]
 </pre>
 </div>
 
@@ -646,7 +698,7 @@ of the first cell pretty much.
 <div class="org-src-container">
 <pre class="src src-python">%matplotlib inline
 
-import matplotlib.pyplot as plt
+<span style="color: #778c00; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #778c00; font-weight: bold;">as</span> plt
 </pre>
 </div>
 
@@ -688,9 +740,9 @@ shown below.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">import pandas as pd
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">import</span> pandas <span style="color: #778c00; font-weight: bold;">as</span> pd
+<span style="color: #778c00; font-weight: bold;">import</span> statsmodels.api <span style="color: #778c00; font-weight: bold;">as</span> sm
+<span style="color: #778c00; font-weight: bold;">import</span> statsmodels.formula.api <span style="color: #778c00; font-weight: bold;">as</span> smf
 </pre>
 </div>
 
@@ -702,9 +754,9 @@ documentation.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">duncan_prestige = sm.datasets.get_rdataset("Duncan", "carData")
-print(duncan_prestige.__doc__) # for meta-data
-duncan_prestige.data # pandas dataframe
+<pre class="src src-python"><span style="color: #007ec4;">duncan_prestige</span> = sm.datasets.get_rdataset(<span style="color: #11948b;">"Duncan"</span>, <span style="color: #11948b;">"carData"</span>)
+<span style="color: #596e76; font-weight: bold;">print</span>(duncan_prestige.<span style="color: #596e76; font-weight: bold;">__doc__</span>) <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">for meta-data</span>
+duncan_prestige.data <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">pandas dataframe</span>
 </pre>
 </div>
 </div>
@@ -781,7 +833,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-04-13 Thu 17:13</p>
+<p class="date">Created: 2023-07-11 Tue 10:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
