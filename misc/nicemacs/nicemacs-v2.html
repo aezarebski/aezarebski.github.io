@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-07-18 Tue 10:42 -->
+<!-- 2023-07-25 Tue 09:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org4940ece" class="figure">
+<div id="org1bd0132" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -216,6 +216,7 @@
 <ul>
 <li><a href="#org6bdc618">Ideas</a></li>
 <li><a href="#orgea80e0d">STUFF 1</a></li>
+<li><a href="#orgd7d876b">Window management</a></li>
 <li><a href="#org7df5ba1">Shells</a></li>
 <li><a href="#org8a45e18">Dired</a></li>
 <li><a href="#orga404802">Buffers, files, and dired</a></li>
@@ -330,9 +331,12 @@
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">---------</span>
 <span style="color: #98a6a6;">;;</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-07</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Improve window management.</span>
+<span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Set up a major mode for MATLAB.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Introduce a new org-mode todo states.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Avoid annoying warning from `</span><span style="color: #007ec4; font-weight: bold;">git</span><span style="color: #98a6a6;">' by setting `</span><span style="color: #007ec4; font-weight: bold;">GIT_PAGER</span><span style="color: #98a6a6;">' to</span>
 <span style="color: #98a6a6;">;;     </span><span style="color: #98a6a6;">`</span><span style="color: #007ec4; font-weight: bold;">cat</span><span style="color: #98a6a6;">'.</span>
+<span style="color: #98a6a6;">;;</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">- 2023-06</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include the `</span><span style="color: #007ec4; font-weight: bold;">cdf</span><span style="color: #98a6a6;">' function for easier eshell navigation.</span>
 <span style="color: #98a6a6;">;;   </span><span style="color: #98a6a6;">+ Include keys for ESS devtools integration.</span>
@@ -695,8 +699,16 @@
     (shell-command (format <span style="color: #11948b;">"meld %s %s &amp;"</span> file1 file2))))
 
 (evil-leader/set-key <span style="color: #11948b;">"f m m"</span> 'nice-meld)
+</pre>
+</div>
+</div>
+</div>
 
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">The `</span><span style="color: #007ec4; font-weight: bold;">winum</span><span style="color: #98a6a6;">' package facilitates switching between windows using</span>
+<div id="outline-container-orgd7d876b" class="outline-3">
+<h3 id="orgd7d876b">Window management</h3>
+<div class="outline-text-3" id="text-orgd7d876b">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">The `</span><span style="color: #007ec4; font-weight: bold;">winum</span><span style="color: #98a6a6;">' package facilitates switching between windows using</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">numbers which appear in the bottom left hand of the window, at the</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">start of the mode-line.</span>
 (<span style="color: #778c00; font-weight: bold;">require</span> '<span style="color: #007ec4; font-weight: bold;">winum</span>)
@@ -716,13 +728,25 @@
   <span style="color: #11948b;">"3"</span> 'winum-select-window-3
   <span style="color: #11948b;">"4"</span> 'winum-select-window-4
   <span style="color: #11948b;">"5"</span> 'winum-select-window-5
-  <span style="color: #11948b;">"6"</span> 'winum-select-window-6
-  <span style="color: #11948b;">"7"</span> 'winum-select-window-7
-  <span style="color: #11948b;">"8"</span> 'winum-select-window-8
-  <span style="color: #11948b;">"9"</span> 'winum-select-window-9)
+  <span style="color: #11948b;">"w a"</span> 'nice-balance-windows-alt
+  <span style="color: #11948b;">"w b"</span> 'balance-windows
+  <span style="color: #11948b;">"w n s"</span> 'nice-swap-buffers)
 
-<span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Adjust the windows so that they are all the same size.</span>
-(evil-leader/set-key <span style="color: #11948b;">"w b"</span> 'balance-windows)
+(<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-swap-buffers</span> ()
+  <span style="color: #11948b;">"Swap buffers between two windows specified by their numbers.</span>
+
+<span style="color: #11948b;">Prompt for two window numbers and swap the buffers displayed in</span>
+<span style="color: #11948b;">those windows. Window numbers are assigned by the `</span><span style="color: #007ec4; font-weight: bold;">winum</span><span style="color: #11948b;">' package."</span>
+  (<span style="color: #778c00; font-weight: bold;">interactive</span>)
+  (<span style="color: #778c00; font-weight: bold;">let*</span> ((win1 (winum-get-window-by-number
+                (read-number <span style="color: #11948b;">"First window number: "</span>)))
+         (win2 (winum-get-window-by-number
+                (read-number <span style="color: #11948b;">"Second window number: "</span>)))
+         (buffer1 (<span style="color: #778c00; font-weight: bold;">and</span> win1 (window-buffer win1)))
+         (buffer2 (<span style="color: #778c00; font-weight: bold;">and</span> win2 (window-buffer win2))))
+    (<span style="color: #778c00; font-weight: bold;">when</span> (<span style="color: #778c00; font-weight: bold;">and</span> buffer1 buffer2)
+      (set-window-buffer win1 buffer2)
+      (set-window-buffer win2 buffer1))))
 
 (<span style="color: #778c00; font-weight: bold;">defun</span> <span style="color: #007ec4;">nice-balance-windows-alt</span> ()
   <span style="color: #11948b;">"Balance windows such that the current window receives a certain</span>
@@ -736,7 +760,6 @@
          (desired-height (floor (* proportion frame-height))))
     (enlarge-window-horizontally (- desired-width (window-width)))
     (enlarge-window (- desired-height (window-height)))))
-(evil-leader/set-key <span style="color: #11948b;">"w a"</span> 'nice-balance-windows-alt)
 </pre>
 </div>
 </div>
@@ -806,6 +829,24 @@ way. Just removing <code>:ensure t</code> fixes it though.
 <div id="outline-container-orga404802" class="outline-3">
 <h3 id="orga404802">Buffers, files, and dired</h3>
 <div class="outline-text-3" id="text-orga404802">
+<p>
+You can get a list of all the current buffers with <code>ibuffer</code>. Important keys for
+Ibuffer include
+</p>
+
+<ul class="org-ul">
+<li><code>d</code> to mark for killing and <code>x</code> to run those kills,</li>
+<li><code>g r</code> to refresh the listing,</li>
+<li><code>o &lt;thing&gt;</code> to sort by:
+<ul class="org-ul">
+<li><code>o v</code> time</li>
+<li><code>o m</code> mode</li>
+<li><code>o a</code> name (alphbetical)</li>
+<li><code>o i</code> to <b>invert</b> the ordering.</li>
+</ul></li>
+<li>and <code>u</code> to unmark buffers.</li>
+</ul>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">Buffer stuff</span>
 <span style="color: #98a6a6;">;; </span><span style="color: #98a6a6;">------------</span>
@@ -822,6 +863,7 @@ way. Just removing <code>:ensure t</code> fixes it though.
   <span style="color: #11948b;">"f F"</span> 'find-file-other-frame
   <span style="color: #11948b;">"f s"</span> 'save-buffer
   <span style="color: #11948b;">"f d"</span> 'nice-dired
+  <span style="color: #11948b;">"b l"</span> 'ibuffer
   <span style="color: #11948b;">"b b"</span> 'switch-to-buffer
   <span style="color: #11948b;">"d b"</span> 'kill-buffer
   <span style="color: #11948b;">"d w"</span> 'delete-window
@@ -1196,10 +1238,11 @@ instead of <code>u</code> in step 5 to stage the files in the region.
      (evil-leader/set-key ,(concat <span style="color: #11948b;">"g c "</span> key) (intern ,(format <span style="color: #11948b;">"nccm-%s"</span> fname)))))
 
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> emacs <span style="color: #11948b;">"update emacs config"</span> <span style="color: #11948b;">"e"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> flashcards <span style="color: #11948b;">"flashcards"</span> <span style="color: #11948b;">"f"</span>)
+(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> journal <span style="color: #11948b;">"update journal"</span> <span style="color: #11948b;">"j"</span>)
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> notes <span style="color: #11948b;">"update notes"</span> <span style="color: #11948b;">"n"</span>)
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> review <span style="color: #11948b;">"update reading list"</span> <span style="color: #11948b;">"r"</span>)
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> website <span style="color: #11948b;">"update website"</span> <span style="color: #11948b;">"w"</span>)
-(<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> journal <span style="color: #11948b;">"update journal"</span> <span style="color: #11948b;">"j"</span>)
 (<span style="color: #778c00; font-weight: bold;">nice-canned-commit-message</span> yasnippet <span style="color: #11948b;">"yasnippet"</span> <span style="color: #11948b;">"y"</span>)
 
 (<span style="color: #778c00; font-weight: bold;">setq</span> magit-display-buffer-function
@@ -1714,6 +1757,16 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
          <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/tikz/"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #11948b;">"website-misc-matplotlib-org-files"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/matplotlib/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/matplotlib/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"website-misc-matplotlib-static"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/public-site/org/misc/matplotlib/"</span>
+         <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"png</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">jpg</span><span style="color: #778c00; font-weight: bold;">\\</span><span style="color: #a67c00; font-weight: bold;">|</span><span style="color: #11948b;">pdf"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/matplotlib/"</span>
+         <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-publish-attachment)
         (<span style="color: #11948b;">"review2-org"</span>
          <span style="color: #596e76; font-weight: bold;">:base-directory</span> <span style="color: #11948b;">"~/Documents/bibliography/review2"</span>
          <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
@@ -1733,6 +1786,9 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
          <span style="color: #596e76; font-weight: bold;">:base-extension</span> <span style="color: #11948b;">"org"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-directory</span> <span style="color: #11948b;">"~/aezarebski.github.io/misc/nicemacs/"</span>
          <span style="color: #596e76; font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #11948b;">"python"</span>
+         <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-misc-matplotlib-org-files"</span>
+                      <span style="color: #11948b;">"website-misc-matplotlib-static"</span>))
         (<span style="color: #11948b;">"R"</span>
          <span style="color: #596e76; font-weight: bold;">:components</span> (<span style="color: #11948b;">"website-misc-basegraphicsR-org-files"</span>
                       <span style="color: #11948b;">"website-misc-basegraphicsR-static"</span>
@@ -1753,6 +1809,7 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
                       <span style="color: #11948b;">"nicemacs-org-files"</span>
                       <span style="color: #11948b;">"review"</span>
                       <span style="color: #11948b;">"latex"</span>
+                      <span style="color: #11948b;">"python"</span>
                       <span style="color: #11948b;">"R"</span>))))
 </pre>
 </div>
@@ -2185,7 +2242,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-07-18 Tue 10:42</p>
+<p class="date">Created: 2023-07-25 Tue 09:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

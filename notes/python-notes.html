@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-07-11 Tue 10:09 -->
+<!-- 2023-07-25 Tue 09:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-python-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgf1bc376" class="figure">
+<div id="orgd98bf32" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -216,6 +216,7 @@
 <ul>
 <li><a href="#org15dd35d">Reading</a></li>
 <li><a href="#orge011041">Syntax</a></li>
+<li><a href="#orgd25c8ca">Object oriented programming</a></li>
 <li><a href="#orgabba2b4">Virtual environment</a></li>
 <li><a href="#orgb919290">Pip</a></li>
 <li><a href="#org1265c3b">PIP VANISHED!!!</a></li>
@@ -284,6 +285,77 @@
 <div class="outline-text-4" id="text-org68b9e25">
 <div class="org-src-container">
 <pre class="src src-sh">[f(x) <span style="color: #778c00; font-weight: bold;">for</span> x<span style="color: #778c00; font-weight: bold;"> in</span> xs if p(x)]
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd25c8ca" class="outline-3">
+<h3 id="orgd25c8ca">Object oriented programming</h3>
+<div class="outline-text-3" id="text-orgd25c8ca">
+</div>
+<div id="outline-container-orgd6c85f6" class="outline-4">
+<h4 id="orgd6c85f6">UML design and Python implementation</h4>
+<div class="outline-text-4" id="text-orgd6c85f6">
+
+<div id="org50745a5" class="figure">
+<p><img src="../resources/uml-class-diagram-example.png" alt="uml-class-diagram-example.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Example of a UML class diagram</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">from</span> abc <span style="color: #778c00; font-weight: bold;">import</span> ABC, abstractmethod
+
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Mammal</span>:
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">__init__</span>(<span style="color: #778c00; font-weight: bold;">self</span>, name):
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">name</span> = name
+
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Flippable</span>(ABC):
+    <span style="color: #a67c00;">@abstractmethod</span>
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">doBackFlip</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">pass</span>
+
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Person</span>(Mammal, Flippable):
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">__init__</span>(<span style="color: #778c00; font-weight: bold;">self</span>, name):
+        <span style="color: #596e76; font-weight: bold;">super</span>().__init__(name)
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">backpack</span> = Backpack()
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">doBackFlip</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{<span style="color: #778c00; font-weight: bold;">self</span>.name}<span style="color: #11948b;"> did a backflip!"</span>)
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">checkForApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #778c00; font-weight: bold;">self</span>.backpack.checkForApple()
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">eatApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #778c00; font-weight: bold;">self</span>.backpack.getApple():
+            <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{<span style="color: #778c00; font-weight: bold;">self</span>.name}<span style="color: #11948b;"> ate an apple!"</span>)
+        <span style="color: #778c00; font-weight: bold;">else</span>:
+            <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{<span style="color: #778c00; font-weight: bold;">self</span>.name}<span style="color: #11948b;"> has no apples to eat!"</span>)
+
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Backpack</span>:
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">__init__</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">content</span> = [<span style="color: #11948b;">'apple'</span>, <span style="color: #11948b;">'sandwich'</span>]
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">checkForApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"apple"</span> <span style="color: #778c00; font-weight: bold;">in</span> <span style="color: #778c00; font-weight: bold;">self</span>.content
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">getApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #778c00; font-weight: bold;">self</span>.checkForApple():
+            <span style="color: #778c00; font-weight: bold;">self</span>.content.remove(<span style="color: #11948b;">"apple"</span>)
+            <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"apple"</span>
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #007ec4; font-weight: bold;">None</span>
+
+<span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">main</span>():
+    <span style="color: #007ec4;">john</span> = Person(<span style="color: #11948b;">"John"</span>)
+    john.doBackFlip()
+    <span style="color: #778c00; font-weight: bold;">if</span> john.checkForApple():
+        john.eatApple()
+        john.eatApple()
+
+<span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #596e76; font-weight: bold;">__name__</span> == <span style="color: #11948b;">"__main__"</span>:
+    main()
 </pre>
 </div>
 </div>
@@ -538,6 +610,48 @@ player.play()
 <div id="outline-container-org107604f" class="outline-3">
 <h3 id="org107604f">Numpy</h3>
 <div class="outline-text-3" id="text-org107604f">
+</div>
+<div id="outline-container-orge1498d0" class="outline-4">
+<h4 id="orge1498d0">Notes</h4>
+<div class="outline-text-4" id="text-orge1498d0">
+<ul class="org-ul">
+<li>The <code>ndarray</code> is the core data type, it consists of <i>n</i>-dimensional
+homogeneous arrays of a fixed size.
+<ul class="org-ul">
+<li>The <code>ndim</code> method tells you the dimension of the array.</li>
+<li>If <code>a</code> is <code>np.array([1,2,3])</code>, then <code>a.shape</code> will be <code>(3,)</code> and
+both <code>a[:,np.newaxis]</code> and <code>a.reshape((3,1))</code> will be a <code>(3,1)</code>
+column vector.</li>
+</ul></li>
+<li><i>Broadcasting</i> is the implicit use of element-wise operations which
+means that the code is vectorised by default.</li>
+<li>Numpy expects an iterable for array construction when using
+<code>np.array</code>.</li>
+<li><span class="underline">Arithmetic operations are all performed element-wise.</span> So are
+logical operations.</li>
+<li><i>Universal functions</i> such as the exponential, and trigonometric
+functions apply element-wise.</li>
+<li>Python has zero-based indexing: <code>a[2]</code> gives the third element.
+<ul class="org-ul">
+<li>In the multidimensional case <code>a[i,j]</code> is the same as <code>a[(i,j)]</code>.</li>
+</ul></li>
+<li>The colon is used to take a <i>slice</i> through a dimension. Trailing,
+unspecified dimension values are treated as slices.</li>
+<li>Assignment and function call do <b>not</b> copy the array.</li>
+<li>The <code>view</code> method of an array creates a <i>view</i>.</li>
+<li><span class="underline">Slicing an array returns a view</span>, not a copy.</li>
+<li>The <code>copy</code> method of an array creates a <i>copy</i>. You need to
+explicitly <code>del my_array</code> to free memory though.</li>
+<li>There are all the <a href="https://numpy.org/doc/stable/user/quickstart.html#functions-and-methods-overview">functions and methods</a> you would expect for arrays.</li>
+<li>To write and read data from CSV, numpy provides the <code>savetxt</code> and
+<code>loadtxt</code> functions.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org17e5220" class="outline-4">
+<h4 id="org17e5220">Comparison with R</h4>
+<div class="outline-text-4" id="text-org17e5220">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -557,8 +671,34 @@ player.play()
 <td class="org-left"><code>np.linspace(a, b, num = 10)</code></td>
 <td class="org-left"><code>seq(from = a, to = b, length = 10)</code></td>
 </tr>
+
+<tr>
+<td class="org-left"><code>np.array([x1, x2, x3])</code></td>
+<td class="org-left"><code>c(x1, x2, x3)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>a1 * a2</code></td>
+<td class="org-left"><code>a1 * a2</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>a1 @ a2</code></td>
+<td class="org-left"><code>a1 %*% a2</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>np.vstack((a1, a2))</code></td>
+<td class="org-left"><code>rbind(a1, a2)</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>a.transpose()</code></td>
+<td class="org-left"><code>t(a)</code></td>
+</tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 
@@ -833,7 +973,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-07-11 Tue 10:09</p>
+<p class="date">Created: 2023-07-25 Tue 09:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
