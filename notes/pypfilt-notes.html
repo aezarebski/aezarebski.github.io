@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-07-25 Tue 16:55 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pypfilt-notes</title>
+<meta name="author" content="Alexander E. Zarebski" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">pypfilt-notes</h1>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+
+<div id="orgad67800" class="figure">
+<p><img src="../images/pypfilt-logo.png" alt="pypfilt-logo.png" width="250px" />
+</p>
+</div>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc26acd6">Examples</a>
+<ul>
+<li><a href="#org4517dab">Simple birth-death</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc26acd6" class="outline-2">
+<h2 id="orgc26acd6">Examples</h2>
+<div class="outline-text-2" id="text-orgc26acd6">
+</div>
+<div id="outline-container-org4517dab" class="outline-3">
+<h3 id="org4517dab">Simple birth-death</h3>
+<div class="outline-text-3" id="text-org4517dab">
+<p>
+Consider an approximation of the birth-death process using
+\(\tau\)-leaping where the process is observed with Poisson noise
+about the true values of the state. The following example demonstrates
+how to simulate from this process and then run a forecast to estimate
+both the future state and the birth rate (assuming a known death
+rate).
+</p>
+</div>
+
+<div id="outline-container-orga63445c" class="outline-4">
+<h4 id="orga63445c">Process model</h4>
+<div class="outline-text-4" id="text-orga63445c">
+<p>
+We start by defining a model for this process
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">ApproxBirthDeathProcess</span>(pypfilt.model.Model):
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">field_types</span>(<span style="color: #778c00; font-weight: bold;">self</span>, ctx):
+        <span style="color: #778c00; font-weight: bold;">return</span> [(<span style="color: #11948b;">'birth'</span>, np.dtype(<span style="color: #596e76; font-weight: bold;">float</span>)),
+                (<span style="color: #11948b;">'death'</span>, np.dtype(<span style="color: #596e76; font-weight: bold;">float</span>)),
+                (<span style="color: #11948b;">'x'</span>, np.dtype(<span style="color: #596e76; font-weight: bold;">int</span>))]
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">update</span>(<span style="color: #778c00; font-weight: bold;">self</span>, ctx, time_step, is_fs, prev, curr):
+        <span style="color: #11948b;">"""Destructively update the current state."""</span>
+        <span style="color: #007ec4;">rnd</span> = ctx.component[<span style="color: #11948b;">'random'</span>][<span style="color: #11948b;">'model'</span>]
+        <span style="color: #007ec4;">net_rate</span> = (prev[<span style="color: #11948b;">'birth'</span>] - prev[<span style="color: #11948b;">'death'</span>]) * time_step.dt * prev[<span style="color: #11948b;">'x'</span>]
+        <span style="color: #007ec4;">curr</span>[<span style="color: #11948b;">'birth'</span>] = prev[<span style="color: #11948b;">'birth'</span>]
+        <span style="color: #007ec4;">curr</span>[<span style="color: #11948b;">'death'</span>] = prev[<span style="color: #11948b;">'death'</span>]
+        <span style="color: #007ec4;">curr</span>[<span style="color: #11948b;">'x'</span>] = prev[<span style="color: #11948b;">'x'</span>] + rnd.poisson(lam=net_rate, size=curr[<span style="color: #11948b;">'x'</span>].shape)
+</pre>
+</div>
+
+<p>
+Note that in the <code>update</code> method we need to desctructively update
+<code>curr</code> to contain the new value. I.e., <code>curr</code> should be considered a
+reference to the state, this avoids needing to make a copy of this
+data.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6ac282e" class="outline-4">
+<h4 id="org6ac282e">Observation model</h4>
+<div class="outline-text-4" id="text-org6ac282e">
+<p>
+As stated above, we will assume Poisson noise about the true value of
+the state. This is implemented as the <code>NoisyCount</code> class.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">NoisyCount</span>(pypfilt.obs.Univariate):
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">distribution</span>(<span style="color: #778c00; font-weight: bold;">self</span>, ctx, snapshot):
+        <span style="color: #007ec4;">expected_value</span> = snapshot.state_vec[<span style="color: #11948b;">'x'</span>]
+        <span style="color: #778c00; font-weight: bold;">return</span> scipy.stats.poisson(mu=expected_value)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ba7252" class="outline-4">
+<h4 id="org9ba7252">Scenario file</h4>
+<div class="outline-text-4" id="text-org9ba7252">
+<p>
+The simulation and estimation computations are specified with a TOML
+file called <code>my-scenario.toml</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-toml">[<span style="color: #a67c00;">metadata</span>]
+<span style="color: #007ec4;">name</span> = <span style="color: #11948b;">"Approximate birth-death example"</span>
+<span style="color: #007ec4;">author</span> = <span style="color: #11948b;">"Alexander E. Zarebski"</span>
+<span style="color: #007ec4;">date</span> = <span style="color: #11948b;">"2023-07-25"</span>
+
+[<span style="color: #a67c00;">components</span>]
+<span style="color: #007ec4;">model</span> = <span style="color: #11948b;">"ApproxBirthDeathProcess.ApproxBirthDeathProcess"</span>
+<span style="color: #007ec4;">time</span> = <span style="color: #11948b;">"pypfilt.Scalar"</span>
+<span style="color: #007ec4;">sampler</span> = <span style="color: #11948b;">"pypfilt.sampler.LatinHypercube"</span>
+<span style="color: #007ec4;">summary</span> = <span style="color: #11948b;">"pypfilt.summary.HDF5"</span>
+
+[<span style="color: #a67c00;">time</span>]
+<span style="color: #007ec4;">start</span> = 0.0
+<span style="color: #007ec4;">until</span> = 10.0
+<span style="color: #007ec4;">steps_per_unit</span> = 10
+<span style="color: #007ec4;">summaries_per_unit</span> = 2
+
+[<span style="color: #a67c00;">prior</span>]
+<span style="color: #007ec4;">death</span> = { name = <span style="color: #11948b;">"constant"</span>, args.value = 1.0 }
+<span style="color: #007ec4;">x</span> = { name = <span style="color: #11948b;">"constant"</span>, args.value = 1 }
+
+[<span style="color: #a67c00;">observations.x</span>]
+<span style="color: #007ec4;">model</span> = <span style="color: #11948b;">"NoisyCount.NoisyCount"</span>
+
+[<span style="color: #a67c00;">filter</span>]
+<span style="color: #007ec4;">particles</span> = 10000
+<span style="color: #007ec4;">prng_seed</span> = 42
+<span style="color: #007ec4;">history_window</span> = -1
+<span style="color: #007ec4;">resample.threshold</span> = 0.25
+<span style="color: #007ec4;">regularisation.enabled</span> = <span style="color: #778c00; font-weight: bold;">true</span>
+
+[<span style="color: #a67c00;">scenario.simulate</span>]
+<span style="color: #007ec4;">prior.birth</span> = { name = <span style="color: #11948b;">"constant"</span>, args.value = 2.0 }
+
+[<span style="color: #a67c00;">scenario.forecast</span>]
+<span style="color: #007ec4;">summary.tables.model_cints.component</span> = <span style="color: #11948b;">"pypfilt.summary.ModelCIs"</span>
+<span style="color: #007ec4;">summary.tables.model_cints.credible_intervals</span> = [ 0, 50, 95 ]
+<span style="color: #007ec4;">summary.tables.forecasts.component</span> = <span style="color: #11948b;">"pypfilt.summary.PredictiveCIs"</span>
+<span style="color: #007ec4;">summary.tables.forecasts.credible_intervals</span> = [10, 20, 40, 80]
+<span style="color: #007ec4;">prior.birth</span> = { name = <span style="color: #11948b;">"uniform"</span>, args.loc = 1.75, args.scale = 0.5 }
+<span style="color: #007ec4;">output_png</span> = <span style="color: #11948b;">"demo-forecast.png"</span>
+</pre>
+</div>
+
+<p>
+Note, apart from <code>scenario.simulate</code> and <code>scenario.forecast</code>, all the
+configuration is shared between the two tasks. The process for
+referencing your model and observation objects needs to contain the
+module and the class within it.
+</p>
+
+<p>
+The specification of the prior distributions appears to take the
+location as the right end of the uniform distribution and the scale is
+the width of the uniform distribution.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb7ed110" class="outline-4">
+<h4 id="orgb7ed110">Main script</h4>
+<div class="outline-text-4" id="text-orgb7ed110">
+<p>
+Here is the main script that runs the simulation and estimation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #778c00; font-weight: bold;">import</span> numpy <span style="color: #778c00; font-weight: bold;">as</span> np
+<span style="color: #778c00; font-weight: bold;">import</span> pypfilt
+<span style="color: #778c00; font-weight: bold;">import</span> pypfilt.plot
+<span style="color: #778c00; font-weight: bold;">import</span> scipy.stats
+<span style="color: #778c00; font-weight: bold;">import</span> matplotlib
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">====================================================================</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we simulate a dataset</span>
+
+<span style="color: #007ec4;">scenario_file</span> = <span style="color: #11948b;">'my-scenario.toml'</span>
+<span style="color: #007ec4;">instances</span> = <span style="color: #596e76; font-weight: bold;">list</span>(pypfilt.load_instances(scenario_file))
+<span style="color: #007ec4;">sim_instance</span> = instances[0]
+<span style="color: #007ec4;">my_time_scale</span> = sim_instance.time_scale()
+<span style="color: #007ec4;">my_obs_tables</span> = pypfilt.simulate_from_model(sim_instance)
+
+<span style="color: #778c00; font-weight: bold;">for</span> (obs_unit, obs_table) <span style="color: #778c00; font-weight: bold;">in</span> my_obs_tables.items():
+    <span style="color: #007ec4;">out_file</span> = f<span style="color: #11948b;">'demo-birth-death-</span>{obs_unit}<span style="color: #11948b;">.ssv'</span>
+    pypfilt.io.write_table(out_file, obs_table, my_time_scale)
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">====================================================================</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we forecast the future states of the system</span>
+
+<span style="color: #007ec4;">fst_instance</span> = instances[1]
+<span style="color: #007ec4;">backcast_time</span> = 5.0
+<span style="color: #007ec4;">forecast_time</span> = 9.0
+<span style="color: #007ec4;">context</span> = fst_instance.build_context()
+<span style="color: #007ec4;">results</span> = pypfilt.forecast(context, [forecast_time], filename=<span style="color: #007ec4; font-weight: bold;">None</span>)
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">====================================================================</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we plot the results</span>
+
+<span style="color: #007ec4;">fit</span> = results.estimation.tables[<span style="color: #11948b;">'forecasts'</span>]
+<span style="color: #007ec4;">forecast</span> = results.forecasts[forecast_time].tables[<span style="color: #11948b;">'forecasts'</span>]
+<span style="color: #007ec4;">credible_intervals</span> = np.concatenate((
+    fit[fit[<span style="color: #11948b;">'time'</span>] &gt;= backcast_time],
+    forecast))
+
+<span style="color: #007ec4;">backcast_obs</span> = {
+    unit: table[np.logical_and(
+        table[<span style="color: #11948b;">'time'</span>] &gt;= backcast_time,
+        table[<span style="color: #11948b;">'time'</span>] &lt;= forecast_time,
+    )]
+    <span style="color: #778c00; font-weight: bold;">for</span> (unit, table) <span style="color: #778c00; font-weight: bold;">in</span> my_obs_tables.items()}
+
+<span style="color: #007ec4;">future_obs</span> = {
+    unit: table[table[<span style="color: #11948b;">'time'</span>] &gt; forecast_time]
+    <span style="color: #778c00; font-weight: bold;">for</span> (unit, table) <span style="color: #778c00; font-weight: bold;">in</span> my_obs_tables.items()}
+</pre>
+</div>
+
+<p>
+Here are the <a href="#orgf1efed2">results</a> of the particle filter (with the code to create
+the figure below).
+</p>
+
+
+<div id="orgf1efed2" class="figure">
+<p><img src="../images/pypfilt-example-birth-death.png" alt="pypfilt-example-birth-death.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Forecast of birth-death process</p>
+</div>
+
+
+
+<p>
+I have not grokked the plotting of the results, but here is a
+cut-n-paste job that produces something plausible.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">matplotlib.use(<span style="color: #11948b;">'Agg'</span>)
+<span style="color: #778c00; font-weight: bold;">with</span> pypfilt.plot.apply_style():
+    <span style="color: #007ec4;">plot</span> = pypfilt.plot.Wrap(credible_intervals, <span style="color: #11948b;">'Time'</span>, <span style="color: #11948b;">''</span>,
+                             (<span style="color: #11948b;">'unit'</span>, <span style="color: #778c00; font-weight: bold;">lambda</span> s: <span style="color: #11948b;">'{}(t)'</span>.<span style="color: #596e76; font-weight: bold;">format</span>(s)),
+                             nc=1)
+
+    plot.expand_x_lims(<span style="color: #11948b;">'time'</span>)
+    plot.expand_y_lims(<span style="color: #11948b;">'ymax'</span>)
+    plot.fig.subplots_adjust(hspace=0.5)
+
+    <span style="color: #007ec4;">obs_size</span> = 25.0
+
+    <span style="color: #778c00; font-weight: bold;">for</span> (ax, df) <span style="color: #778c00; font-weight: bold;">in</span> plot.subplots():
+        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Plot each forecast credible interval.</span>
+        <span style="color: #007ec4;">hs</span> = pypfilt.plot.cred_ints(ax, df, <span style="color: #11948b;">'time'</span>, <span style="color: #11948b;">'prob'</span>)
+
+        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Plot the observations up to the forecasting time.</span>
+        hs.extend(pypfilt.plot.observations(
+            ax,
+            backcast_obs[df[<span style="color: #11948b;">'unit'</span>][0]],
+            label=<span style="color: #11948b;">'Past observations'</span>,
+            s=obs_size))
+
+        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Plot the observations after the forecasting time.</span>
+        hs.extend(pypfilt.plot.observations(
+            ax,
+            future_obs[df[<span style="color: #11948b;">'unit'</span>][0]],
+            future=<span style="color: #007ec4; font-weight: bold;">True</span>,
+            label=<span style="color: #11948b;">'Future observations'</span>,
+            s=obs_size))
+
+        plot.add_to_legend(hs)
+
+        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Add a vertical line to indicate the forecast time.</span>
+        ax.axvline(x=forecast_time,
+                   linestyle=<span style="color: #11948b;">'--'</span>,
+                   color=<span style="color: #11948b;">'#7f7f7f'</span>,
+                   zorder=0)
+
+        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Adjust the axis limits and the number of ticks.</span>
+        <span style="color: #007ec4;">x_range</span> = df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">max</span>() - df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">min</span>()
+        <span style="color: #007ec4;">x_expand</span> = x_range * 0.01
+        ax.set_xlim(left=df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">min</span>() - x_expand,
+                    right=df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">max</span>() + x_expand)
+        ax.locator_params(axis=<span style="color: #11948b;">'x'</span>, nbins=6)
+        ax.set_ylim(auto=<span style="color: #007ec4; font-weight: bold;">True</span>)
+        ax.locator_params(axis=<span style="color: #11948b;">'y'</span>, nbins=6)
+
+        plot.legend(loc=<span style="color: #11948b;">'upper center'</span>, ncol=4, borderaxespad=0)
+
+        plot.save(fst_instance.settings[<span style="color: #11948b;">'output_png'</span>],
+                  <span style="color: #596e76; font-weight: bold;">format</span>=<span style="color: #11948b;">'png'</span>, width=10, height=5)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2023-07-25 Tue 16:55</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
