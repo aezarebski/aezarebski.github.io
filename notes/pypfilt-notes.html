@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-07-25 Tue 16:55 -->
+<!-- 2023-07-25 Tue 19:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>pypfilt-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="orgad67800" class="figure">
+<div id="orgc9ac448" class="figure">
 <p><img src="../images/pypfilt-logo.png" alt="pypfilt-logo.png" width="250px" />
 </p>
 </div>
@@ -353,6 +353,7 @@ file called <code>my-scenario.toml</code>:
 
 [<span style="color: #a67c00;">observations.x</span>]
 <span style="color: #007ec4;">model</span> = <span style="color: #11948b;">"NoisyCount.NoisyCount"</span>
+<span style="color: #007ec4;">file</span> = <span style="color: #11948b;">"demo-birth-death-x.ssv"</span>
 
 [<span style="color: #a67c00;">filter</span>]
 <span style="color: #007ec4;">particles</span> = 10000
@@ -370,7 +371,11 @@ file called <code>my-scenario.toml</code>:
 <span style="color: #007ec4;">summary.tables.forecasts.component</span> = <span style="color: #11948b;">"pypfilt.summary.PredictiveCIs"</span>
 <span style="color: #007ec4;">summary.tables.forecasts.credible_intervals</span> = [10, 20, 40, 80]
 <span style="color: #007ec4;">prior.birth</span> = { name = <span style="color: #11948b;">"uniform"</span>, args.loc = 1.75, args.scale = 0.5 }
-<span style="color: #007ec4;">output_png</span> = <span style="color: #11948b;">"demo-forecast.png"</span>
+<span style="color: #007ec4;">backcast_time</span> = 5.0
+<span style="color: #007ec4;">forecast_time</span> = 8.0
+
+[<span style="color: #a67c00;">output</span>]
+<span style="color: #007ec4;">credible_intervals</span> = <span style="color: #11948b;">"demo-cris.ssv"</span>
 </pre>
 </div>
 
@@ -420,13 +425,13 @@ Here is the main script that runs the simulation and estimation.
 <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we forecast the future states of the system</span>
 
 <span style="color: #007ec4;">fst_instance</span> = instances[1]
-<span style="color: #007ec4;">backcast_time</span> = 5.0
-<span style="color: #007ec4;">forecast_time</span> = 9.0
+<span style="color: #007ec4;">backcast_time</span> = fst_instance.settings[<span style="color: #11948b;">'backcast_time'</span>]
+<span style="color: #007ec4;">forecast_time</span> = fst_instance.settings[<span style="color: #11948b;">'forecast_time'</span>]
 <span style="color: #007ec4;">context</span> = fst_instance.build_context()
 <span style="color: #007ec4;">results</span> = pypfilt.forecast(context, [forecast_time], filename=<span style="color: #007ec4; font-weight: bold;">None</span>)
 
 <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">====================================================================</span>
-<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we plot the results</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we export the credible intervals to an SSV</span>
 
 <span style="color: #007ec4;">fit</span> = results.estimation.tables[<span style="color: #11948b;">'forecasts'</span>]
 <span style="color: #007ec4;">forecast</span> = results.forecasts[forecast_time].tables[<span style="color: #11948b;">'forecasts'</span>]
@@ -434,16 +439,11 @@ Here is the main script that runs the simulation and estimation.
     fit[fit[<span style="color: #11948b;">'time'</span>] &gt;= backcast_time],
     forecast))
 
-<span style="color: #007ec4;">backcast_obs</span> = {
-    unit: table[np.logical_and(
-        table[<span style="color: #11948b;">'time'</span>] &gt;= backcast_time,
-        table[<span style="color: #11948b;">'time'</span>] &lt;= forecast_time,
-    )]
-    <span style="color: #778c00; font-weight: bold;">for</span> (unit, table) <span style="color: #778c00; font-weight: bold;">in</span> my_obs_tables.items()}
-
-<span style="color: #007ec4;">future_obs</span> = {
-    unit: table[table[<span style="color: #11948b;">'time'</span>] &gt; forecast_time]
-    <span style="color: #778c00; font-weight: bold;">for</span> (unit, table) <span style="color: #778c00; font-weight: bold;">in</span> my_obs_tables.items()}
+np.savetxt(fst_instance.settings[<span style="color: #11948b;">'output'</span>][<span style="color: #11948b;">'credible_intervals'</span>],
+           credible_intervals,
+           header = <span style="color: #11948b;">" "</span>.join(credible_intervals.dtype.names),
+           comments = <span style="color: #11948b;">''</span>,
+           fmt = [<span style="color: #11948b;">'%s'</span>] + 5 * [<span style="color: #11948b;">'%.6e'</span>])
 </pre>
 </div>
 
@@ -460,65 +460,49 @@ the figure below).
 </div>
 
 
-
-<p>
-I have not grokked the plotting of the results, but here is a
-cut-n-paste job that produces something plausible.
-</p>
-
 <div class="org-src-container">
-<pre class="src src-python">matplotlib.use(<span style="color: #11948b;">'Agg'</span>)
-<span style="color: #778c00; font-weight: bold;">with</span> pypfilt.plot.apply_style():
-    <span style="color: #007ec4;">plot</span> = pypfilt.plot.Wrap(credible_intervals, <span style="color: #11948b;">'Time'</span>, <span style="color: #11948b;">''</span>,
-                             (<span style="color: #11948b;">'unit'</span>, <span style="color: #778c00; font-weight: bold;">lambda</span> s: <span style="color: #11948b;">'{}(t)'</span>.<span style="color: #596e76; font-weight: bold;">format</span>(s)),
-                             nc=1)
+<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(ggplot2)
+<span style="color: #007ec4; font-weight: bold;">library</span>(RcppTOML)
+<span style="color: #007ec4; font-weight: bold;">library</span>(dplyr)
 
-    plot.expand_x_lims(<span style="color: #11948b;">'time'</span>)
-    plot.expand_y_lims(<span style="color: #11948b;">'ymax'</span>)
-    plot.fig.subplots_adjust(hspace=0.5)
+scenario_toml <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #11948b;">"my-scenario.toml"</span>
+scenario <span style="color: #007ec4; font-weight: bold;">&lt;-</span> parseTOML(scenario_toml)
 
-    <span style="color: #007ec4;">obs_size</span> = 25.0
+cri_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span>
+  scenario$output$credible_intervals |&gt;
+  read.table(header = <span style="color: #a67c00;">TRUE</span>) |&gt;
+  mutate(prob = 1 - prob)
+fs_time <span style="color: #007ec4; font-weight: bold;">&lt;-</span> scenario$scenario$forecast$forecast_time
+bs_time <span style="color: #007ec4; font-weight: bold;">&lt;-</span> scenario$scenario$forecast$backcast_time
+obs_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span>
+  scenario$observations$x$file |&gt;
+  read.table(header = <span style="color: #a67c00;">TRUE</span>) |&gt;
+  filter(time &gt;= bs_time)
 
-    <span style="color: #778c00; font-weight: bold;">for</span> (ax, df) <span style="color: #778c00; font-weight: bold;">in</span> plot.subplots():
-        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Plot each forecast credible interval.</span>
-        <span style="color: #007ec4;">hs</span> = pypfilt.plot.cred_ints(ax, df, <span style="color: #11948b;">'time'</span>, <span style="color: #11948b;">'prob'</span>)
+ggplot() +
+  geom_ribbon(
+    data = cri_df,
+    mapping = aes(x = time, ymin = ymin, ymax = ymax,
+                  group = prob,
+                  fill = prob)
+  ) +
+  scale_fill_gradient(low = <span style="color: #11948b;">"white"</span>, high = <span style="color: #11948b;">"black"</span>) +
+  geom_point(
+    data = obs_df,
+    mapping = aes(x = time, y = value, shape = time &gt; fs_time),
+    size = 3
+  ) +
+  scale_shape_manual(values = c(16, 1)) +
+  geom_vline(xintercept = fs_time, linetype = <span style="color: #11948b;">"dashed"</span>) +
+  theme_bw() +
+  theme(legend.position = <span style="color: #11948b;">"none"</span>,
+        axis.title = element_blank())
 
-        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Plot the observations up to the forecasting time.</span>
-        hs.extend(pypfilt.plot.observations(
-            ax,
-            backcast_obs[df[<span style="color: #11948b;">'unit'</span>][0]],
-            label=<span style="color: #11948b;">'Past observations'</span>,
-            s=obs_size))
-
-        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Plot the observations after the forecasting time.</span>
-        hs.extend(pypfilt.plot.observations(
-            ax,
-            future_obs[df[<span style="color: #11948b;">'unit'</span>][0]],
-            future=<span style="color: #007ec4; font-weight: bold;">True</span>,
-            label=<span style="color: #11948b;">'Future observations'</span>,
-            s=obs_size))
-
-        plot.add_to_legend(hs)
-
-        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Add a vertical line to indicate the forecast time.</span>
-        ax.axvline(x=forecast_time,
-                   linestyle=<span style="color: #11948b;">'--'</span>,
-                   color=<span style="color: #11948b;">'#7f7f7f'</span>,
-                   zorder=0)
-
-        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Adjust the axis limits and the number of ticks.</span>
-        <span style="color: #007ec4;">x_range</span> = df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">max</span>() - df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">min</span>()
-        <span style="color: #007ec4;">x_expand</span> = x_range * 0.01
-        ax.set_xlim(left=df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">min</span>() - x_expand,
-                    right=df[<span style="color: #11948b;">'time'</span>].<span style="color: #596e76; font-weight: bold;">max</span>() + x_expand)
-        ax.locator_params(axis=<span style="color: #11948b;">'x'</span>, nbins=6)
-        ax.set_ylim(auto=<span style="color: #007ec4; font-weight: bold;">True</span>)
-        ax.locator_params(axis=<span style="color: #11948b;">'y'</span>, nbins=6)
-
-        plot.legend(loc=<span style="color: #11948b;">'upper center'</span>, ncol=4, borderaxespad=0)
-
-        plot.save(fst_instance.settings[<span style="color: #11948b;">'output_png'</span>],
-                  <span style="color: #596e76; font-weight: bold;">format</span>=<span style="color: #11948b;">'png'</span>, width=10, height=5)
+ggsave(filename = <span style="color: #11948b;">"demo-forecast-plot.png"</span>,
+       <span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">height = 14.8, width = 21.0, # A5</span>
+       <span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">height = 10.5, width = 14.8, # A6</span>
+       height = 7.4, width = 10.5, <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">A7</span>
+       units = <span style="color: #11948b;">"cm"</span>)
 </pre>
 </div>
 </div>
@@ -528,7 +512,7 @@ cut-n-paste job that produces something plausible.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-07-25 Tue 16:55</p>
+<p class="date">Created: 2023-07-25 Tue 19:15</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
