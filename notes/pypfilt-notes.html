@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-07-27 Thu 16:17 -->
+<!-- 2023-07-27 Thu 16:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>pypfilt-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="org683abec" class="figure">
+<div id="org25c1c26" class="figure">
 <p><img src="../images/pypfilt-logo.png" alt="pypfilt-logo.png" width="250px" />
 </p>
 </div>
@@ -248,6 +248,7 @@
 <li><a href="#orgc26acd6">Examples</a>
 <ul>
 <li><a href="#org72244d9">Tau-leaping birth-death</a></li>
+<li><a href="#org6745aef">ODE birth-death</a></li>
 <li><a href="#orgd2979a4">CTMC birth-death</a></li>
 </ul>
 </li>
@@ -283,9 +284,9 @@ rate).
 </p>
 </div>
 
-<div id="outline-container-orge7f19e8" class="outline-4">
-<h4 id="orge7f19e8">Process model</h4>
-<div class="outline-text-4" id="text-orge7f19e8">
+<div id="outline-container-orgbde7306" class="outline-4">
+<h4 id="orgbde7306">Process model</h4>
+<div class="outline-text-4" id="text-orgbde7306">
 <p>
 We start by defining a model for this process
 </p>
@@ -312,7 +313,7 @@ We start by defining a model for this process
 </div>
 
 <p>
-Note that in the <code>update</code> method we need to desctructively update
+Note that in the <code>update</code> method we need to destructively update
 <code>curr</code> to contain the new value. I.e., <code>curr</code> should be considered a
 reference to the state, this avoids needing to make a copy of this
 data.
@@ -342,9 +343,9 @@ the state. This is implemented as the <code>NoisyCount</code> class.
 </div>
 </div>
 
-<div id="outline-container-org9526c0f" class="outline-4">
-<h4 id="org9526c0f">Scenario file</h4>
-<div class="outline-text-4" id="text-org9526c0f">
+<div id="outline-container-orgd7a03eb" class="outline-4">
+<h4 id="orgd7a03eb">Scenario file</h4>
+<div class="outline-text-4" id="text-orgd7a03eb">
 <p>
 The simulation and estimation computations are specified with a TOML
 file <code>approx-bd-example.toml</code>.
@@ -416,9 +417,9 @@ the width of the uniform distribution.
 </div>
 </div>
 
-<div id="outline-container-orge0f1fd9" class="outline-4">
-<h4 id="orge0f1fd9">Main script</h4>
-<div class="outline-text-4" id="text-orge0f1fd9">
+<div id="outline-container-orgabbc4aa" class="outline-4">
+<h4 id="orgabbc4aa">Main script</h4>
+<div class="outline-text-4" id="text-orgabbc4aa">
 <p>
 Here is the main script that runs the simulation and estimation.
 </p>
@@ -530,6 +531,238 @@ ggsave(filename = <span style="color: #11948b;">"approx-bd-example.png"</span>,
 </div>
 </div>
 
+<div id="outline-container-org6745aef" class="outline-3">
+<h3 id="org6745aef">ODE birth-death</h3>
+<div class="outline-text-3" id="text-org6745aef">
+<p>
+Consider an approximation of the birth-death process using a
+differential equation and the process is observed with Poisson noise
+about the true values of the state. The following example demonstrates
+how to simulate from this process and then run a forecast to estimate
+both the future state and the birth rate (assuming a known death
+rate).
+</p>
+</div>
+
+<div id="outline-container-org3aa1949" class="outline-4">
+<h4 id="org3aa1949">Process model</h4>
+<div class="outline-text-4" id="text-org3aa1949">
+<p>
+We start by defining a model for this process which is adapted from
+<a href="https://pypfilt.readthedocs.io/en/0.8.0/how-to/index.html#implement-an-ordinary-differential-equation-ode-model">this example</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">ODEBirthDeathProcess.py</span>
+
+&lt;&lt;imports&gt;&gt;
+
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">ODEBirthDeathProcess</span>(pypfilt.model.OdeModel):
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">field_types</span>(<span style="color: #778c00; font-weight: bold;">self</span>, ctx):
+        <span style="color: #778c00; font-weight: bold;">return</span> [(<span style="color: #11948b;">'birth'</span>, np.dtype(<span style="color: #596e76; font-weight: bold;">float</span>)),
+                (<span style="color: #11948b;">'death'</span>, np.dtype(<span style="color: #596e76; font-weight: bold;">float</span>)),
+                (<span style="color: #11948b;">'x'</span>, np.dtype(<span style="color: #596e76; font-weight: bold;">float</span>))]
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">init</span>(<span style="color: #778c00; font-weight: bold;">self</span>, ctx, vec):
+        <span style="color: #007ec4;">prior</span> = ctx.data[<span style="color: #11948b;">'prior'</span>]
+        <span style="color: #007ec4;">vec</span>[<span style="color: #11948b;">'x'</span>] = prior[<span style="color: #11948b;">'x'</span>]
+        <span style="color: #007ec4;">vec</span>[<span style="color: #11948b;">'birth'</span>] = prior[<span style="color: #11948b;">'birth'</span>]
+        <span style="color: #007ec4;">vec</span>[<span style="color: #11948b;">'death'</span>] = prior[<span style="color: #11948b;">'death'</span>]
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">method</span> = <span style="color: #11948b;">'RK45'</span>
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">d_dt</span>(<span style="color: #778c00; font-weight: bold;">self</span>, time, xt, ctx, is_forecast):
+        <span style="color: #007ec4;">d_dt</span> = np.zeros(xt.shape, dtype=xt.dtype)
+        <span style="color: #007ec4;">d_dt</span>[<span style="color: #11948b;">'x'</span>] = (xt[<span style="color: #11948b;">'birth'</span>] - xt[<span style="color: #11948b;">'death'</span>]) * xt[<span style="color: #11948b;">'x'</span>]
+        <span style="color: #778c00; font-weight: bold;">return</span> d_dt
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6ac282e" class="outline-4">
+<h4 id="org6ac282e">Observation model</h4>
+<div class="outline-text-4" id="text-org6ac282e">
+<p>
+See the <a href="#noisy-count-obs-model">NoisyCount</a> observation model.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5dd0419" class="outline-4">
+<h4 id="org5dd0419">Scenario file</h4>
+<div class="outline-text-4" id="text-org5dd0419">
+<p>
+The simulation and estimation computations are specified with a TOML
+file <code>ode-bd-example.toml</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-toml">[<span style="color: #a67c00;">metadata</span>]
+<span style="color: #007ec4;">name</span> = <span style="color: #11948b;">"ODE birth-death example"</span>
+<span style="color: #007ec4;">filename</span> = <span style="color: #11948b;">"ode-bd-example.toml"</span>
+<span style="color: #007ec4;">author</span> = <span style="color: #11948b;">"Alexander E. Zarebski"</span>
+<span style="color: #007ec4;">date</span> = <span style="color: #11948b;">"2023-07-27"</span>
+
+[<span style="color: #a67c00;">components</span>]
+<span style="color: #007ec4;">model</span> = <span style="color: #11948b;">"ODEBirthDeathProcess.ODEBirthDeathProcess"</span>
+<span style="color: #007ec4;">time</span> = <span style="color: #11948b;">"pypfilt.Scalar"</span>
+<span style="color: #007ec4;">sampler</span> = <span style="color: #11948b;">"pypfilt.sampler.LatinHypercube"</span>
+<span style="color: #007ec4;">summary</span> = <span style="color: #11948b;">"pypfilt.summary.HDF5"</span>
+
+[<span style="color: #a67c00;">time</span>]
+<span style="color: #007ec4;">start</span> = 0.0
+<span style="color: #007ec4;">until</span> = 5.0
+<span style="color: #007ec4;">steps_per_unit</span> = 10
+<span style="color: #007ec4;">summaries_per_unit</span> = 2
+
+[<span style="color: #a67c00;">prior</span>]
+<span style="color: #007ec4;">death</span> = { name = <span style="color: #11948b;">"constant"</span>, args.value = 1.0 }
+<span style="color: #007ec4;">x</span> = { name = <span style="color: #11948b;">"constant"</span>, args.value = 5 }
+
+[<span style="color: #a67c00;">observations.x</span>]
+<span style="color: #007ec4;">model</span> = <span style="color: #11948b;">"NoisyCount.NoisyCount"</span>
+<span style="color: #007ec4;">file</span> = <span style="color: #11948b;">"ode-bd-example-x.ssv"</span>
+
+[<span style="color: #a67c00;">filter</span>]
+<span style="color: #007ec4;">particles</span> = 10000
+<span style="color: #007ec4;">prng_seed</span> = 13
+<span style="color: #007ec4;">history_window</span> = -1
+<span style="color: #007ec4;">resample.threshold</span> = 0.25
+<span style="color: #007ec4;">regularisation.enabled</span> = <span style="color: #778c00; font-weight: bold;">true</span>
+
+[<span style="color: #a67c00;">scenario.simulate</span>]
+<span style="color: #007ec4;">prior.birth</span> = { name = <span style="color: #11948b;">"constant"</span>, args.value = 2.0 }
+
+[<span style="color: #a67c00;">scenario.forecast</span>]
+<span style="color: #007ec4;">summary.tables.model_cints.component</span> = <span style="color: #11948b;">"pypfilt.summary.ModelCIs"</span>
+<span style="color: #007ec4;">summary.tables.model_cints.credible_intervals</span> = [ 0, 50, 95 ]
+<span style="color: #007ec4;">summary.tables.forecasts.component</span> = <span style="color: #11948b;">"pypfilt.summary.PredictiveCIs"</span>
+<span style="color: #007ec4;">summary.tables.forecasts.credible_intervals</span> = [10, 20, 40, 80]
+<span style="color: #007ec4;">prior.birth</span> = { name = <span style="color: #11948b;">"uniform"</span>, args.loc = 1.75, args.scale = 0.5 }
+<span style="color: #007ec4;">backcast_time</span> = 2.0
+<span style="color: #007ec4;">forecast_time</span> = 4.0
+
+[<span style="color: #a67c00;">output</span>]
+<span style="color: #007ec4;">credible_intervals</span> = <span style="color: #11948b;">"ode-bd-example-cris.ssv"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc7cbc1" class="outline-4">
+<h4 id="orgbc7cbc1">Main script</h4>
+<div class="outline-text-4" id="text-orgbc7cbc1">
+<p>
+Here is the main script that runs the simulation and estimation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">ode-bd-example.py</span>
+
+&lt;&lt;imports&gt;&gt;
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we simulate a dataset</span>
+
+<span style="color: #007ec4;">scenario_file</span> = <span style="color: #11948b;">'ode-bd-example.toml'</span>
+<span style="color: #007ec4;">instances</span> = <span style="color: #596e76; font-weight: bold;">list</span>(pypfilt.load_instances(scenario_file))
+<span style="color: #007ec4;">sim_instance</span> = instances[0]
+<span style="color: #007ec4;">my_time_scale</span> = sim_instance.time_scale()
+<span style="color: #007ec4;">my_obs_tables</span> = pypfilt.simulate_from_model(sim_instance)
+
+<span style="color: #778c00; font-weight: bold;">for</span> (obs_unit, obs_table) <span style="color: #778c00; font-weight: bold;">in</span> my_obs_tables.items():
+    <span style="color: #007ec4;">out_file</span> = f<span style="color: #11948b;">'ode-bd-example-</span>{obs_unit}<span style="color: #11948b;">.ssv'</span>
+    pypfilt.io.write_table(out_file, obs_table, my_time_scale)
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we forecast the future states of the system</span>
+
+<span style="color: #007ec4;">fst_instance</span> = instances[1]
+<span style="color: #007ec4;">backcast_time</span> = fst_instance.settings[<span style="color: #11948b;">'backcast_time'</span>]
+<span style="color: #007ec4;">forecast_time</span> = fst_instance.settings[<span style="color: #11948b;">'forecast_time'</span>]
+<span style="color: #007ec4;">context</span> = fst_instance.build_context()
+<span style="color: #007ec4;">results</span> = pypfilt.forecast(context, [forecast_time], filename=<span style="color: #007ec4; font-weight: bold;">None</span>)
+
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Here we export the credible intervals to an SSV</span>
+
+<span style="color: #007ec4;">fit</span> = results.estimation.tables[<span style="color: #11948b;">'forecasts'</span>]
+<span style="color: #007ec4;">forecast</span> = results.forecasts[forecast_time].tables[<span style="color: #11948b;">'forecasts'</span>]
+<span style="color: #007ec4;">credible_intervals</span> = np.concatenate((
+    fit[fit[<span style="color: #11948b;">'time'</span>] &gt;= backcast_time],
+    forecast))
+
+np.savetxt(fst_instance.settings[<span style="color: #11948b;">'output'</span>][<span style="color: #11948b;">'credible_intervals'</span>],
+           credible_intervals,
+           header = <span style="color: #11948b;">" "</span>.join(credible_intervals.dtype.names),
+           comments = <span style="color: #11948b;">''</span>,
+           fmt = [<span style="color: #11948b;">'%s'</span>] + 5 * [<span style="color: #11948b;">'%.6e'</span>])
+</pre>
+</div>
+
+<p>
+Here are the <a href="#org051efbf">results</a> of the particle filter (with the code to create
+the figure below).
+</p>
+
+
+<div id="org051efbf" class="figure">
+<p><img src="./pypfilt/ode-bd-example.png" alt="ode-bd-example.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Forecast of birth-death process</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">ode-bd-example.R</span>
+
+<span style="color: #007ec4; font-weight: bold;">library</span>(ggplot2)
+<span style="color: #007ec4; font-weight: bold;">library</span>(RcppTOML)
+<span style="color: #007ec4; font-weight: bold;">library</span>(dplyr)
+
+scenario_toml <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #11948b;">"ode-bd-example.toml"</span>
+scenario <span style="color: #007ec4; font-weight: bold;">&lt;-</span> parseTOML(scenario_toml)
+
+cri_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span>
+  scenario$output$credible_intervals |&gt;
+  read.table(header = <span style="color: #a67c00;">TRUE</span>) |&gt;
+  mutate(prob = 100 - prob)
+fs_time <span style="color: #007ec4; font-weight: bold;">&lt;-</span> scenario$scenario$forecast$forecast_time
+bs_time <span style="color: #007ec4; font-weight: bold;">&lt;-</span> scenario$scenario$forecast$backcast_time
+obs_df <span style="color: #007ec4; font-weight: bold;">&lt;-</span>
+  scenario$observations$x$file |&gt;
+  read.table(header = <span style="color: #a67c00;">TRUE</span>) |&gt;
+  filter(time &gt;= bs_time)
+
+ggplot() +
+  geom_ribbon(
+    data = cri_df,
+    mapping = aes(x = time, ymin = ymin, ymax = ymax,
+                  group = prob,
+                  fill = prob)
+  ) +
+  scale_fill_gradient(low = <span style="color: #11948b;">"white"</span>, high = <span style="color: #11948b;">"grey"</span>) +
+  geom_point(
+    data = obs_df,
+    mapping = aes(x = time, y = value, shape = time &gt; fs_time),
+    size = 3
+  ) +
+  scale_shape_manual(values = c(16, 1)) +
+  geom_vline(xintercept = fs_time, linetype = <span style="color: #11948b;">"dashed"</span>) +
+  theme_bw() +
+  theme(legend.position = <span style="color: #11948b;">"none"</span>,
+        axis.title = element_blank())
+
+ggsave(filename = <span style="color: #11948b;">"ode-bd-example.png"</span>,
+       <span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">height = 14.8, width = 21.0, # A5</span>
+       <span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">height = 10.5, width = 14.8, # A6</span>
+       height = 7.4, width = 10.5, <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">A7</span>
+       units = <span style="color: #11948b;">"cm"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgd2979a4" class="outline-3">
 <h3 id="orgd2979a4">CTMC birth-death</h3>
 <div class="outline-text-3" id="text-orgd2979a4">
@@ -542,9 +775,9 @@ forecast to estimate both the future state and the birth rate
 </p>
 </div>
 
-<div id="outline-container-orgbde7306" class="outline-4">
-<h4 id="orgbde7306">Process model</h4>
-<div class="outline-text-4" id="text-orgbde7306">
+<div id="outline-container-org0500337" class="outline-4">
+<h4 id="org0500337">Process model</h4>
+<div class="outline-text-4" id="text-org0500337">
 <p>
 We start by defining a model for this process which is adapted from
 <a href="https://pypfilt.readthedocs.io/en/0.8.0/how-to/index.html#implement-a-continuous-time-markov-chain-ctmc-model">this example</a>.
@@ -614,18 +847,18 @@ We start by defining a model for this process which is adapted from
 </div>
 </div>
 
-<div id="outline-container-org6ac282e" class="outline-4">
-<h4 id="org6ac282e">Observation model</h4>
-<div class="outline-text-4" id="text-org6ac282e">
+<div id="outline-container-orgb602642" class="outline-4">
+<h4 id="orgb602642">Observation model</h4>
+<div class="outline-text-4" id="text-orgb602642">
 <p>
 See the <a href="#noisy-count-obs-model">NoisyCount</a> observation model.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd7a03eb" class="outline-4">
-<h4 id="orgd7a03eb">Scenario file</h4>
-<div class="outline-text-4" id="text-orgd7a03eb">
+<div id="outline-container-orgbabf1db" class="outline-4">
+<h4 id="orgbabf1db">Scenario file</h4>
+<div class="outline-text-4" id="text-orgbabf1db">
 <p>
 The simulation and estimation computations are specified with a TOML
 file <code>ctmc-bd-example.toml</code>.
@@ -684,9 +917,9 @@ file <code>ctmc-bd-example.toml</code>.
 </div>
 </div>
 
-<div id="outline-container-orgabbc4aa" class="outline-4">
-<h4 id="orgabbc4aa">Main script</h4>
-<div class="outline-text-4" id="text-orgabbc4aa">
+<div id="outline-container-orgaa72193" class="outline-4">
+<h4 id="orgaa72193">Main script</h4>
+<div class="outline-text-4" id="text-orgaa72193">
 <p>
 Here is the main script that runs the simulation and estimation.
 </p>
@@ -744,7 +977,7 @@ the figure below).
 <div id="org703eb85" class="figure">
 <p><img src="./pypfilt/ctmc-bd-example.png" alt="ctmc-bd-example.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 2: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 3: </span>Forecast of birth-death process</p>
 </div>
 
 <div class="org-src-container">
@@ -802,6 +1035,11 @@ ggsave(filename = <span style="color: #11948b;">"ctmc-bd-example.png"</span>,
 <div id="outline-container-org34c603d" class="outline-2">
 <h2 id="org34c603d">Colophon</h2>
 <div class="outline-text-2" id="text-org34c603d">
+<p>
+Here is a requirements file for a python virtual environment to run
+these examples.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-txt">h5py==3.9.0
 lhs==0.4.1
@@ -812,6 +1050,22 @@ tomli==2.0.1
 tomli_w==1.0.0
 </pre>
 </div>
+
+<p>
+Once you have the virtual environment set up, the examples can be run
+as shown in the following example when using the \(\tau\)-leaping
+code.
+</p>
+
+<pre class="example">
+$ python approx-bd-example.py
+$ Rscript approx-bd-example.R
+</pre>
+
+<p>
+Here is a source block that gets included whenever you see an imports
+statement.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-python" id="orgdd2c2dd"><span style="color: #778c00; font-weight: bold;">import</span> numpy <span style="color: #778c00; font-weight: bold;">as</span> np
@@ -824,7 +1078,7 @@ tomli_w==1.0.0
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-07-27 Thu 16:17</p>
+<p class="date">Created: 2023-07-27 Thu 16:54</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
