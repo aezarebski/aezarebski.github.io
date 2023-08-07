@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-01 Tue 08:52 -->
+<!-- 2023-08-08 Tue 09:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="org9de1ea7" class="figure">
+<div id="org296f0ca" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -252,6 +252,7 @@
 </li>
 <li><a href="#org02abfdd">Programming in R (software development)</a>
 <ul>
+<li><a href="#org28b50b4">Debugging</a></li>
 <li><a href="#orga736c12">Scripting with R</a></li>
 <li><a href="#orge6d10d7">Working with files</a></li>
 <li><a href="#org05badbe">Error handling</a></li>
@@ -456,6 +457,22 @@ There is an R package, <a href="https://github.com/r-lib/rim">rim</a>, which man
 <h2 id="org02abfdd">Programming in R (software development)</h2>
 <div class="outline-text-2" id="text-org02abfdd">
 </div>
+<div id="outline-container-org28b50b4" class="outline-3">
+<h3 id="org28b50b4">Debugging</h3>
+<div class="outline-text-3" id="text-org28b50b4">
+<p>
+R makes it easy to shoot yourself in the foot, but it also makes it
+easy to patch your foot up again afterwards.
+</p>
+
+<dl class="org-dl">
+<dt><code>browser()</code></dt><dd>to create a breakpoint in your source code</dd>
+<dt>=debugonce()</dt><dd>to enter the debugger next time you run a particular
+function.</dd>
+</dl>
+</div>
+</div>
+
 <div id="outline-container-orga736c12" class="outline-3">
 <h3 id="orga736c12">Scripting with R</h3>
 <div class="outline-text-3" id="text-orga736c12">
@@ -832,7 +849,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org7b9e9b2" class="figure">
+<div id="org9da36dd" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -949,9 +966,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org354a9e5" class="outline-4">
-<h4 id="org354a9e5">Example</h4>
-<div class="outline-text-4" id="text-org354a9e5">
+<div id="outline-container-orga66d35b" class="outline-4">
+<h4 id="orga66d35b">Example</h4>
+<div class="outline-text-4" id="text-orga66d35b">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1191,9 +1208,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-orga66d35b" class="outline-4">
-<h4 id="orga66d35b">Example</h4>
-<div class="outline-text-4" id="text-orga66d35b">
+<div id="outline-container-org93bd0e4" class="outline-4">
+<h4 id="org93bd0e4">Example</h4>
+<div class="outline-text-4" id="text-org93bd0e4">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -1519,6 +1536,38 @@ Here is an example from <i>R Packages</i>:
 <span style="color: #006699;">str_unique</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(string, ...) {
   ...
 }
+</pre>
+</div>
+
+<p>
+For some mysterious reason, when you document a package and build a
+PDF of the manual it will include documentation for functions that you
+have not exported. There will be documentation for functions that are
+not made available to the user!
+</p>
+
+<p>
+The solution appears to be to remove the corresponding <code>.Rd</code> files
+from <code>man/</code> and then to build the manual from the remaining files. If
+you do not want to do this manually, the following script might help.
+<b>WARNING:</b> this assumes that you are only putting one function per
+file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">my_namespace <span style="color: #D0372D;">&lt;-</span> readLines(<span style="color: #008000;">"NAMESPACE"</span>)
+my_exported <span style="color: #D0372D;">&lt;-</span> gsub(
+  <span style="color: #008000;">"export\\((.*)\\)"</span>,
+  <span style="color: #008000;">"\\1"</span>,
+  grep(<span style="color: #008000;">"export"</span>, my_namespace, value = <span style="color: #6434A3;">TRUE</span>)
+)
+
+all_my_rd_files <span style="color: #D0372D;">&lt;-</span>
+  list.files(<span style="color: #008000;">"man"</span>, pattern = <span style="color: #008000;">"\\.Rd$"</span>, full.names = <span style="color: #6434A3;">TRUE</span>)
+
+not_exported_mask <span style="color: #D0372D;">&lt;-</span>
+  !gsub(<span style="color: #008000;">"man/(.*)\\.Rd"</span>, <span style="color: #008000;">"\\1"</span>, all_my_rd_files) <span style="color: #D0372D;">%in%</span> my_exported
+file.remove(all_my_rd_files[not_exported_mask])
 </pre>
 </div>
 </div>
@@ -2864,7 +2913,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-01 Tue 08:52</p>
+<p class="date">Created: 2023-08-08 Tue 09:44</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

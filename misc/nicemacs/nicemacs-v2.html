@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-01 Tue 08:52 -->
+<!-- 2023-08-08 Tue 09:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org1f1b5a9" class="figure">
+<div id="org9424f19" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -238,6 +238,7 @@
 <li><a href="#orgc50f55c">Markdown</a></li>
 <li><a href="#org349cbf7">Org-mode</a></li>
 <li><a href="#org857239b">STUFF 8</a></li>
+<li><a href="#org7d0395d">Copilot</a></li>
 <li><a href="#org1939d88">STUFF 9</a></li>
 </ul>
 </li>
@@ -326,7 +327,10 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
 <span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-08</span>
+<span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-07</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Re-organised the themeing and started Leuven.</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Isolate theme configuration so it is easier to edit.</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Set up debugging with `</span><span style="color: #D0372D; font-style: italic;">realgud</span><span style="color: #8D8D84; font-style: italic;">' (for Python).</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Improve window management.</span>
@@ -376,10 +380,8 @@
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">package</span>)
 (add-to-list 'package-archives '(<span style="color: #008000;">"melpa"</span> . <span style="color: #008000;">"https://melpa.org/packages/"</span>) t)
-(add-to-list 'package-archives '(<span style="color: #008000;">"nongnu"</span> . <span style="color: #008000;">"https://elpa.nongnu.org/nongnu/"</span>) t)
-(add-to-list 'package-archives '(<span style="color: #008000;">"gnu"</span> . <span style="color: #008000;">"https://elpa.gnu.org/packages/"</span>) t)
-
 (package-initialize)
+
 (<span style="color: #0000FF;">unless</span> (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -830,16 +832,19 @@ between files.
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The `</span><span style="color: #D0372D; font-style: italic;">winum</span><span style="color: #8D8D84; font-style: italic;">' package facilitates switching between windows using</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">numbers which appear in the bottom left hand of the window, at the</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">start of the mode-line.</span>
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">winum</span>)
-(winum-mode)
-(<span style="color: #0000FF;">setq</span> winum-format <span style="color: #008000;">" %s "</span>)
-(custom-set-faces
- `(winum-face
-   ((t
-     (<span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>
-      <span style="color: #006FE0;">:weight</span> bold
-      <span style="color: #006FE0;">:underline</span> nil
-      <span style="color: #006FE0;">:height</span> 1.1)))))
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">winum</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:config</span>
+  (winum-mode)
+  (<span style="color: #0000FF;">setq</span> winum-format <span style="color: #008000;">" %s "</span>)
+  (custom-set-faces
+   '(winum-face
+     ((t
+       (<span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>
+        <span style="color: #006FE0;">:weight</span> bold
+        <span style="color: #006FE0;">:underline</span> nil
+        <span style="color: #006FE0;">:height</span> 1.1))))))
+
 (evil-leader/set-key
   <span style="color: #008000;">"0"</span> 'winum-select-window-0
   <span style="color: #008000;">"1"</span> 'winum-select-window-1
@@ -1325,10 +1330,14 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Magit</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-----</span>
-
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">magit</span>)
-
-(evil-leader/set-key <span style="color: #008000;">"g s"</span> 'magit-status)
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">magit</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:config</span>
+  (<span style="color: #0000FF;">setq</span> magit-display-buffer-function
+        #'magit-display-buffer-fullframe-status-v1)
+  (evil-leader/set-key
+    <span style="color: #008000;">"g s"</span> 'magit-status
+    <span style="color: #008000;">"g q"</span> 'with-editor-cancel))
 
 (<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">nice-canned-commit-message</span> (fname cmessage key)
   <span style="color: #036A07;">"Define a canned commit message function with an Evil key binding.</span>
@@ -1363,11 +1372,6 @@ instead of <code>u</code> in step 5 to stage the files in the region.
 (<span style="color: #0000FF;">nice-canned-commit-message</span> review <span style="color: #008000;">"update reading list"</span> <span style="color: #008000;">"r"</span>)
 (<span style="color: #0000FF;">nice-canned-commit-message</span> website <span style="color: #008000;">"update website"</span> <span style="color: #008000;">"w"</span>)
 (<span style="color: #0000FF;">nice-canned-commit-message</span> yasnippet <span style="color: #008000;">"yasnippet"</span> <span style="color: #008000;">"y"</span>)
-
-(<span style="color: #0000FF;">setq</span> magit-display-buffer-function
-      #'magit-display-buffer-fullframe-status-v1)
-
-(evil-leader/set-key <span style="color: #008000;">"g q"</span> 'with-editor-cancel)
 </pre>
 </div>
 </div>
@@ -2049,6 +2053,7 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 (<span style="color: #0000FF;">NVNF</span> r-notes <span style="color: #008000;">"R notes"</span> <span style="color: #008000;">"r-notes.org"</span> <span style="color: #008000;">"r"</span>)
 (<span style="color: #0000FF;">NVNF</span> ubuntu-notes <span style="color: #008000;">"Ubuntu/Linux notes"</span> <span style="color: #008000;">"linux-notes.org"</span> <span style="color: #008000;">"u"</span>)
 
+(<span style="color: #0000FF;">NVD</span> pypfilt <span style="color: #008000;">"Pypfilt notes"</span> <span style="color: #008000;">"~/public-site/org/notes/pypfilt/fake.org"</span> <span style="color: #008000;">"1"</span>)
 (<span style="color: #0000FF;">NVD</span> library <span style="color: #008000;">"Library"</span> <span style="color: #008000;">"~/Documents/library/fake.org"</span> <span style="color: #008000;">"l"</span>)
 (<span style="color: #0000FF;">NVD</span> manuscripts <span style="color: #008000;">"Manuscripts"</span> <span style="color: #008000;">"~/Documents/manuscripts/fake.org"</span> <span style="color: #008000;">"m"</span>)
 (<span style="color: #0000FF;">NVD</span> music <span style="color: #008000;">"Music"</span> <span style="color: #008000;">"~/Music/fake.org"</span> <span style="color: #008000;">"M"</span>)
@@ -2092,9 +2097,9 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 </div>
 </div>
 
-<div id="outline-container-org1939d88" class="outline-3">
-<h3 id="org1939d88">STUFF 9</h3>
-<div class="outline-text-3" id="text-org1939d88">
+<div id="outline-container-org7d0395d" class="outline-3">
+<h3 id="org7d0395d">Copilot</h3>
+<div class="outline-text-3" id="text-org7d0395d">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Copilot</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=======</span>
@@ -2103,16 +2108,15 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">dependencies yourself: s, editorconfig which are emacs packages and</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">node.js.</span>
 <span style="color: #8D8D84;">;;</span>
-
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">To enable `</span><span style="color: #D0372D; font-style: italic;">copilot</span><span style="color: #8D8D84; font-style: italic;">' on your buffer, use SPC t c.</span>
+<span style="color: #8D8D84;">;;</span>
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">copilot</span>
   <span style="color: #006FE0;">:defer</span> 1
   <span style="color: #006FE0;">:config</span>
   (evil-leader/set-key <span style="color: #008000;">"t c"</span> 'copilot-mode)
   (<span style="color: #0000FF;">setq</span> copilot-node-executable <span style="color: #008000;">"~/.nvm/versions/node/v17.3.1/bin/node"</span>)
   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">(setq copilot-node-executable "/usr/bin/node")</span>
-  <span style="color: #006FE0;">:load-path</span> <span style="color: #008000;">"~/.emacs.d/copilot.el/"</span>
-  <span style="color: #006FE0;">:hook</span> ((python-mode . copilot-mode)
-         (ess-r-mode . copilot-mode)))
+  <span style="color: #006FE0;">:load-path</span> <span style="color: #008000;">"~/.emacs.d/copilot.el/"</span>)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-copilot-tab</span> ()
   <span style="color: #036A07;">"Accept the current suggestion provided by copilot."</span>
@@ -2133,9 +2137,16 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 (<span style="color: #0000FF;">with-eval-after-load</span> 'copilot
   (<span style="color: #0000FF;">evil-define-key</span> 'insert copilot-mode-map
     (kbd <span style="color: #008000;">"C-&lt;tab&gt;"</span>) #'nice-copilot-by-line))
+</pre>
+</div>
+</div>
+</div>
 
-
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Explore new worlds</span>
+<div id="outline-container-org1939d88" class="outline-3">
+<h3 id="org1939d88">STUFF 9</h3>
+<div class="outline-text-3" id="text-org1939d88">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Explore new worlds</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">==================</span>
 
 <span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Work out how to browse gopher with =gopher.el=.</span>
@@ -2161,8 +2172,8 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <h2 id="org5170ca2">GNU Emacs</h2>
 <div class="outline-text-2" id="text-org5170ca2">
 <p>
-The notes here are intended to deal exclusively with GNU emacs without
-the use of packages other than those that are provided with emacs.
+The notes here are intended to deal exclusively with GNU emacs without the use
+of packages other than those that are provided with emacs.
 </p>
 </div>
 
@@ -2191,10 +2202,11 @@ Follow the instructions in the <code>INSTALL</code> file to build emacs.
 <li>This seems to just be <code>./configure</code> then <code>make</code> then <code>sudo make install</code>.
 <ul class="org-ul">
 <li><code>./configure --with-native-compilation --with-rsvg</code>.</li>
+<li>If you cannot find the <code>configure</code> script, you may need to run <code>autogen.sh</code>
+first.</li>
 </ul></li>
-<li>If you cannot find the <code>configure</code> script, you may need to run <code>autogen.sh</code> first.</li>
 <li>If you have spare compute you can use multiple jobs to speed up the
-compilation with <code>make -j [N]</code> to use <code>N</code> jobs during compilation</li>
+compilation with <code>make -j[N]</code> to use <code>N</code> jobs during compilation</li>
 </ul>
 </div>
 
@@ -2202,6 +2214,8 @@ compilation with <code>make -j [N]</code> to use <code>N</code> jobs during comp
 <h4 id="orgcbbfe39">Notes</h4>
 <div class="outline-text-4" id="text-orgcbbfe39">
 <ul class="org-ul">
+<li><code>emacs-29.1</code> on the work laptop: <code>./configure --with-json --with-rsvg
+  --with-native-compilation --with-imagemagick CFLAGS</code>'-g3 -O3'=</li>
 <li><code>emacs-29.0.60</code> on a new laptop:
 <code>./configure --with-native-compilation --with-tree-sitter --without-x --with-pgtk</code>
 because it uses Wayland.</li>
@@ -2387,7 +2401,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-01 Tue 08:52</p>
+<p class="date">Created: 2023-08-08 Tue 09:44</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
