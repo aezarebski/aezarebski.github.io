@@ -63,3 +63,10 @@ git add notes/tutoring-notes.html
 # The nicemacs stuff
 git add misc/nicemacs/nicemacs.html
 git add misc/nicemacs/nicemacs-v2.html
+
+# The recipes
+git add misc/recipes/img/*.png
+git add misc/recipes/index.html
+git add misc/recipes/recipe-style.css
+git add misc/recipes/butternut-squash-risotto.html
+git add misc/recipes/paneer-korma.html

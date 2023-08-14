@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-08 Tue 09:44 -->
+<!-- 2023-08-15 Tue 09:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org9424f19" class="figure">
+<div id="org2058ba9" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -328,6 +328,8 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-08</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">org-log-done</span><span style="color: #8D8D84; font-style: italic;">' to record when tasks where completed.</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Upgrade to Emacs 29.1 and enable smooth scrolling.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-07</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Re-organised the themeing and started Leuven.</span>
@@ -436,11 +438,7 @@ scrolling (which gives a smoother scroll).
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">evil</span>
   <span style="color: #006FE0;">:ensure</span> t
   <span style="color: #006FE0;">:init</span>
-  (evil-mode 1)
-  <span style="color: #006FE0;">:config</span>
-  (<span style="color: #0000FF;">setq</span> scroll-margin 2
-        scroll-conservatively 101
-        scroll-preserve-screen-position 1))
+  (evil-mode 1))
 
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">evil-leader</span>
   <span style="color: #006FE0;">:ensure</span> t
@@ -488,7 +486,7 @@ scrolling (which gives a smoother scroll).
 <span style="color: #8D8D84;">;;    </span><span style="color: #8D8D84; font-style: italic;">$ fc-cache -f -v</span>
 <span style="color: #8D8D84;">;;</span>
 (set-frame-font <span style="color: #008000;">"JetBrains Mono"</span> nil t)
-(ligature-set-ligatures 'prog-mode '(<span style="color: #008000;">"|&gt;"</span> <span style="color: #008000;">"&lt;-"</span> <span style="color: #008000;">"=="</span> <span style="color: #008000;">"!="</span> <span style="color: #008000;">"&gt;="</span> <span style="color: #008000;">"&lt;="</span>))
+(ligature-set-ligatures 'prog-mode '(<span style="color: #008000;">"|&gt;"</span> <span style="color: #008000;">"&lt;-"</span> <span style="color: #008000;">"&lt;&lt;-"</span> <span style="color: #008000;">"=="</span> <span style="color: #008000;">"!="</span> <span style="color: #008000;">"&gt;="</span> <span style="color: #008000;">"&lt;="</span>))
 (global-ligature-mode nil)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">toggle-ligatures</span> ()
@@ -510,7 +508,18 @@ scrolling (which gives a smoother scroll).
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Look stunning</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-------------</span>
 <span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">`</span><span style="color: #D0372D; font-style: italic;">pixel-scroll-precision-mode</span><span style="color: #8D8D84; font-style: italic;">' means you can have smooth scrolling</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">if you have a compatible mouse.</span>
+<span style="color: #8D8D84;">;;</span>
+
 (tool-bar-mode -1)                      <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">remove the tool bar</span>
+
+(pixel-scroll-precision-mode 1)
+(<span style="color: #0000FF;">setq</span> pixel-dead-time 0)
+
+(<span style="color: #0000FF;">setq</span> scroll-margin 2
+      scroll-conservatively 101
+      scroll-preserve-screen-position 1)
 
 (<span style="color: #0000FF;">setq-default</span> scroll-bar-width 10)
 (<span style="color: #0000FF;">setq-default</span> left-fringe-width 10)
@@ -746,11 +755,11 @@ Get information on partial keys to help you remember/discover functionality.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The which-key package is a great way to be reminded of what keys</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">are available from the start of a key sequence.</span>
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">which-key</span>)
-(which-key-mode)
-(<span style="color: #0000FF;">setq</span> which-key-idle-delay 0.3)
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">which-key</span>)
-(which-key-mode)
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">which-key</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:config</span>
+  (which-key-mode)
+  (<span style="color: #0000FF;">setq</span> which-key-idle-delay 0.3))
 
 (<span style="color: #0000FF;">setq</span> key-description-pairs
       '((<span style="color: #008000;">"SPC a"</span> . <span style="color: #008000;">"Agenda (org-mode)"</span>)
@@ -931,7 +940,19 @@ this is more convenient.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">dired</span>
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Dired</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-----</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- R :: mv</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- C :: cp</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- + :: mkdir</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- - :: cd ../</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- m :: mark a file</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- u :: unmark a file</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- d :: flag file for deletion</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- x :: execute deletion</span>
+<span style="color: #8D8D84;">;;</span>
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">dired</span>
   <span style="color: #006FE0;">:bind</span> (<span style="color: #006FE0;">:map</span> dired-mode-map
               (<span style="color: #008000;">"-"</span> . dired-up-directory))
   <span style="color: #006FE0;">:config</span>
@@ -947,6 +968,29 @@ installed by default and is not no the package repositories, so if you have
 <code>:ensure t</code> it will throw a warning saying it is not installed in the expected
 way. Just removing <code>:ensure t</code> fixes it though.
 </p>
+</div>
+
+<div id="outline-container-org7e804de" class="outline-4">
+<h4 id="org7e804de">Searching</h4>
+<div class="outline-text-4" id="text-org7e804de">
+<p>
+The following advice from the emacs manual may be useful if you are trying to
+locate some files.
+</p>
+
+<blockquote>
+<p>
+To search for files with names matching a wildcard pattern use <code>M-x
+find-name-dired</code>. It reads arguments DIRECTORY and PATTERN, and chooses all the
+files in DIRECTORY or its subdirectories whose individual names match PATTERN.
+</p>
+</blockquote>
+
+<p>
+There is also the <code>grep</code> command for searching within files and the
+<code>find</code> command for searching based on the filename.
+</p>
+</div>
 </div>
 </div>
 
@@ -1141,12 +1185,20 @@ Ibuffer include
 
 (<span style="color: #0000FF;">setq</span> sentence-end-double-space nil)
 
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">flyspell</span>)
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">writegood-mode</span>)
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">lorem-ipsum</span>)                  <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">provide dummy text</span>
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">flyspell</span>
+  <span style="color: #006FE0;">:config</span>
+  (<span style="color: #0000FF;">setq</span> ispell-program-name <span style="color: #008000;">"aspell"</span>)
+  (<span style="color: #0000FF;">setq</span> ispell-personal-dictionary <span style="color: #008000;">"~/.aspell.en.pws"</span>)
+  (set-face-attribute 'flyspell-duplicate nil
+                      <span style="color: #006FE0;">:underline</span> nil
+                      <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
+                      <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
+  (set-face-attribute 'flyspell-incorrect nil
+                      <span style="color: #006FE0;">:underline</span> nil
+                      <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
+                      <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>))
 
-(<span style="color: #0000FF;">setq</span> ispell-program-name <span style="color: #008000;">"aspell"</span>)
-(<span style="color: #0000FF;">setq</span> ispell-personal-dictionary <span style="color: #008000;">"~/.aspell.en.pws"</span>)
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">lorem-ipsum</span>)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-diff-dictionaries</span> ()
   <span style="color: #036A07;">"Run ediff on the current ispell-personal-dictionary and the</span>
@@ -1156,21 +1208,15 @@ Ibuffer include
          (concat nice-resources-dir <span style="color: #008000;">"/aspell.en.pws"</span>)))
     (ediff-files ispell-personal-dictionary backup-dictionary)))
 
-(set-face-attribute 'flyspell-duplicate nil
-                    <span style="color: #006FE0;">:underline</span> nil
-                    <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
-                    <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
-(set-face-attribute 'flyspell-incorrect nil
-                    <span style="color: #006FE0;">:underline</span> nil
-                    <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
-                    <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
-
 (evil-leader/set-key
   <span style="color: #008000;">"t S"</span> 'flyspell-mode <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">toggle flyspell on/off.</span>
   <span style="color: #008000;">"S b"</span> 'flyspell-buffer
+  <span style="color: #008000;">"S n"</span> 'flyspell-goto-next-error
   <span style="color: #008000;">"S r"</span> 'flyspell-region
   <span style="color: #008000;">"S c"</span> 'flyspell-correct-word-before-point
   <span style="color: #008000;">"S d"</span> 'nice-diff-dictionaries)
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">writegood-mode</span>)
 
 (<span style="color: #0000FF;">setq</span> words-to-add
       '(<span style="color: #008000;">"many"</span> <span style="color: #008000;">"various"</span> <span style="color: #008000;">"very"</span> <span style="color: #008000;">"quite"</span> <span style="color: #008000;">"somewhat"</span> <span style="color: #008000;">"several"</span>
@@ -1191,6 +1237,14 @@ Ibuffer include
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Be powerful with packages</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=========================</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Obfuscate the text on the screen if there is no movement for 60</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">seconds.</span>
+(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">zone</span>)
+(zone-when-idle 0)
+(<span style="color: #0000FF;">setq</span> zone-programs [zone-pgm-whack-chars])
+(evil-leader/set-key <span style="color: #008000;">"z z"</span> 'zone)
+
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">NXML</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">----</span>
@@ -1220,8 +1274,10 @@ I have a collection of yasnippets <a href="https://github.com/aezarebski/whipper
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">See https://github.com/aezarebski/whipper-snipper</span>
 
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">yasnippet</span>)
-(yas-global-mode 1)
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">yasnippet</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:config</span>
+  (yas-global-mode 1))
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-load-snippets</span> ()
   <span style="color: #036A07;">"Load the snippets in ~/.emacs.d/snippets."</span>
@@ -1435,7 +1491,7 @@ version of an S-expression on the kill ring.
   (evil-leader/set-key-for-mode 'ess-r-mode
     <span style="color: #008000;">"m d t"</span> 'ess-r-devtools-test-package
     <span style="color: #008000;">"m d l"</span> 'ess-r-devtools-load-package
-    <span style="color: #008000;">"m d b"</span> 'ess-r-devtools-build-package
+    <span style="color: #008000;">"m d b"</span> 'ess-r-devtools-build
     <span style="color: #008000;">"m d i"</span> 'ess-r-devtools-install-package
     <span style="color: #008000;">"m d c"</span> 'ess-r-devtools-check-package
     <span style="color: #008000;">"m d d"</span> 'ess-r-devtools-document-package
@@ -1446,8 +1502,11 @@ version of an S-expression on the kill ring.
     <span style="color: #008000;">"m c i"</span> 'indent-region
     <span style="color: #008000;">"m '"</span> 'ess-switch-to-inferior-or-script-buffer))
 
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">ess-site</span>)
-(<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">quarto-mode</span>)
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">ess-site</span>
+  <span style="color: #006FE0;">:ensure</span> t)
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">quarto-mode</span>
+  <span style="color: #006FE0;">:ensure</span> t)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-code-lint-buffer-r</span> ()
   <span style="color: #036A07;">"Lint the current R buffer using lintr."</span>
@@ -1752,9 +1811,11 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">S-&lt;left/right&gt;</span><span style="color: #8D8D84; font-style: italic;">' moves the scheduled date backwards/forwards</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">r</span><span style="color: #8D8D84; font-style: italic;">' rebuilds the agenda view</span>
 <span style="color: #8D8D84;">;;</span>
-(<span style="color: #0000FF;">setq</span> org-agenda-start-day <span style="color: #008000;">"-14d"</span>)
-(<span style="color: #0000FF;">setq</span> org-agenda-span 30)
-(<span style="color: #0000FF;">setq</span> org-agenda-start-on-weekday nil)
+(<span style="color: #0000FF;">setq</span> org-agenda-start-day <span style="color: #008000;">"-14d"</span>
+      org-agenda-span 30
+      org-agenda-start-on-weekday nil
+      org-log-done 'time
+      org-log-schedule 'time)
 
 (<span style="color: #0000FF;">setq</span> org-todo-keywords
       '((sequence <span style="color: #008000;">"</span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold;">TODO</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
@@ -1916,6 +1977,17 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
          <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"png</span><span style="color: #008000; font-weight: bold;">\\</span><span style="color: #008000; font-weight: bold;">|</span><span style="color: #008000;">jpg</span><span style="color: #008000; font-weight: bold;">\\</span><span style="color: #008000; font-weight: bold;">|</span><span style="color: #008000;">pdf"</span>
          <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/misc/matplotlib/"</span>
          <span style="color: #006FE0;">:publishing-function</span> org-publish-attachment)
+        (<span style="color: #008000;">"website-misc-recipes"</span>
+         <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/misc/recipes/"</span>
+         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"org"</span>
+         <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/misc/recipes/"</span>
+         <span style="color: #006FE0;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #008000;">"website-misc-recipes-static"</span>
+         <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/misc/recipes/"</span>
+         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"png</span><span style="color: #008000; font-weight: bold;">\\</span><span style="color: #008000; font-weight: bold;">|</span><span style="color: #008000;">css"</span>
+         <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/misc/recipes/"</span>
+         <span style="color: #006FE0;">:recursive</span> ()
+         <span style="color: #006FE0;">:publishing-function</span> org-publish-attachment)
         (<span style="color: #008000;">"review2-org"</span>
          <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/Documents/bibliography/review2"</span>
          <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"org"</span>
@@ -1951,11 +2023,15 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
                       <span style="color: #008000;">"website-misc-latex-static"</span>
                       <span style="color: #008000;">"website-misc-tikz-org-files"</span>
                       <span style="color: #008000;">"website-misc-tikz-static"</span>))
+        (<span style="color: #008000;">"recipes"</span>
+         <span style="color: #006FE0;">:components</span> (<span style="color: #008000;">"website-misc-recipes"</span>
+                      <span style="color: #008000;">"website-misc-recipes-static"</span>))
         (<span style="color: #008000;">"website"</span>
          <span style="color: #006FE0;">:components</span> (<span style="color: #008000;">"website-notes-org-files"</span>
                       <span style="color: #008000;">"website-images-static"</span>
                       <span style="color: #008000;">"website-lists-org-files"</span>
                       <span style="color: #008000;">"nicemacs-org-files"</span>
+                      <span style="color: #008000;">"recipes"</span>
                       <span style="color: #008000;">"review"</span>
                       <span style="color: #008000;">"latex"</span>
                       <span style="color: #008000;">"python"</span>
@@ -2401,7 +2477,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-08 Tue 09:44</p>
+<p class="date">Created: 2023-08-15 Tue 09:11</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
