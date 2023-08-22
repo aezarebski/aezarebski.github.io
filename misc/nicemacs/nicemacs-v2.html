@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-15 Tue 09:11 -->
+<!-- 2023-08-22 Tue 11:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org2058ba9" class="figure">
+<div id="org7e60ac7" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -297,7 +297,6 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">dired</span><span style="color: #8D8D84; font-style: italic;">'</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">editorconfig</span><span style="color: #8D8D84; font-style: italic;">' EditorConfig Emacs Plugin</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">ess</span><span style="color: #8D8D84; font-style: italic;">' Emacs Speaks Statistics</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">ess-site</span><span style="color: #8D8D84; font-style: italic;">'</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">evil</span><span style="color: #8D8D84; font-style: italic;">' Extensible Vi layer for Emacs.</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">evil-collection</span><span style="color: #8D8D84; font-style: italic;">' A set of keybindings for Evil mode</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">evil-leader</span><span style="color: #8D8D84; font-style: italic;">' let there be &lt;leader&gt;</span>
@@ -328,6 +327,8 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-08</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">indent-guide</span><span style="color: #8D8D84; font-style: italic;">' to visualise indentation in `</span><span style="color: #D0372D; font-style: italic;">python-mode</span><span style="color: #8D8D84; font-style: italic;">'.</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">org-agenda-window-setup</span><span style="color: #8D8D84; font-style: italic;">' to open agenda in a new frame.</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">org-log-done</span><span style="color: #8D8D84; font-style: italic;">' to record when tasks where completed.</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Upgrade to Emacs 29.1 and enable smooth scrolling.</span>
 <span style="color: #8D8D84;">;;</span>
@@ -849,7 +850,8 @@ between files.
   (custom-set-faces
    '(winum-face
      ((t
-       (<span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>
+       (<span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #000000;">black</span><span style="color: #008000;">"</span>
+        <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffd700;">gold</span><span style="color: #008000;">"</span>
         <span style="color: #006FE0;">:weight</span> bold
         <span style="color: #006FE0;">:underline</span> nil
         <span style="color: #006FE0;">:height</span> 1.1))))))
@@ -1485,9 +1487,12 @@ version of an S-expression on the kill ring.
 
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">ess</span>
   <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:init</span>
+  (<span style="color: #0000FF;">setq</span> ess-etc-directory <span style="color: #008000;">"~/.emacs.d/nice-packages/etc"</span>)
   <span style="color: #006FE0;">:mode</span> (<span style="color: #008000;">"\\.Rmd"</span> . Rmd-mode)
   <span style="color: #006FE0;">:config</span>
-  (<span style="color: #0000FF;">setq</span> ess-default-style 'DEFAULT)
+  (<span style="color: #0000FF;">setq</span> ess-default-style 'DEFAULT
+        ess-history-file nil)
   (evil-leader/set-key-for-mode 'ess-r-mode
     <span style="color: #008000;">"m d t"</span> 'ess-r-devtools-test-package
     <span style="color: #008000;">"m d l"</span> 'ess-r-devtools-load-package
@@ -1501,9 +1506,6 @@ version of an S-expression on the kill ring.
     <span style="color: #008000;">"m c l"</span> 'nice-code-lint-buffer-r
     <span style="color: #008000;">"m c i"</span> 'indent-region
     <span style="color: #008000;">"m '"</span> 'ess-switch-to-inferior-or-script-buffer))
-
-(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">ess-site</span>
-  <span style="color: #006FE0;">:ensure</span> t)
 
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">quarto-mode</span>
   <span style="color: #006FE0;">:ensure</span> t)
@@ -1589,6 +1591,13 @@ version of an S-expression on the kill ring.
   <span style="color: #006FE0;">:config</span>
   (<span style="color: #0000FF;">setq</span> python-shell-interpreter <span style="color: #008000;">"python3"</span>)
   (<span style="color: #0000FF;">setq</span> python-indent-offset 4))
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">indent-guide</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:hook</span> (python-mode . indent-guide-mode)
+  <span style="color: #006FE0;">:config</span>
+  (<span style="color: #0000FF;">setq</span> indent-guide-char <span style="color: #008000;">"|"</span>)
+  (<span style="color: #0000FF;">setq</span> indent-guide-recursive t))
 
 (evil-leader/set-key-for-mode 'python-mode
   <span style="color: #008000;">"m v a"</span> 'pyvenv-activate
@@ -1796,6 +1805,13 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <div id="outline-container-orgdf8321f" class="outline-4">
 <h4 id="orgdf8321f">Agenda and calendar</h4>
 <div class="outline-text-4" id="text-orgdf8321f">
+<ul class="org-ul">
+<li>I have had some weird warning messages from <code>org-persist</code> about there being
+difficulty reading some org-mode related data from the cache: "Emacs reader
+failed to read data in &#x2026;". I was able to resolve this by closing emacs,
+deleting the cache files, and then it worked perfectly when I restarted emacs.</li>
+</ul>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Org-agenda</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">----------</span>
@@ -1814,6 +1830,7 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 (<span style="color: #0000FF;">setq</span> org-agenda-start-day <span style="color: #008000;">"-14d"</span>
       org-agenda-span 30
       org-agenda-start-on-weekday nil
+      org-agenda-window-setup 'other-frame
       org-log-done 'time
       org-log-schedule 'time)
 
@@ -2477,7 +2494,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-15 Tue 09:11</p>
+<p class="date">Created: 2023-08-22 Tue 11:58</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
