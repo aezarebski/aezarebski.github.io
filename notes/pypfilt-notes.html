@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-28 Mon 16:51 -->
+<!-- 2023-08-29 Tue 10:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>pypfilt-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="org5c7dda9" class="figure">
+<div id="orge3788af" class="figure">
 <p><img src="../images/pypfilt-logo.png" alt="pypfilt-logo.png" width="250px" />
 </p>
 </div>
@@ -246,6 +246,13 @@
 <ul>
 <li><a href="#org0d9250f">Pypfilt</a></li>
 <li><a href="#org51da6d9">Terminology</a></li>
+<li><a href="#org40734b4">Examples: flipping coins</a>
+<ul>
+<li><a href="#orgb02fb3c">Data</a></li>
+<li><a href="#orgf30ea5c">Scenario file</a></li>
+<li><a href="#org42e4e0f">Main script</a></li>
+</ul>
+</li>
 <li><a href="#orgb51cf18">Examples: birth-death process</a>
 <ul>
 <li><a href="#noisy-count-obs-model">Observation model</a></li>
@@ -289,6 +296,204 @@ population size changes through time.</dd>
 e.g., estimating the birth rate and the future population sizes.
 Think: "an imagined sequence of events."</dd>
 </dl>
+</div>
+</div>
+
+<div id="outline-container-org40734b4" class="outline-2">
+<h2 id="org40734b4">Examples: flipping coins</h2>
+<div class="outline-text-2" id="text-org40734b4">
+<p>
+Consider the problem of estimating the probability a coin comes up
+heads. Let \(\theta\) be the probability of heads. Our data are the
+random variables \(H_{i}|\theta\sim\text{Bernoulli}(\theta)\) for
+\(i=1,\ldots,5\). We will use the prior distribution
+\(\theta\sim\text{Beta}(1, 1)\). For \(\sum_{i=1}^{5} H_{i} = 3\), the
+posterior distribution is \(\theta|\mathcal{D}\sim\text{Beta}(4,3)\).
+</p>
+
+<p>
+A comparison of the credible intervals for the analytic solution and
+the result from using a particle filter (with only 100 particles) is
+shown in the following figure.
+</p>
+
+
+<div id="orgbe4f867" class="figure">
+<p><img src="./pypfilt/coin-example.png" alt="coin-example.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Credible intervals for the probability of heads based on 3 heads in 5 flips.</p>
+</div>
+</div>
+
+<div id="outline-container-orgb02fb3c" class="outline-3">
+<h3 id="orgb02fb3c">Data</h3>
+<div class="outline-text-3" id="text-orgb02fb3c">
+<p>
+Here is our data, saved in a file <code>coin-results.ssv</code>.
+</p>
+
+<pre class="example">
+time value
+1.0 1
+2.0 0
+3.0 1
+4.0 0
+5.0 1
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgf30ea5c" class="outline-3">
+<h3 id="orgf30ea5c">Scenario file</h3>
+<div class="outline-text-3" id="text-orgf30ea5c">
+<p>
+Here is a scenario file describing the inference problem.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-toml">[<span style="color: #6434A3;">components</span>]
+<span style="color: #BA36A5;">model</span> = <span style="color: #008000;">"coin_example.ConstantParameter"</span>
+<span style="color: #BA36A5;">time</span> = <span style="color: #008000;">"pypfilt.Scalar"</span>
+<span style="color: #BA36A5;">sampler</span> = <span style="color: #008000;">"pypfilt.sampler.LatinHypercube"</span>
+<span style="color: #BA36A5;">summary</span> = <span style="color: #008000;">"pypfilt.summary.HDF5"</span>
+
+[<span style="color: #6434A3;">time</span>]
+<span style="color: #BA36A5;">start</span> = 0.0
+<span style="color: #BA36A5;">until</span> = 5.0
+<span style="color: #BA36A5;">steps_per_unit</span> = 1
+<span style="color: #BA36A5;">summaries_per_unit</span> = 1
+
+[<span style="color: #6434A3;">prior</span>]
+<span style="color: #BA36A5;">theta</span> = { name = <span style="color: #008000;">"uniform"</span>, args.loc = 0.0, args.scale = 1.0 }
+
+[<span style="color: #6434A3;">observations.theta</span>]
+<span style="color: #BA36A5;">model</span> = <span style="color: #008000;">"coin_example.BernoulliObservation"</span>
+<span style="color: #BA36A5;">file</span> = <span style="color: #008000;">"coin-results.ssv"</span>
+
+[<span style="color: #6434A3;">filter</span>]
+<span style="color: #BA36A5;">particles</span> = 100
+<span style="color: #BA36A5;">prng_seed</span> = 1
+<span style="color: #BA36A5;">history_window</span> = 0
+<span style="color: #BA36A5;">resample.threshold</span> = 0.25
+
+[<span style="color: #6434A3;">scenario.inference</span>]
+<span style="color: #BA36A5;">summary.tables.model_cints.component</span> = <span style="color: #008000;">"pypfilt.summary.ModelCIs"</span>
+<span style="color: #BA36A5;">summary.tables.model_cints.credible_intervals</span> = [ 10, 20, 30, 40, 50, 60, 70, 80, 90 ]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org42e4e0f" class="outline-3">
+<h3 id="org42e4e0f">Main script</h3>
+<div class="outline-text-3" id="text-org42e4e0f">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">coin-example.py</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">program: Coin flipping example</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">programmer: Alexander E. Zarebski</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">date: 2023-08-28</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">description: A simple example of parameter estimation with the fit</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">method in a case where we know the solution analytically</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #0000FF;">import</span> scipy.stats
+<span style="color: #0000FF;">import</span> pypfilt
+<span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+<span style="color: #0000FF;">import</span> matplotlib.image <span style="color: #0000FF;">as</span> mpimg
+<span style="color: #0000FF;">import</span> matplotlib <span style="color: #0000FF;">as</span> matplotlib
+matplotlib.use(<span style="color: #008000;">'QtAgg'</span>)
+<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
+<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">************************************************</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">*                                              *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">* Define the simulation and observation models *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">*                                              *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">************************************************</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #0000FF;">class</span> <span style="color: #6434A3;">ConstantParameter</span>(pypfilt.model.Model):
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">field_types</span>(<span style="color: #0000FF;">self</span>, ctx):
+        <span style="color: #0000FF;">return</span> [(<span style="color: #008000;">'theta'</span>, np.dtype(<span style="color: #006FE0;">float</span>))]
+
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">init</span>(<span style="color: #0000FF;">self</span>, ctx, vec):
+        <span style="color: #BA36A5;">prior</span> = ctx.data[<span style="color: #008000;">'prior'</span>]
+        <span style="color: #BA36A5;">vec</span>[<span style="color: #008000;">'theta'</span>] = prior[<span style="color: #008000;">'theta'</span>]
+
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">update</span>(<span style="color: #0000FF;">self</span>, ctx, time_step, is_forecast, prev, curr):
+        <span style="color: #BA36A5;">curr</span>[:] = prev[:]
+
+
+<span style="color: #0000FF;">class</span> <span style="color: #6434A3;">BernoulliObservation</span>(pypfilt.obs.Univariate):
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">distribution</span>(<span style="color: #0000FF;">self</span>, ctx, snapshot):
+        <span style="color: #BA36A5;">p</span> = snapshot.state_vec[<span style="color: #0000FF;">self</span>.unit]
+        <span style="color: #0000FF;">return</span> scipy.stats.bernoulli(p)
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">***************************************************</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">*                                                 *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">* Use the particle filter to sample the posterior *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">*                                                 *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">***************************************************</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #BA36A5;">inst</span> = <span style="color: #006FE0;">list</span>(pypfilt.load_instances(<span style="color: #008000;">"coin.toml"</span>))[0]
+<span style="color: #BA36A5;">ctx</span> = inst.build_context()
+<span style="color: #BA36A5;">fit</span> = pypfilt.fit(ctx, filename=<span style="color: #D0372D;">None</span>)
+<span style="color: #BA36A5;">pst_df</span> = pd.DataFrame(fit.estimation.tables[<span style="color: #008000;">'model_cints'</span>])
+<span style="color: #BA36A5;">pst_df</span> = pst_df[pst_df[<span style="color: #008000;">'time'</span>] == 5.0][[<span style="color: #008000;">'prob'</span>,<span style="color: #008000;">'ymin'</span>, <span style="color: #008000;">'ymax'</span>]]
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">************************************************</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">*                                              *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">* Plot the approximate and analytic posteriors *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">*                                              *</span>
+<span style="color: #8D8D84;">#  </span><span style="color: #8D8D84; font-style: italic;">************************************************</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #8D8D84;">#</span>
+<span style="color: #BA36A5;">coin_flips</span> = pd.read_table(<span style="color: #008000;">"coin-results.ssv"</span>, sep = <span style="color: #008000;">' '</span>)[<span style="color: #008000;">'value'</span>]
+<span style="color: #BA36A5;">num_flips</span> = coin_flips.size
+<span style="color: #BA36A5;">num_heads</span> = coin_flips.<span style="color: #006FE0;">sum</span>()
+<span style="color: #BA36A5;">post_dist</span> = scipy.stats.beta(a = num_heads + 1, b = num_flips - num_heads + 1)
+
+<span style="color: #BA36A5;">plt_df</span> = pst_df.copy()
+<span style="color: #BA36A5;">plt_df</span>[<span style="color: #008000;">'ymax_beta'</span>] = post_dist.ppf(1 - 0.01 * 0.5 * (100 - plt_df[<span style="color: #008000;">'prob'</span>]))
+<span style="color: #BA36A5;">plt_df</span>[<span style="color: #008000;">'ymin_beta'</span>] = post_dist.ppf(0.01 * 0.5 * (100 - plt_df[<span style="color: #008000;">'prob'</span>]))
+<span style="color: #BA36A5;">plt_df</span> = pd.melt(plt_df,
+                 id_vars = [<span style="color: #008000;">'prob'</span>],
+                 value_vars = [<span style="color: #008000;">'ymin'</span>, <span style="color: #008000;">'ymax'</span>, <span style="color: #008000;">'ymin_beta'</span>, <span style="color: #008000;">'ymax_beta'</span>])
+<span style="color: #BA36A5;">plt_df</span>[<span style="color: #008000;">'type'</span>] = plt_df[<span style="color: #008000;">'variable'</span>].<span style="color: #006FE0;">apply</span>(<span style="color: #0000FF;">lambda</span> v: <span style="color: #008000;">'Analytic'</span> <span style="color: #0000FF;">if</span> (<span style="color: #008000;">'beta'</span> <span style="color: #0000FF;">in</span> v) <span style="color: #0000FF;">else</span> <span style="color: #008000;">'Particle filter'</span>)
+
+<span style="color: #BA36A5;">cri_p9</span> = (ggplot()
+          + geom_point(
+              data = plt_df,
+              mapping = aes(x = <span style="color: #008000;">"prob"</span>,
+                            y = <span style="color: #008000;">"value"</span>,
+                            color = <span style="color: #008000;">"type"</span>))
+          + geom_line(
+              data = plt_df,
+              mapping = aes(x = <span style="color: #008000;">"prob"</span>,
+                            y = <span style="color: #008000;">"value"</span>,
+                            color = <span style="color: #008000;">"type"</span>,
+                            group = <span style="color: #008000;">"variable"</span>))
+          + labs(title = <span style="color: #008000;">"Coin flipping example"</span>,
+                 y = <span style="color: #008000;">"Credible interval for theta"</span>,
+                 x = <span style="color: #008000;">"Coverage probability (%)"</span>,
+                 color = <span style="color: #008000;">"Method"</span>)
+          + theme_bw()
+
+    )
+cri_p9.save(<span style="color: #008000;">"coin-example.png"</span>,
+        height = 4.1, width = 5.8)
+</pre>
+</div>
+</div>
 </div>
 </div>
 
@@ -347,9 +552,9 @@ condition).
 </p>
 </div>
 
-<div id="outline-container-org69affb7" class="outline-4">
-<h4 id="org69affb7">Process model</h4>
-<div class="outline-text-4" id="text-org69affb7">
+<div id="outline-container-org2af9960" class="outline-4">
+<h4 id="org2af9960">Process model</h4>
+<div class="outline-text-4" id="text-org2af9960">
 <p>
 We start by defining a model for this process using \(\tau\)-leaping.
 </p>
@@ -384,9 +589,9 @@ data.
 </div>
 </div>
 
-<div id="outline-container-org8b81f10" class="outline-4">
-<h4 id="org8b81f10">Scenario file</h4>
-<div class="outline-text-4" id="text-org8b81f10">
+<div id="outline-container-org6efc77e" class="outline-4">
+<h4 id="org6efc77e">Scenario file</h4>
+<div class="outline-text-4" id="text-org6efc77e">
 <p>
 The simulation and estimation computations are specified with a TOML
 file <code>approx-bd-example.toml</code>.
@@ -462,9 +667,9 @@ specifying a prior distribution available.
 </div>
 </div>
 
-<div id="outline-container-orga9d9f28" class="outline-4">
-<h4 id="orga9d9f28">Main script</h4>
-<div class="outline-text-4" id="text-orga9d9f28">
+<div id="outline-container-org01b3ea6" class="outline-4">
+<h4 id="org01b3ea6">Main script</h4>
+<div class="outline-text-4" id="text-org01b3ea6">
 <p>
 Here is the main script that runs the simulation and estimation.
 </p>
@@ -553,7 +758,7 @@ Here are the <a href="#orgf1efed2">results</a> of the particle filter.
 <div id="orgf1efed2" class="figure">
 <p><img src="./pypfilt/tau-leap-bd-posterior-forecasts.png" alt="tau-leap-bd-posterior-forecasts.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 2: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 3: </span>Forecast of birth-death process</p>
 </div>
 
 <p>
@@ -602,7 +807,7 @@ Here are the <a href="#orgf641899">results</a> of the particle filter.
 <div id="orgf641899" class="figure">
 <p><img src="./pypfilt/tau-leap-bd-posterior-estimates.png" alt="tau-leap-bd-posterior-estimates.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 3: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 4: </span>Forecast of birth-death process</p>
 </div>
 </div>
 </div>
@@ -617,9 +822,9 @@ differential equation.
 </p>
 </div>
 
-<div id="outline-container-orgb18cf22" class="outline-4">
-<h4 id="orgb18cf22">Process model</h4>
-<div class="outline-text-4" id="text-orgb18cf22">
+<div id="outline-container-org0749d5f" class="outline-4">
+<h4 id="org0749d5f">Process model</h4>
+<div class="outline-text-4" id="text-org0749d5f">
 <p>
 We start by defining a model for this process which is adapted from
 <a href="https://pypfilt.readthedocs.io/en/0.8.0/how-to/index.html#implement-an-ordinary-differential-equation-ode-model">this example</a>.
@@ -652,9 +857,9 @@ We start by defining a model for this process which is adapted from
 </div>
 </div>
 
-<div id="outline-container-orgc282cd7" class="outline-4">
-<h4 id="orgc282cd7">Scenario file</h4>
-<div class="outline-text-4" id="text-orgc282cd7">
+<div id="outline-container-orgff47d98" class="outline-4">
+<h4 id="orgff47d98">Scenario file</h4>
+<div class="outline-text-4" id="text-orgff47d98">
 <p>
 The simulation and estimation computations are specified with a TOML
 file <code>ode-bd-example.toml</code>.
@@ -715,9 +920,9 @@ file <code>ode-bd-example.toml</code>.
 </div>
 </div>
 
-<div id="outline-container-org1b44fd0" class="outline-4">
-<h4 id="org1b44fd0">Main script</h4>
-<div class="outline-text-4" id="text-org1b44fd0">
+<div id="outline-container-orgf473cd6" class="outline-4">
+<h4 id="orgf473cd6">Main script</h4>
+<div class="outline-text-4" id="text-orgf473cd6">
 <p>
 Here is the main script that runs the simulation and estimation.
 </p>
@@ -814,7 +1019,7 @@ the figure below).
 <div id="org051efbf" class="figure">
 <p><img src="./pypfilt/ode-bd-example.png" alt="ode-bd-example.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 4: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 5: </span>Forecast of birth-death process</p>
 </div>
 
 <p>
@@ -867,7 +1072,7 @@ Here are the <a href="#org1405532">results</a> of the particle filter.
 <div id="org1405532" class="figure">
 <p><img src="./pypfilt/ode-bd-posterior-estimates.png" alt="ode-bd-posterior-estimates.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 5: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 6: </span>Forecast of birth-death process</p>
 </div>
 </div>
 </div>
@@ -881,9 +1086,9 @@ Consider the birth-death process modelled with a CTMC.
 </p>
 </div>
 
-<div id="outline-container-org2af9960" class="outline-4">
-<h4 id="org2af9960">Process model</h4>
-<div class="outline-text-4" id="text-org2af9960">
+<div id="outline-container-orgbdab41f" class="outline-4">
+<h4 id="orgbdab41f">Process model</h4>
+<div class="outline-text-4" id="text-orgbdab41f">
 <p>
 We start by defining a model for this process which is adapted from
 <a href="https://pypfilt.readthedocs.io/en/0.8.0/how-to/index.html#implement-a-continuous-time-markov-chain-ctmc-model">this example</a>.
@@ -956,9 +1161,9 @@ We start by defining a model for this process which is adapted from
 </div>
 </div>
 
-<div id="outline-container-orgf30ea5c" class="outline-4">
-<h4 id="orgf30ea5c">Scenario file</h4>
-<div class="outline-text-4" id="text-orgf30ea5c">
+<div id="outline-container-org941c782" class="outline-4">
+<h4 id="org941c782">Scenario file</h4>
+<div class="outline-text-4" id="text-org941c782">
 <p>
 The simulation and estimation computations are specified with a TOML
 file <code>ctmc-bd-example.toml</code>.
@@ -1021,9 +1226,9 @@ file <code>ctmc-bd-example.toml</code>.
 </div>
 </div>
 
-<div id="outline-container-org42e4e0f" class="outline-4">
-<h4 id="org42e4e0f">Main script</h4>
-<div class="outline-text-4" id="text-org42e4e0f">
+<div id="outline-container-org5255517" class="outline-4">
+<h4 id="org5255517">Main script</h4>
+<div class="outline-text-4" id="text-org5255517">
 <p>
 Here is the main script that runs the simulation and estimation.
 Because there is a substantial chance of the process going extinct, we
@@ -1123,7 +1328,7 @@ the figure below).
 <div id="org703eb85" class="figure">
 <p><img src="./pypfilt/ctmc-bd-posterior-forecasts.png" alt="ctmc-bd-posterior-forecasts.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 6: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 7: </span>Forecast of birth-death process</p>
 </div>
 
 <p>
@@ -1172,7 +1377,7 @@ Here are the <a href="#orgea6266c">results</a> of the particle filter.
 <div id="orgea6266c" class="figure">
 <p><img src="./pypfilt/ctmc-bd-posterior-estimates.png" alt="ctmc-bd-posterior-estimates.png" width="400px" />
 </p>
-<p><span class="figure-number">Figure 7: </span>Forecast of birth-death process</p>
+<p><span class="figure-number">Figure 8: </span>Forecast of birth-death process</p>
 </div>
 </div>
 </div>
@@ -1255,7 +1460,7 @@ matplotlib.use(<span style="color: #008000;">'QtAgg'</span>)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-28 Mon 16:51</p>
+<p class="date">Created: 2023-08-29 Tue 10:03</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

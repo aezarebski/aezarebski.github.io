@@ -56,6 +56,7 @@ git add notes/linux-notes.html
 git add notes/org-mode-notes.html
 git add notes/phylogenetics-notes.html
 git add notes/probability-notes.html
+git add notes/pypfilt-notes.html
 git add notes/python-notes.html
 git add notes/r-notes.html
 git add notes/tutoring-notes.html
