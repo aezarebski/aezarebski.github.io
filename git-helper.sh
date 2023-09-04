@@ -10,6 +10,14 @@ git add lists/movies-and-series.html
 git add lists/quotes.html
 git add lists/zarebski.bib
 
+# The plotnine gallery
+git add misc/plotnine/gallery.html
+
+for ix in $(seq -f "%02g" 1 4);
+do
+    git add ./misc/plotnine/fig$ix.png
+done
+
 # The TikZ gallery
 git add misc/tikz/gallery.html
 
