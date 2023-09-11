@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-09-05 Tue 09:13 -->
+<!-- 2023-09-12 Tue 09:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org50874dd" class="figure">
+<div id="org3d7706b" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -304,7 +304,7 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">evil-mc-extras</span><span style="color: #8D8D84; font-style: italic;">' Extra functionality for evil-mc</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">evil-surround</span><span style="color: #8D8D84; font-style: italic;">'</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">flyspell</span><span style="color: #8D8D84; font-style: italic;">'</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">hl-todo</span><span style="color: #8D8D84; font-style: italic;">' Highlight </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> and similar keywords</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">hl-todo</span><span style="color: #8D8D84; font-style: italic;">' Highlight TODO and similar keywords</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">htmlize</span><span style="color: #8D8D84; font-style: italic;">' Convert buffer text and decorations to HTML.</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">ligature</span><span style="color: #8D8D84; font-style: italic;">' Ligature support for Emacs.</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">lorem-ipsum</span><span style="color: #8D8D84; font-style: italic;">' Insert dummy pseudo Latin text</span>
@@ -325,6 +325,10 @@
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-09</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">IBuffer</span><span style="color: #8D8D84; font-style: italic;">' to manage buffers.</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">avy</span><span style="color: #8D8D84; font-style: italic;">' to jump to lines in a buffer using a character.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-08</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">indent-guide</span><span style="color: #8D8D84; font-style: italic;">' to visualise indentation in `</span><span style="color: #D0372D; font-style: italic;">python-mode</span><span style="color: #8D8D84; font-style: italic;">'.</span>
@@ -459,6 +463,11 @@ scrolling (which gives a smoother scroll).
   <span style="color: #006FE0;">:ensure</span> t
   <span style="color: #006FE0;">:config</span>
   (global-evil-surround-mode 1))
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">avy</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:config</span>
+  (evil-leader/set-key <span style="color: #008000;">"J"</span> 'avy-goto-line))
 </pre>
 </div>
 </div>
@@ -528,7 +537,7 @@ scrolling (which gives a smoother scroll).
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">I dislike trailing whitespace creeping into my files so the</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">following will make it visible and automatically remove it upon</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">saving. </span><span style="color: #00ffff; font-weight: bold; font-style: italic;">NOTE</span><span style="color: #8D8D84; font-style: italic;"> setting `</span><span style="color: #D0372D; font-style: italic;">show-trailing-whitespace</span><span style="color: #8D8D84; font-style: italic;">' globally leads to</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">saving. NOTE setting `</span><span style="color: #D0372D; font-style: italic;">show-trailing-whitespace</span><span style="color: #8D8D84; font-style: italic;">' globally leads to</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">some things being highlighted in other buffers such as `</span><span style="color: #D0372D; font-style: italic;">calendar</span><span style="color: #8D8D84; font-style: italic;">'</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">where they should not be hightlight. Doing it with</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">`</span><span style="color: #D0372D; font-style: italic;">nice-show-trailing-whitespace</span><span style="color: #8D8D84; font-style: italic;">' ensures it is set locally as</span>
@@ -558,10 +567,10 @@ scrolling (which gives a smoother scroll).
                 <span style="color: #006FE0;">:color</span> ,colour))))))
 
 (<span style="color: #0000FF;">setq</span> hl-todo-keyword-faces
-      `((<span style="color: #008000;">"</span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold;">TODO</span><span style="color: #008000;">"</span>   . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffc8c8;">#ffc8c8</span><span style="color: #008000;">"</span>))
-        (<span style="color: #008000;">"</span><span style="color: #ff00ff; font-weight: bold;">FIXME</span><span style="color: #008000;">"</span>  . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>))
-        (<span style="color: #008000;">"</span><span style="color: #00ffff; font-weight: bold;">NOTE</span><span style="color: #008000;">"</span>   . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #000000; background-color: #00ffff;">cyan</span><span style="color: #008000;">"</span>))
-        (<span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>   . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #0000ff;">blue</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #E6ECFF;">#E6ECFF</span><span style="color: #008000;">"</span>))))
+      `((<span style="color: #008000;">"TODO"</span>   . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffc8c8;">#ffc8c8</span><span style="color: #008000;">"</span>))
+        (<span style="color: #008000;">"FIXME"</span>  . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>))
+        (<span style="color: #008000;">"NOTE"</span>   . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #000000; background-color: #00ffff;">cyan</span><span style="color: #008000;">"</span>))
+        (<span style="color: #008000;">"DONE"</span>   . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #0000ff;">blue</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #E6ECFF;">#E6ECFF</span><span style="color: #008000;">"</span>))))
 
 (<span style="color: #0000FF;">setq</span> fill-column 70)
 
@@ -846,16 +855,14 @@ between files.
   <span style="color: #006FE0;">:ensure</span> t
   <span style="color: #006FE0;">:config</span>
   (winum-mode)
-  (<span style="color: #0000FF;">setq</span> winum-format <span style="color: #008000;">" %s "</span>)
-  (custom-set-faces
-   '(winum-face
-     ((t
-       (<span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #000000;">black</span><span style="color: #008000;">"</span>
-        <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffd700;">gold</span><span style="color: #008000;">"</span>
-        <span style="color: #006FE0;">:weight</span> bold
-        <span style="color: #006FE0;">:underline</span> nil
-        <span style="color: #006FE0;">:height</span> 1.1))))))
+  (<span style="color: #0000FF;">setq</span> winum-format <span style="color: #008000;">" %s "</span>))
 
+(set-face-attribute 'winum-face nil
+                    <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #000000;">black</span><span style="color: #008000;">"</span>
+                    <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffd700;">gold</span><span style="color: #008000;">"</span>
+                    <span style="color: #006FE0;">:weight</span> 'bold
+                    <span style="color: #006FE0;">:underline</span> nil
+                    <span style="color: #006FE0;">:height</span> 1.1)
 (evil-leader/set-key
   <span style="color: #008000;">"0"</span> 'winum-select-window-0
   <span style="color: #008000;">"1"</span> 'winum-select-window-1
@@ -907,12 +914,25 @@ between files.
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Shell stuff</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-----------</span>
 <span style="color: #8D8D84;">;;</span>
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-eshell</span> ()
+  <span style="color: #036A07;">"Open an existing or new eshell buffer in a vertical split."</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">let</span> ((eshell-buffer (get-buffer <span style="color: #008000;">"*eshell*"</span>))
+        (width (/ (frame-width) 2)))
+    (split-window-horizontally)
+    (other-window 1)
+    (window-resize nil (- width (window-width)) t)
+    (<span style="color: #0000FF;">if</span> eshell-buffer
+        (switch-to-buffer eshell-buffer)
+      (eshell))))
+
 (<span style="color: #0000FF;">setq</span> eshell-cmpl-ignore-case t)
 (evil-leader/set-key
   <span style="color: #008000;">"s e"</span> 'eshell
   <span style="color: #008000;">"s b"</span> (<span style="color: #0000FF;">lambda</span> () (<span style="color: #0000FF;">interactive</span>) (ansi-term <span style="color: #008000;">"/bin/bash"</span>))
   <span style="color: #008000;">"s i"</span> 'ielm
-  <span style="color: #008000;">"s r"</span> 'R)
+  <span style="color: #008000;">"s r"</span> 'R
+  <span style="color: #008000;">"'"</span> 'nice-eshell)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">cdf</span> (filepath)
   <span style="color: #036A07;">"Change the current directory in Eshell to the directory of</span>
@@ -1198,7 +1218,7 @@ Ibuffer include
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Write well</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">----------</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure the =dictionary= command so that it works off of a</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Configure the =dictionary= command so that it works off of a</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">local copy of Webster's</span>
 
 (<span style="color: #0000FF;">setq</span> sentence-end-double-space nil)
@@ -1543,7 +1563,7 @@ version of an S-expression on the kill ring.
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">MATLAB</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">------</span>
 <span style="color: #8D8D84;">;;</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> There should be a variable for the `</span><span style="color: #D0372D; font-style: italic;">nice-packages</span><span style="color: #8D8D84; font-style: italic;">' directory.</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO There should be a variable for the `</span><span style="color: #D0372D; font-style: italic;">nice-packages</span><span style="color: #8D8D84; font-style: italic;">' directory.</span>
 <span style="color: #8D8D84;">;;</span>
 
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">matlab-load</span>
@@ -1632,7 +1652,7 @@ version of an S-expression on the kill ring.
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Scheme/Racket</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-------------</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Work out how to start a repl properly, running the key does</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Work out how to start a repl properly, running the key does</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">not seem to work, I need to run the command via M-x directly.</span>
 
 (<span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">racket-mode</span>)
@@ -1656,12 +1676,12 @@ version of an S-expression on the kill ring.
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">LaTeX/BibTeX</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">------------</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure this so that there is a good way to search the key</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Configure this so that there is a good way to search the key</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">bibtex files, perhaps with a SQL type search</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure this so there is the command to convert ris to bib.</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Configure this so there is the command to convert ris to bib.</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Find a better way to search BIB files.</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Find a better way to search BIB files.</span>
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">most-recent-file</span> (files)
   <span style="color: #036A07;">"Return the most recent file from a list of FILES.</span>
@@ -1748,7 +1768,8 @@ version of an S-expression on the kill ring.
                             (car split-title))))))
     (<span style="color: #0000FF;">if</span> (<span style="color: #0000FF;">and</span> author year first-two-words)
         (<span style="color: #0000FF;">let</span> ((newkey (format <span style="color: #008000;">"%s%s%s"</span> author year first-two-words)))
-          (kill-new newkey)
+          (kill-new (replace-regexp-in-string <span style="color: #008000;">"[{}]"</span> <span style="color: #008000;">""</span> newkey))
+          (evil-jump-item)
           (message <span style="color: #008000;">"New key generated and copied to clipboard: %s"</span> newkey))
       (<span style="color: #ff0000; font-weight: bold;">error</span> <span style="color: #008000;">"Author, Year or Title is missing in the current BibTeX entry."</span>))))
 
@@ -1802,10 +1823,10 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Org-Mode</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">--------</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #00ffff; font-weight: bold; font-style: italic;">NOTE</span><span style="color: #8D8D84; font-style: italic;"> It would be nice to have an additional command and key for</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">NOTE It would be nice to have an additional command and key for</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">moving from level n+1 headers their parent level n header.</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff00ff; font-weight: bold; font-style: italic;">FIXME</span><span style="color: #8D8D84; font-style: italic;"> Work out why the configuration based approach does not work!</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">FIXME Work out why the configuration based approach does not work!</span>
 (<span style="color: #0000FF;">setq</span> org-return-follows-link t)
 (evil-leader/set-key-for-mode 'org-mode <span style="color: #008000;">"RET"</span> 'org-open-at-point)
 
@@ -1818,9 +1839,9 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 </div>
 </div>
 
-<div id="outline-container-orgdf8321f" class="outline-4">
-<h4 id="orgdf8321f">Agenda and calendar</h4>
-<div class="outline-text-4" id="text-orgdf8321f">
+<div id="outline-container-orgd46987b" class="outline-4">
+<h4 id="orgd46987b">Agenda and calendar (org-mode)</h4>
+<div class="outline-text-4" id="text-orgd46987b">
 <ul class="org-ul">
 <li>I have had some weird warning messages from <code>org-persist</code> about there being
 difficulty reading some org-mode related data from the cache: "Emacs reader
@@ -1839,7 +1860,7 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">v-SPC</span><span style="color: #8D8D84; font-style: italic;">' resets the view.</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">.</span><span style="color: #8D8D84; font-style: italic;">' goes to today.</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">j</span><span style="color: #8D8D84; font-style: italic;">' will /jump/ to a date (selected via calendar).</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">t</span><span style="color: #8D8D84; font-style: italic;">' will cycle through </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;">/</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold; font-style: italic;">DONE</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">t</span><span style="color: #8D8D84; font-style: italic;">' will cycle through TODO/DONE</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">S-&lt;left/right&gt;</span><span style="color: #8D8D84; font-style: italic;">' moves the scheduled date backwards/forwards</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- `</span><span style="color: #D0372D; font-style: italic;">r</span><span style="color: #8D8D84; font-style: italic;">' rebuilds the agenda view</span>
 <span style="color: #8D8D84;">;;</span>
@@ -1851,10 +1872,10 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
       org-log-schedule 'time)
 
 (<span style="color: #0000FF;">setq</span> org-todo-keywords
-      '((sequence <span style="color: #008000;">"</span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold;">TODO</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
-        (sequence <span style="color: #008000;">"MEETING"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
-        (sequence <span style="color: #008000;">"DEADLINE"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
-        (sequence <span style="color: #008000;">"SOCIAL"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)))
+      '((sequence <span style="color: #008000;">"TODO"</span> <span style="color: #008000;">"DONE"</span>)
+        (sequence <span style="color: #008000;">"MEETING"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"DONE"</span>)
+        (sequence <span style="color: #008000;">"DEADLINE"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"DONE"</span>)
+        (sequence <span style="color: #008000;">"SOCIAL"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"DONE"</span>)))
 
 (<span style="color: #0000FF;">setq</span> org-todo-keyword-faces
       `((<span style="color: #008000;">"MEETING"</span> . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>))
@@ -1868,8 +1889,16 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
 (advice-add 'org-agenda-goto-today
             <span style="color: #006FE0;">:after</span> #'nice-org-agenda-goto-today-advice-after)
 (evil-leader/set-key-for-mode 'org-mode <span style="color: #008000;">"a s"</span> 'org-schedule)
+</pre>
+</div>
+</div>
+</div>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Calendar view</span>
+<div id="outline-container-org8b0162e" class="outline-4">
+<h4 id="org8b0162e">Agenda and calendar (calfw)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EXCLUDED">EXCLUDED</span></span></h4>
+<div class="outline-text-4" id="text-org8b0162e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Calendar view</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">This provides a more classical view of the agenda as a calendar.</span>
 <span style="color: #8D8D84;">;;</span>
@@ -2272,13 +2301,13 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Explore new worlds</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">==================</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Work out how to browse gopher with =gopher.el=.</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Work out how to browse gopher with =gopher.el=.</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Work out how to configure auth-source.</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Work out how to configure auth-source.</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Work out how to use mediawiki-mode to read and edit wikipedia.</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Work out how to use mediawiki-mode to read and edit wikipedia.</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Explore running spotify through emacs</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">TODO Explore running spotify through emacs</span>
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Customization</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=============</span>
@@ -2524,7 +2553,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-09-05 Tue 09:13</p>
+<p class="date">Created: 2023-09-12 Tue 09:11</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
