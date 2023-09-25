@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-05-02 Tue 09:46 -->
+<!-- 2023-09-22 Fri 09:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>system-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="org426cac2" class="figure">
+<div id="orgf80ee5b" class="figure">
 <p><img src="../images/linux-logo.png" alt="linux-logo.png" width="250px" />
 </p>
 </div>
@@ -363,14 +363,14 @@ root/administrative privileges.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;<span style="color: #3c98e0;">policymap</span>&gt;
+<pre class="src src-xml">&lt;<span style="color: #AE1B9A;">policymap</span>&gt;
   ...
-  &lt;<span style="color: #3c98e0;">policies</span>&gt;
-    &lt;<span style="color: #3c98e0;">policy</span> <span style="color: #3c98e0;">domain</span>=<span style="color: #3cafa5;">"coder"</span> <span style="color: #3c98e0;">rights</span>=<span style="color: #3cafa5;">"none"</span> <span style="color: #3c98e0;">pattern</span>=<span style="color: #3cafa5;">"PDF"</span> /&gt;
+  &lt;<span style="color: #AE1B9A;">policies</span>&gt;
+    &lt;<span style="color: #AE1B9A;">policy</span> <span style="color: #BA36A5;">domain</span>=<span style="color: #008000;">"coder"</span> <span style="color: #BA36A5;">rights</span>=<span style="color: #008000;">"none"</span> <span style="color: #BA36A5;">pattern</span>=<span style="color: #008000;">"PDF"</span> /&gt;
     ...
-  &lt;/<span style="color: #3c98e0;">policies</span>&gt;
+  &lt;/<span style="color: #AE1B9A;">policies</span>&gt;
   ...
-&lt;/<span style="color: #3c98e0;">policymap</span>&gt;
+&lt;/<span style="color: #AE1B9A;">policymap</span>&gt;
 </pre>
 </div>
 
@@ -379,7 +379,7 @@ root/administrative privileges.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-xml">&lt;<span style="color: #3c98e0;">policy</span> <span style="color: #3c98e0;">domain</span>=<span style="color: #3cafa5;">"coder"</span> <span style="color: #3c98e0;">rights</span>=<span style="color: #3cafa5;">"read|write"</span> <span style="color: #3c98e0;">pattern</span>=<span style="color: #3cafa5;">"PDF"</span> /&gt;
+<pre class="src src-xml">&lt;<span style="color: #AE1B9A;">policy</span> <span style="color: #BA36A5;">domain</span>=<span style="color: #008000;">"coder"</span> <span style="color: #BA36A5;">rights</span>=<span style="color: #008000;">"read|write"</span> <span style="color: #BA36A5;">pattern</span>=<span style="color: #008000;">"PDF"</span> /&gt;
 </pre>
 </div>
 
@@ -768,7 +768,7 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">chmod 750 foo.sh  <span style="color: #e4ecda; background-color: #207e7b;"># makes foo.sh rwxr-x---</span>
+<pre class="src src-shell">chmod 750 foo.sh  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">makes foo.sh rwxr-x---</span>
 </pre>
 </div>
 
@@ -871,18 +871,25 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 <div id="outline-container-orgaafb8a8" class="outline-3">
 <h3 id="orgaafb8a8"><code>screen</code></h3>
 <div class="outline-text-3" id="text-orgaafb8a8">
-<ul class="org-ul">
-<li>You need to have <code>screen</code> installed.</li>
-<li>Start a new screen session with <code>screen</code>.</li>
-<li>Detach from a screen with <code>C-a d</code>.</li>
-<li>Re-attach to a screen with <code>screen -r</code> from the command line.</li>
-<li><code>screen -ls</code> will list existing screens.</li>
-</ul>
-
 <p>
-To kill a screen, <code>C-a k</code> will ask for confirmation you want to kill
-the screen.
+The <code>screen</code> program helps you manage long-running tasks, it is
+particularly helpful if you need to be able to disconnect from the
+task and come back later without interrupting the program in the mean
+time.
 </p>
+
+<ul class="org-ul">
+<li>Start a session with <code>screen</code>.
+<ul class="org-ul">
+<li>use <code>screen -S &lt;session_id&gt;</code> to name a session</li>
+</ul></li>
+<li>Detach from a session with <code>C-a d</code>.</li>
+<li>Kill a session with <code>C-a k</code>.</li>
+<li>Get help on available keybindings with <code>C-a ?</code>.</li>
+<li><code>screen -ls</code> lists sessions.</li>
+<li>Re-attach to a session with <code>screen -r</code> (<code>screen -r &lt;session_id&gt;</code> if
+there is ambiguity.)</li>
+</ul>
 </div>
 
 <div id="outline-container-orgfc4123c" class="outline-4">
@@ -976,11 +983,11 @@ my laptop.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #3c98e0;">LOCAL_DIR</span>=out/result-v2
-<span style="color: #3c98e0;">REMOTE_DIR</span>=/home/aez/projects/example/$<span style="color: #3c98e0;">LOCAL_DIR</span>
-<span style="color: #3c98e0;">REMOTE_HOST</span>=zool
+<pre class="src src-sh"><span style="color: #BA36A5;">LOCAL_DIR</span>=out/result-v2
+<span style="color: #BA36A5;">REMOTE_DIR</span>=/home/aez/projects/example/$<span style="color: #BA36A5;">LOCAL_DIR</span>
+<span style="color: #BA36A5;">REMOTE_HOST</span>=zool
 
-scp $<span style="color: #3c98e0;">REMOTE_HOST</span>:$<span style="color: #3c98e0;">REMOTE_DIR</span>/*{html,png} $<span style="color: #3c98e0;">LOCAL_DIR</span>/
+scp $<span style="color: #BA36A5;">REMOTE_HOST</span>:$<span style="color: #BA36A5;">REMOTE_DIR</span>/*{html,png} $<span style="color: #BA36A5;">LOCAL_DIR</span>/
 </pre>
 </div>
 
@@ -1016,7 +1023,7 @@ To find all the PNG files down from the current directory.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find . -regex <span style="color: #3cafa5;">".*png$"</span>
+<pre class="src src-shell">find . -regex <span style="color: #008000;">".*png$"</span>
 </pre>
 </div>
 </div>
@@ -1031,7 +1038,7 @@ following.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find . -name <span style="color: #3cafa5;">\*</span>figure-1<span style="color: #3cafa5;">\*</span> -print
+<pre class="src src-shell">find . -name <span style="color: #008000;">\*</span>figure-1<span style="color: #008000;">\*</span> -print
 </pre>
 </div>
 </div>
@@ -1055,7 +1062,7 @@ which contain the string <code>"foo"</code>, and show the line <i>number</i>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">grep -r -n --include=<span style="color: #3cafa5;">"*l*notes.org"</span> <span style="color: #3cafa5;">"foo"</span> .
+<pre class="src src-shell">grep -r -n --include=<span style="color: #008000;">"*l*notes.org"</span> <span style="color: #008000;">"foo"</span> .
 </pre>
 </div>
 </div>
@@ -1071,7 +1078,7 @@ looking for lines matching the pattern <code>"rnest"</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find public-site/org/ -regex <span style="color: #3cafa5;">".*book.*"</span> -print0 | xargs -0 grep <span style="color: #3cafa5;">"rnest"</span>
+<pre class="src src-shell">find public-site/org/ -regex <span style="color: #008000;">".*book.*"</span> -print0 | xargs -0 grep <span style="color: #008000;">"rnest"</span>
 </pre>
 </div>
 </div>
@@ -1106,12 +1113,12 @@ achieve this using <code>inotifywait</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #3c98e0;">WATCH_FILE</span>=demo.tex
+<pre class="src src-sh"><span style="color: #BA36A5;">WATCH_FILE</span>=demo.tex
 
-inotifywait -q -m -e close_write $<span style="color: #3c98e0;">WATCH_FILE</span> |
-    <span style="color: #93a61a; font-weight: bold;">while </span><span style="color: #8d9fa1; font-weight: bold;">read</span> -r filename event; <span style="color: #93a61a; font-weight: bold;">do</span>
-        pdflatex $<span style="color: #3c98e0;">WATCH_FILE</span>
-    <span style="color: #93a61a; font-weight: bold;">done</span>
+inotifywait -q -m -e close_write $<span style="color: #BA36A5;">WATCH_FILE</span> |
+    <span style="color: #0000FF;">while </span><span style="color: #006FE0;">read</span> -r filename event; <span style="color: #0000FF;">do</span>
+        pdflatex $<span style="color: #BA36A5;">WATCH_FILE</span>
+    <span style="color: #0000FF;">done</span>
 </pre>
 </div>
 </div>
@@ -1282,8 +1289,8 @@ my local library.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #c49619; font-weight: bold;">\</span>
-      --recursive --times --perms --links <span style="color: #c49619; font-weight: bold;">\</span>
+<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #008000;">\</span>
+      --recursive --times --perms --links <span style="color: #008000;">\</span>
       zool:/home/aez/Documents/library/* /home/aez/Documents/library/
 </pre>
 </div>
@@ -1371,9 +1378,9 @@ regardless.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #93a61a; font-weight: bold;">if</span> [ -f $<span style="color: #3c98e0;">HOME</span>/.bashrc ]; <span style="color: #93a61a; font-weight: bold;">then</span>
-    <span style="color: #8d9fa1; font-weight: bold;">source</span> $<span style="color: #3c98e0;">HOME</span>/.bashrc
-<span style="color: #93a61a; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #0000FF;">if</span> [ -f $<span style="color: #BA36A5;">HOME</span>/.bashrc ]; <span style="color: #0000FF;">then</span>
+    <span style="color: #006FE0;">source</span> $<span style="color: #BA36A5;">HOME</span>/.bashrc
+<span style="color: #0000FF;">fi</span>
 </pre>
 </div>
 
@@ -1383,7 +1390,7 @@ to the file <code>/etc/inputrc</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #8d9fa1; font-weight: bold;">set</span> completion-ignore-case on
+<pre class="src src-sh"><span style="color: #006FE0;">set</span> completion-ignore-case on
 </pre>
 </div>
 </div>
@@ -1401,7 +1408,7 @@ An example command to add a user is the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sudo useradd -c <span style="color: #3cafa5;">"Jerry Smith"</span> -d /home/jsmith -m -s /bin/bash jsmith
+<pre class="src src-sh">sudo useradd -c <span style="color: #008000;">"Jerry Smith"</span> -d /home/jsmith -m -s /bin/bash jsmith
 </pre>
 </div>
 
@@ -1584,7 +1591,7 @@ There are instructions on how to install this program <a href="http://ytdl-org.g
 <h4 id="org13a1482">Download audio as MP3</h4>
 <div class="outline-text-4" id="text-org13a1482">
 <div class="org-src-container">
-<pre class="src src-sh">youtube-dl --extract-audio --audio-format <span style="color: #3cafa5;">"mp3"</span> &lt;VIDEO/URL&gt;
+<pre class="src src-sh">youtube-dl --extract-audio --audio-format <span style="color: #008000;">"mp3"</span> &lt;VIDEO/URL&gt;
 </pre>
 </div>
 </div>
@@ -1629,15 +1636,15 @@ the following example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #93a61a; font-weight: bold;">if</span> [ -d <span style="color: #3cafa5;">"foobar"</span> ]; <span style="color: #93a61a; font-weight: bold;">then</span>
-    <span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"There is a directory called foobar"</span>
-    <span style="color: #93a61a; font-weight: bold;">exit</span> 0
-<span style="color: #93a61a; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #0000FF;">if</span> [ -d <span style="color: #008000;">"foobar"</span> ]; <span style="color: #0000FF;">then</span>
+    <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"There is a directory called foobar"</span>
+    <span style="color: #0000FF;">exit</span> 0
+<span style="color: #0000FF;">fi</span>
 
-<span style="color: #93a61a; font-weight: bold;">if</span> [ <span style="color: #c49619; font-weight: bold;">!</span> -d <span style="color: #3cafa5;">"foobar"</span> ]; <span style="color: #93a61a; font-weight: bold;">then</span>
-    <span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"Could not find directory: foobar"</span>
-    <span style="color: #93a61a; font-weight: bold;">exit</span> 1
-<span style="color: #93a61a; font-weight: bold;">fi</span>
+<span style="color: #0000FF;">if</span> [ ! -d <span style="color: #008000;">"foobar"</span> ]; <span style="color: #0000FF;">then</span>
+    <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Could not find directory: foobar"</span>
+    <span style="color: #0000FF;">exit</span> 1
+<span style="color: #0000FF;">fi</span>
 </pre>
 </div>
 </div>
@@ -1657,18 +1664,18 @@ map-reduce style computations correctly via bash. Note that this actually needs
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e4ecda; background-color: #207e7b;"># waiter.sh</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"Starting"</span>
+<pre class="src src-sh"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">waiter.sh</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Starting"</span>
 
-<span style="color: #3c98e0;">pids</span>=()
+<span style="color: #BA36A5;">pids</span>=()
 
-<span style="color: #93a61a; font-weight: bold;">for</span> i<span style="color: #93a61a; font-weight: bold;"> in</span> $(<span style="color: #7a7ed2; font-weight: bold;">seq 1 5</span>)
-<span style="color: #93a61a; font-weight: bold;">do</span>
-  sleep 4 &amp;&amp; <span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"Done part $i"</span> &amp; <span style="color: #3c98e0;">pids</span>+=($<span style="color: #3c98e0;">!</span>)
-<span style="color: #93a61a; font-weight: bold;">done</span>
+<span style="color: #0000FF;">for</span> i<span style="color: #0000FF;"> in</span> $(<span style="color: #FF1493;">seq 1 5</span>)
+<span style="color: #0000FF;">do</span>
+  sleep 4 &amp;&amp; <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Done part $i"</span> &amp; <span style="color: #BA36A5;">pids</span>+=($<span style="color: #BA36A5;">!</span>)
+<span style="color: #0000FF;">done</span>
 
-<span style="color: #8d9fa1; font-weight: bold;">wait</span> <span style="color: #3cafa5;">"${pids[@]}"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"Finished :)"</span>
+<span style="color: #006FE0;">wait</span> <span style="color: #008000;">"${pids[@]}"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Finished :)"</span>
 </pre>
 </div>
 
@@ -1696,26 +1703,26 @@ subsets to run in parallel before moving onto the next chunk.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e4ecda; background-color: #207e7b;">#!/usr/bin/</span><span style="color: #93a61a; font-weight: bold;">env</span><span style="color: #e4ecda; background-color: #207e7b;"> bash</span>
+<pre class="src src-sh"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/</span><span style="color: #0000FF;">env</span><span style="color: #8D8D84; font-style: italic;"> bash</span>
 
-<span style="color: #3c98e0;">chunk_size</span>=5                    <span style="color: #e4ecda; background-color: #207e7b;"># the number of processes in each chunk</span>
-<span style="color: #3c98e0;">limit</span>=20                        <span style="color: #e4ecda; background-color: #207e7b;"># the total number of processes</span>
-<span style="color: #3c98e0;">ix</span>=0
+<span style="color: #BA36A5;">chunk_size</span>=5                    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">the number of processes in each chunk</span>
+<span style="color: #BA36A5;">limit</span>=20                        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">the total number of processes</span>
+<span style="color: #BA36A5;">ix</span>=0
 
-<span style="color: #3c98e0;">outer_limit</span>=<span style="color: #3cafa5;">"$(</span><span style="color: #7a7ed2; font-weight: bold;">($limit-$chunk_size</span><span style="color: #3cafa5;">))"</span>
-<span style="color: #93a61a; font-weight: bold;">while</span> [ $<span style="color: #3c98e0;">ix</span> -le $<span style="color: #3c98e0;">outer_limit</span> ]
-<span style="color: #93a61a; font-weight: bold;">do</span>
-    <span style="color: #3c98e0;">pids</span>=()
-    <span style="color: #3c98e0;">chunk_limit</span>=<span style="color: #3cafa5;">"$(</span><span style="color: #7a7ed2; font-weight: bold;">($ix+$chunk_size</span><span style="color: #3cafa5;">))"</span>
-    <span style="color: #93a61a; font-weight: bold;">while</span> [ $<span style="color: #3c98e0;">ix</span> -lt $<span style="color: #3c98e0;">chunk_limit</span> ]
-    <span style="color: #93a61a; font-weight: bold;">do</span>
-        <span style="color: #3c98e0;">padded_num</span>=$(<span style="color: #7a7ed2; font-weight: bold;">printf "%03d" $ix</span>)
-        <span style="color: #8d9fa1; font-weight: bold;">echo</span> $<span style="color: #3c98e0;">padded_num</span> &amp;&amp; sleep 1s &amp; <span style="color: #3c98e0;">pids</span>+=($<span style="color: #3c98e0;">!</span>)
+<span style="color: #BA36A5;">outer_limit</span>=<span style="color: #008000;">"$(</span><span style="color: #FF1493;">($limit-$chunk_size</span><span style="color: #008000;">))"</span>
+<span style="color: #0000FF;">while</span> [ $<span style="color: #BA36A5;">ix</span> -le $<span style="color: #BA36A5;">outer_limit</span> ]
+<span style="color: #0000FF;">do</span>
+    <span style="color: #BA36A5;">pids</span>=()
+    <span style="color: #BA36A5;">chunk_limit</span>=<span style="color: #008000;">"$(</span><span style="color: #FF1493;">($ix+$chunk_size</span><span style="color: #008000;">))"</span>
+    <span style="color: #0000FF;">while</span> [ $<span style="color: #BA36A5;">ix</span> -lt $<span style="color: #BA36A5;">chunk_limit</span> ]
+    <span style="color: #0000FF;">do</span>
+        <span style="color: #BA36A5;">padded_num</span>=$(<span style="color: #FF1493;">printf "%03d" $ix</span>)
+        <span style="color: #006FE0;">echo</span> $<span style="color: #BA36A5;">padded_num</span> &amp;&amp; sleep 1s &amp; <span style="color: #BA36A5;">pids</span>+=($<span style="color: #BA36A5;">!</span>)
         ((ix++))
-    <span style="color: #93a61a; font-weight: bold;">done</span>
-    <span style="color: #8d9fa1; font-weight: bold;">wait</span> <span style="color: #3cafa5;">"${pids[@]}"</span>
-    <span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"---"</span>
-<span style="color: #93a61a; font-weight: bold;">done</span>
+    <span style="color: #0000FF;">done</span>
+    <span style="color: #006FE0;">wait</span> <span style="color: #008000;">"${pids[@]}"</span>
+    <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"---"</span>
+<span style="color: #0000FF;">done</span>
 </pre>
 </div>
 
@@ -1762,10 +1769,10 @@ As an example, here is a simple shell script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e4ecda; background-color: #207e7b;">#!/bin/</span><span style="color: #93a61a; font-weight: bold;">sh</span>
-<span style="color: #e4ecda; background-color: #207e7b;"># demo.sh</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"foo: $2"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"bar: $1"</span>
+<pre class="src src-sh"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/bin/</span><span style="color: #0000FF;">sh</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">demo.sh</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"foo: $2"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"bar: $1"</span>
 </pre>
 </div>
 
@@ -1794,8 +1801,8 @@ Here is an example of a function which converts an ODG to a PDF
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #3c98e0;">ConvertODG2PDF</span> () {
-    libreoffice --headless --convert-to pdf $<span style="color: #3c98e0;">1</span>
+<pre class="src src-sh"><span style="color: #006699;">ConvertODG2PDF</span> () {
+    libreoffice --headless --convert-to pdf $<span style="color: #BA36A5;">1</span>
 }
 
 ConvertODG2PDF awesome-figure.odg
@@ -1809,12 +1816,12 @@ ConvertODG2PDF awesome-figure.odg
 <div class="outline-text-4" id="text-org34cbb84">
 <div class="org-src-container">
 <pre class="src src-sh">
-<span style="color: #3c98e0;">compileStandAlone</span> () {
-    pdflatex $<span style="color: #3c98e0;">1</span>.tex
-    convert -flatten -density 300 $<span style="color: #3c98e0;">1</span>.pdf -colorspace RGB $<span style="color: #3c98e0;">1</span>.png
-    rm $<span style="color: #3c98e0;">1</span>.aux
-    rm $<span style="color: #3c98e0;">1</span>.log
-    rm $<span style="color: #3c98e0;">1</span>.pdf
+<span style="color: #006699;">compileStandAlone</span> () {
+    pdflatex $<span style="color: #BA36A5;">1</span>.tex
+    convert -flatten -density 300 $<span style="color: #BA36A5;">1</span>.pdf -colorspace RGB $<span style="color: #BA36A5;">1</span>.png
+    rm $<span style="color: #BA36A5;">1</span>.aux
+    rm $<span style="color: #BA36A5;">1</span>.log
+    rm $<span style="color: #BA36A5;">1</span>.pdf
 }
 
 </pre>
@@ -1831,10 +1838,10 @@ Here is a silly little example of how to loop over an explicity list of strings.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #93a61a; font-weight: bold;">for</span> month<span style="color: #93a61a; font-weight: bold;"> in</span> jan feb mar;
-<span style="color: #93a61a; font-weight: bold;">do</span>
-    cat foo-$<span style="color: #3c98e0;">month</span>.csv
-<span style="color: #93a61a; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #0000FF;">for</span> month<span style="color: #0000FF;"> in</span> jan feb mar;
+<span style="color: #0000FF;">do</span>
+    cat foo-$<span style="color: #BA36A5;">month</span>.csv
+<span style="color: #0000FF;">done</span>
 </pre>
 </div>
 
@@ -1850,10 +1857,10 @@ standard out.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #93a61a; font-weight: bold;">for</span> ix<span style="color: #93a61a; font-weight: bold;"> in</span> <span style="color: #7a7ed2; font-weight: bold;">`seq 1 3`</span>;
-<span style="color: #93a61a; font-weight: bold;">do</span>
-    <span style="color: #8d9fa1; font-weight: bold;">echo</span> $<span style="color: #3c98e0;">ix</span>
-<span style="color: #93a61a; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #0000FF;">for</span> ix<span style="color: #0000FF;"> in</span> <span style="color: #FF1493;">`seq 1 3`</span>;
+<span style="color: #0000FF;">do</span>
+    <span style="color: #006FE0;">echo</span> $<span style="color: #BA36A5;">ix</span>
+<span style="color: #0000FF;">done</span>
 </pre>
 </div>
 </div>
@@ -1869,24 +1876,24 @@ servers.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #93a61a; font-weight: bold;">for</span> i<span style="color: #93a61a; font-weight: bold;"> in</span> $(<span style="color: #7a7ed2; font-weight: bold;">seq 1140 1165</span>)
-<span style="color: #93a61a; font-weight: bold;">do</span>
-    sleep 2                     <span style="color: #e4ecda; background-color: #207e7b;"># be nice!</span>
-    google-chrome --headless --disable-gpu --print-to-pdf https://www.theguardian.com/crosswords/quiptic/$<span style="color: #3c98e0;">i</span>/print
-    mv output.pdf quiptic-$<span style="color: #3c98e0;">i</span>.pdf
-<span style="color: #93a61a; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #0000FF;">for</span> i<span style="color: #0000FF;"> in</span> $(<span style="color: #FF1493;">seq 1140 1165</span>)
+<span style="color: #0000FF;">do</span>
+    sleep 2                     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">be nice!</span>
+    google-chrome --headless --disable-gpu --print-to-pdf https://www.theguardian.com/crosswords/quiptic/$<span style="color: #BA36A5;">i</span>/print
+    mv output.pdf quiptic-$<span style="color: #BA36A5;">i</span>.pdf
+<span style="color: #0000FF;">done</span>
 
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"==========================================================="</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">""</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"Guardian - Quiptics"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"-------------------"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">""</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"Use the following command to compile the quiptics into a"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"single pdf after you have removed any broken ones by hand:"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">""</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"pdftk quiptic-* cat output quiptics.pdf"</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">""</span>
-<span style="color: #8d9fa1; font-weight: bold;">echo</span> <span style="color: #3cafa5;">"==========================================================="</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"==========================================================="</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Guardian - Quiptics"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"-------------------"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Use the following command to compile the quiptics into a"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"single pdf after you have removed any broken ones by hand:"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"pdftk quiptic-* cat output quiptics.pdf"</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"==========================================================="</span>
 </pre>
 </div>
 </div>
@@ -1895,7 +1902,7 @@ servers.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-05-02 Tue 09:46</p>
+<p class="date">Created: 2023-09-22 Fri 09:02</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
