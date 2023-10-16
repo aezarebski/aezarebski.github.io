@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-31 Thu 16:00 -->
+<!-- 2023-10-17 Tue 09:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="orgf2ba073" class="figure">
+<div id="org5a5ebde" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -244,6 +244,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
+<li><a href="#org2b66e53">Programming in R (markdown and reproducibility)</a>
+<ul>
+<li><a href="#orgefc9d44">Quarto</a></li>
+</ul>
+</li>
 <li><a href="#org9aa324b">Programming in R (installation and administration)</a>
 <ul>
 <li><a href="#orgd0702c5">Installing and updating R</a></li>
@@ -275,7 +280,6 @@
 <li><a href="#org5bae681">Dates and times</a></li>
 <li><a href="#org8dc6437"><code>Rmath.h</code></a></li>
 <li><a href="#org8c12fbb">Cheat sheets</a></li>
-<li><a href="#org66bef21">Data frames</a></li>
 <li><a href="#org05b2f17">Data structures</a></li>
 </ul>
 </li>
@@ -296,10 +300,14 @@
 <li><a href="#orgbc057fe">Working with XML</a></li>
 <li><a href="#org98909f5">Joins</a></li>
 <li><a href="#orgdf2b231">Aggregation</a></li>
+<li><a href="#org6e1c976">Selecting columns</a></li>
+<li><a href="#org10d56c3">Sorting rows</a></li>
+<li><a href="#org543295d">Renaming columns</a></li>
 </ul>
 </li>
 <li><a href="#org1ec9966">Statistics with R</a>
 <ul>
+<li><a href="#org7d302cd">GLM</a></li>
 <li><a href="#orgdbd36e2">Linear regression <code>lm</code></a></li>
 <li><a href="#org23720a8">Zero-inflated regression</a></li>
 <li><a href="#org6d05aed"><span class="todo TODO">TODO</span> Mathematical optimisation</a></li>
@@ -327,6 +335,69 @@
 </ul>
 </li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-org2b66e53" class="outline-2">
+<h2 id="org2b66e53">Programming in R (markdown and reproducibility)</h2>
+<div class="outline-text-2" id="text-org2b66e53">
+</div>
+<div id="outline-container-orgefc9d44" class="outline-3">
+<h3 id="orgefc9d44">Quarto</h3>
+<div class="outline-text-3" id="text-orgefc9d44">
+<p>
+<code>.qmd</code> files can be rendered to HTML or PDF from RStudio or the
+command line. To compile these from the command line use the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">quarto render &lt;path/to/file.qmd&gt;
+</pre>
+</div>
+
+<p>
+The default settings during PDF generation are the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">format:
+pdf:
+  documentclass: scrartcl
+  papersize: letter
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7eb2110" class="outline-4">
+<h4 id="org7eb2110">Code chunks</h4>
+<div class="outline-text-4" id="text-org7eb2110">
+<p>
+When loading libraries, you can avoid messages being printed with the
+following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">| message: false</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf4ee180" class="outline-4">
+<h4 id="orgf4ee180">Table of contents</h4>
+<div class="outline-text-4" id="text-orgf4ee180">
+<p>
+To include a table of contents, extend the preamble:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">format:
+  pdf:
+    toc: true
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -850,7 +921,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org9f9f25d" class="figure">
+<div id="org6e2a7cb" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -967,9 +1038,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org93bd0e4" class="outline-4">
-<h4 id="org93bd0e4">Example</h4>
-<div class="outline-text-4" id="text-org93bd0e4">
+<div id="outline-container-orgd33d033" class="outline-4">
+<h4 id="orgd33d033">Example</h4>
+<div class="outline-text-4" id="text-orgd33d033">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1209,9 +1280,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-orgab1494f" class="outline-4">
-<h4 id="orgab1494f">Example</h4>
-<div class="outline-text-4" id="text-orgab1494f">
+<div id="outline-container-org48b4ae2" class="outline-4">
+<h4 id="org48b4ae2">Example</h4>
+<div class="outline-text-4" id="text-org48b4ae2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -1433,7 +1504,7 @@ much easier and is organised to work well with the modern piping style.
 <tbody>
 <tr>
 <td class="org-left"><code>str_detect</code></td>
-<td class="org-left"><b>match</b> like <code>grepl</code></td>
+<td class="org-left"><b>match</b> like <code>grepl</code>, returning matches</td>
 </tr>
 
 <tr>
@@ -1690,21 +1761,6 @@ file.remove(all_my_rd_files[not_exported_mask])
 <li><a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_purrr.pdf">purrr</a></li>
 <li><a href="../resources/ess-cheat-sheet.pdf">ESS</a></li>
 </ul>
-</div>
-</div>
-
-<div id="outline-container-org66bef21" class="outline-3">
-<h3 id="org66bef21">Data frames</h3>
-<div class="outline-text-3" id="text-org66bef21">
-</div>
-<div id="outline-container-org57dfeff" class="outline-4">
-<h4 id="org57dfeff">Sorting rows of a data frame</h4>
-<div class="outline-text-4" id="text-org57dfeff">
-<div class="org-src-container">
-<pre class="src src-R">iris[order(iris$Sepal.Length),]
-</pre>
-</div>
-</div>
 </div>
 </div>
 
@@ -2363,12 +2419,54 @@ iris <span style="color: #D0372D;">%&gt;%</span>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org6e1c976" class="outline-3">
+<h3 id="org6e1c976">Selecting columns</h3>
+<div class="outline-text-3" id="text-org6e1c976">
+<p>
+See <code>starts_with</code> and <code>ends_with</code>, and <code>matches</code> which takes strings
+to describe columns.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org10d56c3" class="outline-3">
+<h3 id="org10d56c3">Sorting rows</h3>
+<div class="outline-text-3" id="text-org10d56c3">
+<div class="org-src-container">
+<pre class="src src-R">iris[order(iris$Sepal.Length),]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org543295d" class="outline-3">
+<h3 id="org543295d">Renaming columns</h3>
+<div class="outline-text-3" id="text-org543295d">
+<p>
+If you want to programmatically rename the columns of a data frame the
+<code>dplyr::rename_with</code> function takes a function <code>.fn</code> from strings to
+strings defining a renaming rule. The columns that this get applied to
+are <i>selected</i> with the argument to the <code>.cols</code> argument.
+</p>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org1ec9966" class="outline-2">
 <h2 id="org1ec9966">Statistics with R</h2>
 <div class="outline-text-2" id="text-org1ec9966">
 </div>
+<div id="outline-container-org7d302cd" class="outline-3">
+<h3 id="org7d302cd">GLM</h3>
+<div class="outline-text-3" id="text-org7d302cd">
+<ul class="org-ul">
+<li><a href="./statistics-notes.html">Here</a> is an example of fitting a negative binomial GLM using the MASS
+package.</li>
+</ul>
+</div>
+</div>
+
 <div id="outline-container-orgdbd36e2" class="outline-3">
 <h3 id="orgdbd36e2">Linear regression <code>lm</code></h3>
 <div class="outline-text-3" id="text-orgdbd36e2">
@@ -2914,7 +3012,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-31 Thu 16:00</p>
+<p class="date">Created: 2023-10-17 Tue 09:37</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-09-22 Fri 09:02 -->
+<!-- 2023-10-11 Wed 17:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>system-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="orgf80ee5b" class="figure">
+<div id="orgcd62a06" class="figure">
 <p><img src="../images/linux-logo.png" alt="linux-logo.png" width="250px" />
 </p>
 </div>
@@ -296,8 +296,9 @@
 <li><a href="#orgb34bbeb"><span class="todo TODO">TODO</span> Browsers</a></li>
 </ul>
 </li>
-<li><a href="#org56f0d04">Shell scripting</a>
+<li><a href="#org4041f74">Scripting</a>
 <ul>
+<li><a href="#org9d9bc7a">Bioinformatics one-liners</a></li>
 <li><a href="#org164760e">Control flow</a></li>
 <li><a href="#orgf4272e5">Running things in parallel by backgrounding</a></li>
 <li><a href="#orga24fc38">Arguments</a></li>
@@ -1614,9 +1615,9 @@ There are instructions on how to install this program <a href="http://ytdl-org.g
 </div>
 </div>
 
-<div id="outline-container-org56f0d04" class="outline-2">
-<h2 id="org56f0d04">Shell scripting</h2>
-<div class="outline-text-2" id="text-org56f0d04">
+<div id="outline-container-org4041f74" class="outline-2">
+<h2 id="org4041f74">Scripting</h2>
+<div class="outline-text-2" id="text-org4041f74">
 <p>
 On my machine at uni this is <code>/bin/sh</code> which points to <code>/bin/dash</code>.
 </p>
@@ -1625,6 +1626,32 @@ On my machine at uni this is <code>/bin/sh</code> which points to <code>/bin/das
 There is a commandline tool <code>shellcheck</code> which performs static analysis on a
 shell script and provides advice to improve it.
 </p>
+</div>
+
+<div id="outline-container-org9d9bc7a" class="outline-3">
+<h3 id="org9d9bc7a">Bioinformatics one-liners</h3>
+<div class="outline-text-3" id="text-org9d9bc7a">
+</div>
+<div id="outline-container-org84c1d6a" class="outline-4">
+<h4 id="org84c1d6a">Extract the trees from a NEXUS file and put them in a Newick file</h4>
+<div class="outline-text-4" id="text-org84c1d6a">
+<p>
+This one-liner carries out the following pipeline:
+</p>
+
+<ol class="org-ol">
+<li><code>grep</code> the lines of the nexus file containing trees</li>
+<li>Take the first 5000 of them</li>
+<li>Use <code>awk</code> to remove the text on the line before the tree</li>
+<li>Write the results to file.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep <span style="color: #008000;">"^tree STATE_"</span> your_file.nexus | head -n 5000 | awk -F<span style="color: #008000;">"= "</span> <span style="color: #008000;">'{print $2}'</span> &gt; first_5000_trees.nwk
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org164760e" class="outline-3">
@@ -1902,7 +1929,7 @@ servers.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-09-22 Fri 09:02</p>
+<p class="date">Created: 2023-10-11 Wed 17:40</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
