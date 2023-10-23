@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-10-17 Tue 09:37 -->
+<!-- 2023-10-20 Fri 15:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="org5a5ebde" class="figure">
+<div id="org4df606b" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -921,7 +921,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org6e2a7cb" class="figure">
+<div id="org8fa63d0" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -1038,9 +1038,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-orgd33d033" class="outline-4">
-<h4 id="orgd33d033">Example</h4>
-<div class="outline-text-4" id="text-orgd33d033">
+<div id="outline-container-org48b4ae2" class="outline-4">
+<h4 id="org48b4ae2">Example</h4>
+<div class="outline-text-4" id="text-org48b4ae2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1280,9 +1280,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-org48b4ae2" class="outline-4">
-<h4 id="org48b4ae2">Example</h4>
-<div class="outline-text-4" id="text-org48b4ae2">
+<div id="outline-container-orgc7ba9f7" class="outline-4">
+<h4 id="orgc7ba9f7">Example</h4>
+<div class="outline-text-4" id="text-orgc7ba9f7">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -2433,9 +2433,60 @@ to describe columns.
 <div id="outline-container-org10d56c3" class="outline-3">
 <h3 id="org10d56c3">Sorting rows</h3>
 <div class="outline-text-3" id="text-org10d56c3">
+</div>
+<div id="outline-container-orgfced469" class="outline-4">
+<h4 id="orgfced469">Base R approach</h4>
+<div class="outline-text-4" id="text-orgfced469">
 <div class="org-src-container">
 <pre class="src src-R">iris[order(iris$Sepal.Length),]
 </pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1a756c8" class="outline-4">
+<h4 id="org1a756c8">Tidyverse approach</h4>
+<div class="outline-text-4" id="text-org1a756c8">
+<p>
+You can use the following command to generate a figure that shows the
+rows of <code>iris</code> are certainly not sorted by the length, although they
+are sorted by species.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">plot(iris$Sepal.Length, col = iris$Species)
+</pre>
+</div>
+
+<p>
+The <code>dplyr::arrange</code> function will sort the rows of a data frame based
+on a selected column, respecting groupings if the data are grouped.
+The following demonstrates how this works.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">tmp1 <span style="color: #D0372D;">&lt;-</span> iris |&gt;
+  dplyr::group_by(Species) |&gt;
+  dplyr::arrange(Sepal.Length, .by_group = <span style="color: #6434A3;">TRUE</span>) |&gt;
+  as.data.frame()
+
+plot(tmp1$Sepal.Length, col = tmp1$Species)
+</pre>
+</div>
+
+<p>
+Note that if you forget to group in this way it will just sort all of
+the rows!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">tmp2 <span style="color: #D0372D;">&lt;-</span> iris |&gt;
+  dplyr::arrange(Sepal.Length) |&gt;
+  as.data.frame()
+
+plot(tmp2$Sepal.Length, col = tmp2$Species)
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -3012,7 +3063,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-10-17 Tue 09:37</p>
+<p class="date">Created: 2023-10-20 Fri 15:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
