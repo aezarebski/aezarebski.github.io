@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-09-12 Tue 09:11 -->
+<!-- 2023-11-04 Sat 16:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-python-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org591ed53" class="figure">
+<div id="org4d01a1b" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -226,10 +226,12 @@
 <li><a href="#org26d7dca">Help</a></li>
 <li><a href="#org12c8707">Debugging</a></li>
 <li><a href="#org2969679"><span class="todo TODO">TODO</span> Functional programming</a></li>
+<li><a href="#org148639e">High performance computing</a></li>
 </ul>
 </li>
 <li><a href="#org49dac90">Python packages</a>
 <ul>
+<li><a href="#org4338c7d">PyTorch</a></li>
 <li><a href="#orgdeba73c">Scipy</a></li>
 <li><a href="#org3db0618">Unittest</a></li>
 <li><a href="#orgec5aeda">Pypfilt</a></li>
@@ -566,6 +568,46 @@ for this.
 </ul>
 </div>
 </div>
+
+<div id="outline-container-org148639e" class="outline-3">
+<h3 id="org148639e">High performance computing</h3>
+<div class="outline-text-3" id="text-org148639e">
+</div>
+<div id="outline-container-org0088582" class="outline-4">
+<h4 id="org0088582">Using python to run a queue of processes</h4>
+<div class="outline-text-4" id="text-org0088582">
+<div class="org-src-container">
+<pre class="src src-py">from concurrent.futures import ThreadPoolExecutor
+import subprocess
+
+def run_commands_in_parallel(parameters, command_template, max_workers=4):
+    """
+    Executes a command in parallel over a set of parameters.
+
+    Args:
+    - parameters (List[Any]): A list of parameters to format the command with.
+    - command_template (str): The command string template, expecting a single parameter for formatting.
+    - max_workers (int, optional): The maximum number of concurrent workers. Defaults to 4.
+
+    Raises:
+    - subprocess.CalledProcessError: If a command fails to execute successfully.
+    """
+    def run_command(parameter):
+        cmd = command_template.format(parameter)
+        subprocess.run(cmd, shell=True, check=True)
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        executor.map(run_command, parameters)
+
+# Example usage
+filenames = ["foobar1.xml", "foobar2.xml", "foobar3.xml"]
+command = "&lt;some/command/taking/a/file&gt; {}"
+run_commands_in_parallel(filenames, command)
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org49dac90" class="outline-2">
@@ -574,6 +616,24 @@ for this.
 <p>
 For notes on installation of packages see the notes above about <a href="#orgb919290">pip</a>.
 </p>
+</div>
+
+<div id="outline-container-org4338c7d" class="outline-3">
+<h3 id="org4338c7d">PyTorch</h3>
+<div class="outline-text-3" id="text-org4338c7d">
+</div>
+<div id="outline-container-orgb0d7cae" class="outline-4">
+<h4 id="orgb0d7cae">Saving and loading models</h4>
+<div class="outline-text-4" id="text-orgb0d7cae">
+<div class="org-src-container">
+<pre class="src src-python">  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">first train `my_cool_model'</span>
+torch.save(my_cool_model.state_dict(), <span style="color: #008000;">"./demo.pt"</span>)
+<span style="color: #BA36A5;">another_cool_model</span> = CoolModel()
+another_cool_model.load_state_dict(torch.load(<span style="color: #008000;">"./demo.pt"</span>))
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgdeba73c" class="outline-3">
@@ -1068,7 +1128,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-09-12 Tue 09:11</p>
+<p class="date">Created: 2023-11-04 Sat 16:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

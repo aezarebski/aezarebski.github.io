@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-09-19 Tue 08:50 -->
+<!-- 2023-10-27 Fri 13:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org6760cc4" class="figure">
+<div id="org03272dc" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -324,6 +324,10 @@
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-10</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Add a scrartcl class to `</span><span style="color: #D0372D; font-style: italic;">org-latex-classes</span><span style="color: #8D8D84; font-style: italic;">' as nicer org-mode</span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">PDF export option.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-09</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">evil-window-X</span><span style="color: #8D8D84; font-style: italic;">' functions as a simpler alternative to</span>
@@ -1703,8 +1707,6 @@ version of an S-expression on the kill ring.
 <span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure this so that there is a good way to search the key</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">bibtex files, perhaps with a SQL type search</span>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure this so there is the command to convert ris to bib.</span>
-
 <span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Find a better way to search BIB files.</span>
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">most-recent-file</span> (files)
@@ -1816,6 +1818,24 @@ version of an S-expression on the kill ring.
   <span style="color: #008000;">"m b b"</span> 'nice-bibtex-braces
   <span style="color: #008000;">"m b f"</span> 'bibtex-reformat
   <span style="color: #008000;">"m b k"</span> 'nice-bibtex-guess-key)
+</pre>
+</div>
+
+<p>
+In the following we use <code>with-eval-after-load</code> because otherwise the
+<code>org-latex-classes</code> variable may not have been instantiated.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">with-eval-after-load</span> 'ox-latex
+  (add-to-list 'org-latex-classes
+               '(<span style="color: #008000;">"scrartcl"</span>
+                 <span style="color: #008000;">"\\documentclass{scrartcl}"</span>
+                 (<span style="color: #008000;">"\\section{%s}"</span> . <span style="color: #008000;">"\\section*{%s}"</span>)
+                 (<span style="color: #008000;">"\\subsection{%s}"</span> . <span style="color: #008000;">"\\subsection*{%s}"</span>)
+                 (<span style="color: #008000;">"\\subsubsection{%s}"</span> . <span style="color: #008000;">"\\subsubsection*{%s}"</span>)
+                 (<span style="color: #008000;">"\\paragraph{%s}"</span> . <span style="color: #008000;">"\\paragraph*{%s}"</span>)
+                 (<span style="color: #008000;">"\\subparagraph{%s}"</span> . <span style="color: #008000;">"\\subparagraph*{%s}"</span>))))
 </pre>
 </div>
 </div>
@@ -2392,7 +2412,11 @@ compilation with <code>make -j[N]</code> to use <code>N</code> jobs during compi
 <div class="outline-text-4" id="text-orgcbbfe39">
 <ul class="org-ul">
 <li><code>emacs-29.1</code> on the work laptop: <code>./configure --with-json --with-rsvg
-  --with-native-compilation --with-imagemagick CFLAGS</code>'-g3 -O3'=</li>
+  --with-native-compilation --with-imagemagick CFLAGS</code>'-g3 -O3'=
+<ul class="org-ul">
+<li>When building from source on a completely fresh system I needed a lot of
+basic packages: <code>build-essential autoconf texinfo libgnutls28-dev libjansson-dev</code></li>
+</ul></li>
 <li><code>emacs-29.0.60</code> on a new laptop:
 <code>./configure --with-native-compilation --with-tree-sitter --without-x --with-pgtk</code>
 because it uses Wayland.</li>
@@ -2578,7 +2602,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-09-19 Tue 08:50</p>
+<p class="date">Created: 2023-10-27 Fri 13:55</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

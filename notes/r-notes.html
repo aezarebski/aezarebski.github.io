@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-10-20 Fri 15:46 -->
+<!-- 2023-10-27 Fri 13:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>r-lang-aez-notes</title>
@@ -235,7 +235,7 @@
 </p>
 
 
-<div id="org4df606b" class="figure">
+<div id="orgec20101" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -286,6 +286,7 @@
 <li><a href="#org61cbc65">Programming in R (language and evaluation)</a>
 <ul>
 <li><a href="#org885527d">Recommended reading</a></li>
+<li><a href="#orgfabf8b8">Memory usage</a></li>
 <li><a href="#org0bc1307">Benchmarking and optimising impementations</a></li>
 <li><a href="#org2992392">Functional programming support</a></li>
 <li><a href="#org2a7746c">R/Haskell Prelude</a></li>
@@ -319,6 +320,7 @@
 </li>
 <li><a href="#org8324e55">Miscellaneous functions</a>
 <ul>
+<li><a href="#org1b8e094">Generating LaTeX summary of GLM</a></li>
 <li><a href="#org9fbb6d1">Mini test suite</a></li>
 <li><a href="#org47aca1a">Step function</a></li>
 <li><a href="#orgd4e213b">Number of lines in a file</a></li>
@@ -921,7 +923,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org8fa63d0" class="figure">
+<div id="org6060420" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -1038,9 +1040,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org48b4ae2" class="outline-4">
-<h4 id="org48b4ae2">Example</h4>
-<div class="outline-text-4" id="text-org48b4ae2">
+<div id="outline-container-orgc7ba9f7" class="outline-4">
+<h4 id="orgc7ba9f7">Example</h4>
+<div class="outline-text-4" id="text-orgc7ba9f7">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1280,9 +1282,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-orgc7ba9f7" class="outline-4">
-<h4 id="orgc7ba9f7">Example</h4>
-<div class="outline-text-4" id="text-orgc7ba9f7">
+<div id="outline-container-org5cd6e1c" class="outline-4">
+<h4 id="org5cd6e1c">Example</h4>
+<div class="outline-text-4" id="text-org5cd6e1c">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -1799,6 +1801,28 @@ my_dict[[<span style="color: #008000;">"key"</span>]] <span style="color: #8D8D8
 <li><a href="https://www.r-bloggers.com/2019/06/curly-curly-the-successor-of-bang-bang-2/">Curly-Curly, the successor of Bang-Bang</a> (new rlang syntax for extending dplyr)</li>
 <li><a href="https://github.com/jimhester/lookup">lookup</a> is an R package from Jim Hester which simplifies the process of reading source code (even for compiled functions).</li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-orgfabf8b8" class="outline-3">
+<h3 id="orgfabf8b8">Memory usage</h3>
+<div class="outline-text-3" id="text-orgfabf8b8">
+<p>
+To get the size of an object <code>x</code> in terms of its memory usage, run the
+following command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">print(format(object.size(x), units = <span style="color: #008000;">"auto"</span>))
+</pre>
+</div>
+
+<p>
+You can get a print out of the current memory usage (and trigger a
+garbage collection) with the <code>gc</code> function. This can be helpful to
+call immediately after calling <code>rm</code> on large objects that are no
+longer needed.
+</p>
 </div>
 </div>
 
@@ -2782,6 +2806,84 @@ ggplot() +
 <h2 id="org8324e55">Miscellaneous functions</h2>
 <div class="outline-text-2" id="text-org8324e55">
 </div>
+<div id="outline-container-org1b8e094" class="outline-3">
+<h3 id="org1b8e094">Generating LaTeX summary of GLM</h3>
+<div class="outline-text-3" id="text-org1b8e094">
+<p>
+We can use the <code>xtable</code> package to generate a table in LaTeX that
+displays a sensible summary of estimates. The following function
+streamlines this process a little bit.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Convert GLM Fit to LaTeX-Ready xtable</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This function takes a GLM fit object, formats the summary information,</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> and returns an xtable object for LaTeX export.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">fit</span><span style="color: #8D8D84; font-style: italic;"> A GLM fit object obtained through the `glm()` function.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">num_fmt</span><span style="color: #8D8D84; font-style: italic;"> A string indicating the format for numerical values (default is "%f").</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> Additional arguments passed to xtable.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@return</span><span style="color: #8D8D84; font-style: italic;"> An xtable object containing formatted GLM summary data.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@examples</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> fit &lt;- glm(mpg ~ wt + hp, data=mtcars, family=gaussian())</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> tab &lt;- glm_fit_as_xtable(fit, num_fmt="%.2f")</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> print.xtable(tab, include.rownames=FALSE, type="latex", file="demo-latex-table.tex")</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@importFrom</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xtable</span><span style="color: #8D8D84; font-style: italic;"> xtable</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@importFrom</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">stats</span><span style="color: #8D8D84; font-style: italic;"> as.data.frame confint summary</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #006699;">glm_fit_as_xtable</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(fit, num_fmt=<span style="color: #008000;">"%f"</span>, ...) {
+
+  ns <span style="color: #D0372D;">&lt;-</span> c(var = <span style="color: #008000;">"Variable"</span>,
+          est_and_ci = <span style="color: #008000;">"Estimate and CI (95%)"</span>,
+          sig = <span style="color: #008000;">"Significance"</span>,
+          p_val = <span style="color: #008000;">"Pr(&gt;|t|)"</span>)
+
+  fs_df <span style="color: #D0372D;">&lt;-</span> as.data.frame(summary(fit)$coefficient)[, c(1,4)]
+
+  tmp <span style="color: #D0372D;">&lt;-</span> confint(fit)
+
+  fs_df[[ns[<span style="color: #008000;">'var'</span>]]] <span style="color: #D0372D;">&lt;-</span> rownames(fs_df)
+  est_and_ci_fmt <span style="color: #D0372D;">&lt;-</span>
+    sprintf(<span style="color: #008000;">"%s (%s, %s)"</span>, num_fmt, num_fmt, num_fmt)
+  fs_df[[ns[<span style="color: #008000;">'est_and_ci'</span>]]] <span style="color: #D0372D;">&lt;-</span>
+    sprintf(est_and_ci_fmt, fs_df$Estimate, tmp[,1], tmp[,2])
+  fs_df[[ns[<span style="color: #008000;">'sig'</span>]]] <span style="color: #D0372D;">&lt;-</span>
+    ifelse(fs_df[[ns[<span style="color: #008000;">'p_val'</span>]]] &lt; 0.05 , <span style="color: #008000;">"*"</span>, <span style="color: #008000;">""</span>)
+
+  rownames(fs_df) <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">NULL</span>
+
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Return xtable object</span>
+  <span style="color: #0000FF;">return</span>(xtable(fs_df[ns[c(1,2,3)]],
+                align = c(<span style="color: #008000;">"l"</span>, <span style="color: #008000;">"l"</span>, <span style="color: #008000;">"r"</span>, <span style="color: #008000;">"c"</span>),
+                ...))
+}
+
+</pre>
+</div>
+
+<p>
+This will return an <code>xtable</code> object which still needs to be printed in
+a slightly strange way, the following example might help.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(xtable)
+
+fit <span style="color: #D0372D;">&lt;-</span> glm(mpg ~ wt + hp, data=mtcars, family=gaussian())
+
+print.xtable(glm_fit_as_xtable(fit, num_fmt=<span style="color: #008000;">"%.2f"</span>),
+             include.rownames = <span style="color: #6434A3;">FALSE</span>,
+             type = <span style="color: #008000;">"latex"</span>,
+             file = <span style="color: #008000;">"demo-latex-table.tex"</span>)
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org9fbb6d1" class="outline-3">
 <h3 id="org9fbb6d1">Mini test suite</h3>
 <div class="outline-text-3" id="text-org9fbb6d1">
@@ -3063,7 +3165,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-10-20 Fri 15:46</p>
+<p class="date">Created: 2023-10-27 Fri 13:55</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
