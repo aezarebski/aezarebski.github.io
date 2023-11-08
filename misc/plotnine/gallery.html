@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-30 Wed 10:45 -->
+<!-- 2023-11-09 Thu 10:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>plotnine-gallery-aez</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org5cea247" class="figure">
+<div id="org6e70ffa" class="figure">
 <p><img src="../../images/plotnine-logo.png" alt="plotnine-logo.png" width="250px" />
 </p>
 </div>
@@ -213,6 +213,7 @@
   <div class="grid-figure"><a href="#fig-02"><img src="./fig02.png" height="200px" /></a></div>
   <div class="grid-figure"><a href="#fig-03"><img src="./fig03.png" height="200px" /></a></div>
   <div class="grid-figure"><a href="#fig-04"><img src="./fig04.png" height="200px" /></a></div>
+  <div class="grid-figure"><a href="#fig-05"><img src="./fig05.png" height="200px" /></a></div>
 </div>
 
 <h3 id="fig-01">Figure 1</h3>
@@ -454,10 +455,47 @@ matplotlib.use(<span style="color: #008000;">'QtAgg'</span>)
 demo_p9.save(<span style="color: #008000;">"fig04.png"</span>, height = 2.9, width = 4.1)
 </pre>
 </div>
+
+<h3 id="fig-05">Figure 5</h3>
+<div><img src="./fig05.png" width="900px" /></div>
+
+<p>
+<b>Keywords:</b> facet labeller, title case, density
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+<span style="color: #0000FF;">import</span> matplotlib.image <span style="color: #0000FF;">as</span> mpimg
+<span style="color: #0000FF;">import</span> matplotlib <span style="color: #0000FF;">as</span> matplotlib
+
+matplotlib.use(<span style="color: #008000;">"QtAgg"</span>)
+<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #0000FF;">import</span> scipy.stats
+
+<span style="color: #BA36A5;">iris</span> = pd.read_csv(<span style="color: #008000;">"iris.csv"</span>)
+
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">my_labeller</span>(label: <span style="color: #006FE0;">str</span>) -&gt; <span style="color: #006FE0;">str</span>:
+    <span style="color: #0000FF;">return</span> label.title()
+
+
+<span style="color: #BA36A5;">demo_p9</span> = (
+    ggplot(iris, aes(x=<span style="color: #008000;">"Petal.Length"</span>, y=<span style="color: #008000;">"..density.."</span>))
+    + geom_histogram(bins=7)
+    + geom_density()
+    + facet_wrap(<span style="color: #008000;">"Species"</span>, scales=<span style="color: #008000;">"free"</span>, labeller=my_labeller)
+    + theme_bw()
+)
+
+demo_p9.save(<span style="color: #008000;">"fig05.png"</span>, height=2.9, width=8.1)
+</pre>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-30 Wed 10:45</p>
+<p class="date">Created: 2023-11-09 Thu 10:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
