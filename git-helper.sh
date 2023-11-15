@@ -13,7 +13,7 @@ git add lists/zarebski.bib
 # The plotnine gallery
 git add misc/plotnine/gallery.html
 
-for ix in $(seq -f "%02g" 1 4);
+for ix in $(seq -f "%02g" 1 5);
 do
     git add ./misc/plotnine/fig$ix.png
 done

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-11-08 Wed 11:46 -->
+<!-- 2023-11-15 Wed 19:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orga690e96" class="figure">
+<div id="org6b2e9a5" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -324,6 +324,9 @@
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-11</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Configure size of latex previews in org-mode.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-10</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Add a scrartcl class to `</span><span style="color: #D0372D; font-style: italic;">org-latex-classes</span><span style="color: #8D8D84; font-style: italic;">' as nicer org-mode</span>
@@ -1457,10 +1460,48 @@ instead of <code>u</code> in step 5 to stage the files in the region.
   <span style="color: #006FE0;">:config</span>
   (<span style="color: #0000FF;">setq</span> magit-display-buffer-function
         #'magit-display-buffer-fullframe-status-v1)
+  (setenv <span style="color: #008000;">"SSH_AUTH_SOCK"</span> <span style="color: #008000;">"&lt;ADD THE CORRECT PATH HERE&gt;"</span>)
   (evil-leader/set-key
-    <span style="color: #008000;">"g s"</span> 'magit-status
+    <span style="color: #008000;">"g s"</span> 'nice/magit-status
     <span style="color: #008000;">"g q"</span> 'with-editor-cancel))
+</pre>
+</div>
 
+<p>
+The following is meant to solve the problem where the window configuration is
+lost by <code>magit-status</code>. I haven't been able to get the bindings working within
+<code>magit-status</code> though, so you have to call <code>nice/magit-quit</code> manually. It does
+restore the configuration though which is nice.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice/temp-window-configuration</span> nil
+  <span style="color: #036A07;">"Temporary variable to hold the window configuration."</span>)
+
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice/magit-status</span> ()
+  <span style="color: #036A07;">"Save the current window configuration and open Magit status."</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">setq</span> nice/temp-window-configuration (current-window-configuration))
+  (magit-status))
+
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice/magit-quit</span> ()
+  <span style="color: #036A07;">"Restore the window configuration from before opening Magit status."</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">when</span> nice/temp-window-configuration
+    (set-window-configuration nice/temp-window-configuration)
+    (<span style="color: #0000FF;">setq</span> nice/temp-window-configuration nil)))
+</pre>
+</div>
+
+<p>
+In the <code>use-package</code> command above we set the <code>SSH_AUTH_SOCK</code> manually which
+fixes some weird issue where git was not able to authenticate correctly. This
+only happened on one machine and is probably machine specific so you'll need to
+be careful to get the right value here.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
 (<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">nice-canned-commit-message</span> (fname cmessage key)
   <span style="color: #036A07;">"Define a canned commit message function with an Evil key binding.</span>
 
@@ -1880,6 +1921,21 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 
 (add-hook 'org-mode-hook #'nice-org-mode-hook)
 </pre>
+</div>
+</div>
+
+<div id="outline-container-org56e52e7" class="outline-4">
+<h4 id="org56e52e7">LaTeX preview</h4>
+<div class="outline-text-4" id="text-org56e52e7">
+<p>
+The following adjusts the size of the latex preview in org-mode. See the binding
+for <code>org-latex-preview</code> below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">setq</span> org-format-latex-options (plist-put org-format-latex-options <span style="color: #006FE0;">:scale</span> 2.0))
+</pre>
+</div>
 </div>
 </div>
 
@@ -2602,7 +2658,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-11-08 Wed 11:46</p>
+<p class="date">Created: 2023-11-15 Wed 19:54</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
