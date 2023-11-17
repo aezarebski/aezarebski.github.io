@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-11-15 Wed 19:54 -->
+<!-- 2023-11-17 Fri 21:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org6b2e9a5" class="figure">
+<div id="orgf6f9f12" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -326,6 +326,7 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-11</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Refactor window selection.</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Configure size of latex previews in org-mode.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-10</span>
@@ -700,24 +701,7 @@ scrolling (which gives a smoother scroll).
 <h4 id="org5579024">Other</h4>
 <div class="outline-text-4" id="text-org5579024">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">next-window-and-pulse</span> ()
-  <span style="color: #036A07;">"Switch to another window and pulse the current window."</span>
-  (<span style="color: #0000FF;">interactive</span>)
-  (other-window 1)
-  (<span style="color: #0000FF;">let</span> ((orig-color (face-background 'mode-line)))
-    (set-face-background 'mode-line <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
-    (sit-for 0.1)
-    (set-face-background 'mode-line orig-color)))
-
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">previous-window-and-pulse</span> ()
-  <span style="color: #036A07;">"Switch to another window and pulse the current window."</span>
-  (<span style="color: #0000FF;">interactive</span>)
-  (other-window -1)
-  (<span style="color: #0000FF;">let</span> ((orig-color (face-background 'mode-line)))
-    (set-face-background 'mode-line <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
-    (sit-for 0.1)
-    (set-face-background 'mode-line orig-color)))
-
+<pre class="src src-emacs-lisp">
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Rainbow-mode will highlight strings indicating colours,</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">e.g. hexcodes in their corresponding colour.</span>
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">rainbow-mode</span>
@@ -910,15 +894,34 @@ between files.
 <h4 id="org47932bd">Evil window management</h4>
 <div class="outline-text-4" id="text-org47932bd">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(evil-leader/set-key
-  <span style="color: #008000;">"w a"</span> 'nice-balance-windows-alt
-  <span style="color: #008000;">"w b"</span> 'balance-windows)
+<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">define-nice-window-move</span> (name move-func)
+  `(<span style="color: #0000FF;">defun</span> ,name ()
+     (<span style="color: #0000FF;">interactive</span>)
+     (,move-func 1)
+     (<span style="color: #0000FF;">let</span> ((ov (make-overlay (point-min) (point-max))))
+       (overlay-put ov 'window (selected-window))
+       (overlay-put ov 'face '(<span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>))
+       (sit-for 0.1)
+       (delete-overlay ov))))
+
+(<span style="color: #0000FF;">define-nice-window-move</span> nice-window-up evil-window-up)
+(<span style="color: #0000FF;">define-nice-window-move</span> nice-window-down evil-window-down)
+(<span style="color: #0000FF;">define-nice-window-move</span> nice-window-left evil-window-left)
+(<span style="color: #0000FF;">define-nice-window-move</span> nice-window-right evil-window-right)
 
 (evil-leader/set-key
-  <span style="color: #008000;">"k"</span> 'evil-window-up
-  <span style="color: #008000;">"j"</span> 'evil-window-down
-  <span style="color: #008000;">"h"</span> 'evil-window-left
-  <span style="color: #008000;">"l"</span> 'evil-window-right)
+  <span style="color: #008000;">"k"</span> 'nice-window-up
+  <span style="color: #008000;">"j"</span> 'nice-window-down
+  <span style="color: #008000;">"h"</span> 'nice-window-left
+  <span style="color: #008000;">"l"</span> 'nice-window-right
+  <span style="color: #008000;">"w a"</span> 'nice-balance-windows-alt
+  <span style="color: #008000;">"w b"</span> 'balance-windows
+  <span style="color: #008000;">"w s"</span> 'split-window-below
+  <span style="color: #008000;">"w v"</span> 'split-window-right
+  <span style="color: #008000;">"w L"</span> 'evil-window-move-far-right
+  <span style="color: #008000;">"w H"</span> 'evil-window-move-far-left
+  <span style="color: #008000;">"w J"</span> 'evil-window-move-very-bottom
+  <span style="color: #008000;">"w K"</span> 'evil-window-move-very-top)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-balance-windows-alt</span> ()
   <span style="color: #036A07;">"Balance windows such that the current window receives a certain</span>
@@ -1149,16 +1152,6 @@ Ibuffer include
 (<span style="color: #0000FF;">nice-scratch-buffer</span> text-mode <span style="color: #008000;">"b s t"</span>)
 (<span style="color: #0000FF;">nice-scratch-buffer</span> org-mode <span style="color: #008000;">"b s o"</span>)
 (<span style="color: #0000FF;">nice-scratch-buffer</span> emacs-lisp-mode <span style="color: #008000;">"b s e"</span>)
-
-(evil-leader/set-key
-  <span style="color: #008000;">"w s"</span> 'split-window-below
-  <span style="color: #008000;">"w v"</span> 'split-window-right
-  <span style="color: #008000;">"TAB"</span> 'next-window-and-pulse
-  <span style="color: #008000;">"&lt;backtab&gt;"</span> 'previous-window-and-pulse
-  <span style="color: #008000;">"w L"</span> 'evil-window-move-far-right
-  <span style="color: #008000;">"w H"</span> 'evil-window-move-far-left
-  <span style="color: #008000;">"w J"</span> 'evil-window-move-very-bottom
-  <span style="color: #008000;">"w K"</span> 'evil-window-move-very-top)
 </pre>
 </div>
 </div>
@@ -1501,8 +1494,7 @@ be careful to get the right value here.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">
-(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">nice-canned-commit-message</span> (fname cmessage key)
+<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">nice-canned-commit-message</span> (fname cmessage key)
   <span style="color: #036A07;">"Define a canned commit message function with an Evil key binding.</span>
 
 <span style="color: #036A07;">  This macro takes in three arguments:</span>
@@ -2658,7 +2650,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-11-15 Wed 19:54</p>
+<p class="date">Created: 2023-11-17 Fri 21:00</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
