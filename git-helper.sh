@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 git add git-helper.sh
+git add notes.html
 git add index.html
 
 # A bunch of boring lists
