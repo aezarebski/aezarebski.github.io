@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-11-17 Fri 21:00 -->
+<!-- 2023-12-06 Wed 09:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgf6f9f12" class="figure">
+<div id="org33489bb" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -806,7 +806,14 @@ between files.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">nice-meld-files</span> (name fa fb key)
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Diffing files with meld</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-----------------------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">+ f m a - will diff the aspell dictionary</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">+ f m i - will diff the emacs init</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">+ f m m - will prompt for two files to diff</span>
+<span style="color: #8D8D84;">;;</span>
+(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">nice-meld-files</span> (name fa fb key)
   <span style="color: #036A07;">"Generate function named nice-meld-NAME which opens meld diff for</span>
 <span style="color: #036A07;">files FA and FB using SPC f m KEY."</span>
   `(<span style="color: #0000FF;">progn</span>
@@ -2060,11 +2067,16 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
 <pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-publish-homepage</span> ()
   <span style="color: #036A07;">"Copy my website homepage if it exists."</span>
   (<span style="color: #0000FF;">interactive</span>)
-  (<span style="color: #0000FF;">let</span> ((local <span style="color: #008000;">"~/public-site/org/scratch.html"</span>)
-        (remote <span style="color: #008000;">"~/aezarebski.github.io/index.html"</span>))
-    (<span style="color: #0000FF;">when</span> (file-exists-p local)
-      (copy-file local remote t)
-      (message <span style="color: #008000;">"Copied %s to %s"</span> local remote))))
+  (<span style="color: #0000FF;">let</span> ((local-notes <span style="color: #008000;">"~/public-site/org/scratch.html"</span>)
+        (remote-notes <span style="color: #008000;">"~/aezarebski.github.io/notes.html"</span>)
+        (local-landing <span style="color: #008000;">"~/public-site/org/index-academic.html"</span>)
+        (remote-landing <span style="color: #008000;">"~/aezarebski.github.io/index.html"</span>))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-notes)
+      (copy-file local-notes remote-notes t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-notes remote-notes))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-landing)
+      (copy-file local-landing remote-landing t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-landing remote-landing))))
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The following projects are available for publishing when the</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">`</span><span style="color: #D0372D; font-style: italic;">org-publish</span><span style="color: #8D8D84; font-style: italic;">' command is given.</span>
@@ -2650,7 +2662,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-11-17 Fri 21:00</p>
+<p class="date">Created: 2023-12-06 Wed 09:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

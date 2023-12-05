@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-11-04 Sat 16:21 -->
+<!-- 2023-12-06 Wed 09:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>aez-python-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org4d01a1b" class="figure">
+<div id="orgac04847" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -222,11 +222,11 @@
 <li><a href="#org1265c3b">PIP VANISHED!!!</a></li>
 <li><a href="#org5c647fc">Colab</a></li>
 <li><a href="#org8bde66d">Jupyter via Nix</a></li>
-<li><a href="#org40f49c1">Spacemacs layer</a></li>
 <li><a href="#org26d7dca">Help</a></li>
 <li><a href="#org12c8707">Debugging</a></li>
 <li><a href="#org2969679"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#org148639e">High performance computing</a></li>
+<li><a href="#org221bde9">IO</a></li>
 </ul>
 </li>
 <li><a href="#org49dac90">Python packages</a>
@@ -388,10 +388,6 @@ To save a copy of the packages in an environment you can use freeze
 <pre class="src src-sh">pip freeze &gt; requirements.txt
 </pre>
 </div>
-
-<p>
-If you are struggling to get this working in an Emacs REPL, see <a href="#org40f49c1">these notes</a>.
-</p>
 </div>
 </div>
 
@@ -471,55 +467,6 @@ in
   jupyterEnvironment.env
 </pre>
 </div>
-</div>
-</div>
-
-<div id="outline-container-org40f49c1" class="outline-3">
-<h3 id="org40f49c1">Spacemacs layer</h3>
-<div class="outline-text-3" id="text-org40f49c1">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Shortcut</th>
-<th scope="col" class="org-left">Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>SPC m V a</code></td>
-<td class="org-left">Activate a virtual environment</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>SPC m V d</code></td>
-<td class="org-left">Deactivate the virtual environment</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>SPC '</code></td>
-<td class="org-left">Start a REPL</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>SPC m s &lt;x&gt;</code></td>
-<td class="org-left">Send <code>&lt;x&gt;</code> to the REPL</td>
-</tr>
-</tbody>
-</table>
-
-<ul class="org-ul">
-<li>I have found that if I'm using a virtual environment I need to pip install
-IPython before I can use the REPL properly. If the REPL starts in the wrong
-python version even after activating the virtual environment this might be
-worth a try.</li>
-</ul>
 </div>
 </div>
 
@@ -603,6 +550,27 @@ def run_commands_in_parallel(parameters, command_template, max_workers=4):
 filenames = ["foobar1.xml", "foobar2.xml", "foobar3.xml"]
 command = "&lt;some/command/taking/a/file&gt; {}"
 run_commands_in_parallel(filenames, command)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org221bde9" class="outline-3">
+<h3 id="org221bde9">IO</h3>
+<div class="outline-text-3" id="text-org221bde9">
+</div>
+<div id="outline-container-org9ac723f" class="outline-4">
+<h4 id="org9ac723f">Working with JSON</h4>
+<div class="outline-text-4" id="text-org9ac723f">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> json
+
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(<span style="color: #008000;">'foo.json'</span>, <span style="color: #008000;">'r'</span>) <span style="color: #0000FF;">as</span> f:
+    <span style="color: #BA36A5;">d</span> = json.load(f)
+
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(<span style="color: #008000;">'bar.json'</span>, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF;">as</span> f:
+    json.dump(d, f, indent=4)
 </pre>
 </div>
 </div>
@@ -888,9 +856,37 @@ There is the <code>copy</code> method to help you a lot of the time.</li>
 </ul>
 </div>
 
-<div id="outline-container-org221bde9" class="outline-4">
-<h4 id="org221bde9">IO</h4>
-<div class="outline-text-4" id="text-org221bde9">
+<div id="outline-container-orgaeebe01" class="outline-4">
+<h4 id="orgaeebe01">Reshaping (melting) data</h4>
+<div class="outline-text-4" id="text-orgaeebe01">
+<p>
+Dataframes have a <code>melt</code> method to go from a wide to long format.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">sales_melted</span> = sales.melt(id_vars=[<span style="color: #008000;">'Year'</span>],
+                          value_vars=[<span style="color: #008000;">'product_a'</span>, <span style="color: #008000;">'product_b'</span>, <span style="color: #008000;">'product_c'</span>],
+                          var_name=<span style="color: #008000;">'Product'</span>,
+                          value_name=<span style="color: #008000;">'Sales'</span>)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>id_vars</code> are the columns you want to keep as an identifier;</li>
+<li><code>value_vars</code> are the columns you want to melt into rows;</li>
+<li><code>var_name</code> is the column name of the new variable created;</li>
+<li>and <code>value_name</code> is the column name of the existing values.</li>
+</ul>
+
+<p>
+Melting is particularly useful in plotting.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0cd1bfe" class="outline-4">
+<h4 id="org0cd1bfe">IO</h4>
+<div class="outline-text-4" id="text-org0cd1bfe">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1128,7 +1124,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-11-04 Sat 16:21</p>
+<p class="date">Created: 2023-12-06 Wed 09:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

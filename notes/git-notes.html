@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-07-18 Tue 10:42 -->
+<!-- 2023-12-06 Wed 09:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>git-aez-notes</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org2efb063" class="figure">
+<div id="org92f2d46" class="figure">
 <p><img src="../images/git-logo.png" alt="git-logo.png" width="300px" />
 </p>
 </div>
@@ -241,6 +241,7 @@
 <li><a href="#org74bfd8f">Issue tracker</a></li>
 <li><a href="#org6bb2a26">ssh keys</a></li>
 <li><a href="#org09f846a">Wikis</a></li>
+<li><a href="#org2cbda3e">How many times has it been downloaded?</a></li>
 </ul>
 </li>
 </ul>
@@ -259,7 +260,7 @@ Make sure that you have got your remote set to the correct location, it should
 look like the following:
 </p>
 
-<pre class="example" id="org27ff89c">
+<pre class="example" id="org099c9bc">
 origin git@github.com:aezarebski/foobar.git
 </pre>
 
@@ -299,9 +300,9 @@ Note that you may need to use some extra commands to restart the ssh agent
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #596e76; font-weight: bold;">eval</span> <span style="color: #11948b;">"$(</span><span style="color: #5e65b6; font-weight: bold;">ssh-agent -s</span><span style="color: #11948b;">)"</span>
-<span style="color: #596e76; font-weight: bold;">kill</span> -9 &lt;agent pid&gt;
-<span style="color: #596e76; font-weight: bold;">eval</span> <span style="color: #5e65b6; font-weight: bold;">`ssh-agent`</span>
+<pre class="src src-sh"><span style="color: #006FE0;">eval</span> <span style="color: #008000;">"$(</span><span style="color: #FF1493;">ssh-agent -s</span><span style="color: #008000;">)"</span>
+<span style="color: #006FE0;">kill</span> -9 &lt;agent pid&gt;
+<span style="color: #006FE0;">eval</span> <span style="color: #FF1493;">`ssh-agent`</span>
 ssh-add ~/.ssh/&lt;your private key&gt;
 ssh git@gitprovider.com
 </pre>
@@ -313,7 +314,7 @@ ssh git@gitprovider.com
 <h3 id="org941e4ce">List current commit hash</h3>
 <div class="outline-text-3" id="text-org941e4ce">
 <div class="org-src-container">
-<pre class="src src-sh">git log -1 --format=<span style="color: #11948b;">"%H"</span>
+<pre class="src src-sh">git log -1 --format=<span style="color: #008000;">"%H"</span>
 </pre>
 </div>
 </div>
@@ -620,7 +621,7 @@ messy.
 git checkout -b feature-neat
 git checkout feature-neat
 git merge --squash feature-messy
-git commit <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">This step may require more attention</span>
+git commit <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">This step may require more attention</span>
 git checkout master
 git merge feature-neat
 </pre>
@@ -658,9 +659,9 @@ you want from branch <code>Y</code>. To pull those edits over you can do the fol
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git checkout X                  <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">we need to be on X</span>
-git checkout Y f1 f2            <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">checkout out the edited files</span>
-git commit -m <span style="color: #11948b;">"Pull edits over"</span> <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Profit!</span>
+<pre class="src src-sh">git checkout X                  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">we need to be on X</span>
+git checkout Y f1 f2            <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">checkout out the edited files</span>
+git commit -m <span style="color: #008000;">"Pull edits over"</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Profit!</span>
 </pre>
 </div>
 </div>
@@ -699,7 +700,7 @@ The following command should set vim as the default editor on a machine.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git config --global core.editor <span style="color: #11948b;">"vim"</span>
+<pre class="src src-sh">git config --global core.editor <span style="color: #008000;">"vim"</span>
 </pre>
 </div>
 </div>
@@ -779,7 +780,7 @@ the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #596e76; font-weight: bold;">cd</span> ~/.ssh
+<pre class="src src-shell"><span style="color: #006FE0;">cd</span> ~/.ssh
 ssh-keygen
 </pre>
 </div>
@@ -824,11 +825,43 @@ then you clone the wiki for this repository with
 </div>
 </div>
 </div>
+
+<div id="outline-container-org2cbda3e" class="outline-3">
+<h3 id="org2cbda3e">How many times has it been downloaded?</h3>
+<div class="outline-text-3" id="text-org2cbda3e">
+<p>
+The GitHub API makes it possible to see how many times each release of
+a package has been downloaded. The following script can be used to
+determine how many times my <a href="https://aezarebski.github.io/timtam/">timtam</a> package has been downloaded.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> requests
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Replace with your repository details</span>
+<span style="color: #BA36A5;">owner</span> = <span style="color: #008000;">'aezarebski'</span>
+<span style="color: #BA36A5;">repo</span> = <span style="color: #008000;">'timtam2'</span>
+
+<span style="color: #BA36A5;">response</span> = requests.get(f<span style="color: #008000;">'https://api.github.com/repos/</span>{owner}<span style="color: #008000;">/</span>{repo}<span style="color: #008000;">/releases'</span>)
+<span style="color: #BA36A5;">releases</span> = response.json()
+
+<span style="color: #BA36A5;">counts</span> = []
+<span style="color: #0000FF;">for</span> release <span style="color: #0000FF;">in</span> releases:
+    <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Release: </span>{release['name']}<span style="color: #008000;">"</span>)
+    <span style="color: #0000FF;">for</span> asset <span style="color: #0000FF;">in</span> release[<span style="color: #008000;">'assets'</span>]:
+        <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"  Asset: </span>{asset['name']}<span style="color: #008000;">, Downloads: </span>{asset['download_count']}<span style="color: #008000;">"</span>)
+        counts.append(asset[<span style="color: #008000;">'download_count'</span>])
+
+<span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Total download count: </span>{<span style="color: #006FE0;">sum</span>(counts)}<span style="color: #008000;">"</span>)
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-07-18 Tue 10:42</p>
+<p class="date">Created: 2023-12-06 Wed 09:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
