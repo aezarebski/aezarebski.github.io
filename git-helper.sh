@@ -80,3 +80,7 @@ git add misc/recipes/index.html
 git add misc/recipes/recipe-style.css
 git add misc/recipes/butternut-squash-risotto.html
 git add misc/recipes/paneer-korma.html
+
+# Teaching things
+git add teaching/index.html
+git add teaching/teaching.css
