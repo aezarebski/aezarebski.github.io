@@ -22,7 +22,7 @@ done
 # The TikZ gallery
 git add misc/tikz/gallery.html
 
-for ix in $(seq -f "%02g" 1 2);
+for ix in $(seq -f "%02g" 1 8);
 do
     git add ./misc/tikz/fig$ix.png
 done
