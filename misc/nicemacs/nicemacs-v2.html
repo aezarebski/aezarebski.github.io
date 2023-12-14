@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-06 Wed 09:27 -->
+<!-- 2023-12-15 Fri 10:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org33489bb" class="figure">
+<div id="orgbe70d87" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -328,6 +328,7 @@
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-11</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Refactor window selection.</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Configure size of latex previews in org-mode.</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Clean up snippet configuration.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-10</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Add a scrartcl class to `</span><span style="color: #D0372D; font-style: italic;">org-latex-classes</span><span style="color: #8D8D84; font-style: italic;">' as nicer org-mode</span>
@@ -416,6 +417,8 @@
   <span style="color: #036A07;">"The path to the nicemacs resources directory on this machine."</span>)
 (<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice-nicemacs-directory</span> <span style="color: #008000;">"~/Documents/nicemacs"</span>
   <span style="color: #036A07;">"The path to the nicemacs directory on this machine."</span>)
+(<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice-snippet-directory</span> <span style="color: #008000;">"~/.emacs.d/snippets"</span>
+  <span style="color: #036A07;">"The path to the whipper snipper directory on this machine."</span>)
 
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">cl-lib</span>
   <span style="color: #006FE0;">:ensure</span> t)
@@ -1334,7 +1337,9 @@ Ibuffer include
 <h3 id="orgc0b7087">Yasnippet</h3>
 <div class="outline-text-3" id="text-orgc0b7087">
 <p>
-I have a collection of yasnippets <a href="https://github.com/aezarebski/whipper-snipper">here</a>.
+I have a collection of yasnippets <a href="https://github.com/aezarebski/whipper-snipper">here</a>. To use these snippets clone that
+repository into your <code>.emacs.d/</code> under the name <code>snippets</code> and use
+<code>yas-reload-all</code> (possibly after <code>yas-recompile-all</code> although this can be slow).
 </p>
 
 <div class="org-src-container">
@@ -1349,9 +1354,9 @@ I have a collection of yasnippets <a href="https://github.com/aezarebski/whipper
   (yas-global-mode 1))
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-load-snippets</span> ()
-  <span style="color: #036A07;">"Load the snippets in ~/.emacs.d/snippets."</span>
+  <span style="color: #036A07;">"Load the snippets in my snippet directory"</span>
   (<span style="color: #0000FF;">interactive</span>)
-  (<span style="color: #0000FF;">let</span> ((snippets-dir <span style="color: #008000;">"~/.emacs.d/snippets"</span>))
+  (<span style="color: #0000FF;">let</span> ((snippets-dir nice-snippet-directory))
     (<span style="color: #0000FF;">unless</span> (file-exists-p snippets-dir)
       (make-directory snippets-dir))
     (yas-load-directory snippets-dir)))
@@ -1370,7 +1375,7 @@ I have a collection of yasnippets <a href="https://github.com/aezarebski/whipper
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-go-to-snippets-dir</span> ()
   <span style="color: #036A07;">"Open the snippets directory in dired."</span>
   (<span style="color: #0000FF;">interactive</span>)
-  (dired <span style="color: #008000;">"~/.emacs.d/snippets"</span>))
+  (dired nice-snippet-directory))
 </pre>
 </div>
 </div>
@@ -2086,6 +2091,16 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
          <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"org"</span>
          <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/notes/"</span>
          <span style="color: #006FE0;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #008000;">"website-teaching-org-files"</span>
+         <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/teaching/"</span>
+         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"org"</span>
+         <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/teaching/"</span>
+         <span style="color: #006FE0;">:publishing-function</span> org-html-publish-to-html)
+        (<span style="color: #008000;">"website-teaching-static"</span>
+         <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/teaching/"</span>
+         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"css"</span>
+         <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/teaching/"</span>
+         <span style="color: #006FE0;">:publishing-function</span> org-publish-attachment)
         (<span style="color: #008000;">"website-lists-org-files"</span>
          <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/lists/"</span>
          <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"org"</span>
@@ -2207,6 +2222,9 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
         (<span style="color: #008000;">"recipes"</span>
          <span style="color: #006FE0;">:components</span> (<span style="color: #008000;">"website-misc-recipes"</span>
                       <span style="color: #008000;">"website-misc-recipes-static"</span>))
+        (<span style="color: #008000;">"teaching"</span>
+         <span style="color: #006FE0;">:components</span> (<span style="color: #008000;">"website-teaching-org-files"</span>
+                      <span style="color: #008000;">"website-teaching-static"</span>))
         (<span style="color: #008000;">"website"</span>
          <span style="color: #006FE0;">:components</span> (<span style="color: #008000;">"website-notes-org-files"</span>
                       <span style="color: #008000;">"website-images-static"</span>
@@ -2662,7 +2680,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-12-06 Wed 09:27</p>
+<p class="date">Created: 2023-12-15 Fri 10:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

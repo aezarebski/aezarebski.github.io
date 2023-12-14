@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-28 Mon 09:12 -->
+<!-- 2023-12-15 Fri 10:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>latex-aez-notes</title>
@@ -252,6 +252,7 @@
 </li>
 <li><a href="#orgb84a44d">Latex notes</a>
 <ul>
+<li><a href="#org5c98631">Lists</a></li>
 <li><a href="#org8d13fac">Help! Where is the manual?</a></li>
 <li><a href="#org8c888ef">Basic styling</a></li>
 <li><a href="#org75897df">Math styling</a></li>
@@ -295,7 +296,7 @@
 </div>
 
 
-<div id="orgca91804" class="figure">
+<div id="org18f7cbc" class="figure">
 <p><img src="../images/latex-logo.png" alt="latex-logo.png" width="500px" />
 </p>
 </div>
@@ -437,7 +438,7 @@ columns so you may need to adjust it if you are using a single column.
 <h3 id="org73a75c0">Basic document II</h3>
 <div class="outline-text-3" id="text-org73a75c0">
 
-<div id="orge391692" class="figure">
+<div id="orgb04e02a" class="figure">
 <p><img src="../resources/latex-basic-document-ii.png" alt="latex-basic-document-ii.png" width="400px" />
 </p>
 </div>
@@ -526,22 +527,32 @@ stamped PDF of the compiled document
 
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/</span><span style="color: #0000FF;">env</span><span style="color: #8D8D84; font-style: italic;"> bash</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">-*- mode:sh; -*-</span>
 
-<span style="color: #BA36A5;">DOC</span>=document
+<span style="color: #0000FF;">function</span> <span style="color: #006699;">compileAndClean</span> {
+    <span style="color: #BA36A5;">base_filename</span>=$<span style="color: #BA36A5;">1</span>
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Compile LaTeX document</span>
+    pdflatex $<span style="color: #BA36A5;">base_filename</span>
+    bibtex $<span style="color: #BA36A5;">base_filename</span>
+    pdflatex $<span style="color: #BA36A5;">base_filename</span>
+    pdflatex $<span style="color: #BA36A5;">base_filename</span>
 
-pdflatex $<span style="color: #BA36A5;">DOC</span>
-bibtex $<span style="color: #BA36A5;">DOC</span>
-pdflatex $<span style="color: #BA36A5;">DOC</span>
-pdflatex $<span style="color: #BA36A5;">DOC</span>
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">List of extensions of temporary files to remove</span>
+    <span style="color: #BA36A5;">aux_extensions</span>=(aux log out bbl blg run.xml)
 
-rm $<span style="color: #BA36A5;">DOC</span>.aux
-rm $<span style="color: #BA36A5;">DOC</span>.bbl
-rm $<span style="color: #BA36A5;">DOC</span>.blg
-rm $<span style="color: #BA36A5;">DOC</span>.log
-rm $<span style="color: #BA36A5;">DOC</span>.out
-rm $<span style="color: #BA36A5;">DOC</span>.run.xml
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Remove temporary files</span>
+    <span style="color: #0000FF;">for</span> ext<span style="color: #0000FF;"> in</span> <span style="color: #008000;">"aux_extensions[@]"</span>; <span style="color: #0000FF;">do</span>
+        <span style="color: #BA36A5;">tmp_file</span>=<span style="color: #008000;">"$base_filename.$ext"</span>
+        <span style="color: #0000FF;">if</span> [ -f <span style="color: #008000;">"$tmp_file"</span> ]; <span style="color: #0000FF;">then</span>
+            rm $<span style="color: #BA36A5;">tmp_file</span>
+        <span style="color: #0000FF;">fi</span>
+    <span style="color: #0000FF;">done</span>
 
-cp $<span style="color: #BA36A5;">DOC</span>.pdf $<span style="color: #BA36A5;">DOC</span>-$(<span style="color: #FF1493;">date '+%Y-%m-%d'</span>).pdf
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Make a backup copy of the pdf with today's date</span>
+    cp <span style="color: #008000;">"$base_filename.pdf"</span> <span style="color: #008000;">"$base_filename-$(</span><span style="color: #FF1493;">date '+%Y-%m-%d'</span><span style="color: #008000;">).pdf"</span>
+}
+
+compileAndClean document
 </pre>
 </div>
 </div>
@@ -784,8 +795,14 @@ can compile it with <code>pdflatex</code>.</li>
 <div id="outline-container-org07d33d0" class="outline-3">
 <h3 id="org07d33d0">(The dreaded) Gantt chart</h3>
 <div class="outline-text-3" id="text-org07d33d0">
+
+<div id="org27df1dd" class="figure">
+<p><img src="../resources/gantt-chart.png" alt="gantt-chart.png" width="400px" />
+</p>
+</div>
+
 <div class="org-src-container">
-<pre class="src src-latex"><span style="color: #0000FF;">\documentclass</span>{<span style="color: #006FE0;">article</span>}
+<pre class="src src-latex"><span style="color: #0000FF;">\documentclass</span>{<span style="color: #006FE0;">standalone</span>}
 <span style="color: #0000FF;">\usepackage</span>{<span style="color: #006FE0;">pgfgantt</span>}
 
 <span style="color: #0000FF;">\begin</span>{<span style="color: #006699;">document</span>}
@@ -830,6 +847,39 @@ can compile it with <code>pdflatex</code>.</li>
 <h2 id="orgb84a44d">Latex notes</h2>
 <div class="outline-text-2" id="text-orgb84a44d">
 </div>
+<div id="outline-container-org5c98631" class="outline-3">
+<h3 id="org5c98631">Lists</h3>
+<div class="outline-text-3" id="text-org5c98631">
+</div>
+<div id="outline-container-org8deb0d0" class="outline-4">
+<h4 id="org8deb0d0">Customizing itemized lists: spacing</h4>
+<div class="outline-text-4" id="text-org8deb0d0">
+<div class="org-src-container">
+<pre class="src src-latex"><span style="color: #8D8D84;">%% </span><span style="color: #8D8D84; font-style: italic;">preamble</span>
+<span style="color: #0000FF;">\usepackage</span>{<span style="color: #006FE0;">enumitem</span>}
+
+<span style="color: #0000FF;">\begin</span>{<span style="color: #006699;">itemize</span>}[topsep=-6pt, parsep=5pt]
+<span style="color: #0000FF;">\item</span> foobar
+<span style="color: #0000FF;">\item</span> foobar again
+<span style="color: #0000FF;">\end</span>{<span style="color: #006699;">itemize</span>}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9226e48" class="outline-4">
+<h4 id="org9226e48">Customizing itemized lists: triangles</h4>
+<div class="outline-text-4" id="text-org9226e48">
+<div class="org-src-container">
+<pre class="src src-latex"><span style="color: #0000FF;">\usepackage</span>{<span style="color: #006FE0;">amsmath</span>}
+<span style="color: #0000FF;">\usepackage</span>{<span style="color: #006FE0;">enumitem</span>}
+<span style="color: #0000FF;">\setlist</span>[itemize]{label=<span style="color: #008000;">$\rhd$</span>}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org8d13fac" class="outline-3">
 <h3 id="org8d13fac">Help! Where is the manual?</h3>
 <div class="outline-text-3" id="text-org8d13fac">
@@ -1635,7 +1685,7 @@ Here is some text
 <h2 id="org550615d">Bibtex notes</h2>
 <div class="outline-text-2" id="text-org550615d">
 
-<div id="orge91de4d" class="figure">
+<div id="org3b25326" class="figure">
 <p><img src="../images/bibtex-logo.png" alt="bibtex-logo.png" />
 </p>
 </div>
@@ -1959,7 +2009,7 @@ them. This compiles with <code>pdflatex</code> to give the following
 </p>
 
 
-<div id="org823e8ce" class="figure">
+<div id="org3ceac12" class="figure">
 <p><img src="../images/tikz-example-basic-diagram.png" alt="tikz-example-basic-diagram.png" />
 </p>
 </div>
@@ -1969,7 +2019,7 @@ them. This compiles with <code>pdflatex</code> to give the following
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-08-28 Mon 09:12</p>
+<p class="date">Created: 2023-12-15 Fri 10:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
