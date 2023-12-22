@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-15 Fri 10:56 -->
+<!-- 2023-12-22 Fri 15:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgbe70d87" class="figure">
+<div id="org0791286" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -324,6 +324,11 @@
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-12</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Abbreviate the eshell prompt in a nice way.</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Include emoji keybinding amount yasnippet bindings since they</span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">play a similar role.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2023-11</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Refactor window selection.</span>
@@ -970,6 +975,24 @@ between files.
         (switch-to-buffer eshell-buffer)
       (eshell))))
 
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-eshell-prompt</span> ()
+  (<span style="color: #0000FF;">let*</span> ((directory (abbreviate-file-name (eshell/pwd)))
+         (parent (file-name-directory directory))
+         (name (file-name-nondirectory directory))
+         (base-prompt (concat (<span style="color: #0000FF;">if</span> parent
+                                  (concat <span style="color: #008000;">"... "</span> (file-name-nondirectory (directory-file-name parent)) <span style="color: #008000;">"/"</span>)
+                                <span style="color: #008000;">""</span>)
+                              name
+                              <span style="color: #008000;">" $ "</span>))
+         (trimmed-prompt (<span style="color: #0000FF;">if</span> (&gt; (length base-prompt) 50)
+                             (concat <span style="color: #008000;">"[...] "</span> (substring base-prompt (- (length base-prompt) 44)))
+                           base-prompt)))
+    (<span style="color: #0000FF;">if</span> (string-match-p <span style="color: #008000;">"~"</span> trimmed-prompt)
+        (replace-regexp-in-string <span style="color: #008000;">"^\\.\\.\\. "</span> <span style="color: #008000;">""</span> trimmed-prompt)
+      trimmed-prompt)))
+
+(<span style="color: #0000FF;">setq</span> eshell-prompt-function 'nice-eshell-prompt)
+
 (<span style="color: #0000FF;">setq</span> eshell-cmpl-ignore-case t)
 (evil-leader/set-key
   <span style="color: #008000;">"s e"</span> 'eshell
@@ -1347,6 +1370,7 @@ repository into your <code>.emacs.d/</code> under the name <code>snippets</code>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">See https://github.com/aezarebski/whipper-snipper</span>
+<span style="color: #8D8D84;">;;</span>
 
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">yasnippet</span>
   <span style="color: #006FE0;">:ensure</span> t
@@ -1370,7 +1394,8 @@ repository into your <code>.emacs.d/</code> under the name <code>snippets</code>
   <span style="color: #008000;">"y r"</span> 'yas-reload-all         <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Reload all snippets</span>
   <span style="color: #008000;">"y c"</span> 'yas-compile-directory  <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Compile all snippets</span>
   <span style="color: #008000;">"y l"</span> 'nice-load-snippets     <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Load your custom snippets</span>
-  <span style="color: #008000;">"y g"</span> 'nice-go-to-snippets-dir)
+  <span style="color: #008000;">"y g"</span> 'nice-go-to-snippets-dir
+  <span style="color: #008000;">"y e"</span> 'emoji-list)
 
 (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-go-to-snippets-dir</span> ()
   <span style="color: #036A07;">"Open the snippets directory in dired."</span>
@@ -2098,8 +2123,9 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
          <span style="color: #006FE0;">:publishing-function</span> org-html-publish-to-html)
         (<span style="color: #008000;">"website-teaching-static"</span>
          <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/teaching/"</span>
-         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"css"</span>
+         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"css</span><span style="color: #008000; font-weight: bold;">\\</span><span style="color: #008000; font-weight: bold;">|</span><span style="color: #008000;">pdf"</span>
          <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/teaching/"</span>
+         <span style="color: #006FE0;">:recursive</span> t
          <span style="color: #006FE0;">:publishing-function</span> org-publish-attachment)
         (<span style="color: #008000;">"website-lists-org-files"</span>
          <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/lists/"</span>
@@ -2680,7 +2706,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-12-15 Fri 10:56</p>
+<p class="date">Created: 2023-12-22 Fri 15:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
