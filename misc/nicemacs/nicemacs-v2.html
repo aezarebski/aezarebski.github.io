@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:21 -->
+<!-- 2023-12-27 Wed 14:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org0791286" class="figure">
+<div id="orgeafa563" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -1272,63 +1272,6 @@ Ibuffer include
       read-file-name-completion-ignore-case t
       completion-ignore-case t)
 
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Write well</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">----------</span>
-
-<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure the =dictionary= command so that it works off of a</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">local copy of Webster's</span>
-
-(<span style="color: #0000FF;">setq</span> sentence-end-double-space nil)
-
-(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">flyspell</span>
-  <span style="color: #006FE0;">:config</span>
-  (<span style="color: #0000FF;">setq</span> ispell-program-name <span style="color: #008000;">"aspell"</span>)
-  (<span style="color: #0000FF;">setq</span> ispell-personal-dictionary <span style="color: #008000;">"~/.aspell.en.pws"</span>)
-  (set-face-attribute 'flyspell-duplicate nil
-                      <span style="color: #006FE0;">:underline</span> nil
-                      <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
-                      <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
-  (set-face-attribute 'flyspell-incorrect nil
-                      <span style="color: #006FE0;">:underline</span> nil
-                      <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
-                      <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>))
-
-(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">lorem-ipsum</span>)
-
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-diff-dictionaries</span> ()
-  <span style="color: #036A07;">"Run ediff on the current ispell-personal-dictionary and the</span>
-<span style="color: #036A07;">backup dictionary."</span>
-  (<span style="color: #0000FF;">interactive</span>)
-  (<span style="color: #0000FF;">let</span> ((backup-dictionary
-         (concat nice-resources-dir <span style="color: #008000;">"/aspell.en.pws"</span>)))
-    (ediff-files ispell-personal-dictionary backup-dictionary)))
-
-(evil-leader/set-key
-  <span style="color: #008000;">"t S"</span> 'flyspell-mode <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">toggle flyspell on/off.</span>
-  <span style="color: #008000;">"S b"</span> 'flyspell-buffer
-  <span style="color: #008000;">"S n"</span> 'flyspell-goto-next-error
-  <span style="color: #008000;">"S r"</span> 'flyspell-region
-  <span style="color: #008000;">"S c"</span> 'flyspell-correct-word-before-point
-  <span style="color: #008000;">"S d"</span> 'nice-diff-dictionaries)
-
-(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">writegood-mode</span>)
-
-(<span style="color: #0000FF;">setq</span> words-to-add
-      '(<span style="color: #008000;">"many"</span> <span style="color: #008000;">"various"</span> <span style="color: #008000;">"very"</span> <span style="color: #008000;">"quite"</span> <span style="color: #008000;">"somewhat"</span> <span style="color: #008000;">"several"</span>
-        <span style="color: #008000;">"extremely"</span> <span style="color: #008000;">"exceedingly"</span> <span style="color: #008000;">"fairly"</span> <span style="color: #008000;">"rather"</span> <span style="color: #008000;">"remarkably"</span> <span style="color: #008000;">"few"</span>
-        <span style="color: #008000;">"surprisingly"</span> <span style="color: #008000;">"mostly"</span> <span style="color: #008000;">"largely"</span> <span style="color: #008000;">"almost"</span> <span style="color: #008000;">"nearly"</span> <span style="color: #008000;">"in which"</span>
-        <span style="color: #008000;">"generally"</span> <span style="color: #008000;">"virtually"</span> <span style="color: #008000;">"essentially"</span> <span style="color: #008000;">"often"</span> <span style="color: #008000;">"substantially"</span>
-        <span style="color: #008000;">"significantly"</span> <span style="color: #008000;">"considerably"</span> <span style="color: #008000;">"typically"</span> <span style="color: #008000;">"widely"</span> <span style="color: #008000;">"really"</span>
-        <span style="color: #008000;">"actually"</span> <span style="color: #008000;">"basically"</span> <span style="color: #008000;">"certainly"</span> <span style="color: #008000;">"possibly"</span> <span style="color: #008000;">"probably"</span>
-        <span style="color: #008000;">"arguably"</span> <span style="color: #008000;">"likely"</span> <span style="color: #008000;">"apparently"</span> <span style="color: #008000;">"clearly"</span> <span style="color: #008000;">"naturally"</span>
-        <span style="color: #008000;">"obviously"</span> <span style="color: #008000;">"seemingly"</span> <span style="color: #008000;">"surely"</span> <span style="color: #008000;">"somewhat"</span> <span style="color: #008000;">"allegedly"</span>
-        <span style="color: #008000;">"supposedly"</span> <span style="color: #008000;">"purportedly"</span> <span style="color: #008000;">"perhaps"</span> <span style="color: #008000;">"maybe"</span> <span style="color: #008000;">"kind of"</span>
-        <span style="color: #008000;">"sort of"</span> <span style="color: #008000;">"potentially"</span> <span style="color: #008000;">"ultimately"</span> <span style="color: #008000;">"respectively"</span>))
-(<span style="color: #0000FF;">cl-loop</span> for word in words-to-add
-         unless (member word writegood-weasel-words)
-         do (add-to-list 'writegood-weasel-words word))
-
-(evil-leader/set-key <span style="color: #008000;">"t w"</span> 'writegood-mode)
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Be powerful with packages</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=========================</span>
@@ -1935,7 +1878,7 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Org-Mode</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">--------</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">========</span>
 
 <span style="color: #8D8D84;">;; </span><span style="color: #00ffff; font-weight: bold; font-style: italic;">NOTE</span><span style="color: #8D8D84; font-style: italic;"> It would be nice to have an additional command and key for</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">moving from level n+1 headers their parent level n header.</span>
@@ -1950,6 +1893,114 @@ based on a column (1-indexed) with a variety of datatypes acceptable.</li>
 
 (add-hook 'org-mode-hook #'nice-org-mode-hook)
 </pre>
+</div>
+</div>
+
+<div id="outline-container-orgeaac21e" class="outline-4">
+<h4 id="orgeaac21e">Writing natural language</h4>
+<div class="outline-text-4" id="text-orgeaac21e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Write well</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">----------</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold; font-style: italic;">TODO</span><span style="color: #8D8D84; font-style: italic;"> Configure the =dictionary= command so that it works off of a</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">local copy of Webster's</span>
+
+(<span style="color: #0000FF;">setq</span> sentence-end-double-space nil)
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">flyspell</span>
+  <span style="color: #006FE0;">:config</span>
+  (<span style="color: #0000FF;">setq</span> ispell-program-name <span style="color: #008000;">"aspell"</span>)
+  (<span style="color: #0000FF;">setq</span> ispell-personal-dictionary <span style="color: #008000;">"~/.aspell.en.pws"</span>)
+  (set-face-attribute 'flyspell-duplicate nil
+                      <span style="color: #006FE0;">:underline</span> nil
+                      <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
+                      <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>)
+  (set-face-attribute 'flyspell-incorrect nil
+                      <span style="color: #006FE0;">:underline</span> nil
+                      <span style="color: #006FE0;">:foreground</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>
+                      <span style="color: #006FE0;">:background</span> <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span>))
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">lorem-ipsum</span>)
+
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-diff-dictionaries</span> ()
+  <span style="color: #036A07;">"Run ediff on the current ispell-personal-dictionary and the</span>
+<span style="color: #036A07;">backup dictionary."</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">let</span> ((backup-dictionary
+         (concat nice-resources-dir <span style="color: #008000;">"/aspell.en.pws"</span>)))
+    (ediff-files ispell-personal-dictionary backup-dictionary)))
+
+(evil-leader/set-key
+  <span style="color: #008000;">"t S"</span> 'flyspell-mode <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">toggle flyspell on/off.</span>
+  <span style="color: #008000;">"S b"</span> 'flyspell-buffer
+  <span style="color: #008000;">"S n"</span> 'flyspell-goto-next-error
+  <span style="color: #008000;">"S r"</span> 'flyspell-region
+  <span style="color: #008000;">"S c"</span> 'flyspell-correct-word-before-point
+  <span style="color: #008000;">"S d"</span> 'nice-diff-dictionaries)
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">writegood-mode</span>)
+
+(<span style="color: #0000FF;">setq</span> words-to-add
+      '(<span style="color: #008000;">"many"</span> <span style="color: #008000;">"various"</span> <span style="color: #008000;">"very"</span> <span style="color: #008000;">"quite"</span> <span style="color: #008000;">"somewhat"</span> <span style="color: #008000;">"several"</span>
+        <span style="color: #008000;">"extremely"</span> <span style="color: #008000;">"exceedingly"</span> <span style="color: #008000;">"fairly"</span> <span style="color: #008000;">"rather"</span> <span style="color: #008000;">"remarkably"</span> <span style="color: #008000;">"few"</span>
+        <span style="color: #008000;">"surprisingly"</span> <span style="color: #008000;">"mostly"</span> <span style="color: #008000;">"largely"</span> <span style="color: #008000;">"almost"</span> <span style="color: #008000;">"nearly"</span> <span style="color: #008000;">"in which"</span>
+        <span style="color: #008000;">"generally"</span> <span style="color: #008000;">"virtually"</span> <span style="color: #008000;">"essentially"</span> <span style="color: #008000;">"often"</span> <span style="color: #008000;">"substantially"</span>
+        <span style="color: #008000;">"significantly"</span> <span style="color: #008000;">"considerably"</span> <span style="color: #008000;">"typically"</span> <span style="color: #008000;">"widely"</span> <span style="color: #008000;">"really"</span>
+        <span style="color: #008000;">"actually"</span> <span style="color: #008000;">"basically"</span> <span style="color: #008000;">"certainly"</span> <span style="color: #008000;">"possibly"</span> <span style="color: #008000;">"probably"</span>
+        <span style="color: #008000;">"arguably"</span> <span style="color: #008000;">"likely"</span> <span style="color: #008000;">"apparently"</span> <span style="color: #008000;">"clearly"</span> <span style="color: #008000;">"naturally"</span>
+        <span style="color: #008000;">"obviously"</span> <span style="color: #008000;">"seemingly"</span> <span style="color: #008000;">"surely"</span> <span style="color: #008000;">"somewhat"</span> <span style="color: #008000;">"allegedly"</span>
+        <span style="color: #008000;">"supposedly"</span> <span style="color: #008000;">"purportedly"</span> <span style="color: #008000;">"perhaps"</span> <span style="color: #008000;">"maybe"</span> <span style="color: #008000;">"kind of"</span>
+        <span style="color: #008000;">"sort of"</span> <span style="color: #008000;">"potentially"</span> <span style="color: #008000;">"ultimately"</span> <span style="color: #008000;">"respectively"</span>))
+(<span style="color: #0000FF;">cl-loop</span> for word in words-to-add
+         unless (member word writegood-weasel-words)
+         do (add-to-list 'writegood-weasel-words word))
+
+(evil-leader/set-key <span style="color: #008000;">"t w"</span> 'writegood-mode)
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Formatting text</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Some useful functions for writing in natural language.</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- nice-org-wrapped-lines</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- nice-org-single-long-line</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- nice-org-each-sentence-new-line</span>
+<span style="color: #8D8D84;">;;</span>
+
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-org-wrapped-lines</span> ()
+  <span style="color: #036A07;">"Formats the current paragraph to have wrapped lines at 70"</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">setq</span> fill-column 70)
+  (fill-paragraph)
+  (message <span style="color: #008000;">"Wrapped lines at 70 characters."</span>))
+
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-org-single-long-line</span> ()
+  <span style="color: #036A07;">"Formats the current paragraph into a single long line."</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">save-excursion</span>
+    (<span style="color: #0000FF;">let</span> ((start (<span style="color: #0000FF;">progn</span> (backward-paragraph 1) (point)))
+          (end (<span style="color: #0000FF;">progn</span> (forward-paragraph 1) (point))))
+      (goto-char start)
+      (<span style="color: #0000FF;">while</span> (re-search-forward <span style="color: #008000;">"[ \t]*\n[ \t]*"</span> end t)
+        (replace-match <span style="color: #008000;">" "</span>))))
+  (message <span style="color: #008000;">"Single long line."</span>))
+
+(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-org-each-sentence-new-line</span> ()
+  <span style="color: #036A07;">"Puts each sentence of the current paragraph on a new line."</span>
+  (<span style="color: #0000FF;">interactive</span>)
+  (<span style="color: #0000FF;">save-excursion</span>
+    (<span style="color: #0000FF;">let</span> ((end (<span style="color: #0000FF;">save-excursion</span> (forward-paragraph) (point)))
+          (beg (<span style="color: #0000FF;">save-excursion</span> (backward-paragraph) (point))))
+      (goto-char beg)
+      (<span style="color: #0000FF;">while</span> (&lt; (point) end)
+        (forward-sentence)
+        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Insert newline at the end of a sentence, unless it's the last one.</span>
+        (<span style="color: #0000FF;">unless</span> (<span style="color: #0000FF;">or</span> (= (point) end) (eobp))
+          (insert <span style="color: #008000;">"\n"</span>)))))
+  (message <span style="color: #008000;">"Each sentence on a new line."</span>))
+</pre>
+</div>
 </div>
 </div>
 
@@ -2706,7 +2757,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-12-22 Fri 15:21</p>
+<p class="date">Created: 2023-12-27 Wed 14:17</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
