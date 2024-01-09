@@ -3,6 +3,7 @@
 git add git-helper.sh
 git add notes.html
 git add index.html
+git add microgram.css
 
 # A bunch of boring lists
 git add lists/books.html
