@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-10 Wed 10:06 -->
+<!-- 2024-01-11 Thu 10:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="orgac26305" class="figure">
+<div id="org6229f39" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -421,6 +421,8 @@
   <span style="color: #036A07;">"The directory for nicemacs journal files."</span>)
 (<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice-notes-directory</span> <span style="color: #008000;">"~/public-site/org/notes"</span>
   <span style="color: #036A07;">"The directory for nicemacs notes files."</span>)
+(<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice-website-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/"</span>
+  <span style="color: #036A07;">"The directory for my website."</span>)
 (<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice-resources-dir</span> <span style="color: #008000;">"~/Documents/nicemacs/resources"</span>
   <span style="color: #036A07;">"The path to the nicemacs resources directory on this machine."</span>)
 (<span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">nice-nicemacs-directory</span> <span style="color: #008000;">"~/Documents/nicemacs"</span>
@@ -2153,15 +2155,20 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
   <span style="color: #036A07;">"Copy my website homepage if it exists."</span>
   (<span style="color: #0000FF;">interactive</span>)
   (<span style="color: #0000FF;">let</span> ((local-notes <span style="color: #008000;">"~/public-site/org/scratch.html"</span>)
-        (remote-notes <span style="color: #008000;">"~/aezarebski.github.io/notes.html"</span>)
+        (remote-notes (concat nice-website-directory <span style="color: #008000;">"notes.html"</span>))
         (local-landing <span style="color: #008000;">"~/public-site/org/index-academic.html"</span>)
-        (remote-landing <span style="color: #008000;">"~/aezarebski.github.io/index.html"</span>))
+        (remote-landing (concat nice-website-directory <span style="color: #008000;">"index.html"</span>))
+        (local-css <span style="color: #008000;">"~/public-site/org/microgram.css"</span>)
+        (remote-css (concat nice-website-directory <span style="color: #008000;">"microgram.css"</span>)))
     (<span style="color: #0000FF;">when</span> (file-exists-p local-notes)
       (copy-file local-notes remote-notes t)
       (message <span style="color: #008000;">"Copied %s to %s"</span> local-notes remote-notes))
-    (<span style="color: #0000FF;">when</span> (file-exists-p local-landing)
-      (copy-file local-landing remote-landing t)
-      (message <span style="color: #008000;">"Copied %s to %s"</span> local-landing remote-landing))))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-notes)
+      (copy-file local-notes remote-notes t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-notes remote-notes))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-css)
+      (copy-file local-css remote-css t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-css remote-css))))
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The following projects are available for publishing when the</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">`</span><span style="color: #D0372D; font-style: italic;">org-publish</span><span style="color: #8D8D84; font-style: italic;">' command is given.</span>
@@ -2775,7 +2782,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-10 Wed 10:06</p>
+<p class="date">Created: 2024-01-11 Thu 10:19</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

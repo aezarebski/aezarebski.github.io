@@ -1,396 +1,152 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-
+<html lang="en">
+  <head>
     <meta charset="UTF-8">
     <title>Alex's internet garden</title>
+
+    <meta name="keywords" content="genetic epidemiology, Bayesian statistics, R programming, BEAST2 package development, statistical genetics, epidemiological research, Bayesian analysis">
+    <meta name="author" content="Alexander E Zarebski">
     <link rel="icon" type="image/png" href="./resources/nicemacs-favicon.png">
+    <link rel="canonical" href="https://aezarebski.github.io/">
+    <meta property="og:title" content="Alexander E Zarebski | Genetic Epidemiology | Bayesian Statistics | R and BEAST2 Package Development">
+    <meta property="og:url" content="https://aezarebski.github.io/">
+    <meta property="og:type" content="website">
 
-    <style>
-        :root {
-            --yellow: #b1951d;
-            --light-yellow: #f6f1e1;
-            --light-light-yellow: #fbf8ef;
-            --orange-text: #da8b55;
-            --blue-headings: #3a81c3;
-            --aqua: #2d9574;
-            --cyan: #21b8c7;
-            --teal-links: #2aa1ae;
-            --red-background: #eed9d2;
-            --red-warning: #f2241f;
-            --red-border: #ba2f59;
-            --purple-background-light: #ddd8eb;
-            --purple-background-dark: #9380b2;
-            --purple-text-bright: #a31db1;
-            --purple-text: #4e3163;
-            --purple-title: #6c3163;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" href="./microgram.css">
+  </head>
 
-        body {
-            cursor: url(../resources/nyan.cur), auto !important;
-            background-color: var(--light-light-yellow);
-        }
+  <body>
+    <div class="container">
 
-        li {
-            margin-top: 3px;
-            margin-bottom: 3px;
-        }
+      <h1>Welcome to Alex's internet garden</h1>
+      <div class="row">
+	<div class="column">
 
-        a {
-            text-decoration: underline;
-            color: var(--teal-links);
-            font-family: sans;
-        }
+	  <div>
+	    <h2>Professional</h2>
+	    <ul>
+              <li><a href="./data/academic-information.json">Academic information</a></li>
+              <li><a href="https://mathematical-biology.science.unimelb.edu.au/2023/02/19/alexander-zarebski/">Melbourne Mathematical Biology profile</a></li>
+              <li><a href="https://www.psi.ox.ac.uk/our-team/alexander-zarebski">Pandemic Sciences Institute (PSI)</a></li>
+              <li><a href="https://www.oxfordmartin.ox.ac.uk/people/dr-alexander-zarebski/">Oxford Martin profile</a></li>
+              <li><a href="http://evolve.zoo.ox.ac.uk/Evolve/Alex_Zarebski.html"><code>evolve.zoo</code></a> (<a href="https://web.archive.org/web/20211017113918/http://evolve.zoo.ox.ac.uk/Evolve/Alex_Zarebski.html">WayBackMachine</a>)</li>
+              <li><a href="https://en.wikipedia.org/wiki/User:Aezarebski">Wikipedia</a></li>
+              <li><a href="https://github.com/aezarebski">GitHub</a></li>
+	      <li><a href="https://twitter.com/aezarebski">Twitter</a></li>
+	    </ul>
+	  </div>
 
-        a:hover,
-        a:active {
-            cursor: url(../resources/rainbow.png), auto !important;
-            background-color: var(--yellow);
-            color: var(--light-light-yellow);
-        }
+	  <div>
+	    <h2>Projects</h2>
+            <h5><i><a href="https://aezarebski.github.io/timtam/">TimTam2</a></i></h5>
+            <p>An implementation of the <a href="https://doi.org/10.1371/journal.pcbi.1009805"><i>TimTam</i></a> model as a BEAST2 package.</p>
+            <h5><i><a href="https://github.com/aezarebski/beasts-castle">Beast's castle</a></i></h5>
+            <p>This repository contains the build script from Timothy Vaughan which generates an empty BEAST2 package and a build script that works as a cookie cutter for analyses involving BEAST.</p>
+            <h5><i><a href="https://github.com/aezarebski/aas-extended-examples">Applied Analytic Statistics</a></i></h5>
+            <p>Since 2020 I've been involved in developing materials for the Applied Analytic Statistics course run by the <a href="https://www.oii.ox.ac.uk/study/courses/applied-analytical-statistics/">OII</a>.</p>
+	  </div>
 
-        .main-container {
-            display: grid;
-            grid-template-columns: 45% 35% 20%;
-            background-color: var(--purple-background-dark);
-            padding: 5px;
-            margin: auto;
-            margin-top: 40px;
-            margin-bottom: 70px;
-            width: 95vw;
-            max-width: 1100px;
-        }
+	</div>
 
-        .block {
-            background-color: var(--purple-background-light);
-            border: 3px solid var(--purple-background-dark);
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        .block2 {
-            grid-column: 2;
-            grid-row: 1 / span 4;
-        }
-
-        .block3 {
-            grid-column: 3;
-            grid-row: 1 / span 4;
-        }
-
-        .buttons-container {
-            display: grid;
-            grid-template-columns: auto auto;
-            padding-top: 5vw;
-        }
-
-        .button {
-            padding-top: 20px;
-            padding-bottom: 20px;
-            padding-left: 6px;
-            padding-right: 6px;
-            width: 7vw;
-            max-width: 70px;
-            transform: translate(0%, -50%);
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: sans;
-            font-style: italic;
-            color: var(--blue-headings);
-        }
-
-        h3 {
-            font-size: x-large;
-        }
-
-        h4 {
-            font-size: large;
-        }
-
-        #title {
-            text-align: center;
-            font-family: sans;
-            font-style: normal;
-            font-size: xx-large;
-        }
-
-     #footnotes {
-         max-width: 1100px;
-         width: 95vw;
-         margin: auto;
-     }
-    </style>
-</head>
-
-<body>
-
-    <h1 id="title">Alex's little corner of the internet<sup><a href="#fn1">1</a></sup></h1>
-
-    <div class="main-container">
-
-        <div class="block block1">
-            <h3>Professional</h3>
-            <h5>Information</h5>
-            <div>
-                <ul>
-                    <li><a href="./data/academic-information.json">Academic information</a></li>
-                    <li><a href="https://mathematical-biology.science.unimelb.edu.au/2023/02/19/alexander-zarebski/">Melbourne Mathematical Biology profile</a></li>
-                    <li><a href="https://www.psi.ox.ac.uk/our-team/alexander-zarebski">Pandemic Sciences Institute (PSI)</a></li>
-                    <li><a href="https://www.oxfordmartin.ox.ac.uk/people/dr-alexander-zarebski/">Oxford Martin profile</a></li>
-                    <li><a href="http://evolve.zoo.ox.ac.uk/Evolve/Alex_Zarebski.html"><code>evolve.zoo</code></a> (<a href="https://web.archive.org/web/20211017113918/http://evolve.zoo.ox.ac.uk/Evolve/Alex_Zarebski.html">WayBackMachine</a>)</li>
-                    <!-- <li><a href="./publications.html">Publications</a></li> -->
-                </ul>
-            </div>
-            <h5>Social media</h5>
-            <div>
-                <ul>
-                    <li><a href="https://en.wikipedia.org/wiki/User:Aezarebski">Wikipedia</a></li>
-                    <li><a href="https://github.com/aezarebski">GitHub</a></li>
-                    <li><a rel="me" href="https://mastodon.coffee/@aezarebski">Mastodon</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="block block2">
-            <h3>Notes</h3>
-            <h5>Mathematics, statistics and friends</h5>
-            <ul>
+	<div class="column column-40">
+	  <div><h2>Notes</h2></div>
+	  <div class="row">
+	    <div class="column column-50">
+              <h5>Mathematics and statistics</h5>
+              <ul>
                 <li><a href="./notes/algorithms-notes.html">Algorithms notes</a></li>
-                <li><a href="./notes/glossary-biology.html">Glossary of biology and epidemiology</a></li>
-                <li><a href="./notes/glossary-mathematics-and-statistics.html">Glossary of mathematics and statistics</a></li>
                 <li><a href="./notes/numerics-notes.html">Numerics notes</a></li>
                 <li><a href="./notes/phylogenetics-notes.html">Phylogenetics notes</a></li>
                 <li><a href="./notes/probability-notes.html">Probability notes</a></li>
                 <li><a href="./notes/statistics-notes.html">Statistics notes</a></li>
-                <li><a href="./notes/type-theory-notes.html">Type theory and functional programming notes</a></li>
-            </ul>
-            <h5>Programming and software</h5>
-            <div>
-                <ul>
-                    <li><a href="./notes/beast2-notes.html">BEAST2 notes</a></li>
-                    <li><a href="./notes/emacs-lisp-notes.html">Emacs Lisp notes</a></li>
-                    <li><a href="./notes/git-notes.html">Git notes</a></li>
-                    <li><a href="./notes/haskell-notes.html">Haskell notes</a></li>
-                    <li><a href="./notes/html-notes.html">HTML/CSS notes</a></li>
-                    <li><a href="./notes/inkscape-notes.html">Inkscape notes</a></li>
-                    <li><a href="./notes/java-notes.html">Java notes</a></li>
-                    <li><a href="./notes/javascript-notes.html">JavaScript notes</a></li>
-                    <li><a href="./notes/latex-notes.html">LaTeX notes</a></li>
-                    <li><a href="./notes/libreoffice-notes.html">LibreOffice notes</a></li>
-                    <li><a href="./notes/linux-notes.html">Linux notes</a></li>
-                    <li><a href="./notes/lisp-notes.html">Common Lisp notes</a></li>
-                    <li><a href="./notes/make-notes.html">Make(file) notes</a></li>
-                    <li><a href="./notes/maxima-notes.html">Maxima notes</a></li>
-                    <li><a href="./notes/nix-notes.html">Nix notes</a></li>
-                    <li><a href="./notes/org-mode-notes.html">Org-mode notes</a></li>
-                    <li><a href="./notes/python-notes.html">Python notes</a></li>
-                    <li><a href="./notes/pypfilt-notes.html">Pypfilt notes</a></li>
-                    <li><a href="./notes/r-notes.html">R notes</a></li>
-                    <li><a href="./notes/regex-notes.html">Regular expressions notes</a></li>
-                    <li><a href="./notes/stan-notes.html">Stan notes</a></li>
-                    <li><a href="./notes/yed-notes.html">UML and yEd notes</a></li>
-                </ul>
-            </div>
+              </ul>
 
-            <h5>Academia</h5>
-            <div>
-                <ul>
-                    <li><a href="./notes/academic-journal-notes.html">Academia</a></li>
-                    <li><a href="./notes/tutoring-notes.html">Teaching</a></li>
-                    <li><a href="./notes/wikipedia-notes.html">Wikipedia notes</a></li>
-                    <li><a href="https://scholar.google.com.au/citations?user=w9AM8zcAAAAJ&hl=en">Google Scholar</a></li>
-                </ul>
-            </div>
+              <h5>Academia</h5>
+              <ul>
+                <li><a href="./notes/academic-journal-notes.html">Academia</a></li>
+                <li><a href="./notes/tutoring-notes.html">Teaching</a></li>
+                <li><a href="./notes/wikipedia-notes.html">Wikipedia notes</a></li>
+                <li><a href="https://scholar.google.com.au/citations?user=w9AM8zcAAAAJ&hl=en">Google Scholar</a></li>
+              </ul>
 
-            <h5>Visualisation</h5>
-            <div>
-                <ul>
-                    <li><a href="./misc/colours/index.html">Colour converter</a></li>
-                    <li><a href="./notes/colour-notes.html">Curated colours</a></li>
-                    <li><a href="./misc/ggplot2/gallery.html">Ggplot2 gallery</a></li>
-                    <li><a href="./notes/ggplot2-notes.html">Ggplot2 notes</a></li>
-                    <li><a href="./misc/basegraphicsR/gallery.html">R base/graphics gallery</a></li>
-                    <li><a href="./misc/matplotlib/gallery.html">Matplotlib gallery</a></li>
-                    <li><a href="./misc/plotnine/gallery.html">Plotnine gallery</a></li>
-                    <li><a href="./misc/tikz/gallery.html">TikZ gallery</a></li>
-                    <li><a href="./misc/latex/gallery.html">LaTeX gallery</a></li>
-                    <li><a href="./notes/visualisation-notes.html">Visualisation notes</a></li>
-                </ul>
-            </div>
-        </div>
+              <h5>Visualisation</h5>
+              <ul>
+                <li><a href="./misc/colours/index.html">Colour converter</a></li>
+                <li><a href="./notes/colour-notes.html">Curated colours</a></li>
+                <li><a href="./misc/ggplot2/gallery.html">Ggplot2 gallery</a></li>
+                <li><a href="./notes/ggplot2-notes.html">Ggplot2 notes</a></li>
+                <li><a href="./misc/basegraphicsR/gallery.html">R base/graphics gallery</a></li>
+                <li><a href="./misc/matplotlib/gallery.html">Matplotlib gallery</a></li>
+                <li><a href="./misc/plotnine/gallery.html">Plotnine gallery</a></li>
+                <li><a href="./misc/tikz/gallery.html">TikZ gallery</a></li>
+                <li><a href="./misc/latex/gallery.html">LaTeX gallery</a></li>
+                <li><a href="./notes/visualisation-notes.html">Visualisation notes</a></li>
+              </ul>
+	    </div>
 
-        <div class="block block3">
-            <h3>Quick Links</h3>
-            <div class="buttons-container">
-                <div>
-                    <a href="./notes/linux-notes.html">
-                        <img class="button" src="./images/dither_it_linux-logo.png">
-                    </a>
-                </div>
+	    <div class="column column-50">
+              <h5>Programming and software</h5>
+              <ul>
+                <li><a href="./notes/beast2-notes.html">BEAST2 notes</a></li>
+                <li><a href="./notes/emacs-lisp-notes.html">Emacs Lisp notes</a></li>
+                <li><a href="./notes/git-notes.html">Git notes</a></li>
+                <li><a href="./notes/haskell-notes.html">Haskell notes</a></li>
+                <li><a href="./notes/html-notes.html">HTML/CSS notes</a></li>
+                <li><a href="./notes/inkscape-notes.html">Inkscape notes</a></li>
+                <li><a href="./notes/java-notes.html">Java notes</a></li>
+                <li><a href="./notes/javascript-notes.html">JavaScript notes</a></li>
+                <li><a href="./notes/latex-notes.html">LaTeX notes</a></li>
+                <li><a href="./notes/libreoffice-notes.html">LibreOffice notes</a></li>
+                <li><a href="./notes/linux-notes.html">Linux notes</a></li>
+                <li><a href="./notes/lisp-notes.html">Common Lisp notes</a></li>
+                <li><a href="./notes/make-notes.html">Make(file) notes</a></li>
+                <li><a href="./notes/maxima-notes.html">Maxima notes</a></li>
+                <li><a href="./notes/nix-notes.html">Nix notes</a></li>
+                <li><a href="./notes/org-mode-notes.html">Org-mode notes</a></li>
+                <li><a href="./notes/python-notes.html">Python notes</a></li>
+                <li><a href="./notes/pypfilt-notes.html">Pypfilt notes</a></li>
+                <li><a href="./notes/r-notes.html">R notes</a></li>
+                <li><a href="./notes/regex-notes.html">Regex notes</a></li>
+                <li><a href="./notes/stan-notes.html">Stan notes</a></li>
+                <li><a href="./notes/yed-notes.html">UML and yEd notes</a></li>
+              </ul>
+	    </div>
 
-                <div>
-                    <a href="./notes/org-mode-notes.html">
-                        <img class="button" src="./images/dither_it_org-mode-logo.png">
-                    </a>
-                </div>
 
-                <div>
-                    <a href="./misc/nicemacs/nicemacs-v2.html">
-                        <img class="button" src="./images/dither_it_nicemacs-logo.png">
-                    </a>
-                </div>
 
-                <div>
-                    <a href="./notes/latex-notes.html">
-                        <img class="button" src="./images/dither_it_latex-logo.png">
-                    </a>
-                </div>
+	  </div>
+	</div>
 
-                <div>
-                    <a href="./notes/r-notes.html">
-                        <img class="button" src="./images/dither_it_r-logo.png">
-                    </a>
-                </div>
 
-                <div>
-                    <a href="./misc/ggplot2/gallery.html">
-                        <img class="button" src="./images/dither_it_ggplot2-logo.png">
-                    </a>
-                </div>
+	<div class="column">
+          <h2>Quick Links</h2>
 
-		<div>
-                    <a href="./misc/plotnine/gallery.html">
-                        <img class="button" src="./images/dither_it_plotnine-logo.png">
-                    </a>
-                </div>
+	  <a class="button button-outline" href="./notes/linux-notes.html">GNU/Linux</a>
+	  <a class="button button-outline" href="#./notes/org-mode-notes.html">Org-mode</a>
+	  <a class="button button-outline" href="./notes/latex-notes.html">LaTeX</a>
+	  <a class="button button-outline" href="./notes/r-notes.html">R</a>
+	  <a class="button button-outline" href="./notes/python-notes.html">Python</a>
+	  <a class="button button-outline" href="./notes/git-notes.html">Git</a>
+	  <a class="button button-outline" href="./misc/ggplot2/gallery.html">Ggplot2 gallery</a>
+	  <a class="button button-outline" href="./misc/plotnine/gallery.html">Plotnine gallery</a>
+	  <a class="button button-outline" href="./misc/matplotlib/gallery.html">Matplotlib gallery</a>
 
-		<div>
-                    <a href="./misc/matplotlib/gallery.html">
-                        <img class="button" src="./images/dither_it_matplotlib-logo.png">
-                    </a>
-                </div>
+	  <h2>Lists</h2>
+          <ul>
+            <li><a href="./lists/books.html">Books</a></li>
+            <li><a href="./lists/links.html">External links</a></li>
+            <li><a href="./lists/lecture-slides.html">Lecture slides</a></li>
+            <li><a href="./lists/movies-and-series.html">Movies and Series</a></li>
+            <li><a href="./lists/music.html">Music</a></li>
+            <li><a href="./lists/quotes.html">Quotes</a></li>
+            <li><a href="./misc/recipes/index.html">Recipes</a></li>
+          </ul>
 
-                <div>
-                    <a href="./notes/python-notes.html">
-                        <img class="button" src="./images/dither_it_python-logo.png">
-                    </a>
-                </div>
-
-                <div>
-                    <a href="./notes/git-notes.html">
-                        <img class="button" src="./images/dither_it_git-logo.png">
-                    </a>
-                </div>
-
-                <!-- <div> -->
-                <!--   <a href="./notes/nix-notes.html"> -->
-                <!--     <img class="button" src="./images/nix-logo.png"> -->
-                <!--   </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./notes/java-notes.html"> -->
-                <!--         <img class="button" src="./images/dither_it_java-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./notes/javascript-notes.html"> -->
-                <!--         <img class="button" src="./images/dither_it_javascript-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./notes/maxima-notes.html"> -->
-                <!--         <img class="button" src="./images/dither_it_negative-maxima-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./notes/haskell-notes.html"> -->
-                <!--         <img class="button" src="./images/dither_it_haskell-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./notes/beast2-notes.html"> -->
-                <!--         <img class="button" src="./images/dither_it_beast2-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./notes/xml-notes.html"> -->
-                <!--         <img class="button" src="./images/dither_it_xml-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-
-                <!-- <div> -->
-                <!--     <a href="./misc/d3/gallery.html"> -->
-                <!--         <img class="button" src="./images/dither_it_d3-logo.png"> -->
-                <!--     </a> -->
-                <!-- </div> -->
-            </div>
-        </div>
-
-        <div class="block block4">
-            <h3>Projects</h3>
-            <div>
-                <h5><i><a href="https://aezarebski.github.io/timtam/">TimTam2</a></i></h5>
-                <p>An implementation of the <a href="https://doi.org/10.1371/journal.pcbi.1009805"><i>TimTam</i></a> model as a BEAST2 package.</p>
-            </div>
-            <div>
-                <h5><i><a href="https://github.com/aezarebski/beasts-castle">Beast's castle</a></i></h5>
-                <p>This repository contains the build script from Timothy Vaughan which generates an empty BEAST2 package and a build script that works as a cookie cutter for analyses involving BEAST.</p>
-            </div>
-            <div>
-                <h5><i><a href="https://github.com/aezarebski/aas-extended-examples">Applied Analytic Statistics</a></i></h5>
-                <p>Since 2020 I've been involved in developing materials for the Applied Analytic Statistics course run by the <a href="https://www.oii.ox.ac.uk/study/courses/applied-analytical-statistics/">OII</a>.</p>
-            </div>
-        </div>
-
-        <div class="block block6">
-            <h3>Lists</h3>
-            <ul>
-                <li><a href="./lists/books.html">Books</a></li>
-                <li><a href="./lists/links.html">External links</a></li>
-                <li><a href="./lists/lecture-slides.html">Lecture slides</a></li>
-                <li><a href="./lists/movies-and-series.html">Movies and Series</a></li>
-                <li><a href="./lists/music.html">Music</a></li>
-                <li><a href="./lists/quotes.html">Quotes</a></li>
-                <li><a href="./misc/recipes/index.html">Recipes</a></li>
-            </ul>
-        </div>
-
-        <div class="block block5">
-            <h3>Side Projects</h3>
-            <div>
-                <h5><i><a href="./misc/js4ds/index.html">JavaScript for Data Science</a></i> and <i><a href="./misc/d3/gallery.html">D3</a></i></h5>
-                <p>In 2022 I used the book <a href="https://js4ds.org"><i>JavaScript for Data Science</i></a> as a set of exercises to learn how to use <a href="./notes/javascript-notes.html">JavaScript</a> and have been learning <a href="https://d3js.org/"><i>D3</i></a>.</p>
-            </div>
-            <div>
-                <h5><i><a href="./misc/fifty-problems/index.html">Fifty Challenging Problems in Probability</a></i></h5>
-                <p>In 2021 I used the book <a href="https://archive.org/details/fiftychallenging00most"><i>Fifty Challenging Problems in Probability</i></a> as a set of exercises to learn how to use <a href="./notes/maxima-notes.html">Maxima</a>.</p>
-            </div>
-            <div>
-                <h5><i><a href="./misc/nicemacs/nicemacs-v2.html">Nicemacs v2</a></i></h5>
-                <p>In 2020 I started working on the emacs configuration described <a href="./misc/nicemacs/nicemacs-v2.html">here</a>, which you can get from <a href="https://github.com/aezarebski/nicemacs">github</a>.</p>
-            </div>
-        </div>
-
+	</div>
+      </div>
     </div>
-
-    <ol id="footnotes">
-        <li id="fn1"><p>This website contains my notes which are scholarly works, they are not teaching materials.</p></li>
-    </ol>
-</body>
+  </body>
 
 </html>
