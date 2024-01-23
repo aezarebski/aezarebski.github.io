@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-06-20 Tue 10:40 -->
+<!-- 2024-01-23 Tue 10:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>phylogenetics-aez-notes</title>
+<title>phylogenetics</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,7 +193,9 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
 <script>
   window.MathJax = {
     tex: {
@@ -229,21 +231,11 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">phylogenetics-aez-notes</h1>
-<p>
-<a href="../index.html">Home</a>
-</p>
-
+<h1 class="title">phylogenetics</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgdda8736">Molecular theory</a></li>
-<li><a href="#org1a3a65b">Coalescent theory</a>
-<ul>
-<li><a href="#orgce2914b">Notes from <code>nordborg2000coalescent</code></a></li>
-</ul>
-</li>
 <li><a href="#orgf1ef9d0">Grammars</a>
 <ul>
 <li><a href="#orgb02b54c">Newick</a></li>
@@ -251,6 +243,7 @@
 </li>
 <li><a href="#org3da4495">Software</a>
 <ul>
+<li><a href="#org6f5d5cc">biopython</a></li>
 <li><a href="#orgaf70897">Beast2</a></li>
 <li><a href="#org6e95efc">TempEst</a></li>
 <li><a href="#orgbd85e88">Rentrez in R (downloading sequence data)</a></li>
@@ -262,52 +255,9 @@
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgdda8736" class="outline-2">
-<h2 id="orgdda8736">Molecular theory</h2>
-<div class="outline-text-2" id="text-orgdda8736">
 <p>
-(, ) tells us that
+<a href="../index.html">Home</a>
 </p>
-
-<blockquote>
-<p>
-RNA viruses, which often have mutation rates on the order of \(10^{−3}\) to
-\(10^{−4}\) substitutions per site per year
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org1a3a65b" class="outline-2">
-<h2 id="org1a3a65b">Coalescent theory</h2>
-<div class="outline-text-2" id="text-org1a3a65b">
-</div>
-<div id="outline-container-orgce2914b" class="outline-3">
-<h3 id="orgce2914b">Notes from <code>nordborg2000coalescent</code></h3>
-<div class="outline-text-3" id="text-orgce2914b">
-<ul class="org-ul">
-<li>Wright-Fisher considers a population of \(N\) asexually reproducing
-individuals.</li>
-<li>Each individual selects a parent from the previous generation independently
-sampling uniformly at random.</li>
-<li>The probability that two individuals have a common ancestor longer than \(t\)
-generations ago is \((1-1/N)^t\) which can be seen by observing that they
-probability that the probability of sharing an ancestor is \(1/N\) in each
-generation.</li>
-<li>Time can be rescaled into \(\tau = t / N\) in which case \(\tau N = t\) and
-the expression before limits to \(e^{-\tau}\) in the limit as \(N\to\infty\).
-Hence the time between coalescent events follows an exponential distribution
-(in the limit).</li>
-<li>If there are \(k\) lineages we care about there are \(k\) choose \(2\) ways
-for a coalescence to occur hence the global coalescence rate is \(k(k-1)/2\).</li>
-<li>There is a similar set up for a structured coalescent in which migration
-events and coalescent events occur following a Poisson process. This is
-possible because of a particular scaling of time.</li>
-</ul>
-</div>
-</div>
-</div>
 
 <div id="outline-container-orgf1ef9d0" class="outline-2">
 <h2 id="orgf1ef9d0">Grammars</h2>
@@ -358,6 +308,58 @@ The important part of this is
 <h2 id="org3da4495">Software</h2>
 <div class="outline-text-2" id="text-org3da4495">
 </div>
+<div id="outline-container-org6f5d5cc" class="outline-3">
+<h3 id="org6f5d5cc">biopython</h3>
+<div class="outline-text-3" id="text-org6f5d5cc">
+
+<div id="org70cadb2" class="figure">
+<p><img src="../images/biopython-logo.png" alt="biopython-logo.png" width="300px" />
+</p>
+</div>
+
+<p>
+<a href="https://biopython.org/docs/1.75/api/index.html">Biopython</a> is a Python library that aims to provide a comprehensive set
+of modules for computational biology and bioinformatics.
+</p>
+
+<ul class="org-ul">
+<li>the <a href="https://biopython.org/docs/1.75/api/Bio.Phylo.BaseTree.html">Bio Phylo BaseTree</a> module provides foundational classes for
+working with phylogenies.</li>
+<li>the <a href="https://biopython.org/docs/1.75/api/Bio.Phylo.BaseTree.html#Bio.Phylo.BaseTree.Clade">Clade</a> class in particular provides a recursively defined tree.
+<ul class="org-ul">
+<li>instances of Clade have <code>branch_length</code> (the length of the branch
+to their parent) and <code>clades</code> (a list of their children).</li>
+<li>the Clade class has a method <code>is_terminal</code> which is a predicate
+for if the current clade is a leaf node.</li>
+<li>iterating over a Clade will iterate over its direct children.</li>
+<li>the <code>__len__</code> of a Clade is its number of children.</li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-org720cffc" class="outline-4">
+<h4 id="org720cffc">Example</h4>
+<div class="outline-text-4" id="text-org720cffc">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">from</span> Bio <span style="color: #0000FF;">import</span> Phylo
+
+<span style="color: #BA36A5;">newick_tree</span> = <span style="color: #008000;">"((A:0.1, B:0.2):0.3, (C:0.4, D:0.5):0.6);"</span>
+
+<span style="color: #BA36A5;">filename</span> = <span style="color: #008000;">"foobar.newick"</span>
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(filename, <span style="color: #008000;">"w+"</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+    <span style="color: #006FE0;">file</span>.write(newick_tree)
+
+<span style="color: #BA36A5;">tree</span> = Phylo.read(filename, <span style="color: #008000;">"newick"</span>)
+<span style="color: #BA36A5;">clade</span> = tree.root
+
+<span style="color: #0000FF;">assert</span> clade[0][0].branch_length == 0.1
+<span style="color: #0000FF;">assert</span> clade[0][0].name == <span style="color: #008000;">"A"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgaf70897" class="outline-3">
 <h3 id="orgaf70897">Beast2</h3>
 <div class="outline-text-3" id="text-orgaf70897">
@@ -386,10 +388,10 @@ The following examples demonstrates how to use <code>ape::dist.dna</code> and
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">alignment_dna <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read.dna(<span style="color: #11948b;">"alignment.fasta"</span>, format = <span style="color: #11948b;">"fasta"</span>)
-dist_matrix <span style="color: #007ec4; font-weight: bold;">&lt;-</span> dist.dna(alignment_dna, model = <span style="color: #11948b;">"K80"</span>, pairwise.deletion = <span style="color: #a67c00;">TRUE</span>)
-nj_phylo <span style="color: #007ec4; font-weight: bold;">&lt;-</span> nj(dist_matrix)
-write.nexus(nj_phylo, file = <span style="color: #11948b;">"nj-tree.nexus"</span>)
+<pre class="src src-R">alignment_dna <span style="color: #D0372D;">&lt;-</span> read.dna(<span style="color: #008000;">"alignment.fasta"</span>, format = <span style="color: #008000;">"fasta"</span>)
+dist_matrix <span style="color: #D0372D;">&lt;-</span> dist.dna(alignment_dna, model = <span style="color: #008000;">"K80"</span>, pairwise.deletion = <span style="color: #6434A3;">TRUE</span>)
+nj_phylo <span style="color: #D0372D;">&lt;-</span> nj(dist_matrix)
+write.nexus(nj_phylo, file = <span style="color: #008000;">"nj-tree.nexus"</span>)
 </pre>
 </div>
 </div>
@@ -426,40 +428,40 @@ Here is the code that simulated the data set.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(ape)
-<span style="color: #007ec4; font-weight: bold;">library</span>(phangorn)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(ape)
+<span style="color: #D0372D;">library</span>(phangorn)
 set.seed(1)
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Read in a simple tree to use as an example so we do not</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> need to mess around trying to simulate one.</span>
-demo_tree <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read.tree(text = <span style="color: #11948b;">"(((((A:2.0,B:1.0):2.0,C:1.0):2.0,D:1.0):2.0,E:1.0):2.0,F:1.0);"</span>)
-png(filename=<span style="color: #11948b;">"tempest-demo-tree.png"</span>)
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Read in a simple tree to use as an example so we do not</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> need to mess around trying to simulate one.</span>
+demo_tree <span style="color: #D0372D;">&lt;-</span> read.tree(text = <span style="color: #008000;">"(((((A:2.0,B:1.0):2.0,C:1.0):2.0,D:1.0):2.0,E:1.0):2.0,F:1.0);"</span>)
+png(filename=<span style="color: #008000;">"tempest-demo-tree.png"</span>)
 plot(demo_tree)
 dev.off()
-num_tips <span style="color: #007ec4; font-weight: bold;">&lt;-</span> length(demo_tree$tip.label)
-tip_times <span style="color: #007ec4; font-weight: bold;">&lt;-</span> head(
+num_tips <span style="color: #D0372D;">&lt;-</span> length(demo_tree$tip.label)
+tip_times <span style="color: #D0372D;">&lt;-</span> head(
   node.depth.edgelength(demo_tree),
   num_tips
 )
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Relabel the tips to preserve the sampling date in a</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> suitable format for subsequent use.</span>
-demo_tree$tip.label <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sprintf(<span style="color: #11948b;">"%s_%f"</span>, demo_tree$tip.label, tip_times)
-demo_seqs <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo_tree |&gt; simSeq(l = 1e4, rate = 1e-3) |&gt; as.character()
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Compute the distances manually because the functions</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> provided seem to be a bit buggy.</span>
-demo_distances <span style="color: #007ec4; font-weight: bold;">&lt;-</span> matrix(0, num_tips, num_tips)
-rownames(demo_distances) <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo_tree$tip.label
-colnames(demo_distances) <span style="color: #007ec4; font-weight: bold;">&lt;-</span> demo_tree$tip.label
-<span style="color: #778c00; font-weight: bold;">for</span> (ix <span style="color: #778c00; font-weight: bold;">in</span> 1:(num_tips - 1)) {
-  <span style="color: #778c00; font-weight: bold;">for</span> (jx <span style="color: #778c00; font-weight: bold;">in</span> ix:num_tips) {
-    jac <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sum(demo_seqs[ix,] != demo_seqs[jx,])
-    demo_distances[ix,jx] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> jac
-    demo_distances[jx,ix] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> jac
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Relabel the tips to preserve the sampling date in a</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> suitable format for subsequent use.</span>
+demo_tree$tip.label <span style="color: #D0372D;">&lt;-</span> sprintf(<span style="color: #008000;">"%s_%f"</span>, demo_tree$tip.label, tip_times)
+demo_seqs <span style="color: #D0372D;">&lt;-</span> demo_tree |&gt; simSeq(l = 1e4, rate = 1e-3) |&gt; as.character()
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Compute the distances manually because the functions</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> provided seem to be a bit buggy.</span>
+demo_distances <span style="color: #D0372D;">&lt;-</span> matrix(0, num_tips, num_tips)
+rownames(demo_distances) <span style="color: #D0372D;">&lt;-</span> demo_tree$tip.label
+colnames(demo_distances) <span style="color: #D0372D;">&lt;-</span> demo_tree$tip.label
+<span style="color: #0000FF;">for</span> (ix <span style="color: #0000FF;">in</span> 1:(num_tips - 1)) {
+  <span style="color: #0000FF;">for</span> (jx <span style="color: #0000FF;">in</span> ix:num_tips) {
+    jac <span style="color: #D0372D;">&lt;-</span> sum(demo_seqs[ix,] != demo_seqs[jx,])
+    demo_distances[ix,jx] <span style="color: #D0372D;">&lt;-</span> jac
+    demo_distances[jx,ix] <span style="color: #D0372D;">&lt;-</span> jac
   }
 }
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Estimate the tree using the distances and write this to a</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> nexus file so it can be read into TempEst.</span>
-demo_nj <span style="color: #007ec4; font-weight: bold;">&lt;-</span> nj(demo_distances)
-write.nexus(demo_nj, file = <span style="color: #11948b;">"tempest-demo-data.nexus"</span>)
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Estimate the tree using the distances and write this to a</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> nexus file so it can be read into TempEst.</span>
+demo_nj <span style="color: #D0372D;">&lt;-</span> nj(demo_distances)
+write.nexus(demo_nj, file = <span style="color: #008000;">"tempest-demo-data.nexus"</span>)
 </pre>
 </div>
 </div>
@@ -477,26 +479,26 @@ between them.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> Fetch Entrez data as XML object</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@param</span><span style="color: #98a6a6;"> </span><span style="color: #007ec4;">...</span><span style="color: #98a6a6;"> Arguments to pass to =rentrez::entrez_fetch=</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@return</span><span style="color: #98a6a6;"> An =xml_node= object</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> </span><span style="color: #778c00; font-weight: bold;">@examples</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span><span style="color: #98a6a6;"> entrez_obj &lt;- fetch_as_xml(db = "nucleotide", id = accession_numbers)</span>
-<span style="color: #98a6a6; font-weight: bold;">#</span><span style="color: #98a6a6; font-weight: bold;">'</span>
-<span style="color: #007ec4;">fetch_as_xml</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(...) {
-  temp_file <span style="color: #007ec4; font-weight: bold;">&lt;-</span> tempfile()
-  <span style="color: #778c00; font-weight: bold;">on.exit</span>(file.remove(temp_file))
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Fetch Entrez data as XML object</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> Arguments to pass to =rentrez::entrez_fetch=</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@return</span><span style="color: #8D8D84; font-style: italic;"> An =xml_node= object</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@examples</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> entrez_obj &lt;- fetch_as_xml(db = "nucleotide", id = accession_numbers)</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #006699;">fetch_as_xml</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(...) {
+  temp_file <span style="color: #D0372D;">&lt;-</span> tempfile()
+  <span style="color: #0000FF;">on.exit</span>(file.remove(temp_file))
 
-  entrez_obj <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rentrez::entrez_fetch(
+  entrez_obj <span style="color: #D0372D;">&lt;-</span> rentrez::entrez_fetch(
     ...,
-    rettype = <span style="color: #11948b;">"xml"</span>,
-    parsed = <span style="color: #a67c00;">TRUE</span>
+    rettype = <span style="color: #008000;">"xml"</span>,
+    parsed = <span style="color: #6434A3;">TRUE</span>
   )
   XML::saveXML(entrez_obj, file = temp_file)
-  <span style="color: #778c00; font-weight: bold;">return</span>(xml2::read_xml(temp_file))
+  <span style="color: #0000FF;">return</span>(xml2::read_xml(temp_file))
 }
 </pre>
 </div>
@@ -566,32 +568,32 @@ Note that this uses forwards time starting from the origin as time zero. Figure
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(ape)
-<span style="color: #007ec4; font-weight: bold;">library</span>(purrr)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(ape)
+<span style="color: #D0372D;">library</span>(purrr)
 set.seed(1)
 
-<span style="color: #007ec4;">birth_rate</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(ts) {
+<span style="color: #006699;">birth_rate</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(ts) {
   ifelse(ts &lt; 0.5, 5.0, 1.0)
 }
 
-<span style="color: #007ec4;">death_rate</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(ts) {
+<span style="color: #006699;">death_rate</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(ts) {
   rep(2.0, length(ts))
 }
 
-<span style="color: #007ec4;">max_ltt</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x) {
+<span style="color: #006699;">max_ltt</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) {
   max(ltt.plot.coords(x)[,2])
 }
 
-ps <span style="color: #007ec4; font-weight: bold;">&lt;-</span> purrr::map(1:100, \(x) rlineage(birth_rate, death_rate, Tmax = 1))
+ps <span style="color: #D0372D;">&lt;-</span> purrr::map(1:100, \(x) rlineage(birth_rate, death_rate, Tmax = 1))
 
-y_upper_lim <span style="color: #007ec4; font-weight: bold;">&lt;-</span> purrr::map(ps, max_ltt) |&gt; as_vector() |&gt; max()
-png(<span style="color: #11948b;">'ape-rlineage-demo.png'</span>,
+y_upper_lim <span style="color: #D0372D;">&lt;-</span> purrr::map(ps, max_ltt) |&gt; as_vector() |&gt; max()
+png(<span style="color: #008000;">'ape-rlineage-demo.png'</span>,
     width = 1.618 * 300,
     height = 300,
-    units = <span style="color: #11948b;">"px"</span>)
+    units = <span style="color: #008000;">"px"</span>)
 ltt.plot(ps[[1]], ylim = c(1, y_upper_lim))
 purrr::walk(tail(ps, -1), ltt.lines)
-abline(v=-0.5, col=<span style="color: #11948b;">'red'</span>)
+abline(v=-0.5, col=<span style="color: #008000;">'red'</span>)
 dev.off()
 </pre>
 </div>
@@ -624,13 +626,13 @@ GitHub.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #007ec4; font-weight: bold;">library</span>(ape)
-<span style="color: #007ec4; font-weight: bold;">library</span>(phangorn)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(ape)
+<span style="color: #D0372D;">library</span>(phangorn)
 
-fdir <span style="color: #007ec4; font-weight: bold;">&lt;-</span> system.file(<span style="color: #11948b;">"extdata/trees"</span>, package = <span style="color: #11948b;">"phangorn"</span>)
-tmp <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read.csv(file.path(fdir, <span style="color: #11948b;">"H3N2_NA_20.csv"</span>))
-H3N2 <span style="color: #007ec4; font-weight: bold;">&lt;-</span> read.phyDat(file.path(fdir, <span style="color: #11948b;">"H3N2_NA_20.fasta"</span>), format = <span style="color: #11948b;">"fasta"</span>)
-dates <span style="color: #007ec4; font-weight: bold;">&lt;-</span> setNames(tmp$numdate_given, tmp$name)
+fdir <span style="color: #D0372D;">&lt;-</span> system.file(<span style="color: #008000;">"extdata/trees"</span>, package = <span style="color: #008000;">"phangorn"</span>)
+tmp <span style="color: #D0372D;">&lt;-</span> read.csv(file.path(fdir, <span style="color: #008000;">"H3N2_NA_20.csv"</span>))
+H3N2 <span style="color: #D0372D;">&lt;-</span> read.phyDat(file.path(fdir, <span style="color: #008000;">"H3N2_NA_20.fasta"</span>), format = <span style="color: #008000;">"fasta"</span>)
+dates <span style="color: #D0372D;">&lt;-</span> setNames(tmp$numdate_given, tmp$name)
 </pre>
 </div>
 
@@ -642,12 +644,12 @@ to get something to start subsequent analyses with.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">fit_td <span style="color: #007ec4; font-weight: bold;">&lt;-</span> pml_bb(
+<pre class="src src-R">fit_td <span style="color: #D0372D;">&lt;-</span> pml_bb(
   H3N2,
-  model = <span style="color: #11948b;">"GTR+G(4)"</span>,
-  method = <span style="color: #11948b;">"tipdated"</span>,
+  model = <span style="color: #008000;">"GTR+G(4)"</span>,
+  method = <span style="color: #008000;">"tipdated"</span>,
   tip.dates = dates,
-  rearrangment = <span style="color: #11948b;">"NNI"</span>,
+  rearrangment = <span style="color: #008000;">"NNI"</span>,
   control = pml.control(trace = 0)
 )
 </pre>
@@ -658,18 +660,18 @@ Then we can make a simple plot showing the estimated tree.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">tree_td <span style="color: #007ec4; font-weight: bold;">&lt;-</span> fit_td$tree
-root_time <span style="color: #007ec4; font-weight: bold;">&lt;-</span> max(dates) - max(node.depth.edgelength(tree_td))
+<pre class="src src-R">tree_td <span style="color: #D0372D;">&lt;-</span> fit_td$tree
+root_time <span style="color: #D0372D;">&lt;-</span> max(dates) - max(node.depth.edgelength(tree_td))
 
-png(<span style="color: #11948b;">"phangorn-demo.png"</span>,
+png(<span style="color: #008000;">"phangorn-demo.png"</span>,
   width = 1.618 * 300,
   height = 300,
-  units = <span style="color: #11948b;">"px"</span>
+  units = <span style="color: #008000;">"px"</span>
 )
-plot(tree_td, show.tip.label = <span style="color: #a67c00;">FALSE</span>)
-title(main = <span style="color: #11948b;">"H3N2"</span>, adj = 1)
-title(sub = <span style="color: #11948b;">"Timed tree estimated using phangorn"</span>, line = -13, adj = 1)
-axisPhylo(root.time = root_time, backward = <span style="color: #a67c00;">FALSE</span>)
+plot(tree_td, show.tip.label = <span style="color: #6434A3;">FALSE</span>)
+title(main = <span style="color: #008000;">"H3N2"</span>, adj = 1)
+title(sub = <span style="color: #008000;">"Timed tree estimated using phangorn"</span>, line = -13, adj = 1)
+axisPhylo(root.time = root_time, backward = <span style="color: #6434A3;">FALSE</span>)
 dev.off()
 </pre>
 </div>
@@ -701,7 +703,7 @@ likely want to use Bioconductor.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">BiocManager::install(<span style="color: #11948b;">"ggtree"</span>)
+<pre class="src src-R">BiocManager::install(<span style="color: #008000;">"ggtree"</span>)
 </pre>
 </div>
 </div>
@@ -710,7 +712,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-06-20 Tue 10:40</p>
+<p class="date">Created: 2024-01-23 Tue 10:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

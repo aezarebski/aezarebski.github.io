@@ -85,3 +85,13 @@ git add misc/recipes/paneer-korma.html
 # Teaching things
 git add teaching/index.html
 git add teaching/teaching.css
+
+# ML blog posts
+git add misc/ml/example-2024-01-25/coverage.png
+git add misc/ml/example-2024-01-25/loss.png
+git add misc/ml/post-2024-01-03.html
+git add misc/ml/post-2024-01-04.html
+git add misc/ml/post-2024-01-07.html
+git add misc/ml/post-2024-01-09.html
+git add misc/ml/post-2024-01-11.html
+git add misc/ml/post-2024-01-25.html

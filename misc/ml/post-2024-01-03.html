@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-10 Wed 13:17 -->
+<!-- 2024-01-22 Mon 10:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>AANN 03/01/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -231,6 +231,7 @@
 </head>
 <body>
 <div id="content" class="content">
+<h1 class="title">AANN 03/01/2024</h1>
 <p>
 <a href="../../index.html">Home</a>
 </p>
@@ -266,6 +267,7 @@ batching substantially speeds up the evaluation.
 
 <span style="color: #0000FF;">import</span> niceneuron.io <span style="color: #0000FF;">as</span> nn_io
 <span style="color: #0000FF;">import</span> niceneuron.data <span style="color: #0000FF;">as</span> nn_data
+<span style="color: #0000FF;">import</span> niceneuron.plot <span style="color: #0000FF;">as</span> nn_plot
 
 <span style="color: #BA36A5;">loss_csv</span> = <span style="color: #008000;">"example-2024-01-03-loss.csv"</span>
 <span style="color: #BA36A5;">loss_png</span> = <span style="color: #008000;">"example-2024-01-03-loss.png"</span>
@@ -385,12 +387,7 @@ Plot the resulting loss values across the epochs.
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">loss_df</span> = pd.read_csv(loss_csv)
-<span style="color: #BA36A5;">loss_p9</span> = (
-    ggplot(loss_df, aes(x=<span style="color: #008000;">'epoch'</span>, y=<span style="color: #008000;">'loss'</span>)) +
-    geom_point() +
-    geom_line() +
-    theme_bw()
-)
+<span style="color: #BA36A5;">loss_p9</span> = nn_plot.plot_loss_curve(loss_df)
 loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </pre>
 </div>
@@ -399,7 +396,7 @@ loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-10 Wed 13:17</p>
+<p class="date">Created: 2024-01-22 Mon 10:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-12 Fri 18:23 -->
+<!-- 2024-01-23 Tue 11:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>AANN 25/01/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -231,8 +231,13 @@
 </head>
 <body>
 <div id="content" class="content">
+<h1 class="title">AANN 25/01/2024</h1>
 <p>
 <a href="../../index.html">Home</a>
+</p>
+
+<p>
+<a href="./index.html">Index</a>
 </p>
 
 <div id="outline-container-org4ba5060" class="outline-2">
@@ -241,16 +246,22 @@
 <p>
 In this example we will use the <i>simultaneous quantile regression</i>
 (SQR) as proposed by <a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> to compute the
-quantiles of a prediction. We will apply this to the simple problem of
-estimating the location of a distribution. Since this is about the
-loss function rather than the network, we will just use a simple
-feed-forward network.
+quantiles of a prediction. Basically, SQR is a way to get a
+quantification of the uncertainty in a prediction produced by a neural
+network. If you want to get technical, this is an instance of
+<i>aleatoric</i> uncertainty (i.e. assuming we have the model specified
+correctly), as opposed to <i>epistemic</i> uncertainty (i.e. the
+uncertainty that derives from possible model misspecification.) Since
+I am mainly interested in the aleatoric uncertainty, I will ignore the
+<i>orthonormal certificates</i> that Tagasovska and Lopez-Paz proposed as a
+way to manage the epistemic uncertainty.
 </p>
 
 <p>
-Since I am mainly interested in the aleatoric uncertainty, I will
-ignore the <i>orthonormal certificates</i> that Tagasovska and Lopez-Paz
-proposed as a way to manage the epistemic uncertainty.
+We will apply SQR to the simple problem of estimating the location of
+a distribution. Since this is about the loss function rather than the
+network, we will just use a simple feed-forward network to generate
+the estimates.
 </p>
 </div>
 
@@ -278,17 +289,29 @@ can calculate the quantiles analytically.
 <div id="outline-container-org4639592" class="outline-3">
 <h3 id="org4639592">Loading packages</h3>
 <div class="outline-text-3" id="text-org4639592">
+<p>
+PyTorch has some nice random number generation functionality and this
+saves us needing to put the values into tensors later. We set the seed
+to keep things reproducible.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #0000FF;">import</span> time
+<span style="color: #0000FF;">import</span> sys
+<span style="color: #0000FF;">import</span> os
+<span style="color: #0000FF;">from</span> pathlib <span style="color: #0000FF;">import</span> Path
+
 <span style="color: #0000FF;">import</span> torch
 <span style="color: #0000FF;">import</span> torch.nn <span style="color: #0000FF;">as</span> nn
 <span style="color: #0000FF;">import</span> torch.optim <span style="color: #0000FF;">as</span> optim
 <span style="color: #0000FF;">from</span> torch.distributions <span style="color: #0000FF;">import</span> normal, uniform
-
 <span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
 <span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
 <span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
 
+<span style="color: #BA36A5;">current_directory</span> = Path(os.getcwd())
+sys.path.append(<span style="color: #006FE0;">str</span>(current_directory.parent))
+<span style="color: #0000FF;">import</span> niceneuron.plot <span style="color: #0000FF;">as</span> nn_plot
 torch.manual_seed(0)
 </pre>
 </div>
@@ -298,11 +321,16 @@ torch.manual_seed(0)
 <div id="outline-container-orga4daa53" class="outline-3">
 <h3 id="orga4daa53">Define the input and output filenames</h3>
 <div class="outline-text-3" id="text-orga4daa53">
+<p>
+There is a <code>replicate_size</code> (in addition to a number of replicates)
+because we are using a permutation invariant network similar to the
+<a href="./post-2024-01-11.html">previous post</a>, and each data point consists of a set of observations.
+</p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #BA36A5;">loss_png</span> = <span style="color: #008000;">"example-2024-01-25-loss.png"</span>
-<span style="color: #BA36A5;">loss_csv</span> = <span style="color: #008000;">"example-2024-01-25-loss.csv"</span>
-<span style="color: #BA36A5;">coverage_png</span> = <span style="color: #008000;">"example-2024-01-25-coverage.png"</span>
+<pre class="src src-python"><span style="color: #BA36A5;">loss_png</span> = <span style="color: #008000;">"loss.png"</span>
+<span style="color: #BA36A5;">loss_csv</span> = <span style="color: #008000;">"loss.csv"</span>
+<span style="color: #BA36A5;">coverage_png</span> = <span style="color: #008000;">"coverage.png"</span>
 
 <span style="color: #BA36A5;">replicate_size</span> = 10
 
@@ -376,7 +404,10 @@ quantile estimator you need to solve for the root of the derivative.
 <p>
 <b>IMPORTANT:</b> This definition allows for the use of a different value
 of \(\tau\) for each element of the target tensor. This is the
-distinguishing factor of <i>simultaneous</i> quantile regression.
+distinguishing factor of <i>simultaneous</i> quantile regression. Training
+the network to learn multiple quantiles simultaneously apparently
+provides a partial resolution to the crossing quantile problem where
+the ordering of the quantiles is not respected.
 </p>
 
 <div class="org-src-container">
@@ -396,6 +427,12 @@ distinguishing factor of <i>simultaneous</i> quantile regression.
 <div id="outline-container-orgbdbaacb" class="outline-3">
 <h3 id="orgbdbaacb">Define data generating process</h3>
 <div class="outline-text-3" id="text-orgbdbaacb">
+<p>
+Because we are going to need separate training and testing datasets,
+it is helpful to have a function that makes it easy to simulate new
+data.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #0000FF;">def</span> <span style="color: #006699;">rand_dataset</span>(num_replicates: <span style="color: #006FE0;">int</span>, replicate_size: <span style="color: #006FE0;">int</span>):
     <span style="color: #BA36A5;">mu_i</span> = normal.Normal(torch.tensor([0.0]), torch.tensor([10.0])).sample(
@@ -417,6 +454,11 @@ distinguishing factor of <i>simultaneous</i> quantile regression.
 <div id="outline-container-org3b89b80" class="outline-3">
 <h3 id="org3b89b80">Prepare for training</h3>
 <div class="outline-text-3" id="text-org3b89b80">
+<p>
+Because it worked out of the box, I didn't see much need to go beyond
+a standard Adam optimizer.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">loc_nb</span> = LocationNB(replicate_size)
 
@@ -478,19 +520,15 @@ We can visualise the training error across the epochs.
 
 
 <div id="org3cf0ea1" class="figure">
-<p><img src="./example-2024-01-25-loss.png" alt="example-2024-01-25-loss.png" width="400px" />
+<p><img src="./example-2024-01-25/loss.png" alt="loss.png" width="400px" />
 </p>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">loss_df</span> = pd.DataFrame(loss_history, columns=[<span style="color: #008000;">"epoch"</span>, <span style="color: #008000;">"loss"</span>])
 loss_df.to_csv(loss_csv)
-
-(
-    ggplot(loss_df, aes(x=<span style="color: #008000;">"epoch"</span>, y=<span style="color: #008000;">"loss"</span>))
-    + geom_line()
-    + theme_bw()
-).save(loss_png, height=2.9, width=4.1)
+<span style="color: #BA36A5;">loss_p9</span> = nn_plot.plot_loss_curve(loss_df)
+loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </pre>
 </div>
 </div>
@@ -508,7 +546,7 @@ means perfect.
 
 
 <div id="orgb959c11" class="figure">
-<p><img src="./example-2024-01-25-coverage.png" alt="example-2024-01-25-coverage.png" width="400px" />
+<p><img src="./example-2024-01-25/coverage.png" alt="coverage.png" width="400px" />
 </p>
 </div>
 
@@ -566,7 +604,7 @@ described by <a href="https://arxiv.org/abs/1905.03222">Romano et al (2019)</a>)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-12 Fri 18:23</p>
+<p class="date">Created: 2024-01-23 Tue 11:15</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
