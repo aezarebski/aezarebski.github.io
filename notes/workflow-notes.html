@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-01-23 Tue 10:50 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Workflows: Make/Ant/Snakemake</title>
+<meta name="author" content="Alexander E. Zarebski" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Workflows: Make/Ant/Snakemake</h1>
+<p>
+<a href="../notes.html">Home</a>
+</p>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org238058d">Make</a>
+<ul>
+<li><a href="#orgc68620e">Basic example</a></li>
+<li><a href="#org69410ed">Variables</a></li>
+<li><a href="#org793bb40">Grouped targets</a></li>
+<li><a href="#org9a1d4a8">Splitting long lines</a></li>
+<li><a href="#org2fc6e42">Debugging</a></li>
+</ul>
+</li>
+<li><a href="#org4a0a68d">Ant</a></li>
+<li><a href="#orgeeccebb">Snakemake</a>
+<ul>
+<li><a href="#org16352fd">Example: Hello Snakemake!</a></li>
+<li><a href="#org8ebc626">Example: Minimal simulation study</a></li>
+<li><a href="#conda-for-snakemake">Conda</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org238058d" class="outline-2">
+<h2 id="org238058d">Make</h2>
+<div class="outline-text-2" id="text-org238058d">
+<p>
+<a href="https://www.gnu.org/software/make/manual/make.html"><span class="underline">DOCUMENTATION</span></a>
+</p>
+</div>
+
+<div id="outline-container-orgc68620e" class="outline-3">
+<h3 id="orgc68620e">Basic example</h3>
+<div class="outline-text-3" id="text-orgc68620e">
+<p>
+Remember to use <span class="underline">TABS</span> before each command!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-makefile"><span style="color: #0000ff; font-weight: bold;">target [target ...]</span>: [component ...]
+  [command 1]
+        [command 2]
+  ...
+</pre>
+</div>
+
+<p>
+Line continuation uses a backslash
+</p>
+</div>
+</div>
+
+<div id="outline-container-org69410ed" class="outline-3">
+<h3 id="org69410ed">Variables</h3>
+<div class="outline-text-3" id="text-org69410ed">
+<p>
+Use <code>$()</code> or <code>${}</code> to reference variables.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org793bb40" class="outline-3">
+<h3 id="org793bb40">Grouped targets</h3>
+<div class="outline-text-3" id="text-org793bb40">
+<p>
+Here is an example of a grouped target given in the documentation. Note the use
+of the <code>&amp;:</code> to separate the targets from the prerequisites
+</p>
+
+<div class="org-src-container">
+<pre class="src src-makefile"><span style="color: #0000ff; font-weight: bold;">foo bar biz &amp;</span>: baz boz
+        echo $<span style="color: #D0372D;">^</span> &gt; foo
+        echo $<span style="color: #D0372D;">^</span> &gt; bar
+        echo $<span style="color: #D0372D;">^</span> &gt; biz
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a1d4a8" class="outline-3">
+<h3 id="org9a1d4a8">Splitting long lines</h3>
+<div class="outline-text-3" id="text-org9a1d4a8">
+<ul class="org-ul">
+<li>Split long lines of dependencies using <code>\</code>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2fc6e42" class="outline-3">
+<h3 id="org2fc6e42">Debugging</h3>
+<div class="outline-text-3" id="text-org2fc6e42">
+</div>
+<div id="outline-container-orgcdde26e" class="outline-4">
+<h4 id="orgcdde26e">Echo recipe without execution</h4>
+<div class="outline-text-4" id="text-orgcdde26e">
+<div class="org-src-container">
+<pre class="src src-sh">make &lt;target&gt; --just-print
+</pre>
+</div>
+
+<p>
+will echo the commands without executing them. This is particularly useful for
+making sure variables have the expected values.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a0a68d" class="outline-2">
+<h2 id="org4a0a68d">Ant</h2>
+<div class="outline-text-2" id="text-org4a0a68d">
+<ul class="org-ul">
+<li><a href="https://ant.apache.org/manual/index.html">Apache Ant</a> is a build tool that can be used in place of make but is geared
+towards use with Java projects.
+<ul class="org-ul">
+<li>There is a <a href="https://stackoverflow.com/questions/43633442/convert-makefile-content-to-apache-ant">StackOverflow answer</a> demonstrating how to convert a makefile to
+an Ant XML.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgeeccebb" class="outline-2">
+<h2 id="orgeeccebb">Snakemake</h2>
+<div class="outline-text-2" id="text-orgeeccebb">
+<p>
+The Snakemake developers strongly recommend the use of Conda. I have
+some <a href="#conda-for-snakemake">notes</a> on how to use Conda.
+</p>
+</div>
+
+<div id="outline-container-org16352fd" class="outline-3">
+<h3 id="org16352fd">Example: Hello Snakemake!</h3>
+<div class="outline-text-3" id="text-org16352fd">
+<p>
+Create a directory for the project and touch a Snakefile.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">mkdir snakemake_example
+<span style="color: #006FE0;">cd</span> snakemake_example
+touch Snakefile
+</pre>
+</div>
+
+<p>
+In the Snakefile, specify the task, which is just to echo "Hello,
+Snakemake!" to a text file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Snakefile</span>
+rule hello_world:
+    output: <span style="color: #008000;">"hello.txt"</span>
+    shell:
+        <span style="color: #008000;">"echo 'Hello, Snakemake!' &gt; {output}"</span>
+</pre>
+</div>
+
+<p>
+Run the workflow on a single core and print out the results to check
+it worked.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">snakemake --cores 1
+cat hello.txt
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ebc626" class="outline-3">
+<h3 id="org8ebc626">Example: Minimal simulation study</h3>
+<div class="outline-text-3" id="text-org8ebc626">
+<p>
+The output of this is a histogram in a PNG.
+</p>
+
+<p>
+Create a directory for the project (and some useful subdirectories and
+scripts) and touch a Snakefile.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">mkdir snakemake_example
+<span style="color: #006FE0;">cd</span> snakemake_example
+touch Snakefile
+touch config.yaml
+mkdir src
+touch src/simulate.py
+touch src/compute_mean.py
+touch src/plot_histogram.py
+mkdir data
+mkdir out
+</pre>
+</div>
+
+<p>
+Since it is reasonable to consider the number of simulations as a
+configuration parameter we will create a <code>config.yaml</code> file to hold
+this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #D0372D;">N</span>: 99
+</pre>
+</div>
+
+<p>
+The Snakefile makes use of this
+</p>
+
+<div class="org-src-container">
+<pre class="src src-snakemake"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Snakefile</span>
+<span style="color: #0000FF;">configfile</span>: <span style="color: #008000;">"config.yaml"</span>
+<span style="color: #BA36A5;">histogram_png</span> = <span style="color: #008000;">"out/histogram.png"</span>
+
+<span style="color: #0000FF;">rule</span> <span style="color: #006699;">all</span>:
+    <span style="color: #6434A3;">input</span>:
+        histogram_png
+
+<span style="color: #0000FF;">rule</span> <span style="color: #006699;">simulate</span>:
+    <span style="color: #6434A3;">output</span>:
+        <span style="color: #008000;">"out/sim_data_{index}.csv"</span>
+    <span style="color: #6434A3;">shell</span>:
+        <span style="color: #008000;">"python src/simulate.py {output}"</span>
+
+<span style="color: #0000FF;">rule</span> <span style="color: #006699;">compute_mean</span>:
+    <span style="color: #6434A3;">input</span>:
+        <span style="color: #008000;">"out/sim_data_{index}.csv"</span>
+    <span style="color: #6434A3;">output</span>:
+        <span style="color: #008000;">"out/mean_{index}.txt"</span>
+    <span style="color: #6434A3;">shell</span>:
+        <span style="color: #008000;">"python src/compute_mean.py {input} {output}"</span>
+
+<span style="color: #0000FF;">rule</span> <span style="color: #006699;">plot_histogram</span>:
+    <span style="color: #6434A3;">input</span>:
+        <span style="color: #006FE0;">expand</span>(<span style="color: #008000;">"out/mean_{index}.txt"</span>, index=[f<span style="color: #008000;">"</span>{i:02d}<span style="color: #008000;">"</span> <span style="color: #0000FF;">for</span> i <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(1, config[<span style="color: #008000;">'N'</span>]+1)])
+    <span style="color: #6434A3;">output</span>:
+        histogram_png
+    <span style="color: #6434A3;">shell</span>:
+        <span style="color: #008000;">"python src/generate_histogram.py {input} {output}"</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb379835" class="outline-4">
+<h4 id="orgb379835">Python scripts</h4>
+<div class="outline-text-4" id="text-orgb379835">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">simulate.py</span>
+<span style="color: #0000FF;">import</span> sys
+<span style="color: #0000FF;">import</span> csv
+<span style="color: #0000FF;">import</span> random
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">main</span>():
+    <span style="color: #BA36A5;">num_samples</span> = 10
+    <span style="color: #BA36A5;">csv_file</span> = sys.argv[1]
+
+    <span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(csv_file, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+        <span style="color: #BA36A5;">writer</span> = csv.writer(<span style="color: #006FE0;">file</span>)
+        <span style="color: #0000FF;">for</span> _ <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(num_samples):
+            writer.writerow([random.random()])
+
+<span style="color: #0000FF;">if</span> <span style="color: #006FE0;">__name__</span> == <span style="color: #008000;">"__main__"</span>:
+    main()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">compute_mean.py</span>
+<span style="color: #0000FF;">import</span> sys
+<span style="color: #0000FF;">import</span> csv
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">main</span>():
+    <span style="color: #BA36A5;">csv_file</span> = sys.argv[1]
+    <span style="color: #BA36A5;">txt_file</span> = sys.argv[2]
+
+    <span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(csv_file, <span style="color: #008000;">'r'</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+        <span style="color: #BA36A5;">reader</span> = csv.reader(<span style="color: #006FE0;">file</span>)
+        <span style="color: #BA36A5;">data</span> = [<span style="color: #006FE0;">float</span>(row[0]) <span style="color: #0000FF;">for</span> row <span style="color: #0000FF;">in</span> reader]
+
+    <span style="color: #BA36A5;">mean</span> = <span style="color: #006FE0;">sum</span>(data) / <span style="color: #006FE0;">len</span>(data)
+    <span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(txt_file, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+        <span style="color: #006FE0;">file</span>.write(<span style="color: #006FE0;">str</span>(mean))
+
+<span style="color: #0000FF;">if</span> <span style="color: #006FE0;">__name__</span> == <span style="color: #008000;">"__main__"</span>:
+    main()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">generate_histogram.py</span>
+<span style="color: #0000FF;">import</span> sys
+<span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">main</span>():
+    <span style="color: #BA36A5;">png_file</span> = sys.argv[-1]
+    <span style="color: #BA36A5;">txt_files</span> = sys.argv[1:-1]
+
+    <span style="color: #BA36A5;">data</span> = []
+    <span style="color: #0000FF;">for</span> txt_file <span style="color: #0000FF;">in</span> txt_files:
+        <span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(txt_file, <span style="color: #008000;">'r'</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+            data.append(<span style="color: #006FE0;">float</span>(<span style="color: #006FE0;">file</span>.read()))
+
+    plt.figure()
+    plt.hist(data)
+    plt.savefig(png_file)
+
+<span style="color: #0000FF;">if</span> <span style="color: #006FE0;">__name__</span> == <span style="color: #008000;">"__main__"</span>:
+    main()
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-conda-for-snakemake" class="outline-3">
+<h3 id="conda-for-snakemake">Conda</h3>
+<div class="outline-text-3" id="text-conda-for-snakemake">
+<p>
+You can install Conda with Miniconda. By default this is a bit
+aggressive &#x2014; it will activate conda when it starts a new shell &#x2014;
+but you can stop it activating in a new shell with the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda config --set auto_activate_base false
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1424466" class="outline-4">
+<h4 id="org1424466">Listing existing Conda environments</h4>
+<div class="outline-text-4" id="text-org1424466">
+<div class="org-src-container">
+<pre class="src src-sh">conda env list
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0614d3a" class="outline-4">
+<h4 id="org0614d3a">Creating/removing a Conda environment</h4>
+<div class="outline-text-4" id="text-org0614d3a">
+<div class="org-src-container">
+<pre class="src src-sh">conda create -n myenv <span style="color: #BA36A5;">python</span>=3.10
+</pre>
+</div>
+
+<p>
+This created an environment in <code>~/miniconda3/envs/myenv</code>. If you want
+to remove this later, this can be managed by Conda too.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda env remove -n myenv
+</pre>
+</div>
+
+<p>
+To remove old caches there is <code>conda clean --all</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3a722c6" class="outline-4">
+<h4 id="org3a722c6">Activating/deactivating a Conda environment</h4>
+<div class="outline-text-4" id="text-org3a722c6">
+<div class="org-src-container">
+<pre class="src src-sh">conda activate myenv
+conda deactivate
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge026dde" class="outline-4">
+<h4 id="orge026dde">Installing Snakemake in Conda</h4>
+<div class="outline-text-4" id="text-orge026dde">
+<div class="org-src-container">
+<pre class="src src-sh">conda install -c bioconda -c conda-forge snakemake
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf5e8e6" class="outline-4">
+<h4 id="orgdf5e8e6">Exporting/recreating a Conda environment</h4>
+<div class="outline-text-4" id="text-orgdf5e8e6">
+<div class="org-src-container">
+<pre class="src src-sh">conda env export &gt; environment.yaml
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda env create -f environment.yaml
+</pre>
+</div>
+
+<p>
+If you want to update an existing environment to match those in a
+<code>environment.yaml</code>,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda env update -n myenv -f environment.yml
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Alexander E. Zarebski</p>
+<p class="date">Created: 2024-01-23 Tue 10:50</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
