@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-23 Tue 11:15 -->
+<!-- 2024-01-25 Thu 11:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 25/01/2024</title>
@@ -246,22 +246,23 @@
 <p>
 In this example we will use the <i>simultaneous quantile regression</i>
 (SQR) as proposed by <a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> to compute the
-quantiles of a prediction. Basically, SQR is a way to get a
-quantification of the uncertainty in a prediction produced by a neural
-network. If you want to get technical, this is an instance of
-<i>aleatoric</i> uncertainty (i.e. assuming we have the model specified
-correctly), as opposed to <i>epistemic</i> uncertainty (i.e. the
-uncertainty that derives from possible model misspecification.) Since
-I am mainly interested in the aleatoric uncertainty, I will ignore the
-<i>orthonormal certificates</i> that Tagasovska and Lopez-Paz proposed as a
-way to manage the epistemic uncertainty.
+quantiles of a prediction. SQR provides a way to get a prediction with
+a quantification of the uncertainty in that prediction. If you want to
+get technical, this is an instance of <i>aleatoric</i> uncertainty (i.e.
+the uncertainty intrinsic to a known stochastic process), as opposed
+to <i>epistemic</i> uncertainty (i.e. the uncertainty that derives from
+possible model misspecification.) Since I am mainly interested in the
+aleatoric uncertainty, I will ignore the <i>orthonormal certificates</i>
+that Tagasovska and Lopez-Paz proposed as a way to manage the
+epistemic uncertainty.
 </p>
 
 <p>
-We will apply SQR to the simple problem of estimating the location of
-a distribution. Since this is about the loss function rather than the
-network, we will just use a simple feed-forward network to generate
-the estimates.
+We will use SQR to estimate the quantiles of a distribution. Since the
+use of SQR is primarily about the loss function used in the
+optimisation, (not the network architecture itself), we will just use
+a simple feed-forward network to generate the estimates. We will also
+use simulated data so we have a known "truth" to compare to.
 </p>
 </div>
 
@@ -269,17 +270,19 @@ the estimates.
 <h3 id="org62443f9">Data generating process</h3>
 <div class="outline-text-3" id="text-org62443f9">
 <p>
-The input to the process is \(x_i=(x_i^1,\ldots,x_i^m)\) where
+The input to our neural network is a datum,
+\(x_i=(x_i^1,\ldots,x_i^m)\), where
 </p>
 
 <p>
 \[
-x_i^j\sim\text{Normal}(\mu_i,1).
+x_i^j\sim\text{Normal}(\mu_i,1)
 \]
 </p>
 
 <p>
-The output we want to predict is \(y_i=\mu_i\) where
+for \(j=1,\ldots,m\). Our goal is to use a set of observations,
+\(x_i\) to predict \(y_i=\mu_i\) where we assume a prior distribution
 \(\mu_i\sim\text{Normal}(0,10)\). This model is simple enough that we
 can calculate the quantiles analytically.
 </p>
@@ -348,6 +351,7 @@ because we are using a permutation invariant network similar to the
 <h3 id="org6b2f6e3">Define the network architecture</h3>
 <div class="outline-text-3" id="text-org6b2f6e3">
 <ul class="org-ul">
+<li>The network we will use is based on the one from the <a href="./post-2024-01-11.html">previous post</a>.</li>
 <li>We call the network <code>LocationNB</code> because it estimates the location
 parameter of a sample and is reminiscent of the neural Bayes
 structure.</li>
@@ -399,13 +403,24 @@ quantile to compute.</li>
 We define the pinball loss as a PyTorch loss function so the network
 can learn to predict quantiles. To see why this function yields the
 quantile estimator you need to solve for the root of the derivative.
+Mathematically, the loss function \(\ell_{\tau}\) associated with a
+prediction of \(\hat{y}\) for a true value of \(y\) is
+</p>
+
+<p>
+\[
+\ell_{\tau}(\hat{y}, y) =\begin{cases}
+\tau (y - \hat{y}) & \text{if } y \geq \hat{y} \\
+(1 - \tau) (\hat{y} - y) & \text{if } y < \hat{y}
+\end{cases}
+\]
 </p>
 
 <p>
 <b>IMPORTANT:</b> This definition allows for the use of a different value
 of \(\tau\) for each element of the target tensor. This is the
 distinguishing factor of <i>simultaneous</i> quantile regression. Training
-the network to learn multiple quantiles simultaneously apparently
+the network to learn multiple quantiles simultaneously purportedly
 provides a partial resolution to the crossing quantile problem where
 the ordering of the quantiles is not respected.
 </p>
@@ -599,12 +614,21 @@ Quantile regression can be combined with conformal prediction to yield
 described by <a href="https://arxiv.org/abs/1905.03222">Romano et al (2019)</a>).
 </p>
 </div>
+
+<div id="outline-container-orgdfb80e7" class="outline-4">
+<h4 id="orgdfb80e7">Thanks</h4>
+<div class="outline-text-4" id="text-orgdfb80e7">
+<p>
+Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/">Jackson Kwok</a> for helpful comments on a draft of this.
+</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-23 Tue 11:15</p>
+<p class="date">Created: 2024-01-25 Thu 11:00</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

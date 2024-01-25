@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-11 Thu 10:58 -->
+<!-- 2024-01-25 Thu 10:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>aez-python-notes</title>
+<title>Python notes</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,17 +193,20 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">aez-python-notes</h1>
+<h1 class="title">Python notes</h1>
 <p>
-<a href="../index.html">Home</a>
+<a href="../notes.html">Home</a>
 </p>
 
 
-<div id="org50b3f80" class="figure">
+<div id="org9dab8d9" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -217,7 +220,6 @@
 <li><a href="#org15dd35d">Reading</a></li>
 <li><a href="#orge011041">Syntax</a></li>
 <li><a href="#orgd25c8ca">Object oriented programming</a></li>
-<li><a href="#orgabba2b4">Virtual environment</a></li>
 <li><a href="#orgb919290">Pip</a></li>
 <li><a href="#org1265c3b">PIP VANISHED!!!</a></li>
 <li><a href="#org5c647fc">Colab</a></li>
@@ -226,7 +228,13 @@
 <li><a href="#org12c8707">Debugging</a></li>
 <li><a href="#org2969679"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#org148639e">High performance computing</a></li>
-<li><a href="#org8deac5c">IO</a></li>
+<li><a href="#orgb1b2de0">IO</a></li>
+</ul>
+</li>
+<li><a href="#orgfee8060">Virtual environments</a>
+<ul>
+<li><a href="#venv"><code>venv</code></a></li>
+<li><a href="#conda">Conda</a></li>
 </ul>
 </li>
 <li><a href="#org49dac90">Python packages</a>
@@ -380,29 +388,6 @@
     main()
 </pre>
 </div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgabba2b4" class="outline-3">
-<h3 id="orgabba2b4">Virtual environment</h3>
-<div class="outline-text-3" id="text-orgabba2b4">
-<div class="org-src-container">
-<pre class="src src-sh">python3 -m venv venv
-<span style="color: #006FE0;">source</span> venv/bin/activate
-pip install -U pip   <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">update pip</span>
-pip install -r requirements.txt
-deactivate
-</pre>
-</div>
-
-<p>
-To save a copy of the packages in an environment you can use freeze
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">pip freeze &gt; requirements.txt
-</pre>
 </div>
 </div>
 </div>
@@ -572,9 +557,9 @@ run_commands_in_parallel(filenames, command)
 </div>
 </div>
 
-<div id="outline-container-org8deac5c" class="outline-3">
-<h3 id="org8deac5c">IO</h3>
-<div class="outline-text-3" id="text-org8deac5c">
+<div id="outline-container-orgb1b2de0" class="outline-3">
+<h3 id="orgb1b2de0">IO</h3>
+<div class="outline-text-3" id="text-orgb1b2de0">
 </div>
 <div id="outline-container-org9ac723f" class="outline-4">
 <h4 id="org9ac723f">Working with JSON</h4>
@@ -587,6 +572,137 @@ run_commands_in_parallel(filenames, command)
 
 <span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(<span style="color: #008000;">'bar.json'</span>, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF;">as</span> f:
     json.dump(d, f, indent=4)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfee8060" class="outline-2">
+<h2 id="orgfee8060">Virtual environments</h2>
+<div class="outline-text-2" id="text-orgfee8060">
+<p>
+There are two main tools for python specific virtual environments:
+<a href="#venv">venv</a> (super light weight) and <a href="#conda">conda</a> (heavy weight).
+</p>
+</div>
+
+<div id="outline-container-venv" class="outline-3">
+<h3 id="venv"><code>venv</code></h3>
+<div class="outline-text-3" id="text-venv">
+<div class="org-src-container">
+<pre class="src src-sh">python3 -m venv venv
+<span style="color: #006FE0;">source</span> venv/bin/activate
+pip install -U pip   <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">update pip</span>
+pip install -r requirements.txt
+deactivate
+</pre>
+</div>
+
+<p>
+To save a copy of the packages in an environment you can use freeze
+them to a <code>requirements file</code>. This records the exact versions of the
+packages which makes it easy to recreate the environment later.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">pip freeze &gt; requirements.txt
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-conda" class="outline-3">
+<h3 id="conda">Conda</h3>
+<div class="outline-text-3" id="text-conda">
+<p>
+You can install Conda with Miniconda. By default this is a bit
+aggressive &#x2014; it will activate conda when it starts a new shell &#x2014;
+but you can stop it activating in a new shell with the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda config --set auto_activate_base false
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgdcb9fb3" class="outline-4">
+<h4 id="orgdcb9fb3">Listing existing Conda environments</h4>
+<div class="outline-text-4" id="text-orgdcb9fb3">
+<div class="org-src-container">
+<pre class="src src-sh">conda env list
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a21205" class="outline-4">
+<h4 id="org6a21205">Creating/removing a Conda environment</h4>
+<div class="outline-text-4" id="text-org6a21205">
+<div class="org-src-container">
+<pre class="src src-sh">conda create -n myenv <span style="color: #BA36A5;">python</span>=3.10
+</pre>
+</div>
+
+<p>
+This created an environment in <code>~/miniconda3/envs/myenv</code>. If you want
+to remove this later, this can be managed by Conda too.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda env remove -n myenv
+</pre>
+</div>
+
+<p>
+To remove old caches there is <code>conda clean --all</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6075d23" class="outline-4">
+<h4 id="org6075d23">Activating/deactivating a Conda environment</h4>
+<div class="outline-text-4" id="text-org6075d23">
+<div class="org-src-container">
+<pre class="src src-sh">conda activate myenv
+conda deactivate
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org28a057e" class="outline-4">
+<h4 id="org28a057e">Installing Snakemake in Conda</h4>
+<div class="outline-text-4" id="text-org28a057e">
+<div class="org-src-container">
+<pre class="src src-sh">conda install -c bioconda -c conda-forge snakemake
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a0d529" class="outline-4">
+<h4 id="org7a0d529">Exporting/recreating a Conda environment</h4>
+<div class="outline-text-4" id="text-org7a0d529">
+<div class="org-src-container">
+<pre class="src src-sh">conda env export &gt; environment.yaml
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda env create -f environment.yaml
+</pre>
+</div>
+
+<p>
+If you want to update an existing environment to match those in a
+<code>environment.yaml</code>,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">conda env update -n myenv -f environment.yml
 </pre>
 </div>
 </div>
@@ -900,9 +1016,9 @@ Melting is particularly useful in plotting.
 </div>
 </div>
 
-<div id="outline-container-org9e6382c" class="outline-4">
-<h4 id="org9e6382c">IO</h4>
-<div class="outline-text-4" id="text-org9e6382c">
+<div id="outline-container-orgaa3e9e0" class="outline-4">
+<h4 id="orgaa3e9e0">IO</h4>
+<div class="outline-text-4" id="text-orgaa3e9e0">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1140,7 +1256,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-11 Thu 10:58</p>
+<p class="date">Created: 2024-01-25 Thu 10:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

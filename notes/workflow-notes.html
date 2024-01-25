@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-23 Tue 10:50 -->
+<!-- 2024-01-25 Thu 10:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Workflows: Make/Ant/Snakemake</title>
@@ -223,7 +223,6 @@
 <ul>
 <li><a href="#org16352fd">Example: Hello Snakemake!</a></li>
 <li><a href="#org8ebc626">Example: Minimal simulation study</a></li>
-<li><a href="#conda-for-snakemake">Conda</a></li>
 </ul>
 </li>
 </ul>
@@ -319,6 +318,12 @@ making sure variables have the expected values.
 <div id="outline-container-org4a0a68d" class="outline-2">
 <h2 id="org4a0a68d">Ant</h2>
 <div class="outline-text-2" id="text-org4a0a68d">
+
+<div id="org7d73261" class="figure">
+<p><img src="../images/apache-ant-logo.png" alt="apache-ant-logo.png" width="400px" />
+</p>
+</div>
+
 <ul class="org-ul">
 <li><a href="https://ant.apache.org/manual/index.html">Apache Ant</a> is a build tool that can be used in place of make but is geared
 towards use with Java projects.
@@ -333,9 +338,15 @@ an Ant XML.</li>
 <div id="outline-container-orgeeccebb" class="outline-2">
 <h2 id="orgeeccebb">Snakemake</h2>
 <div class="outline-text-2" id="text-orgeeccebb">
+
+<div id="org8a1ea17" class="figure">
+<p><img src="../images/snakemake-logo.png" alt="snakemake-logo.png" width="200px" />
+</p>
+</div>
+
 <p>
 The Snakemake developers strongly recommend the use of Conda. I have
-some <a href="#conda-for-snakemake">notes</a> on how to use Conda.
+some <a href="./python-notes.html#conda">notes</a> on how to use Conda.
 </p>
 </div>
 
@@ -525,107 +536,11 @@ The Snakefile makes use of this
 </div>
 </div>
 </div>
-
-<div id="outline-container-conda-for-snakemake" class="outline-3">
-<h3 id="conda-for-snakemake">Conda</h3>
-<div class="outline-text-3" id="text-conda-for-snakemake">
-<p>
-You can install Conda with Miniconda. By default this is a bit
-aggressive &#x2014; it will activate conda when it starts a new shell &#x2014;
-but you can stop it activating in a new shell with the following
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">conda config --set auto_activate_base false
-</pre>
-</div>
-</div>
-
-<div id="outline-container-org1424466" class="outline-4">
-<h4 id="org1424466">Listing existing Conda environments</h4>
-<div class="outline-text-4" id="text-org1424466">
-<div class="org-src-container">
-<pre class="src src-sh">conda env list
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0614d3a" class="outline-4">
-<h4 id="org0614d3a">Creating/removing a Conda environment</h4>
-<div class="outline-text-4" id="text-org0614d3a">
-<div class="org-src-container">
-<pre class="src src-sh">conda create -n myenv <span style="color: #BA36A5;">python</span>=3.10
-</pre>
-</div>
-
-<p>
-This created an environment in <code>~/miniconda3/envs/myenv</code>. If you want
-to remove this later, this can be managed by Conda too.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">conda env remove -n myenv
-</pre>
-</div>
-
-<p>
-To remove old caches there is <code>conda clean --all</code>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org3a722c6" class="outline-4">
-<h4 id="org3a722c6">Activating/deactivating a Conda environment</h4>
-<div class="outline-text-4" id="text-org3a722c6">
-<div class="org-src-container">
-<pre class="src src-sh">conda activate myenv
-conda deactivate
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orge026dde" class="outline-4">
-<h4 id="orge026dde">Installing Snakemake in Conda</h4>
-<div class="outline-text-4" id="text-orge026dde">
-<div class="org-src-container">
-<pre class="src src-sh">conda install -c bioconda -c conda-forge snakemake
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgdf5e8e6" class="outline-4">
-<h4 id="orgdf5e8e6">Exporting/recreating a Conda environment</h4>
-<div class="outline-text-4" id="text-orgdf5e8e6">
-<div class="org-src-container">
-<pre class="src src-sh">conda env export &gt; environment.yaml
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-sh">conda env create -f environment.yaml
-</pre>
-</div>
-
-<p>
-If you want to update an existing environment to match those in a
-<code>environment.yaml</code>,
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">conda env update -n myenv -f environment.yml
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-23 Tue 10:50</p>
+<p class="date">Created: 2024-01-25 Thu 10:52</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
