@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-25 Thu 10:53 -->
+<!-- 2024-01-29 Mon 19:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org9dab8d9" class="figure">
+<div id="org02fa05c" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -228,7 +228,7 @@
 <li><a href="#org12c8707">Debugging</a></li>
 <li><a href="#org2969679"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#org148639e">High performance computing</a></li>
-<li><a href="#orgb1b2de0">IO</a></li>
+<li><a href="#orgaa3e9e0">IO</a></li>
 </ul>
 </li>
 <li><a href="#orgfee8060">Virtual environments</a>
@@ -239,6 +239,8 @@
 </li>
 <li><a href="#org49dac90">Python packages</a>
 <ul>
+<li><a href="#pyyaml">PyYAML</a></li>
+<li><a href="#python-requests">Requests/lxml</a></li>
 <li><a href="#org4338c7d">PyTorch</a></li>
 <li><a href="#orgdeba73c">Scipy</a></li>
 <li><a href="#org3db0618">Unittest</a></li>
@@ -557,9 +559,9 @@ run_commands_in_parallel(filenames, command)
 </div>
 </div>
 
-<div id="outline-container-orgb1b2de0" class="outline-3">
-<h3 id="orgb1b2de0">IO</h3>
-<div class="outline-text-3" id="text-orgb1b2de0">
+<div id="outline-container-orgaa3e9e0" class="outline-3">
+<h3 id="orgaa3e9e0">IO</h3>
+<div class="outline-text-3" id="text-orgaa3e9e0">
 </div>
 <div id="outline-container-org9ac723f" class="outline-4">
 <h4 id="org9ac723f">Working with JSON</h4>
@@ -716,6 +718,97 @@ If you want to update an existing environment to match those in a
 <p>
 For notes on installation of packages see the notes above about <a href="#orgb919290">pip</a>.
 </p>
+</div>
+
+<div id="outline-container-pyyaml" class="outline-3">
+<h3 id="pyyaml">PyYAML</h3>
+<div class="outline-text-3" id="text-pyyaml">
+</div>
+
+<div id="outline-container-org3caa4d6" class="outline-4">
+<h4 id="org3caa4d6">Reading YAML Files</h4>
+<div class="outline-text-4" id="text-org3caa4d6">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> yaml
+
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(<span style="color: #008000;">'config.yaml'</span>, <span style="color: #008000;">'r'</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+    <span style="color: #BA36A5;">config</span> = yaml.safe_load(<span style="color: #006FE0;">file</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11add46" class="outline-4">
+<h4 id="org11add46">Writing YAML Files</h4>
+<div class="outline-text-4" id="text-org11add46">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">data</span> = {
+<span style="color: #008000;">'name'</span>: <span style="color: #008000;">'Clark Evans'</span>,
+<span style="color: #008000;">'features'</span>: [<span style="color: #008000;">'YAML'</span>]
+}
+
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(<span style="color: #008000;">'output.yaml'</span>, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+    yaml.dump(data, <span style="color: #006FE0;">file</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-python-requests" class="outline-3">
+<h3 id="python-requests">Requests/lxml</h3>
+<div class="outline-text-3" id="text-python-requests">
+</div>
+
+<div id="outline-container-orga8d5edf" class="outline-4">
+<h4 id="orga8d5edf">Example: Getting a list of references from an article</h4>
+<div class="outline-text-4" id="text-orga8d5edf">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> requests
+<span style="color: #0000FF;">from</span> lxml <span style="color: #0000FF;">import</span> html
+</pre>
+</div>
+
+<p>
+The request information I got from the <b>Network</b> tab in <b>Inspect</b>
+(Firefox) after looking for a request that returned HTML and looking
+at the response to see it did include the references.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">url</span> = <span style="color: #008000;">"https://doi.org/10.1371/journal.pcbi.1009805"</span>
+<span style="color: #BA36A5;">headers</span> = {
+    <span style="color: #008000;">"Accept"</span>: <span style="color: #008000;">"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"</span>,
+    <span style="color: #008000;">"Accept-Language"</span>: <span style="color: #008000;">"en-GB,en;q=0.5"</span>,
+    <span style="color: #008000;">"User-Agent"</span>: <span style="color: #008000;">"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0"</span>,
+}
+</pre>
+</div>
+
+<p>
+The request returns the HTML for the whole page, but the references
+are in an <code>ol</code> with the class <code>references</code> so with XPath (via <code>lxml</code>)
+we can filter out this information.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">response</span> = requests.get(url, headers=headers)
+
+<span style="color: #0000FF;">if</span> response.status_code == 200:
+    <span style="color: #BA36A5;">tree</span> = html.fromstring(response.content)
+    <span style="color: #BA36A5;">xpath</span> = <span style="color: #008000;">"//ol[@class='references']"</span>
+    <span style="color: #BA36A5;">ordered_list</span> = tree.xpath(xpath)
+
+    <span style="color: #0000FF;">if</span> ordered_list:
+        <span style="color: #006FE0;">print</span>(html.tostring(ordered_list[0], pretty_print=<span style="color: #D0372D;">True</span>).decode())
+    <span style="color: #0000FF;">else</span>:
+        <span style="color: #006FE0;">print</span>(<span style="color: #008000;">"Ordered list not found in the HTML."</span>)
+<span style="color: #0000FF;">else</span>:
+    <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Failed to retrieve data: Status code </span>{response.status_code}<span style="color: #008000;">"</span>)
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org4338c7d" class="outline-3">
@@ -1016,9 +1109,9 @@ Melting is particularly useful in plotting.
 </div>
 </div>
 
-<div id="outline-container-orgaa3e9e0" class="outline-4">
-<h4 id="orgaa3e9e0">IO</h4>
-<div class="outline-text-4" id="text-orgaa3e9e0">
+<div id="outline-container-org6584d48" class="outline-4">
+<h4 id="org6584d48">IO</h4>
+<div class="outline-text-4" id="text-org6584d48">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1256,7 +1349,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-25 Thu 10:53</p>
+<p class="date">Created: 2024-01-29 Mon 19:38</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
