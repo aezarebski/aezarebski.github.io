@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-31 Wed 17:06 -->
+<!-- 2024-02-04 Sun 19:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 08/02/2024</title>
@@ -246,10 +246,11 @@
 <p>
 In this example we will use the <i>gated multimodal units</i> (GMU) as
 proposed by <a href="https://arxiv.org/abs/1702.01992">Arevalo et al (2017)</a> to solve a classification problem on
-a synthetic dataset. Since this is about the new type of unit (defined
-<a href="#gmu">here</a>), we will use the basic simulation example (defined <a href="#sim">here</a>) from
-the paper rather than trying to replicate the full movie genre
-classification task.
+a synthetic dataset. The GMU provides a way to combine data from
+multiple sources (provided they can be mapped into a shared space).
+Since this is about the new type of unit (defined <a href="#gmu">here</a>), we will use
+the basic simulation example (defined <a href="#sim">here</a>) from the paper rather than
+trying to replicate the full movie genre classification task.
 </p>
 </div>
 
@@ -257,23 +258,30 @@ classification task.
 <h3 id="sim">Synthetic data</h3>
 <div class="outline-text-3" id="text-sim">
 <p>
-The task we are going to consider in the simulation study is simple
-binary classification. Where we have a pair of univariate predictors
-in each sample, and we want to predict a binary class value. In each
+The task we consider in the simulation study is simple binary
+classification, where we have a pair of univariate predictors in each
+sample, and we want to predict a binary class value. In each
 observation, only one of the predictors is informative of the class
-and the other is pure noise drawn from another distribution.
+and the other is pure noise drawn from another distribution<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
 </p>
 
 <ul class="org-ul">
 <li>\(C\sim\text{Bernoulli}(p_C)\) for the class</li>
 <li>\(M\sim\text{Bernoulli}(p_M)\) for which modality is informative</li>
-<li>Then for modality \(i\in\{a,b\}\) we have
+<li>Then for modality \(i\) where \(i=a\) or \(b\) we have
 <ul class="org-ul">
 <li>\(y_i\sim\text{Normal}(\gamma_i^C)\) the informative predictor</li>
-<li>\(\tilde{y}_i\sim\text{Normal}(\tilde{\gamma}_i^C)\) noise</li>
-<li>\(x_a = M y_a + (1 - M) \tilde{y}_a\) and \(x_b = M y_b + M \tilde{y}_b\).</li>
+<li>\(\tilde{y}_i\sim\text{Normal}(\tilde{\gamma}_i)\) noise</li>
+<li>\(x_a = M y_a + (1 - M) \tilde{y}_a\) and \(x_b = (1 - M) y_b + M \tilde{y}_b\).</li>
 </ul></li>
 </ul>
+
+<p>
+So, we have a binary class label \(C\) and we want to predict if it is
+\(0\) or \(1\) based on a pair of noisy observations \(x_a\) and
+\(x_b\). The random variable \(M\) determines which of \(x_a\) and
+\(x_b\) is informative of \(C\) (the other is pure noise).
+</p>
 
 <p>
 The GMU can handle the more general case where both variables are
@@ -329,9 +337,20 @@ though.
 <h3 id="org74eec38">Define data generating process</h3>
 <div class="outline-text-3" id="text-org74eec38">
 <p>
-We can implement the model above with some dummy values for the
-\(p_C\), \(p_M\) and \(\gamma\). The following snippet implements the
-data generating process described <a href="#sim">above</a>.
+We can implement the model above with some values for the \(p_C\),
+\(p_M\) and \(\gamma\) as
+</p>
+
+<ul class="org-ul">
+<li>\(p_C=0.5\)</li>
+<li>\(p_M=0.5\)</li>
+<li>\(\gamma^{0}_a=1.0\), \(\gamma^{1}_a=2.0\), \(\tilde{\gamma}_a=3\)</li>
+<li>\(\gamma^{0}_b=2.0\), \(\gamma^{1}_b=3.0\), \(\tilde{\gamma}_b=1\)</li>
+</ul>
+
+<p>
+The following snippet implements the data generating process described
+<a href="#sim">above</a>.
 </p>
 
 <div class="org-src-container">
@@ -388,6 +407,41 @@ data generating process described <a href="#sim">above</a>.
 <div class="outline-text-3" id="text-gmu">
 <p>
 Here is GMU in its binary form as described by <a href="https://arxiv.org/abs/1702.01992">Arevalo et al (2017)</a>.
+The GMU has hidden values
+</p>
+
+<p>
+\[
+h_i = \tanh(W_i \cdot x_i)
+\]
+</p>
+
+<p>
+for \(i=a\) and \(b\), a weighting vector
+</p>
+
+<p>
+\[
+z = \sigma(W_z \cdot [x_a, x_b]),
+\]
+</p>
+
+<p>
+and outputs
+</p>
+
+<p>
+\[
+h = z * h_a + (1 - z) * h_b.
+\]
+</p>
+
+<p>
+The parameters of this unit are \(\Theta = \{W_a, W_b, W_z\}\).
+</p>
+
+<p>
+And as a PyTorch Module, this is
 </p>
 
 <div class="org-src-container">
@@ -407,6 +461,11 @@ Here is GMU in its binary form as described by <a href="https://arxiv.org/abs/17
         <span style="color: #0000FF;">return</span> z * h_a + (1 - z) * h_b
 </pre>
 </div>
+
+<p>
+Note that we have assume that \(x_a\) and \(x_b\) have the same
+dimensionality, but this is not necessary.
+</p>
 </div>
 </div>
 
@@ -560,9 +619,9 @@ loss_df.to_csv(loss_csv, index=<span style="color: #D0372D;">False</span>)
 <p>
 Figure <a href="#org77b3e1c">1</a> shows the training curves for each of the
 models considered. Obviously, this isn't as convincing as a separate
-validation set, but it seems reasonable based on this to thing that
+validation set, but it seems reasonable based on this to think that
 the multimodal models are preforming on par with each other and that
-both are doing better than the unimodal one.
+both are doing better than the unimodal one<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
 </p>
 
 
@@ -587,17 +646,43 @@ loss_p9.save(loss_png, height = 5.8, width = 8.2)
 Gated multimodal units provide a clean way to combine data from
 multiple sources provided they can be mapped into a shared space. In
 this simulation study, the GMU-based model is comparable to
-concatenation but for such a simple task that is not wildly
-surprising. Not surprisingly, the multimodal models do better than the
-univariate one.
+concatenation, but for such a simple task that is not wildly
+surprising. Part of the motivation for the GMU is that it will keep
+the number of parameters smaller at higher dimensions, so I am not
+surprised there are not substantial benefits in this small example.
+Not surprisingly, the multimodal models do better than the univariate
+one.
+</p>
+</div>
+
+<div id="outline-container-org3de7bf5" class="outline-4">
+<h4 id="org3de7bf5">Thanks</h4>
+<div class="outline-text-4" id="text-org3de7bf5">
+<p>
+Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/">Jackson Kwok</a> for helpful comments on a draft of this.
 </p>
 </div>
 </div>
 </div>
 </div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This is perhaps a more artificial example than is ideal, but it is what they presented in the paper and it does provide an example of modes having different amounts of information.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+I have been warned that making these sort of assumptions is fraught with danger, but since the main point of interest is the GMU architecture I'll be bold.
+</p></div></div>
+
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-31 Wed 17:06</p>
+<p class="date">Created: 2024-02-04 Sun 19:17</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
