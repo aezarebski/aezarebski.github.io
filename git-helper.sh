@@ -55,7 +55,6 @@ done
 # A bunch of notes files
 git add notes/academic-journal-notes.html
 git add notes/beast2-notes.html
-git add notes/colour-notes.html
 git add notes/docker-notes.html
 git add notes/emacs-lisp-notes.html
 git add notes/git-notes.html
@@ -88,7 +87,7 @@ git add teaching/index.html
 git add teaching/teaching.css
 
 # ML blog posts
-git add misc/ml/index.html
+# git add misc/ml/index.html <- need to do this manually
 git add misc/ml/post-2024-01-03.html
 git add misc/ml/post-2024-01-04.html
 git add misc/ml/post-2024-01-07.html
