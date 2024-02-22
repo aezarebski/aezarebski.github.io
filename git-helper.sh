@@ -98,6 +98,10 @@ git add misc/ml/example-2024-01-25/coverage.png
 git add misc/ml/example-2024-01-25/loss.png
 git add misc/ml/post-2024-02-08.html
 git add misc/ml/example-2024-02-08/loss.png
+git add misc/ml/post-2024-02-08.html
+git add misc/ml/example-2024-02-08/loss.png
+git add misc/ml/post-2024-02-22.html
+git add misc/ml/example-2024-02-22/training.png
 
 # DERP page
 git add derp/index.html
