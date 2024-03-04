@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-30 Sat 14:32 -->
+<!-- 2024-01-29 Mon 19:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>statistics-aez-notes</title>
+<title>Statistics</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,32 +193,45 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
+<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">statistics-aez-notes</h1>
+<h1 class="title">Statistics</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
@@ -227,45 +240,388 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge13001b">Statistics notes</a>
+<li><a href="#org4896457">Bayesian statistics</a>
 <ul>
-<li><a href="#orge379895">Fisher information</a></li>
-<li><a href="#org3ee315c">Guassian approximation to posterior</a></li>
-<li><a href="#org6c9921b">Is it statistically significant</a></li>
-<li><a href="#org05dd2fe">Empirical Distribution Function</a></li>
-<li><a href="#org3a51c1f">The bootstrap</a></li>
-<li><a href="#org95eb172">MCMC</a></li>
-<li><a href="#orga8dfc7e">Linear regression</a></li>
-<li><a href="#org6cff123">Profile likelihood function</a></li>
-<li><a href="#org36a91a8"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</a></li>
-<li><a href="#org6173c85"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</a></li>
-<li><a href="#org2bea59f"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</a></li>
-<li><a href="#orged1a01d"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</a></li>
-<li><a href="#orgd5c927d">Contingency tables</a></li>
-<li><a href="#orgc6c20f6">Linear Mixed-effects Models</a></li>
-<li><a href="#org7d1d162">Moment closure for CTMC processes</a></li>
-<li><a href="#org9323946">The Law of the unconscious statistician</a></li>
-<li><a href="#orgc7fd0c1"><span class="todo TODO">TODO</span> Bland-Altman plot</a></li>
-<li><a href="#orgd4aa852">Further reading</a></li>
+<li><a href="#org0ad7ca3">Graphical models</a></li>
+<li><a href="#org97c0c88">Gaussian approximation to posterior</a></li>
+<li><a href="#orgfb0751b">Maximum a posteriori (MAP) estimation</a></li>
+<li><a href="#org447bbad">MCMC</a></li>
 </ul>
 </li>
-<li><a href="#org4761b21">Machine learning notes</a>
+<li><a href="#org40847c6">Statistics notes</a>
 <ul>
-<li><a href="#org4706dbb">Using neural networks to solve differential equations</a></li>
-<li><a href="#org8e42416">Initialisation</a></li>
+<li><a href="#r-glm-nbinom">GLM: Negative binomial</a></li>
+<li><a href="#org87305be">Fisher information</a></li>
+<li><a href="#orgbd4f8e7">Is it statistically significant</a></li>
+<li><a href="#orgc3e1984">Empirical Distribution Function</a></li>
+<li><a href="#org541c272">The bootstrap</a></li>
+<li><a href="#org5c8322b">Linear regression</a></li>
+<li><a href="#org20f27d8">Profile likelihood function</a></li>
+<li><a href="#orgf5cef1d"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</a></li>
+<li><a href="#org63dd7f3"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</a></li>
+<li><a href="#org53d5acd"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</a></li>
+<li><a href="#org5d86830"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</a></li>
+<li><a href="#org6c7f0b2">Contingency tables</a></li>
+<li><a href="#orga298f6b">Linear Mixed-effects Models</a></li>
+<li><a href="#orgbee8dd6">Moment closure for CTMC processes</a></li>
+<li><a href="#org5fa8bec">The Law of the unconscious statistician</a></li>
+<li><a href="#org18d3df0"><span class="todo TODO">TODO</span> Bland-Altman plot</a></li>
+<li><a href="#orgec1f470">Further reading</a></li>
+</ul>
+</li>
+<li><a href="#org7f19343">Machine learning notes</a>
+<ul>
+<li><a href="#org029a64f">Gaussian processes</a></li>
+<li><a href="#org5025d8e">Using neural networks to solve differential equations</a></li>
+<li><a href="#orgcc52918">Initialisation</a></li>
+</ul>
+</li>
+<li><a href="#org0585d15">Data notes</a>
+<ul>
+<li><a href="#org43af69f">WebPlotDigitizer</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge13001b" class="outline-2">
-<h2 id="orge13001b">Statistics notes</h2>
-<div class="outline-text-2" id="text-orge13001b">
+<div id="outline-container-org4896457" class="outline-2">
+<h2 id="org4896457">Bayesian statistics</h2>
+<div class="outline-text-2" id="text-org4896457">
 </div>
-<div id="outline-container-orge379895" class="outline-3">
-<h3 id="orge379895">Fisher information</h3>
-<div class="outline-text-3" id="text-orge379895">
+<div id="outline-container-org0ad7ca3" class="outline-3">
+<h3 id="org0ad7ca3">Graphical models</h3>
+<div class="outline-text-3" id="text-org0ad7ca3">
+<p>
+Figure <a href="#org3a08305">1</a> is an example of a notation for graphical models.
+</p>
+
+
+<div id="org3a08305" class="figure">
+<p><img src="../resources/uml-dag-legend.png" alt="uml-dag-legend.png" width="200px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Example of the notation that might be used to represent a graphical model</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97c0c88" class="outline-3">
+<h3 id="org97c0c88">Gaussian approximation to posterior</h3>
+<div class="outline-text-3" id="text-org97c0c88">
+<p>
+Consider a posterior distribution where the mode is at \(\theta^{*}\) and the
+Hessian matrix at this point is \(h''(\theta^{*})\). If we consider a
+multivariate Gaussian density, we can see that it will have its mode at the
+mean, \(\mu\), and, assuming a covariance matrix, \(\Sigma\), the density will
+have a Hessian of \(-\Sigma^{-1}\) at the mode. This motivates the Gaussian
+approximation at the mode of the posterior. Also see <a href="#org87305be">Fisher information</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfb0751b" class="outline-3">
+<h3 id="orgfb0751b">Maximum a posteriori (MAP) estimation</h3>
+<div class="outline-text-3" id="text-orgfb0751b">
+</div>
+<div id="outline-container-org5b11385" class="outline-4">
+<h4 id="org5b11385">Example: univariate data in R</h4>
+<div class="outline-text-4" id="text-org5b11385">
+<p>
+The following snippet produes Figure <a href="#org727c910">2</a>. This
+demonstrates how you can approximate the MAP from a posterior sample
+in a simple way using the <code>stats::density</code> function in R. It also
+demonstrates why the mean might not be the most characteristic value
+to summarise a distribution with.
+</p>
+
+
+<div id="org727c910" class="figure">
+<p><img src="../resources/map-example.png" alt="map-example.png" width="800px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The mode and mean and PDF of the gamma(2, 0.5) distribution in red and the sample mean and approximate MAP in blue.</p>
+</div>
+
+<p>
+Set up the parameters of the example and set the seed to make this
+reproducible.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">set.seed(7)
+
+num_samples <span style="color: #D0372D;">&lt;-</span> 1e3
+true_shape <span style="color: #D0372D;">&lt;-</span> 2
+true_rate <span style="color: #D0372D;">&lt;-</span> 0.5
+xs <span style="color: #D0372D;">&lt;-</span> rgamma(n = num_samples,
+             shape = true_shape,
+             rate = true_rate)
+</pre>
+</div>
+
+<p>
+Compute the mean and mode from the known expressions and then use the
+<code>stats::density</code> function to approximate the mode of the sample.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">true_mean <span style="color: #D0372D;">&lt;-</span> true_shape / true_rate
+true_mode <span style="color: #D0372D;">&lt;-</span> (true_shape - 1) / true_rate
+
+emp_pdf <span style="color: #D0372D;">&lt;-</span> density(xs, from = 0, to = max(xs), n = 100)
+emp_mean <span style="color: #D0372D;">&lt;-</span> mean(xs)
+emp_mode <span style="color: #D0372D;">&lt;-</span> emp_pdf$x[which.max(emp_pdf$y)]
+</pre>
+</div>
+
+<p>
+Visualise this to produce the image in Figure <a href="#org727c910">2</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">x_mesh <span style="color: #D0372D;">&lt;-</span> seq(from = 0, to = max(xs), length = 100)
+pdf_mesh <span style="color: #D0372D;">&lt;-</span> dgamma(x = x_mesh,
+                   shape = true_shape,
+                   rate = true_rate)
+
+png(<span style="color: #008000;">'../resources/map-example.png'</span>,
+    width = 1.62 * 400, height = 400)
+hist(xs, 15, prob = <span style="color: #6434A3;">TRUE</span>,
+     ylim = range(pdf_mesh), main = <span style="color: #6434A3;">NA</span>, xlab = <span style="color: #008000;">'X'</span>)
+lines(x_mesh, pdf_mesh, col = <span style="color: #008000;">'red'</span>)
+lines(emp_pdf$x, emp_pdf$y, col = <span style="color: #008000;">'blue'</span>)
+abline(v = true_mean, col = <span style="color: #008000;">'red'</span>, lty = 2, lwd = 2)
+abline(v = emp_mean, col = <span style="color: #008000;">'blue'</span>, lty = 2, lwd = 2)
+abline(v = true_mode, col = <span style="color: #008000;">'red'</span>, lty = 4, lwd = 2)
+abline(v = emp_mode, col = <span style="color: #008000;">'blue'</span>, lty = 4, lwd = 2)
+dev.off()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcdd2cb0" class="outline-4">
+<h4 id="orgcdd2cb0">Example: bivariate data in Python</h4>
+<div class="outline-text-4" id="text-orgcdd2cb0">
+
+<div id="orgc4382ca" class="figure">
+<p><img src="../resources/map-example-2.png" alt="map-example-2.png" width="800px" />
+</p>
+<p><span class="figure-number">Figure 3: </span>The mode (blue) and mean (red) of some bivariate data.</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #0000FF;">from</span> scipy <span style="color: #0000FF;">import</span> stats
+<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+</pre>
+</div>
+
+<p>
+Simulate some data from a unimodal distribution with interesting
+structure.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">n</span> = 1000
+<span style="color: #BA36A5;">x</span> = stats.norm().rvs(size=n)
+<span style="color: #BA36A5;">y</span> = stats.norm().rvs(size=n) + 10*np.<span style="color: #006FE0;">abs</span>(x)
+<span style="color: #BA36A5;">data_mat</span> = np.vstack([x, y])
+</pre>
+</div>
+
+<p>
+Compute an approximate MAP by getting the data point that maximises
+the KDE. This avoids needing to run an optimiser and gives a possible
+value.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">kernel</span> = stats.gaussian_kde(data_mat)
+<span style="color: #BA36A5;">kernal_pdf_vals</span> = kernel(data_mat)
+<span style="color: #BA36A5;">idx</span> = kernal_pdf_vals.argmax()
+<span style="color: #BA36A5;">map_df</span> = pd.DataFrame({<span style="color: #008000;">'x'</span>:x[idx], <span style="color: #008000;">'y'</span>:y[idx]}, index=[0])
+</pre>
+</div>
+
+<p>
+Generate a plot
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">mean_df</span> = pd.DataFrame({<span style="color: #008000;">'x'</span>:x.mean(), <span style="color: #008000;">'y'</span>:y.mean()}, index=[0])
+<span style="color: #BA36A5;">data_df</span> = pd.DataFrame({<span style="color: #008000;">'x'</span>:x, <span style="color: #008000;">'y'</span>:y})
+<span style="color: #BA36A5;">demo_p9</span> = (ggplot(mapping=aes(x=<span style="color: #008000;">'x'</span>, y=<span style="color: #008000;">'y'</span>))
+           + geom_point(data_df, shape=<span style="color: #008000;">'o'</span>, size = 2, alpha=0.2)
+           + geom_point(mean_df, size=5, color=<span style="color: #008000;">'red'</span>)
+           + geom_point(map_df, size=5, color=<span style="color: #008000;">'blue'</span>)
+           + theme_bw())
+demo_p9.save(<span style="color: #008000;">'../resources/map-example-2.png'</span>,
+             height=4, width=6, dpi=300)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org447bbad" class="outline-3">
+<h3 id="org447bbad">MCMC</h3>
+<div class="outline-text-3" id="text-org447bbad">
+<p>
+See Chib and Greenberg (1995) for a timeless introduction to the
+Metropolis-Hasting algorithm.
+</p>
+</div>
+
+<div id="outline-container-org9a6ede6" class="outline-4">
+<h4 id="org9a6ede6">Parameter transformation</h4>
+<div class="outline-text-4" id="text-org9a6ede6">
+<p>
+You want to sample \(x\) which has density \(f\) but the MCMC samples are
+butting up against the edge of the support. For example, we have \(X\sim
+\text{Lognormal}(0,1)\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(mcmc)
+<span style="color: #D0372D;">library</span>(coda)
+set.seed(1)
+
+<span style="color: #006699;">mcmc_samples</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(obj) {
+    as.mcmc(metrop(obj, 1, 10000)$batch)
+}
+
+<span style="color: #006699;">posterior</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) {
+    dlnorm(x = x, meanlog = 0, sdlog = 1, log = <span style="color: #6434A3;">TRUE</span>)
+}
+
+x_samples <span style="color: #D0372D;">&lt;-</span> mcmc_samples(posterior)
+</pre>
+</div>
+
+<p>
+But the sampler keeps jumping into the negative numbers which is a problem. So
+you might consider \(Y = log(X)\) as this takes values on the whole real line.
+We need to derive the posterior distribution for this, \(g\). Note
+</p>
+
+<p>
+\[
+\left|g(y)dy\right| = \left|f(x)dx\right|,
+\]
+</p>
+
+<p>
+put another way,
+</p>
+
+<p>
+\[
+g(y) = f(x(y)) \left|\frac{dx(y)}{dy}\right|.
+\]
+</p>
+
+<p>
+So, if we let \(x = \exp(y)\), then the Jacobian is just \(\exp(y)\), and when we
+take the logarithm to get the log-posterior this becomes just \(y\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #006699;">y_posterior</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(y) {
+    posterior(exp(y)) + y
+}
+
+y_samples <span style="color: #D0372D;">&lt;-</span> mcmc_samples(y_posterior)
+</pre>
+</div>
+
+<p>
+Then a Q-Q plot of the logarithm of the \(X\) samples and the \(Y\) samples
+suggests we have gotten this correct. The tails are slightly different because
+the second sampler has been able to explore smaller and larger values more
+efficiently.
+</p>
+
+
+<div id="org318f748" class="figure">
+<p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org40847c6" class="outline-2">
+<h2 id="org40847c6">Statistics notes</h2>
+<div class="outline-text-2" id="text-org40847c6">
+</div>
+<div id="outline-container-r-glm-nbinom" class="outline-3">
+<h3 id="r-glm-nbinom">GLM: Negative binomial</h3>
+<div class="outline-text-3" id="text-r-glm-nbinom">
+</div>
+
+<div id="outline-container-org869b82b" class="outline-4">
+<h4 id="org869b82b">Setting up the data</h4>
+<div class="outline-text-4" id="text-org869b82b">
+<p>
+Note that with the log-link function, the true intercept should be 1
+and the coefficients should be 1, -1 and 0. The true size parameter of
+the negative binomial distribution is 0.5.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">set.seed(1)
+x1 <span style="color: #D0372D;">&lt;-</span> runif(n = 100, min = 0, max = 5)
+x2 <span style="color: #D0372D;">&lt;-</span> runif(n = 100, min = 0, max = 5)
+x3 <span style="color: #D0372D;">&lt;-</span> runif(n = 100, min = 0, max = 5)
+y_mean <span style="color: #D0372D;">&lt;-</span> exp(1 + 1 * x1 - 1 * x2)
+y <span style="color: #D0372D;">&lt;-</span> rnbinom(n = 100, mu = y_mean, size = 0.5)
+df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2, x3 = x3)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org342a4ca" class="outline-4">
+<h4 id="org342a4ca">Fitting the model</h4>
+<div class="outline-text-4" id="text-org342a4ca">
+<p>
+The following demonstrates that with this data set the coefficients
+are well estimates as is the size parameter of the negative binomial
+distribution. The intercept is less well estimates.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(MASS)
+glm_fit <span style="color: #D0372D;">&lt;-</span> glm.nb(y ~ ., data = df)
+summary(glm_fit)
+confint(glm_fit)
+</pre>
+</div>
+
+<p>
+As a point of comparison we can fit a Poisson model.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">glm_fit_2 <span style="color: #D0372D;">&lt;-</span> glm(y ~ ., data = df, family = poisson)
+</pre>
+</div>
+
+<p>
+In the Poisson model the residual deviance is far far larger than the
+residual degrees of freedom (they were similar in the negative
+binomial model) which makes sense since the data should be
+over-dispersed with respect to the Poisson distribution.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org87305be" class="outline-3">
+<h3 id="org87305be">Fisher information</h3>
+<div class="outline-text-3" id="text-org87305be">
 <p>
 For a random variable, \(X\) with distrtibution \(f(X;\theta)\) the <i>score
 function</i> is
@@ -308,23 +664,13 @@ which can be more convenient to work with.
 </div>
 </div>
 
-<div id="outline-container-org3ee315c" class="outline-3">
-<h3 id="org3ee315c">Guassian approximation to posterior</h3>
-<div class="outline-text-3" id="text-org3ee315c">
-<p>
-Consider a posterior distribution where the mode is at \(\theta^{*}\) and the
-Hessian matrix at this point is \(h''(\theta^{*})\). If we consider a
-multivariate Gaussian density, we can see that it will have its mode at the
-mean, \(\mu\), and, assuming a covariance matrix, \(\Sigma\), the density will
-have a Hessian of \(-\Sigma^{-1}\) at the mode. This motivates the Guassian
-approximation at the mode of the posterior. Also see <a href="#orge379895">Fisher information</a>.
-</p>
+<div id="outline-container-orgbd4f8e7" class="outline-3">
+<h3 id="orgbd4f8e7">Is it statistically significant</h3>
+<div class="outline-text-3" id="text-orgbd4f8e7">
 </div>
-</div>
-
-<div id="outline-container-org6c9921b" class="outline-3">
-<h3 id="org6c9921b">Is it statistically significant</h3>
-<div class="outline-text-3" id="text-org6c9921b">
+<div id="outline-container-org18b1432" class="outline-4">
+<h4 id="org18b1432">Fair coin</h4>
+<div class="outline-text-4" id="text-org18b1432">
 <p>
 Here is a table of values for testing whether the a binomial sample differs from
 fair trials at a significance level of 0.05.
@@ -412,9 +758,70 @@ fair trials at a significance level of 0.05.
 </div>
 </div>
 
-<div id="outline-container-org05dd2fe" class="outline-3">
-<h3 id="org05dd2fe">Empirical Distribution Function</h3>
-<div class="outline-text-3" id="text-org05dd2fe">
+<div id="outline-container-org2addb0d" class="outline-4">
+<h4 id="org2addb0d">Coverage of credible interval</h4>
+<div class="outline-text-4" id="text-org2addb0d">
+<p>
+Suppose you have a way to estimate a parameter and you want to check if the
+coverage is as expected. You can test the null hypothesis that the coverage is
+the specified parameter in a frequentist way using the following function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Hypothesis test on the binomial probability.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x_obs</span><span style="color: #8D8D84; font-style: italic;"> integer number of successes observed.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">size</span><span style="color: #8D8D84; font-style: italic;"> integer number of tests carried out.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">prob</span><span style="color: #8D8D84; font-style: italic;"> probability of success in each test</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #006699;">calibration_test</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x_obs, size, prob=0.95) {
+  pmf_vals <span style="color: #D0372D;">&lt;-</span> dbinom(x = 0:size, prob = prob, size = size)
+  obs_prob <span style="color: #D0372D;">&lt;-</span> dbinom(x = x_obs, prob = prob, size = size)
+  mask <span style="color: #D0372D;">&lt;-</span> pmf_vals &lt;= obs_prob
+  p_val <span style="color: #D0372D;">&lt;-</span> sum(pmf_vals[mask])
+  list(
+    p_val = p_val,
+    reject_null = p_val &lt; 0.05
+    )
+}
+</pre>
+</div>
+
+<p>
+For example, suppose you simulated and estimated 50 times and 46 of the
+intervals contained the true parameter, then you could not reject the null
+hypothesis that the \(95\%\) coverage is correct.
+</p>
+
+<pre class="example" id="orgd505371">
+&gt; calibration_test(46, size = 50, prob = 0.95)
+$p_val
+[1] 0.316537
+
+$reject_null
+[1] FALSE
+</pre>
+
+<p>
+If instead you only had 44 of the intervals containing the parameter, then you
+could reject this null hypothesis:
+</p>
+
+<pre class="example" id="org9d19402">
+&gt; calibration_test(44, size = 50, prob = 0.95)
+$p_val
+[1] 0.03777617
+
+$reject_null
+[1] TRUE
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc3e1984" class="outline-3">
+<h3 id="orgc3e1984">Empirical Distribution Function</h3>
+<div class="outline-text-3" id="text-orgc3e1984">
 <p>
 Let \(X_1,\dots,X_n\sim F\) IID on \(\mathbb{R}\), then the empirical
 distribution function (EDF) is
@@ -456,128 +863,51 @@ construction of confidence bounds on the EDF. A functional \(T : F \mapsto
 </div>
 </div>
 
-<div id="outline-container-org3a51c1f" class="outline-3">
-<h3 id="org3a51c1f">The bootstrap</h3>
-<div class="outline-text-3" id="text-org3a51c1f">
+<div id="outline-container-org541c272" class="outline-3">
+<h3 id="org541c272">The bootstrap</h3>
+<div class="outline-text-3" id="text-org541c272">
 <p>
-The bootstrap is a simulation based method to estimate standard errors and
-confidence intervals. Consider a statistic \(T\) which is a function of a sample
-of \(X_i\sim F\); we want to compute \(\mathbb{V}_F(T)\). The subscript \(F\) is
-to indicate that this is with respect to the distribution \(F\). Let \(\hat{F}\)
-be the empirical distribution (EDF) of the \(X_i\). The bootstrap uses
-\(\mathbb{V}_F(T)\) to approximate \(\mathbb{V}_{\hat{F}}(T)\) which is then
-itself estimated via simulation.
+The <i>bootstrap</i> is a simulation based method to estimate standard
+errors and confidence intervals (there is a standard R package called
+<a href="https://cran.r-project.org/web/packages/boot/index.html">boot</a>.) Unlike the <i>jackknife</i> the bootstrap has access to the
+distribution of a statistic rather.
 </p>
 
 <p>
-The simulation typically is just sampling from the EDF with replacement, and we
-can always run more simulation to get an arbitrarily good approximation of
-\(\mathbb{V}_{\hat{F}}(T)\). The real source of error is how well \(\hat{F}\)
+Consider a statistic \(T\) which is a function of a sample of
+\(X_i\sim F\); we want to compute \(\mathbb{V}_F(T)\). The subscript
+\(F\) is to indicate that this is with respect to the distribution
+\(F\). Let \(\hat{F}\) be the empirical distribution function (EDF) of
+the \(X_i\). The bootstrap uses \(\mathbb{V}_F(T)\) to approximate
+\(\mathbb{V}_{\hat{F}}(T)\) which is then itself estimated via
+simulation.
+</p>
+
+<p>
+The simulation typically is just sampling from the EDF with
+replacement, and we can always run more simulation to get an
+arbitrarily good approximation of \(\mathbb{V}_{\hat{F}}(T)\) (there
+are \(\binom{n + n - 1}{n}\) potential datasets to sample here, for a
+dataset of size \(n=140\) that is already the number of atoms in the
+known universe.) The real source of error is how well \(\hat{F}\)
 approximate \(F\).
 </p>
 
 <p>
-In the <i>parametric</i> bootstrap, rather than sampling from the EDF of the data, a
-sample is generated from the parametric distribution parameterised by the
-estimated parameter value.
+In the <i>parametric</i> bootstrap, rather than sampling from the EDF of
+the data, a sample is generated from the parametric distribution
+parameterised by the estimated parameter value.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org95eb172" class="outline-3">
-<h3 id="org95eb172">MCMC</h3>
-<div class="outline-text-3" id="text-org95eb172">
-<p>
-See Chib and Greenberg (1995) for a timeless introduction to the
-Metropolis-Hasting algorithm.
-</p>
+<div id="outline-container-org5c8322b" class="outline-3">
+<h3 id="org5c8322b">Linear regression</h3>
+<div class="outline-text-3" id="text-org5c8322b">
 </div>
-
-<div id="outline-container-org99599dd" class="outline-4">
-<h4 id="org99599dd">Parameter transformation</h4>
-<div class="outline-text-4" id="text-org99599dd">
-<p>
-You want to sample \(x\) which has density \(f\) but the MCMC samples are
-butting up against the edge of the support. For example, we have \(X\sim
-\text{Lognormal}(0,1)\).
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R"><span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>mcmc<span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">library</span><span style="color: #3a81c3;">(</span>coda<span style="color: #3a81c3;">)</span>
-set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
-
-<span style="color: #6c3163; font-weight: bold;">mcmc_samples</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>obj<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    as.mcmc<span style="color: #6c3163;">(</span>metrop<span style="color: #2d9574;">(</span>obj, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">10000</span><span style="color: #2d9574;">)</span>$batch<span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
-
-<span style="color: #6c3163; font-weight: bold;">posterior</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    dlnorm<span style="color: #6c3163;">(</span>x = x, meanlog = <span style="color: #4e3163;">0</span>, sdlog = <span style="color: #4e3163;">1</span>, log = <span style="color: #4e3163;">TRUE</span><span style="color: #6c3163;">)</span>
-<span style="color: #3a81c3;">}</span>
-
-x_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>posterior<span style="color: #3a81c3;">)</span>
-</pre>
-</div>
-
-<p>
-But the sampler keeps jumping into the negative numbers which is a problem. So
-you might consider \(Y = log(X)\) as this takes values on the whole real line.
-We need to derive the posterior distribution for this, \(g\). Note
-</p>
-
-<p>
-\[
-\left|g(y)dy\right| = \left|f(x)dx\right|,
-\]
-</p>
-
-<p>
-put another way,
-</p>
-
-<p>
-\[
-g(y) = f(x(y)) \left|\frac{dx(y)}{dy}\right|.
-\]
-</p>
-
-<p>
-So, if we let \(x = \exp(y)\), then the Jacobian is just \(\exp(y)\), and when we
-take the logarithm to get the log-posterior this becomes just \(y\).
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">y_posterior</span> <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> <span style="color: #3a81c3;">function</span><span style="color: #3a81c3;">(</span>y<span style="color: #3a81c3;">)</span> <span style="color: #3a81c3;">{</span>
-    posterior<span style="color: #6c3163;">(</span>exp<span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span> + y
-<span style="color: #3a81c3;">}</span>
-
-y_samples <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> mcmc_samples<span style="color: #3a81c3;">(</span>y_posterior<span style="color: #3a81c3;">)</span>
-</pre>
-</div>
-
-<p>
-Then a Q-Q plot of the logarithm of the \(X\) samples and the \(Y\) samples
-suggests we have gotten this correct. The tails are slightly different because
-the second sampler has been able to explore smaller and larger values more
-efficiently.
-</p>
-
-
-<div id="org2d5bf84" class="figure">
-<p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
-</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga8dfc7e" class="outline-3">
-<h3 id="orga8dfc7e">Linear regression</h3>
-<div class="outline-text-3" id="text-orga8dfc7e">
-</div>
-<div id="outline-container-orgece8f09" class="outline-4">
-<h4 id="orgece8f09">Linear regression with <code>lm</code></h4>
-<div class="outline-text-4" id="text-orgece8f09">
+<div id="outline-container-orgbb16128" class="outline-4">
+<h4 id="orgbb16128">Linear regression with <code>lm</code></h4>
+<div class="outline-text-4" id="text-orgbb16128">
 <p>
 The formulas used to specify a model in R use Wilkinson-Rogers notation.
 Consider \(y = \alpha + \beta x + \epsilon\). Often estimators will assume that
@@ -608,9 +938,9 @@ dataset of size \(N\).
 </div>
 </div>
 
-<div id="outline-container-org6cff123" class="outline-3">
-<h3 id="org6cff123">Profile likelihood function</h3>
-<div class="outline-text-3" id="text-org6cff123">
+<div id="outline-container-org20f27d8" class="outline-3">
+<h3 id="org20f27d8">Profile likelihood function</h3>
+<div class="outline-text-3" id="text-org20f27d8">
 <p>
 The profile likelihood is a lower dimensional version of the likelihood
 function. Consider a likelihood function \(\mathcal{L}(\theta)\) where \(\theta
@@ -626,79 +956,79 @@ likelihood</i> is
 </div>
 </div>
 
-<div id="outline-container-org36a91a8" class="outline-3">
-<h3 id="org36a91a8"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</h3>
-<div class="outline-text-3" id="text-org36a91a8">
+<div id="outline-container-orgf5cef1d" class="outline-3">
+<h3 id="orgf5cef1d"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</h3>
+<div class="outline-text-3" id="text-orgf5cef1d">
 </div>
-<div id="outline-container-orge5f8ae4" class="outline-4">
-<h4 id="orge5f8ae4">Null is specific mean</h4>
-<div class="outline-text-4" id="text-orge5f8ae4">
+<div id="outline-container-orgf6154a7" class="outline-4">
+<h4 id="orgf6154a7">Null is specific mean</h4>
+<div class="outline-text-4" id="text-orgf6154a7">
 <div class="org-src-container">
-<pre class="src src-R">t.test<span style="color: #3a81c3;">(</span>rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean=<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>, mu = <span style="color: #4e3163;">0</span><span style="color: #3a81c3;">)</span>$p.value
+<pre class="src src-R">t.test(rnorm(100, mean=1), mu = 0)$p.value
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org70d843b" class="outline-4">
-<h4 id="org70d843b">Null is different mean (assumed equal variance)</h4>
-<div class="outline-text-4" id="text-org70d843b">
+<div id="outline-container-org7ad7fb7" class="outline-4">
+<h4 id="org7ad7fb7">Null is different mean (assumed equal variance)</h4>
+<div class="outline-text-4" id="text-org7ad7fb7">
 <div class="org-src-container">
-<pre class="src src-R">t.test<span style="color: #3a81c3;">(</span>rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span>, rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span>, var.equal = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>$p.value
+<pre class="src src-R">t.test(rnorm(100, mean = 0), rnorm(100, mean = 1), var.equal = <span style="color: #6434A3;">TRUE</span>)$p.value
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf67f4de" class="outline-4">
-<h4 id="orgf67f4de">Null is different mean (Welch)</h4>
-<div class="outline-text-4" id="text-orgf67f4de">
+<div id="outline-container-org2827bba" class="outline-4">
+<h4 id="org2827bba">Null is different mean (Welch)</h4>
+<div class="outline-text-4" id="text-org2827bba">
 <div class="org-src-container">
-<pre class="src src-R">t.test<span style="color: #3a81c3;">(</span>rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span>, rnorm<span style="color: #6c3163;">(</span><span style="color: #4e3163;">100</span>, mean = <span style="color: #4e3163;">1</span>, sd = <span style="color: #4e3163;">2</span><span style="color: #6c3163;">)</span>, var.equal = <span style="color: #4e3163;">FALSE</span><span style="color: #3a81c3;">)</span>$p.value
+<pre class="src src-R">t.test(rnorm(100, mean = 0), rnorm(100, mean = 1, sd = 2), var.equal = <span style="color: #6434A3;">FALSE</span>)$p.value
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4a82aeb" class="outline-4">
-<h4 id="org4a82aeb"><span class="todo TODO">TODO</span> Null is different mean but values are paired</h4>
+<div id="outline-container-orgfaef5d7" class="outline-4">
+<h4 id="orgfaef5d7"><span class="todo TODO">TODO</span> Null is different mean but values are paired</h4>
 </div>
 </div>
 
-<div id="outline-container-org6173c85" class="outline-3">
-<h3 id="org6173c85"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</h3>
-<div class="outline-text-3" id="text-org6173c85">
+<div id="outline-container-org63dd7f3" class="outline-3">
+<h3 id="org63dd7f3"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</h3>
+<div class="outline-text-3" id="text-org63dd7f3">
 <p>
 Roughly, it plays the role of a nonparametric paired <i>t</i>-test.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2bea59f" class="outline-3">
-<h3 id="org2bea59f"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</h3>
-<div class="outline-text-3" id="text-org2bea59f">
+<div id="outline-container-org53d5acd" class="outline-3">
+<h3 id="org53d5acd"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</h3>
+<div class="outline-text-3" id="text-org53d5acd">
 <p>
 Roughly, it plays the role of a nonparametric <i>t</i>-test.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orged1a01d" class="outline-3">
-<h3 id="orged1a01d"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</h3>
-<div class="outline-text-3" id="text-orged1a01d">
+<div id="outline-container-org5d86830" class="outline-3">
+<h3 id="org5d86830"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</h3>
+<div class="outline-text-3" id="text-org5d86830">
 <p>
-Roughly, it extends the <a href="#org2bea59f">Mann–Whitney <i>U</i> test</a> to more than two groups.
+Roughly, it extends the <a href="#org53d5acd">Mann–Whitney <i>U</i> test</a> to more than two groups.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd5c927d" class="outline-3">
-<h3 id="orgd5c927d">Contingency tables</h3>
-<div class="outline-text-3" id="text-orgd5c927d">
+<div id="outline-container-org6c7f0b2" class="outline-3">
+<h3 id="org6c7f0b2">Contingency tables</h3>
+<div class="outline-text-3" id="text-org6c7f0b2">
 </div>
-<div id="outline-container-orgbb809df" class="outline-4">
-<h4 id="orgbb809df">An example in R</h4>
-<div class="outline-text-4" id="text-orgbb809df">
+<div id="outline-container-org94e6853" class="outline-4">
+<h4 id="org94e6853">An example in R</h4>
+<div class="outline-text-4" id="text-org94e6853">
 <p>
 A contingency table counts the number of times that a particular combination of
 catagorical variables occur. For example, we can simulate a data set of
@@ -706,10 +1036,10 @@ catagorical variables as follows
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">set.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
-x <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">1000</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
-y <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> sample<span style="color: #3a81c3;">(</span>letters<span style="color: #6c3163;">[</span><span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span><span style="color: #6c3163;">]</span>, <span style="color: #4e3163;">1000</span>, replace = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span>
-df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>x, y<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">set.seed(1)
+x <span style="color: #D0372D;">&lt;-</span> sample(1:3, 1000, replace = <span style="color: #6434A3;">TRUE</span>)
+y <span style="color: #D0372D;">&lt;-</span> sample(letters[1:3], 1000, replace = <span style="color: #6434A3;">TRUE</span>)
+df <span style="color: #D0372D;">&lt;-</span> data.frame(x, y)
 </pre>
 </div>
 
@@ -718,17 +1048,17 @@ Then we can create a contingency table from this with the <code>xtabs</code> fun
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">tab <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> xtabs<span style="color: #3a81c3;">(</span>~ x + y, data = df<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">tab <span style="color: #D0372D;">&lt;-</span> xtabs(~ x + y, data = df)
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R">&gt; print<span style="color: #3a81c3;">(</span>tab<span style="color: #3a81c3;">)</span>
+<pre class="src src-R">&gt; print(tab)
    y
 x     a   b   c
-  <span style="color: #4e3163;">1</span> <span style="color: #4e3163;">131</span> <span style="color: #4e3163;">109</span> <span style="color: #4e3163;">111</span>
-  <span style="color: #4e3163;">2</span> <span style="color: #4e3163;">100</span> <span style="color: #4e3163;">122</span> <span style="color: #4e3163;">117</span>
-  <span style="color: #4e3163;">3</span> <span style="color: #4e3163;">100</span>  <span style="color: #4e3163;">99</span> <span style="color: #4e3163;">111</span>
+  1 131 109 111
+  2 100 122 117
+  3 100  99 111
 </pre>
 </div>
 
@@ -740,12 +1070,12 @@ binary we could use Fisher's exact test, but since there are more, and there are
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">&gt; print<span style="color: #3a81c3;">(</span>chisq.test<span style="color: #6c3163;">(</span>tab<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-R">&gt; print(chisq.test(tab))
 
-  Pearson<span style="color: #2d9574;">'s Chi-squared test</span>
+        Pearson<span style="color: #008000;">'s Chi-squared test</span>
 
-<span style="color: #2d9574;">data:  tab</span>
-<span style="color: #2d9574;">X-squared = 5.6178, df = 4, p-value = 0.2296</span>
+<span style="color: #008000;">data:  tab</span>
+<span style="color: #008000;">X-squared = 5.6178, df = 4, p-value = 0.2296</span>
 
 </pre>
 </div>
@@ -757,9 +1087,9 @@ surprisingly, large enough that it would not be considered significant.
 </div>
 </div>
 
-<div id="outline-container-org7c6faf6" class="outline-4">
-<h4 id="org7c6faf6">What actually happens</h4>
-<div class="outline-text-4" id="text-org7c6faf6">
+<div id="outline-container-org81bb462" class="outline-4">
+<h4 id="org81bb462">What actually happens</h4>
+<div class="outline-text-4" id="text-org81bb462">
 <p>
 Let \(f_{ij}\) be the value in the \(ij\)-th cell of the contingency table and
 \(e_{ij}\) the expected value assuming that the observations are distributed such
@@ -782,9 +1112,9 @@ takes.
 </div>
 </div>
 
-<div id="outline-container-orgc6c20f6" class="outline-3">
-<h3 id="orgc6c20f6">Linear Mixed-effects Models</h3>
-<div class="outline-text-3" id="text-orgc6c20f6">
+<div id="outline-container-orga298f6b" class="outline-3">
+<h3 id="orga298f6b">Linear Mixed-effects Models</h3>
+<div class="outline-text-3" id="text-orga298f6b">
 <p>
 The Laird-Ware form of a linear mixed effect model (LMM) for the \(j\)th
 observation in the \(i\)th group of measurements is as follows:
@@ -811,9 +1141,9 @@ parameterised by \(\sigma^2\).</li>
 </ul>
 </div>
 
-<div id="outline-container-orgfc11b1d" class="outline-4">
-<h4 id="orgfc11b1d">Model derivation</h4>
-<div class="outline-text-4" id="text-orgfc11b1d">
+<div id="outline-container-org531d5b6" class="outline-4">
+<h4 id="org531d5b6">Model derivation</h4>
+<div class="outline-text-4" id="text-org531d5b6">
 <p>
 One way to go about deriving a LMM for a particular data set is to consider a
 model at the individual level and then assume some random structure on the
@@ -825,9 +1155,9 @@ parts of the parameters form the fixed effects.
 </div>
 </div>
 
-<div id="outline-container-org86763eb" class="outline-4">
-<h4 id="org86763eb">Model notation</h4>
-<div class="outline-text-4" id="text-org86763eb">
+<div id="outline-container-org815d4fd" class="outline-4">
+<h4 id="org815d4fd">Model notation</h4>
+<div class="outline-text-4" id="text-org815d4fd">
 <p>
 The <code>lme4</code> package in R introduces some syntax for describing these models.
 </p>
@@ -843,9 +1173,9 @@ effects, but assumes that they are uncorrelated.</li>
 </div>
 </div>
 
-<div id="outline-container-org7d1d162" class="outline-3">
-<h3 id="org7d1d162">Moment closure for CTMC processes</h3>
-<div class="outline-text-3" id="text-org7d1d162">
+<div id="outline-container-orgbee8dd6" class="outline-3">
+<h3 id="orgbee8dd6">Moment closure for CTMC processes</h3>
+<div class="outline-text-3" id="text-orgbee8dd6">
 <p>
 Consider a random process, \(X_t\) which is a CTMC on \(\mathbb{N}_0\) where the
 only possible transitions from \(n\) are to \(n\pm 1\), potentially with an
@@ -914,9 +1244,9 @@ expresses higher moments in terms of lower ones.
 </div>
 </div>
 
-<div id="outline-container-org9323946" class="outline-3">
-<h3 id="org9323946">The Law of the unconscious statistician</h3>
-<div class="outline-text-3" id="text-org9323946">
+<div id="outline-container-org5fa8bec" class="outline-3">
+<h3 id="org5fa8bec">The Law of the unconscious statistician</h3>
+<div class="outline-text-3" id="text-org5fa8bec">
 <p>
 This refers to the equation
 </p>
@@ -934,14 +1264,14 @@ rather than being viewed as a theorem.
 
 <p>
 This result is particularly useful when carrying out MCMC in a transformed
-parameter space as described in the <a href="#org99599dd">notes on changing parameterisation</a> above.
+parameter space as described in the <a href="#org9a6ede6">notes on changing parameterisation</a> above.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc7fd0c1" class="outline-3">
-<h3 id="orgc7fd0c1"><span class="todo TODO">TODO</span> Bland-Altman plot</h3>
-<div class="outline-text-3" id="text-orgc7fd0c1">
+<div id="outline-container-org18d3df0" class="outline-3">
+<h3 id="org18d3df0"><span class="todo TODO">TODO</span> Bland-Altman plot</h3>
+<div class="outline-text-3" id="text-org18d3df0">
 <p>
 Given to ways to measure something, a Bland-Altman plot is a way to compare
 them.
@@ -949,9 +1279,9 @@ them.
 </div>
 </div>
 
-<div id="outline-container-orgd4aa852" class="outline-3">
-<h3 id="orgd4aa852">Further reading</h3>
-<div class="outline-text-3" id="text-orgd4aa852">
+<div id="outline-container-orgec1f470" class="outline-3">
+<h3 id="orgec1f470">Further reading</h3>
+<div class="outline-text-3" id="text-orgec1f470">
 <ul class="org-ul">
 <li><a href="https://pages.cs.wisc.edu/~tdw/files/cookbook-en.pdf">Probability and Statistics Cookbook</a> from <a href="http://matthias.vallentin.net/">Matthias Vallentin</a>.</li>
 </ul>
@@ -959,9 +1289,9 @@ them.
 </div>
 </div>
 
-<div id="outline-container-org4761b21" class="outline-2">
-<h2 id="org4761b21">Machine learning notes</h2>
-<div class="outline-text-2" id="text-org4761b21">
+<div id="outline-container-org7f19343" class="outline-2">
+<h2 id="org7f19343">Machine learning notes</h2>
+<div class="outline-text-2" id="text-org7f19343">
 <blockquote>
 <p>
 The first rule of machine learning: Start without machine learning
@@ -973,9 +1303,25 @@ The first rule of machine learning: Start without machine learning
 </blockquote>
 </div>
 
-<div id="outline-container-org4706dbb" class="outline-3">
-<h3 id="org4706dbb">Using neural networks to solve differential equations</h3>
-<div class="outline-text-3" id="text-org4706dbb">
+<div id="outline-container-org029a64f" class="outline-3">
+<h3 id="org029a64f">Gaussian processes</h3>
+<div class="outline-text-3" id="text-org029a64f">
+</div>
+<div id="outline-container-org6619ffa" class="outline-4">
+<h4 id="org6619ffa"><span class="todo TODO">TODO</span> Gaussian process regression (a.k.a. Kriging)</h4>
+<div class="outline-text-4" id="text-org6619ffa">
+<ul class="org-ul">
+<li>Construct a multi-variate normal distribution with dimensionality equal to the
+number of training points and test points and condition it upon the training
+data to get the distribution over the test data.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5025d8e" class="outline-3">
+<h3 id="org5025d8e">Using neural networks to solve differential equations</h3>
+<div class="outline-text-3" id="text-org5025d8e">
 <p>
 Lagaris <i>et al</i> (1998) describe a method to solve differential equations
 numerically with neural networks. The simplest example they use is the following
@@ -1028,130 +1374,130 @@ optimisation routines to be applied.
 </p>
 
 <p>
-Figure <a href="#org27b6cfa">1</a> shows the result of less than a minute of training with
+Figure <a href="#org71b0ed4">4</a> shows the result of less than a minute of training with
 gradient descent with only ten test points.
 </p>
 
 
-<div id="org27b6cfa" class="figure">
+<div id="org71b0ed4" class="figure">
 <p><img src="./img/lagaris-1998.png" alt="lagaris-1998.png" width="900px" />
 </p>
-<p><span class="figure-number">Figure 1: </span>Replication of the first example problem from Lagaris <i>et al</i> (1998)</p>
+<p><span class="figure-number">Figure 4: </span>Replication of the first example problem from Lagaris <i>et al</i> (1998)</p>
 </div>
 
 <p>
-The script that generated the image in Figure <a href="#org27b6cfa">1</a> is shown below.
+The script that generated the image in Figure <a href="#org71b0ed4">4</a> is shown below.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #3a81c3;">import</span> tensorflow <span style="color: #3a81c3;">as</span> tf
-<span style="color: #3a81c3;">import</span> numpy <span style="color: #3a81c3;">as</span> np
-<span style="color: #3a81c3;">import</span> matplotlib.pyplot <span style="color: #3a81c3;">as</span> plt
+<pre class="src src-python"><span style="color: #0000FF;">import</span> tensorflow <span style="color: #0000FF;">as</span> tf
+<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
 
-np.random.seed<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
+np.random.seed(1)
 
-<span style="color: #715ab1;">H</span> = <span style="color: #4e3163;">10</span>
-<span style="color: #715ab1;">mesh_size</span> = <span style="color: #4e3163;">10</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">We need to select some points to train the model on and some to test it on.</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">It looks like you need to have this as a mutable value if you want to compute</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">gradients.</span>
-<span style="color: #715ab1;">train_mesh</span> = tf.Variable<span style="color: #3a81c3;">(</span>np.linspace<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">1</span>, mesh_size<span style="color: #6c3163;">)</span>, dtype=np.float64<span style="color: #3a81c3;">)</span>
-test_mesh = tf.Variable<span style="color: #3a81c3;">(</span>np.linspace<span style="color: #6c3163;">(</span><span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">01</span>, <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">99</span>, mesh_size<span style="color: #6c3163;">)</span>, dtype=np.float64<span style="color: #3a81c3;">)</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">We need to select some points to plot the resulting approximation on.</span>
-plt_mesh = np.linspace<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">0</span>, <span style="color: #4e3163;">2</span>, <span style="color: #4e3163;">100</span><span style="color: #3a81c3;">)</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">We need to record the solution at multiple points of the training loop to</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">test that it is infact converging so something sensible.</span>
-psi_val_stash = <span style="color: #3a81c3;">[]</span>
-iter_stash = <span style="color: #3a81c3;">[]</span>
-loss_stash = <span style="color: #3a81c3;">[]</span>
-vldt_stash = <span style="color: #3a81c3;">[]</span>
+<span style="color: #BA36A5;">H</span> = 10
+<span style="color: #BA36A5;">mesh_size</span> = 10
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">We need to select some points to train the model on and some to test it on.</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">It looks like you need to have this as a mutable value if you want to compute</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">gradients.</span>
+<span style="color: #BA36A5;">train_mesh</span> = tf.Variable(np.linspace(0, 1, mesh_size), dtype=np.float64)
+<span style="color: #BA36A5;">test_mesh</span> = tf.Variable(np.linspace(0.01, 0.99, mesh_size), dtype=np.float64)
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">We need to select some points to plot the resulting approximation on.</span>
+<span style="color: #BA36A5;">plt_mesh</span> = np.linspace(0, 2, 100)
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">We need to record the solution at multiple points of the training loop to</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">test that it is infact converging so something sensible.</span>
+<span style="color: #BA36A5;">psi_val_stash</span> = []
+<span style="color: #BA36A5;">iter_stash</span> = []
+<span style="color: #BA36A5;">loss_stash</span> = []
+<span style="color: #BA36A5;">vldt_stash</span> = []
 
-<span style="color: #ba2f59; font-weight: bold;">@tf.function</span>
-<span style="color: #3a81c3;">def</span> <span style="color: #6c3163; font-weight: bold;">psi_truth</span><span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>:
-    <span style="color: #da8b55;">"""Solution of the differential equation."""</span>
-    <span style="color: #3a81c3;">return</span> tf.exp<span style="color: #3a81c3;">(</span>-<span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">5</span> * x**<span style="color: #4e3163;">2</span><span style="color: #3a81c3;">)</span> / <span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span> + x + x**<span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span> + x**<span style="color: #4e3163;">2</span>
-
-
-<span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">MyModel</span><span style="color: #3a81c3;">(</span>tf.Module<span style="color: #3a81c3;">)</span>:
-    <span style="color: #da8b55;">"""This class respresents the approximation to the solution."""</span>
-
-    <span style="color: #3a81c3;">def</span> <span style="color: #6c3163; font-weight: bold;">__init__</span><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">self</span>, psi_0, num_units, **kwargs<span style="color: #3a81c3;">)</span>:
-        <span style="color: #da8b55;">"""Construct approximate solution with a hard-coded IC."""</span>
-        <span style="color: #3a81c3;">super</span><span style="color: #3a81c3;">()</span>.__init__<span style="color: #3a81c3;">(</span>**kwargs<span style="color: #3a81c3;">)</span>
-        <span style="color: #3a81c3;">self</span>.IC_A = psi_0
-        <span style="color: #3a81c3;">self</span>.w = tf.Variable<span style="color: #3a81c3;">(</span>np.random.randn<span style="color: #6c3163;">(</span>num_units<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-        <span style="color: #3a81c3;">self</span>.u = tf.Variable<span style="color: #3a81c3;">(</span>np.random.randn<span style="color: #6c3163;">(</span>num_units<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-        <span style="color: #3a81c3;">self</span>.v = tf.Variable<span style="color: #3a81c3;">(</span>np.random.randn<span style="color: #6c3163;">(</span>num_units<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-
-    <span style="color: #3a81c3;">def</span> <span style="color: #6c3163; font-weight: bold;">__call__</span><span style="color: #3a81c3;">(</span><span style="color: #3a81c3;">self</span>, x<span style="color: #3a81c3;">)</span>:
-        <span style="color: #da8b55;">"""Evaluate the approximation."""</span>
-        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">matrix with one datum per row</span>
-        l1 = tf.math.sigmoid<span style="color: #3a81c3;">(</span>tf.tensordot<span style="color: #6c3163;">(</span>x, <span style="color: #3a81c3;">self</span>.w, <span style="color: #4e3163;">0</span><span style="color: #6c3163;">)</span> + <span style="color: #3a81c3;">self</span>.u<span style="color: #3a81c3;">)</span>
-        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">We have encoded the IC using the method from Lagaris et al (1998),</span>
-        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">although there are other formulations that are used in contemporary</span>
-        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">implementations. Attempting to use a 1-exp(-x) function to get the IC</span>
-        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">constraint did not yield any improvement.</span>
-        l2 = <span style="color: #3a81c3;">self</span>.IC_A + x * tf.tensordot<span style="color: #3a81c3;">(</span>l1, <span style="color: #3a81c3;">self</span>.v, <span style="color: #4e3163;">1</span><span style="color: #3a81c3;">)</span>
-        <span style="color: #3a81c3;">return</span> l2
+<span style="color: #6434A3;">@tf.function</span>
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">psi_truth</span>(x):
+    <span style="color: #036A07;">"""Solution of the differential equation."""</span>
+    <span style="color: #0000FF;">return</span> tf.exp(-0.5 * x**2) / (1 + x + x**3) + x**2
 
 
-psi_model = MyModel<span style="color: #3a81c3;">(</span>tf.constant<span style="color: #6c3163;">(</span><span style="color: #4e3163;">1</span>.<span style="color: #4e3163;">0</span>, dtype=np.float64<span style="color: #6c3163;">)</span>, H<span style="color: #3a81c3;">)</span>
+<span style="color: #0000FF;">class</span> <span style="color: #6434A3;">MyModel</span>(tf.Module):
+    <span style="color: #036A07;">"""This class respresents the approximation to the solution."""</span>
 
-num_iters = <span style="color: #4e3163;">2000</span>
-learning_rate = <span style="color: #4e3163;">0</span>.<span style="color: #4e3163;">050</span>
-x = train_mesh
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>, psi_0, num_units, **kwargs):
+        <span style="color: #036A07;">"""Construct approximate solution with a hard-coded IC."""</span>
+        <span style="color: #006FE0;">super</span>().__init__(**kwargs)
+        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">IC_A</span> = psi_0
+        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">w</span> = tf.Variable(np.random.randn(num_units))
+        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">u</span> = tf.Variable(np.random.randn(num_units))
+        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">v</span> = tf.Variable(np.random.randn(num_units))
+
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__call__</span>(<span style="color: #0000FF;">self</span>, x):
+        <span style="color: #036A07;">"""Evaluate the approximation."""</span>
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">matrix with one datum per row</span>
+        <span style="color: #BA36A5;">l1</span> = tf.math.sigmoid(tf.tensordot(x, <span style="color: #0000FF;">self</span>.w, 0) + <span style="color: #0000FF;">self</span>.u)
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">We have encoded the IC using the method from Lagaris et al (1998),</span>
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">although there are other formulations that are used in contemporary</span>
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">implementations. Attempting to use a 1-exp(-x) function to get the IC</span>
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">constraint did not yield any improvement.</span>
+        <span style="color: #BA36A5;">l2</span> = <span style="color: #0000FF;">self</span>.IC_A + x * tf.tensordot(l1, <span style="color: #0000FF;">self</span>.v, 1)
+        <span style="color: #0000FF;">return</span> l2
 
 
-<span style="color: #3a81c3;">def</span> <span style="color: #6c3163; font-weight: bold;">loss_fn</span><span style="color: #3a81c3;">(</span>psi_dash, psi, x<span style="color: #3a81c3;">)</span>:
-    <span style="color: #3a81c3;">return</span> tf.reduce_sum<span style="color: #3a81c3;">(</span><span style="color: #6c3163;">(</span>psi_trial_dash + <span style="color: #2d9574;">(</span>x + <span style="color: #67b11d;">(</span><span style="color: #4e3163;">1</span> + <span style="color: #4e3163;">3</span> * x**<span style="color: #4e3163;">2</span><span style="color: #67b11d;">)</span> / <span style="color: #67b11d;">(</span><span style="color: #4e3163;">1</span> + x + x**<span style="color: #4e3163;">3</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> * psi_trial - <span style="color: #2d9574;">(</span>x**<span style="color: #4e3163;">3</span> + <span style="color: #4e3163;">2</span> * x + x**<span style="color: #4e3163;">2</span> * <span style="color: #67b11d;">(</span><span style="color: #4e3163;">1</span> + <span style="color: #4e3163;">3</span> * x**<span style="color: #4e3163;">2</span><span style="color: #67b11d;">)</span> / <span style="color: #67b11d;">(</span><span style="color: #4e3163;">1</span> + x + x**<span style="color: #4e3163;">3</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #6c3163;">)</span>**<span style="color: #4e3163;">2</span><span style="color: #3a81c3;">)</span>
+<span style="color: #BA36A5;">psi_model</span> = MyModel(tf.constant(1.0, dtype=np.float64), H)
+
+<span style="color: #BA36A5;">num_iters</span> = 2000
+<span style="color: #BA36A5;">learning_rate</span> = 0.050
+<span style="color: #BA36A5;">x</span> = train_mesh
 
 
-<span style="color: #3a81c3;">for</span> iter_num <span style="color: #3a81c3;">in</span> <span style="color: #3a81c3;">range</span><span style="color: #3a81c3;">(</span>num_iters<span style="color: #3a81c3;">)</span>:
-    <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">The gradient evaluations need to be within to the loop for TF to</span>
-    <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">understand how they work.</span>
-    <span style="color: #3a81c3;">with</span> tf.GradientTape<span style="color: #3a81c3;">()</span> <span style="color: #3a81c3;">as</span> t2:
-        <span style="color: #3a81c3;">with</span> tf.GradientTape<span style="color: #3a81c3;">()</span> <span style="color: #3a81c3;">as</span> t1:
-            psi_trial = psi_model<span style="color: #3a81c3;">(</span>x<span style="color: #3a81c3;">)</span>
-        psi_trial_dash = t1.gradient<span style="color: #3a81c3;">(</span>psi_trial, x<span style="color: #3a81c3;">)</span>
-        <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">The loss function needs to know the differential equation.</span>
-        loss = loss_fn<span style="color: #3a81c3;">(</span>psi_trial_dash, psi_trial, x<span style="color: #3a81c3;">)</span>
-        vldt_val = loss_fn<span style="color: #3a81c3;">(</span>psi_trial_dash, psi_trial, test_mesh<span style="color: #3a81c3;">)</span>
-    <span style="color: #715ab1;">loss_w_dash</span>, <span style="color: #715ab1;">loss_u_dash</span>, <span style="color: #715ab1;">loss_v_dash</span> = t2.gradient<span style="color: #3a81c3;">(</span>loss, <span style="color: #6c3163;">[</span>psi_model.w, psi_model.u, psi_model.v<span style="color: #6c3163;">]</span><span style="color: #3a81c3;">)</span>
-    psi_val_stash.append<span style="color: #3a81c3;">(</span>psi_model<span style="color: #6c3163;">(</span>plt_mesh<span style="color: #6c3163;">)</span>.numpy<span style="color: #6c3163;">()</span><span style="color: #3a81c3;">)</span>
-    psi_model.w.assign_sub<span style="color: #3a81c3;">(</span>learning_rate * loss_w_dash<span style="color: #3a81c3;">)</span>
-    psi_model.u.assign_sub<span style="color: #3a81c3;">(</span>learning_rate * loss_u_dash<span style="color: #3a81c3;">)</span>
-    psi_model.v.assign_sub<span style="color: #3a81c3;">(</span>learning_rate * loss_v_dash<span style="color: #3a81c3;">)</span>
-    <span style="color: #3a81c3;">if</span> iter_num % <span style="color: #4e3163;">10</span> == <span style="color: #4e3163;">0</span>:
-        iter_stash.append<span style="color: #3a81c3;">(</span>iter_num<span style="color: #3a81c3;">)</span>
-        loss_stash.append<span style="color: #3a81c3;">(</span>loss.numpy<span style="color: #6c3163;">()</span><span style="color: #3a81c3;">)</span>
-        vldt_stash.append<span style="color: #3a81c3;">(</span>vldt_val.numpy<span style="color: #6c3163;">()</span><span style="color: #3a81c3;">)</span>
-        <span style="color: #3a81c3;">print</span><span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"iteration: {i}\tloss: {l}\tlearning rate: {r}"</span>.<span style="color: #3a81c3;">format</span><span style="color: #6c3163;">(</span>i=iter_num, l=loss.numpy<span style="color: #2d9574;">()</span>, r=learning_rate<span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-    <span style="color: #3a81c3;">if</span> iter_num % <span style="color: #4e3163;">1000</span> == <span style="color: #4e3163;">0</span> <span style="color: #3a81c3;">and</span> iter_num &gt; <span style="color: #4e3163;">0</span>:
-        learning_rate /= <span style="color: #4e3163;">1</span>.<span style="color: #4e3163;">5</span>
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">loss_fn</span>(psi_dash, psi, x):
+    <span style="color: #0000FF;">return</span> tf.reduce_sum((psi_trial_dash + (x + (1 + 3 * x**2) / (1 + x + x**3)) * psi_trial - (x**3 + 2 * x + x**2 * (1 + 3 * x**2) / (1 + x + x**3)))**2)
 
-fig, axs = plt.subplots<span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">2</span>, figsize=<span style="color: #6c3163;">(</span><span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">5</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>.plot<span style="color: #3a81c3;">(</span>plt_mesh, psi_truth<span style="color: #6c3163;">(</span>plt_mesh<span style="color: #6c3163;">)</span>, label=<span style="color: #2d9574;">"True solution"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #3a81c3;">for</span> ix <span style="color: #3a81c3;">in</span> <span style="color: #3a81c3;">range</span><span style="color: #3a81c3;">(</span><span style="color: #4e3163;">1</span>, num_iters, num_iters // <span style="color: #4e3163;">3</span><span style="color: #3a81c3;">)</span>:
-    axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>.plot<span style="color: #3a81c3;">(</span>plt_mesh, psi_val_stash<span style="color: #6c3163;">[</span>ix<span style="color: #6c3163;">]</span>, label=<span style="color: #2d9574;">"Iteration {n}"</span>.<span style="color: #3a81c3;">format</span><span style="color: #6c3163;">(</span>n=ix+<span style="color: #4e3163;">1</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>.scatter<span style="color: #3a81c3;">(</span>train_mesh, psi_truth<span style="color: #6c3163;">(</span>train_mesh<span style="color: #6c3163;">)</span>, label=<span style="color: #2d9574;">"Training data"</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>.legend<span style="color: #3a81c3;">(</span>loc=<span style="color: #2d9574;">"upper left"</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">0</span><span style="color: #3a81c3;">]</span>.set_title<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Approximate solutions of ODE"</span><span style="color: #3a81c3;">)</span>
 
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>.plot<span style="color: #3a81c3;">(</span>iter_stash, loss_stash, label=<span style="color: #2d9574;">"Training"</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>.plot<span style="color: #3a81c3;">(</span>iter_stash, vldt_stash, label=<span style="color: #2d9574;">"Validation"</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>.set_title<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Loss functions"</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>.set_xlabel<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"Iteration"</span><span style="color: #3a81c3;">)</span>
-axs<span style="color: #3a81c3;">[</span><span style="color: #4e3163;">1</span><span style="color: #3a81c3;">]</span>.legend<span style="color: #3a81c3;">(</span>loc=<span style="color: #2d9574;">"upper right"</span><span style="color: #3a81c3;">)</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">fig.show()</span>
-fig.savefig<span style="color: #3a81c3;">(</span><span style="color: #2d9574;">"out/lagaris-1998.png"</span>, dpi=<span style="color: #4e3163;">300</span><span style="color: #3a81c3;">)</span>
+<span style="color: #0000FF;">for</span> iter_num <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(num_iters):
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The gradient evaluations need to be within to the loop for TF to</span>
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">understand how they work.</span>
+    <span style="color: #0000FF;">with</span> tf.GradientTape() <span style="color: #0000FF;">as</span> t2:
+        <span style="color: #0000FF;">with</span> tf.GradientTape() <span style="color: #0000FF;">as</span> t1:
+            <span style="color: #BA36A5;">psi_trial</span> = psi_model(x)
+        <span style="color: #BA36A5;">psi_trial_dash</span> = t1.gradient(psi_trial, x)
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The loss function needs to know the differential equation.</span>
+        <span style="color: #BA36A5;">loss</span> = loss_fn(psi_trial_dash, psi_trial, x)
+        <span style="color: #BA36A5;">vldt_val</span> = loss_fn(psi_trial_dash, psi_trial, test_mesh)
+    <span style="color: #BA36A5;">loss_w_dash</span>, <span style="color: #BA36A5;">loss_u_dash</span>, <span style="color: #BA36A5;">loss_v_dash</span> = t2.gradient(loss, [psi_model.w, psi_model.u, psi_model.v])
+    psi_val_stash.append(psi_model(plt_mesh).numpy())
+    psi_model.w.assign_sub(learning_rate * loss_w_dash)
+    psi_model.u.assign_sub(learning_rate * loss_u_dash)
+    psi_model.v.assign_sub(learning_rate * loss_v_dash)
+    <span style="color: #0000FF;">if</span> iter_num % 10 == 0:
+        iter_stash.append(iter_num)
+        loss_stash.append(loss.numpy())
+        vldt_stash.append(vldt_val.numpy())
+        <span style="color: #006FE0;">print</span>(<span style="color: #008000;">"iteration: {i}</span><span style="color: #D0372D;">\t</span><span style="color: #008000;">loss: {l}</span><span style="color: #D0372D;">\t</span><span style="color: #008000;">learning rate: {r}"</span>.<span style="color: #006FE0;">format</span>(i=iter_num, l=loss.numpy(), r=learning_rate))
+    <span style="color: #0000FF;">if</span> iter_num % 1000 == 0 <span style="color: #0000FF;">and</span> iter_num &gt; 0:
+        <span style="color: #BA36A5;">learning_rate</span> /= 1.5
+
+<span style="color: #BA36A5;">fig</span>, <span style="color: #BA36A5;">axs</span> = plt.subplots(1, 2, figsize=(10, 5))
+axs[0].plot(plt_mesh, psi_truth(plt_mesh), label=<span style="color: #008000;">"True solution"</span>)
+<span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(1, num_iters, num_iters // 3):
+    axs[0].plot(plt_mesh, psi_val_stash[ix], label=<span style="color: #008000;">"Iteration {n}"</span>.<span style="color: #006FE0;">format</span>(n=ix+1))
+axs[0].scatter(train_mesh, psi_truth(train_mesh), label=<span style="color: #008000;">"Training data"</span>)
+axs[0].legend(loc=<span style="color: #008000;">"upper left"</span>)
+axs[0].set_title(<span style="color: #008000;">"Approximate solutions of ODE"</span>)
+
+axs[1].plot(iter_stash, loss_stash, label=<span style="color: #008000;">"Training"</span>)
+axs[1].plot(iter_stash, vldt_stash, label=<span style="color: #008000;">"Validation"</span>)
+axs[1].set_title(<span style="color: #008000;">"Loss functions"</span>)
+axs[1].set_xlabel(<span style="color: #008000;">"Iteration"</span>)
+axs[1].legend(loc=<span style="color: #008000;">"upper right"</span>)
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">fig.show()</span>
+fig.savefig(<span style="color: #008000;">"out/lagaris-1998.png"</span>, dpi=300)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8e42416" class="outline-3">
-<h3 id="org8e42416">Initialisation</h3>
-<div class="outline-text-3" id="text-org8e42416">
+<div id="outline-container-orgcc52918" class="outline-3">
+<h3 id="orgcc52918">Initialisation</h3>
+<div class="outline-text-3" id="text-orgcc52918">
 <ul class="org-ul">
 <li>When initialising the weights of a neural network, keep in mind that we want
 the linear map of the input to take a value that has values roughly compatible
@@ -1161,10 +1507,29 @@ variables, you might choose to initialise the weights from \(N(0,1\sqrt{n})\).</
 </div>
 </div>
 </div>
+
+<div id="outline-container-org0585d15" class="outline-2">
+<h2 id="org0585d15">Data notes</h2>
+<div class="outline-text-2" id="text-org0585d15">
+</div>
+<div id="outline-container-org43af69f" class="outline-3">
+<h3 id="org43af69f">WebPlotDigitizer</h3>
+<div class="outline-text-3" id="text-org43af69f">
+<p>
+<a href="https://github.com/ankitrohatgi/WebPlotDigitizer">https://github.com/ankitrohatgi/WebPlotDigitizer</a>
+</p>
+
+<p>
+This tool can be used to extra data from a plot in a figure in paper! If you
+want to extract a figure from a PDF of a paper, see my Inkscape notes <a href="./inkscape-notes.html#org6fe51b8">here</a>.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2022-07-30 Sat 14:32</p>
+<p class="date">Created: 2024-01-29 Mon 19:38</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

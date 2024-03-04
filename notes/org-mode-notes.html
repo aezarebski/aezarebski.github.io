@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-02-04 Sun 19:25 -->
+<!-- 2024-02-29 Thu 10:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-mode notes</title>
@@ -194,7 +194,9 @@
   .org-svg { }
 </style>
 <link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
 </head>
 <body>
 <div id="content" class="content">
@@ -204,7 +206,7 @@
 </p>
 
 
-<div id="org6b7f639" class="figure">
+<div id="orgbc367f2" class="figure">
 <p><img src="../images/org-mode-logo.png" alt="org-mode-logo.png" width="250px" />
 </p>
 </div>
@@ -227,7 +229,8 @@
 <li><a href="#org99e2d0f">HTML export: attributes</a></li>
 <li><a href="#org46ae29c">Images</a></li>
 <li><a href="#org1f189da">Publishing to HTML: How this site is generated</a></li>
-<li><a href="#org53983b8">Literate programming and notebooks</a></li>
+<li><a href="#orgfca5b9c">Computational notebooks</a></li>
+<li><a href="#org82bf8f8">Literate programming with noweb</a></li>
 <li><a href="#orgb129991">Figures</a></li>
 <li><a href="#org0b8ddfa">Beamer</a></li>
 <li><a href="#org76bbeb1">Quotation</a></li>
@@ -645,9 +648,9 @@ The <code>base-directory</code> is where to look for source files and the
 </div>
 </div>
 
-<div id="outline-container-org53983b8" class="outline-3">
-<h3 id="org53983b8">Literate programming and notebooks</h3>
-<div class="outline-text-3" id="text-org53983b8">
+<div id="outline-container-orgfca5b9c" class="outline-3">
+<h3 id="orgfca5b9c">Computational notebooks</h3>
+<div class="outline-text-3" id="text-orgfca5b9c">
 </div>
 <div id="outline-container-org245bcdb" class="outline-4">
 <h4 id="org245bcdb">Notebook example 1</h4>
@@ -694,7 +697,7 @@ you have set <code>:session</code> this will evaluate it in that specified sessi
 
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #008ED1; background-color: #EAEAFF;">#+header: :width 300 :height 300</span>
-#+begin_src R :session <span style="color: #000000; font-weight: bold;">*R-demo*</span> :file 2.png :results graphics file :tangle demo.R
+\#+begin_src R :session <span style="color: #000000; font-weight: bold;">*R-demo*</span> :file 2.png :results graphics file :tangle demo.R
   library(ggplot2)
 
   g &lt;- ggplot(iris) +
@@ -704,11 +707,9 @@ you have set <code>:session</code> this will evaluate it in that specified sessi
 
   print(getwd())
   print(g)
+\#+end_src
 </pre>
 </div>
-<p>
-#+end<sub>src</sub>
-</p>
 </div>
 </div>
 
@@ -722,7 +723,7 @@ resulting output are exported.
 
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #008ED1; background-color: #EAEAFF;">#+header: :exports both</span>
-#+begin_src maxima :results output
+\#+begin_src maxima :results output
   a : (x* exp(-aa) + y + y * exp(-aa))/ (y*exp(-aa) + x);
   b : ratsimp(a);
   c : collectterms(expand(num(b)), exp(aa)) / denom(b);
@@ -731,17 +732,40 @@ resulting output are exported.
     collectterms(expand(ea * num(b)), ea) / expand(ea * denom(b))
     );
   display(a, b, c, d);
+\#+end_src
+
+<span style="color: #008ED1; background-color: #EAEAFF;">#+RESULTS:</span>
+<span style="color: #555555; background-color: #E2E1D5; text-decoration: underline;">#+begin_example</span>
+                                - aa           - aa
+                              %e     y + y + %e     x
+                          a = -----------------------
+                                     - aa
+                                   %e     y + x
+                                    aa
+                                 (%e   + 1) y + x
+                             b = ----------------
+                                          aa
+                                    y + %e   x
+                                    aa
+                                  %e   y + y + x
+                              c = --------------
+                                          aa
+                                    y + %e   x
+                                  - aa
+                                %e     (y + x) + y
+                            d = ------------------
+                                     - aa
+                                   %e     y + x
+<span style="color: #555555; background-color: #E2E1D5; text-decoration: overline;">#+end_example</span>
 </pre>
 </div>
-<p>
-#+end<sub>src</sub>
-</p>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org82bf8f8" class="outline-4">
-<h4 id="org82bf8f8">Literate programming with noweb</h4>
-<div class="outline-text-4" id="text-org82bf8f8">
+<div id="outline-container-org82bf8f8" class="outline-3">
+<h3 id="org82bf8f8">Literate programming with noweb</h3>
+<div class="outline-text-3" id="text-org82bf8f8">
 <p>
 The default behaviour when using noweb syntax is that it will be expanded when
 tangling and exporting. If you want to keep expansion on tangle but not on
@@ -809,7 +833,6 @@ Tangling this produces the following JSON
         }
 }
 </pre>
-</div>
 </div>
 </div>
 </div>
@@ -1114,7 +1137,7 @@ Which will generate a link like <a href="./haskell-notes.html#org84a7cc5">this</
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-02-04 Sun 19:25</p>
+<p class="date">Created: 2024-02-29 Thu 10:54</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
