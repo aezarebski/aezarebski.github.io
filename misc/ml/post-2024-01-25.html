@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-25 Thu 11:00 -->
+<!-- 2024-03-08 Fri 16:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 25/01/2024</title>
@@ -338,7 +338,7 @@ because we are using a permutation invariant network similar to the
 <span style="color: #BA36A5;">replicate_size</span> = 10
 
 <span style="color: #BA36A5;">train_num_replicates</span> = 10000
-<span style="color: #BA36A5;">train_num_epochs</span> = 10000
+<span style="color: #BA36A5;">train_num_steps</span> = 10000
 <span style="color: #BA36A5;">train_record_every</span> = 500
 
 <span style="color: #BA36A5;">test_num_replicates</span> = 100
@@ -489,16 +489,17 @@ a standard Adam optimizer.
 <h3 id="org6fd8840">Run the training loop</h3>
 <div class="outline-text-3" id="text-org6fd8840">
 <p>
-At each epoch we simulate a new data set so we don't need to worry
-about batching or shuffling or precomputing all the data beforehand.
-It would be nice to extend this to include a stopping criterion.
+At each step of the optimisation we simulate a new data set so we
+don't need to worry about shuffling or precomputing all the data
+beforehand. It would be nice to extend this to include a stopping
+criterion.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-python">loc_nb.train()
 <span style="color: #BA36A5;">loss_history</span> = []
 <span style="color: #BA36A5;">training_start_time</span> = time.time()
-<span style="color: #0000FF;">for</span> epoch <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(train_num_epochs):
+<span style="color: #0000FF;">for</span> step <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(train_num_steps):
     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Sample training data</span>
     <span style="color: #BA36A5;">train_y</span>, <span style="color: #BA36A5;">train_x</span> = rand_dataset(train_num_replicates, replicate_size)
     <span style="color: #BA36A5;">train_tau</span> = (
@@ -509,16 +510,16 @@ It would be nice to extend this to include a stopping criterion.
     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Forward pass</span>
     <span style="color: #BA36A5;">preds</span> = loc_nb(train_x, train_tau)
     <span style="color: #BA36A5;">loss</span> = pb_loss(preds, train_y, train_tau)
-    <span style="color: #BA36A5;">epoch_loss</span> = loss.item()
+    <span style="color: #BA36A5;">step_loss</span> = loss.item()
 
     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Backward pass</span>
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
 
-    <span style="color: #0000FF;">if</span> epoch % train_record_every == 0:
-        <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Epoch </span>{epoch}<span style="color: #008000;"> loss: </span>{epoch_loss}<span style="color: #008000;">"</span>)
-        loss_history.append((epoch, epoch_loss))
+    <span style="color: #0000FF;">if</span> step % train_record_every == 0:
+        <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Step </span>{step}<span style="color: #008000;"> loss: </span>{step_loss}<span style="color: #008000;">"</span>)
+        loss_history.append((step, step_loss))
 <span style="color: #BA36A5;">training_finish_time</span> = time.time()
 <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Training took: </span>{training_finish_time - training_start_time}<span style="color: #008000;">"</span>)
 </pre>
@@ -530,7 +531,8 @@ It would be nice to extend this to include a stopping criterion.
 <h3 id="org669ae79">Visualise training results</h3>
 <div class="outline-text-3" id="text-org669ae79">
 <p>
-We can visualise the training error across the epochs.
+We can visualise the training error across the steps of the
+optimisation.
 </p>
 
 
@@ -540,9 +542,9 @@ We can visualise the training error across the epochs.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #BA36A5;">loss_df</span> = pd.DataFrame(loss_history, columns=[<span style="color: #008000;">"epoch"</span>, <span style="color: #008000;">"loss"</span>])
+<pre class="src src-python"><span style="color: #BA36A5;">loss_df</span> = pd.DataFrame(loss_history, columns=[<span style="color: #008000;">"step"</span>, <span style="color: #008000;">"loss"</span>])
 loss_df.to_csv(loss_csv)
-<span style="color: #BA36A5;">loss_p9</span> = nn_plot.plot_loss_curve(loss_df)
+<span style="color: #BA36A5;">loss_p9</span> = nn_plot.plot_loss_curve(loss_df, x_var=<span style="color: #008000;">'step'</span>, x_lab=<span style="color: #008000;">''</span>)
 loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </pre>
 </div>
@@ -628,7 +630,7 @@ Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-25 Thu 11:00</p>
+<p class="date">Created: 2024-03-08 Fri 16:05</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
