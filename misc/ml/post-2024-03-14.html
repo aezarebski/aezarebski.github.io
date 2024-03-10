@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-03-08 Fri 16:57 -->
+<!-- 2024-03-11 Mon 09:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 14/03/2024</title>
@@ -250,13 +250,13 @@
 <p>
 In this example we will use the <i>simultaneous quantile regression</i>
 (SQR) as proposed by <a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> to compute the
-quantiles of a prediction. Equation (1) of that paper poses SQR as an
-optimisation problem,
+quantiles of a prediction. Equation (1) of their paper poses SQR as an
+optimisation problem with the following (<a href="https://en.wikipedia.org/wiki/Quantile_regression#Machine_learning_methods_for_quantile_regression">pinball</a>) loss function:
 </p>
 
 <p>
 \[
-\hat{f}\in \text{argmin}_{f} \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}_{\tau\sim\text{U}(0,1)} \ell_{\tau}(f(x_i,\tau),y_{i})
+\hat{f} = \text{argmin}_{f} \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}_{\tau\sim\text{U}(0,1)} \ell_{\tau}(f(x_i,\tau),y_{i}).
 \]
 </p>
 
@@ -286,6 +286,10 @@ Building off of the structure from the <a href="./post-2024-01-25.html">previous
 shows that switching to a beta distribution for \(\tau\) leads to a
 lower MSE for the point predictions (which isn't as exciting as it
 seems) and noticably more conservative intervals.
+</p>
+
+<p>
+The full script with all the code is <a href="./example-2024-03-14/main.py">here</a>.
 </p>
 </div>
 </div>
@@ -381,84 +385,6 @@ There are a lot of functions used here, they are provided in the
             loss_history.append((step, step_loss))
 
     <span style="color: #0000FF;">return</span> model, loss_history
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org4cc67d5" class="outline-4">
-<h4 id="org4cc67d5">Configuration</h4>
-<div class="outline-text-4" id="text-org4cc67d5">
-<div class="org-src-container">
-<pre class="src src-python">&lt;&lt;helper-functions&gt;&gt;
-
-<span style="color: #BA36A5;">loss_a_png</span> = <span style="color: #008000;">"loss-a.png"</span>
-<span style="color: #BA36A5;">loss_a_csv</span> = <span style="color: #008000;">"loss-a.csv"</span>
-<span style="color: #BA36A5;">coverage_a_png</span> = <span style="color: #008000;">"coverage-a.png"</span>
-<span style="color: #BA36A5;">points_a_png</span> = <span style="color: #008000;">"points-a.png"</span>
-<span style="color: #BA36A5;">loss_b_png</span> = <span style="color: #008000;">"loss-b.png"</span>
-<span style="color: #BA36A5;">loss_b_csv</span> = <span style="color: #008000;">"loss-b.csv"</span>
-<span style="color: #BA36A5;">coverage_b_png</span> = <span style="color: #008000;">"coverage-b.png"</span>
-<span style="color: #BA36A5;">points_b_png</span> = <span style="color: #008000;">"points-b.png"</span>
-
-<span style="color: #BA36A5;">replicate_size</span> = 10
-<span style="color: #BA36A5;">train_num_replicates</span> = 1000
-<span style="color: #BA36A5;">train_num_steps</span> = 20000
-<span style="color: #BA36A5;">test_num_replicates</span> = 10000
-
-<span style="color: #BA36A5;">test_y</span>, <span style="color: #BA36A5;">test_x</span> = rand_dataset(test_num_replicates, replicate_size)
-<span style="color: #BA36A5;">test_alpha</span> = torch.linspace(0.05, 0.95, steps=20)
-<span style="color: #BA36A5;">train_data_gen</span> = <span style="color: #0000FF;">lambda</span>: rand_dataset(train_num_replicates, replicate_size)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd98a3da" class="outline-4">
-<h4 id="orgd98a3da">Training uniform tau model</h4>
-<div class="outline-text-4" id="text-orgd98a3da">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #BA36A5;">model_title</span> = <span style="color: #008000;">"Base model"</span>
-<span style="color: #BA36A5;">loc_nb_a</span> = LocationNB(replicate_size)
-<span style="color: #BA36A5;">loc_nb_a</span>, <span style="color: #BA36A5;">loss_history_a</span> = train_model(
-    loc_nb_a,
-    uniform.Uniform(torch.tensor([0.0]), torch.tensor([1.0])),
-    train_num_steps,
-    train_data_gen,
-)
-
-record_loss_details(loss_history_a, loss_a_csv, loss_a_png, model_title)
-<span style="color: #BA36A5;">coverage_a_df</span>, <span style="color: #BA36A5;">mse_of_coverage_a_err</span> = test_coverage(
-    loc_nb_a, test_x, test_y, test_alpha, test_num_replicates
-)
-<span style="color: #BA36A5;">point_a_df</span>, <span style="color: #BA36A5;">point_mse_a</span> = test_accuracy(loc_nb_a, test_x, test_y, test_num_replicates)
-plot_coverage(coverage_a_df, mse_of_coverage_a_err, model_title, coverage_a_png)
-plot_points(point_a_df, point_mse_a, model_title, points_a_png)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org583679f" class="outline-4">
-<h4 id="org583679f">Training beta tau model</h4>
-<div class="outline-text-4" id="text-org583679f">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #BA36A5;">model_title</span> = <span style="color: #008000;">"Beta tau samples model"</span>
-<span style="color: #BA36A5;">loc_nb_b</span> = LocationNB(replicate_size)
-<span style="color: #BA36A5;">loc_nb_b</span>, <span style="color: #BA36A5;">loss_history_b</span> = train_model(
-    loc_nb_b,
-    beta.Beta(torch.tensor([0.5]), torch.tensor([0.5])),
-    train_num_steps,
-    train_data_gen,
-)
-
-record_loss_details(loss_history_b, loss_b_csv, loss_b_png, model_title)
-<span style="color: #BA36A5;">coverage_b_df</span>, <span style="color: #BA36A5;">mse_of_coverage_b_err</span> = test_coverage(
-    loc_nb_b, test_x, test_y, test_alpha, test_num_replicates
-)
-<span style="color: #BA36A5;">point_b_df</span>, <span style="color: #BA36A5;">point_mse_b</span> = test_accuracy(loc_nb_b, test_x, test_y, test_num_replicates)
-plot_coverage(coverage_b_df, mse_of_coverage_b_err, model_title, coverage_b_png)
-plot_points(point_b_df, point_mse_b, model_title, points_b_png)
 </pre>
 </div>
 </div>
@@ -636,7 +562,7 @@ the beta distribution would be a good idea in practise.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-03-08 Fri 16:57</p>
+<p class="date">Created: 2024-03-11 Mon 09:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
