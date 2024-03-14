@@ -112,4 +112,3 @@ git add misc/ml/example-2024-03-14/main.py
 
 # DERP page
 git add derp/index.html
-git add derp/styles.css
