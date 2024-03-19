@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-01-23 Tue 10:50 -->
+<!-- 2024-03-20 Wed 10:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org7717209" class="figure">
+<div id="org5891e4c" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -247,6 +247,7 @@
 <li><a href="#orgf41e1c8">Build you an Emacs</a></li>
 <li><a href="#org39020bb">Recording keyboard macros</a></li>
 <li><a href="#orgc48db6b">Buffer specific variables</a></li>
+<li><a href="#sec:colours">Colours</a></li>
 <li><a href="#org4c7e516">Jargon</a></li>
 <li><a href="#org9b9d17d">Mastering Emacs</a></li>
 <li><a href="#org4635828">Getting HELP</a></li>
@@ -324,6 +325,14 @@
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2024-03</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use the `</span><span style="color: #D0372D; font-style: italic;">:exclude</span><span style="color: #8D8D84; font-style: italic;">' pattern to be a bit more selective with the</span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">files that get copied by `</span><span style="color: #D0372D; font-style: italic;">org-publish</span><span style="color: #8D8D84; font-style: italic;">' (i.e. do not</span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">accidentally copy a whole Python virtual environment.)</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2024-02</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Tweak `</span><span style="color: #D0372D; font-style: italic;">revert-without-query</span><span style="color: #8D8D84; font-style: italic;">' to make it easier to use PNG files</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2024-01</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Add `</span><span style="color: #D0372D; font-style: italic;">yaml-mode</span><span style="color: #8D8D84; font-style: italic;">'.</span>
@@ -1066,6 +1075,19 @@ installed by default and is not no the package repositories, so if you have
 <code>:ensure t</code> it will throw a warning saying it is not installed in the expected
 way. Just removing <code>:ensure t</code> fixes it though.
 </p>
+
+<p>
+By default you will always be prompted if you want to revert a file if you
+already are visiting it and it has changed on the file system since you last
+looked. This is a bit annoying when you are working on figures. The following
+modication of <code>revert-without-query</code> ensures no confirmation is required when
+opening PNGs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-to-list 'revert-without-query <span style="color: #008000;">"\\.png$"</span>)
+</pre>
+</div>
 </div>
 
 <div id="outline-container-org7e804de" class="outline-4">
@@ -2042,6 +2064,8 @@ for <code>org-latex-preview</code> below.
 difficulty reading some org-mode related data from the cache: "Emacs reader
 failed to read data in &#x2026;". I was able to resolve this by closing emacs,
 deleting the cache files, and then it worked perfectly when I restarted emacs.</li>
+<li>You can get a list of all available colours to use in keyword faces below with
+the <code>list-colors-disply</code> command as described in the <a href="#sec:colours">section below</a>.</li>
 </ul>
 
 <div class="org-src-container">
@@ -2070,12 +2094,14 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
       '((sequence <span style="color: #008000;">"</span><span style="color: #ff0000; background-color: #ffc8c8; font-weight: bold;">TODO</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
         (sequence <span style="color: #008000;">"MEETING"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
         (sequence <span style="color: #008000;">"SEMINAR"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
+        (sequence <span style="color: #008000;">"RESEARCH"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
         (sequence <span style="color: #008000;">"DEADLINE"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)
         (sequence <span style="color: #008000;">"SOCIAL"</span> <span style="color: #008000;">"|"</span> <span style="color: #008000;">"</span><span style="color: #0000ff; background-color: #E6ECFF; font-weight: bold;">DONE</span><span style="color: #008000;">"</span>)))
 
 (<span style="color: #0000FF;">setq</span> org-todo-keyword-faces
       `((<span style="color: #008000;">"MEETING"</span> . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>))
         (<span style="color: #008000;">"SEMINAR"</span> . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff00ff;">magenta</span><span style="color: #008000;">"</span>))
+        (<span style="color: #008000;">"RESEARCH"</span> . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #006400;">dark green</span><span style="color: #008000;">"</span>))
         (<span style="color: #008000;">"DEADLINE"</span> . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #ff0000;">red</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #ffffff;">white</span><span style="color: #008000;">"</span>))
         (<span style="color: #008000;">"SOCIAL"</span> . ,(boxed-face <span style="color: #008000;">"</span><span style="color: #ffffff; background-color: #0000ff;">blue</span><span style="color: #008000;">"</span> <span style="color: #008000;">"</span><span style="color: #000000; background-color: #E6ECFF;">#E6ECFF</span><span style="color: #008000;">"</span>))))
 
@@ -2183,8 +2209,15 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
     (<span style="color: #0000FF;">when</span> (file-exists-p local-css)
       (copy-file local-css remote-css t)
       (message <span style="color: #008000;">"Copied %s to %s"</span> local-css remote-css))))
+</pre>
+</div>
+</div>
 
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The following projects are available for publishing when the</span>
+<ul class="org-ul">
+<li><a id="org7f14140"></a>Configuration for bulk publishing<br />
+<div class="outline-text-5" id="text-org7f14140">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The following projects are available for publishing when the</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">`</span><span style="color: #D0372D; font-style: italic;">org-publish</span><span style="color: #8D8D84; font-style: italic;">' command is given.</span>
 (<span style="color: #0000FF;">setq</span> org-publish-project-alist
       `((<span style="color: #008000;">"website-notes-org-files"</span>
@@ -2270,9 +2303,11 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
          <span style="color: #006FE0;">:publishing-function</span> org-html-publish-to-html)
         (<span style="color: #008000;">"website-misc-ml-static"</span>
          <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/misc/ml/"</span>
-         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"png"</span>
+         <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"webp</span><span style="color: #008000; font-weight: bold;">\\</span><span style="color: #008000; font-weight: bold;">|</span><span style="color: #008000;">png</span><span style="color: #008000; font-weight: bold;">\\</span><span style="color: #008000; font-weight: bold;">|</span><span style="color: #008000;">py"</span>
+         <span style="color: #006FE0;">:recursive</span> t
          <span style="color: #006FE0;">:publishing-directory</span> <span style="color: #008000;">"~/aezarebski.github.io/misc/ml/"</span>
-         <span style="color: #006FE0;">:publishing-function</span> org-publish-attachment)
+         <span style="color: #006FE0;">:publishing-function</span> org-publish-attachment
+         <span style="color: #006FE0;">:exclude</span> <span style="color: #008000;">"venv/"</span>)
         (<span style="color: #008000;">"website-misc-ml-diagrams-static"</span>
          <span style="color: #006FE0;">:base-directory</span> <span style="color: #008000;">"~/public-site/org/misc/ml/diagrams/"</span>
          <span style="color: #006FE0;">:base-extension</span> <span style="color: #008000;">"png"</span>
@@ -2360,6 +2395,8 @@ deleting the cache files, and then it worked perfectly when I restarted emacs.</
 </pre>
 </div>
 </div>
+</li>
+</ul>
 </div>
 </div>
 
@@ -2611,6 +2648,7 @@ compilation with <code>make -j[N]</code> to use <code>N</code> jobs during compi
 <h4 id="orgcbbfe39">Notes</h4>
 <div class="outline-text-4" id="text-orgcbbfe39">
 <ul class="org-ul">
+<li><code>emacs-29.2</code>: same procedure as the previous version.</li>
 <li><code>emacs-29.1</code> on the work laptop: <code>./configure --with-json --with-rsvg
   --with-native-compilation --with-imagemagick CFLAGS</code>'-g3 -O3'=
 <ul class="org-ul">
@@ -2671,6 +2709,17 @@ the following to the end of the file to set it to 80 for this file.
 <span style="color: #8D8D84;">% </span><span style="color: #8D8D84; font-style: italic;">End:</span>
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-sec:colours" class="outline-3">
+<h3 id="sec:colours">Colours</h3>
+<div class="outline-text-3" id="text-sec:colours">
+<p>
+The function <code>list-colors-display</code> will open a new buffer displaying all the
+defined colours and their names. This is particularly useful if you want to
+configure faces.
+</p>
 </div>
 </div>
 
@@ -2802,7 +2851,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-01-23 Tue 10:50</p>
+<p class="date">Created: 2024-03-20 Wed 10:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
