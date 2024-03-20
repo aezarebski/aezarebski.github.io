@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-03-19 Tue 14:44 -->
+<!-- 2024-03-21 Thu 09:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>git-aez-notes</title>
@@ -197,6 +197,38 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 <link rel="stylesheet" href="../microgram.css">
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -206,7 +238,7 @@
 </p>
 
 
-<div id="org839983d" class="figure">
+<div id="org2db0a1f" class="figure">
 <p><img src="../images/git-logo.png" alt="git-logo.png" width="300px" />
 </p>
 </div>
@@ -219,6 +251,7 @@
 <ul>
 <li><a href="#orgb3d31be">Help! GitHub keeps asking me for my username and password</a></li>
 <li><a href="#orgdf5ca1c">Help! I'm getting Permission denied (publickey)</a></li>
+<li><a href="#org462ac72">List how a file was last modified</a></li>
 <li><a href="#org941e4ce">List current commit hash</a></li>
 <li><a href="#org2925aad">List all tags in repository</a></li>
 <li><a href="#org10f923e">List which files differ between branches</a></li>
@@ -263,7 +296,7 @@ Make sure that you have got your remote set to the correct location, it should
 look like the following:
 </p>
 
-<pre class="example" id="org35c44e0">
+<pre class="example" id="org1b03121">
 origin git@github.com:aezarebski/foobar.git
 </pre>
 
@@ -310,6 +343,36 @@ ssh-add ~/.ssh/&lt;your private key&gt;
 ssh git@gitprovider.com
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org462ac72" class="outline-3">
+<h3 id="org462ac72">List how a file was last modified</h3>
+<div class="outline-text-3" id="text-org462ac72">
+<p>
+To see a list of the last commit relevant to each line of a file use
+the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git blame &lt;file&gt;
+</pre>
+</div>
+
+<p>
+If you want to limit this to modifications to lines \(n\) through to
+\(m\) then
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git blame -L &lt;n&gt;,&lt;m&gt; &lt;file&gt;
+</pre>
+</div>
+
+<p>
+You can also use <code>git log -L &lt;n&gt;,&lt;m&gt;:&lt;file&gt;</code> to get a log of all the
+commits that have changed those lines of the file.
+</p>
 </div>
 </div>
 
@@ -864,7 +927,7 @@ determine how many times my <a href="https://aezarebski.github.io/timtam/">timta
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-03-19 Tue 14:44</p>
+<p class="date">Created: 2024-03-21 Thu 09:40</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
