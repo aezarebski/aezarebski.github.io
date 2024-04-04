@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-03-20 Wed 12:05 -->
+<!-- 2024-03-24 Sun 14:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org8c7659c" class="figure">
+<div id="org8745522" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -228,7 +228,7 @@
 <li><a href="#org12c8707">Debugging</a></li>
 <li><a href="#org2969679"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#org148639e">High performance computing</a></li>
-<li><a href="#org63f2c3a">IO</a></li>
+<li><a href="#org30631e7">IO</a></li>
 </ul>
 </li>
 <li><a href="#orgfee8060">Virtual environments</a>
@@ -566,9 +566,9 @@ for this.
 <h3 id="org148639e">High performance computing</h3>
 <div class="outline-text-3" id="text-org148639e">
 </div>
-<div id="outline-container-org0088582" class="outline-4">
-<h4 id="org0088582">Using python to run a queue of processes</h4>
-<div class="outline-text-4" id="text-org0088582">
+<div id="outline-container-org97a137e" class="outline-4">
+<h4 id="org97a137e">Example: Using python to run a queue of processes</h4>
+<div class="outline-text-4" id="text-org97a137e">
 <div class="org-src-container">
 <pre class="src src-py">from concurrent.futures import ThreadPoolExecutor
 import subprocess
@@ -600,11 +600,54 @@ run_commands_in_parallel(filenames, command)
 </div>
 </div>
 </div>
+
+<div id="outline-container-org115733c" class="outline-4">
+<h4 id="org115733c">Example: Timing statement execution</h4>
+<div class="outline-text-4" id="text-org115733c">
+<p>
+Figure <a href="#org3ee1ac2">2</a> is produced by the following snippet which
+demonstrates how to use the <code>timeit</code> module (which is part of the
+standard library).
+</p>
+
+
+<div id="org3ee1ac2" class="figure">
+<p><img src="./../images/timeit-example.png" alt="timeit-example.png" width="600px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The computational cost of adding up the numbers in a list grows linearly with the size of the list.</p>
 </div>
 
-<div id="outline-container-org63f2c3a" class="outline-3">
-<h3 id="org63f2c3a">IO</h3>
-<div class="outline-text-3" id="text-org63f2c3a">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> timeit
+<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">demo</span>(n):
+    <span style="color: #0000FF;">return</span> <span style="color: #006FE0;">sum</span>(<span style="color: #006FE0;">range</span>(n))
+
+<span style="color: #BA36A5;">vals</span> = [
+    {<span style="color: #008000;">"n"</span>: 2*k,
+     <span style="color: #008000;">"time"</span>: timeit.timeit(<span style="color: #0000FF;">lambda</span>: demo(10*k), number=100)}
+    <span style="color: #0000FF;">for</span> k <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(1, 10000, 1000)]
+
+<span style="color: #BA36A5;">df</span> = pd.DataFrame(vals)
+
+<span style="color: #BA36A5;">p</span> = (p9.ggplot(df, p9.aes(x=<span style="color: #008000;">"n"</span>, y=<span style="color: #008000;">"time"</span>)) +
+     p9.geom_point(size = 4) +
+     p9.geom_smooth(method=<span style="color: #008000;">"lm"</span>) +
+     p9.labs(x = <span style="color: #008000;">"Size"</span>, y = <span style="color: #008000;">"Time (s)"</span>) +
+     p9.theme_bw())
+
+p.save(<span style="color: #008000;">"foo.png"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org30631e7" class="outline-3">
+<h3 id="org30631e7">IO</h3>
+<div class="outline-text-3" id="text-org30631e7">
 </div>
 <div id="outline-container-org9be0b92" class="outline-4">
 <h4 id="org9be0b92"><span class="todo TODO">TODO</span> Pickle</h4>
@@ -1188,9 +1231,9 @@ Melting is particularly useful in plotting.
 </div>
 </div>
 
-<div id="outline-container-org30631e7" class="outline-4">
-<h4 id="org30631e7">IO</h4>
-<div class="outline-text-4" id="text-org30631e7">
+<div id="outline-container-orgdd8e9e1" class="outline-4">
+<h4 id="orgdd8e9e1">IO</h4>
+<div class="outline-text-4" id="text-orgdd8e9e1">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1428,7 +1471,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-03-20 Wed 12:05</p>
+<p class="date">Created: 2024-03-24 Sun 14:19</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
