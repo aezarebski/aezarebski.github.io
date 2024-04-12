@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-03-28 Thu 10:15 -->
+<!-- 2024-04-12 Fri 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>phylogenetics</title>
@@ -250,6 +250,7 @@
 <li><a href="#orgc0dc4eb">Example: Plotting a tree</a></li>
 <li><a href="#orgd3fbbd0">Example: Counting the number of leaves</a></li>
 <li><a href="#org0d2b318">Example: Normalising a tree to unit branch lengths</a></li>
+<li><a href="#orgca43778">Example: Quickly reading a tree from disk</a></li>
 </ul>
 </li>
 <li><a href="#orgaf70897">Beast2</a></li>
@@ -330,7 +331,7 @@ The important part of this is
 <h3 id="org6f5d5cc">biopython</h3>
 <div class="outline-text-3" id="text-org6f5d5cc">
 
-<div id="org6749ab3" class="figure">
+<div id="org10a72b4" class="figure">
 <p><img src="../images/biopython-logo.png" alt="biopython-logo.png" width="300px" />
 </p>
 </div>
@@ -481,10 +482,85 @@ Phylo.draw(tree)
 The output of this script is
 </p>
 
-<pre class="example" id="org3daefce">
+<pre class="example" id="org6ee35a5">
 The mean branch length was 0.350
 The old tree height is 1.1
 The new tree height is 3.143
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgca43778" class="outline-4">
+<h4 id="orgca43778">Example: Quickly reading a tree from disk</h4>
+<div class="outline-text-4" id="text-orgca43778">
+<p>
+<b>TLDR:</b> <code>pickle</code> is faster than Newick.
+</p>
+
+
+<p>
+The following code writes a big tree to one of two types of files: a
+plain text Newick file or a pickle. It then reads those trees back
+multiple times to get an estimate of how long it takes. Across a range
+of tests we see that the pickled version is about twice as fast, but
+this seems to diminish as we get to larger trees.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">from</span> io <span style="color: #0000FF;">import</span> StringIO
+<span style="color: #0000FF;">from</span> Bio <span style="color: #0000FF;">import</span> Phylo
+<span style="color: #0000FF;">import</span> pickle
+<span style="color: #0000FF;">import</span> timeit
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">_tree_string</span>(n):
+    <span style="color: #0000FF;">if</span> n == 0:
+        <span style="color: #0000FF;">return</span> <span style="color: #008000;">"(A:0.1, A:0.1):0.1"</span>
+    <span style="color: #0000FF;">else</span>:
+        <span style="color: #BA36A5;">tmp</span> = _tree_string(n-1)
+        <span style="color: #0000FF;">return</span> f<span style="color: #008000;">"(</span>{tmp}<span style="color: #008000;">, </span>{tmp}<span style="color: #008000;">):0.1"</span>
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">tree_string</span>(n):
+    <span style="color: #0000FF;">return</span> _tree_string(n) + <span style="color: #008000;">";"</span>
+
+<span style="color: #BA36A5;">newick_tree</span> = tree_string(9)
+
+<span style="color: #BA36A5;">filename_newick</span> = <span style="color: #008000;">"foobar.newick"</span>
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(filename_newick, <span style="color: #008000;">"w+"</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+    <span style="color: #006FE0;">file</span>.write(newick_tree)
+
+<span style="color: #BA36A5;">filename_pickle</span> = <span style="color: #008000;">"foobar.pickle"</span>
+<span style="color: #BA36A5;">newick_tree_obj</span> = Phylo.read(StringIO(newick_tree), <span style="color: #008000;">"newick"</span>)
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(filename_pickle, <span style="color: #008000;">"wb+"</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+    pickle.dump(newick_tree_obj, <span style="color: #006FE0;">file</span>)
+
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">test_a</span>():
+    <span style="color: #BA36A5;">tree</span> = Phylo.read(filename_newick, <span style="color: #008000;">"newick"</span>)
+    <span style="color: #0000FF;">return</span> <span style="color: #006FE0;">len</span>(tree.get_terminals())
+
+<span style="color: #0000FF;">def</span> <span style="color: #006699;">test_b</span>():
+    <span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(filename_pickle, <span style="color: #008000;">"rb"</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+        <span style="color: #BA36A5;">tree</span> = pickle.load(<span style="color: #006FE0;">file</span>)
+        <span style="color: #0000FF;">return</span> <span style="color: #006FE0;">len</span>(tree.get_terminals())
+
+<span style="color: #0000FF;">assert</span> test_a() == test_b()
+
+<span style="color: #BA36A5;">num_reps</span> = 250
+<span style="color: #BA36A5;">time_a</span> = timeit.timeit(<span style="color: #0000FF;">lambda</span>: test_a(), number=num_reps)
+<span style="color: #BA36A5;">time_b</span> = timeit.timeit(<span style="color: #0000FF;">lambda</span>: test_b(), number=num_reps)
+<span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"The ratio of time needed is </span>{(time_a/time_b):.2f}<span style="color: #008000;"> for Bio/pickle with </span>{test_a()}<span style="color: #008000;"> nodes with </span>{num_reps}<span style="color: #008000;"> replicates."</span>)
+</pre>
+</div>
+
+<p>
+Gives us the following examples for different tree sizes.
+</p>
+
+<pre class="example" id="orge66f70d">
+The ratio of time needed is 1.98 for Bio/pickle with 256 nodes with 250 replicates.
+The ratio of time needed is 2.00 for Bio/pickle with 512 nodes with 250 replicates.
+The ratio of time needed is 1.80 for Bio/pickle with 1024 nodes with 250 replicates.
+The ratio of time needed is 1.69 for Bio/pickle with 2048 nodes with 250 replicates.
 </pre>
 </div>
 </div>
@@ -842,7 +918,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-03-28 Thu 10:15</p>
+<p class="date">Created: 2024-04-12 Fri 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-04-05 Fri 10:32 -->
+<!-- 2024-04-12 Fri 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org990d046" class="figure">
+<div id="org72211e1" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -2405,128 +2405,129 @@ the <code>list-colors-disply</code> command as described in the <a href="#sec:co
 <h3 id="org857239b">STUFF 8</h3>
 <div class="outline-text-3" id="text-org857239b">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Visitors</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">========</span>
+<pre class="src src-emacs-lisp">  <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Visitors</span>
+  <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">========</span>
 
-(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">NVNF</span> (fname pname file key)
-  <span style="color: #036A07;">"Macro to define a function for visiting a notes file and set an Evil leader key binding.</span>
+  (<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">NVNF</span> (fname pname file key)
+    <span style="color: #036A07;">"Macro to define a function for visiting a notes file and set an Evil leader key binding.</span>
 
-<span style="color: #036A07;">  This macro takes in four arguments:</span>
-<span style="color: #036A07;">  - FNAME: A string that will be used to construct the function name.</span>
-<span style="color: #036A07;">  - PNAME: A string that will be used in the message displayed to the user.</span>
-<span style="color: #036A07;">  - FILE: A string that represents the name of the notes file.</span>
-<span style="color: #036A07;">  - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
+<span style="color: #036A07;">    This macro takes in four arguments:</span>
+<span style="color: #036A07;">    - FNAME: A string that will be used to construct the function name.</span>
+<span style="color: #036A07;">    - PNAME: A string that will be used in the message displayed to the user.</span>
+<span style="color: #036A07;">    - FILE: A string that represents the name of the notes file.</span>
+<span style="color: #036A07;">    - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
 
-<span style="color: #036A07;">  The function created by this macro opens the notes file specified by FILE in</span>
-<span style="color: #036A07;">  the directory specified by `</span><span style="color: #D0372D;">nice-notes-directory</span><span style="color: #036A07;">'. The keybinding is set using</span>
-<span style="color: #036A07;">  the Evil leader, and is constructed using the specified KEY string.</span>
+<span style="color: #036A07;">    The function created by this macro opens the notes file specified by FILE in</span>
+<span style="color: #036A07;">    the directory specified by `</span><span style="color: #D0372D;">nice-notes-directory</span><span style="color: #036A07;">'. The keybinding is set using</span>
+<span style="color: #036A07;">    the Evil leader, and is constructed using the specified KEY string.</span>
 
-<span style="color: #036A07;">  Example usage:</span>
-<span style="color: #036A07;">  (NVNF \"my-notes\" \"My Notes\" \"my-notes.org\" \"n\")"</span>
+<span style="color: #036A07;">    Example usage:</span>
+<span style="color: #036A07;">    (NVNF \"my-notes\" \"My Notes\" \"my-notes.org\" \"n\")"</span>
 
-  `(<span style="color: #0000FF;">progn</span>
-     (<span style="color: #0000FF;">defun</span> ,(intern (format <span style="color: #008000;">"nice-visit-%s"</span> fname)) ()
-       <span style="color: #036A07;">"Visit a notes file."</span>
-       (<span style="color: #0000FF;">interactive</span>)
-       (<span style="color: #0000FF;">progn</span>
-         (message ,(format <span style="color: #008000;">"Visiting %s"</span> pname))
-         (find-file ,(concat nice-notes-directory <span style="color: #008000;">"/"</span> file))))
-     (evil-leader/set-key ,(concat <span style="color: #008000;">"v n "</span> key) (intern ,(format <span style="color: #008000;">"nice-visit-%s"</span> fname)))))
+    `(<span style="color: #0000FF;">progn</span>
+       (<span style="color: #0000FF;">defun</span> ,(intern (format <span style="color: #008000;">"nice-visit-%s"</span> fname)) ()
+         <span style="color: #036A07;">"Visit a notes file."</span>
+         (<span style="color: #0000FF;">interactive</span>)
+         (<span style="color: #0000FF;">progn</span>
+           (message ,(format <span style="color: #008000;">"Visiting %s"</span> pname))
+           (find-file ,(concat nice-notes-directory <span style="color: #008000;">"/"</span> file))))
+       (evil-leader/set-key ,(concat <span style="color: #008000;">"v n "</span> key) (intern ,(format <span style="color: #008000;">"nice-visit-%s"</span> fname)))))
 
-(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">NVF</span> (fname pname file key)
-  `(<span style="color: #0000FF;">progn</span>
-     (<span style="color: #0000FF;">defun</span> ,(intern (format <span style="color: #008000;">"nice-visit-%s"</span> fname)) ()
-       <span style="color: #036A07;">"Visit a file."</span>
-       (<span style="color: #0000FF;">interactive</span>)
-       (<span style="color: #0000FF;">progn</span>
-         (message ,(format <span style="color: #008000;">"Visiting %s"</span> pname))
-         (find-file ,file)))
-     (evil-leader/set-key ,(concat <span style="color: #008000;">"v f"</span> key) (intern ,(format <span style="color: #008000;">"nice-visit-%s"</span> fname)))))
+  (<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">NVF</span> (fname pname file key)
+    `(<span style="color: #0000FF;">progn</span>
+       (<span style="color: #0000FF;">defun</span> ,(intern (format <span style="color: #008000;">"nice-visit-%s"</span> fname)) ()
+         <span style="color: #036A07;">"Visit a file."</span>
+         (<span style="color: #0000FF;">interactive</span>)
+         (<span style="color: #0000FF;">progn</span>
+           (message ,(format <span style="color: #008000;">"Visiting %s"</span> pname))
+           (find-file ,file)))
+       (evil-leader/set-key ,(concat <span style="color: #008000;">"v f"</span> key) (intern ,(format <span style="color: #008000;">"nice-visit-%s"</span> fname)))))
 
-(<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">NVD</span> (dname pname path key)
-  <span style="color: #036A07;">"Macro to define a function for visiting a directory and set an Evil leader key binding.</span>
+  (<span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">NVD</span> (dname pname path key)
+    <span style="color: #036A07;">"Macro to define a function for visiting a directory and set an Evil leader key binding.</span>
 
-<span style="color: #036A07;">  This macro takes in four arguments:</span>
-<span style="color: #036A07;">  - DNAME: A string that will be used to construct the function name.</span>
-<span style="color: #036A07;">  - PNAME: A string that will be used in the message displayed to the user.</span>
-<span style="color: #036A07;">  - PATH: A string that represents the path of the directory.</span>
-<span style="color: #036A07;">  - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
+<span style="color: #036A07;">    This macro takes in four arguments:</span>
+<span style="color: #036A07;">    - DNAME: A string that will be used to construct the function name.</span>
+<span style="color: #036A07;">    - PNAME: A string that will be used in the message displayed to the user.</span>
+<span style="color: #036A07;">    - PATH: A string that represents the path of the directory.</span>
+<span style="color: #036A07;">    - KEY: A string that represents the keybinding for the function using the Evil leader.</span>
 
-<span style="color: #036A07;">  The function created by this macro jumps to the directory specified by PATH using `</span><span style="color: #D0372D;">dired-jump</span><span style="color: #036A07;">'.</span>
-<span style="color: #036A07;">  The keybinding is set using the Evil leader, and is constructed using the specified KEY string.</span>
+<span style="color: #036A07;">    The function created by this macro jumps to the directory specified by PATH using `</span><span style="color: #D0372D;">dired-jump</span><span style="color: #036A07;">'.</span>
+<span style="color: #036A07;">    The keybinding is set using the Evil leader, and is constructed using the specified KEY string.</span>
 
-<span style="color: #036A07;">  Example usage:</span>
-<span style="color: #036A07;">  (NVD \"my-dir\" \"My Directory\" \"/path/to/directory\" \"d\")"</span>
+<span style="color: #036A07;">    Example usage:</span>
+<span style="color: #036A07;">    (NVD \"my-dir\" \"My Directory\" \"/path/to/directory\" \"d\")"</span>
 
-  `(<span style="color: #0000FF;">progn</span>
-     (<span style="color: #0000FF;">defun</span> ,(intern (format <span style="color: #008000;">"nice-visit-%s"</span> dname)) ()
-       <span style="color: #036A07;">"Visit a directory."</span>
-       (<span style="color: #0000FF;">interactive</span>)
-       (<span style="color: #0000FF;">progn</span>
-         (message ,(format <span style="color: #008000;">"Visiting %s"</span> pname))
-         (dired-jump nil ,path)
-         (revert-buffer)))
-     (evil-leader/set-key ,(concat <span style="color: #008000;">"v d "</span> key) (intern ,(format <span style="color: #008000;">"nice-visit-%s"</span> dname)))))
+    `(<span style="color: #0000FF;">progn</span>
+       (<span style="color: #0000FF;">defun</span> ,(intern (format <span style="color: #008000;">"nice-visit-%s"</span> dname)) ()
+         <span style="color: #036A07;">"Visit a directory."</span>
+         (<span style="color: #0000FF;">interactive</span>)
+         (<span style="color: #0000FF;">progn</span>
+           (message ,(format <span style="color: #008000;">"Visiting %s"</span> pname))
+           (dired-jump nil ,path)
+           (revert-buffer)))
+       (evil-leader/set-key ,(concat <span style="color: #008000;">"v d "</span> key) (intern ,(format <span style="color: #008000;">"nice-visit-%s"</span> dname)))))
 
-(<span style="color: #0000FF;">NVF</span> nicemacs2-source <span style="color: #008000;">"Nicemacs v2 source"</span> <span style="color: #008000;">"~/Documents/nicemacs/nicemacs-v2.el"</span> <span style="color: #008000;">"e 3"</span>)
-(<span style="color: #0000FF;">NVF</span> nicemacs2-init <span style="color: #008000;">"Nicemacs v2 init.el"</span> <span style="color: #008000;">"~/.emacs.d/init.el"</span> <span style="color: #008000;">"e 2"</span>)
-(<span style="color: #0000FF;">NVF</span> nicemacs-init <span style="color: #008000;">"Nicemacs v1 nicemacs.el"</span> <span style="color: #008000;">"~/Documents/nicemacs/nicemacs.el"</span> <span style="color: #008000;">"e 1"</span>)
-(<span style="color: #0000FF;">NVF</span> nicemacs-org <span style="color: #008000;">"Nicemacs v1 nicemacs.org"</span> <span style="color: #008000;">"~/Documents/nicemacs/nicemacs.org"</span> <span style="color: #008000;">"e 1"</span>)
-(<span style="color: #0000FF;">NVF</span> review-2 <span style="color: #008000;">"Review 2"</span> <span style="color: #008000;">"~/Documents/bibliography/review2/review.org"</span> <span style="color: #008000;">"r 2"</span>)
-(<span style="color: #0000FF;">NVF</span> review-reading-list <span style="color: #008000;">"Reading list"</span> <span style="color: #008000;">"~/Documents/bibliography/review2/reading-list.org"</span> <span style="color: #008000;">"r l"</span>)
-(<span style="color: #0000FF;">NVF</span> review-references <span style="color: #008000;">"Bibtex references"</span> <span style="color: #008000;">"~/Documents/bibliography/references.bib"</span> <span style="color: #008000;">"r r"</span>)
+  (<span style="color: #0000FF;">NVF</span> nicemacs2-source <span style="color: #008000;">"Nicemacs v2 source"</span> <span style="color: #008000;">"~/Documents/nicemacs/nicemacs-v2.el"</span> <span style="color: #008000;">"e 3"</span>)
+  (<span style="color: #0000FF;">NVF</span> nicemacs2-init <span style="color: #008000;">"Nicemacs v2 init.el"</span> <span style="color: #008000;">"~/.emacs.d/init.el"</span> <span style="color: #008000;">"e 2"</span>)
+  (<span style="color: #0000FF;">NVF</span> nicemacs-init <span style="color: #008000;">"Nicemacs v1 nicemacs.el"</span> <span style="color: #008000;">"~/Documents/nicemacs/nicemacs.el"</span> <span style="color: #008000;">"e 1"</span>)
+  (<span style="color: #0000FF;">NVF</span> nicemacs-org <span style="color: #008000;">"Nicemacs v1 nicemacs.org"</span> <span style="color: #008000;">"~/Documents/nicemacs/nicemacs.org"</span> <span style="color: #008000;">"e 1"</span>)
+  (<span style="color: #0000FF;">NVF</span> review-2 <span style="color: #008000;">"Review 2"</span> <span style="color: #008000;">"~/Documents/bibliography/review2/review.org"</span> <span style="color: #008000;">"r 2"</span>)
+  (<span style="color: #0000FF;">NVF</span> review-reading-list <span style="color: #008000;">"Reading list"</span> <span style="color: #008000;">"~/Documents/bibliography/review2/reading-list.org"</span> <span style="color: #008000;">"r l"</span>)
+  (<span style="color: #0000FF;">NVF</span> review-references <span style="color: #008000;">"Bibtex references"</span> <span style="color: #008000;">"~/Documents/bibliography/references.bib"</span> <span style="color: #008000;">"r r"</span>)
 
-(<span style="color: #0000FF;">NVNF</span> academia-notes <span style="color: #008000;">"Academia notes"</span> <span style="color: #008000;">"academic-journal-notes.org"</span> <span style="color: #008000;">"a"</span>)
-(<span style="color: #0000FF;">NVNF</span> beast-notes <span style="color: #008000;">"BEAST2 notes"</span> <span style="color: #008000;">"beast2-notes.org"</span> <span style="color: #008000;">"b"</span>)
-(<span style="color: #0000FF;">NVNF</span> git-notes <span style="color: #008000;">"Git notes"</span> <span style="color: #008000;">"git-notes.org"</span> <span style="color: #008000;">"g"</span>)
-(<span style="color: #0000FF;">NVNF</span> haskell-notes <span style="color: #008000;">"Haskell notes"</span> <span style="color: #008000;">"haskell-notes.org"</span> <span style="color: #008000;">"h"</span>)
-(<span style="color: #0000FF;">NVNF</span> java-notes <span style="color: #008000;">"Java notes"</span> <span style="color: #008000;">"java-notes.org"</span> <span style="color: #008000;">"j"</span>)
-(<span style="color: #0000FF;">NVNF</span> latex-notes <span style="color: #008000;">"LaTeX notes"</span> <span style="color: #008000;">"latex-notes.org"</span> <span style="color: #008000;">"l"</span>)
-(<span style="color: #0000FF;">NVNF</span> maxima-notes <span style="color: #008000;">"Maxima notes"</span> <span style="color: #008000;">"maxima-notes.org"</span> <span style="color: #008000;">"m"</span>)
-(<span style="color: #0000FF;">NVNF</span> org-mode-notes <span style="color: #008000;">"org-mode notes"</span> <span style="color: #008000;">"org-mode-notes.org"</span> <span style="color: #008000;">"o"</span>)
-(<span style="color: #0000FF;">NVNF</span> python-notes <span style="color: #008000;">"Python notes"</span> <span style="color: #008000;">"python-notes.org"</span> <span style="color: #008000;">"p"</span>)
-(<span style="color: #0000FF;">NVNF</span> r-notes <span style="color: #008000;">"R notes"</span> <span style="color: #008000;">"r-notes.org"</span> <span style="color: #008000;">"r"</span>)
-(<span style="color: #0000FF;">NVNF</span> ubuntu-notes <span style="color: #008000;">"Ubuntu/Linux notes"</span> <span style="color: #008000;">"linux-notes.org"</span> <span style="color: #008000;">"u"</span>)
+  (<span style="color: #0000FF;">NVNF</span> academia-notes <span style="color: #008000;">"Academia notes"</span> <span style="color: #008000;">"academic-journal-notes.org"</span> <span style="color: #008000;">"a"</span>)
+  (<span style="color: #0000FF;">NVNF</span> beast-notes <span style="color: #008000;">"BEAST2 notes"</span> <span style="color: #008000;">"beast2-notes.org"</span> <span style="color: #008000;">"b"</span>)
+  (<span style="color: #0000FF;">NVNF</span> git-notes <span style="color: #008000;">"Git notes"</span> <span style="color: #008000;">"git-notes.org"</span> <span style="color: #008000;">"g"</span>)
+  (<span style="color: #0000FF;">NVNF</span> haskell-notes <span style="color: #008000;">"Haskell notes"</span> <span style="color: #008000;">"haskell-notes.org"</span> <span style="color: #008000;">"h"</span>)
+  (<span style="color: #0000FF;">NVNF</span> java-notes <span style="color: #008000;">"Java notes"</span> <span style="color: #008000;">"java-notes.org"</span> <span style="color: #008000;">"j"</span>)
+  (<span style="color: #0000FF;">NVNF</span> latex-notes <span style="color: #008000;">"LaTeX notes"</span> <span style="color: #008000;">"latex-notes.org"</span> <span style="color: #008000;">"l"</span>)
+  (<span style="color: #0000FF;">NVNF</span> maxima-notes <span style="color: #008000;">"Maxima notes"</span> <span style="color: #008000;">"maxima-notes.org"</span> <span style="color: #008000;">"m"</span>)
+  (<span style="color: #0000FF;">NVNF</span> org-mode-notes <span style="color: #008000;">"org-mode notes"</span> <span style="color: #008000;">"org-mode-notes.org"</span> <span style="color: #008000;">"o"</span>)
+  (<span style="color: #0000FF;">NVNF</span> python-notes <span style="color: #008000;">"Python notes"</span> <span style="color: #008000;">"python-notes.org"</span> <span style="color: #008000;">"p"</span>)
+  (<span style="color: #0000FF;">NVNF</span> r-notes <span style="color: #008000;">"R notes"</span> <span style="color: #008000;">"r-notes.org"</span> <span style="color: #008000;">"r"</span>)
+  (<span style="color: #0000FF;">NVNF</span> ubuntu-notes <span style="color: #008000;">"Ubuntu/Linux notes"</span> <span style="color: #008000;">"linux-notes.org"</span> <span style="color: #008000;">"u"</span>)
 
-(<span style="color: #0000FF;">NVD</span> emacs <span style="color: #008000;">"Emacs"</span> <span style="color: #008000;">"~/.emacs.d/fake.org"</span> <span style="color: #008000;">"e"</span>)
-(<span style="color: #0000FF;">NVD</span> library <span style="color: #008000;">"Library"</span> <span style="color: #008000;">"~/Documents/library/fake.org"</span> <span style="color: #008000;">"l"</span>)
-(<span style="color: #0000FF;">NVD</span> manuscripts <span style="color: #008000;">"Manuscripts"</span> <span style="color: #008000;">"~/Documents/manuscripts/fake.org"</span> <span style="color: #008000;">"m"</span>)
-(<span style="color: #0000FF;">NVD</span> music <span style="color: #008000;">"Music"</span> <span style="color: #008000;">"~/Music/fake.org"</span> <span style="color: #008000;">"M"</span>)
-(<span style="color: #0000FF;">NVD</span> documents <span style="color: #008000;">"Documents"</span> <span style="color: #008000;">"~/Documents/fake.org"</span> <span style="color: #008000;">"d"</span>)
-(<span style="color: #0000FF;">NVD</span> downloads <span style="color: #008000;">"Downloads"</span> <span style="color: #008000;">"~/Downloads/fake.org"</span> <span style="color: #008000;">"D"</span>)
-(<span style="color: #0000FF;">NVD</span> professional <span style="color: #008000;">"Professional"</span> <span style="color: #008000;">"~/Documents/professional/README.org"</span> <span style="color: #008000;">"p"</span>)
-(<span style="color: #0000FF;">NVD</span> projects <span style="color: #008000;">"Projects"</span> <span style="color: #008000;">"~/projects/fake.org"</span> <span style="color: #008000;">"P"</span>)
-(<span style="color: #0000FF;">NVD</span> teaching <span style="color: #008000;">"Teaching"</span> <span style="color: #008000;">"~/Documents/teaching/fake.org"</span> <span style="color: #008000;">"t"</span>)
-(<span style="color: #0000FF;">NVD</span> website-org <span style="color: #008000;">"Website (org files)"</span> <span style="color: #008000;">"~/public-site/org/fake.org"</span> <span style="color: #008000;">"w"</span>)
-(<span style="color: #0000FF;">NVD</span> website-html <span style="color: #008000;">"Website (HTML files)"</span> <span style="color: #008000;">"~/aezarebski.github.io/fake.org"</span> <span style="color: #008000;">"W"</span>)
-(<span style="color: #0000FF;">NVD</span> notes <span style="color: #008000;">"My notes"</span> <span style="color: #008000;">"~/public-site/org/notes/fake.org"</span> <span style="color: #008000;">"n"</span>)
-(<span style="color: #0000FF;">NVD</span> yasnippet <span style="color: #008000;">"Yasnippet"</span> <span style="color: #008000;">"~/.emacs.d/snippets/fake.org"</span> <span style="color: #008000;">"y"</span>)
+  (<span style="color: #0000FF;">NVD</span> emacs <span style="color: #008000;">"Emacs"</span> <span style="color: #008000;">"~/.emacs.d/fake.org"</span> <span style="color: #008000;">"e"</span>)
+(<span style="color: #0000FF;">NVD</span> journal-dir <span style="color: #008000;">"Journal Directory"</span> <span style="color: #008000;">"~/Documents/journal/fake.org"</span> <span style="color: #008000;">"j"</span>)
+  (<span style="color: #0000FF;">NVD</span> library <span style="color: #008000;">"Library"</span> <span style="color: #008000;">"~/Documents/library/fake.org"</span> <span style="color: #008000;">"l"</span>)
+  (<span style="color: #0000FF;">NVD</span> manuscripts <span style="color: #008000;">"Manuscripts"</span> <span style="color: #008000;">"~/Documents/manuscripts/fake.org"</span> <span style="color: #008000;">"m"</span>)
+  (<span style="color: #0000FF;">NVD</span> music <span style="color: #008000;">"Music"</span> <span style="color: #008000;">"~/Music/fake.org"</span> <span style="color: #008000;">"M"</span>)
+  (<span style="color: #0000FF;">NVD</span> documents <span style="color: #008000;">"Documents"</span> <span style="color: #008000;">"~/Documents/fake.org"</span> <span style="color: #008000;">"d"</span>)
+  (<span style="color: #0000FF;">NVD</span> downloads <span style="color: #008000;">"Downloads"</span> <span style="color: #008000;">"~/Downloads/fake.org"</span> <span style="color: #008000;">"D"</span>)
+  (<span style="color: #0000FF;">NVD</span> professional <span style="color: #008000;">"Professional"</span> <span style="color: #008000;">"~/Documents/professional/README.org"</span> <span style="color: #008000;">"p"</span>)
+  (<span style="color: #0000FF;">NVD</span> projects <span style="color: #008000;">"Projects"</span> <span style="color: #008000;">"~/projects/fake.org"</span> <span style="color: #008000;">"P"</span>)
+  (<span style="color: #0000FF;">NVD</span> teaching <span style="color: #008000;">"Teaching"</span> <span style="color: #008000;">"~/Documents/teaching/fake.org"</span> <span style="color: #008000;">"t"</span>)
+  (<span style="color: #0000FF;">NVD</span> website-org <span style="color: #008000;">"Website (org files)"</span> <span style="color: #008000;">"~/public-site/org/fake.org"</span> <span style="color: #008000;">"w"</span>)
+  (<span style="color: #0000FF;">NVD</span> website-html <span style="color: #008000;">"Website (HTML files)"</span> <span style="color: #008000;">"~/aezarebski.github.io/fake.org"</span> <span style="color: #008000;">"W"</span>)
+  (<span style="color: #0000FF;">NVD</span> notes <span style="color: #008000;">"My notes"</span> <span style="color: #008000;">"~/public-site/org/notes/fake.org"</span> <span style="color: #008000;">"n"</span>)
+  (<span style="color: #0000FF;">NVD</span> yasnippet <span style="color: #008000;">"Yasnippet"</span> <span style="color: #008000;">"~/.emacs.d/snippets/fake.org"</span> <span style="color: #008000;">"y"</span>)
 
-(<span style="color: #0000FF;">setq</span> org-agenda-files
-      (list (concat nice-journal-directory <span style="color: #008000;">"bike.org"</span>)))
+  (<span style="color: #0000FF;">setq</span> org-agenda-files
+        (list (concat nice-journal-directory <span style="color: #008000;">"bike.org"</span>)))
 
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-visit-journal</span> ()
-  <span style="color: #036A07;">"Opens the current journal file. If it does not yet exist, it</span>
-<span style="color: #036A07;">  makes a copy of the one from one week ago. This will also</span>
-<span style="color: #036A07;">  ensure that the current journal file is among the org agenda</span>
-<span style="color: #036A07;">  files and that a previous one is not."</span>
-  (<span style="color: #0000FF;">interactive</span>)
-  (<span style="color: #0000FF;">let*</span> ((filepath-template (concat nice-journal-directory <span style="color: #008000;">"journal-%s.org"</span>))
-         (curr-file (format filepath-template (format-time-string <span style="color: #008000;">"%Y-%m"</span>)))
-         (prev-file (format filepath-template (format-time-string <span style="color: #008000;">"%Y-%m"</span> (time-subtract (current-time) (* 7 24 60 60))))))
-    (<span style="color: #0000FF;">unless</span> (file-exists-p curr-file)
-      (message <span style="color: #008000;">"Creating new journal file"</span>)
-      (copy-file prev-file curr-file))
-    (message <span style="color: #008000;">"Opening journal file"</span>)
-    (<span style="color: #0000FF;">when</span> (member prev-file org-agenda-files)
-      (<span style="color: #0000FF;">setq</span> org-agenda-files (remove prev-file org-agenda-files)))
-    (<span style="color: #0000FF;">unless</span> (member curr-file org-agenda-files)
-      (add-to-list 'org-agenda-files curr-file))
-    (find-file curr-file)
-    (goto-char (point-min))
-    (recenter-top-bottom)))
+  (<span style="color: #0000FF;">defun</span> <span style="color: #006699;">nice-visit-journal</span> ()
+    <span style="color: #036A07;">"Opens the current journal file. If it does not yet exist, it</span>
+<span style="color: #036A07;">    makes a copy of the one from one week ago. This will also</span>
+<span style="color: #036A07;">    ensure that the current journal file is among the org agenda</span>
+<span style="color: #036A07;">    files and that a previous one is not."</span>
+    (<span style="color: #0000FF;">interactive</span>)
+    (<span style="color: #0000FF;">let*</span> ((filepath-template (concat nice-journal-directory <span style="color: #008000;">"journal-%s.org"</span>))
+           (curr-file (format filepath-template (format-time-string <span style="color: #008000;">"%Y-%m"</span>)))
+           (prev-file (format filepath-template (format-time-string <span style="color: #008000;">"%Y-%m"</span> (time-subtract (current-time) (* 7 24 60 60))))))
+      (<span style="color: #0000FF;">unless</span> (file-exists-p curr-file)
+        (message <span style="color: #008000;">"Creating new journal file"</span>)
+        (copy-file prev-file curr-file))
+      (message <span style="color: #008000;">"Opening journal file"</span>)
+      (<span style="color: #0000FF;">when</span> (member prev-file org-agenda-files)
+        (<span style="color: #0000FF;">setq</span> org-agenda-files (remove prev-file org-agenda-files)))
+      (<span style="color: #0000FF;">unless</span> (member curr-file org-agenda-files)
+        (add-to-list 'org-agenda-files curr-file))
+      (find-file curr-file)
+      (goto-char (point-min))
+      (recenter-top-bottom)))
 
-(evil-leader/set-key <span style="color: #008000;">"v f j"</span> 'nice-visit-journal)
+  (evil-leader/set-key <span style="color: #008000;">"v f j"</span> 'nice-visit-journal)
 </pre>
 </div>
 </div>
@@ -2852,7 +2853,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-04-05 Fri 10:32</p>
+<p class="date">Created: 2024-04-12 Fri 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
