@@ -108,6 +108,14 @@ git add misc/ml/example-2024-03-14/coverage-b.png
 git add misc/ml/example-2024-03-14/points-a.png
 git add misc/ml/example-2024-03-14/points-b.png
 git add misc/ml/example-2024-03-14/main.py
+git add misc/ml/post-2024-05-02.html
+git add misc/ml/example-2024-05-02/cover-image.webp
+git add misc/ml/example-2024-05-02/main.py
+git add misc/ml/example-2024-05-02/optuna_history.png
+git add misc/ml/example-2024-05-02/optuna_intermediate_values.png
+git add misc/ml/example-2024-05-02/optuna_parallel_coordinate.png
+git add misc/ml/example-2024-05-02/optuna_param_importances.png
+git add misc/ml/example-2024-05-02/sampling-algorithm.png
 
 # DERP page
 git add derp/index.html

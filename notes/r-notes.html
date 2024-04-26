@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-10-27 Fri 13:55 -->
+<!-- 2024-04-18 Thu 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>r-lang-aez-notes</title>
+<title>R notes</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,7 +193,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
 <script>
   window.MathJax = {
     tex: {
@@ -229,13 +232,13 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">r-lang-aez-notes</h1>
+<h1 class="title">R notes</h1>
 <p>
 <a href="../index.html">Home</a>
 </p>
 
 
-<div id="orgec20101" class="figure">
+<div id="org15d1138" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -257,6 +260,7 @@
 </li>
 <li><a href="#org02abfdd">Programming in R (software development)</a>
 <ul>
+<li><a href="#orgce900e3">Linting code</a></li>
 <li><a href="#org28b50b4">Debugging</a></li>
 <li><a href="#orga736c12">Scripting with R</a></li>
 <li><a href="#orge6d10d7">Working with files</a></li>
@@ -362,10 +366,10 @@ The default settings during PDF generation are the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-yaml">format:
-pdf:
-  documentclass: scrartcl
-  papersize: letter
+<pre class="src src-yaml"><span style="color: #BA36A5;">format</span>:
+<span style="color: #BA36A5;">pdf</span>:
+  <span style="color: #BA36A5;">documentclass</span>: scrartcl
+  <span style="color: #BA36A5;">papersize</span>: letter
 </pre>
 </div>
 </div>
@@ -393,9 +397,9 @@ To include a table of contents, extend the preamble:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-yaml">format:
-  pdf:
-    toc: true
+<pre class="src src-yaml"><span style="color: #BA36A5;">format</span>:
+  <span style="color: #BA36A5;">pdf</span>:
+    <span style="color: #BA36A5;">toc</span>: <span style="color: #D0372D;">true</span>
 </pre>
 </div>
 </div>
@@ -530,6 +534,63 @@ There is an R package, <a href="https://github.com/r-lib/rim">rim</a>, which man
 <h2 id="org02abfdd">Programming in R (software development)</h2>
 <div class="outline-text-2" id="text-org02abfdd">
 </div>
+<div id="outline-container-orgce900e3" class="outline-3">
+<h3 id="orgce900e3">Linting code</h3>
+<div class="outline-text-3" id="text-orgce900e3">
+<p>
+There is the <code>stylr</code> package for formating code. The following script
+makes it easy to format every R file in a directory from the command
+line.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/env Rscript</span>
+<span style="color: #8D8D84;">##</span>
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Usage</span>
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">=====</span>
+<span style="color: #8D8D84;">##</span>
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">./stylr.R &lt;path_to_directory&gt;</span>
+<span style="color: #8D8D84;">##</span>
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Styles all the R files in the specified directory.</span>
+<span style="color: #8D8D84;">##</span>
+<span style="color: #D0372D;">library</span>(styler)
+
+
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Style the R files in the specified directory</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">dir_path</span><span style="color: #8D8D84; font-style: italic;"> The path to the directory containing the R files</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #006699;">style_r_files</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(dir_path) {
+  <span style="color: #0000FF;">if</span> (!grepl(<span style="color: #008000;">"/$"</span>, dir_path)) {
+    dir_path <span style="color: #D0372D;">&lt;-</span> paste0(dir_path, <span style="color: #008000;">"/"</span>)
+  }
+
+  files <span style="color: #D0372D;">&lt;-</span> list.files(dir_path, pattern = <span style="color: #008000;">"\\.R$"</span>, full.names = <span style="color: #6434A3;">TRUE</span>)
+  lapply(files, style_file)
+
+  <span style="color: #0000FF;">if</span> (length(files) &gt; 0) {
+    cat(<span style="color: #008000;">"Styled files:\n"</span>, paste(files, collapse = <span style="color: #008000;">"\n"</span>), <span style="color: #008000;">"\n"</span>)
+  } <span style="color: #0000FF;">else</span> {
+    cat(<span style="color: #008000;">"No R files found in the specified directory.\n"</span>)
+  }
+}
+
+
+<span style="color: #006699;">main</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>() {
+  args <span style="color: #D0372D;">&lt;-</span> commandArgs(trailingOnly = <span style="color: #6434A3;">TRUE</span>)
+  <span style="color: #0000FF;">if</span> (length(args) == 0) {
+    <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"No directory specified. Usage: ./stylr.R &lt;path_to_directory&gt;"</span>, call. = <span style="color: #6434A3;">FALSE</span>)
+  }
+
+  style_r_files(args[1])
+}
+
+main()
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org28b50b4" class="outline-3">
 <h3 id="org28b50b4">Debugging</h3>
 <div class="outline-text-3" id="text-org28b50b4">
@@ -923,7 +984,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org6060420" class="figure">
+<div id="org9d2261c" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -1040,9 +1101,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-orgc7ba9f7" class="outline-4">
-<h4 id="orgc7ba9f7">Example</h4>
-<div class="outline-text-4" id="text-orgc7ba9f7">
+<div id="outline-container-org5cd6e1c" class="outline-4">
+<h4 id="org5cd6e1c">Example</h4>
+<div class="outline-text-4" id="text-org5cd6e1c">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1282,9 +1343,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-org5cd6e1c" class="outline-4">
-<h4 id="org5cd6e1c">Example</h4>
-<div class="outline-text-4" id="text-org5cd6e1c">
+<div id="outline-container-org5d6dc22" class="outline-4">
+<h4 id="org5d6dc22">Example</h4>
+<div class="outline-text-4" id="text-org5d6dc22">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -3165,7 +3226,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-10-27 Fri 13:55</p>
+<p class="date">Created: 2024-04-18 Thu 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

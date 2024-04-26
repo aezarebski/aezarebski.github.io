@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-02-08 Thu 11:04 -->
+<!-- 2024-04-17 Wed 15:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Workflows: Make/Ant/Snakemake</title>
@@ -319,7 +319,7 @@ making sure variables have the expected values.
 <h2 id="org4a0a68d">Ant</h2>
 <div class="outline-text-2" id="text-org4a0a68d">
 
-<div id="orge528e86" class="figure">
+<div id="orgeec46a0" class="figure">
 <p><img src="../images/apache-ant-logo.png" alt="apache-ant-logo.png" width="400px" />
 </p>
 </div>
@@ -339,7 +339,7 @@ an Ant XML.</li>
 <h2 id="orgeeccebb">Snakemake</h2>
 <div class="outline-text-2" id="text-orgeeccebb">
 
-<div id="org4ca50ce" class="figure">
+<div id="org7dd247d" class="figure">
 <p><img src="../images/snakemake-logo.png" alt="snakemake-logo.png" width="200px" />
 </p>
 </div>
@@ -350,7 +350,9 @@ some <a href="./python-notes.html#conda">notes</a> on how to use Conda.
 </p>
 
 <ul class="org-ul">
-<li><code>snakemake -n --printshellcmds</code></li>
+<li><code>snakemake -pn</code> (the <code>n</code> is for a dry run). This is a good way to do
+<code>snakemake -n --printshellcmds</code>, and then when you are happy with
+it, you can remote the <code>n</code> to get a live run.</li>
 <li><code>snakemake --keep-going</code> will keep going if some fail.</li>
 </ul>
 </div>
@@ -377,9 +379,12 @@ Snakemake!" to a text file.
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Snakefile</span>
 rule hello_world:
-    output: <span style="color: #008000;">"hello.txt"</span>
+    params:
+        <span style="color: #BA36A5;">greeting</span>=<span style="color: #008000;">"Hello"</span>
+    output:
+        <span style="color: #008000;">"hello.txt"</span>
     shell:
-        <span style="color: #008000;">"echo 'Hello, Snakemake!' &gt; {output}"</span>
+        <span style="color: #008000;">"echo '{params.greeting}, Snakemake!' &gt; {output}"</span>
 </pre>
 </div>
 
@@ -393,6 +398,12 @@ it worked.
 cat hello.txt
 </pre>
 </div>
+
+<p>
+<b>Note</b> that you can abbreviate <code>--cores &lt;n&gt;</code> to <code>-c&lt;n&gt;</code>, e.g. <code>-c5</code> to
+run on five cores, and if you need to specify the name of the
+snakefile to use there is <code>--snakefile</code>.
+</p>
 </div>
 </div>
 
@@ -545,7 +556,7 @@ The Snakefile makes use of this
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-02-08 Thu 11:04</p>
+<p class="date">Created: 2024-04-17 Wed 15:36</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
