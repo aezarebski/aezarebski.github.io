@@ -1,3 +1,4 @@
+# [[file:../post-2024-05-02.org::*Thanks][Thanks:1]]
 import os
 
 import optuna
@@ -27,31 +28,29 @@ def define_model(trial):
 
     in_features = INPUT_SIZE
     for i in range(n_layers):
-        out_features = trial.suggest_int("n_units_l{}".format(i), 4, 128)
-        layers.append(nn.Linear(in_features, out_features))
-        layers.append(nn.ReLU())
-        p = trial.suggest_float("dropout_l{}".format(i), 0.2, 0.5)
-        layers.append(nn.Dropout(p))
-        in_features = out_features
+	out_features = trial.suggest_int("n_units_l{}".format(i), 4, 128)
+	layers.append(nn.Linear(in_features, out_features))
+	layers.append(nn.ReLU())
+	p = trial.suggest_float("dropout_l{}".format(i), 0.2, 0.5)
+	layers.append(nn.Dropout(p))
+	in_features = out_features
 
     layers.append(nn.Linear(in_features, CLASSES))
     layers.append(nn.LogSoftmax(dim=1))
     return nn.Sequential(*layers)
 
-
 def get_mnist():
     train_loader = torch.utils.data.DataLoader(
-        datasets.MNIST(DIR, train=True, download=True, transform=transforms.ToTensor()),
-        batch_size=BATCHSIZE,
-        shuffle=True,
+	datasets.MNIST(DIR, train=True, download=True, transform=transforms.ToTensor()),
+	batch_size=BATCHSIZE,
+	shuffle=True,
     )
     valid_loader = torch.utils.data.DataLoader(
-        datasets.MNIST(DIR, train=False, transform=transforms.ToTensor()),
-        batch_size=BATCHSIZE,
-        shuffle=True,
+	datasets.MNIST(DIR, train=False, transform=transforms.ToTensor()),
+	batch_size=BATCHSIZE,
+	shuffle=True,
     )
     return train_loader, valid_loader
-
 
 def objective(trial):
     model = define_model(trial).to(DEVICE)
@@ -63,27 +62,27 @@ def objective(trial):
     train_loader, valid_loader = get_mnist()
 
     for epoch in range(EPOCHS):
-        model.train()
-        for batch_idx, (data, target) in enumerate(train_loader):
-            data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
-            optimizer.zero_grad()
-            output = model(data)
-            loss = LOSS_FN(output, target)
-            loss.backward()
-            optimizer.step()
+	model.train()
+	for batch_idx, (data, target) in enumerate(train_loader):
+	    data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
+	    optimizer.zero_grad()
+	    output = model(data)
+	    loss = LOSS_FN(output, target)
+	    loss.backward()
+	    optimizer.step()
 
-        model.eval()
-        validation_loss = 0
-        with torch.no_grad():
-            for batch_idx, (data, target) in enumerate(valid_loader):
-                data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
-                output = model(data)
-                loss = LOSS_FN(output, target)
-                validation_loss += loss.item()
+	model.eval()
+	validation_loss = 0
+	with torch.no_grad():
+	    for batch_idx, (data, target) in enumerate(valid_loader):
+		data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
+		output = model(data)
+		loss = LOSS_FN(output, target)
+		validation_loss += loss.item()
 
-        trial.report(validation_loss, epoch)
-        if trial.should_prune():
-            raise optuna.exceptions.TrialPruned()
+	trial.report(validation_loss, epoch)
+	if trial.should_prune():
+	    raise optuna.exceptions.TrialPruned()
 
     return validation_loss
 
@@ -107,7 +106,7 @@ if __name__ == "__main__":
 
     print("  Params: ")
     for key, value in trial.params.items():
-        print("    {}: {}".format(key, value))
+	print("    {}: {}".format(key, value))
 
     fig_opt_hist = optuna.visualization.plot_optimization_history(study)
     fig_opt_hist.write_image("optuna_history.png")
@@ -121,3 +120,4 @@ if __name__ == "__main__":
     fig_import_vals = optuna.visualization.plot_param_importances(study)
     fig_import_vals.write_image("optuna_param_importances.png")
     fig_import_vals.write_image("optuna_param_importances.svg")
+# Thanks:1 ends here

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-04-26 Fri 17:29 -->
+<!-- 2024-04-30 Tue 12:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 02/05/2024</title>
@@ -217,6 +217,7 @@
 <li><a href="#org9f1b462">Usage</a>
 <ul>
 <li><a href="#orga65050e">Minimal example</a></li>
+<li><a href="#orgdb5214e">MNIST example</a></li>
 <li><a href="#org24453a3">Model definition</a></li>
 <li><a href="#org8d526e3">Objective function</a></li>
 <li><a href="#org3682c7f">Running the study</a></li>
@@ -232,7 +233,7 @@
 <h2 id="orgdaea601">Hyperparameter optimisation with Optuna</h2>
 <div class="outline-text-2" id="text-orgdaea601">
 
-<div id="org4afd6c2" class="figure">
+<div id="org2811017" class="figure">
 <p><img src="./example-2024-05-02/cover-image.webp" alt="cover-image.webp" width="400px" />
 </p>
 </div>
@@ -304,6 +305,23 @@ objective function.
 study.optimize(objective, n_trials=100)
 
 study.best_params  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">E.g. {'x': 2.002108042}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdb5214e" class="outline-3">
+<h3 id="orgdb5214e">MNIST example</h3>
+<div class="outline-text-3" id="text-orgdb5214e">
+<p>
+Since we are working with the MNIST dataset (as we have done in
+several previous blog posts), the input size is the number of pixels
+in the image and there are 10 output classes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #BA36A5;">INPUT_SIZE</span>= 28 * 28
+<span style="color: #BA36A5;">CLASSES</span> = 10
 </pre>
 </div>
 </div>
@@ -443,7 +461,7 @@ out. Perhaps surprisingly, this favoured a single layer model with 79
 units.
 </p>
 
-<pre class="example" id="org7f35cd1">
+<pre class="example" id="org34d714d">
 Study statistics:
   Number of finished trials:  28
   Number of pruned trials:  9
@@ -461,13 +479,8 @@ Best trial:
 <p>
 Figure <a href="#org6adf389">2</a> shows the values of the objective function across
 the trials of the study, highlighting how the optimal solution has
-progressed. Figure <a href="#org2f8b332">3</a> zooms in on each of the trials,
-showing how the optimisation process unfolded. This comes from the
-<code>report</code> values, the first of which comes after a complete epoch of
-training which is why some start off so much better than the others.
-Finally, and perhaps most importantly for the subsequent optimisation,
-Figure <a href="#orgfc1de31">4</a> ranks the variables being optimised in terms of
-importance.
+progressed. The red line indicates the best performance seen up until
+that point in the study.
 </p>
 
 
@@ -477,12 +490,29 @@ importance.
 <p><span class="figure-number">Figure 2: </span>The objective function value decreases across the study trials</p>
 </div>
 
+<p>
+Figure <a href="#org2f8b332">3</a> zooms in on each of the trials, showing how
+the optimisation process unfolded. There are some points in this
+figure that do not have subsequent evaluations. These isolated points
+are where the pruning algorithm has terminated the trial early to use
+the computational resources elsewhere. The values for this plot comes
+from the <code>report</code> values, (see the end of the <code>objective</code> function
+above). Note that the first evaluation comes after a complete epoch of
+training which is why some start off so much better than the others.
+</p>
+
 
 <div id="org2f8b332" class="figure">
 <p><img src="./example-2024-05-02/optuna_intermediate_values.png" alt="optuna_intermediate_values.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>The intermediate values of the objective function withing each trial.</p>
 </div>
+
+<p>
+Finally, and perhaps most importantly for the subsequent optimisation,
+Figure <a href="#orgfc1de31">4</a> ranks the variables being optimised in terms of
+importance.
+</p>
 
 
 <div id="orgfc1de31" class="figure">
@@ -508,13 +538,17 @@ give a good idea of how it works.
 <div id="outline-container-org1dde550" class="outline-4">
 <h4 id="org1dde550">Thanks</h4>
 <div class="outline-text-4" id="text-org1dde550">
+<p>
+Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/">Jackson Kwok</a>, and <a href="https://dgermano8.github.io/">Domenic Germano</a> for helpful comments on a
+draft of this.
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-04-26 Fri 17:29</p>
+<p class="date">Created: 2024-04-30 Tue 12:40</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
