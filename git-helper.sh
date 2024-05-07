@@ -70,6 +70,7 @@ git add notes/python-notes.html
 git add notes/r-notes.html
 git add notes/statistics-notes.html
 git add notes/tutoring-notes.html
+git add notes/wikipedia-notes.html
 git add notes/workflow-notes.html
 
 # The nicemacs stuff
