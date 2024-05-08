@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-04-18 Thu 10:29 -->
+<!-- 2024-05-08 Wed 15:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>R notes</title>
@@ -234,11 +234,11 @@
 <div id="content" class="content">
 <h1 class="title">R notes</h1>
 <p>
-<a href="../index.html">Home</a>
+<a href="../notes.html">Home</a>
 </p>
 
 
-<div id="org15d1138" class="figure">
+<div id="org34e6004" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -302,6 +302,7 @@
 </li>
 <li><a href="#orgd6174d2">Data munging</a>
 <ul>
+<li><a href="#org007031c">IO with R Data Serialisation (RDS)</a></li>
 <li><a href="#orgbc057fe">Working with XML</a></li>
 <li><a href="#org98909f5">Joins</a></li>
 <li><a href="#orgdf2b231">Aggregation</a></li>
@@ -984,7 +985,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org9d2261c" class="figure">
+<div id="orgf772b7b" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -1101,9 +1102,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org5cd6e1c" class="outline-4">
-<h4 id="org5cd6e1c">Example</h4>
-<div class="outline-text-4" id="text-org5cd6e1c">
+<div id="outline-container-org5d6dc22" class="outline-4">
+<h4 id="org5d6dc22">Example</h4>
+<div class="outline-text-4" id="text-org5d6dc22">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1343,9 +1344,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-org5d6dc22" class="outline-4">
-<h4 id="org5d6dc22">Example</h4>
-<div class="outline-text-4" id="text-org5d6dc22">
+<div id="outline-container-org5b7896e" class="outline-4">
+<h4 id="org5b7896e">Example</h4>
+<div class="outline-text-4" id="text-org5b7896e">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -2209,6 +2210,26 @@ mtcars$mpg[mtcars$cyl == 8  &amp;  mtcars$disp &gt; 350]
 <h2 id="orgd6174d2">Data munging</h2>
 <div class="outline-text-2" id="text-orgd6174d2">
 </div>
+<div id="outline-container-org007031c" class="outline-3">
+<h3 id="org007031c">IO with R Data Serialisation (RDS)</h3>
+<div class="outline-text-3" id="text-org007031c">
+<p>
+<a href="http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata">RDS</a> provides a simple (and very quick) way to save R objects to disk.
+This is a binary format and is computationally efficient, but is
+incompatible with other languages and not human readable, so there is
+a real trade-off there. It is <i>very</i> easy to use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">obj <span style="color: #D0372D;">&lt;-</span> list(foo = <span style="color: #008000;">"bar"</span>)
+
+saveRDS(obj, <span style="color: #008000;">"demo.rds"</span>)
+new_obj <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"demo.rds"</span>)
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgbc057fe" class="outline-3">
 <h3 id="orgbc057fe">Working with XML</h3>
 <div class="outline-text-3" id="text-orgbc057fe">
@@ -2988,15 +3009,32 @@ The following snippet defines a vectorised step function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorised step function.</span>
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorized step function.</span>
 <span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">ts</span><span style="color: #8D8D84; font-style: italic;"> the times at which there is a step.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">vs</span><span style="color: #8D8D84; font-style: italic;"> the value of the function at the step.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This function creates a vectorized step function that changes</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> values at specified time points (`ts`). The resulting step function</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> will produce a constant value between each pair of consecutive</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> times in `ts`, and return the corresponding value in `vs` for any</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> given input. If an input value is less than the first time in `ts`,</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> it will return the first value in `vs`. If an input value is</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> greater than or equal to the last time in `ts`, it will return the</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> last value in `vs`.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">ts</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of times at which the step function</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   changes values. Must be sorted in strictly increasing order and</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   have at least one element.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">vs</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of values corresponding to the steps.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   Must have one more element than `ts` because the function needs</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   to cover all time ranges, including values less than the first</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   time and values greater than or equal to the last time.</span>
 <span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
 <span style="color: #006699;">step_function_factory</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(ts, vs) {
   n <span style="color: #D0372D;">&lt;-</span> length(ts)
   <span style="color: #0000FF;">if</span> (n &lt; 1) {
     <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"need at least one step time."</span>)
+  }
+  <span style="color: #0000FF;">if</span> (all(sort(ts, decreasing = <span style="color: #6434A3;">FALSE</span>) != ts)) {
+    <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"times must be sorted in strictly increasing order."</span>)
   }
   <span style="color: #0000FF;">if</span> (length(vs) != (1 + n)) {
     <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"if there are n step times there must be n+1 values."</span>)
@@ -3031,7 +3069,7 @@ The following snippet defines a vectorised step function.
 </div>
 
 <p>
-Here is a demonstration of it in action producing Figure <a href="#orge894e31">X</a>
+Here is a demonstration of it in action producing Figure <a href="#orge894e31">1</a>
 </p>
 
 <div class="org-src-container">
@@ -3108,12 +3146,13 @@ binary function \(F\). This can be implemented as follows
 </div>
 
 <p>
-Here is a demonstration of it in action producing Figure [[fig:step-function-binary][Y]
+Here is a demonstration of it in action producing Figure <a href="#orgc9c7959">2</a>
 </p>
 
 <div class="org-src-container">
 <pre class="src src-R">demo3 <span style="color: #D0372D;">&lt;-</span> map_step_function(demo1, demo2, <span style="color: #0000FF;">function</span>(x, y) { x / y })
 y3 <span style="color: #D0372D;">&lt;-</span> demo3$func(x)
+t3s <span style="color: #D0372D;">&lt;-</span> c(t2s, t1s)
 
 png(<span style="color: #008000;">'step-function-binary-demo.png'</span>,
     width = 1.618 * 300,
@@ -3131,6 +3170,54 @@ dev.off()
 <p><img src="../images/step-function-binary-demo.png" alt="step-function-binary-demo.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The result of combining two step functions.</p>
+</div>
+
+<p>
+And here is another example in which we use date-time objects for the
+times of the step functions. The resulting figure is shown in Figure
+<a href="#org4a23460">3</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(lubridate)
+
+ts1 <span style="color: #D0372D;">&lt;-</span> ymd_hms(c(<span style="color: #008000;">"2024-01-01 00:00:00"</span>,
+                 <span style="color: #008000;">"2024-01-02 00:00:00"</span>,
+                 <span style="color: #008000;">"2024-01-03 00:00:00"</span>))
+vs1 <span style="color: #D0372D;">&lt;-</span> c(10, 30, 20, 40)
+step_func_a <span style="color: #D0372D;">&lt;-</span> step_function_factory(ts1, vs1)
+
+ts2 <span style="color: #D0372D;">&lt;-</span> ymd_hms(c(<span style="color: #008000;">"2024-01-02 00:00:00"</span>,
+                 <span style="color: #008000;">"2024-01-03 00:00:00"</span>,
+                 <span style="color: #008000;">"2024-01-04 00:00:00"</span>))
+vs2 <span style="color: #D0372D;">&lt;-</span> c(15, 25, 35, 45)
+step_func_b <span style="color: #D0372D;">&lt;-</span> step_function_factory(ts2, vs2)
+
+step_func_c <span style="color: #D0372D;">&lt;-</span> map_step_function(step_func_a,
+                                 step_func_b,
+                                 <span style="color: #0000FF;">function</span>(x, y) { x + y })
+
+times_to_evaluate <span style="color: #D0372D;">&lt;-</span> seq(from = ymd_hms(<span style="color: #008000;">"2023-12-31 00:00:00"</span>),
+                         to = ymd_hms(<span style="color: #008000;">"2024-01-05 00:00:00"</span>),
+                         length = 100)
+result <span style="color: #D0372D;">&lt;-</span> step_func_c$func(times_to_evaluate)
+
+png(<span style="color: #008000;">'step-function-dates-demo.png'</span>,
+    width = 1.618 * 300,
+    height = 300,
+    units = <span style="color: #008000;">"px"</span>)
+plot(times_to_evaluate, result, <span style="color: #008000;">'l'</span>, col = <span style="color: #008000;">'black'</span>, ylab = <span style="color: #008000;">""</span>, ylim = c(0, 90))
+lines(times_to_evaluate, step_func_a$func(times_to_evaluate), col = <span style="color: #008000;">'blue'</span>)
+lines(times_to_evaluate, step_func_b$func(times_to_evaluate), col = <span style="color: #008000;">'red'</span>)
+dev.off()
+</pre>
+</div>
+
+
+<div id="org4a23460" class="figure">
+<p><img src="../images/step-function-dates-demo.png" alt="step-function-dates-demo.png" width="400px" />
+</p>
+<p><span class="figure-number">Figure 3: </span>An example using dates as time</p>
 </div>
 </div>
 </div>
@@ -3226,7 +3313,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-04-18 Thu 10:29</p>
+<p class="date">Created: 2024-05-08 Wed 15:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
