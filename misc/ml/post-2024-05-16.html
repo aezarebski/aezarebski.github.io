@@ -6,7 +6,7 @@
 <!-- 2024-05-20 Mon 10:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Alex's adventures with neural networks</title>
+<title>AANN 16/05/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -196,70 +196,187 @@
 <link rel="icon" type="image/png" href="../../resources/nicemacs-favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 <link rel="stylesheet" href="../../microgram.css">
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Alex's adventures with neural networks</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgafe88eb">Posts</a></li>
-<li><a href="#orgb2001b9">References</a></li>
-</ul>
-</div>
-</div>
+<h1 class="title">AANN 16/05/2024</h1>
 <p>
 <a href="../../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgafe88eb" class="outline-2">
-<h2 id="orgafe88eb">Posts</h2>
-<div class="outline-text-2" id="text-orgafe88eb">
-<dl class="org-dl">
-<dt>2024-05-16</dt><dd><a href="./post-2024-05-16.html">Universal approximation theorem</a></dd>
-<dt>2024-05-02</dt><dd><a href="./post-2024-05-02.html">Hyperparameter optimisation with Optuna</a></dd>
-<dt>2024-03-28</dt><dd><a href="./post-2024-03-28.html">Orthonormal certificates</a> for epistemic uncertainty</dd>
-<dt>2024-03-14</dt><dd><a href="./post-2024-03-14.html">Another look at SQR</a></dd>
-<dt>2024-02-22</dt><dd><a href="./post-2024-02-22.html">Early stopping rule</a> with a <code>ValidationManager</code></dd>
-<dt>2024-02-08</dt><dd><a href="./post-2024-02-08.html">Gated multimodal units</a> with synthetic data</dd>
-<dt>2024-01-25</dt><dd><a href="./post-2024-01-25.html">Simultaneous quantile regression</a> (SQR) with the pinball loss</dd>
-<dt>2024-01-11</dt><dd><a href="./post-2024-01-11.html">Neural Bayes estimators</a> using a permutation invariant architecture</dd>
-<dt>2024-01-09</dt><dd><a href="./post-2024-01-09.html">Fine-tuning for MNIST classification</a></dd>
-<dt>2024-01-07</dt><dd><a href="./post-2024-01-04.html">CNN with dropout for MNIST classification</a></dd>
-<dt>2024-01-04</dt><dd><a href="./post-2024-01-04.html">CNN using PyTorch for MNIST classification</a></dd>
-<dt>2024-01-03</dt><dd><a href="./post-2024-01-03.html">Basic model using PyTorch for MNIST classification</a></dd>
-</dl>
-</div>
-</div>
+<p>
+<a href="./index.html">Index</a>
+</p>
 
-<div id="outline-container-orgb2001b9" class="outline-2">
-<h2 id="orgb2001b9">References</h2>
-<div class="outline-text-2" id="text-orgb2001b9">
-</div>
-<div id="outline-container-org9f962f2" class="outline-3">
-<h3 id="org9f962f2">Software</h3>
-<div class="outline-text-3" id="text-org9f962f2">
-<ul class="org-ul">
-<li><a href="https://pytorch.org/docs/stable/index.html">PyTorch Documentation</a></li>
-<li><a href="https://www.oreilly.com/library/view/pytorch-pocket-reference/9781492089995/">Papa (2021)</a> <i>PyTorch Pocket Reference</i></li>
-<li><a href="https://doi.org/10.48550/arXiv.1907.10902">Akiba et al (2019)</a> the reference for <a href="https://optuna.readthedocs.io/en/stable/index.html">Optuna</a></li>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0085496">Universal approximation theorem</a>
+<ul>
+<li><a href="#org4058f2e">Theorem</a></li>
+<li><a href="#org01edb8e">(Sketch of) proof</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2a296db" class="outline-3">
-<h3 id="org2a296db">Theory</h3>
-<div class="outline-text-3" id="text-org2a296db">
+<div id="outline-container-org0085496" class="outline-2">
+<h2 id="org0085496">Universal approximation theorem</h2>
+<div class="outline-text-2" id="text-org0085496">
+
+<div id="org78dffbf" class="figure">
+<p><img src="./example-2024-05-16/cover-image.webp" alt="cover-image.webp" width="400px" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4058f2e" class="outline-3">
+<h3 id="org4058f2e">Theorem</h3>
+<div class="outline-text-3" id="text-org4058f2e">
+<blockquote>
+<p>
+Assume \(\sigma\in C(\mathbb{R},\mathbb{R})\) non-constant with finite
+(and distinct) limits as \(x\to\pm\infty\) and
+\((\sigma\circ~x)_{i}=\sigma(x_{i})\) (i.e. the element-wise
+application). If \(n,m\in\mathbb{N}\) and \(f\in C(K,\mathbb{R}^{m})\)
+where \(K\subset\mathbb{R}^{n}\) is compact, then, for all
+\(\epsilon>0\) there exists
+\(k\in\mathbb{N},A\in\mathbb{R}^{k\times~n},b\in\mathbb{R}^{k},D\in\mathbb{R}^{m\times
+k}\) such that
+</p>
+
+<p>
+\[
+\left\| f(x) - g(x) \right\|_{\infty} < \epsilon
+\]
+</p>
+
+<p>
+where \(g(x) = D \cdot (\sigma \circ (A\cdot x + b))\).
+</p>
+</blockquote>
+
+<p>
+Recall the supremum norm is given by \(\left\| f \right\|_{\infty} = \sup_{x}|f(x)|\).
+</p>
+
+<p>
+This means that, for a continuous function \(f\), given a suitable
+activation function \(\sigma\), a wide enough neural network with a
+single hidden layer is capable of approximating \(f\) arbitrarily well
+(in the supremum norm). This doesn't tell you <i>how</i> to construct such
+a network, but it does guarantee that one exists.
+</p>
+
+<p>
+The universal approximation theorem as usually stated is slightly
+stronger than this but this is the result I am most interested in. The
+"proof" here is cobbled together from a few sources (including
+<a href="https://en.wikipedia.org/wiki/Universal_approximation_theorem">Wikipedia</a>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org01edb8e" class="outline-3">
+<h3 id="org01edb8e">(Sketch of) proof</h3>
+<div class="outline-text-3" id="text-org01edb8e">
+<ol class="org-ol">
+<li>Uniform convergence in \(\mathbb{R}^{m}\) follows from uniform
+convergence in each of the coordinates, so it is sufficient to
+consider the case \(m=1\)</li>
+<li><a href="#org7ef126f">Lemma</a> we can approximate the piecewise linear functions
+arbitrarily well.</li>
+<li>The <a href="#orgb74edd6">Stone-Weierstrass theorem</a> tells us that the piecewise linear
+functions are dense in \(C(K,\mathbb{R})\) hence contains our
+desired function \(g\).</li>
+</ol>
+</div>
+
+<div id="outline-container-org7ef126f" class="outline-4">
+<h4 id="org7ef126f">Lemma</h4>
+<div class="outline-text-4" id="text-org7ef126f">
 <ul class="org-ul">
-<li><a href="https://cs231n.github.io/convolutional-networks/">CS231n: Deep Learning for Computer Vision</a></li>
-<li><a href="https://arxiv.org/abs/1207.0580">Hinton et al (2012)</a> the reference for <i>dropout regularisation</i>.</li>
-<li><a href="https://doi.org/10.1080/00031305.2023.2249522">Sainsbury-Dale et al (2023)</a> for a review of <i>neural Bayes estimators</i>.</li>
-<li><a href="https://doi.org/10.1007/3-540-49430-8_3">Prechelt (1998)</a> the reference for three types of <i>early-stopping</i>.</li>
-<li><a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> the reference for <i>simultaneous quantile regression</i>.</li>
-<li><a href="https://arxiv.org/abs/1905.03222">Romano et al (2019)</a>) the reference for <i>conformalized quantile regression</i>.</li>
-<li><a href="https://arxiv.org/abs/1702.01992">Arevalo et al (2017)</a> the reference for <i>gated multimodal units</i>.</li>
+<li>We get step functions by scaling the input sufficiently and using
+the assumption that the \(\sigma\) has finite (and distinct) limits.
+This means we can choose \(A\) and \(b\) such that
+\(\sigma(A\cdot~x+b)\) to get functions arbitrarily close to some
+step function. The value of \(b\) controls the location of the step.
+With \(D\) we can then scale this to arbitrary height.</li>
+<li>Taking a linear combination of linear combinations can be achieved
+with \(D\), so we can take linear combinations of the step function
+to approximate a ramp function:</li>
 </ul>
+
+<p>
+\[
+f(x) = \begin{cases}
+      0 & x< 0 \\
+      x & 0\leq x\leq 1 \\
+      1 & 1< x
+   \end{cases}
+\]
+</p>
+
+<ul class="org-ul">
+<li>Using these ramp functions we can construct arbitrary piecewise
+linear functions.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb74edd6" class="outline-4">
+<h4 id="orgb74edd6">Stone-Weierstrass theorem</h4>
+<div class="outline-text-4" id="text-orgb74edd6">
+<blockquote>
+<p>
+Let \(K\) be a compact Hausdorff space and \(\mathcal{F}\) a
+subalgebra of \(C(K,\mathbb{R})\) containing a non-zero constant
+function. Then \(\mathcal{F}\) is dense in \(C(K,\mathbb{R})\) if and
+only if \(\mathcal{F}\) separates points in \(K\).
+</p>
+</blockquote>
+
+<p>
+Recall that a set of functions on \(K\) <i>separates points</i> if for any
+\(x,y\in~K\) if \(x\neq~y\) then there is an \(f\in\mathcal{F}\) such
+that \(f(x)\neq~f(y)\). A space is <i>Hausdorff</i> if different elements
+have disjoint neighbourhoods.
+</p>
+</div>
 </div>
 </div>
 </div>
