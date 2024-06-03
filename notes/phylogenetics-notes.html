@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-05-23 Thu 10:41 -->
+<!-- 2024-06-04 Tue 09:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>phylogenetics</title>
@@ -250,6 +250,7 @@
 <li><a href="#orgc0dc4eb">Example: Plotting a tree</a></li>
 <li><a href="#orgd3fbbd0">Example: Counting the number of leaves</a></li>
 <li><a href="#org0d2b318">Example: Normalising a tree to unit branch lengths</a></li>
+<li><a href="#org46e70f7">Example: Querying node depths</a></li>
 <li><a href="#orgca43778">Example: Quickly reading a tree from disk</a></li>
 </ul>
 </li>
@@ -331,7 +332,7 @@ The important part of this is
 <h3 id="org6f5d5cc">biopython</h3>
 <div class="outline-text-3" id="text-org6f5d5cc">
 
-<div id="org2775717" class="figure">
+<div id="org2e0bb0a" class="figure">
 <p><img src="../images/biopython-logo.png" alt="biopython-logo.png" width="300px" />
 </p>
 </div>
@@ -482,11 +483,49 @@ Phylo.draw(tree)
 The output of this script is
 </p>
 
-<pre class="example" id="orgc87c8cb">
+<pre class="example" id="org2596e04">
 The mean branch length was 0.350
 The old tree height is 1.1
 The new tree height is 3.143
 </pre>
+</div>
+</div>
+
+<div id="outline-container-org46e70f7" class="outline-4">
+<h4 id="org46e70f7">Example: Querying node depths</h4>
+<div class="outline-text-4" id="text-org46e70f7">
+<p>
+This script demonstrates how to query the depth of a node in a tree
+given a reference to the corresponding clade. The documentation for
+the <code>depths</code> method is <a href="https://biopython.org/docs/1.75/api/Bio.Phylo.BaseTree.html#Bio.Phylo.BaseTree.TreeMixin.depths">here</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">from</span> io <span style="color: #0000FF;">import</span> StringIO
+<span style="color: #0000FF;">from</span> Bio <span style="color: #0000FF;">import</span> Phylo
+<span style="color: #0000FF;">import</span> copy
+
+<span style="color: #BA36A5;">newick_tree</span> = StringIO(<span style="color: #008000;">"((A:0.1, B:0.2):0.3, (C:0.4, D:0.5):0.6);"</span>)
+
+<span style="color: #BA36A5;">tree</span> = Phylo.read(newick_tree, <span style="color: #008000;">"newick"</span>)
+<span style="color: #BA36A5;">depth_dict</span> = tree.depths()
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The root node should have a depth of 0.0</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade] == 0.0
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The depth of the left internal node should be 0.3</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade.clades[0]] == 0.3
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The depth of leaf A should be 0.4</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade.clades[0].clades[0]] == 0.4
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The depth of leaf B should be 0.5</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade.clades[0].clades[1]] == 0.5
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The depth of the right internal node should be 0.6</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade.clades[1]] == 0.6
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The depth of leaf C should be 1.0</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade.clades[1].clades[0]] == 1.0
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The depth of leaf D should be 1.1</span>
+<span style="color: #0000FF;">assert</span> depth_dict[tree.clade.clades[1].clades[1]] == 1.1
+</pre>
+</div>
 </div>
 </div>
 
@@ -556,7 +595,7 @@ this seems to diminish as we get to larger trees.
 Gives us the following examples for different tree sizes.
 </p>
 
-<pre class="example" id="org41ed1ca">
+<pre class="example" id="orge62bc54">
 The ratio of time needed is 1.98 for Bio/pickle with 256 nodes with 250 replicates.
 The ratio of time needed is 2.00 for Bio/pickle with 512 nodes with 250 replicates.
 The ratio of time needed is 1.80 for Bio/pickle with 1024 nodes with 250 replicates.
@@ -918,7 +957,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-05-23 Thu 10:41</p>
+<p class="date">Created: 2024-06-04 Tue 09:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
