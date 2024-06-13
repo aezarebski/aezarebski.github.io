@@ -44,6 +44,14 @@ do
     git add ./misc/ggplot2/fig$ix.png
 done
 
+# The ggplot2 gallery
+git add misc/matplotlib/gallery.html
+
+for ix in $(seq -f "%02g" 1 8);
+do
+    git add ./misc/matplotlib/fig$ix.png
+done
+
 # The d3 gallery
 git add misc/d3/gallery.html
 
