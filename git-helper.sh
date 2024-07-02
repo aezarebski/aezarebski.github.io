@@ -128,3 +128,5 @@ git add misc/ml/example-2024-05-02/sampling-algorithm.png
 
 # DERP page
 git add derp/index.html
+
+git add misc/papers/data.json
