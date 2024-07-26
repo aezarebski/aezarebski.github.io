@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-07-02 Tue 15:47 -->
+<!-- 2024-07-26 Fri 15:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -203,7 +203,7 @@
 </p>
 
 
-<div id="org00be744" class="figure">
+<div id="org844934d" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -326,6 +326,10 @@
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Changelog</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">---------</span>
+<span style="color: #8D8D84;">;;</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2024-07</span>
+<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Use `</span><span style="color: #D0372D; font-style: italic;">openwith</span><span style="color: #8D8D84; font-style: italic;">' so that `</span><span style="color: #D0372D; font-style: italic;">dired</span><span style="color: #8D8D84; font-style: italic;">' will open PDFs with Okular on</span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">click rather than the emacs PDF viewer.</span>
 <span style="color: #8D8D84;">;;</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- 2024-05</span>
 <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">+ Add binding of SPC-m-s-s to evaluate R source blocks in</span>
@@ -1099,8 +1103,23 @@ opening PNGs.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-to-list 'revert-without-query <span style="color: #008000;">"\\.png$"</span>)
+
+(<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">openwith</span>
+  <span style="color: #006FE0;">:ensure</span> t
+  <span style="color: #006FE0;">:config</span>
+  (<span style="color: #0000FF;">setq</span> openwith-associations
+        (list (list (openwith-make-extension-regexp '(<span style="color: #008000;">"pdf"</span>))
+                    <span style="color: #008000;">"okular"</span>
+                    '(file))))
+  (openwith-mode t))
 </pre>
 </div>
+
+<p>
+The use of the <code>openwith</code> package above means that when you click on a
+PDF in dired, it will open with Okular, rather than in the DocViewer
+in Emacs.
+</p>
 </div>
 
 <div id="outline-container-org7e804de" class="outline-4">
@@ -2224,6 +2243,7 @@ the <code>list-colors-disply</code> command as described in the <a href="#sec:co
   <span style="color: #036A07;">"Copy my website homepage if it exists."</span>
   (<span style="color: #0000FF;">interactive</span>)
   (<span style="color: #0000FF;">let*</span> ((notes-root <span style="color: #008000;">"~/public-site/org/"</span>)
+         (misc-root <span style="color: #008000;">"~/public-site/org/misc/papers/"</span>)
          (local-notes (concat notes-root <span style="color: #008000;">"index-notes.html"</span>))
          (remote-notes (concat nice-website-directory <span style="color: #008000;">"notes.html"</span>))
          (local-mininyan (concat notes-root <span style="color: #008000;">"mininyan.js"</span>))
@@ -2231,7 +2251,13 @@ the <code>list-colors-disply</code> command as described in the <a href="#sec:co
          (local-landing (concat notes-root <span style="color: #008000;">"index-academic.html"</span>))
          (remote-landing (concat nice-website-directory <span style="color: #008000;">"index.html"</span>))
          (local-css (concat notes-root <span style="color: #008000;">"microgram.css"</span>))
-         (remote-css (concat nice-website-directory <span style="color: #008000;">"microgram.css"</span>)))
+         (remote-css (concat nice-website-directory <span style="color: #008000;">"microgram.css"</span>))
+         (local-misc-index (concat misc-root <span style="color: #008000;">"index.html"</span>))
+         (remote-misc-index (concat nice-website-directory <span style="color: #008000;">"misc/papers/index.html"</span>))
+         (local-misc-data (concat misc-root <span style="color: #008000;">"data.json"</span>))
+         (remote-misc-data (concat nice-website-directory <span style="color: #008000;">"misc/papers/data.json"</span>))
+         (local-misc-script (concat misc-root <span style="color: #008000;">"script.js"</span>))
+         (remote-misc-script (concat nice-website-directory <span style="color: #008000;">"misc/papers/script.js"</span>)))
     (<span style="color: #0000FF;">when</span> (file-exists-p local-notes)
       (copy-file local-notes remote-notes t)
       (message <span style="color: #008000;">"Copied %s to %s"</span> local-notes remote-notes))
@@ -2243,7 +2269,16 @@ the <code>list-colors-disply</code> command as described in the <a href="#sec:co
       (message <span style="color: #008000;">"Copied %s to %s"</span> local-landing remote-landing))
     (<span style="color: #0000FF;">when</span> (file-exists-p local-css)
       (copy-file local-css remote-css t)
-      (message <span style="color: #008000;">"Copied %s to %s"</span> local-css remote-css))))
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-css remote-css))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-misc-index)
+      (copy-file local-misc-index remote-misc-index t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-misc-index remote-misc-index))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-misc-data)
+      (copy-file local-misc-data remote-misc-data t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-misc-data remote-misc-data))
+    (<span style="color: #0000FF;">when</span> (file-exists-p local-misc-script)
+      (copy-file local-misc-script remote-misc-script t)
+      (message <span style="color: #008000;">"Copied %s to %s"</span> local-misc-script remote-misc-script))))
 
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">The following projects are available for publishing when the</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">`</span><span style="color: #D0372D; font-style: italic;">org-publish</span><span style="color: #8D8D84; font-style: italic;">' command is given.</span>
@@ -2881,7 +2916,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-07-02 Tue 15:47</p>
+<p class="date">Created: 2024-07-26 Fri 15:54</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
