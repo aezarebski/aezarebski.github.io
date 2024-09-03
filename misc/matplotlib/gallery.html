@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-08-28 Wed 08:45 -->
+<!-- 2024-09-03 Tue 17:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>matplotlib-gallery-aez</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org48a5999" class="figure">
+<div id="orgcf991c7" class="figure">
 <p><img src="../../images/matplotlib-logo.png" alt="matplotlib-logo.png" width="250px" />
 </p>
 </div>
@@ -224,6 +224,9 @@
       <a href="#fig-06"><img src="./fig06.png" width="250px"/></a>
       <a href="#fig-07"><img src="./fig07.png" width="250px"/></a>
       <a href="#fig-08"><img src="./fig08.png" width="250px"/></a>
+    </div>
+    <div class="row">
+      <a href="#fig-09"><img src="./fig09.png" width="250px"/></a>
     </div>
   </div>
 </div>
@@ -497,6 +500,61 @@ fig.savefig(<span style="color: #008000;">"fig08.png"</span>, dpi=300)
 </pre>
 </div>
 
+<h3 id="fig-09">Figure 9</h3>
+<div><img src="./fig09.png" width="900px" /></div>
+
+<p>
+<b>Keywords:</b> Uncertainty, ribbon, grid lines, axis text, z-order
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+
+
+<span style="color: #BA36A5;">mtcars</span> = pd.read_csv(<span style="color: #008000;">"mtcars.csv"</span>)
+
+
+<span style="color: #BA36A5;">plot_df</span> = (
+    mtcars.groupby(<span style="color: #008000;">"cyl"</span>)
+    .agg(
+        mean_mpg=(<span style="color: #008000;">"mpg"</span>, <span style="color: #008000;">"mean"</span>),
+        sd_mpg=(<span style="color: #008000;">"mpg"</span>, <span style="color: #008000;">"std"</span>),
+        n=(<span style="color: #008000;">"mpg"</span>, <span style="color: #008000;">"size"</span>),  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Count the number of occurrences for each group</span>
+    )
+    .reset_index()
+)
+
+<span style="color: #BA36A5;">plot_df</span>[<span style="color: #008000;">"lower_mpg"</span>] = plot_df[<span style="color: #008000;">"mean_mpg"</span>] - 1.96 * plot_df[<span style="color: #008000;">"sd_mpg"</span>] / np.sqrt(
+    plot_df[<span style="color: #008000;">"n"</span>]
+)
+<span style="color: #BA36A5;">plot_df</span>[<span style="color: #008000;">"upper_mpg"</span>] = plot_df[<span style="color: #008000;">"mean_mpg"</span>] + 1.96 * plot_df[<span style="color: #008000;">"sd_mpg"</span>] / np.sqrt(
+    plot_df[<span style="color: #008000;">"n"</span>]
+)
+
+
+<span style="color: #BA36A5;">fig</span> = plt.figure()
+<span style="color: #BA36A5;">ax</span> = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+ax.fill_between(
+    plot_df[<span style="color: #008000;">"cyl"</span>], plot_df[<span style="color: #008000;">"lower_mpg"</span>], plot_df[<span style="color: #008000;">"upper_mpg"</span>], color=<span style="color: #008000;">"blue"</span>, alpha=0.2
+)
+ax.plot(plot_df[<span style="color: #008000;">"cyl"</span>], plot_df[<span style="color: #008000;">"lower_mpg"</span>], <span style="color: #008000;">"--"</span>, color=<span style="color: #008000;">"blue"</span>)
+ax.plot(plot_df[<span style="color: #008000;">"cyl"</span>], plot_df[<span style="color: #008000;">"upper_mpg"</span>], <span style="color: #008000;">"--"</span>, color=<span style="color: #008000;">"blue"</span>)
+ax.plot(plot_df[<span style="color: #008000;">"cyl"</span>], plot_df[<span style="color: #008000;">"mean_mpg"</span>], <span style="color: #008000;">"-"</span>, color=<span style="color: #008000;">"red"</span>, label=<span style="color: #008000;">"Mean"</span>)
+ax.set_xlabel(<span style="color: #008000;">"Number of Cylinders"</span>)
+ax.set_ylabel(<span style="color: #008000;">"Miles per Gallon (MPG)"</span>)
+ax.set_xticks(<span style="color: #006FE0;">range</span>(4, 9))
+ax.set_yticks(<span style="color: #006FE0;">range</span>(15, 35, 5))
+
+ax.grid(<span style="color: #D0372D;">True</span>, which=<span style="color: #008000;">"major"</span>, linestyle=<span style="color: #008000;">"-"</span>, linewidth=0.25, color=<span style="color: #008000;">"grey"</span>, zorder=0)
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Ensure the grid lines are in the background by setting the z-order of the plots</span>
+ax.set_axisbelow(<span style="color: #D0372D;">True</span>)
+
+fig.savefig(<span style="color: #008000;">"fig09.png"</span>, dpi=300)
+</pre>
+</div>
+
 <h3>Requirements file for python environment</h3>
 
 <pre class="example">
@@ -516,7 +574,7 @@ six==1.16.0
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-08-28 Wed 08:45</p>
+<p class="date">Created: 2024-09-03 Tue 17:34</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
