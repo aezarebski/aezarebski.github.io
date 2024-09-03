@@ -39,7 +39,7 @@ done
 # The ggplot2 gallery
 git add misc/ggplot2/gallery.html
 
-for ix in $(seq -f "%02g" 1 11);
+for ix in $(seq -f "%02g" 1 14);
 do
     git add ./misc/ggplot2/fig$ix.png
 done
