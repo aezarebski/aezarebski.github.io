@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-05-23 Thu 10:41 -->
+<!-- 2024-09-18 Wed 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>R notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="org538ac62" class="figure">
+<div id="orgec2c898" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -325,6 +325,7 @@
 </li>
 <li><a href="#org8324e55">Miscellaneous functions</a>
 <ul>
+<li><a href="#orgfa4b20c">Quantile functions of truncated distributions</a></li>
 <li><a href="#org0a843c0">Read BEAST2 log file</a></li>
 <li><a href="#org1b8e094">Generating LaTeX summary of GLM</a></li>
 <li><a href="#org9fbb6d1">Mini test suite</a></li>
@@ -986,7 +987,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="org3c3cca7" class="figure">
+<div id="orgc37f381" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -1103,9 +1104,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-org10006a9" class="outline-4">
-<h4 id="org10006a9">Example</h4>
-<div class="outline-text-4" id="text-org10006a9">
+<div id="outline-container-orgf52a57e" class="outline-4">
+<h4 id="orgf52a57e">Example</h4>
+<div class="outline-text-4" id="text-orgf52a57e">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1345,9 +1346,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-orgf52a57e" class="outline-4">
-<h4 id="orgf52a57e">Example</h4>
-<div class="outline-text-4" id="text-orgf52a57e">
+<div id="outline-container-org60d4935" class="outline-4">
+<h4 id="org60d4935">Example</h4>
+<div class="outline-text-4" id="text-org60d4935">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -2895,6 +2896,56 @@ ggplot() +
 <h2 id="org8324e55">Miscellaneous functions</h2>
 <div class="outline-text-2" id="text-org8324e55">
 </div>
+<div id="outline-container-orgfa4b20c" class="outline-3">
+<h3 id="orgfa4b20c">Quantile functions of truncated distributions</h3>
+<div class="outline-text-3" id="text-orgfa4b20c">
+<p>
+The <code>truncnorm</code> package provides a clean way to work with normal
+distributions that have been truncated to a finite range of values. I
+wanted the analogous function for the quantile function of the
+log-normal distribution but this wasn't in the package. Here is an
+implementation and a basic test of such a quantile function.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #006699;">.qtruncnorm</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(p, a = -<span style="color: #6434A3;">Inf</span>, b = <span style="color: #6434A3;">Inf</span>, mean = 0, sd = 1) {
+  ut_cdf_a <span style="color: #D0372D;">&lt;-</span> pnorm(a, mean = mean, sd = sd)
+  ut_cdf_b <span style="color: #D0372D;">&lt;-</span> pnorm(b, mean = mean, sd = sd)
+  ut_p <span style="color: #D0372D;">&lt;-</span> pnorm(a, mean = mean, sd = sd) + p * (pnorm(b, mean = mean, sd = sd) - pnorm(a, mean = mean, sd = sd))
+  <span style="color: #0000FF;">return</span>(qnorm(ut_p, mean = mean, sd = sd))
+}
+
+
+.test_ps <span style="color: #D0372D;">&lt;-</span> runif(1000)
+stopifnot(
+  max(abs(.qtruncnorm(.test_ps, a = -1, b = 2, mean = 3) - truncnorm::qtruncnorm(.test_ps, a = -1, b = 2, mean = 3))) &lt; 1e-13
+)
+
+
+<span style="color: #006699;">.qtrunclnorm</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(p, a = -<span style="color: #6434A3;">Inf</span>, b = <span style="color: #6434A3;">Inf</span>, meanlog = 0, sdlog = 1) {
+  ut_cdf_a <span style="color: #D0372D;">&lt;-</span> plnorm(a, meanlog = meanlog, sdlog = sdlog)
+  ut_cdf_b <span style="color: #D0372D;">&lt;-</span> plnorm(b, meanlog = meanlog, sdlog = sdlog)
+  ut_p <span style="color: #D0372D;">&lt;-</span> plnorm(a, meanlog = meanlog, sdlog = sdlog) + p * (plnorm(b, meanlog = meanlog, sdlog = sdlog) - plnorm(a, meanlog = meanlog, sdlog = sdlog))
+  <span style="color: #0000FF;">return</span>(qlnorm(ut_p, meanlog = meanlog, sdlog = sdlog))
+}
+
+
+.test_ps <span style="color: #D0372D;">&lt;-</span> seq(from = 0.2, to = 0.9, length = 10)
+stopifnot(
+  max(abs(.qtrunclnorm(.test_ps, a = 0, b = 10^5, meanlog = 3) - qlnorm(.test_ps, meanlog = 3))) &lt; 1e-14
+)
+.test_ps <span style="color: #D0372D;">&lt;-</span> runif(1000)
+stopifnot(
+  !(max(abs(.qtrunclnorm(.test_ps, a = 0, b = 10^3, meanlog = 3) - qlnorm(.test_ps, meanlog = 3))) &lt; 1e-14)
+)
+stopifnot(
+  (max(abs(.qtrunclnorm(.test_ps, a = 0, b = 10^5, meanlog = 3) - qlnorm(.test_ps, meanlog = 3))) &lt; 1e-14)
+)
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org0a843c0" class="outline-3">
 <h3 id="org0a843c0">Read BEAST2 log file</h3>
 <div class="outline-text-3" id="text-org0a843c0">
@@ -3443,7 +3494,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-05-23 Thu 10:41</p>
+<p class="date">Created: 2024-09-18 Wed 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
