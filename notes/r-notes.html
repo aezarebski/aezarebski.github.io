@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-09-18 Wed 10:29 -->
+<!-- 2024-10-19 Sat 10:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>R notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="orgec2c898" class="figure">
+<div id="org96a7aa5" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -325,6 +325,7 @@
 </li>
 <li><a href="#org8324e55">Miscellaneous functions</a>
 <ul>
+<li><a href="#orgeab9398">Function to save a ggplot to both PNG and SVG</a></li>
 <li><a href="#orgfa4b20c">Quantile functions of truncated distributions</a></li>
 <li><a href="#org0a843c0">Read BEAST2 log file</a></li>
 <li><a href="#org1b8e094">Generating LaTeX summary of GLM</a></li>
@@ -987,7 +988,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="orgc37f381" class="figure">
+<div id="orge7ba398" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -1104,9 +1105,9 @@ There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
 
-<div id="outline-container-orgf52a57e" class="outline-4">
-<h4 id="orgf52a57e">Example</h4>
-<div class="outline-text-4" id="text-orgf52a57e">
+<div id="outline-container-org60d4935" class="outline-4">
+<h4 id="org60d4935">Example</h4>
+<div class="outline-text-4" id="text-org60d4935">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1346,9 +1347,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org60ec514">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org60ec514">
 </div>
-<div id="outline-container-org60d4935" class="outline-4">
-<h4 id="org60d4935">Example</h4>
-<div class="outline-text-4" id="text-org60d4935">
+<div id="outline-container-org6a9f3ca" class="outline-4">
+<h4 id="org6a9f3ca">Example</h4>
+<div class="outline-text-4" id="text-org6a9f3ca">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -2896,6 +2897,36 @@ ggplot() +
 <h2 id="org8324e55">Miscellaneous functions</h2>
 <div class="outline-text-2" id="text-org8324e55">
 </div>
+<div id="outline-container-orgeab9398" class="outline-3">
+<h3 id="orgeab9398">Function to save a ggplot to both PNG and SVG</h3>
+<div class="outline-text-3" id="text-orgeab9398">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Save a ggplot to both PNG and SVG.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">filepath</span><span style="color: #8D8D84; font-style: italic;"> is the path to save the plot to.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">plot</span><span style="color: #8D8D84; font-style: italic;"> is the ggplot object to save.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> are additional arguments to pass to ggsave.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@examples</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> ggsave_plus("plot.png", ggplot() + geom_point(aes(x = 1:10, y = 1:10))</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
+<span style="color: #006699;">ggsave_plus</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(filepath, plot, ...) {
+  <span style="color: #0000FF;">if</span> (stringr::str_ends(filepath, <span style="color: #008000;">".png"</span>)) {
+    filepath_png <span style="color: #D0372D;">&lt;-</span> filepath
+    filepath_svg <span style="color: #D0372D;">&lt;-</span> str_replace(filepath, <span style="color: #008000;">".png"</span>, <span style="color: #008000;">".svg"</span>)
+  } <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> (stringr::str_ends(filepath, <span style="color: #008000;">".svg"</span>)) {
+    filepath_svg <span style="color: #D0372D;">&lt;-</span> filepath
+    filepath_png <span style="color: #D0372D;">&lt;-</span> str_replace(filepath, <span style="color: #008000;">".svg"</span>, <span style="color: #008000;">".png"</span>)
+  }
+
+  ggplot2::ggsave(plot, filename = filepath_png, ...)
+  ggplot2::ggsave(plot, filename = filepath_svg, ...)
+}
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgfa4b20c" class="outline-3">
 <h3 id="orgfa4b20c">Quantile functions of truncated distributions</h3>
 <div class="outline-text-3" id="text-orgfa4b20c">
@@ -3494,7 +3525,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-09-18 Wed 10:29</p>
+<p class="date">Created: 2024-10-19 Sat 10:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

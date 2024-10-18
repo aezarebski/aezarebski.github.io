@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-06-05 Wed 15:04 -->
+<!-- 2024-10-19 Sat 10:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>phylogenetics</title>
@@ -246,6 +246,7 @@
 <li><a href="#org6f5d5cc">biopython</a>
 <ul>
 <li><a href="#org54425f0">Example: Reading Newick from file</a></li>
+<li><a href="#orgd0f6edd">Example: Reading Nexus from file</a></li>
 <li><a href="#org667c4e1">Example: Reading Newick from string</a></li>
 <li><a href="#orgc0dc4eb">Example: Plotting a tree</a></li>
 <li><a href="#org62a1524">Example: Plotting the lineages through time (LTT)</a></li>
@@ -333,7 +334,7 @@ The important part of this is
 <h3 id="org6f5d5cc">biopython</h3>
 <div class="outline-text-3" id="text-org6f5d5cc">
 
-<div id="orgadda3a3" class="figure">
+<div id="org86e6996" class="figure">
 <p><img src="../images/biopython-logo.png" alt="biopython-logo.png" width="300px" />
 </p>
 </div>
@@ -371,6 +372,38 @@ for if the current clade is a leaf node.</li>
     <span style="color: #006FE0;">file</span>.write(newick_tree)
 
 <span style="color: #BA36A5;">tree</span> = Phylo.read(filename, <span style="color: #008000;">"newick"</span>)
+<span style="color: #BA36A5;">clade</span> = tree.root
+
+<span style="color: #0000FF;">assert</span> clade[0][0].branch_length == 0.1
+<span style="color: #0000FF;">assert</span> clade[0][0].name == <span style="color: #008000;">"A"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd0f6edd" class="outline-4">
+<h4 id="orgd0f6edd">Example: Reading Nexus from file</h4>
+<div class="outline-text-4" id="text-orgd0f6edd">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">from</span> Bio <span style="color: #0000FF;">import</span> Phylo
+
+<span style="color: #BA36A5;">nexus_tree</span> = <span style="color: #008000;">"""</span>
+<span style="color: #008000;">#NEXUS</span>
+
+<span style="color: #008000;">BEGIN TAXA;</span>
+<span style="color: #008000;">    TAXLABELS A B C D;</span>
+<span style="color: #008000;">END;</span>
+
+<span style="color: #008000;">BEGIN TREES;</span>
+<span style="color: #008000;">    TREE tree1 = [&amp;R] ((A:0.1,B:0.2):0.3,(C:0.4,D:0.5):0.6);</span>
+<span style="color: #008000;">END;</span>
+<span style="color: #008000;">"""</span>
+
+<span style="color: #BA36A5;">filename</span> = <span style="color: #008000;">"foobar.nexus"</span>
+<span style="color: #0000FF;">with</span> <span style="color: #006FE0;">open</span>(filename, <span style="color: #008000;">"w+"</span>) <span style="color: #0000FF;">as</span> <span style="color: #006FE0;">file</span>:
+    <span style="color: #006FE0;">file</span>.write(nexus_tree)
+
+<span style="color: #BA36A5;">tree</span> = Phylo.read(filename, <span style="color: #008000;">"nexus"</span>)
 <span style="color: #BA36A5;">clade</span> = tree.root
 
 <span style="color: #0000FF;">assert</span> clade[0][0].branch_length == 0.1
@@ -559,7 +592,7 @@ fig.savefig(<span style="color: #008000;">"demo-plotting-ltt.png"</span>, dpi=30
 The output of this script is
 </p>
 
-<pre class="example" id="org0c92e17">
+<pre class="example" id="orgb9dc691">
 The mean branch length was 0.350
 The old tree height is 1.1
 The new tree height is 3.143
@@ -671,7 +704,7 @@ this seems to diminish as we get to larger trees.
 Gives us the following examples for different tree sizes.
 </p>
 
-<pre class="example" id="orgdf44358">
+<pre class="example" id="org8202e98">
 The ratio of time needed is 1.98 for Bio/pickle with 256 nodes with 250 replicates.
 The ratio of time needed is 2.00 for Bio/pickle with 512 nodes with 250 replicates.
 The ratio of time needed is 1.80 for Bio/pickle with 1024 nodes with 250 replicates.
@@ -1033,7 +1066,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-06-05 Wed 15:04</p>
+<p class="date">Created: 2024-10-19 Sat 10:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
