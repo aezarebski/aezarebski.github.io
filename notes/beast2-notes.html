@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-10-19 Sat 10:50 -->
+<!-- 2024-10-25 Fri 12:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>BEAST2 notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="org41f941d" class="figure">
+<div id="orga6ee951" class="figure">
 <p><img src="../images/beast2-logo.png" alt="beast2-logo.png" width="250px" />
 </p>
 </div>
@@ -248,7 +248,7 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#orgc88f874">Links</a></li>
-<li><a href="#org0177f39">Notes</a>
+<li><a href="#orge6926fa">Notes</a>
 <ul>
 <li><a href="#orga1fb111">Understanding BEAUti</a></li>
 <li><a href="#orgd892ffd">Build a BEAST2</a></li>
@@ -263,12 +263,13 @@
 <li><a href="#orge3b3ff9">ReMASTER</a></li>
 </ul>
 </li>
-<li><a href="#orgc1d7eae">Tools and useful R functions</a>
+<li><a href="#orgac638c8">Tools and useful functions</a>
 <ul>
 <li><a href="#org5309505">Cogsworth</a></li>
 <li><a href="#org61bf476">Cogsworth 2.0: snakemake flavoured Cogsworth</a></li>
 <li><a href="#orgea6ba96">Web beautify</a></li>
 <li><a href="#sec:read-beast2-log">Read BEAST2 log file</a></li>
+<li><a href="#org0a51699">Running BEAST2 XML files with Python</a></li>
 <li><a href="#orgc1eeab7">Pretty printing Tracer output</a></li>
 </ul>
 </li>
@@ -298,9 +299,9 @@
 </div>
 </div>
 
-<div id="outline-container-org0177f39" class="outline-2">
-<h2 id="org0177f39">Notes</h2>
-<div class="outline-text-2" id="text-org0177f39">
+<div id="outline-container-orge6926fa" class="outline-2">
+<h2 id="orge6926fa">Notes</h2>
+<div class="outline-text-2" id="text-orge6926fa">
 </div>
 <div id="outline-container-orga1fb111" class="outline-3">
 <h3 id="orga1fb111">Understanding BEAUti</h3>
@@ -342,9 +343,9 @@ packages are stored at.
 </p>
 </div>
 
-<div id="outline-container-orge6926fa" class="outline-4">
-<h4 id="orge6926fa">Notes</h4>
-<div class="outline-text-4" id="text-orge6926fa">
+<div id="outline-container-org4f2dcc3" class="outline-4">
+<h4 id="org4f2dcc3">Notes</h4>
+<div class="outline-text-4" id="text-org4f2dcc3">
 <ul class="org-ul">
 <li><code>v2.6.7</code>:</li>
 </ul>
@@ -1012,9 +1013,9 @@ details.
 </div>
 </div>
 
-<div id="outline-container-orgc1d7eae" class="outline-2">
-<h2 id="orgc1d7eae">Tools and useful R functions</h2>
-<div class="outline-text-2" id="text-orgc1d7eae">
+<div id="outline-container-orgac638c8" class="outline-2">
+<h2 id="orgac638c8">Tools and useful functions</h2>
+<div class="outline-text-2" id="text-orgac638c8">
 <ul class="org-ul">
 <li>You can run both <code>beast</code> and <code>beauti</code> from the command line as they are both
 available in the <code>beast.jar</code>. In the case of <code>beauti</code> it will be something like
@@ -1146,6 +1147,80 @@ The following function reads a log file into a suitable dataframe.
 }
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org0a51699" class="outline-3">
+<h3 id="org0a51699">Running BEAST2 XML files with Python</h3>
+<div class="outline-text-3" id="text-org0a51699">
+<p>
+The <code>run_beast2_simulations_parallel</code> takes a list of XML files and a
+number of workers and then distributes the running of these files
+across the workers. The <code>subprocess</code> package is used to run BEAST2 and
+we use the <code>ThreadPoolExecutor</code> (and <code>as_completed</code>) from
+<code>concurrent.futures</code> to manage the workers.
+</p>
+
+<p>
+This is particularly useful if you are running a whole heap of MCMC
+files as part of a simulation study, or trying to generate a lot of
+datasets with something like remaster.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">def</span> <span style="color: #006699;">run_beast2_simulations_parallel</span>(simulation_xml_list, num_jobs):
+    <span style="color: #0000FF;">def</span> <span style="color: #006699;">run_beast2</span>(simulation_xml):
+        <span style="color: #036A07;">"""</span>
+<span style="color: #036A07;">        Run a BEAST2 simulation using the provided XML file.</span>
+
+<span style="color: #036A07;">        If the simulation does not finish within 5 minutes, it is</span>
+<span style="color: #036A07;">        considered to have timed out.</span>
+
+<span style="color: #036A07;">        $ ./lib/beast/bin/beast -seed 1 -overwrite &lt;simulation_xml&gt;</span>
+<span style="color: #036A07;">        """</span>
+        <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Running simulation: </span>{simulation_xml}<span style="color: #008000;">"</span>)
+        <span style="color: #BA36A5;">beast_executable_mac</span> = <span style="color: #008000;">"/Applications/BEAST 2.7.6/bin/beast"</span>
+        <span style="color: #BA36A5;">beast_executable_linux</span> = <span style="color: #008000;">"./lib/beast/bin/beast"</span>
+        <span style="color: #0000FF;">if</span> os.path.exists(beast_executable_mac):
+            <span style="color: #BA36A5;">beast_executable</span> = beast_executable_mac
+        <span style="color: #0000FF;">elif</span> os.path.exists(beast_executable_linux):
+            <span style="color: #BA36A5;">beast_executable</span> = beast_executable_linux
+        <span style="color: #0000FF;">else</span>:
+            <span style="color: #0000FF;">raise</span> <span style="color: #6434A3;">Exception</span>(<span style="color: #008000;">"BEAST2 executable not found."</span>)
+        <span style="color: #BA36A5;">command</span> = [beast_executable, <span style="color: #008000;">"-seed"</span>, <span style="color: #008000;">"1"</span>, <span style="color: #008000;">"-overwrite"</span>, simulation_xml]
+        <span style="color: #0000FF;">try</span>:
+            <span style="color: #BA36A5;">result</span> = subprocess.run(
+                command,
+                check=<span style="color: #D0372D;">True</span>,
+                capture_output=<span style="color: #D0372D;">True</span>,
+                text=<span style="color: #D0372D;">True</span>,
+                timeout=300,
+            )
+            <span style="color: #0000FF;">return</span> result.stdout
+        <span style="color: #0000FF;">except</span> subprocess.TimeoutExpired:
+            <span style="color: #0000FF;">return</span> f<span style="color: #008000;">"BEAST2 simulation for </span>{simulation_xml}<span style="color: #008000;"> timed out."</span>
+        <span style="color: #0000FF;">except</span> subprocess.CalledProcessError <span style="color: #0000FF;">as</span> e:
+            <span style="color: #0000FF;">return</span> f<span style="color: #008000;">"Error occurred while running BEAST2 simulation for </span>{simulation_xml}<span style="color: #008000;">: </span>{e.stderr}<span style="color: #008000;">"</span>
+
+    <span style="color: #0000FF;">with</span> ThreadPoolExecutor(max_workers=num_jobs) <span style="color: #0000FF;">as</span> executor:
+        <span style="color: #BA36A5;">future_to_xml</span> = {
+            executor.submit(run_beast2, xml): xml <span style="color: #0000FF;">for</span> xml <span style="color: #0000FF;">in</span> simulation_xml_list
+        }
+        <span style="color: #0000FF;">for</span> future <span style="color: #0000FF;">in</span> as_completed(future_to_xml):
+            <span style="color: #BA36A5;">xml</span> = future_to_xml[future]
+            <span style="color: #0000FF;">try</span>:
+                <span style="color: #BA36A5;">data</span> = future.result()
+                <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Simulation completed for </span>{xml}<span style="color: #008000;">: </span>{data}<span style="color: #008000;">"</span>)
+            <span style="color: #0000FF;">except</span> <span style="color: #6434A3;">Exception</span> <span style="color: #0000FF;">as</span> exc:
+                <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Simulation generated an exception for </span>{xml}<span style="color: #008000;">: </span>{exc}<span style="color: #008000;">"</span>)
+</pre>
+</div>
+
+<p>
+Note that this assumes that the executable for BEAST2 is in one of two
+standard locations. This should be easy to fix if you have a different
+path.
+</p>
 </div>
 </div>
 
@@ -1320,9 +1395,9 @@ an <code>operator</code> and <code>logger</code> to perturb the state and record
 </div>
 </div>
 
-<div id="outline-container-org9b0da21" class="outline-4">
-<h4 id="org9b0da21">Running the sampler</h4>
-<div class="outline-text-4" id="text-org9b0da21">
+<div id="outline-container-org8c8ef76" class="outline-4">
+<h4 id="org8c8ef76">Running the sampler</h4>
+<div class="outline-text-4" id="text-org8c8ef76">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -1339,16 +1414,16 @@ unless you change the output file name.
 </div>
 </div>
 
-<div id="outline-container-orgc7af1b9" class="outline-4">
-<h4 id="orgc7af1b9">Visualising the results</h4>
-<div class="outline-text-4" id="text-orgc7af1b9">
+<div id="outline-container-orga7dd5d0" class="outline-4">
+<h4 id="orga7dd5d0">Visualising the results</h4>
+<div class="outline-text-4" id="text-orga7dd5d0">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="org769416d" class="figure">
+<div id="org9791735" class="figure">
 <p><img src="../images/beast-demo.png" alt="beast-demo.png" width="800px" />
 </p>
 </div>
@@ -1446,9 +1521,9 @@ heads and tails from the command line.
 </div>
 </div>
 
-<div id="outline-container-org96e2d3e" class="outline-4">
-<h4 id="org96e2d3e">Running the sampler</h4>
-<div class="outline-text-4" id="text-org96e2d3e">
+<div id="outline-container-org2d167a6" class="outline-4">
+<h4 id="org2d167a6">Running the sampler</h4>
+<div class="outline-text-4" id="text-org2d167a6">
 <p>
 Here is the command to actually run this program.
 </p>
@@ -1465,16 +1540,16 @@ tails.
 </div>
 </div>
 
-<div id="outline-container-orga7dd5d0" class="outline-4">
-<h4 id="orga7dd5d0">Visualising the results</h4>
-<div class="outline-text-4" id="text-orga7dd5d0">
+<div id="outline-container-org36bfef2" class="outline-4">
+<h4 id="org36bfef2">Visualising the results</h4>
+<div class="outline-text-4" id="text-org36bfef2">
 <p>
 Here is a visualisation of the resulting samples along with the distribution we
 were sampling from.
 </p>
 
 
-<div id="orgf06ee44" class="figure">
+<div id="orgbfa87ad" class="figure">
 <p><img src="../images/beast-02.png" alt="beast-02.png" width="800px" />
 </p>
 </div>
@@ -1732,9 +1807,9 @@ parameter.</li>
 </div>
 </div>
 
-<div id="outline-container-org8c8ef76" class="outline-4">
-<h4 id="org8c8ef76">Running the sampler</h4>
-<div class="outline-text-4" id="text-org8c8ef76">
+<div id="outline-container-orgc8f9e40" class="outline-4">
+<h4 id="orgc8f9e40">Running the sampler</h4>
+<div class="outline-text-4" id="text-orgc8f9e40">
 <p>
 Running the sampler for \(10^{6}\) iterations does not take very long and allows
 us to see which variables are getting stuck. There are some suggested
@@ -1820,7 +1895,7 @@ posterior distribution (histogram) and the true values used in the simulation
 </p>
 
 
-<div id="orgfeb055d" class="figure">
+<div id="org684b192" class="figure">
 <p><img src="../misc/beast2/bd-sim-ex-1/combined-results.png" alt="combined-results.png" width="800px" />
 </p>
 </div>
@@ -2186,7 +2261,7 @@ you might use in subsequent analyses.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-10-19 Sat 10:50</p>
+<p class="date">Created: 2024-10-25 Fri 12:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

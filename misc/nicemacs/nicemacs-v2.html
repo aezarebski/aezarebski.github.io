@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-10-19 Sat 10:51 -->
+<!-- 2024-10-30 Wed 14:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NICEMACS</title>
@@ -193,7 +193,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../../css/stylesheet.css" />
+<link rel="icon" type="image/png" href="../../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../../microgram.css">
 </head>
 <body>
 <div id="content" class="content">
@@ -203,7 +206,7 @@
 </p>
 
 
-<div id="orgdd12a77" class="figure">
+<div id="org748c23c" class="figure">
 <p><img src="./resources/nicemacs-logo.png" alt="nicemacs-logo.png" width="300px" />
 </p>
 </div>
@@ -575,7 +578,7 @@ scrolling (which gives a smoother scroll).
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">if you have a compatible mouse.</span>
 <span style="color: #8D8D84;">;;</span>
 
-(tool-bar-mode -1)                      <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">remove the tool bar</span>
+(tool-bar-mode -1)                     <span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">remove the tool bar</span>
 
 (pixel-scroll-precision-mode 1)
 (<span style="color: #0000FF;">setq</span> pixel-dead-time 0)
@@ -745,8 +748,7 @@ scrolling (which gives a smoother scroll).
 <h4 id="org5579024">Other</h4>
 <div class="outline-text-4" id="text-org5579024">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Rainbow-mode will highlight strings indicating colours,</span>
+<pre class="src src-emacs-lisp"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Rainbow-mode will highlight strings indicating colours,</span>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">e.g. hexcodes in their corresponding colour.</span>
 (<span style="color: #0000FF;">use-package</span> <span style="color: #D0372D;">rainbow-mode</span>
   <span style="color: #006FE0;">:ensure</span> t
@@ -2817,18 +2819,45 @@ search entered with <code>s</code> is very useful here.
 <h3 id="org90451f5">TRAMP</h3>
 <div class="outline-text-3" id="text-org90451f5">
 <p>
-TRAMP stands for "Transparent Remote (file) Access, Multiple Protocol". To use
-TRAMP find a file with <code>/method:user@host:/path/to/file</code>. If you usually SSH
-into server and you want to edit files there then the <code>method</code> is <code>ssh</code>. Once
-you are visiting a file in this way, the standard emacs functionality should
-work.
+TRAMP stands for "Transparent Remote (file) Access, Multiple Protocol". In
+general, TRAMP connections use the following syntax:
+<code>/protocol:[user@]hostname[#port]:/path/to/file</code>. If you usually SSH into server
+and you want to edit files there then the <code>protocol</code> will be <code>ssh</code>. If you omit
+the protocol it will use the method named by the variable <code>tramp-defaul-method</code>.
+(Mickey Petersen recommends setting <code>tramp-default-method</code> to <code>ssh</code> for
+convenience.) If you set up an <code>~/.ssh/config</code> file, TRAMP will be aware of
+these hosts. Once you are visiting a file in this way, the standard emacs
+functionality will work so ou can treat it like any other buffer.
+</p>
+</div>
+
+<div id="outline-container-orgb8a859a" class="outline-4">
+<h4 id="orgb8a859a">Example</h4>
+<div class="outline-text-4" id="text-orgb8a859a">
+<p>
+Suppose you had the ssh configuration shown below:
 </p>
 
+<pre class="example">
+Host foobar
+     HostName squanch.beep.boop
+     User flappy
+</pre>
+
 <p>
-Although, another thing to keep in mind is that you can just run emacs
-on the server, it will be the terminal version, but it is a simple
-solution.
+Then you could run <code>find-file</code> with the following to access a file at
+<code>~/bing/bong/readme.org</code>:
 </p>
+
+<pre class="example">
+/ssh:foobar:~/bing/bong/readme.org
+</pre>
+
+<p>
+And amazingly, tab-complete of paths should also work! If you give the path to a
+directory, this will open in dired.
+</p>
+</div>
 </div>
 </div>
 
@@ -2889,10 +2918,7 @@ information about known items:
 <div class="outline-text-4" id="text-org3e000c9">
 <ul class="org-ul">
 <li>There is the function <code>read-only-mode</code> which toggles read only mode, which
-replaces the obsolete <code>toggle-read-only</code> function.
-<ul class="org-ul">
-<li>In Spacemacs this is bound to <code>SPC b w</code> which seems strange.</li>
-</ul></li>
+replaces the obsolete <code>toggle-read-only</code> function.</li>
 </ul>
 </div>
 </div>
@@ -2938,7 +2964,7 @@ The following are key-bindings for emacs mode (use <code>\</code> to call
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-10-19 Sat 10:51</p>
+<p class="date">Created: 2024-10-30 Wed 14:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
