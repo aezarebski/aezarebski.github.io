@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-09-03 Tue 17:34 -->
+<!-- 2024-11-14 Thu 21:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>matplotlib-gallery-aez</title>
+<title>matplotlib gallery</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -193,20 +193,20 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="icon" type="image/png" href="../../resources/nicemacs-favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 <link rel="stylesheet" href="../../microgram.css">
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">matplotlib-gallery-aez</h1>
+<h1 class="title">matplotlib gallery</h1>
 <p>
-<a href="../../index.html">Home</a>
+<a href="../../notes.html">Home</a>
 </p>
 
 
-<div id="orgcf991c7" class="figure">
+<div id="orge5af117" class="figure">
 <p><img src="../../images/matplotlib-logo.png" alt="matplotlib-logo.png" width="250px" />
 </p>
 </div>
@@ -227,6 +227,7 @@
     </div>
     <div class="row">
       <a href="#fig-09"><img src="./fig09.png" width="250px"/></a>
+      <a href="#fig-10"><img src="./fig10.png" width="250px"/></a>
     </div>
   </div>
 </div>
@@ -555,6 +556,49 @@ fig.savefig(<span style="color: #008000;">"fig09.png"</span>, dpi=300)
 </pre>
 </div>
 
+<h3 id="fig-10">Figure 10</h3>
+<div><img src="./fig10.png" width="900px" /></div>
+
+<p>
+<b>Keywords:</b> scatter plot in 3d
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
+<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
+<span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+
+
+<span style="color: #BA36A5;">mtcars</span> = pd.read_csv(<span style="color: #008000;">"mtcars.csv"</span>)
+
+<span style="color: #BA36A5;">plot_df</span> = mtcars[[<span style="color: #008000;">"mpg"</span>, <span style="color: #008000;">"hp"</span>, <span style="color: #008000;">"wt"</span>, <span style="color: #008000;">"cyl"</span>]]
+
+
+<span style="color: #BA36A5;">fig</span> = plt.figure()
+<span style="color: #BA36A5;">ax</span> = fig.add_subplot(111, projection=<span style="color: #008000;">"3d"</span>)
+
+<span style="color: #BA36A5;">scatter</span> = ax.scatter(
+    plot_df[<span style="color: #008000;">"mpg"</span>],
+    plot_df[<span style="color: #008000;">"hp"</span>],
+    plot_df[<span style="color: #008000;">"wt"</span>],
+    c=plot_df[<span style="color: #008000;">"cyl"</span>],
+    cmap=<span style="color: #008000;">"viridis"</span>,
+    marker=<span style="color: #008000;">"o"</span>,
+)
+<span style="color: #BA36A5;">colorbar</span> = fig.colorbar(scatter, ax=ax, fraction=0.025, pad=0.25)
+colorbar.set_label(<span style="color: #008000;">"Number of Cylinders"</span>)
+
+ax.set_xlabel(<span style="color: #008000;">"Horsepower (HP)"</span>)
+ax.set_ylabel(<span style="color: #008000;">"Weight (1000 lbs)"</span>)
+ax.set_zlabel(<span style="color: #008000;">"Miles per Gallon (MPG)"</span>)
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">For an interactive plot, uncomment the following line.</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">plt.show()</span>
+
+fig.savefig(<span style="color: #008000;">"fig10.png"</span>, dpi=300)
+</pre>
+</div>
+
 <h3>Requirements file for python environment</h3>
 
 <pre class="example">
@@ -574,7 +618,7 @@ six==1.16.0
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-09-03 Tue 17:34</p>
+<p class="date">Created: 2024-11-14 Thu 21:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

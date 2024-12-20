@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-10-21 Mon 13:14 -->
+<!-- 2024-11-14 Thu 21:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org2595ac1" class="figure">
+<div id="orgdc07e53" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -228,7 +228,7 @@
 <li><a href="#org12c8707">Debugging</a></li>
 <li><a href="#org2969679"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#org148639e">High performance computing</a></li>
-<li><a href="#orgaa9b04a">IO</a></li>
+<li><a href="#org1fac72c">IO</a></li>
 </ul>
 </li>
 <li><a href="#sec:virtual-envs">Virtual environments</a>
@@ -240,6 +240,7 @@
 </li>
 <li><a href="#org49dac90">Python packages</a>
 <ul>
+<li><a href="#orgdca5cc0">argparse</a></li>
 <li><a href="#org558c942">Biopython</a></li>
 <li><a href="#org7f5fce4">Black (linting)</a></li>
 <li><a href="#org24a716d">h5py</a></li>
@@ -606,6 +607,7 @@ for this.
 <li><a href="https://docs.python.org/3/library/functools.html#module-functools"><code>functools</code></a></li>
 <li><a href="https://docs.python.org/3/library/itertools.html#module-itertools">=itertools</a></li>
 </ul></li>
+<li>You can create overloaded functions using the <a href="https://docs.python.org/3/library/functools.html#functools.singledispatch"><code>functools.singledispatch</code></a>.</li>
 </ul>
 </div>
 </div>
@@ -693,9 +695,9 @@ p.save(<span style="color: #008000;">"foo.png"</span>)
 </div>
 </div>
 
-<div id="outline-container-orgaa9b04a" class="outline-3">
-<h3 id="orgaa9b04a">IO</h3>
-<div class="outline-text-3" id="text-orgaa9b04a">
+<div id="outline-container-org1fac72c" class="outline-3">
+<h3 id="org1fac72c">IO</h3>
+<div class="outline-text-3" id="text-org1fac72c">
 </div>
 <div id="outline-container-org9be0b92" class="outline-4">
 <h4 id="org9be0b92">Pickle</h4>
@@ -895,6 +897,46 @@ rule conda_environment:
 For notes on installation of packages see the notes above about <a href="#orgb919290">pip</a> or
 <a href="#sec:virtual-envs">virtual environments</a>.
 </p>
+</div>
+
+<div id="outline-container-orgdca5cc0" class="outline-3">
+<h3 id="orgdca5cc0">argparse</h3>
+<div class="outline-text-3" id="text-orgdca5cc0">
+<p>
+The <code>argparse</code> module is part of the standard library.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF;">import</span> argparse
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create parser object</span>
+<span style="color: #BA36A5;">parser</span> = argparse.ArgumentParser()
+
+parser.add_argument(
+    <span style="color: #008000;">"-v"</span>,
+    <span style="color: #008000;">"--verbose"</span>,
+    action=<span style="color: #008000;">"store_true"</span>,
+    default=<span style="color: #D0372D;">False</span>,
+    <span style="color: #006FE0;">help</span>=<span style="color: #008000;">"Verbose output"</span>
+)
+parser.add_argument(
+    <span style="color: #008000;">"-s"</span>,
+    <span style="color: #008000;">"--seed"</span>,
+    <span style="color: #006FE0;">type</span>=<span style="color: #006FE0;">int</span>,
+    default=1,
+    <span style="color: #006FE0;">help</span>=<span style="color: #008000;">"PRNG seed"</span>
+)
+parser.add_argument(
+    <span style="color: #008000;">"-p"</span>,
+    <span style="color: #008000;">"--parameters"</span>,
+    <span style="color: #006FE0;">type</span>=<span style="color: #006FE0;">str</span>,
+    <span style="color: #006FE0;">help</span>=<span style="color: #008000;">"Filepath to parameters JSON"</span>
+)
+
+<span style="color: #BA36A5;">args</span> = parser.parse_args()
+</pre>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org558c942" class="outline-3">
@@ -1448,9 +1490,9 @@ Melting is particularly useful in plotting.
 </div>
 </div>
 
-<div id="outline-container-org54d6376" class="outline-4">
-<h4 id="org54d6376">IO</h4>
-<div class="outline-text-4" id="text-org54d6376">
+<div id="outline-container-orgf40b510" class="outline-4">
+<h4 id="orgf40b510">IO</h4>
+<div class="outline-text-4" id="text-orgf40b510">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1688,7 +1730,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-10-21 Mon 13:14</p>
+<p class="date">Created: 2024-11-14 Thu 21:18</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
