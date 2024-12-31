@@ -1,0 +1,27 @@
+rule all:
+    input:
+        "results-figure.png"
+
+
+rule make_pkl:
+    input:
+        "realNV.py",
+        py = "train.py"
+    output:
+        "training-results.pkl"
+    shell:
+        """
+        python {input.py}
+        """
+
+
+rule make_png:
+    input:
+        "training-results.pkl",
+        py = "plot.py"
+    output:
+        "results-figure.png"
+    shell:
+        """
+        python {input.py}
+        """
