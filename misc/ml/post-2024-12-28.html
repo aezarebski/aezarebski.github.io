@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-12-31 Tue 12:07 -->
+<!-- 2025-01-02 Thu 12:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 28/12/2024</title>
@@ -246,9 +246,11 @@
 <ul>
 <li><a href="#org88685b1"><b>DRAFT</b> Real NVP: Normalizing flows</a>
 <ul>
+<li><a href="#org4fa58cd">Overview</a></li>
 <li><a href="#org0874af4">Network implementation</a></li>
 <li><a href="#orga7a6674">Training</a></li>
 <li><a href="#org7f817b2">Example</a></li>
+<li><a href="#org4ad1036">Discussion</a></li>
 </ul>
 </li>
 </ul>
@@ -259,11 +261,15 @@
 <h2 id="org88685b1"><b>DRAFT</b> Real NVP: Normalizing flows</h2>
 <div class="outline-text-2" id="text-org88685b1">
 
-<div id="org064b6a0" class="figure">
+<div id="org11f3d74" class="figure">
 <p><img src="./example-2024-12-28/cover-image.webp" alt="cover-image.webp" width="400px" />
 </p>
 </div>
+</div>
 
+<div id="outline-container-org4fa58cd" class="outline-3">
+<h3 id="org4fa58cd">Overview</h3>
+<div class="outline-text-3" id="text-org4fa58cd">
 <p>
 In this example we will implement the <a href="https://arxiv.org/abs/1605.08803">real NVP</a>, which is a
 <i>normalizing flow</i> model. We will follow the description of this
@@ -291,6 +297,7 @@ implementation in PyTorch. You can find the model implementation <a href="./exam
 and training script <a href="./example-2024-12-28/train.py">here</a>, and a snakefile which coordinates the
 computation <a href="./example-2024-12-28/snakefile">here</a>.
 </p>
+</div>
 </div>
 
 <div id="outline-container-org0874af4" class="outline-3">
@@ -447,16 +454,40 @@ network the samples have a similar distribution to the training data.
 
 
 <div id="org3dff174" class="figure">
-<p><img src="./example-2024-12-28/results-figure.png" alt="results-figure.png" width="400px" />
+<p><img src="./example-2024-12-28/results-figure.png" alt="results-figure.png" width="700px" />
 </p>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org4ad1036" class="outline-3">
+<h3 id="org4ad1036">Discussion</h3>
+<div class="outline-text-3" id="text-org4ad1036">
+<p>
+I've wanted to do a post on normalizing flows for a long time; the
+ability to easily map between distributions seems too good to be true.
+The implementation of this network is a little bit more mathematically
+involved than what has been seen in previous posts, but I was
+satisfied with how it came together in the end. I couldn't see a
+particularly nice way to assess the trained model, but there are a few
+packages for normalizing flows, so maybe there are some nice ideas in
+there that I could use.
+</p>
+
+<p>
+In a follow up post, I want to extend this to get something along the
+lines of BayesFlow <a href="https://ieeexplore.ieee.org/document/9298920">1</a>, <a href="https://arxiv.org/abs/2306.16015">2</a>. Maybe the availability of training data will
+be a problem for real problems. I'm mainly interested in the
+application to amortized inference though, and in that case some sort
+of emulation might help.
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2024-12-31 Tue 12:07</p>
+<p class="date">Created: 2025-01-02 Thu 12:32</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
