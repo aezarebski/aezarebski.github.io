@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-06 Mon 09:32 -->
+<!-- 2025-01-11 Sat 12:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 28/12/2024</title>
@@ -243,24 +243,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org88685b1"><b>DRAFT</b> Real NVP: Normalizing flows</a>
+<li><a href="#org0a34fcc">Real NVP: Normalizing flows</a>
 <ul>
 <li><a href="#org4fa58cd">Overview</a></li>
-<li><a href="#org0874af4">Network implementation</a></li>
+<li><a href="#org5154bf5">Normalizing flows</a></li>
+<li><a href="#sec:implementation">Network implementation</a></li>
 <li><a href="#orga7a6674">Training</a></li>
 <li><a href="#org7f817b2">Example</a></li>
 <li><a href="#org4ad1036">Discussion</a></li>
+<li><a href="#org938484e">Thanks</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org88685b1" class="outline-2">
-<h2 id="org88685b1"><b>DRAFT</b> Real NVP: Normalizing flows</h2>
-<div class="outline-text-2" id="text-org88685b1">
+<div id="outline-container-org0a34fcc" class="outline-2">
+<h2 id="org0a34fcc">Real NVP: Normalizing flows</h2>
+<div class="outline-text-2" id="text-org0a34fcc">
 
-<div id="orgf497283" class="figure">
+<div id="org73f7974" class="figure">
 <p><img src="./example-2024-12-28/cover-image.webp" alt="cover-image.webp" width="400px" />
 </p>
 </div>
@@ -271,37 +273,83 @@
 <div class="outline-text-3" id="text-org4fa58cd">
 <p>
 In this example we will implement the <a href="https://arxiv.org/abs/1605.08803">real NVP</a>, which is a
-<i>normalizing flow</i> model. We will follow the description of this
-architecture given in Chapter 18 of <a href="https://www.bishopbook.com/">Bishop and Bishop (2024)</a>. The
-Bishops have done a great job of describing the mathematics, my goal
-here is to demonstrate how this might be implemented.
+<i>normalizing flow</i> model. I will follow the description given in
+Chapter 18 of <a href="https://www.bishopbook.com/">Bishop and Bishop (2024)</a>. The Bishops did a great job
+describing the mathematics, I want to demonstrate how it might be
+implemented in PyTorch.
 </p>
 
 <p>
 The goal of normalizing flows is to create an invertible mapping
 between samples from a <i>target</i> distribution and a <i>base</i>
-distribution, and in doing so get an approximation of the target's
-density. The target distribution will typically be expensive to sample
-from, and we may not be able to evaluate its density. The base
+distribution. As a bonus, we get an approximation of the target's PDF.
+The target distribution will typically be something expensive to
+sample from, and we may not be able to evaluate its density. The base
 distribution will be a convenient distribution, typically a
 multivariate normal (hence the "normalizing" part).
 </p>
 
 <p>
 The <i>real NVP</i> (short for "real-valued non-volume-preserving") is an
-invertible neural network normalizing flow. This network is described
-clearly by Bishop and Bishop (2024) in Section 18.1, so I won't go
-into the mathematical details here, but instead will step through an
-implementation in PyTorch. You can find the model implementation <a href="./example-2024-12-28/realNV.py">here</a>,
-and training script <a href="./example-2024-12-28/train.py">here</a>, and a snakefile which coordinates the
-computation <a href="./example-2024-12-28/snakefile">here</a>.
+invertible neural network that can be used as a normalizing flow. This
+network is described clearly by Bishop and Bishop (2024) in \(\S\)
+18.1, so I won't go into the mathematical details here, instead, I
+will present an implementation in PyTorch with a simple example. You
+can find the model implementation <a href="./example-2024-12-28/realNV.py">here</a>, and training script <a href="./example-2024-12-28/train.py">here</a>, and
+a snakefile which coordinates the computation <a href="./example-2024-12-28/snakefile">here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0874af4" class="outline-3">
-<h3 id="org0874af4">Network implementation</h3>
-<div class="outline-text-3" id="text-org0874af4">
+<div id="outline-container-org5154bf5" class="outline-3">
+<h3 id="org5154bf5">Normalizing flows</h3>
+<div class="outline-text-3" id="text-org5154bf5">
+<p>
+Consider a random variable \(X\) with an unknown target density
+\(p_X(x)\). Typically, \(X\) represents high-dimensional or complex
+data, such as the pixel values in an image, making it challenging to
+model or manipulate directly. Normalizing flows let us work with \(X\)
+indirectly, through a more convenient random variable \(Z\). The
+random variable \(Z\) comes from a simpler base distribution
+\(p_Z(z)\), e.g., a multivariate Gaussian. The goal is to construct an
+invertible transformation \(f\) that relates \(X\) and \(Z\) through
+\(X = f(Z)\). The inverse of \(f\), denoted \(g = f^{-1}\), allows us
+to map data from the \(X\)-space back to the \(Z\)-space.
+</p>
+
+<p>
+The function \(g\) lets us calculate the density \(p_X(x)\) in terms
+of the \(p_Z(z)\) via the change of variables formula:
+</p>
+
+<p>
+\[
+p_X(x) = p_Z(g(x)) \left|\det \mathbf{J}(x)\right|,
+\]
+</p>
+
+<p>
+where \(\mathbf{J}(x)\) is the Jacobian of the inverse transformation
+\(g\). In the Jacobian, the entry \((i, j)\) represents the partial
+derivative \(\frac{\partial g_i(x)}{\partial x_j}\). Having \(f\) and
+\(g\) lets us do two important things: sample from \(p_X(x)\), by
+sampling from \(p_Z(z)\) and applying the transformation \(f\); and
+evaluate \(p_X(x)\) using the formula above.
+</p>
+
+<p>
+Normalizing flows approximate \(f\) with a neural network. The network
+architecture must be designed so that \(f\) is invertible, the
+Jacobian is computationally efficient, and the \(g\) is easy to
+compute. Real NVP (Real-valued Non-Volume Preserving) networks are an
+example of such an architecture.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec:implementation" class="outline-3">
+<h3 id="sec:implementation">Network implementation</h3>
+<div class="outline-text-3" id="text-sec:implementation">
 <p>
 I implemented the real NVP in the class <code>RealNVP</code>. This extends the
 PyTorch <code>Module</code> class and adds methods for running the network in
@@ -437,8 +485,8 @@ identity as a covariance matrix. I trained the real NVP network with
 
 <p>
 To train this network I used Adam with default settings, a learning
-rate of \(2\times 10^{-4}\) and minibatches of size 64 for 1,000 epochs.
-The training data consisted of 1,000 samples from the target
+rate of \(2\times 10^{-4}\) and mini-batches of size 64 for 1,000
+epochs. The training data consisted of 1,000 samples from the target
 distribution.
 </p>
 
@@ -482,11 +530,21 @@ of emulation might help.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org938484e" class="outline-3">
+<h3 id="org938484e">Thanks</h3>
+<div class="outline-text-3" id="text-org938484e">
+<p>
+Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/">Jackson Kwok</a>, and <a href="https://www.liamhodgkinson.com/">Liam Hodgkinson</a> for helpful comments on a
+draft of this post.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-01-06 Mon 09:32</p>
+<p class="date">Created: 2025-01-11 Sat 12:10</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
