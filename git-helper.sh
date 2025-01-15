@@ -127,6 +127,8 @@ git add misc/ml/example-2024-05-02/optuna_intermediate_values.png
 git add misc/ml/example-2024-05-02/optuna_parallel_coordinate.png
 git add misc/ml/example-2024-05-02/optuna_param_importances.png
 git add misc/ml/example-2024-05-02/sampling-algorithm.png
+# 2024-05-16 post
+git add misc/ml/example-2024-05-16/cover-image.webp
 # 2024-12-28 post
 git add misc/ml/post-2024-12-28.html
 git add misc/ml/example-2024-12-28/cover-image.webp
