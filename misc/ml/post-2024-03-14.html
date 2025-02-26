@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-06 Mon 09:32 -->
+<!-- 2025-02-21 Fri 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 14/03/2024</title>
@@ -243,13 +243,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org65df097">Another look at SQR</a>
+<li><a href="#org98e0cdf">Another look at SQR</a>
 <ul>
-<li><a href="#org9f34004">Overview</a></li>
-<li><a href="#org525512c">Model and loss function</a></li>
-<li><a href="#orgd1f4b0e">Training</a></li>
-<li><a href="#org689efba">Results</a></li>
-<li><a href="#org759fa7e">Discussion</a></li>
+<li><a href="#org037902d">Overview</a></li>
+<li><a href="#org065b4f2">Model and loss function</a></li>
+<li><a href="#org1605486">Training</a></li>
+<li><a href="#org3ee2c7b">Results</a></li>
+<li><a href="#org33666be">Discussion</a></li>
 <li><a href="#sec:helper-functions">Helper functions</a></li>
 </ul>
 </li>
@@ -257,19 +257,19 @@
 </div>
 </div>
 
-<div id="outline-container-org65df097" class="outline-2">
-<h2 id="org65df097">Another look at SQR</h2>
-<div class="outline-text-2" id="text-org65df097">
+<div id="outline-container-org98e0cdf" class="outline-2">
+<h2 id="org98e0cdf">Another look at SQR</h2>
+<div class="outline-text-2" id="text-org98e0cdf">
 
-<div id="org7644faf" class="figure">
+<div id="orgb9668da" class="figure">
 <p><img src="./example-2024-03-14/cover-image.webp" alt="cover-image.webp" width="400px" />
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9f34004" class="outline-3">
-<h3 id="org9f34004">Overview</h3>
-<div class="outline-text-3" id="text-org9f34004">
+<div id="outline-container-org037902d" class="outline-3">
+<h3 id="org037902d">Overview</h3>
+<div class="outline-text-3" id="text-org037902d">
 <p>
 In this example we will use the <i>simultaneous quantile regression</i>
 (SQR) as proposed by <a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> to compute the
@@ -317,9 +317,9 @@ The full script with all the code is <a href="./example-2024-03-14/main.py">here
 </div>
 </div>
 
-<div id="outline-container-org525512c" class="outline-3">
-<h3 id="org525512c">Model and loss function</h3>
-<div class="outline-text-3" id="text-org525512c">
+<div id="outline-container-org065b4f2" class="outline-3">
+<h3 id="org065b4f2">Model and loss function</h3>
+<div class="outline-text-3" id="text-org065b4f2">
 <p>
 See the <a href="./post-2024-01-25.html">previous post</a> for details of the model and loss function.
 </p>
@@ -369,9 +369,9 @@ See the <a href="./post-2024-01-25.html">previous post</a> for details of the mo
 </div>
 </div>
 
-<div id="outline-container-orgd1f4b0e" class="outline-3">
-<h3 id="orgd1f4b0e">Training</h3>
-<div class="outline-text-3" id="text-orgd1f4b0e">
+<div id="outline-container-org1605486" class="outline-3">
+<h3 id="org1605486">Training</h3>
+<div class="outline-text-3" id="text-org1605486">
 <p>
 The training process is pretty standard and was <a href="./post-2024-01-25.html">previously covered</a> so
 I won't go into detail beyond pointing out that we run each step of
@@ -385,11 +385,11 @@ There are a lot of functions used here, they are provided in the
 </p>
 </div>
 
-<div id="outline-container-org5b098a8" class="outline-4">
-<h4 id="org5b098a8">Training loop</h4>
-<div class="outline-text-4" id="text-org5b098a8">
+<div id="outline-container-org9010b78" class="outline-4">
+<h4 id="org9010b78">Training loop</h4>
+<div class="outline-text-4" id="text-org9010b78">
 <div class="org-src-container">
-<pre class="src src-python" id="org7978bc6"><span style="color: #0000FF;">def</span> <span style="color: #006699;">train_model</span>(model, tau_dist, num_steps, train_data_gen):
+<pre class="src src-python" id="org20d58a6"><span style="color: #0000FF;">def</span> <span style="color: #006699;">train_model</span>(model, tau_dist, num_steps, train_data_gen):
     <span style="color: #BA36A5;">optimizer</span> = optim.Adam(model.parameters(), lr=1e-3)
     <span style="color: #BA36A5;">loss_function</span> = PinballLoss()
     model.train()
@@ -414,31 +414,31 @@ There are a lot of functions used here, they are provided in the
 </div>
 </div>
 
-<div id="outline-container-org689efba" class="outline-3">
-<h3 id="org689efba">Results</h3>
-<div class="outline-text-3" id="text-org689efba">
+<div id="outline-container-org3ee2c7b" class="outline-3">
+<h3 id="org3ee2c7b">Results</h3>
+<div class="outline-text-3" id="text-org3ee2c7b">
 <p>
-Figures <a href="#orgb06f01b">1</a> and <a href="#org9eee07e">2</a> show the point estimates across
+Figures <a href="#org70d19e9">1</a> and <a href="#org9dc4f67">2</a> show the point estimates across
 the two models. Model B (with the beta-distributed tau) has a lower
 MSE, although the difference is small.
 </p>
 
 
-<div id="orgb06f01b" class="figure">
+<div id="org70d19e9" class="figure">
 <p><img src="./example-2024-03-14/points-a.png" alt="points-a.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Point estimates using Model A (uniform tau)</p>
 </div>
 
 
-<div id="org9eee07e" class="figure">
+<div id="org9dc4f67" class="figure">
 <p><img src="./example-2024-03-14/points-b.png" alt="points-b.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Point estimates using Model B (beta tau)</p>
 </div>
 
 <p>
-Figures <a href="#org04a29cc">3</a> and <a href="#org3aad283">4</a> show the proportion of times
+Figures <a href="#org5ba1b25">3</a> and <a href="#org3969722">4</a> show the proportion of times
 the interval contains the true value across a range of levels. The MSE
 is between the requested coverage proportion (on the \(x\)-axis) and
 the empirical values (on the \(y\)-axis). Model B has a slightly
@@ -447,14 +447,14 @@ near the \(95\%\) level which is where most users are most interested.
 </p>
 
 
-<div id="org04a29cc" class="figure">
+<div id="org5ba1b25" class="figure">
 <p><img src="./example-2024-03-14/coverage-a.png" alt="coverage-a.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Coverage of intervals from Model A (uniform tau)</p>
 </div>
 
 
-<div id="org3aad283" class="figure">
+<div id="org3969722" class="figure">
 <p><img src="./example-2024-03-14/coverage-b.png" alt="coverage-b.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Coverage of intervals from Model B (beta tau)</p>
@@ -462,9 +462,9 @@ near the \(95\%\) level which is where most users are most interested.
 </div>
 </div>
 
-<div id="outline-container-org759fa7e" class="outline-3">
-<h3 id="org759fa7e">Discussion</h3>
-<div class="outline-text-3" id="text-org759fa7e">
+<div id="outline-container-org33666be" class="outline-3">
+<h3 id="org33666be">Discussion</h3>
+<div class="outline-text-3" id="text-org33666be">
 <p>
 In this example we have demonstrated how you can encourage a SQR to be
 more conservative with the quantiles it produces by sampling the
@@ -480,9 +480,9 @@ the beta distribution would be a good idea in practise.
 </p>
 </div>
 
-<div id="outline-container-orgff7cf8e" class="outline-4">
-<h4 id="orgff7cf8e">Thanks</h4>
-<div class="outline-text-4" id="text-orgff7cf8e">
+<div id="outline-container-org84d5b30" class="outline-4">
+<h4 id="org84d5b30">Thanks</h4>
+<div class="outline-text-4" id="text-org84d5b30">
 <p>
 Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/">Jackson Kwok</a>, and <a href="https://www.liamhodgkinson.com/">Liam Hodgkinson</a> for helpful comments on a
 draft of this.
@@ -495,7 +495,7 @@ draft of this.
 <h3 id="sec:helper-functions">Helper functions</h3>
 <div class="outline-text-3" id="text-sec:helper-functions">
 <div class="org-src-container">
-<pre class="src src-python" id="org1dfd4be"><span style="color: #0000FF;">def</span> <span style="color: #006699;">rand_dataset</span>(num_replicates: <span style="color: #006FE0;">int</span>, replicate_size: <span style="color: #006FE0;">int</span>):
+<pre class="src src-python" id="orgd1abcb4"><span style="color: #0000FF;">def</span> <span style="color: #006699;">rand_dataset</span>(num_replicates: <span style="color: #006FE0;">int</span>, replicate_size: <span style="color: #006FE0;">int</span>):
     <span style="color: #BA36A5;">mu_i</span> = normal.Normal(torch.tensor([0.0]), torch.tensor([10.0])).sample(
         sample_shape=torch.Size([num_replicates])
     )
@@ -595,7 +595,7 @@ draft of this.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-01-06 Mon 09:32</p>
+<p class="date">Created: 2025-02-21 Fri 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

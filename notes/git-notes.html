@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-28 Tue 15:17 -->
+<!-- 2025-01-30 Thu 18:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="orgfdceb8b" class="figure">
+<div id="orgbc6b81a" class="figure">
 <p><img src="../images/git-logo.png" alt="git-logo.png" width="300px" />
 </p>
 </div>
@@ -251,6 +251,7 @@
 <ul>
 <li><a href="#orgfa97987">Help! GitHub keeps asking me for my username and password</a></li>
 <li><a href="#sec:permission-denied">Help! I'm getting Permission denied (publickey)</a></li>
+<li><a href="#org0871ca9">Help! My git provider has gone wonky and I want to change to another</a></li>
 <li><a href="#org52bb365">How do I change the directory <code>git clone</code> clones into?</a></li>
 <li><a href="#org47acbeb">List how a file was last modified</a></li>
 <li><a href="#orge7c2efd">List current commit hash</a></li>
@@ -303,7 +304,7 @@ Make sure that you have got your remote set to the correct location, it should
 look like the following:
 </p>
 
-<pre class="example" id="orgb15f168">
+<pre class="example" id="orge3b0698">
 origin git@github.com:aezarebski/foobar.git
 </pre>
 
@@ -343,13 +344,25 @@ Note that you may need to use some extra commands to restart the ssh agent
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">eval "$(ssh-agent -s)"
-kill -9 &lt;agent pid&gt;
-eval `ssh-agent`
+<pre class="src src-sh"><span style="color: #006FE0;">eval</span> <span style="color: #008000;">"$(</span><span style="color: #FF1493;">ssh-agent -s</span><span style="color: #008000;">)"</span>
+<span style="color: #006FE0;">kill</span> -9 &lt;agent pid&gt;
+<span style="color: #006FE0;">eval</span> <span style="color: #FF1493;">`ssh-agent`</span>
 ssh-add ~/.ssh/&lt;your private key&gt;
 ssh git@gitprovider.com
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org0871ca9" class="outline-3">
+<h3 id="org0871ca9">Help! My git provider has gone wonky and I want to change to another</h3>
+<div class="outline-text-3" id="text-org0871ca9">
+<ol class="org-ol">
+<li>Create a new repo with that new provider and add it as a remote: <code>git remote add providerName git@providerName.com:username/myRepo.git</code>.</li>
+<li>Rename the remotes so the one you care about is called <code>origin</code> with <code>git remote rename oldRemoteName newRemoteName</code>.</li>
+<li>Update branch tracking with <code>git branch --set-upstream-to=origin/main main</code></li>
+<li>Use <code>git push -v</code> to confirm it has worked</li>
+</ol>
 </div>
 </div>
 
@@ -403,7 +416,7 @@ commits that have changed those lines of the file.
 <h3 id="orge7c2efd">List current commit hash</h3>
 <div class="outline-text-3" id="text-orge7c2efd">
 <div class="org-src-container">
-<pre class="src src-sh">git log -1 --format="%H"
+<pre class="src src-sh">git log -1 --format=<span style="color: #008000;">"%H"</span>
 </pre>
 </div>
 </div>
@@ -727,7 +740,7 @@ messy.
 git checkout -b feature-neat
 git checkout feature-neat
 git merge --squash feature-messy
-git commit # This step may require more attention
+git commit <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">This step may require more attention</span>
 git checkout master
 git merge feature-neat
 </pre>
@@ -765,9 +778,9 @@ you want from branch <code>Y</code>. To pull those edits over you can do the fol
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git checkout X                  # we need to be on X
-git checkout Y f1 f2            # checkout out the edited files
-git commit -m "Pull edits over" # Profit!
+<pre class="src src-sh">git checkout X                  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">we need to be on X</span>
+git checkout Y f1 f2            <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">checkout out the edited files</span>
+git commit -m <span style="color: #008000;">"Pull edits over"</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Profit!</span>
 </pre>
 </div>
 </div>
@@ -806,7 +819,7 @@ The following command should set vim as the default editor on a machine.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git config --global core.editor "vim"
+<pre class="src src-sh">git config --global core.editor <span style="color: #008000;">"vim"</span>
 </pre>
 </div>
 </div>
@@ -886,7 +899,7 @@ some keys do the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">cd ~/.ssh
+<pre class="src src-shell"><span style="color: #006FE0;">cd</span> ~/.ssh
 ssh-keygen
 </pre>
 </div>
@@ -949,23 +962,23 @@ determine how many times my <a href="https://aezarebski.github.io/timtam/">timta
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">import requests
+<pre class="src src-python"><span style="color: #0000FF;">import</span> requests
 
-# Replace with your repository details
-owner = 'aezarebski'
-repo = 'timtam2'
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Replace with your repository details</span>
+<span style="color: #BA36A5;">owner</span> = <span style="color: #008000;">'aezarebski'</span>
+<span style="color: #BA36A5;">repo</span> = <span style="color: #008000;">'timtam2'</span>
 
-response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/releases')
-releases = response.json()
+<span style="color: #BA36A5;">response</span> = requests.get(f<span style="color: #008000;">'https://api.github.com/repos/</span>{owner}<span style="color: #008000;">/</span>{repo}<span style="color: #008000;">/releases'</span>)
+<span style="color: #BA36A5;">releases</span> = response.json()
 
-counts = []
-for release in releases:
-    print(f"Release: {release['name']}")
-    for asset in release['assets']:
-        print(f"  Asset: {asset['name']}, Downloads: {asset['download_count']}")
-        counts.append(asset['download_count'])
+<span style="color: #BA36A5;">counts</span> = []
+<span style="color: #0000FF;">for</span> release <span style="color: #0000FF;">in</span> releases:
+    <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Release: </span>{release['name']}<span style="color: #008000;">"</span>)
+    <span style="color: #0000FF;">for</span> asset <span style="color: #0000FF;">in</span> release[<span style="color: #008000;">'assets'</span>]:
+        <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"  Asset: </span>{asset['name']}<span style="color: #008000;">, Downloads: </span>{asset['download_count']}<span style="color: #008000;">"</span>)
+        counts.append(asset[<span style="color: #008000;">'download_count'</span>])
 
-print(f"Total download count: {sum(counts)}")
+<span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Total download count: </span>{<span style="color: #006FE0;">sum</span>(counts)}<span style="color: #008000;">"</span>)
 </pre>
 </div>
 </div>
@@ -988,7 +1001,7 @@ See my <a href="#sec:ssh-keys">notes</a> on how to use these with GitHub.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-01-28 Tue 15:17</p>
+<p class="date">Created: 2025-01-30 Thu 18:06</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

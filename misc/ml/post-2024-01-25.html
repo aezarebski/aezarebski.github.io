@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-06 Mon 09:32 -->
+<!-- 2025-02-21 Fri 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 25/01/2024</title>
@@ -239,9 +239,9 @@
   <a class="button button-outline nav-button" href="./post-2024-02-08.html">Next</a>
 </div>
 
-<div id="outline-container-org4ba5060" class="outline-2">
-<h2 id="org4ba5060">Simultaneous quantile regression</h2>
-<div class="outline-text-2" id="text-org4ba5060">
+<div id="outline-container-org981486d" class="outline-2">
+<h2 id="org981486d">Simultaneous quantile regression</h2>
+<div class="outline-text-2" id="text-org981486d">
 <p>
 In this example we will use the <i>simultaneous quantile regression</i>
 (SQR) as proposed by <a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> to compute the
@@ -265,9 +265,9 @@ use simulated data so we have a known "truth" to compare to.
 </p>
 </div>
 
-<div id="outline-container-org62443f9" class="outline-3">
-<h3 id="org62443f9">Data generating process</h3>
-<div class="outline-text-3" id="text-org62443f9">
+<div id="outline-container-org450d68d" class="outline-3">
+<h3 id="org450d68d">Data generating process</h3>
+<div class="outline-text-3" id="text-org450d68d">
 <p>
 The input to our neural network is a datum,
 \(x_i=(x_i^1,\ldots,x_i^m)\), where
@@ -288,9 +288,9 @@ can calculate the quantiles analytically.
 </div>
 </div>
 
-<div id="outline-container-org4639592" class="outline-3">
-<h3 id="org4639592">Loading packages</h3>
-<div class="outline-text-3" id="text-org4639592">
+<div id="outline-container-orgb394a7e" class="outline-3">
+<h3 id="orgb394a7e">Loading packages</h3>
+<div class="outline-text-3" id="text-orgb394a7e">
 <p>
 PyTorch has some nice random number generation functionality and this
 saves us needing to put the values into tensors later. We set the seed
@@ -320,9 +320,9 @@ torch.manual_seed(0)
 </div>
 </div>
 
-<div id="outline-container-orga4daa53" class="outline-3">
-<h3 id="orga4daa53">Define the input and output filenames</h3>
-<div class="outline-text-3" id="text-orga4daa53">
+<div id="outline-container-org6cf1f1c" class="outline-3">
+<h3 id="org6cf1f1c">Define the input and output filenames</h3>
+<div class="outline-text-3" id="text-org6cf1f1c">
 <p>
 There is a <code>replicate_size</code> (in addition to a number of replicates)
 because we are using a permutation invariant network similar to the
@@ -346,9 +346,9 @@ because we are using a permutation invariant network similar to the
 </div>
 </div>
 
-<div id="outline-container-org6b2f6e3" class="outline-3">
-<h3 id="org6b2f6e3">Define the network architecture</h3>
-<div class="outline-text-3" id="text-org6b2f6e3">
+<div id="outline-container-orgb4b65c6" class="outline-3">
+<h3 id="orgb4b65c6">Define the network architecture</h3>
+<div class="outline-text-3" id="text-orgb4b65c6">
 <ul class="org-ul">
 <li>The network we will use is based on the one from the <a href="./post-2024-01-11.html">previous post</a>.</li>
 <li>We call the network <code>LocationNB</code> because it estimates the location
@@ -395,9 +395,9 @@ quantile to compute.</li>
 </div>
 </div>
 
-<div id="outline-container-org6ebca59" class="outline-3">
-<h3 id="org6ebca59">Define the pinball loss function</h3>
-<div class="outline-text-3" id="text-org6ebca59">
+<div id="outline-container-org3d22bb8" class="outline-3">
+<h3 id="org3d22bb8">Define the pinball loss function</h3>
+<div class="outline-text-3" id="text-org3d22bb8">
 <p>
 We define the pinball loss as a PyTorch loss function so the network
 can learn to predict quantiles. To see why this function yields the
@@ -438,9 +438,9 @@ the ordering of the quantiles is not respected.
 </div>
 </div>
 
-<div id="outline-container-orgbdbaacb" class="outline-3">
-<h3 id="orgbdbaacb">Define data generating process</h3>
-<div class="outline-text-3" id="text-orgbdbaacb">
+<div id="outline-container-org33e9873" class="outline-3">
+<h3 id="org33e9873">Define data generating process</h3>
+<div class="outline-text-3" id="text-org33e9873">
 <p>
 Because we are going to need separate training and testing datasets,
 it is helpful to have a function that makes it easy to simulate new
@@ -465,9 +465,9 @@ data.
 </div>
 </div>
 
-<div id="outline-container-org3b89b80" class="outline-3">
-<h3 id="org3b89b80">Prepare for training</h3>
-<div class="outline-text-3" id="text-org3b89b80">
+<div id="outline-container-org2028909" class="outline-3">
+<h3 id="org2028909">Prepare for training</h3>
+<div class="outline-text-3" id="text-org2028909">
 <p>
 Because it worked out of the box, I didn't see much need to go beyond
 a standard Adam optimizer.
@@ -484,9 +484,9 @@ a standard Adam optimizer.
 </div>
 </div>
 
-<div id="outline-container-org6fd8840" class="outline-3">
-<h3 id="org6fd8840">Run the training loop</h3>
-<div class="outline-text-3" id="text-org6fd8840">
+<div id="outline-container-orgffc52f6" class="outline-3">
+<h3 id="orgffc52f6">Run the training loop</h3>
+<div class="outline-text-3" id="text-orgffc52f6">
 <p>
 At each step of the optimisation we simulate a new data set so we
 don't need to worry about shuffling or precomputing all the data
@@ -526,16 +526,16 @@ criterion.
 </div>
 </div>
 
-<div id="outline-container-org669ae79" class="outline-3">
-<h3 id="org669ae79">Visualise training results</h3>
-<div class="outline-text-3" id="text-org669ae79">
+<div id="outline-container-org7c1243d" class="outline-3">
+<h3 id="org7c1243d">Visualise training results</h3>
+<div class="outline-text-3" id="text-org7c1243d">
 <p>
 We can visualise the training error across the steps of the
 optimisation.
 </p>
 
 
-<div id="org3cf0ea1" class="figure">
+<div id="orgcde659a" class="figure">
 <p><img src="./example-2024-01-25/loss.png" alt="loss.png" width="400px" />
 </p>
 </div>
@@ -550,9 +550,9 @@ loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </div>
 </div>
 
-<div id="outline-container-org1595f76" class="outline-3">
-<h3 id="org1595f76">Test the network performance</h3>
-<div class="outline-text-3" id="text-org1595f76">
+<div id="outline-container-org891a3e6" class="outline-3">
+<h3 id="org891a3e6">Test the network performance</h3>
+<div class="outline-text-3" id="text-org891a3e6">
 <p>
 To test how well-calibrated the predicted quantiles are we generate a
 large dataset and then investigate how often the empirical quantiles
@@ -561,7 +561,7 @@ means perfect.
 </p>
 
 
-<div id="orgb959c11" class="figure">
+<div id="orgdc5c015" class="figure">
 <p><img src="./example-2024-01-25/coverage.png" alt="coverage.png" width="400px" />
 </p>
 </div>
@@ -584,9 +584,9 @@ means perfect.
 </div>
 </div>
 
-<div id="outline-container-orgb730e97" class="outline-4">
-<h4 id="orgb730e97">Visualisation</h4>
-<div class="outline-text-4" id="text-orgb730e97">
+<div id="outline-container-org8f9fced" class="outline-4">
+<h4 id="org8f9fced">Visualisation</h4>
+<div class="outline-text-4" id="text-org8f9fced">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">test_df</span> = pd.DataFrame(test_results, columns=[<span style="color: #008000;">"alpha"</span>, <span style="color: #008000;">"correct"</span>, <span style="color: #008000;">"total"</span>])
 
@@ -604,9 +604,9 @@ means perfect.
 </div>
 </div>
 
-<div id="outline-container-org550015b" class="outline-3">
-<h3 id="org550015b">Discussion</h3>
-<div class="outline-text-3" id="text-org550015b">
+<div id="outline-container-org9e5faf0" class="outline-3">
+<h3 id="org9e5faf0">Discussion</h3>
+<div class="outline-text-3" id="text-org9e5faf0">
 <p>
 Simultaneous quantile regression produces a generic quantile
 regression model. However, the method lacks finite-sample guarantees.
@@ -616,9 +616,9 @@ described by <a href="https://arxiv.org/abs/1905.03222">Romano et al (2019)</a>)
 </p>
 </div>
 
-<div id="outline-container-orgdfb80e7" class="outline-4">
-<h4 id="orgdfb80e7">Thanks</h4>
-<div class="outline-text-4" id="text-orgdfb80e7">
+<div id="outline-container-org0375e3e" class="outline-4">
+<h4 id="org0375e3e">Thanks</h4>
+<div class="outline-text-4" id="text-org0375e3e">
 <p>
 Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/">Jackson Kwok</a> for helpful comments on a draft of this.
 </p>
@@ -629,7 +629,7 @@ Thanks to <a href="https://www.svi.edu.au/researchers/dr-chun-fung-jackson-kwok/
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-01-06 Mon 09:32</p>
+<p class="date">Created: 2025-02-21 Fri 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

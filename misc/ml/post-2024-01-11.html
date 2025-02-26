@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-01-06 Mon 09:32 -->
+<!-- 2025-02-21 Fri 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 11/01/2024</title>
@@ -239,9 +239,9 @@
   <a class="button button-outline nav-button" href="./post-2024-01-25.html">Next</a>
 </div>
 
-<div id="outline-container-org389a00b" class="outline-2">
-<h2 id="org389a00b">Neural Bayes estimators</h2>
-<div class="outline-text-2" id="text-org389a00b">
+<div id="outline-container-org9b45316" class="outline-2">
+<h2 id="org9b45316">Neural Bayes estimators</h2>
+<div class="outline-text-2" id="text-org9b45316">
 <p>
 In this example we will use the <i>neural Bayes estimators</i> developed by
 <a href="https://doi.org/10.1080/00031305.2023.2249522">Sainsbury-Dale et al (2023)</a> for the very simple task of generating a
@@ -249,19 +249,19 @@ point estimate of the parameters of a linear regression. Training the
 model was a bit harder than in previous MNIST examples, but with a bit
 of trial-and-error I was able to get something reasonable that trained
 in under 5 minutes. The overall architecture used in the paper is
-shown in Figure <a href="#org7efb2c7">1</a>.
+shown in Figure <a href="#org16b161a">1</a>.
 </p>
 
 
-<div id="org7efb2c7" class="figure">
+<div id="org16b161a" class="figure">
 <p><img src="./diagrams/drawing-2024-01-11.png" alt="drawing-2024-01-11.png" width="400px" />
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb02ae0d" class="outline-3">
-<h3 id="orgb02ae0d">A statistical model</h3>
-<div class="outline-text-3" id="text-orgb02ae0d">
+<div id="outline-container-orgdc9269c" class="outline-3">
+<h3 id="orgdc9269c">A statistical model</h3>
+<div class="outline-text-3" id="text-orgdc9269c">
 <p>
 The statistical model we are interested in estimating the parameters
 of is linear regression:
@@ -289,9 +289,9 @@ could use the bootstrap since parameter estimation is so cheap.
 </div>
 </div>
 
-<div id="outline-container-orgb70b232" class="outline-3">
-<h3 id="orgb70b232">Loading packages</h3>
-<div class="outline-text-3" id="text-orgb70b232">
+<div id="outline-container-orgae9ea5a" class="outline-3">
+<h3 id="orgae9ea5a">Loading packages</h3>
+<div class="outline-text-3" id="text-orgae9ea5a">
 <p>
 Load packages and set the seed used by PyTorch. Since there is
 extensive functionality for random number generation in PyTorch, we
@@ -315,9 +315,9 @@ torch.manual_seed(0)
 </div>
 </div>
 
-<div id="outline-container-org7814b1c" class="outline-3">
-<h3 id="org7814b1c">Define the input and output filenames</h3>
-<div class="outline-text-3" id="text-org7814b1c">
+<div id="outline-container-org7dc785d" class="outline-3">
+<h3 id="org7dc785d">Define the input and output filenames</h3>
+<div class="outline-text-3" id="text-org7dc785d">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">training_data_csv</span> = <span style="color: #008000;">"data/linear-regression-2024-01-11-training.csv"</span>
 <span style="color: #BA36A5;">testing_data_csv</span> = <span style="color: #008000;">"data/linear-regression-2024-01-11-testing.csv"</span>
@@ -329,9 +329,9 @@ torch.manual_seed(0)
 </div>
 </div>
 
-<div id="outline-container-org0f2cced" class="outline-3">
-<h3 id="org0f2cced">Define statistical model constants</h3>
-<div class="outline-text-3" id="text-org0f2cced">
+<div id="outline-container-org0ac9e6f" class="outline-3">
+<h3 id="org0ac9e6f">Define statistical model constants</h3>
+<div class="outline-text-3" id="text-org0ac9e6f">
 <p>
 Since each datum for this model is itself a dataset, we need to define
 the size of those datasets. This corresponds to the parameter \(J\) in
@@ -351,9 +351,9 @@ not appear to test it, here it is fixed to <code>dataset_size</code>.
 </div>
 </div>
 
-<div id="outline-container-org80ffd55" class="outline-3">
-<h3 id="org80ffd55">Define simulation constants</h3>
-<div class="outline-text-3" id="text-org80ffd55">
+<div id="outline-container-org5482c85" class="outline-3">
+<h3 id="org5482c85">Define simulation constants</h3>
+<div class="outline-text-3" id="text-org5482c85">
 <p>
 The value of <code>train_reps</code> is the number of datasets that we will
 generate, this corresponds loosely to the parameter \(K\) in the paper.
@@ -371,9 +371,9 @@ The <code>test_reps</code> is there to define how big the test set is.
 </div>
 </div>
 
-<div id="outline-container-orgd4912d4" class="outline-3">
-<h3 id="orgd4912d4">Simulate training data</h3>
-<div class="outline-text-3" id="text-orgd4912d4">
+<div id="outline-container-org69ebc70" class="outline-3">
+<h3 id="org69ebc70">Simulate training data</h3>
+<div class="outline-text-3" id="text-org69ebc70">
 <p>
 Simulating the training data is a little bit fiddly, but the only
 notable thing is the use of the <a href="https://pytorch.org/docs/stable/generated/torch.bmm.html#torch-bmm">bmm</a> function to do the batch
@@ -420,9 +420,9 @@ testing dataset, it makes sense to write a function to do this.
 </div>
 </div>
 
-<div id="outline-container-orgc5b82cd" class="outline-4">
-<h4 id="orgc5b82cd">Save the training data to CSV</h4>
-<div class="outline-text-4" id="text-orgc5b82cd">
+<div id="outline-container-orga2dfb37" class="outline-4">
+<h4 id="orga2dfb37">Save the training data to CSV</h4>
+<div class="outline-text-4" id="text-orga2dfb37">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">train_data_df</span> = []
 <span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(train_data.shape[0]):
@@ -445,9 +445,9 @@ train_data_df.to_csv(training_data_csv)
 </div>
 </div>
 
-<div id="outline-container-orgd06f983" class="outline-3">
-<h3 id="orgd06f983">Define the model architecture</h3>
-<div class="outline-text-3" id="text-orgd06f983">
+<div id="outline-container-org2ddd397" class="outline-3">
+<h3 id="org2ddd397">Define the model architecture</h3>
+<div class="outline-text-3" id="text-org2ddd397">
 <p>
 There are three components to this module: the \(\psi\) network which
 summarises a single datum, the \(a\) aggregator which combines these
@@ -510,9 +510,9 @@ leave them there.
 </div>
 </div>
 
-<div id="outline-container-org2a26998" class="outline-3">
-<h3 id="org2a26998">Instantiate the network and check it works as expected</h3>
-<div class="outline-text-3" id="text-org2a26998">
+<div id="outline-container-orgdb0c3cf" class="outline-3">
+<h3 id="orgdb0c3cf">Instantiate the network and check it works as expected</h3>
+<div class="outline-text-3" id="text-orgdb0c3cf">
 <p>
 As mentioned above, this network will only work for datasets of a
 fixed size, so we need to specify this at run time when the network is
@@ -528,9 +528,9 @@ initialised.
 </div>
 </div>
 
-<div id="outline-container-orgb1d58ab" class="outline-3">
-<h3 id="orgb1d58ab">Train the network</h3>
-<div class="outline-text-3" id="text-orgb1d58ab">
+<div id="outline-container-orgd9972db" class="outline-3">
+<h3 id="orgd9972db">Train the network</h3>
+<div class="outline-text-3" id="text-orgd9972db">
 <p>
 Since this is a regression problem we will use the MSE loss function.
 We manage the batching of the data manually. Since it is simulated, it
@@ -571,11 +571,11 @@ lm_nb.<span style="color: #006FE0;">eval</span>()
 </div>
 </div>
 
-<div id="outline-container-org7ddd6af" class="outline-3">
-<h3 id="org7ddd6af">Visualise the training process</h3>
-<div class="outline-text-3" id="text-org7ddd6af">
+<div id="outline-container-org21c8c79" class="outline-3">
+<h3 id="org21c8c79">Visualise the training process</h3>
+<div class="outline-text-3" id="text-org21c8c79">
 
-<div id="orgce8d252" class="figure">
+<div id="orge79e8c0" class="figure">
 <p><img src="./example-2024-01-11-loss.png" alt="example-2024-01-11-loss.png" width="400px" />
 </p>
 </div>
@@ -593,9 +593,9 @@ loss_df.to_csv(loss_csv)
 </div>
 </div>
 
-<div id="outline-container-org676ce10" class="outline-3">
-<h3 id="org676ce10">Simulate testing data</h3>
-<div class="outline-text-3" id="text-org676ce10">
+<div id="outline-container-org96b5b56" class="outline-3">
+<h3 id="org96b5b56">Simulate testing data</h3>
+<div class="outline-text-3" id="text-org96b5b56">
 <p>
 We can reuse the function from above to simulate a dataset to test the
 model with.
@@ -609,9 +609,9 @@ model with.
 </div>
 </div>
 
-<div id="outline-container-orga315dc8" class="outline-4">
-<h4 id="orga315dc8">Save the testing data to CSV</h4>
-<div class="outline-text-4" id="text-orga315dc8">
+<div id="outline-container-org1963e99" class="outline-4">
+<h4 id="org1963e99">Save the testing data to CSV</h4>
+<div class="outline-text-4" id="text-org1963e99">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">test_data_df</span> = []
 <span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(test_data.shape[0]):
@@ -634,9 +634,9 @@ test_data_df.to_csv(testing_data_csv)
 </div>
 </div>
 
-<div id="outline-container-orgd007b6e" class="outline-3">
-<h3 id="orgd007b6e">Visualise the test results</h3>
-<div class="outline-text-3" id="text-orgd007b6e">
+<div id="outline-container-org98acb2d" class="outline-3">
+<h3 id="org98acb2d">Visualise the test results</h3>
+<div class="outline-text-3" id="text-org98acb2d">
 <p>
 The agreement between the true parameters and the estimates is good,
 but with the value of \(m\) that should be expected. It would be nice to
@@ -645,19 +645,19 @@ future.
 </p>
 
 
-<div id="org7942990" class="figure">
+<div id="orge2afc4d" class="figure">
 <p><img src="./example-2024-01-11-beta0.png" alt="example-2024-01-11-beta0.png" width="400px" />
 </p>
 </div>
 
 
-<div id="org77d7f19" class="figure">
+<div id="org528797d" class="figure">
 <p><img src="./example-2024-01-11-beta1.png" alt="example-2024-01-11-beta1.png" width="400px" />
 </p>
 </div>
 
 
-<div id="orge72d3ae" class="figure">
+<div id="orgcb27f0d" class="figure">
 <p><img src="./example-2024-01-11-beta2.png" alt="example-2024-01-11-beta2.png" width="400px" />
 </p>
 </div>
@@ -696,9 +696,9 @@ future.
 </div>
 </div>
 
-<div id="outline-container-orgceb72de" class="outline-3">
-<h3 id="orgceb72de">Discussion</h3>
-<div class="outline-text-3" id="text-orgceb72de">
+<div id="outline-container-org73227c1" class="outline-3">
+<h3 id="org73227c1">Discussion</h3>
+<div class="outline-text-3" id="text-org73227c1">
 <p>
 Neural Bayes estimators provide a way to approximate Bayes estimators
 with neural networks, yieldling flexible approach to likelihood-free
@@ -713,7 +713,7 @@ Lopez-Paz (2019)</a>.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-01-06 Mon 09:32</p>
+<p class="date">Created: 2025-02-21 Fri 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
