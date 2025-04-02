@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:51 -->
+<!-- 2025-04-02 Wed 21:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>emacs-lisp-aez-notes</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -208,52 +208,50 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org899045e">Emacs Lisp the language</a>
+<li><a href="#org3e28ae8">Emacs Lisp the language</a>
 <ul>
-<li><a href="#org1902b26">Variables</a></li>
-<li><a href="#orgc064e10">Nonstandard evaluation</a></li>
-<li><a href="#orgc92e0a8">Program flow</a></li>
-<li><a href="#orgb4799ff">String handling</a></li>
-<li><a href="#org6e08894">Working with dates and times</a></li>
-<li><a href="#orgc5f2514">Working with files</a></li>
-<li><a href="#orgbff72c7">Working with passwords</a></li>
-<li><a href="#orgd2725ec">System command</a></li>
-<li><a href="#org79bd23d">SICP</a></li>
+<li><a href="#orgc619697">Variables</a></li>
+<li><a href="#org793e805">Nonstandard evaluation</a></li>
+<li><a href="#org6a35f77">Program flow</a></li>
+<li><a href="#orgfbb2594">String handling</a></li>
+<li><a href="#org1b79a85">Working with dates and times</a></li>
+<li><a href="#org0f33ec3">Working with files</a></li>
+<li><a href="#orgb3f437f">Working with passwords</a></li>
+<li><a href="#org55b9e29">System command</a></li>
+<li><a href="#orgf9bc7dc">SICP</a></li>
 </ul>
 </li>
-<li><a href="#org08aa3d9">Emacs Lisp Packages</a>
+<li><a href="#org7e43ccf">Emacs Lisp Packages</a>
 <ul>
-<li><a href="#org85bb20d">JSON</a></li>
-<li><a href="#orgd26bd0d">String</a></li>
+<li><a href="#orge393889">JSON</a></li>
+<li><a href="#orgca7e73e">String</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org899045e" class="outline-2">
-<h2 id="org899045e">Emacs Lisp the language</h2>
-<div class="outline-text-2" id="text-org899045e">
+<div id="outline-container-org3e28ae8" class="outline-2">
+<h2 id="org3e28ae8">Emacs Lisp the language</h2>
+<div class="outline-text-2" id="text-org3e28ae8">
 </div>
-<div id="outline-container-org1902b26" class="outline-3">
-<h3 id="org1902b26">Variables</h3>
-<div class="outline-text-3" id="text-org1902b26">
+<div id="outline-container-orgc619697" class="outline-3">
+<h3 id="orgc619697">Variables</h3>
+<div class="outline-text-3" id="text-orgc619697">
 <p>
 Use <code>defvar</code> to define a variable along with <i>optionally</i> an initial value and a
 docstring. Use <code>setq</code> to set the value of an existing variable.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgc064e10" class="outline-3">
-<h3 id="orgc064e10">Nonstandard evaluation</h3>
-<div class="outline-text-3" id="text-orgc064e10">
+<div id="outline-container-org793e805" class="outline-3">
+<h3 id="org793e805">Nonstandard evaluation</h3>
+<div class="outline-text-3" id="text-org793e805">
 <p>
 If you want to evaulate an element of a quoted list you can use <code>,</code> as in the
 following example:
 </p>
 
-<pre class="example" id="org74c9aed">
+<pre class="example" id="org9b43d69">
 `(a list of ,(+ 2 3) elements)
      =&gt; (a list of 5 elements)
 </pre>
@@ -263,7 +261,7 @@ If you want to expand a list out in a quoted list you can use <code>,@</code> as
 following example:
 </p>
 
-<pre class="example" id="org0a95743">
+<pre class="example" id="orgf93d50e">
 (setq some-list '(2 3))
      =&gt; (2 3)
 
@@ -275,27 +273,24 @@ following example:
 </pre>
 </div>
 </div>
-
-<div id="outline-container-orgc92e0a8" class="outline-3">
-<h3 id="orgc92e0a8">Program flow</h3>
-<div class="outline-text-3" id="text-orgc92e0a8">
+<div id="outline-container-org6a35f77" class="outline-3">
+<h3 id="org6a35f77">Program flow</h3>
+<div class="outline-text-3" id="text-org6a35f77">
 <ul class="org-ul">
 <li><code>progn</code> to sequence commands and return the value of the last one.</li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgb4799ff" class="outline-3">
-<h3 id="orgb4799ff">String handling</h3>
-<div class="outline-text-3" id="text-orgb4799ff">
+<div id="outline-container-orgfbb2594" class="outline-3">
+<h3 id="orgfbb2594">String handling</h3>
+<div class="outline-text-3" id="text-orgfbb2594">
 <p>
-The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see the <a href="#orgd26bd0d">notes below</a>.
+The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see the <a href="#orgca7e73e">notes below</a>.
 </p>
 </div>
-
-<div id="outline-container-org68a7586" class="outline-4">
-<h4 id="org68a7586">string interpolation</h4>
-<div class="outline-text-4" id="text-org68a7586">
+<div id="outline-container-org34d267d" class="outline-4">
+<h4 id="org34d267d">string interpolation</h4>
+<div class="outline-text-4" id="text-org34d267d">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(s-format <span style="color: #008000;">"foo ${bar}"</span> 'aget `((<span style="color: #008000;">"bar"</span> . ,(+ 1 1))))
 </pre>
@@ -303,10 +298,9 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 </div>
 </div>
 </div>
-
-<div id="outline-container-org6e08894" class="outline-3">
-<h3 id="org6e08894">Working with dates and times</h3>
-<div class="outline-text-3" id="text-org6e08894">
+<div id="outline-container-org1b79a85" class="outline-3">
+<h3 id="org1b79a85">Working with dates and times</h3>
+<div class="outline-text-3" id="text-org1b79a85">
 <ul class="org-ul">
 <li><code>format-time-string</code> to get datetime as a string</li>
 <li><code>current-time</code> for the current time as a list of integers</li>
@@ -314,10 +308,9 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgc5f2514" class="outline-3">
-<h3 id="orgc5f2514">Working with files</h3>
-<div class="outline-text-3" id="text-orgc5f2514">
+<div id="outline-container-org0f33ec3" class="outline-3">
+<h3 id="org0f33ec3">Working with files</h3>
+<div class="outline-text-3" id="text-org0f33ec3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -341,10 +334,9 @@ The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library prov
 </table>
 </div>
 </div>
-
-<div id="outline-container-orgbff72c7" class="outline-3">
-<h3 id="orgbff72c7">Working with passwords</h3>
-<div class="outline-text-3" id="text-orgbff72c7">
+<div id="outline-container-orgb3f437f" class="outline-3">
+<h3 id="orgb3f437f">Working with passwords</h3>
+<div class="outline-text-3" id="text-orgb3f437f">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(read-passwd <span style="color: #008000;">"magic word: "</span>)
 </pre>
@@ -355,53 +347,50 @@ More details are available in the <a href="https://www.gnu.org/software/emacs/ma
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgd2725ec" class="outline-3">
-<h3 id="orgd2725ec">System command</h3>
-<div class="outline-text-3" id="text-orgd2725ec">
+<div id="outline-container-org55b9e29" class="outline-3">
+<h3 id="org55b9e29">System command</h3>
+<div class="outline-text-3" id="text-org55b9e29">
 <p>
 To run a system command/shell command there is <code>shell-command</code>.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org79bd23d" class="outline-3">
-<h3 id="org79bd23d">SICP</h3>
-<div class="outline-text-3" id="text-org79bd23d">
+<div id="outline-container-orgf9bc7dc" class="outline-3">
+<h3 id="orgf9bc7dc">SICP</h3>
+<div class="outline-text-3" id="text-orgf9bc7dc">
 </div>
-<div id="outline-container-orgb32b68c" class="outline-4">
-<h4 id="orgb32b68c">Exercise 1.3</h4>
-<div class="outline-text-4" id="text-orgb32b68c">
+<div id="outline-container-orgeb6235c" class="outline-4">
+<h4 id="orgeb6235c">Exercise 1.3</h4>
+<div class="outline-text-4" id="text-orgeb6235c">
 <p>
 Define a procedure that takes three numbers as arguments and returns the sum of
 the squares of the two larger numbers.
 </p>
 </div>
-
 <ul class="org-ul">
-<li><a id="org60f0d7b"></a>Answer<br />
-<div class="outline-text-5" id="text-org60f0d7b">
+<li><a id="org4621be7"></a>Answer<br />
+<div class="outline-text-5" id="text-org4621be7">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">square</span> (x)
+<pre class="src src-emacs-lisp">(<span style="color: #0000FF; font-weight: bold;">defun</span> <span style="color: #006699;">square</span> (x)
   (* x x))
 
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">sum-of-squares</span> (x y)
+(<span style="color: #0000FF; font-weight: bold;">defun</span> <span style="color: #006699;">sum-of-squares</span> (x y)
   (+ (square x)
      (square y)))
 
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">biggest-two</span> (a b c)
-  (<span style="color: #0000FF;">cond</span>
-   ((<span style="color: #0000FF;">and</span> (&lt; a b)
+(<span style="color: #0000FF; font-weight: bold;">defun</span> <span style="color: #006699;">biggest-two</span> (a b c)
+  (<span style="color: #0000FF; font-weight: bold;">cond</span>
+   ((<span style="color: #0000FF; font-weight: bold;">and</span> (&lt; a b)
          (&lt; a c))
     (list b c))
-   ((<span style="color: #0000FF;">and</span> (&lt; b a)
+   ((<span style="color: #0000FF; font-weight: bold;">and</span> (&lt; b a)
          (&lt; b c))
     (list a c))
-   ((<span style="color: #0000FF;">and</span> (&lt; c a)
+   ((<span style="color: #0000FF; font-weight: bold;">and</span> (&lt; c a)
          (&lt; c b))
     (list a b))))
 
-(<span style="color: #0000FF;">defun</span> <span style="color: #006699;">foo</span> (a b c)
+(<span style="color: #0000FF; font-weight: bold;">defun</span> <span style="color: #006699;">foo</span> (a b c)
   (apply 'sum-of-squares
          (biggest-two a b c)))
 </pre>
@@ -412,22 +401,20 @@ the squares of the two larger numbers.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org08aa3d9" class="outline-2">
-<h2 id="org08aa3d9">Emacs Lisp Packages</h2>
-<div class="outline-text-2" id="text-org08aa3d9">
+<div id="outline-container-org7e43ccf" class="outline-2">
+<h2 id="org7e43ccf">Emacs Lisp Packages</h2>
+<div class="outline-text-2" id="text-org7e43ccf">
 </div>
-<div id="outline-container-org85bb20d" class="outline-3">
-<h3 id="org85bb20d">JSON</h3>
-<div class="outline-text-3" id="text-org85bb20d">
+<div id="outline-container-orge393889" class="outline-3">
+<h3 id="orge393889">JSON</h3>
+<div class="outline-text-3" id="text-orge393889">
 <p>
 For parsing and encoding to JSON there is the <a href="https://github.com/emacs-mirror/emacs/blob/master/lisp/json.el"><code>json.el</code></a> package.
 </p>
 </div>
-
-<div id="outline-container-org507bad0" class="outline-4">
-<h4 id="org507bad0">Examples to and from a string</h4>
-<div class="outline-text-4" id="text-org507bad0">
+<div id="outline-container-org4ed1cc9" class="outline-4">
+<h4 id="org4ed1cc9">Examples to and from a string</h4>
+<div class="outline-text-4" id="text-org4ed1cc9">
 <p>
 Open up a REPL in emacs and try the following
 </p>
@@ -439,22 +426,20 @@ Open up a REPL in emacs and try the following
 </div>
 </div>
 </div>
-
-<div id="outline-container-org9442ddb" class="outline-4">
-<h4 id="org9442ddb">Examples reading from file</h4>
-<div class="outline-text-4" id="text-org9442ddb">
+<div id="outline-container-orgbd62d36" class="outline-4">
+<h4 id="orgbd62d36">Examples reading from file</h4>
+<div class="outline-text-4" id="text-orgbd62d36">
 <p>
 <code>json-read-file</code> to read from the given file.
 </p>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgd26bd0d" class="outline-3">
-<h3 id="orgd26bd0d">String</h3>
-<div class="outline-text-3" id="text-orgd26bd0d">
+<div id="outline-container-orgca7e73e" class="outline-3">
+<h3 id="orgca7e73e">String</h3>
+<div class="outline-text-3" id="text-orgca7e73e">
 <p>
-The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see <a href="#orgb4799ff">these notes</a> for a
+The <a href="https://github.com/magnars/s.el"><code>s.el</code></a> library provides sensible string functions, see <a href="#orgfbb2594">these notes</a> for a
 table of commonly used functions.
 </p>
 
@@ -507,7 +492,7 @@ table of commonly used functions.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:51</p>
+<p class="date">Created: 2025-04-02 Wed 21:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

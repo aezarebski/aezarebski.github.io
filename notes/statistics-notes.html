@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:52 -->
+<!-- 2025-04-02 Wed 21:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistics</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -240,94 +240,91 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org54ff8e4">Bayesian statistics</a>
+<li><a href="#org08e9998">Bayesian statistics</a>
 <ul>
-<li><a href="#org902d01f">Graphical models</a></li>
-<li><a href="#org423c10c">Gaussian approximation to posterior</a></li>
-<li><a href="#orgc45ec8d">Maximum a posteriori (MAP) estimation</a></li>
-<li><a href="#orge5559ab">MCMC</a></li>
+<li><a href="#org87ad9f9">Graphical models</a></li>
+<li><a href="#org0dd4b71">Gaussian approximation to posterior</a></li>
+<li><a href="#org03a8c8e">Maximum a posteriori (MAP) estimation</a></li>
+<li><a href="#orge0adcae">MCMC</a></li>
 </ul>
 </li>
-<li><a href="#org0bc6864">Statistics notes</a>
+<li><a href="#org7faa267">Statistics notes</a>
 <ul>
 <li><a href="#r-glm-nbinom">GLM: Negative binomial</a></li>
-<li><a href="#org5c504a6">Fisher information</a></li>
-<li><a href="#orgdaac087">Is it statistically significant</a></li>
-<li><a href="#org872ecd3">Empirical Distribution Function</a></li>
-<li><a href="#org0974eb6">The bootstrap</a></li>
-<li><a href="#org3bb28a6">Linear regression</a></li>
-<li><a href="#org0ce6737">Profile likelihood function</a></li>
-<li><a href="#org7b28922"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</a></li>
-<li><a href="#orga79a5ac"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</a></li>
-<li><a href="#org04910c7"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</a></li>
-<li><a href="#org2502ce4"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</a></li>
-<li><a href="#org5dcc688">Contingency tables</a></li>
-<li><a href="#orgb29fddd">Linear Mixed-effects Models</a></li>
-<li><a href="#orgd41d6f8">Moment closure for CTMC processes</a></li>
-<li><a href="#orgf931da3">The Law of the unconscious statistician</a></li>
-<li><a href="#orgce40ad6"><span class="todo TODO">TODO</span> Bland-Altman plot</a></li>
-<li><a href="#org28c825e">Further reading</a></li>
+<li><a href="#org038ccaf">Fisher information</a></li>
+<li><a href="#orgf004233">Is it statistically significant</a></li>
+<li><a href="#orge8a21ae">Empirical Distribution Function</a></li>
+<li><a href="#orge3fa13d">The bootstrap</a></li>
+<li><a href="#org14f1fa5">Linear regression</a></li>
+<li><a href="#orgc6a7039">Profile likelihood function</a></li>
+<li><a href="#org8b2d7a5"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</a></li>
+<li><a href="#org7c31f7e"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</a></li>
+<li><a href="#org8150ea4"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</a></li>
+<li><a href="#org005af83"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</a></li>
+<li><a href="#org21601e5">Contingency tables</a></li>
+<li><a href="#org10fdff7">Linear Mixed-effects Models</a></li>
+<li><a href="#orgac4bc4d">Moment closure for CTMC processes</a></li>
+<li><a href="#org0939eae">The Law of the unconscious statistician</a></li>
+<li><a href="#org5eb1738"><span class="todo TODO">TODO</span> Bland-Altman plot</a></li>
+<li><a href="#org086a29f">Further reading</a></li>
 </ul>
 </li>
-<li><a href="#org39e04d1">Machine learning notes</a>
+<li><a href="#org7982228">Machine learning notes</a>
 <ul>
-<li><a href="#org2ef631c">Gaussian processes</a></li>
-<li><a href="#orgc44ac6d">Using neural networks to solve differential equations</a></li>
-<li><a href="#org793cb94">Initialisation</a></li>
+<li><a href="#org2daee5c">Gaussian processes</a></li>
+<li><a href="#orgdc45f4b">Using neural networks to solve differential equations</a></li>
+<li><a href="#orgc1e38fe">Initialisation</a></li>
 </ul>
 </li>
-<li><a href="#orgf73188d">Data notes</a>
+<li><a href="#orgbbd5eac">Data notes</a>
 <ul>
-<li><a href="#org0da81e2">WebPlotDigitizer</a></li>
+<li><a href="#orgf3c976a">WebPlotDigitizer</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org54ff8e4" class="outline-2">
-<h2 id="org54ff8e4">Bayesian statistics</h2>
-<div class="outline-text-2" id="text-org54ff8e4">
+<div id="outline-container-org08e9998" class="outline-2">
+<h2 id="org08e9998">Bayesian statistics</h2>
+<div class="outline-text-2" id="text-org08e9998">
 </div>
-<div id="outline-container-org902d01f" class="outline-3">
-<h3 id="org902d01f">Graphical models</h3>
-<div class="outline-text-3" id="text-org902d01f">
+<div id="outline-container-org87ad9f9" class="outline-3">
+<h3 id="org87ad9f9">Graphical models</h3>
+<div class="outline-text-3" id="text-org87ad9f9">
 <p>
-Figure <a href="#org0799ed7">1</a> is an example of a notation for graphical models.
+Figure <a href="#org6f7d7c3">1</a> is an example of a notation for graphical models.
 </p>
 
 
-<div id="org0799ed7" class="figure">
+<div id="org6f7d7c3" class="figure">
 <p><img src="../resources/uml-dag-legend.png" alt="uml-dag-legend.png" width="200px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Example of the notation that might be used to represent a graphical model</p>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org423c10c" class="outline-3">
-<h3 id="org423c10c">Gaussian approximation to posterior</h3>
-<div class="outline-text-3" id="text-org423c10c">
+<div id="outline-container-org0dd4b71" class="outline-3">
+<h3 id="org0dd4b71">Gaussian approximation to posterior</h3>
+<div class="outline-text-3" id="text-org0dd4b71">
 <p>
 Consider a posterior distribution where the mode is at \(\theta^{*}\) and the
 Hessian matrix at this point is \(h''(\theta^{*})\). If we consider a
 multivariate Gaussian density, we can see that it will have its mode at the
 mean, \(\mu\), and, assuming a covariance matrix, \(\Sigma\), the density will
 have a Hessian of \(-\Sigma^{-1}\) at the mode. This motivates the Gaussian
-approximation at the mode of the posterior. Also see <a href="#org5c504a6">Fisher information</a>.
+approximation at the mode of the posterior. Also see <a href="#org038ccaf">Fisher information</a>.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgc45ec8d" class="outline-3">
-<h3 id="orgc45ec8d">Maximum a posteriori (MAP) estimation</h3>
-<div class="outline-text-3" id="text-orgc45ec8d">
+<div id="outline-container-org03a8c8e" class="outline-3">
+<h3 id="org03a8c8e">Maximum a posteriori (MAP) estimation</h3>
+<div class="outline-text-3" id="text-org03a8c8e">
 </div>
-<div id="outline-container-orgc4a9078" class="outline-4">
-<h4 id="orgc4a9078">Example: univariate data in R</h4>
-<div class="outline-text-4" id="text-orgc4a9078">
+<div id="outline-container-org3df7ebf" class="outline-4">
+<h4 id="org3df7ebf">Example: univariate data in R</h4>
+<div class="outline-text-4" id="text-org3df7ebf">
 <p>
-The following snippet produes Figure <a href="#orgc0f62a3">2</a>. This
+The following snippet produes Figure <a href="#org7af0fa4">2</a>. This
 demonstrates how you can approximate the MAP from a posterior sample
 in a simple way using the <code>stats::density</code> function in R. It also
 demonstrates why the mean might not be the most characteristic value
@@ -335,7 +332,7 @@ to summarise a distribution with.
 </p>
 
 
-<div id="orgc0f62a3" class="figure">
+<div id="org7af0fa4" class="figure">
 <p><img src="../resources/map-example.png" alt="map-example.png" width="800px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The mode and mean and PDF of the gamma(2, 0.5) distribution in red and the sample mean and approximate MAP in blue.</p>
@@ -374,7 +371,7 @@ emp_mode <span style="color: #D0372D;">&lt;-</span> emp_pdf$x[which.max(emp_pdf$
 </div>
 
 <p>
-Visualise this to produce the image in Figure <a href="#orgc0f62a3">2</a>.
+Visualise this to produce the image in Figure <a href="#org7af0fa4">2</a>.
 </p>
 
 <div class="org-src-container">
@@ -398,22 +395,21 @@ dev.off()
 </div>
 </div>
 </div>
+<div id="outline-container-org7d55549" class="outline-4">
+<h4 id="org7d55549">Example: bivariate data in Python</h4>
+<div class="outline-text-4" id="text-org7d55549">
 
-<div id="outline-container-orgfa11483" class="outline-4">
-<h4 id="orgfa11483">Example: bivariate data in Python</h4>
-<div class="outline-text-4" id="text-orgfa11483">
-
-<div id="org8a0cff4" class="figure">
+<div id="orgd45ffeb" class="figure">
 <p><img src="../resources/map-example-2.png" alt="map-example-2.png" width="800px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>The mode (blue) and mean (red) of some bivariate data.</p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
-<span style="color: #0000FF;">from</span> scipy <span style="color: #0000FF;">import</span> stats
-<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
-<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">from</span> scipy <span style="color: #0000FF; font-weight: bold;">import</span> stats
+<span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+<span style="color: #0000FF; font-weight: bold;">from</span> plotnine <span style="color: #0000FF; font-weight: bold;">import</span> *
 </pre>
 </div>
 
@@ -463,19 +459,17 @@ demo_p9.save(<span style="color: #008000;">'../resources/map-example-2.png'</spa
 </div>
 </div>
 </div>
-
-<div id="outline-container-orge5559ab" class="outline-3">
-<h3 id="orge5559ab">MCMC</h3>
-<div class="outline-text-3" id="text-orge5559ab">
+<div id="outline-container-orge0adcae" class="outline-3">
+<h3 id="orge0adcae">MCMC</h3>
+<div class="outline-text-3" id="text-orge0adcae">
 <p>
 See Chib and Greenberg (1995) for a timeless introduction to the
 Metropolis-Hasting algorithm.
 </p>
 </div>
-
-<div id="outline-container-org58ade1c" class="outline-4">
-<h4 id="org58ade1c">Parameter transformation</h4>
-<div class="outline-text-4" id="text-org58ade1c">
+<div id="outline-container-orgb01573f" class="outline-4">
+<h4 id="orgb01573f">Parameter transformation</h4>
+<div class="outline-text-4" id="text-orgb01573f">
 <p>
 You want to sample \(x\) which has density \(f\) but the MCMC samples are
 butting up against the edge of the support. For example, we have \(X\sim
@@ -487,11 +481,11 @@ butting up against the edge of the support. For example, we have \(X\sim
 <span style="color: #D0372D;">library</span>(coda)
 set.seed(1)
 
-<span style="color: #006699;">mcmc_samples</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(obj) {
+<span style="color: #006699;">mcmc_samples</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(obj) {
     as.mcmc(metrop(obj, 1, 10000)$batch)
 }
 
-<span style="color: #006699;">posterior</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) {
+<span style="color: #006699;">posterior</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x) {
     dlnorm(x = x, meanlog = 0, sdlog = 1, log = <span style="color: #6434A3;">TRUE</span>)
 }
 
@@ -527,7 +521,7 @@ take the logarithm to get the log-posterior this becomes just \(y\).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #006699;">y_posterior</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(y) {
+<pre class="src src-R"><span style="color: #006699;">y_posterior</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(y) {
     posterior(exp(y)) + y
 }
 
@@ -543,16 +537,15 @@ efficiently.
 </p>
 
 
-<div id="orgd07b9cc" class="figure">
+<div id="org125c511" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgff7983d" class="outline-4">
-<h4 id="orgff7983d">Posterior summaries</h4>
-<div class="outline-text-4" id="text-orgff7983d">
+<div id="outline-container-orgbdd4638" class="outline-4">
+<h4 id="orgbdd4638">Posterior summaries</h4>
+<div class="outline-text-4" id="text-orgbdd4638">
 <p>
 The <a href="https://easystats.github.io/bayestestR/index.html">bayestestR</a> provides a range of ways to summarise a sample from a
 posterior distribution. The following demonstrates how to compute the
@@ -578,19 +571,17 @@ intervals.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org0bc6864" class="outline-2">
-<h2 id="org0bc6864">Statistics notes</h2>
-<div class="outline-text-2" id="text-org0bc6864">
+<div id="outline-container-org7faa267" class="outline-2">
+<h2 id="org7faa267">Statistics notes</h2>
+<div class="outline-text-2" id="text-org7faa267">
 </div>
 <div id="outline-container-r-glm-nbinom" class="outline-3">
 <h3 id="r-glm-nbinom">GLM: Negative binomial</h3>
 <div class="outline-text-3" id="text-r-glm-nbinom">
 </div>
-
-<div id="outline-container-org9199629" class="outline-4">
-<h4 id="org9199629">Setting up the data</h4>
-<div class="outline-text-4" id="text-org9199629">
+<div id="outline-container-org49e114b" class="outline-4">
+<h4 id="org49e114b">Setting up the data</h4>
+<div class="outline-text-4" id="text-org49e114b">
 <p>
 Note that with the log-link function, the true intercept should be 1
 and the coefficients should be 1, -1 and 0. The true size parameter of
@@ -609,10 +600,9 @@ df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2
 </div>
 </div>
 </div>
-
-<div id="outline-container-org24a3936" class="outline-4">
-<h4 id="org24a3936">Fitting the model</h4>
-<div class="outline-text-4" id="text-org24a3936">
+<div id="outline-container-orgba59891" class="outline-4">
+<h4 id="orgba59891">Fitting the model</h4>
+<div class="outline-text-4" id="text-orgba59891">
 <p>
 The following demonstrates that with this data set the coefficients
 are well estimates as is the size parameter of the negative binomial
@@ -645,10 +635,9 @@ over-dispersed with respect to the Poisson distribution.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org5c504a6" class="outline-3">
-<h3 id="org5c504a6">Fisher information</h3>
-<div class="outline-text-3" id="text-org5c504a6">
+<div id="outline-container-org038ccaf" class="outline-3">
+<h3 id="org038ccaf">Fisher information</h3>
+<div class="outline-text-3" id="text-org038ccaf">
 <p>
 For a random variable, \(X\) with distrtibution \(f(X;\theta)\) the <i>score
 function</i> is
@@ -690,14 +679,13 @@ which can be more convenient to work with.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgdaac087" class="outline-3">
-<h3 id="orgdaac087">Is it statistically significant</h3>
-<div class="outline-text-3" id="text-orgdaac087">
+<div id="outline-container-orgf004233" class="outline-3">
+<h3 id="orgf004233">Is it statistically significant</h3>
+<div class="outline-text-3" id="text-orgf004233">
 </div>
-<div id="outline-container-orga0cc919" class="outline-4">
-<h4 id="orga0cc919">Fair coin</h4>
-<div class="outline-text-4" id="text-orga0cc919">
+<div id="outline-container-org18f93f1" class="outline-4">
+<h4 id="org18f93f1">Fair coin</h4>
+<div class="outline-text-4" id="text-org18f93f1">
 <p>
 Here is a table of values for testing whether the a binomial sample differs from
 fair trials at a significance level of 0.05.
@@ -784,10 +772,9 @@ fair trials at a significance level of 0.05.
 </table>
 </div>
 </div>
-
-<div id="outline-container-org370643b" class="outline-4">
-<h4 id="org370643b">Coverage of credible interval</h4>
-<div class="outline-text-4" id="text-org370643b">
+<div id="outline-container-orga723261" class="outline-4">
+<h4 id="orga723261">Coverage of credible interval</h4>
+<div class="outline-text-4" id="text-orga723261">
 <p>
 Suppose you have a way to estimate a parameter and you want to check if the
 coverage is as expected. You can test the null hypothesis that the coverage is
@@ -797,11 +784,11 @@ the specified parameter in a frequentist way using the following function.
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Hypothesis test on the binomial probability.</span>
 <span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x_obs</span><span style="color: #8D8D84; font-style: italic;"> integer number of successes observed.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">size</span><span style="color: #8D8D84; font-style: italic;"> integer number of tests carried out.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">prob</span><span style="color: #8D8D84; font-style: italic;"> probability of success in each test</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x_obs</span><span style="color: #8D8D84; font-style: italic;"> integer number of successes observed.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">size</span><span style="color: #8D8D84; font-style: italic;"> integer number of tests carried out.</span>
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">prob</span><span style="color: #8D8D84; font-style: italic;"> probability of success in each test</span>
 <span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">calibration_test</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x_obs, size, prob=0.95) {
+<span style="color: #006699;">calibration_test</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x_obs, size, prob=0.95) {
   pmf_vals <span style="color: #D0372D;">&lt;-</span> dbinom(x = 0:size, prob = prob, size = size)
   obs_prob <span style="color: #D0372D;">&lt;-</span> dbinom(x = x_obs, prob = prob, size = size)
   mask <span style="color: #D0372D;">&lt;-</span> pmf_vals &lt;= obs_prob
@@ -820,7 +807,7 @@ intervals contained the true parameter, then you could not reject the null
 hypothesis that the \(95\%\) coverage is correct.
 </p>
 
-<pre class="example" id="org9b37521">
+<pre class="example" id="org1c22d5b">
 &gt; calibration_test(46, size = 50, prob = 0.95)
 $p_val
 [1] 0.316537
@@ -834,7 +821,7 @@ If instead you only had 44 of the intervals containing the parameter, then you
 could reject this null hypothesis:
 </p>
 
-<pre class="example" id="org14d8b93">
+<pre class="example" id="orgc7987ec">
 &gt; calibration_test(44, size = 50, prob = 0.95)
 $p_val
 [1] 0.03777617
@@ -845,10 +832,9 @@ $reject_null
 </div>
 </div>
 </div>
-
-<div id="outline-container-org872ecd3" class="outline-3">
-<h3 id="org872ecd3">Empirical Distribution Function</h3>
-<div class="outline-text-3" id="text-org872ecd3">
+<div id="outline-container-orge8a21ae" class="outline-3">
+<h3 id="orge8a21ae">Empirical Distribution Function</h3>
+<div class="outline-text-3" id="text-orge8a21ae">
 <p>
 Let \(X_1,\dots,X_n\sim F\) IID on \(\mathbb{R}\), then the empirical
 distribution function (EDF) is
@@ -889,10 +875,9 @@ construction of confidence bounds on the EDF. A functional \(T : F \mapsto
 </p>
 </div>
 </div>
-
-<div id="outline-container-org0974eb6" class="outline-3">
-<h3 id="org0974eb6">The bootstrap</h3>
-<div class="outline-text-3" id="text-org0974eb6">
+<div id="outline-container-orge3fa13d" class="outline-3">
+<h3 id="orge3fa13d">The bootstrap</h3>
+<div class="outline-text-3" id="text-orge3fa13d">
 <p>
 The <i>bootstrap</i> is a simulation based method to estimate standard
 errors and confidence intervals (there is a standard R package called
@@ -927,14 +912,13 @@ parameterised by the estimated parameter value.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org3bb28a6" class="outline-3">
-<h3 id="org3bb28a6">Linear regression</h3>
-<div class="outline-text-3" id="text-org3bb28a6">
+<div id="outline-container-org14f1fa5" class="outline-3">
+<h3 id="org14f1fa5">Linear regression</h3>
+<div class="outline-text-3" id="text-org14f1fa5">
 </div>
-<div id="outline-container-orgdf90085" class="outline-4">
-<h4 id="orgdf90085">Linear regression with <code>lm</code></h4>
-<div class="outline-text-4" id="text-orgdf90085">
+<div id="outline-container-org2dc92e1" class="outline-4">
+<h4 id="org2dc92e1">Linear regression with <code>lm</code></h4>
+<div class="outline-text-4" id="text-org2dc92e1">
 <p>
 The formulas used to specify a model in R use Wilkinson-Rogers notation.
 Consider \(y = \alpha + \beta x + \epsilon\). Often estimators will assume that
@@ -964,10 +948,9 @@ dataset of size \(N\).
 </div>
 </div>
 </div>
-
-<div id="outline-container-org0ce6737" class="outline-3">
-<h3 id="org0ce6737">Profile likelihood function</h3>
-<div class="outline-text-3" id="text-org0ce6737">
+<div id="outline-container-orgc6a7039" class="outline-3">
+<h3 id="orgc6a7039">Profile likelihood function</h3>
+<div class="outline-text-3" id="text-orgc6a7039">
 <p>
 The profile likelihood is a lower dimensional version of the likelihood
 function. Consider a likelihood function \(\mathcal{L}(\theta)\) where \(\theta
@@ -982,80 +965,72 @@ likelihood</i> is
 </p>
 </div>
 </div>
-
-<div id="outline-container-org7b28922" class="outline-3">
-<h3 id="org7b28922"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</h3>
-<div class="outline-text-3" id="text-org7b28922">
+<div id="outline-container-org8b2d7a5" class="outline-3">
+<h3 id="org8b2d7a5"><span class="todo TODO">TODO</span> Student's <i>t</i>-test</h3>
+<div class="outline-text-3" id="text-org8b2d7a5">
 </div>
-<div id="outline-container-orgcb59c6a" class="outline-4">
-<h4 id="orgcb59c6a">Null is specific mean</h4>
-<div class="outline-text-4" id="text-orgcb59c6a">
+<div id="outline-container-org068fec3" class="outline-4">
+<h4 id="org068fec3">Null is specific mean</h4>
+<div class="outline-text-4" id="text-org068fec3">
 <div class="org-src-container">
 <pre class="src src-R">t.test(rnorm(100, mean=1), mu = 0)$p.value
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org58428d3" class="outline-4">
-<h4 id="org58428d3">Null is different mean (assumed equal variance)</h4>
-<div class="outline-text-4" id="text-org58428d3">
+<div id="outline-container-org20352aa" class="outline-4">
+<h4 id="org20352aa">Null is different mean (assumed equal variance)</h4>
+<div class="outline-text-4" id="text-org20352aa">
 <div class="org-src-container">
 <pre class="src src-R">t.test(rnorm(100, mean = 0), rnorm(100, mean = 1), var.equal = <span style="color: #6434A3;">TRUE</span>)$p.value
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org102ac56" class="outline-4">
-<h4 id="org102ac56">Null is different mean (Welch)</h4>
-<div class="outline-text-4" id="text-org102ac56">
+<div id="outline-container-org6e461b5" class="outline-4">
+<h4 id="org6e461b5">Null is different mean (Welch)</h4>
+<div class="outline-text-4" id="text-org6e461b5">
 <div class="org-src-container">
 <pre class="src src-R">t.test(rnorm(100, mean = 0), rnorm(100, mean = 1, sd = 2), var.equal = <span style="color: #6434A3;">FALSE</span>)$p.value
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org6cef524" class="outline-4">
-<h4 id="org6cef524"><span class="todo TODO">TODO</span> Null is different mean but values are paired</h4>
+<div id="outline-container-orgd24ad3f" class="outline-4">
+<h4 id="orgd24ad3f"><span class="todo TODO">TODO</span> Null is different mean but values are paired</h4>
 </div>
 </div>
-
-<div id="outline-container-orga79a5ac" class="outline-3">
-<h3 id="orga79a5ac"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</h3>
-<div class="outline-text-3" id="text-orga79a5ac">
+<div id="outline-container-org7c31f7e" class="outline-3">
+<h3 id="org7c31f7e"><span class="todo TODO">TODO</span> Wilcoxon signed-rank test</h3>
+<div class="outline-text-3" id="text-org7c31f7e">
 <p>
 Roughly, it plays the role of a nonparametric paired <i>t</i>-test.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org04910c7" class="outline-3">
-<h3 id="org04910c7"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</h3>
-<div class="outline-text-3" id="text-org04910c7">
+<div id="outline-container-org8150ea4" class="outline-3">
+<h3 id="org8150ea4"><span class="todo TODO">TODO</span> Mann–Whitney <i>U</i> test</h3>
+<div class="outline-text-3" id="text-org8150ea4">
 <p>
 Roughly, it plays the role of a nonparametric <i>t</i>-test.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org2502ce4" class="outline-3">
-<h3 id="org2502ce4"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</h3>
-<div class="outline-text-3" id="text-org2502ce4">
+<div id="outline-container-org005af83" class="outline-3">
+<h3 id="org005af83"><span class="todo TODO">TODO</span> Kruskal–Wallis <i>H</i> test</h3>
+<div class="outline-text-3" id="text-org005af83">
 <p>
-Roughly, it extends the <a href="#org04910c7">Mann–Whitney <i>U</i> test</a> to more than two groups.
+Roughly, it extends the <a href="#org8150ea4">Mann–Whitney <i>U</i> test</a> to more than two groups.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org5dcc688" class="outline-3">
-<h3 id="org5dcc688">Contingency tables</h3>
-<div class="outline-text-3" id="text-org5dcc688">
+<div id="outline-container-org21601e5" class="outline-3">
+<h3 id="org21601e5">Contingency tables</h3>
+<div class="outline-text-3" id="text-org21601e5">
 </div>
-<div id="outline-container-org5e2903c" class="outline-4">
-<h4 id="org5e2903c">An example in R</h4>
-<div class="outline-text-4" id="text-org5e2903c">
+<div id="outline-container-org6801840" class="outline-4">
+<h4 id="org6801840">An example in R</h4>
+<div class="outline-text-4" id="text-org6801840">
 <p>
 A contingency table counts the number of times that a particular combination of
 catagorical variables occur. For example, we can simulate a data set of
@@ -1113,10 +1088,9 @@ surprisingly, large enough that it would not be considered significant.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org9606348" class="outline-4">
-<h4 id="org9606348">What actually happens</h4>
-<div class="outline-text-4" id="text-org9606348">
+<div id="outline-container-orgd7c9f26" class="outline-4">
+<h4 id="orgd7c9f26">What actually happens</h4>
+<div class="outline-text-4" id="text-orgd7c9f26">
 <p>
 Let \(f_{ij}\) be the value in the \(ij\)-th cell of the contingency table and
 \(e_{ij}\) the expected value assuming that the observations are distributed such
@@ -1138,10 +1112,9 @@ takes.
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgb29fddd" class="outline-3">
-<h3 id="orgb29fddd">Linear Mixed-effects Models</h3>
-<div class="outline-text-3" id="text-orgb29fddd">
+<div id="outline-container-org10fdff7" class="outline-3">
+<h3 id="org10fdff7">Linear Mixed-effects Models</h3>
+<div class="outline-text-3" id="text-org10fdff7">
 <p>
 The Laird-Ware form of a linear mixed effect model (LMM) for the \(j\)th
 observation in the \(i\)th group of measurements is as follows:
@@ -1167,10 +1140,9 @@ noise \(\epsilon\) comes from a zero-mean normal distribution with variance
 parameterised by \(\sigma^2\).</li>
 </ul>
 </div>
-
-<div id="outline-container-org96d7b04" class="outline-4">
-<h4 id="org96d7b04">Model derivation</h4>
-<div class="outline-text-4" id="text-org96d7b04">
+<div id="outline-container-org5515c70" class="outline-4">
+<h4 id="org5515c70">Model derivation</h4>
+<div class="outline-text-4" id="text-org5515c70">
 <p>
 One way to go about deriving a LMM for a particular data set is to consider a
 model at the individual level and then assume some random structure on the
@@ -1181,10 +1153,9 @@ parts of the parameters form the fixed effects.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org965ac28" class="outline-4">
-<h4 id="org965ac28">Model notation</h4>
-<div class="outline-text-4" id="text-org965ac28">
+<div id="outline-container-org4f476c2" class="outline-4">
+<h4 id="org4f476c2">Model notation</h4>
+<div class="outline-text-4" id="text-org4f476c2">
 <p>
 The <code>lme4</code> package in R introduces some syntax for describing these models.
 </p>
@@ -1199,10 +1170,9 @@ effects, but assumes that they are uncorrelated.</li>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgd41d6f8" class="outline-3">
-<h3 id="orgd41d6f8">Moment closure for CTMC processes</h3>
-<div class="outline-text-3" id="text-orgd41d6f8">
+<div id="outline-container-orgac4bc4d" class="outline-3">
+<h3 id="orgac4bc4d">Moment closure for CTMC processes</h3>
+<div class="outline-text-3" id="text-orgac4bc4d">
 <p>
 Consider a random process, \(X_t\) which is a CTMC on \(\mathbb{N}_0\) where the
 only possible transitions from \(n\) are to \(n\pm 1\), potentially with an
@@ -1270,10 +1240,9 @@ expresses higher moments in terms of lower ones.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgf931da3" class="outline-3">
-<h3 id="orgf931da3">The Law of the unconscious statistician</h3>
-<div class="outline-text-3" id="text-orgf931da3">
+<div id="outline-container-org0939eae" class="outline-3">
+<h3 id="org0939eae">The Law of the unconscious statistician</h3>
+<div class="outline-text-3" id="text-org0939eae">
 <p>
 This refers to the equation
 </p>
@@ -1291,34 +1260,31 @@ rather than being viewed as a theorem.
 
 <p>
 This result is particularly useful when carrying out MCMC in a transformed
-parameter space as described in the <a href="#org58ade1c">notes on changing parameterisation</a> above.
+parameter space as described in the <a href="#orgb01573f">notes on changing parameterisation</a> above.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgce40ad6" class="outline-3">
-<h3 id="orgce40ad6"><span class="todo TODO">TODO</span> Bland-Altman plot</h3>
-<div class="outline-text-3" id="text-orgce40ad6">
+<div id="outline-container-org5eb1738" class="outline-3">
+<h3 id="org5eb1738"><span class="todo TODO">TODO</span> Bland-Altman plot</h3>
+<div class="outline-text-3" id="text-org5eb1738">
 <p>
 Given to ways to measure something, a Bland-Altman plot is a way to compare
 them.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org28c825e" class="outline-3">
-<h3 id="org28c825e">Further reading</h3>
-<div class="outline-text-3" id="text-org28c825e">
+<div id="outline-container-org086a29f" class="outline-3">
+<h3 id="org086a29f">Further reading</h3>
+<div class="outline-text-3" id="text-org086a29f">
 <ul class="org-ul">
 <li><a href="https://pages.cs.wisc.edu/~tdw/files/cookbook-en.pdf">Probability and Statistics Cookbook</a> from <a href="http://matthias.vallentin.net/">Matthias Vallentin</a>.</li>
 </ul>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org39e04d1" class="outline-2">
-<h2 id="org39e04d1">Machine learning notes</h2>
-<div class="outline-text-2" id="text-org39e04d1">
+<div id="outline-container-org7982228" class="outline-2">
+<h2 id="org7982228">Machine learning notes</h2>
+<div class="outline-text-2" id="text-org7982228">
 <blockquote>
 <p>
 The first rule of machine learning: Start without machine learning
@@ -1329,14 +1295,13 @@ The first rule of machine learning: Start without machine learning
 </p>
 </blockquote>
 </div>
-
-<div id="outline-container-org2ef631c" class="outline-3">
-<h3 id="org2ef631c">Gaussian processes</h3>
-<div class="outline-text-3" id="text-org2ef631c">
+<div id="outline-container-org2daee5c" class="outline-3">
+<h3 id="org2daee5c">Gaussian processes</h3>
+<div class="outline-text-3" id="text-org2daee5c">
 </div>
-<div id="outline-container-org712bd8d" class="outline-4">
-<h4 id="org712bd8d"><span class="todo TODO">TODO</span> Gaussian process regression (a.k.a. Kriging)</h4>
-<div class="outline-text-4" id="text-org712bd8d">
+<div id="outline-container-org69bebb3" class="outline-4">
+<h4 id="org69bebb3"><span class="todo TODO">TODO</span> Gaussian process regression (a.k.a. Kriging)</h4>
+<div class="outline-text-4" id="text-org69bebb3">
 <ul class="org-ul">
 <li>Construct a multi-variate normal distribution with dimensionality equal to the
 number of training points and test points and condition it upon the training
@@ -1345,10 +1310,9 @@ data to get the distribution over the test data.</li>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgc44ac6d" class="outline-3">
-<h3 id="orgc44ac6d">Using neural networks to solve differential equations</h3>
-<div class="outline-text-3" id="text-orgc44ac6d">
+<div id="outline-container-orgdc45f4b" class="outline-3">
+<h3 id="orgdc45f4b">Using neural networks to solve differential equations</h3>
+<div class="outline-text-3" id="text-orgdc45f4b">
 <p>
 Lagaris <i>et al</i> (1998) describe a method to solve differential equations
 numerically with neural networks. The simplest example they use is the following
@@ -1401,25 +1365,25 @@ optimisation routines to be applied.
 </p>
 
 <p>
-Figure <a href="#org83f6d37">4</a> shows the result of less than a minute of training with
+Figure <a href="#org13a2462">4</a> shows the result of less than a minute of training with
 gradient descent with only ten test points.
 </p>
 
 
-<div id="org83f6d37" class="figure">
+<div id="org13a2462" class="figure">
 <p><img src="./img/lagaris-1998.png" alt="lagaris-1998.png" width="900px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Replication of the first example problem from Lagaris <i>et al</i> (1998)</p>
 </div>
 
 <p>
-The script that generated the image in Figure <a href="#org83f6d37">4</a> is shown below.
+The script that generated the image in Figure <a href="#org13a2462">4</a> is shown below.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> tensorflow <span style="color: #0000FF;">as</span> tf
-<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
-<span style="color: #0000FF;">import</span> matplotlib.pyplot <span style="color: #0000FF;">as</span> plt
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> tensorflow <span style="color: #0000FF; font-weight: bold;">as</span> tf
+<span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #0000FF; font-weight: bold;">as</span> plt
 
 np.random.seed(1)
 
@@ -1440,32 +1404,32 @@ np.random.seed(1)
 <span style="color: #BA36A5;">vldt_stash</span> = []
 
 <span style="color: #6434A3;">@tf.function</span>
-<span style="color: #0000FF;">def</span> <span style="color: #006699;">psi_truth</span>(x):
+<span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">psi_truth</span>(x):
     <span style="color: #036A07;">"""Solution of the differential equation."""</span>
-    <span style="color: #0000FF;">return</span> tf.exp(-0.5 * x**2) / (1 + x + x**3) + x**2
+    <span style="color: #0000FF; font-weight: bold;">return</span> tf.exp(-0.5 * x**2) / (1 + x + x**3) + x**2
 
 
-<span style="color: #0000FF;">class</span> <span style="color: #6434A3;">MyModel</span>(tf.Module):
+<span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">MyModel</span>(tf.Module):
     <span style="color: #036A07;">"""This class respresents the approximation to the solution."""</span>
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>, psi_0, num_units, **kwargs):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, psi_0, num_units, **kwargs):
         <span style="color: #036A07;">"""Construct approximate solution with a hard-coded IC."""</span>
         <span style="color: #006FE0;">super</span>().__init__(**kwargs)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">IC_A</span> = psi_0
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">w</span> = tf.Variable(np.random.randn(num_units))
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">u</span> = tf.Variable(np.random.randn(num_units))
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">v</span> = tf.Variable(np.random.randn(num_units))
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">IC_A</span> = psi_0
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">w</span> = tf.Variable(np.random.randn(num_units))
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">u</span> = tf.Variable(np.random.randn(num_units))
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">v</span> = tf.Variable(np.random.randn(num_units))
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__call__</span>(<span style="color: #0000FF;">self</span>, x):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__call__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
         <span style="color: #036A07;">"""Evaluate the approximation."""</span>
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">matrix with one datum per row</span>
-        <span style="color: #BA36A5;">l1</span> = tf.math.sigmoid(tf.tensordot(x, <span style="color: #0000FF;">self</span>.w, 0) + <span style="color: #0000FF;">self</span>.u)
+        <span style="color: #BA36A5;">l1</span> = tf.math.sigmoid(tf.tensordot(x, <span style="color: #0000FF; font-weight: bold;">self</span>.w, 0) + <span style="color: #0000FF; font-weight: bold;">self</span>.u)
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">We have encoded the IC using the method from Lagaris et al (1998),</span>
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">although there are other formulations that are used in contemporary</span>
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">implementations. Attempting to use a 1-exp(-x) function to get the IC</span>
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">constraint did not yield any improvement.</span>
-        <span style="color: #BA36A5;">l2</span> = <span style="color: #0000FF;">self</span>.IC_A + x * tf.tensordot(l1, <span style="color: #0000FF;">self</span>.v, 1)
-        <span style="color: #0000FF;">return</span> l2
+        <span style="color: #BA36A5;">l2</span> = <span style="color: #0000FF; font-weight: bold;">self</span>.IC_A + x * tf.tensordot(l1, <span style="color: #0000FF; font-weight: bold;">self</span>.v, 1)
+        <span style="color: #0000FF; font-weight: bold;">return</span> l2
 
 
 <span style="color: #BA36A5;">psi_model</span> = MyModel(tf.constant(1.0, dtype=np.float64), H)
@@ -1475,15 +1439,15 @@ np.random.seed(1)
 <span style="color: #BA36A5;">x</span> = train_mesh
 
 
-<span style="color: #0000FF;">def</span> <span style="color: #006699;">loss_fn</span>(psi_dash, psi, x):
-    <span style="color: #0000FF;">return</span> tf.reduce_sum((psi_trial_dash + (x + (1 + 3 * x**2) / (1 + x + x**3)) * psi_trial - (x**3 + 2 * x + x**2 * (1 + 3 * x**2) / (1 + x + x**3)))**2)
+<span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">loss_fn</span>(psi_dash, psi, x):
+    <span style="color: #0000FF; font-weight: bold;">return</span> tf.reduce_sum((psi_trial_dash + (x + (1 + 3 * x**2) / (1 + x + x**3)) * psi_trial - (x**3 + 2 * x + x**2 * (1 + 3 * x**2) / (1 + x + x**3)))**2)
 
 
-<span style="color: #0000FF;">for</span> iter_num <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(num_iters):
+<span style="color: #0000FF; font-weight: bold;">for</span> iter_num <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(num_iters):
     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The gradient evaluations need to be within to the loop for TF to</span>
     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">understand how they work.</span>
-    <span style="color: #0000FF;">with</span> tf.GradientTape() <span style="color: #0000FF;">as</span> t2:
-        <span style="color: #0000FF;">with</span> tf.GradientTape() <span style="color: #0000FF;">as</span> t1:
+    <span style="color: #0000FF; font-weight: bold;">with</span> tf.GradientTape() <span style="color: #0000FF; font-weight: bold;">as</span> t2:
+        <span style="color: #0000FF; font-weight: bold;">with</span> tf.GradientTape() <span style="color: #0000FF; font-weight: bold;">as</span> t1:
             <span style="color: #BA36A5;">psi_trial</span> = psi_model(x)
         <span style="color: #BA36A5;">psi_trial_dash</span> = t1.gradient(psi_trial, x)
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The loss function needs to know the differential equation.</span>
@@ -1494,17 +1458,17 @@ np.random.seed(1)
     psi_model.w.assign_sub(learning_rate * loss_w_dash)
     psi_model.u.assign_sub(learning_rate * loss_u_dash)
     psi_model.v.assign_sub(learning_rate * loss_v_dash)
-    <span style="color: #0000FF;">if</span> iter_num % 10 == 0:
+    <span style="color: #0000FF; font-weight: bold;">if</span> iter_num % 10 == 0:
         iter_stash.append(iter_num)
         loss_stash.append(loss.numpy())
         vldt_stash.append(vldt_val.numpy())
         <span style="color: #006FE0;">print</span>(<span style="color: #008000;">"iteration: {i}</span><span style="color: #D0372D;">\t</span><span style="color: #008000;">loss: {l}</span><span style="color: #D0372D;">\t</span><span style="color: #008000;">learning rate: {r}"</span>.<span style="color: #006FE0;">format</span>(i=iter_num, l=loss.numpy(), r=learning_rate))
-    <span style="color: #0000FF;">if</span> iter_num % 1000 == 0 <span style="color: #0000FF;">and</span> iter_num &gt; 0:
+    <span style="color: #0000FF; font-weight: bold;">if</span> iter_num % 1000 == 0 <span style="color: #0000FF; font-weight: bold;">and</span> iter_num &gt; 0:
         <span style="color: #BA36A5;">learning_rate</span> /= 1.5
 
 <span style="color: #BA36A5;">fig</span>, <span style="color: #BA36A5;">axs</span> = plt.subplots(1, 2, figsize=(10, 5))
 axs[0].plot(plt_mesh, psi_truth(plt_mesh), label=<span style="color: #008000;">"True solution"</span>)
-<span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(1, num_iters, num_iters // 3):
+<span style="color: #0000FF; font-weight: bold;">for</span> ix <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(1, num_iters, num_iters // 3):
     axs[0].plot(plt_mesh, psi_val_stash[ix], label=<span style="color: #008000;">"Iteration {n}"</span>.<span style="color: #006FE0;">format</span>(n=ix+1))
 axs[0].scatter(train_mesh, psi_truth(train_mesh), label=<span style="color: #008000;">"Training data"</span>)
 axs[0].legend(loc=<span style="color: #008000;">"upper left"</span>)
@@ -1521,10 +1485,9 @@ fig.savefig(<span style="color: #008000;">"out/lagaris-1998.png"</span>, dpi=300
 </div>
 </div>
 </div>
-
-<div id="outline-container-org793cb94" class="outline-3">
-<h3 id="org793cb94">Initialisation</h3>
-<div class="outline-text-3" id="text-org793cb94">
+<div id="outline-container-orgc1e38fe" class="outline-3">
+<h3 id="orgc1e38fe">Initialisation</h3>
+<div class="outline-text-3" id="text-orgc1e38fe">
 <ul class="org-ul">
 <li>When initialising the weights of a neural network, keep in mind that we want
 the linear map of the input to take a value that has values roughly compatible
@@ -1534,14 +1497,13 @@ variables, you might choose to initialise the weights from \(N(0,1\sqrt{n})\).</
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgf73188d" class="outline-2">
-<h2 id="orgf73188d">Data notes</h2>
-<div class="outline-text-2" id="text-orgf73188d">
+<div id="outline-container-orgbbd5eac" class="outline-2">
+<h2 id="orgbbd5eac">Data notes</h2>
+<div class="outline-text-2" id="text-orgbbd5eac">
 </div>
-<div id="outline-container-org0da81e2" class="outline-3">
-<h3 id="org0da81e2">WebPlotDigitizer</h3>
-<div class="outline-text-3" id="text-org0da81e2">
+<div id="outline-container-orgf3c976a" class="outline-3">
+<h3 id="orgf3c976a">WebPlotDigitizer</h3>
+<div class="outline-text-3" id="text-orgf3c976a">
 <p>
 <a href="https://github.com/ankitrohatgi/WebPlotDigitizer">https://github.com/ankitrohatgi/WebPlotDigitizer</a>
 </p>
@@ -1556,7 +1518,7 @@ want to extract a figure from a PDF of a paper, see my <a href="./inkscape-notes
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:52</p>
+<p class="date">Created: 2025-04-02 Wed 21:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
