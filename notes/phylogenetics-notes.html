@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-04-17 Thu 09:42 -->
+<!-- 2025-04-25 Fri 17:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>phylogenetics</title>
@@ -250,6 +250,7 @@
 <li><a href="#orgddc8934">Example: Reading Nexus from file</a></li>
 <li><a href="#orga6224a4">Example: Reading Newick from string</a></li>
 <li><a href="#orgd841782">Example: Plotting a tree</a></li>
+<li><a href="#org33817fe">Example: Plotting a tree with annotations</a></li>
 <li><a href="#orgdcb9cd2">Example: Plotting the lineages through time (LTT)</a></li>
 <li><a href="#org10831a3">Example: Pruning a particular leaf</a></li>
 <li><a href="#orgfb4d267">Example: Counting the number of leaves</a></li>
@@ -290,7 +291,7 @@
 <h3 id="orgea36b42">Phylogeny</h3>
 <div class="outline-text-3" id="text-orgea36b42">
 
-<div id="orgc87b4f1" class="figure">
+<div id="org89b0ee9" class="figure">
 <p><img src="../images/phylogeny.png" alt="phylogeny.png" width="900px" />
 </p>
 </div>
@@ -344,7 +345,7 @@ The important part of this is
 <h3 id="org9e731cd">biopython</h3>
 <div class="outline-text-3" id="text-org9e731cd">
 
-<div id="orgf7fc498" class="figure">
+<div id="org3db8525" class="figure">
 <p><img src="../images/biopython-logo.png" alt="biopython-logo.png" width="300px" />
 </p>
 </div>
@@ -460,6 +461,57 @@ Phylo.draw(tree)
 </div>
 </div>
 </div>
+<div id="outline-container-org33817fe" class="outline-4">
+<h4 id="org33817fe">Example: Plotting a tree with annotations</h4>
+<div class="outline-text-4" id="text-org33817fe">
+
+<div id="org1b3249b" class="figure">
+<p><img src="../images/biopython-tree-depths.png" alt="biopython-tree-depths.png" width="800px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Plot showing the depths of nodes through a tree and the branch length associated with nodes.</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">from</span> io <span style="color: #0000FF; font-weight: bold;">import</span> StringIO
+<span style="color: #0000FF; font-weight: bold;">from</span> Bio <span style="color: #0000FF; font-weight: bold;">import</span> Phylo
+<span style="color: #0000FF; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #0000FF; font-weight: bold;">as</span> plt
+
+
+<span style="color: #BA36A5;">newick_tree</span> = StringIO(<span style="color: #008000;">"((A:0.1, B:0.2):0.3, (C:0.4, D:0.5):0.6);"</span>)
+<span style="color: #BA36A5;">tree</span> = Phylo.read(newick_tree, <span style="color: #008000;">"newick"</span>)
+<span style="color: #BA36A5;">depth_dict</span> = tree.depths()
+
+
+<span style="color: #BA36A5;">fig</span>, <span style="color: #BA36A5;">ax</span> = plt.subplots(figsize=(8, 6))
+
+Phylo.draw(tree, do_show=<span style="color: #D0372D;">False</span>, axes=ax)
+ax.yaxis.set_visible(<span style="color: #D0372D;">False</span>)
+ax.xaxis.set_visible(<span style="color: #D0372D;">False</span>)
+
+<span style="color: #BA36A5;">arrow_prop_dict</span> =<span style="color: #006FE0;">dict</span>(width=2.0, edgecolor=<span style="color: #008000;">'#1f78b4'</span>, facecolor=<span style="color: #008000;">'#1f78b4'</span>)
+ax.annotate(f<span style="color: #008000;">"Root node at depth </span>{depth_dict[tree.clade]}<span style="color: #008000;">"</span>,
+            xy=(0.0, 2.5), xytext=(0.1, 4.0),
+            arrowprops=arrow_prop_dict,
+            fontsize=12, color=<span style="color: #008000;">'#1f78b4'</span>)
+ax.annotate(f<span style="color: #008000;">"Branch at depth </span>{depth_dict[tree.clade.clades[0]]}<span style="color: #008000;">"</span>,
+            xy=(0.3, 1.5), xytext=(0.4, 2.5),
+            arrowprops=arrow_prop_dict,
+            fontsize=12, color=<span style="color: #008000;">'#1f78b4'</span>)
+ax.annotate(f<span style="color: #008000;">"Tip at depth </span>{depth_dict[tree.clade.clades[0].clades[1]]}<span style="color: #008000;">"</span>,
+            xy=(0.5, 2.0), xytext=(0.6, 0.5),
+            arrowprops=arrow_prop_dict,
+            fontsize=12, color=<span style="color: #008000;">'#1f78b4'</span>)
+ax.annotate(f<span style="color: #008000;">"Tip with branch length </span>{tree.clade.clades[1].clades[0].branch_length}<span style="color: #008000;">"</span>,
+            xy=(1.0, 3.0), xytext=(0.8, 1.5),
+            arrowprops=arrow_prop_dict,
+            fontsize=12, color=<span style="color: #008000;">'#1f78b4'</span>)
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">fig.show()</span>
+fig.savefig(<span style="color: #008000;">"../images/biopython-tree-depths.png"</span>, dpi=96)
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-orgdcb9cd2" class="outline-4">
 <h4 id="orgdcb9cd2">Example: Plotting the lineages through time (LTT)</h4>
 <div class="outline-text-4" id="text-orgdcb9cd2">
@@ -467,7 +519,7 @@ Phylo.draw(tree)
 <div id="orgb196fe6" class="figure">
 <p><img src="../images/biopython-ltt-phylo.png" alt="biopython-ltt-phylo.png" width="800px" />
 </p>
-<p><span class="figure-number">Figure 2: </span>Facetted figure of a phylogeny and its LTT.</p>
+<p><span class="figure-number">Figure 3: </span>Facetted figure of a phylogeny and its LTT.</p>
 </div>
 
 <p>
@@ -541,7 +593,7 @@ fig.savefig(<span style="color: #008000;">"demo-plotting-ltt.png"</span>, dpi=30
 <div id="orgac8eaeb" class="figure">
 <p><img src="../images/biopython-tree-pruning.png" alt="biopython-tree-pruning.png" width="800px" />
 </p>
-<p><span class="figure-number">Figure 3: </span>Prune away a particular leaf from a tree</p>
+<p><span class="figure-number">Figure 4: </span>Prune away a particular leaf from a tree</p>
 </div>
 
 <p>
@@ -648,7 +700,7 @@ plt.savefig(<span style="color: #008000;">"../images/biopython-tree-pruning.png"
 The output of this script is
 </p>
 
-<pre class="example" id="org1d3f4f6">
+<pre class="example" id="org2128590">
 The mean branch length was 0.350
 The old tree height is 1.1
 The new tree height is 3.143
@@ -758,7 +810,7 @@ this seems to diminish as we get to larger trees.
 Gives us the following examples for different tree sizes.
 </p>
 
-<pre class="example" id="orgc5ef65f">
+<pre class="example" id="orgb51c180">
 The ratio of time needed is 1.98 for Bio/pickle with 256 nodes with 250 replicates.
 The ratio of time needed is 2.00 for Bio/pickle with 512 nodes with 250 replicates.
 The ratio of time needed is 1.80 for Bio/pickle with 1024 nodes with 250 replicates.
@@ -1110,7 +1162,7 @@ likely want to use Bioconductor.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-04-17 Thu 09:42</p>
+<p class="date">Created: 2025-04-25 Fri 17:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
