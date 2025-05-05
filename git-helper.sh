@@ -82,6 +82,7 @@ git add notes/statistics-notes.html
 git add notes/tutoring-notes.html
 git add notes/wikipedia-notes.html
 git add notes/workflow-notes.html
+git add notes/sql-notes.html
 
 # The nicemacs stuff
 git add misc/nicemacs/nicemacs-v2.html
