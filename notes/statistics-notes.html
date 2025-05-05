@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-04-02 Wed 21:50 -->
+<!-- 2025-05-05 Mon 13:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistics</title>
@@ -250,6 +250,7 @@
 </li>
 <li><a href="#org7faa267">Statistics notes</a>
 <ul>
+<li><a href="#r-glm-logistic">GLM: Logistic regression</a></li>
 <li><a href="#r-glm-nbinom">GLM: Negative binomial</a></li>
 <li><a href="#org038ccaf">Fisher information</a></li>
 <li><a href="#orgf004233">Is it statistically significant</a></li>
@@ -537,7 +538,7 @@ efficiently.
 </p>
 
 
-<div id="org125c511" class="figure">
+<div id="org59f40c8" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -575,13 +576,78 @@ intervals.
 <h2 id="org7faa267">Statistics notes</h2>
 <div class="outline-text-2" id="text-org7faa267">
 </div>
-<div id="outline-container-r-glm-nbinom" class="outline-3">
-<h3 id="r-glm-nbinom">GLM: Negative binomial</h3>
-<div class="outline-text-3" id="text-r-glm-nbinom">
+<div id="outline-container-r-glm-logistic" class="outline-3">
+<h3 id="r-glm-logistic">GLM: Logistic regression</h3>
+<div class="outline-text-3" id="text-r-glm-logistic">
 </div>
 <div id="outline-container-org49e114b" class="outline-4">
 <h4 id="org49e114b">Setting up the data</h4>
 <div class="outline-text-4" id="text-org49e114b">
+<p>
+Note that with the logit link, the linear predictor controls the
+log-odds of the binary outcome. In this example, the true intercept is 0, and the
+coefficients are 1, -1, and 0.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">set.seed(1)
+x1 <span style="color: #D0372D;">&lt;-</span> runif(n = 200, min = 0, max = 5)
+x2 <span style="color: #D0372D;">&lt;-</span> runif(n = 200, min = 0, max = 5)
+x3 <span style="color: #D0372D;">&lt;-</span> runif(n = 200, min = 0, max = 5)
+linpred <span style="color: #D0372D;">&lt;-</span> 0 + 1 * x1 - 1 * x2
+p <span style="color: #D0372D;">&lt;-</span> 1 / (1 + exp(-linpred))
+y <span style="color: #D0372D;">&lt;-</span> rbinom(n = 200, size = 1, prob = p)
+df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2, x3 = x3)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgba59891" class="outline-4">
+<h4 id="orgba59891">Fitting the model</h4>
+<div class="outline-text-4" id="text-orgba59891">
+<p>
+The <code>glm</code> function fits the GLM, note that we use the <code>binomial</code>
+family which defaults to using the logit link function. The <code>summary</code>
+and <code>confint</code> functions behave as expected.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">glm_fit <span style="color: #D0372D;">&lt;-</span> glm(y ~ ., data = df, family = binomial)
+summary(glm_fit)
+confint(glm_fit)
+</pre>
+</div>
+
+<p>
+We can visualise the fit (although, you could get better insights
+using the <code>effects</code> library!)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">png(<span style="color: #008000;">"glm-example-logistic-regression.png"</span>)
+plot(p, y, col = <span style="color: #008000;">'blue'</span>, xlab = <span style="color: #008000;">"True"</span>, ylab = <span style="color: #008000;">"Probability/Outcome"</span>)
+abline(a = 0, b = 1, col = <span style="color: #008000;">'grey'</span>)
+est_p <span style="color: #D0372D;">&lt;-</span> predict(glm_fit, newdata = df[, 2:4], type = <span style="color: #008000;">"response"</span>)
+points(p, est_p, col = <span style="color: #008000;">'red'</span>)
+dev.off()
+</pre>
+</div>
+
+
+<div id="org40f940e" class="figure">
+<p><img src="../images/glm-example-logistic-regression.png" alt="glm-example-logistic-regression.png" width="800px" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-r-glm-nbinom" class="outline-3">
+<h3 id="r-glm-nbinom">GLM: Negative binomial</h3>
+<div class="outline-text-3" id="text-r-glm-nbinom">
+</div>
+<div id="outline-container-org5dc6052" class="outline-4">
+<h4 id="org5dc6052">Setting up the data</h4>
+<div class="outline-text-4" id="text-org5dc6052">
 <p>
 Note that with the log-link function, the true intercept should be 1
 and the coefficients should be 1, -1 and 0. The true size parameter of
@@ -600,9 +666,9 @@ df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2
 </div>
 </div>
 </div>
-<div id="outline-container-orgba59891" class="outline-4">
-<h4 id="orgba59891">Fitting the model</h4>
-<div class="outline-text-4" id="text-orgba59891">
+<div id="outline-container-org34a3df4" class="outline-4">
+<h4 id="org34a3df4">Fitting the model</h4>
+<div class="outline-text-4" id="text-org34a3df4">
 <p>
 The following demonstrates that with this data set the coefficients
 are well estimates as is the size parameter of the negative binomial
@@ -807,7 +873,7 @@ intervals contained the true parameter, then you could not reject the null
 hypothesis that the \(95\%\) coverage is correct.
 </p>
 
-<pre class="example" id="org1c22d5b">
+<pre class="example" id="org86d3b90">
 &gt; calibration_test(46, size = 50, prob = 0.95)
 $p_val
 [1] 0.316537
@@ -821,7 +887,7 @@ If instead you only had 44 of the intervals containing the parameter, then you
 could reject this null hypothesis:
 </p>
 
-<pre class="example" id="orgc7987ec">
+<pre class="example" id="org2603e87">
 &gt; calibration_test(44, size = 50, prob = 0.95)
 $p_val
 [1] 0.03777617
@@ -1518,7 +1584,7 @@ want to extract a figure from a PDF of a paper, see my <a href="./inkscape-notes
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-04-02 Wed 21:50</p>
+<p class="date">Created: 2025-05-05 Mon 13:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

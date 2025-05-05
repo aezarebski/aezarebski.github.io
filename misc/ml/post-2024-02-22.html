@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:51 -->
+<!-- 2025-05-05 Mon 13:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 22/02/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -238,10 +238,9 @@
   <a class="button button-outline nav-button" href="./index.html">Index</a>
   <a class="button button-outline nav-button" href="./post-2024-03-14.html">Next</a>
 </div>
-
-<div id="outline-container-org1a2ecf2" class="outline-2">
-<h2 id="org1a2ecf2">Early stopping</h2>
-<div class="outline-text-2" id="text-org1a2ecf2">
+<div id="outline-container-org92a6014" class="outline-2">
+<h2 id="org92a6014">Early stopping</h2>
+<div class="outline-text-2" id="text-org92a6014">
 <p>
 In this example we consider an approach to <i>early stopping</i> described
 by <a href="https://link.springer.com/chapter/10.1007/3-540-49430-8_3">Lutz Prechelt (1998)</a>. They propose several classes of stopping
@@ -264,10 +263,9 @@ accuracy of \(99\%\) on the validation set, but it takes a \(<5\)
 minutes to train.
 </p>
 </div>
-
-<div id="outline-container-org68d1a1d" class="outline-3">
-<h3 id="org68d1a1d">Loading packages</h3>
-<div class="outline-text-3" id="text-org68d1a1d">
+<div id="outline-container-orgd210d7f" class="outline-3">
+<h3 id="orgd210d7f">Loading packages</h3>
+<div class="outline-text-3" id="text-orgd210d7f">
 <p>
 There are two packages we will use that haven't seen much action in
 previous posts: <code>collections</code> which provides a <i>deque</i>, and <code>copy</code> which
@@ -277,38 +275,37 @@ are both part of the standard library.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> collections
-<span style="color: #0000FF;">import</span> copy
-<span style="color: #0000FF;">import</span> time
-<span style="color: #0000FF;">import</span> torch
-<span style="color: #0000FF;">import</span> torch.nn <span style="color: #0000FF;">as</span> nn
-<span style="color: #0000FF;">import</span> torch.optim <span style="color: #0000FF;">as</span> optim
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> collections
+<span style="color: #0000FF; font-weight: bold;">import</span> copy
+<span style="color: #0000FF; font-weight: bold;">import</span> time
+<span style="color: #0000FF; font-weight: bold;">import</span> torch
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.nn <span style="color: #0000FF; font-weight: bold;">as</span> nn
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.optim <span style="color: #0000FF; font-weight: bold;">as</span> optim
 
 torch.manual_seed(0)
 
-<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
-<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
-<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
-<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+<span style="color: #0000FF; font-weight: bold;">import</span> plotnine <span style="color: #0000FF; font-weight: bold;">as</span> p9
+<span style="color: #0000FF; font-weight: bold;">from</span> plotnine <span style="color: #0000FF; font-weight: bold;">import</span> *
 
-<span style="color: #0000FF;">import</span> sys
-<span style="color: #0000FF;">import</span> os
-<span style="color: #0000FF;">from</span> pathlib <span style="color: #0000FF;">import</span> Path
+<span style="color: #0000FF; font-weight: bold;">import</span> sys
+<span style="color: #0000FF; font-weight: bold;">import</span> os
+<span style="color: #0000FF; font-weight: bold;">from</span> pathlib <span style="color: #0000FF; font-weight: bold;">import</span> Path
 
 <span style="color: #BA36A5;">current_directory</span> = Path(os.getcwd())
 sys.path.append(<span style="color: #006FE0;">str</span>(current_directory))
 
-<span style="color: #0000FF;">import</span> niceneuron.plot <span style="color: #0000FF;">as</span> nn_plot
-<span style="color: #0000FF;">import</span> niceneuron.io <span style="color: #0000FF;">as</span> nn_io
-<span style="color: #0000FF;">import</span> niceneuron.data <span style="color: #0000FF;">as</span> nn_data
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.plot <span style="color: #0000FF; font-weight: bold;">as</span> nn_plot
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.io <span style="color: #0000FF; font-weight: bold;">as</span> nn_io
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.data <span style="color: #0000FF; font-weight: bold;">as</span> nn_data
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orge9fc35e" class="outline-3">
-<h3 id="orge9fc35e">Setting data and filenames</h3>
-<div class="outline-text-3" id="text-orge9fc35e">
+<div id="outline-container-org409333c" class="outline-3">
+<h3 id="org409333c">Setting data and filenames</h3>
+<div class="outline-text-3" id="text-org409333c">
 <p>
 As usual there is a bit of fuss here to get the data all set up. This
 can be skipped on a first reading.
@@ -345,41 +342,39 @@ can be skipped on a first reading.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org16900bb" class="outline-3">
-<h3 id="org16900bb">Defining the network</h3>
-<div class="outline-text-3" id="text-org16900bb">
+<div id="outline-container-orgf7711ff" class="outline-3">
+<h3 id="orgf7711ff">Defining the network</h3>
+<div class="outline-text-3" id="text-orgf7711ff">
 <p>
 This is the simple convolutional neural network we have used before.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">DemoCNN</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #006FE0;">super</span>(DemoCNN, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv1</span> = nn.Conv2d(1, 6, kernel_size=5, padding=2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool1</span> = nn.AvgPool2d(2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv2</span> = nn.Conv2d(6, 16, kernel_size=5, padding=0)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool2</span> = nn.AvgPool2d(2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5 * 5 * 16, 84)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">DemoCNN</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+          <span style="color: #006FE0;">super</span>(DemoCNN, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv1</span> = nn.Conv2d(1, 6, kernel_size=5, padding=2)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool1</span> = nn.AvgPool2d(2)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv2</span> = nn.Conv2d(6, 16, kernel_size=5, padding=0)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool2</span> = nn.AvgPool2d(2)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5 * 5 * 16, 84)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool1(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv1(x)))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool2(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv2(x)))
-        <span style="color: #BA36A5;">x</span> = x.view(-1, 5 * 5 * 16)
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._fc1(x))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._fc2(x)
-        <span style="color: #0000FF;">return</span> x
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
+          <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool1(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv1(x)))
+          <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool2(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv2(x)))
+          <span style="color: #BA36A5;">x</span> = x.view(-1, 5 * 5 * 16)
+          <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._fc1(x))
+          <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._fc2(x)
+          <span style="color: #0000FF; font-weight: bold;">return</span> x
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org3ff2fbe" class="outline-3">
-<h3 id="org3ff2fbe">Early stopping</h3>
-<div class="outline-text-3" id="text-org3ff2fbe">
+<div id="outline-container-orgd2b6070" class="outline-3">
+<h3 id="orgd2b6070">Early stopping</h3>
+<div class="outline-text-3" id="text-orgd2b6070">
 <p>
 The idea behind this method of early stopping is simple, keep training
 until there are \(s\) consecutive increasing validation errors. To
@@ -387,7 +382,6 @@ simplify this, I have written a class <code>ValidationManager</code> which takes
 care of this.
 </p>
 </div>
-
 <div id="outline-container-sec-validationmanager" class="outline-4">
 <h4 id="sec-validationmanager"><code>ValidationManager</code></h4>
 <div class="outline-text-4" id="text-sec-validationmanager">
@@ -400,57 +394,56 @@ if the stopping criteria has been reached.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">ValidationManager</span>:
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">ValidationManager</span>:
     <span style="color: #036A07;">"""</span>
 <span style="color: #036A07;">    A class for managing early stopping during training.</span>
 <span style="color: #036A07;">    """</span>
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>, model, loss_fn, patience=3):
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_model</span> = model
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_loss_fn</span> = loss_fn
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_patience</span> = patience
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_loss_history</span> = collections.deque([<span style="color: #006FE0;">float</span>(<span style="color: #008000;">"inf"</span>)] * patience)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_best_loss</span> = <span style="color: #006FE0;">float</span>(<span style="color: #008000;">"inf"</span>)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_best_model</span> = <span style="color: #D0372D;">None</span>
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_validation_history</span> = []
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, model, loss_fn, patience=3):
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_model</span> = model
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_loss_fn</span> = loss_fn
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_patience</span> = patience
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_loss_history</span> = collections.deque([<span style="color: #006FE0;">float</span>(<span style="color: #008000;">"inf"</span>)] * patience)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_best_loss</span> = <span style="color: #006FE0;">float</span>(<span style="color: #008000;">"inf"</span>)
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_best_model</span> = <span style="color: #D0372D;">None</span>
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_validation_history</span> = []
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">validate</span>(<span style="color: #0000FF;">self</span>, epoch, dataloader):
-        <span style="color: #BA36A5;">cum_loss</span> = 0
-        <span style="color: #0000FF;">with</span> torch.no_grad():
-            <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> dataloader:
-                <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
-                <span style="color: #BA36A5;">logits</span> = <span style="color: #0000FF;">self</span>._model(images)
-                <span style="color: #BA36A5;">loss</span> = <span style="color: #0000FF;">self</span>._loss_fn(logits, label)
-                <span style="color: #BA36A5;">cum_loss</span> += loss.item()
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">validate</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, epoch, dataloader):
+          <span style="color: #BA36A5;">cum_loss</span> = 0
+          <span style="color: #0000FF; font-weight: bold;">with</span> torch.no_grad():
+              <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> dataloader:
+                  <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
+                  <span style="color: #BA36A5;">logits</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._model(images)
+                  <span style="color: #BA36A5;">loss</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._loss_fn(logits, label)
+                  <span style="color: #BA36A5;">cum_loss</span> += loss.item()
 
-        <span style="color: #0000FF;">if</span> cum_loss &lt; <span style="color: #0000FF;">self</span>._best_loss:
-            <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_best_loss</span> = cum_loss
-            <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_best_model</span> = copy.deepcopy(<span style="color: #0000FF;">self</span>._model.state_dict())
+          <span style="color: #0000FF; font-weight: bold;">if</span> cum_loss &lt; <span style="color: #0000FF; font-weight: bold;">self</span>._best_loss:
+              <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_best_loss</span> = cum_loss
+              <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_best_model</span> = copy.deepcopy(<span style="color: #0000FF; font-weight: bold;">self</span>._model.state_dict())
 
-        <span style="color: #0000FF;">self</span>._validation_history.append((epoch, cum_loss))
-        <span style="color: #0000FF;">self</span>._loss_history.popleft()
-        <span style="color: #0000FF;">self</span>._loss_history.append(cum_loss)
+          <span style="color: #0000FF; font-weight: bold;">self</span>._validation_history.append((epoch, cum_loss))
+          <span style="color: #0000FF; font-weight: bold;">self</span>._loss_history.popleft()
+          <span style="color: #0000FF; font-weight: bold;">self</span>._loss_history.append(cum_loss)
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">should_stop_early</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #0000FF;">return</span> <span style="color: #006FE0;">all</span>(
-            <span style="color: #0000FF;">self</span>._loss_history[i] &lt; <span style="color: #0000FF;">self</span>._loss_history[i + 1]
-            <span style="color: #0000FF;">for</span> i <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(<span style="color: #0000FF;">self</span>._patience - 1)
-        )
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">should_stop_early</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+          <span style="color: #0000FF; font-weight: bold;">return</span> <span style="color: #006FE0;">all</span>(
+              <span style="color: #0000FF; font-weight: bold;">self</span>._loss_history[i] &lt; <span style="color: #0000FF; font-weight: bold;">self</span>._loss_history[i + 1]
+              <span style="color: #0000FF; font-weight: bold;">for</span> i <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(<span style="color: #0000FF; font-weight: bold;">self</span>._patience - 1)
+          )
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">get_validation_history</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #0000FF;">return</span> <span style="color: #0000FF;">self</span>._validation_history
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">get_validation_history</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+          <span style="color: #0000FF; font-weight: bold;">return</span> <span style="color: #0000FF; font-weight: bold;">self</span>._validation_history
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">get_best_model</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #0000FF;">return</span> <span style="color: #0000FF;">self</span>._best_model
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">get_best_model</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+          <span style="color: #0000FF; font-weight: bold;">return</span> <span style="color: #0000FF; font-weight: bold;">self</span>._best_model
 </pre>
 </div>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org7ff7426" class="outline-3">
-<h3 id="org7ff7426">Training loop (with early stopping)</h3>
-<div class="outline-text-3" id="text-org7ff7426">
+<div id="outline-container-org36adabf" class="outline-3">
+<h3 id="org36adabf">Training loop (with early stopping)</h3>
+<div class="outline-text-3" id="text-org36adabf">
 <p>
 Here we have the same training loop as used in the past, but now
 slightly cleaner thanks to the validation manager object.
@@ -465,22 +458,22 @@ slightly cleaner thanks to the validation manager object.
 model.train()
 <span style="color: #BA36A5;">loss_history</span> = []
 <span style="color: #BA36A5;">training_start_time</span> = time.time()
-<span style="color: #0000FF;">for</span> epoch <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(30):
+<span style="color: #0000FF; font-weight: bold;">for</span> epoch <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(30):
     <span style="color: #BA36A5;">epoch_cumloss</span> = 0
-    <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> train_dataloader:
-        <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
-        <span style="color: #BA36A5;">logits</span> = model(images)
-        <span style="color: #BA36A5;">loss</span> = loss_fn(logits, label)
-        <span style="color: #BA36A5;">epoch_cumloss</span> += loss.item()
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+    <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> train_dataloader:
+          <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
+          <span style="color: #BA36A5;">logits</span> = model(images)
+          <span style="color: #BA36A5;">loss</span> = loss_fn(logits, label)
+          <span style="color: #BA36A5;">epoch_cumloss</span> += loss.item()
+          optimizer.zero_grad()
+          loss.backward()
+          optimizer.step()
 
     <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Epoch </span>{epoch}<span style="color: #008000;"> loss: </span>{epoch_cumloss}<span style="color: #008000;">"</span>)
     loss_history.append((epoch, epoch_cumloss))
     validation_manager.validate(epoch, test_dataloader)
-    <span style="color: #0000FF;">if</span> validation_manager.should_stop_early():
-        <span style="color: #0000FF;">break</span>
+    <span style="color: #0000FF; font-weight: bold;">if</span> validation_manager.should_stop_early():
+          <span style="color: #0000FF; font-weight: bold;">break</span>
 
 <span style="color: #BA36A5;">training_finish_time</span> = time.time()
 <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Training took: </span>{training_finish_time - training_start_time}<span style="color: #008000;">"</span>)
@@ -488,12 +481,11 @@ model.train()
 </div>
 </div>
 </div>
+<div id="outline-container-orgcd49f94" class="outline-3">
+<h3 id="orgcd49f94">Visualise the training</h3>
+<div class="outline-text-3" id="text-orgcd49f94">
 
-<div id="outline-container-org5c6cd2e" class="outline-3">
-<h3 id="org5c6cd2e">Visualise the training</h3>
-<div class="outline-text-3" id="text-org5c6cd2e">
-
-<div id="orge3757b6" class="figure">
+<div id="org5b043ea" class="figure">
 <p><img src="./example-2024-02-22/training.png" alt="training.png" width="800px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Testing and validation errors during the training loop.</p>
@@ -516,10 +508,9 @@ training_p9.save(training_png, width=10, height=10, dpi=300)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org9353f05" class="outline-3">
-<h3 id="org9353f05">Testing the model</h3>
-<div class="outline-text-3" id="text-org9353f05">
+<div id="outline-container-org412579b" class="outline-3">
+<h3 id="org412579b">Testing the model</h3>
+<div class="outline-text-3" id="text-org412579b">
 <p>
 We end up with \(99\%\) accuracy, as expected 🥳
 </p>
@@ -530,23 +521,22 @@ model.load_state_dict(best_model)
 model.<span style="color: #006FE0;">eval</span>()
 <span style="color: #BA36A5;">correct</span> = 0
 <span style="color: #BA36A5;">total</span> = 0
-<span style="color: #0000FF;">with</span> torch.no_grad():
-    <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> test_dataloader:
-        <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
-        <span style="color: #BA36A5;">logits</span> = model(images)
-        <span style="color: #BA36A5;">predicted</span> = torch.argmax(logits, dim=1)
-        <span style="color: #BA36A5;">total</span> += label.size(0)
-        <span style="color: #BA36A5;">correct</span> += (predicted == label).<span style="color: #006FE0;">sum</span>().item()
+<span style="color: #0000FF; font-weight: bold;">with</span> torch.no_grad():
+    <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> test_dataloader:
+          <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
+          <span style="color: #BA36A5;">logits</span> = model(images)
+          <span style="color: #BA36A5;">predicted</span> = torch.argmax(logits, dim=1)
+          <span style="color: #BA36A5;">total</span> += label.size(0)
+          <span style="color: #BA36A5;">correct</span> += (predicted == label).<span style="color: #006FE0;">sum</span>().item()
 
 <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Test accuracy: </span>{correct / total}<span style="color: #008000;">"</span>)
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org847d570" class="outline-3">
-<h3 id="org847d570">Discussion</h3>
-<div class="outline-text-3" id="text-org847d570">
+<div id="outline-container-org9ce0a4b" class="outline-3">
+<h3 id="org9ce0a4b">Discussion</h3>
+<div class="outline-text-3" id="text-org9ce0a4b">
 <p>
 Early stopping provides an uncontroversial stopping criteria.
 Empirical results from <a href="https://link.springer.com/chapter/10.1007/3-540-49430-8_3">Lutz Prechelt (1998)</a> suggests there isn't a
@@ -566,7 +556,7 @@ just a proof-of-concept of the value of a validation manager.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:51</p>
+<p class="date">Created: 2025-05-05 Mon 13:23</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

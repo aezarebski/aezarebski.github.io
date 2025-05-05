@@ -1,0 +1,57 @@
+rule all:
+    input:
+        "training-data.pt",
+        "training-data.png",
+        "trained-model.pt",
+        "testing-plot.png",
+        "extrapolation-plot.png"
+
+
+rule plot_testing_data:
+    input:
+        "cRealNVP.py",
+        py="plot-testing-data.py",
+        trained_model="trained-model.pt"
+    output:
+        out_png_1="testing-plot.png",
+        out_png_2="extrapolation-plot.png"
+    shell:
+        """
+        python {input.py} {input.trained_model} {output.out_png_1} {output.out_png_2}
+        """
+
+
+rule train_model:
+    input:
+        "cRealNVP.py",
+        train_data="training-data.pt",
+        py="train-model.py"
+    output:
+        trained_model="trained-model.pt"
+    shell:
+        """
+        python {input.py} {input.train_data} {output.trained_model}
+        """
+
+
+rule make_training_data:
+    input:
+        "simulate-training-data.py"
+    output:
+        "training-data.pt"
+    shell:
+        """
+        python {input} {output}
+        """
+
+
+rule plot_training_data:
+    input:
+        data="training-data.pt",
+        py="plot-training-data.py"
+    output:
+        "training-data.png"
+    shell:
+        """
+        python {input.py} {input.data} {output}
+        """

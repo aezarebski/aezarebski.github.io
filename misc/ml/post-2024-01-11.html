@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:51 -->
+<!-- 2025-05-05 Mon 13:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 11/01/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -238,10 +238,9 @@
   <a class="button button-outline nav-button" href="./index.html">Index</a>
   <a class="button button-outline nav-button" href="./post-2024-01-25.html">Next</a>
 </div>
-
-<div id="outline-container-org9b45316" class="outline-2">
-<h2 id="org9b45316">Neural Bayes estimators</h2>
-<div class="outline-text-2" id="text-org9b45316">
+<div id="outline-container-org42727a9" class="outline-2">
+<h2 id="org42727a9">Neural Bayes estimators</h2>
+<div class="outline-text-2" id="text-org42727a9">
 <p>
 In this example we will use the <i>neural Bayes estimators</i> developed by
 <a href="https://doi.org/10.1080/00031305.2023.2249522">Sainsbury-Dale et al (2023)</a> for the very simple task of generating a
@@ -249,19 +248,18 @@ point estimate of the parameters of a linear regression. Training the
 model was a bit harder than in previous MNIST examples, but with a bit
 of trial-and-error I was able to get something reasonable that trained
 in under 5 minutes. The overall architecture used in the paper is
-shown in Figure <a href="#org16b161a">1</a>.
+shown in Figure <a href="#org2be1638">No description for this link</a>.
 </p>
 
 
-<div id="org16b161a" class="figure">
+<div id="org2be1638" class="figure">
 <p><img src="./diagrams/drawing-2024-01-11.png" alt="drawing-2024-01-11.png" width="400px" />
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgdc9269c" class="outline-3">
-<h3 id="orgdc9269c">A statistical model</h3>
-<div class="outline-text-3" id="text-orgdc9269c">
+<div id="outline-container-org35059e0" class="outline-3">
+<h3 id="org35059e0">A statistical model</h3>
+<div class="outline-text-3" id="text-org35059e0">
 <p>
 The statistical model we are interested in estimating the parameters
 of is linear regression:
@@ -288,10 +286,9 @@ could use the bootstrap since parameter estimation is so cheap.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgae9ea5a" class="outline-3">
-<h3 id="orgae9ea5a">Loading packages</h3>
-<div class="outline-text-3" id="text-orgae9ea5a">
+<div id="outline-container-org8507c99" class="outline-3">
+<h3 id="org8507c99">Loading packages</h3>
+<div class="outline-text-3" id="text-org8507c99">
 <p>
 Load packages and set the seed used by PyTorch. Since there is
 extensive functionality for random number generation in PyTorch, we
@@ -299,39 +296,37 @@ will use that to simulate our datasets.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> time
-<span style="color: #0000FF;">import</span> torch
-<span style="color: #0000FF;">import</span> torch.nn <span style="color: #0000FF;">as</span> nn
-<span style="color: #0000FF;">import</span> torch.optim <span style="color: #0000FF;">as</span> optim
-<span style="color: #0000FF;">from</span> torch.distributions <span style="color: #0000FF;">import</span> uniform, normal
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> time
+<span style="color: #0000FF; font-weight: bold;">import</span> torch
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.nn <span style="color: #0000FF; font-weight: bold;">as</span> nn
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.optim <span style="color: #0000FF; font-weight: bold;">as</span> optim
+<span style="color: #0000FF; font-weight: bold;">from</span> torch.distributions <span style="color: #0000FF; font-weight: bold;">import</span> uniform, normal
 
-<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
-<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
-<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+<span style="color: #0000FF; font-weight: bold;">import</span> plotnine <span style="color: #0000FF; font-weight: bold;">as</span> p9
+<span style="color: #0000FF; font-weight: bold;">from</span> plotnine <span style="color: #0000FF; font-weight: bold;">import</span> *
 
 torch.manual_seed(0)
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org7dc785d" class="outline-3">
-<h3 id="org7dc785d">Define the input and output filenames</h3>
-<div class="outline-text-3" id="text-org7dc785d">
+<div id="outline-container-orga9bd427" class="outline-3">
+<h3 id="orga9bd427">Define the input and output filenames</h3>
+<div class="outline-text-3" id="text-orga9bd427">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">training_data_csv</span> = <span style="color: #008000;">"data/linear-regression-2024-01-11-training.csv"</span>
 <span style="color: #BA36A5;">testing_data_csv</span> = <span style="color: #008000;">"data/linear-regression-2024-01-11-testing.csv"</span>
 <span style="color: #BA36A5;">loss_csv</span> = <span style="color: #008000;">"example-2024-01-11-loss.csv"</span>
 <span style="color: #BA36A5;">loss_png</span> = <span style="color: #008000;">"example-2024-01-11-loss.png"</span>
-<span style="color: #BA36A5;">beta_png</span> = <span style="color: #0000FF;">lambda</span> n: f<span style="color: #008000;">"example-2024-01-11-beta</span>{n}<span style="color: #008000;">.png"</span>
+<span style="color: #BA36A5;">beta_png</span> = <span style="color: #0000FF; font-weight: bold;">lambda</span> n: f<span style="color: #008000;">"example-2024-01-11-beta</span>{n}<span style="color: #008000;">.png"</span>
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org0ac9e6f" class="outline-3">
-<h3 id="org0ac9e6f">Define statistical model constants</h3>
-<div class="outline-text-3" id="text-org0ac9e6f">
+<div id="outline-container-org2f3b0e9" class="outline-3">
+<h3 id="org2f3b0e9">Define statistical model constants</h3>
+<div class="outline-text-3" id="text-org2f3b0e9">
 <p>
 Since each datum for this model is itself a dataset, we need to define
 the size of those datasets. This corresponds to the parameter \(J\) in
@@ -350,10 +345,9 @@ not appear to test it, here it is fixed to <code>dataset_size</code>.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org5482c85" class="outline-3">
-<h3 id="org5482c85">Define simulation constants</h3>
-<div class="outline-text-3" id="text-org5482c85">
+<div id="outline-container-orgb1c896c" class="outline-3">
+<h3 id="orgb1c896c">Define simulation constants</h3>
+<div class="outline-text-3" id="text-orgb1c896c">
 <p>
 The value of <code>train_reps</code> is the number of datasets that we will
 generate, this corresponds loosely to the parameter \(K\) in the paper.
@@ -370,10 +364,9 @@ The <code>test_reps</code> is there to define how big the test set is.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org69ebc70" class="outline-3">
-<h3 id="org69ebc70">Simulate training data</h3>
-<div class="outline-text-3" id="text-org69ebc70">
+<div id="outline-container-org49cc465" class="outline-3">
+<h3 id="org49cc465">Simulate training data</h3>
+<div class="outline-text-3" id="text-org49cc465">
 <p>
 Simulating the training data is a little bit fiddly, but the only
 notable thing is the use of the <a href="https://pytorch.org/docs/stable/generated/torch.bmm.html#torch-bmm">bmm</a> function to do the batch
@@ -382,7 +375,7 @@ testing dataset, it makes sense to write a function to do this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">def</span> <span style="color: #006699;">random_regression_datasets</span>(
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">random_regression_datasets</span>(
         num_replicates: <span style="color: #006FE0;">int</span>,
         replicate_size: <span style="color: #006FE0;">int</span>,
         model_dimension: <span style="color: #006FE0;">int</span>):
@@ -408,25 +401,24 @@ testing dataset, it makes sense to write a function to do this.
         .squeeze(0)
     )
     <span style="color: #BA36A5;">data_vals</span> = torch.cat((y_vals, x_vals), dim=2)
-    <span style="color: #0000FF;">return</span> data_vals, beta_vals
+    <span style="color: #0000FF; font-weight: bold;">return</span> data_vals, beta_vals
 </pre>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">train_data</span>, <span style="color: #BA36A5;">train_beta</span> = random_regression_datasets(
     train_reps, dataset_size, 3)
-<span style="color: #0000FF;">assert</span> train_data.shape == torch.Size([train_reps, dataset_size, 3])
+<span style="color: #0000FF; font-weight: bold;">assert</span> train_data.shape == torch.Size([train_reps, dataset_size, 3])
 </pre>
 </div>
 </div>
-
-<div id="outline-container-orga2dfb37" class="outline-4">
-<h4 id="orga2dfb37">Save the training data to CSV</h4>
-<div class="outline-text-4" id="text-orga2dfb37">
+<div id="outline-container-org332c4cf" class="outline-4">
+<h4 id="org332c4cf">Save the training data to CSV</h4>
+<div class="outline-text-4" id="text-org332c4cf">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">train_data_df</span> = []
-<span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(train_data.shape[0]):
-    <span style="color: #0000FF;">for</span> jx <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(train_data.shape[1]):
+<span style="color: #0000FF; font-weight: bold;">for</span> ix <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(train_data.shape[0]):
+    <span style="color: #0000FF; font-weight: bold;">for</span> jx <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(train_data.shape[1]):
         train_data_df.append(
             [ix, jx] + train_data[ix][jx].tolist() + train_beta[ix].squeeze(1).tolist()
         )
@@ -444,10 +436,9 @@ train_data_df.to_csv(training_data_csv)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org2ddd397" class="outline-3">
-<h3 id="org2ddd397">Define the model architecture</h3>
-<div class="outline-text-3" id="text-org2ddd397">
+<div id="outline-container-org9beef1a" class="outline-3">
+<h3 id="org9beef1a">Define the model architecture</h3>
+<div class="outline-text-3" id="text-org9beef1a">
 <p>
 There are three components to this module: the \(\psi\) network which
 summarises a single datum, the \(a\) aggregator which combines these
@@ -456,40 +447,40 @@ estimates of the parameters.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">LinearRegressionNB</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>, m):
-        <span style="color: #006FE0;">super</span>(LinearRegressionNB, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_m</span> = m     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">individual dataset size: {z_1,...,z_m}</span>
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_n</span> = 3     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">input dimension: (y_i, x_i^1, x_i^2)</span>
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_q</span> = 10    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">latent dimension</span>
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_p</span> = 3     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">output dimension: (beta_0, beta_1, beta_2)</span>
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">LinearRegressionNB</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, m):
+        <span style="color: #006FE0;">super</span>(LinearRegressionNB, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_m</span> = m     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">individual dataset size: {z_1,...,z_m}</span>
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_n</span> = 3     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">input dimension: (y_i, x_i^1, x_i^2)</span>
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_q</span> = 10    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">latent dimension</span>
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_p</span> = 3     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">output dimension: (beta_0, beta_1, beta_2)</span>
 
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_psi</span> = nn.Sequential(
-            nn.Linear(<span style="color: #0000FF;">self</span>._n, <span style="color: #0000FF;">self</span>._q),
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_psi</span> = nn.Sequential(
+            nn.Linear(<span style="color: #0000FF; font-weight: bold;">self</span>._n, <span style="color: #0000FF; font-weight: bold;">self</span>._q),
             nn.Sigmoid(),
         )
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_aggregator</span> = torch.mean
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_phi</span> = nn.Sequential(
-            nn.Linear(<span style="color: #0000FF;">self</span>._q, <span style="color: #0000FF;">self</span>._q),
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_aggregator</span> = torch.mean
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_phi</span> = nn.Sequential(
+            nn.Linear(<span style="color: #0000FF; font-weight: bold;">self</span>._q, <span style="color: #0000FF; font-weight: bold;">self</span>._q),
             nn.Sigmoid(),
-            nn.Linear(<span style="color: #0000FF;">self</span>._q, <span style="color: #0000FF;">self</span>._p)
+            nn.Linear(<span style="color: #0000FF; font-weight: bold;">self</span>._q, <span style="color: #0000FF; font-weight: bold;">self</span>._p)
         )
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">assert x.dim() == 3</span>
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">assert x.shape[1] == self._m</span>
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">assert x.shape[2] == self._n</span>
 
         <span style="color: #BA36A5;">outputs</span> = []
-        <span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(x.shape[0]):
-            <span style="color: #BA36A5;">x_ix</span> = <span style="color: #0000FF;">self</span>._psi(x[ix])
-            <span style="color: #BA36A5;">x_ix</span> = <span style="color: #0000FF;">self</span>._aggregator(x_ix, dim=0)
-            <span style="color: #BA36A5;">x_ix</span> = <span style="color: #0000FF;">self</span>._phi(x_ix)
+        <span style="color: #0000FF; font-weight: bold;">for</span> ix <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(x.shape[0]):
+            <span style="color: #BA36A5;">x_ix</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._psi(x[ix])
+            <span style="color: #BA36A5;">x_ix</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._aggregator(x_ix, dim=0)
+            <span style="color: #BA36A5;">x_ix</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._phi(x_ix)
             outputs.append(x_ix)
 
         <span style="color: #BA36A5;">x</span> = torch.stack(outputs, dim=0)
         <span style="color: #BA36A5;">x</span> = x.unsqueeze(2)
-        <span style="color: #0000FF;">return</span> x
+        <span style="color: #0000FF; font-weight: bold;">return</span> x
 </pre>
 </div>
 
@@ -509,10 +500,9 @@ leave them there.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgdb0c3cf" class="outline-3">
-<h3 id="orgdb0c3cf">Instantiate the network and check it works as expected</h3>
-<div class="outline-text-3" id="text-orgdb0c3cf">
+<div id="outline-container-org618d1fa" class="outline-3">
+<h3 id="org618d1fa">Instantiate the network and check it works as expected</h3>
+<div class="outline-text-3" id="text-org618d1fa">
 <p>
 As mentioned above, this network will only work for datasets of a
 fixed size, so we need to specify this at run time when the network is
@@ -521,16 +511,15 @@ initialised.
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">lm_nb</span> = LinearRegressionNB(dataset_size)
-<span style="color: #0000FF;">assert</span> lm_nb(train_data).shape == torch.Size([train_reps, 3, 1])
-<span style="color: #0000FF;">assert</span> lm_nb(train_data).shape == train_beta.shape
+<span style="color: #0000FF; font-weight: bold;">assert</span> lm_nb(train_data).shape == torch.Size([train_reps, 3, 1])
+<span style="color: #0000FF; font-weight: bold;">assert</span> lm_nb(train_data).shape == train_beta.shape
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgd9972db" class="outline-3">
-<h3 id="orgd9972db">Train the network</h3>
-<div class="outline-text-3" id="text-orgd9972db">
+<div id="outline-container-orgaacd02b" class="outline-3">
+<h3 id="orgaacd02b">Train the network</h3>
+<div class="outline-text-3" id="text-orgaacd02b">
 <p>
 Since this is a regression problem we will use the MSE loss function.
 We manage the batching of the data manually. Since it is simulated, it
@@ -544,7 +533,7 @@ would be possible to generate it on the fly from a data loader.
 lm_nb.train()
 <span style="color: #BA36A5;">loss_history</span> = []
 <span style="color: #BA36A5;">training_start_time</span> = time.time()
-<span style="color: #0000FF;">for</span> epoch <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(train_num_epochs):
+<span style="color: #0000FF; font-weight: bold;">for</span> epoch <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(train_num_epochs):
     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Generate a random sample of 100 indicies to use as a batch</span>
     <span style="color: #BA36A5;">batch_idx</span> = torch.randint(0, train_reps, (train_batch_size,))
     <span style="color: #BA36A5;">batch</span> = train_data[batch_idx]
@@ -560,7 +549,7 @@ lm_nb.train()
     loss.backward()
     optimizer.step()
 
-    <span style="color: #0000FF;">if</span> epoch % 100 == 0:
+    <span style="color: #0000FF; font-weight: bold;">if</span> epoch % 100 == 0:
         <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Epoch </span>{epoch}<span style="color: #008000;"> loss: </span>{epoch_loss}<span style="color: #008000;">"</span>)
     loss_history.append((epoch,epoch_loss))
 lm_nb.<span style="color: #006FE0;">eval</span>()
@@ -570,12 +559,11 @@ lm_nb.<span style="color: #006FE0;">eval</span>()
 </div>
 </div>
 </div>
+<div id="outline-container-org80a9210" class="outline-3">
+<h3 id="org80a9210">Visualise the training process</h3>
+<div class="outline-text-3" id="text-org80a9210">
 
-<div id="outline-container-org21c8c79" class="outline-3">
-<h3 id="org21c8c79">Visualise the training process</h3>
-<div class="outline-text-3" id="text-org21c8c79">
-
-<div id="orge79e8c0" class="figure">
+<div id="org8a5458c" class="figure">
 <p><img src="./example-2024-01-11-loss.png" alt="example-2024-01-11-loss.png" width="400px" />
 </p>
 </div>
@@ -592,10 +580,9 @@ loss_df.to_csv(loss_csv)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org96b5b56" class="outline-3">
-<h3 id="org96b5b56">Simulate testing data</h3>
-<div class="outline-text-3" id="text-org96b5b56">
+<div id="outline-container-orgf2310ec" class="outline-3">
+<h3 id="orgf2310ec">Simulate testing data</h3>
+<div class="outline-text-3" id="text-orgf2310ec">
 <p>
 We can reuse the function from above to simulate a dataset to test the
 model with.
@@ -604,18 +591,17 @@ model with.
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">test_data</span>, <span style="color: #BA36A5;">test_beta</span> = random_regression_datasets(
     test_reps, dataset_size, 3)
-<span style="color: #0000FF;">assert</span> test_data.shape == torch.Size([test_reps, dataset_size, 3])
+<span style="color: #0000FF; font-weight: bold;">assert</span> test_data.shape == torch.Size([test_reps, dataset_size, 3])
 </pre>
 </div>
 </div>
-
-<div id="outline-container-org1963e99" class="outline-4">
-<h4 id="org1963e99">Save the testing data to CSV</h4>
-<div class="outline-text-4" id="text-org1963e99">
+<div id="outline-container-orgff3270f" class="outline-4">
+<h4 id="orgff3270f">Save the testing data to CSV</h4>
+<div class="outline-text-4" id="text-orgff3270f">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">test_data_df</span> = []
-<span style="color: #0000FF;">for</span> ix <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(test_data.shape[0]):
-    <span style="color: #0000FF;">for</span> jx <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(test_data.shape[1]):
+<span style="color: #0000FF; font-weight: bold;">for</span> ix <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(test_data.shape[0]):
+    <span style="color: #0000FF; font-weight: bold;">for</span> jx <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(test_data.shape[1]):
         test_data_df.append(
             [ix, jx] + test_data[ix][jx].tolist() + test_beta[ix].squeeze(1).tolist()
         )
@@ -633,10 +619,9 @@ test_data_df.to_csv(testing_data_csv)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org98acb2d" class="outline-3">
-<h3 id="org98acb2d">Visualise the test results</h3>
-<div class="outline-text-3" id="text-org98acb2d">
+<div id="outline-container-org4e4f27a" class="outline-3">
+<h3 id="org4e4f27a">Visualise the test results</h3>
+<div class="outline-text-3" id="text-org4e4f27a">
 <p>
 The agreement between the true parameters and the estimates is good,
 but with the value of \(m\) that should be expected. It would be nice to
@@ -645,19 +630,19 @@ future.
 </p>
 
 
-<div id="orge2afc4d" class="figure">
+<div id="org1a12926" class="figure">
 <p><img src="./example-2024-01-11-beta0.png" alt="example-2024-01-11-beta0.png" width="400px" />
 </p>
 </div>
 
 
-<div id="org528797d" class="figure">
+<div id="orga0a2708" class="figure">
 <p><img src="./example-2024-01-11-beta1.png" alt="example-2024-01-11-beta1.png" width="400px" />
 </p>
 </div>
 
 
-<div id="orgcb27f0d" class="figure">
+<div id="orgdecd4e4" class="figure">
 <p><img src="./example-2024-01-11-beta2.png" alt="example-2024-01-11-beta2.png" width="400px" />
 </p>
 </div>
@@ -695,10 +680,9 @@ future.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org73227c1" class="outline-3">
-<h3 id="org73227c1">Discussion</h3>
-<div class="outline-text-3" id="text-org73227c1">
+<div id="outline-container-org8908a7a" class="outline-3">
+<h3 id="org8908a7a">Discussion</h3>
+<div class="outline-text-3" id="text-org8908a7a">
 <p>
 Neural Bayes estimators provide a way to approximate Bayes estimators
 with neural networks, yieldling flexible approach to likelihood-free
@@ -713,7 +697,7 @@ Lopez-Paz (2019)</a>.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:51</p>
+<p class="date">Created: 2025-05-05 Mon 13:23</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:51 -->
+<!-- 2025-05-05 Mon 13:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 09/01/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -238,10 +238,9 @@
   <a class="button button-outline nav-button" href="./index.html">Index</a>
   <a class="button button-outline nav-button" href="./post-2024-01-11.html">Next</a>
 </div>
-
-<div id="outline-container-org12e5e15" class="outline-2">
-<h2 id="org12e5e15">Fine-tuning for MNIST classification</h2>
-<div class="outline-text-2" id="text-org12e5e15">
+<div id="outline-container-org292fb09" class="outline-2">
+<h2 id="org292fb09">Fine-tuning for MNIST classification</h2>
+<div class="outline-text-2" id="text-org292fb09">
 <p>
 In this example we are going to <i>fine-tune</i> the model from <a href="./post-2024-01-04.html">this post</a>.
 Well, not really, because we will still use the same MNIST dataset,
@@ -251,30 +250,28 @@ seconds, fine-tuning the model with the same amount of training data
 took about \(15\) seconds.
 </p>
 </div>
-
-<div id="outline-container-org9b09cee" class="outline-3">
-<h3 id="org9b09cee">Loading packages</h3>
-<div class="outline-text-3" id="text-org9b09cee">
+<div id="outline-container-orgd32c0cf" class="outline-3">
+<h3 id="orgd32c0cf">Loading packages</h3>
+<div class="outline-text-3" id="text-orgd32c0cf">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> time
-<span style="color: #0000FF;">import</span> torch
-<span style="color: #0000FF;">import</span> torch.nn <span style="color: #0000FF;">as</span> nn
-<span style="color: #0000FF;">import</span> torch.optim <span style="color: #0000FF;">as</span> optim
-<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
-<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
-<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
-<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> time
+<span style="color: #0000FF; font-weight: bold;">import</span> torch
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.nn <span style="color: #0000FF; font-weight: bold;">as</span> nn
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.optim <span style="color: #0000FF; font-weight: bold;">as</span> optim
+<span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+<span style="color: #0000FF; font-weight: bold;">import</span> plotnine <span style="color: #0000FF; font-weight: bold;">as</span> p9
+<span style="color: #0000FF; font-weight: bold;">from</span> plotnine <span style="color: #0000FF; font-weight: bold;">import</span> *
 
-<span style="color: #0000FF;">import</span> niceneuron.io <span style="color: #0000FF;">as</span> nn_io
-<span style="color: #0000FF;">import</span> niceneuron.data <span style="color: #0000FF;">as</span> nn_data
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.io <span style="color: #0000FF; font-weight: bold;">as</span> nn_io
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.data <span style="color: #0000FF; font-weight: bold;">as</span> nn_data
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgb5eda40" class="outline-3">
-<h3 id="orgb5eda40">Define input and output filenames</h3>
-<div class="outline-text-3" id="text-orgb5eda40">
+<div id="outline-container-org5b41c87" class="outline-3">
+<h3 id="org5b41c87">Define input and output filenames</h3>
+<div class="outline-text-3" id="text-org5b41c87">
 <p>
 Define the files that are used as input and output to keep the program
 DRY.
@@ -293,10 +290,9 @@ DRY.
 </div>
 </div>
 </div>
-
-<div id="outline-container-orge4c5a68" class="outline-3">
-<h3 id="orge4c5a68">Loading testing and training data</h3>
-<div class="outline-text-3" id="text-orge4c5a68">
+<div id="outline-container-org0e4bf06" class="outline-3">
+<h3 id="org0e4bf06">Loading testing and training data</h3>
+<div class="outline-text-3" id="text-org0e4bf06">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">images</span> = nn_io.read_idx(images_path)
 <span style="color: #BA36A5;">images</span> = images.astype(np.float32)
@@ -316,34 +312,33 @@ DRY.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org6e0be46" class="outline-3">
-<h3 id="org6e0be46">Defining the model</h3>
-<div class="outline-text-3" id="text-org6e0be46">
+<div id="outline-container-org82dfb87" class="outline-3">
+<h3 id="org82dfb87">Defining the model</h3>
+<div class="outline-text-3" id="text-org82dfb87">
 <p>
 Recall that in the <a href="./post-2024-01-04.html">previous post</a> we trained the following CNN and
 saved the resulting model state.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">DemoCNN</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #006FE0;">super</span>(DemoCNN, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv1</span> = nn.Conv2d(1, 6, kernel_size=5, padding=2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool1</span> = nn.AvgPool2d(2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv2</span> = nn.Conv2d(6, 16, kernel_size=5, padding=0)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool2</span> = nn.AvgPool2d(2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5*5*16, 84)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">DemoCNN</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+        <span style="color: #006FE0;">super</span>(DemoCNN, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv1</span> = nn.Conv2d(1, 6, kernel_size=5, padding=2)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool1</span> = nn.AvgPool2d(2)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv2</span> = nn.Conv2d(6, 16, kernel_size=5, padding=0)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool2</span> = nn.AvgPool2d(2)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5*5*16, 84)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool1(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv1(x)))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool2(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv2(x)))
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool1(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv1(x)))
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool2(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv2(x)))
         <span style="color: #BA36A5;">x</span> = x.view(-1, 5*5*16)
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._fc1(x))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._fc2(x)
-        <span style="color: #0000FF;">return</span> x
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._fc1(x))
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._fc2(x)
+        <span style="color: #0000FF; font-weight: bold;">return</span> x
 </pre>
 </div>
 
@@ -357,33 +352,33 @@ subsequent training these parameters stay fixed.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">DemoFeatureExtractor</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>, pretrained_DemoCNN, freeze=<span style="color: #D0372D;">True</span>):
-        <span style="color: #006FE0;">super</span>(DemoFeatureExtractor, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv1</span> = pretrained_DemoCNN._conv1
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool1</span> = pretrained_DemoCNN._pool1
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv2</span> = pretrained_DemoCNN._conv2
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool2</span> = pretrained_DemoCNN._pool2
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">DemoFeatureExtractor</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, pretrained_DemoCNN, freeze=<span style="color: #D0372D;">True</span>):
+        <span style="color: #006FE0;">super</span>(DemoFeatureExtractor, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv1</span> = pretrained_DemoCNN._conv1
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool1</span> = pretrained_DemoCNN._pool1
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv2</span> = pretrained_DemoCNN._conv2
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool2</span> = pretrained_DemoCNN._pool2
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
 
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">freeze</span> = freeze
-        <span style="color: #0000FF;">if</span> <span style="color: #0000FF;">self</span>.freeze:
-            <span style="color: #0000FF;">for</span> param <span style="color: #0000FF;">in</span> <span style="color: #0000FF;">self</span>._conv1.parameters():
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">freeze</span> = freeze
+        <span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #0000FF; font-weight: bold;">self</span>.freeze:
+            <span style="color: #0000FF; font-weight: bold;">for</span> param <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #0000FF; font-weight: bold;">self</span>._conv1.parameters():
                 param.<span style="color: #BA36A5;">requires_grad</span> = <span style="color: #D0372D;">False</span>
-            <span style="color: #0000FF;">for</span> param <span style="color: #0000FF;">in</span> <span style="color: #0000FF;">self</span>._pool1.parameters():
+            <span style="color: #0000FF; font-weight: bold;">for</span> param <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #0000FF; font-weight: bold;">self</span>._pool1.parameters():
                 param.<span style="color: #BA36A5;">requires_grad</span> = <span style="color: #D0372D;">False</span>
-            <span style="color: #0000FF;">for</span> param <span style="color: #0000FF;">in</span> <span style="color: #0000FF;">self</span>._conv2.parameters():
+            <span style="color: #0000FF; font-weight: bold;">for</span> param <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #0000FF; font-weight: bold;">self</span>._conv2.parameters():
                 param.<span style="color: #BA36A5;">requires_grad</span> = <span style="color: #D0372D;">False</span>
-            <span style="color: #0000FF;">for</span> param <span style="color: #0000FF;">in</span> <span style="color: #0000FF;">self</span>._pool2.parameters():
+            <span style="color: #0000FF; font-weight: bold;">for</span> param <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #0000FF; font-weight: bold;">self</span>._pool2.parameters():
                 param.<span style="color: #BA36A5;">requires_grad</span> = <span style="color: #D0372D;">False</span>
             <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">for param in self.features.parameters():</span>
             <span style="color: #8D8D84;">#     </span><span style="color: #8D8D84; font-style: italic;">param.requires_grad = False</span>
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool1(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv1(x)))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool2(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv2(x)))
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool1(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv1(x)))
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool2(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv2(x)))
         <span style="color: #BA36A5;">x</span> = x.view(-1, 5*5*16)
-        <span style="color: #0000FF;">return</span> x
+        <span style="color: #0000FF; font-weight: bold;">return</span> x
 </pre>
 </div>
 
@@ -392,19 +387,19 @@ We use a <code>DemoFeatureExtractor</code> as a layer in a new classifier model.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">DemoFineTuner</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>, feature_extractor):
-        <span style="color: #006FE0;">super</span>(DemoFineTuner, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_feature_extractor</span> = feature_extractor
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5*5*16, 84)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">DemoFineTuner</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, feature_extractor):
+        <span style="color: #006FE0;">super</span>(DemoFineTuner, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_feature_extractor</span> = feature_extractor
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5*5*16, 84)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._feature_extractor(x)
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._fc1(x))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._fc2(x)
-        <span style="color: #0000FF;">return</span> x
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._feature_extractor(x)
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._fc1(x))
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._fc2(x)
+        <span style="color: #0000FF; font-weight: bold;">return</span> x
 </pre>
 </div>
 
@@ -422,10 +417,9 @@ pretrained_cnn.load_state_dict(torch.load(trained_model_file))
 </div>
 </div>
 </div>
-
-<div id="outline-container-org90b69e8" class="outline-3">
-<h3 id="org90b69e8">Fine-tuning the model</h3>
-<div class="outline-text-3" id="text-org90b69e8">
+<div id="outline-container-orgdde815a" class="outline-3">
+<h3 id="orgdde815a">Fine-tuning the model</h3>
+<div class="outline-text-3" id="text-orgdde815a">
 <p>
 Then we need to define a training loop to do the fine-tuning.
 </p>
@@ -437,9 +431,9 @@ Then we need to define a training loop to do the fine-tuning.
 model.train()
 <span style="color: #BA36A5;">loss_history</span> = []
 <span style="color: #BA36A5;">training_start_time</span> = time.time()
-<span style="color: #0000FF;">for</span> epoch <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(5):
+<span style="color: #0000FF; font-weight: bold;">for</span> epoch <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(5):
     <span style="color: #BA36A5;">epoch_cumloss</span> = 0
-    <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> train_dataloader:
+    <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> train_dataloader:
         <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Forward pass</span>
         <span style="color: #BA36A5;">logits</span> = model(images)
@@ -463,10 +457,9 @@ loss_df.to_csv(loss_csv, index=<span style="color: #D0372D;">False</span>)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org9cef0c2" class="outline-3">
-<h3 id="org9cef0c2">Test the model</h3>
-<div class="outline-text-3" id="text-org9cef0c2">
+<div id="outline-container-org1c62b6a" class="outline-3">
+<h3 id="org1c62b6a">Test the model</h3>
+<div class="outline-text-3" id="text-org1c62b6a">
 <p>
 Then we test it with the following loop. Note that we have turned the
 gradient tracking off as this runs slightly quicker.
@@ -476,8 +469,8 @@ gradient tracking off as this runs slightly quicker.
 <pre class="src src-python">model.<span style="color: #006FE0;">eval</span>()
 <span style="color: #BA36A5;">correct</span> = 0
 <span style="color: #BA36A5;">total</span> = 0
-<span style="color: #0000FF;">with</span> torch.no_grad():
-    <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> test_dataloader:
+<span style="color: #0000FF; font-weight: bold;">with</span> torch.no_grad():
+    <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> test_dataloader:
         <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
         <span style="color: #BA36A5;">logits</span> = model(images)
         <span style="color: #BA36A5;">predicted</span> = torch.argmax(logits, dim=1)
@@ -490,16 +483,15 @@ gradient tracking off as this runs slightly quicker.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org4b65644" class="outline-3">
-<h3 id="org4b65644">Visualise the results</h3>
-<div class="outline-text-3" id="text-org4b65644">
+<div id="outline-container-orge44cfd0" class="outline-3">
+<h3 id="orge44cfd0">Visualise the results</h3>
+<div class="outline-text-3" id="text-orge44cfd0">
 <p>
 Plot the resulting loss values across the epochs.
 </p>
 
 
-<div id="org36bff54" class="figure">
+<div id="org8da8fbb" class="figure">
 <p><img src="./example-2024-01-09-loss.png" alt="example-2024-01-09-loss.png" width="400px" />
 </p>
 </div>
@@ -521,7 +513,7 @@ loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:51</p>
+<p class="date">Created: 2025-05-05 Mon 13:23</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

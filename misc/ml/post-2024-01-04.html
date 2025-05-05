@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:51 -->
+<!-- 2025-05-05 Mon 13:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 04/01/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -238,10 +238,9 @@
   <a class="button button-outline nav-button" href="./index.html">Index</a>
   <a class="button button-outline nav-button" href="./post-2024-01-07.html">Next</a>
 </div>
-
-<div id="outline-container-org0b4927c" class="outline-2">
-<h2 id="org0b4927c">CNN using PyTorch for MNIST classification</h2>
-<div class="outline-text-2" id="text-org0b4927c">
+<div id="outline-container-org158278a" class="outline-2">
+<h2 id="org158278a">CNN using PyTorch for MNIST classification</h2>
+<div class="outline-text-2" id="text-org158278a">
 <p>
 In this example we use a simple <i>convolutional neural network</i> for
 handwritten digit recognition. This gets an accuracy on the test
@@ -266,30 +265,28 @@ spatial extent. A common choice is <i>max pooling</i>, a \(2\times 2\)
 filter with a stride of \(2\) and taking the max value.</dd>
 </dl>
 </div>
-
-<div id="outline-container-orgefa8911" class="outline-3">
-<h3 id="orgefa8911">Loading packages</h3>
-<div class="outline-text-3" id="text-orgefa8911">
+<div id="outline-container-org55948d0" class="outline-3">
+<h3 id="org55948d0">Loading packages</h3>
+<div class="outline-text-3" id="text-org55948d0">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> time
-<span style="color: #0000FF;">import</span> torch
-<span style="color: #0000FF;">import</span> torch.nn <span style="color: #0000FF;">as</span> nn
-<span style="color: #0000FF;">import</span> torch.optim <span style="color: #0000FF;">as</span> optim
-<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
-<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
-<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
-<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> time
+<span style="color: #0000FF; font-weight: bold;">import</span> torch
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.nn <span style="color: #0000FF; font-weight: bold;">as</span> nn
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.optim <span style="color: #0000FF; font-weight: bold;">as</span> optim
+<span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+<span style="color: #0000FF; font-weight: bold;">import</span> plotnine <span style="color: #0000FF; font-weight: bold;">as</span> p9
+<span style="color: #0000FF; font-weight: bold;">from</span> plotnine <span style="color: #0000FF; font-weight: bold;">import</span> *
 
-<span style="color: #0000FF;">import</span> niceneuron.io <span style="color: #0000FF;">as</span> nn_io
-<span style="color: #0000FF;">import</span> niceneuron.data <span style="color: #0000FF;">as</span> nn_data
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.io <span style="color: #0000FF; font-weight: bold;">as</span> nn_io
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.data <span style="color: #0000FF; font-weight: bold;">as</span> nn_data
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgcb10097" class="outline-3">
-<h3 id="orgcb10097">Define input and output filenames</h3>
-<div class="outline-text-3" id="text-orgcb10097">
+<div id="outline-container-orgb7cb307" class="outline-3">
+<h3 id="orgb7cb307">Define input and output filenames</h3>
+<div class="outline-text-3" id="text-orgb7cb307">
 <p>
 Define the files that are used as input and output to keep the program
 DRY.
@@ -308,10 +305,9 @@ DRY.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org4e7ec28" class="outline-3">
-<h3 id="org4e7ec28">Loading testing and training data</h3>
-<div class="outline-text-3" id="text-org4e7ec28">
+<div id="outline-container-orgcbc9df8" class="outline-3">
+<h3 id="orgcbc9df8">Loading testing and training data</h3>
+<div class="outline-text-3" id="text-orgcbc9df8">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">images</span> = nn_io.read_idx(images_path)
 <span style="color: #BA36A5;">images</span> = images.astype(np.float32)
@@ -331,42 +327,40 @@ DRY.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org25a51f0" class="outline-3">
-<h3 id="org25a51f0">Defining the model</h3>
-<div class="outline-text-3" id="text-org25a51f0">
+<div id="outline-container-orgf4c5784" class="outline-3">
+<h3 id="orgf4c5784">Defining the model</h3>
+<div class="outline-text-3" id="text-orgf4c5784">
 <p>
 Here we define the neural network we will use with the <code>DemoCNN</code>
 class.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">DemoCNN</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #006FE0;">super</span>(DemoCNN, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv1</span> = nn.Conv2d(1, 6, kernel_size=5, padding=2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool1</span> = nn.AvgPool2d(2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_conv2</span> = nn.Conv2d(6, 16, kernel_size=5, padding=0)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_pool2</span> = nn.AvgPool2d(2)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5*5*16, 84)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">DemoCNN</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+        <span style="color: #006FE0;">super</span>(DemoCNN, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv1</span> = nn.Conv2d(1, 6, kernel_size=5, padding=2)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool1</span> = nn.AvgPool2d(2)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_conv2</span> = nn.Conv2d(6, 16, kernel_size=5, padding=0)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_pool2</span> = nn.AvgPool2d(2)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc1</span> = nn.Linear(5*5*16, 84)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_fc2</span> = nn.Linear(84, 10)
+        <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">_relu</span> = nn.ReLU()
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool1(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv1(x)))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._pool2(<span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._conv2(x)))
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool1(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv1(x)))
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._pool2(<span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._conv2(x)))
         <span style="color: #BA36A5;">x</span> = x.view(-1, 5*5*16)
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._relu(<span style="color: #0000FF;">self</span>._fc1(x))
-        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF;">self</span>._fc2(x)
-        <span style="color: #0000FF;">return</span> x
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._relu(<span style="color: #0000FF; font-weight: bold;">self</span>._fc1(x))
+        <span style="color: #BA36A5;">x</span> = <span style="color: #0000FF; font-weight: bold;">self</span>._fc2(x)
+        <span style="color: #0000FF; font-weight: bold;">return</span> x
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org1aca410" class="outline-3">
-<h3 id="org1aca410">Train the model</h3>
-<div class="outline-text-3" id="text-org1aca410">
+<div id="outline-container-orgd35f9e9" class="outline-3">
+<h3 id="orgd35f9e9">Train the model</h3>
+<div class="outline-text-3" id="text-orgd35f9e9">
 <p>
 Then we need to define a training loop for the model.
 </p>
@@ -380,9 +374,9 @@ Then we need to define a training loop for the model.
 model.train()
 <span style="color: #BA36A5;">loss_history</span> = []
 <span style="color: #BA36A5;">training_start_time</span> = time.time()
-<span style="color: #0000FF;">for</span> epoch <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(5):
+<span style="color: #0000FF; font-weight: bold;">for</span> epoch <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(5):
     <span style="color: #BA36A5;">epoch_cumloss</span> = 0
-    <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> train_dataloader:
+    <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> train_dataloader:
         <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
         <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Forward pass</span>
         <span style="color: #BA36A5;">logits</span> = model(images)
@@ -406,10 +400,9 @@ loss_df.to_csv(loss_csv, index=<span style="color: #D0372D;">False</span>)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org6ec287b" class="outline-3">
-<h3 id="org6ec287b">Saving the model</h3>
-<div class="outline-text-3" id="text-org6ec287b">
+<div id="outline-container-orgb454d36" class="outline-3">
+<h3 id="orgb454d36">Saving the model</h3>
+<div class="outline-text-3" id="text-orgb454d36">
 <p>
 Instead of saving the <code>nn.Module</code> as a single object we just save the
 state of the model which is the <a href="https://pytorch.org/docs/stable/notes/serialization.html#saving-and-loading-torch-nn-modules">recommendation from PyTorch</a>.
@@ -433,10 +426,9 @@ new_model.load_state_dict(prev_state_dict)
 </div>
 </div>
 </div>
-
-<div id="outline-container-org04cb819" class="outline-3">
-<h3 id="org04cb819">Test the model</h3>
-<div class="outline-text-3" id="text-org04cb819">
+<div id="outline-container-orgb9cdbf3" class="outline-3">
+<h3 id="orgb9cdbf3">Test the model</h3>
+<div class="outline-text-3" id="text-orgb9cdbf3">
 <p>
 Then we test it with the following loop. Note that we have turned the
 gradient tracking off as this runs slightly quicker.
@@ -446,8 +438,8 @@ gradient tracking off as this runs slightly quicker.
 <pre class="src src-python">model.<span style="color: #006FE0;">eval</span>()
 <span style="color: #BA36A5;">correct</span> = 0
 <span style="color: #BA36A5;">total</span> = 0
-<span style="color: #0000FF;">with</span> torch.no_grad():
-    <span style="color: #0000FF;">for</span> images, label <span style="color: #0000FF;">in</span> test_dataloader:
+<span style="color: #0000FF; font-weight: bold;">with</span> torch.no_grad():
+    <span style="color: #0000FF; font-weight: bold;">for</span> images, label <span style="color: #0000FF; font-weight: bold;">in</span> test_dataloader:
         <span style="color: #BA36A5;">images</span> = images.unsqueeze(1)
         <span style="color: #BA36A5;">logits</span> = model(images)
         <span style="color: #BA36A5;">predicted</span> = torch.argmax(logits, dim=1)
@@ -460,16 +452,15 @@ gradient tracking off as this runs slightly quicker.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org1c72341" class="outline-3">
-<h3 id="org1c72341">Visualise the results</h3>
-<div class="outline-text-3" id="text-org1c72341">
+<div id="outline-container-org2cae854" class="outline-3">
+<h3 id="org2cae854">Visualise the results</h3>
+<div class="outline-text-3" id="text-org2cae854">
 <p>
 Plot the resulting loss values across the epochs.
 </p>
 
 
-<div id="org675616b" class="figure">
+<div id="org461751b" class="figure">
 <p><img src="./example-2024-01-04-loss.png" alt="example-2024-01-04-loss.png" width="400px" />
 </p>
 </div>
@@ -491,7 +482,7 @@ loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:51</p>
+<p class="date">Created: 2025-05-05 Mon 13:23</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

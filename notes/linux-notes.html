@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-04-02 Wed 21:50 -->
+<!-- 2025-05-05 Mon 13:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="orgb91dd60" class="figure">
+<div id="org80fbba6" class="figure">
 <p><img src="../images/linux-logo.png" alt="linux-logo.png" width="250px" />
 </p>
 </div>
@@ -250,11 +250,12 @@
 <li><a href="#orgf66efc8">Desktop Environment</a>
 <ul>
 <li><a href="#org155a0c7">MATE</a></li>
+<li><a href="#org5290c34">GNOME Files</a></li>
 </ul>
 </li>
 <li><a href="#org6886b28">Linux and Ubuntu notes</a>
 <ul>
-<li><a href="#orgdbd4406"><code>.bashrc</code></a></li>
+<li><a href="#bashrc"><code>.bashrc</code></a></li>
 <li><a href="#orgc220609">Setting up a server</a></li>
 <li><a href="#researcher-desktop">The Melbourne Researcher Desktop</a></li>
 <li><a href="#org77add0e">ImageMagick and <code>convert</code></a></li>
@@ -282,7 +283,6 @@
 <li><a href="#org075ce34">Viewing hierarchy <code>tree</code></a></li>
 <li><a href="#orgb645649"><code>rsync</code></a></li>
 <li><a href="#orgb7be434">Getting help</a></li>
-<li><a href="#bashrc">Start up and configuration: the might <code>.bashrc</code> file</a></li>
 <li><a href="#org6a88d43">Accounts</a></li>
 <li><a href="#org2699d0c">Bluetooth</a></li>
 <li><a href="#org194c671">Colour selection and hexcodes</a></li>
@@ -336,14 +336,52 @@ reason.
 </div>
 </div>
 </div>
+<div id="outline-container-org5290c34" class="outline-3">
+<h3 id="org5290c34">GNOME Files</h3>
+<div class="outline-text-3" id="text-org5290c34">
+</div>
+<div id="outline-container-orgfca8cf9" class="outline-4">
+<h4 id="orgfca8cf9">Connecting to the filesystem on a server</h4>
+<div class="outline-text-4" id="text-orgfca8cf9">
+<p>
+If you have configured an alias for a server, following this <a href="#orgef82d75">example</a>,
+then you can connect to this by clicking <b>Other Locations</b> and using
+<code>sftp://myDemoHost</code> (or whatever you have called it) as the input for
+<b>Enter server address&#x2026;</b>
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-org6886b28" class="outline-2">
 <h2 id="org6886b28">Linux and Ubuntu notes</h2>
 <div class="outline-text-2" id="text-org6886b28">
 </div>
-<div id="outline-container-orgdbd4406" class="outline-3">
-<h3 id="orgdbd4406"><code>.bashrc</code></h3>
-<div class="outline-text-3" id="text-orgdbd4406">
+<div id="outline-container-bashrc" class="outline-3">
+<h3 id="bashrc"><code>.bashrc</code></h3>
+<div class="outline-text-3" id="text-bashrc">
+<p>
+To avoid confusion between the <code>.bashrc</code> and <code>.bash_profile</code> you can just add
+the following to <code>.bash_profile</code> and then you'll have the same script evaluated
+regardless.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">if</span> [ -f $<span style="color: #BA36A5;">HOME</span>/.bashrc ]; <span style="color: #0000FF; font-weight: bold;">then</span>
+    <span style="color: #006FE0;">source</span> $<span style="color: #BA36A5;">HOME</span>/.bashrc
+<span style="color: #0000FF; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<p>
+By default, tab completion is case sensitive, to fix this add the following line
+to the file <code>/etc/inputrc</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #006FE0;">set</span> completion-ignore-case on
+</pre>
+</div>
 </div>
 <div id="outline-container-org18fc4e5" class="outline-4">
 <h4 id="org18fc4e5">Prompt configuration: basic</h4>
@@ -359,9 +397,9 @@ get a useful prompt.
 </div>
 </div>
 </div>
-<div id="outline-container-orgb1847db" class="outline-4">
-<h4 id="orgb1847db">Prompt configuration: nice</h4>
-<div class="outline-text-4" id="text-orgb1847db">
+<div id="outline-container-bashrc-prompt-nice" class="outline-4">
+<h4 id="bashrc-prompt-nice">Prompt configuration: nice</h4>
+<div class="outline-text-4" id="text-bashrc-prompt-nice">
 <p>
 Here is a more modular approach to constructing the font that includes
 times. If you want to time commands properly you should use <code>time</code> but
@@ -417,7 +455,7 @@ running their shell script then running the initialisation
 command.)</li>
 <li>Configure your file manager to connect to the server. For GNOME
 files you can ask it to connect to <code>sftp://hostalias</code>. In
-<code>~/.bashrc</code> add prompt configuration <a href="#orgc4cb609">below</a>.</li>
+<code>~/.bashrc</code> add prompt configuration as shown <a href="#bashrc-prompt-nice">here</a>.</li>
 </ol>
 
 <div class="org-src-container">
@@ -430,11 +468,6 @@ files you can ask it to connect to <code>sftp://hostalias</code>. In
 <p>
 In this example <code>XXX-XX-XXX-XX</code> is the IP address of the host.
 </p>
-
-<div class="org-src-container">
-<pre class="src src-nil" id="orgc4cb609">PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\[\033[1;31m\](Hostalias)\[\033[0m\]\$ '
-</pre>
-</div>
 </div>
 </div>
 <div id="outline-container-org77add0e" class="outline-3">
@@ -539,9 +572,19 @@ of your choice.
 <h4 id="org3ad6cdb">Environment variables</h4>
 <div class="outline-text-4" id="text-org3ad6cdb">
 <p>
-There are the <code>env</code> and <code>printenv</code> functions to print all the environment
-variables known to a shell. To get the hostname there is the <code>hostname</code> function
-(this information does not seem to appear as an environment variable).
+There are the <code>env</code> and <code>printenv</code> functions to print all the
+environment variables known to a shell. To get the hostname there is
+the <code>hostname</code> function (this information does not seem to appear as
+an environment variable).
+</p>
+</div>
+</div>
+<div id="outline-container-orgee44a85" class="outline-4">
+<h4 id="orgee44a85">Boot times</h4>
+<div class="outline-text-4" id="text-orgee44a85">
+<p>
+You can get a printout of the (the last) times your device was booted
+by running the command <code>journalctl --list-boots</code>.
 </p>
 </div>
 </div>
@@ -1411,45 +1454,6 @@ is in <code>/var</code> because the file has a variable size as it is logged to.
 </div>
 </div>
 </div>
-<div id="outline-container-bashrc" class="outline-3">
-<h3 id="bashrc">Start up and configuration: the might <code>.bashrc</code> file</h3>
-<div class="outline-text-3" id="text-bashrc">
-<p>
-To avoid confusion between the <code>.bashrc</code> and <code>.bash_profile</code> you can just add
-the following to <code>.bash_profile</code> and then you'll have the same script evaluated
-regardless.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">if</span> [ -f $<span style="color: #BA36A5;">HOME</span>/.bashrc ]; <span style="color: #0000FF; font-weight: bold;">then</span>
-    <span style="color: #006FE0;">source</span> $<span style="color: #BA36A5;">HOME</span>/.bashrc
-<span style="color: #0000FF; font-weight: bold;">fi</span>
-</pre>
-</div>
-
-<p>
-By default, tab completion is case sensitive, to fix this add the following line
-to the file <code>/etc/inputrc</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #006FE0;">set</span> completion-ignore-case on
-</pre>
-</div>
-
-<p>
-If your prompt uses the <code>\w</code> character to display the current
-directory, you can truncate the number of parent directories shown
-with the <code>PROMPT_DIRTRIM</code> variable:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Truncates the length of the path printed by \w in the prompt.</span>
-<span style="color: #006FE0;">export</span> <span style="color: #BA36A5;">PROMPT_DIRTRIM</span>=2
-</pre>
-</div>
-</div>
-</div>
 <div id="outline-container-org6a88d43" class="outline-3">
 <h3 id="org6a88d43">Accounts</h3>
 <div class="outline-text-3" id="text-org6a88d43">
@@ -1942,7 +1946,7 @@ servers.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-04-02 Wed 21:50</p>
+<p class="date">Created: 2025-05-05 Mon 13:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

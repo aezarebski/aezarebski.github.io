@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-02-21 Fri 17:51 -->
+<!-- 2025-05-05 Mon 13:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 03/01/2024</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -238,10 +238,9 @@
   <a class="button button-outline nav-button" href="./index.html">Index</a>
   <a class="button button-outline nav-button" href="./post-2024-01-04.html">Next</a>
 </div>
-
-<div id="outline-container-org87fb559" class="outline-2">
-<h2 id="org87fb559">Basic model using PyTorch for MNIST classification</h2>
-<div class="outline-text-2" id="text-org87fb559">
+<div id="outline-container-org2976f54" class="outline-2">
+<h2 id="org2976f54">Basic model using PyTorch for MNIST classification</h2>
+<div class="outline-text-2" id="text-org2976f54">
 <p>
 In this example we use a very simple feed-forward neural network for
 handwritten digit recognition. This gets an accuracy on the test
@@ -256,17 +255,17 @@ batching substantially speeds up the evaluation.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">import</span> torch
-<span style="color: #0000FF;">import</span> torch.nn <span style="color: #0000FF;">as</span> nn
-<span style="color: #0000FF;">import</span> torch.optim <span style="color: #0000FF;">as</span> optim
-<span style="color: #0000FF;">import</span> numpy <span style="color: #0000FF;">as</span> np
-<span style="color: #0000FF;">import</span> pandas <span style="color: #0000FF;">as</span> pd
-<span style="color: #0000FF;">import</span> plotnine <span style="color: #0000FF;">as</span> p9
-<span style="color: #0000FF;">from</span> plotnine <span style="color: #0000FF;">import</span> *
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> torch
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.nn <span style="color: #0000FF; font-weight: bold;">as</span> nn
+<span style="color: #0000FF; font-weight: bold;">import</span> torch.optim <span style="color: #0000FF; font-weight: bold;">as</span> optim
+<span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+<span style="color: #0000FF; font-weight: bold;">import</span> plotnine <span style="color: #0000FF; font-weight: bold;">as</span> p9
+<span style="color: #0000FF; font-weight: bold;">from</span> plotnine <span style="color: #0000FF; font-weight: bold;">import</span> *
 
-<span style="color: #0000FF;">import</span> niceneuron.io <span style="color: #0000FF;">as</span> nn_io
-<span style="color: #0000FF;">import</span> niceneuron.data <span style="color: #0000FF;">as</span> nn_data
-<span style="color: #0000FF;">import</span> niceneuron.plot <span style="color: #0000FF;">as</span> nn_plot
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.io <span style="color: #0000FF; font-weight: bold;">as</span> nn_io
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.data <span style="color: #0000FF; font-weight: bold;">as</span> nn_data
+<span style="color: #0000FF; font-weight: bold;">import</span> niceneuron.plot <span style="color: #0000FF; font-weight: bold;">as</span> nn_plot
 
 <span style="color: #BA36A5;">loss_csv</span> = <span style="color: #008000;">"example-2024-01-03-loss.csv"</span>
 <span style="color: #BA36A5;">loss_png</span> = <span style="color: #008000;">"example-2024-01-03-loss.png"</span>
@@ -275,7 +274,7 @@ batching substantially speeds up the evaluation.
 <span style="color: #BA36A5;">images_path</span> = <span style="color: #008000;">'data/train-images.idx3-ubyte'</span>
 <span style="color: #BA36A5;">labels_path</span> = <span style="color: #008000;">'data/train-labels.idx1-ubyte'</span>
 <span style="color: #BA36A5;">images</span> = nn_io.read_idx(images_path)
-<span style="color: #0000FF;">assert</span> images.<span style="color: #006FE0;">min</span>() == 0 <span style="color: #0000FF;">and</span> images.<span style="color: #006FE0;">max</span>() == 255
+<span style="color: #0000FF; font-weight: bold;">assert</span> images.<span style="color: #006FE0;">min</span>() == 0 <span style="color: #0000FF; font-weight: bold;">and</span> images.<span style="color: #006FE0;">max</span>() == 255
 <span style="color: #BA36A5;">images</span> = images / 255.0 <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Normalize pixel values to be between 0 and 1</span>
 <span style="color: #BA36A5;">images</span> = images.astype(np.float32)
 <span style="color: #BA36A5;">labels</span> = nn_io.read_idx(labels_path)
@@ -287,7 +286,7 @@ batching substantially speeds up the evaluation.
 <span style="color: #BA36A5;">test_images_path</span> = <span style="color: #008000;">'data/t10k-images.idx3-ubyte'</span>
 <span style="color: #BA36A5;">test_labels_path</span> = <span style="color: #008000;">'data/t10k-labels.idx1-ubyte'</span>
 <span style="color: #BA36A5;">test_images</span> = nn_io.read_idx(test_images_path)
-<span style="color: #0000FF;">assert</span> test_images.<span style="color: #006FE0;">min</span>() == 0 <span style="color: #0000FF;">and</span> test_images.<span style="color: #006FE0;">max</span>() == 255
+<span style="color: #0000FF; font-weight: bold;">assert</span> test_images.<span style="color: #006FE0;">min</span>() == 0 <span style="color: #0000FF; font-weight: bold;">and</span> test_images.<span style="color: #006FE0;">max</span>() == 255
 <span style="color: #BA36A5;">test_images</span> = test_images / 255.0 <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Normalize pixel values to be between 0 and 1</span>
 <span style="color: #BA36A5;">test_images</span> = test_images.astype(np.float32)
 <span style="color: #BA36A5;">test_labels</span> = nn_io.read_idx(test_labels_path)
@@ -302,18 +301,18 @@ class.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">DemoModel</span>(nn.Module):
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF;">self</span>):
-        <span style="color: #006FE0;">super</span>(DemoModel, <span style="color: #0000FF;">self</span>).__init__()
-        <span style="color: #0000FF;">self</span>.<span style="color: #BA36A5;">dense_layers</span> = nn.Sequential(
-            nn.Linear(28*28, 128),
-            nn.ReLU(),
-            nn.Linear(128, 10)
-        )
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">DemoModel</span>(nn.Module):
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">__init__</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
+          <span style="color: #006FE0;">super</span>(DemoModel, <span style="color: #0000FF; font-weight: bold;">self</span>).__init__()
+          <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">dense_layers</span> = nn.Sequential(
+              nn.Linear(28*28, 128),
+              nn.ReLU(),
+              nn.Linear(128, 10)
+          )
 
-    <span style="color: #0000FF;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF;">self</span>, x):
-        <span style="color: #BA36A5;">logits</span> = <span style="color: #0000FF;">self</span>.dense_layers(x)
-        <span style="color: #0000FF;">return</span> logits
+    <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">forward</span>(<span style="color: #0000FF; font-weight: bold;">self</span>, x):
+          <span style="color: #BA36A5;">logits</span> = <span style="color: #0000FF; font-weight: bold;">self</span>.dense_layers(x)
+          <span style="color: #0000FF; font-weight: bold;">return</span> logits
 
 
 <span style="color: #BA36A5;">model</span> = DemoModel()
@@ -331,18 +330,18 @@ Then we need to define a training loop for the model.
 
 model.train()
 <span style="color: #BA36A5;">loss_history</span> = []
-<span style="color: #0000FF;">for</span> epoch <span style="color: #0000FF;">in</span> <span style="color: #006FE0;">range</span>(5):
+<span style="color: #0000FF; font-weight: bold;">for</span> epoch <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(5):
     <span style="color: #BA36A5;">epoch_cumloss</span> = 0
-    <span style="color: #0000FF;">for</span> image, label <span style="color: #0000FF;">in</span> train_dataloader:
-        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Forward pass</span>
-        <span style="color: #BA36A5;">logits</span> = model(image)
-        <span style="color: #BA36A5;">loss</span> = loss_fn(logits, label)
-        <span style="color: #BA36A5;">epoch_cumloss</span> += loss.item()
+    <span style="color: #0000FF; font-weight: bold;">for</span> image, label <span style="color: #0000FF; font-weight: bold;">in</span> train_dataloader:
+          <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Forward pass</span>
+          <span style="color: #BA36A5;">logits</span> = model(image)
+          <span style="color: #BA36A5;">loss</span> = loss_fn(logits, label)
+          <span style="color: #BA36A5;">epoch_cumloss</span> += loss.item()
 
-        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Backward pass</span>
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+          <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Backward pass</span>
+          optimizer.zero_grad()
+          loss.backward()
+          optimizer.step()
 
     <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Epoch </span>{epoch}<span style="color: #008000;"> loss: </span>{epoch_cumloss}<span style="color: #008000;">"</span>)
     loss_history.append((epoch,epoch_cumloss))
@@ -362,12 +361,12 @@ gradient tracking off as this runs slightly quicker.
 model.<span style="color: #006FE0;">eval</span>()
 <span style="color: #BA36A5;">correct</span> = 0
 <span style="color: #BA36A5;">total</span> = 0
-<span style="color: #0000FF;">with</span> torch.no_grad():
-    <span style="color: #0000FF;">for</span> image, label <span style="color: #0000FF;">in</span> test_dataloader:
-        <span style="color: #BA36A5;">logits</span> = model(image)
-        <span style="color: #BA36A5;">predicted</span> = torch.argmax(logits, dim=1)
-        <span style="color: #BA36A5;">total</span> += label.size(0)
-        <span style="color: #BA36A5;">correct</span> += (predicted == label).<span style="color: #006FE0;">sum</span>().item()
+<span style="color: #0000FF; font-weight: bold;">with</span> torch.no_grad():
+    <span style="color: #0000FF; font-weight: bold;">for</span> image, label <span style="color: #0000FF; font-weight: bold;">in</span> test_dataloader:
+          <span style="color: #BA36A5;">logits</span> = model(image)
+          <span style="color: #BA36A5;">predicted</span> = torch.argmax(logits, dim=1)
+          <span style="color: #BA36A5;">total</span> += label.size(0)
+          <span style="color: #BA36A5;">correct</span> += (predicted == label).<span style="color: #006FE0;">sum</span>().item()
 
 <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">print test accuracy</span>
 <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Test accuracy: </span>{correct / total}<span style="color: #008000;">"</span>)
@@ -379,7 +378,7 @@ Plot the resulting loss values across the epochs.
 </p>
 
 
-<div id="org404d944" class="figure">
+<div id="org983f312" class="figure">
 <p><img src="./example-2024-01-03-loss.png" alt="example-2024-01-03-loss.png" width="400px" />
 </p>
 </div>
@@ -395,7 +394,7 @@ loss_p9.save(loss_png, height = 2.9, width = 4.1)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-02-21 Fri 17:51</p>
+<p class="date">Created: 2025-05-05 Mon 13:23</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
