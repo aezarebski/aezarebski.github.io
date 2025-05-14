@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-05-05 Mon 13:21 -->
+<!-- 2025-05-14 Wed 16:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Statistics</title>
@@ -302,6 +302,41 @@ Figure <a href="#org6f7d7c3">1</a> is an example of a notation for graphical mod
 </p>
 <p><span class="figure-number">Figure 1: </span>Example of the notation that might be used to represent a graphical model</p>
 </div>
+
+<p>
+You can also produce with with GraphViz
+</p>
+
+
+<div id="org7fe53a7" class="figure">
+<p><img src="../images/graphical-model.gv.png" alt="graphical-model.gv.png" width="600px" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-dot"><span style="color: #0000FF; font-weight: bold;">digraph</span> <span style="color: #006699;">G</span> {
+    <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">Usage</span>
+    <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">-----</span>
+    <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">dot -Tpng graphical-model.gv -O</span>
+    <span style="color: #8D8D84;">//</span>
+    rand [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Stochastic"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">ellipse</span>]
+    det [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Deterministic"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">ellipse</span>, <span style="color: #BA36A5;">style=</span><span style="color: #D0372D;">dashed</span>]
+    const [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Constant"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">box</span>]
+    obs [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Clamped\n(observed)"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">ellipse</span>, <span style="color: #BA36A5;">style=</span><span style="color: #D0372D;">filled</span>, <span style="color: #BA36A5;">color=</span><span style="color: #008000;">lightgrey</span>]
+
+    <span style="color: #0000FF; font-weight: bold;">subgraph</span> <span style="color: #006699;">cluster_plate</span> {
+        rand
+        det
+        const
+        obs
+        <span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Plate"</span>
+        <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">box</span>
+        <span style="color: #BA36A5;">style=</span><span style="color: #D0372D;">dashed</span>
+    }
+
+}
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-org0dd4b71" class="outline-3">
@@ -538,7 +573,7 @@ efficiently.
 </p>
 
 
-<div id="org59f40c8" class="figure">
+<div id="orgc3506cc" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -580,9 +615,9 @@ intervals.
 <h3 id="r-glm-logistic">GLM: Logistic regression</h3>
 <div class="outline-text-3" id="text-r-glm-logistic">
 </div>
-<div id="outline-container-org49e114b" class="outline-4">
-<h4 id="org49e114b">Setting up the data</h4>
-<div class="outline-text-4" id="text-org49e114b">
+<div id="outline-container-orgd11d65a" class="outline-4">
+<h4 id="orgd11d65a">Setting up the data</h4>
+<div class="outline-text-4" id="text-orgd11d65a">
 <p>
 Note that with the logit link, the linear predictor controls the
 log-odds of the binary outcome. In this example, the true intercept is 0, and the
@@ -602,9 +637,9 @@ df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2
 </div>
 </div>
 </div>
-<div id="outline-container-orgba59891" class="outline-4">
-<h4 id="orgba59891">Fitting the model</h4>
-<div class="outline-text-4" id="text-orgba59891">
+<div id="outline-container-orgee3683a" class="outline-4">
+<h4 id="orgee3683a">Fitting the model</h4>
+<div class="outline-text-4" id="text-orgee3683a">
 <p>
 The <code>glm</code> function fits the GLM, note that we use the <code>binomial</code>
 family which defaults to using the logit link function. The <code>summary</code>
@@ -634,7 +669,7 @@ dev.off()
 </div>
 
 
-<div id="org40f940e" class="figure">
+<div id="orge2d436e" class="figure">
 <p><img src="../images/glm-example-logistic-regression.png" alt="glm-example-logistic-regression.png" width="800px" />
 </p>
 </div>
@@ -645,9 +680,9 @@ dev.off()
 <h3 id="r-glm-nbinom">GLM: Negative binomial</h3>
 <div class="outline-text-3" id="text-r-glm-nbinom">
 </div>
-<div id="outline-container-org5dc6052" class="outline-4">
-<h4 id="org5dc6052">Setting up the data</h4>
-<div class="outline-text-4" id="text-org5dc6052">
+<div id="outline-container-org79dae1b" class="outline-4">
+<h4 id="org79dae1b">Setting up the data</h4>
+<div class="outline-text-4" id="text-org79dae1b">
 <p>
 Note that with the log-link function, the true intercept should be 1
 and the coefficients should be 1, -1 and 0. The true size parameter of
@@ -666,9 +701,9 @@ df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2
 </div>
 </div>
 </div>
-<div id="outline-container-org34a3df4" class="outline-4">
-<h4 id="org34a3df4">Fitting the model</h4>
-<div class="outline-text-4" id="text-org34a3df4">
+<div id="outline-container-org4e2cd75" class="outline-4">
+<h4 id="org4e2cd75">Fitting the model</h4>
+<div class="outline-text-4" id="text-org4e2cd75">
 <p>
 The following demonstrates that with this data set the coefficients
 are well estimates as is the size parameter of the negative binomial
@@ -873,7 +908,7 @@ intervals contained the true parameter, then you could not reject the null
 hypothesis that the \(95\%\) coverage is correct.
 </p>
 
-<pre class="example" id="org86d3b90">
+<pre class="example" id="org0853b1a">
 &gt; calibration_test(46, size = 50, prob = 0.95)
 $p_val
 [1] 0.316537
@@ -887,7 +922,7 @@ If instead you only had 44 of the intervals containing the parameter, then you
 could reject this null hypothesis:
 </p>
 
-<pre class="example" id="org2603e87">
+<pre class="example" id="org0962519">
 &gt; calibration_test(44, size = 50, prob = 0.95)
 $p_val
 [1] 0.03777617
@@ -1584,7 +1619,7 @@ want to extract a figure from a PDF of a paper, see my <a href="./inkscape-notes
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-05-05 Mon 13:21</p>
+<p class="date">Created: 2025-05-14 Wed 16:57</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
