@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-01-16 Mon 16:03 -->
+<!-- 2025-06-04 Wed 16:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>numerics-aez-notes</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -193,7 +193,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../microgram.css">
 <script>
   window.MathJax = {
     tex: {
@@ -238,73 +241,97 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org879d7d0">Numerics notes</a>
+<li><a href="#org77a26d6">Linear algebra</a></li>
+<li><a href="#org7cb925e">Numerics notes</a>
 <ul>
-<li><a href="#orgaede273">Numbers</a></li>
-<li><a href="#org9d48550">Numeric differentiation</a></li>
-<li><a href="#orgad5715b">Mathematical optimisation</a></li>
-<li><a href="#org856c4df">LogSumExp function</a></li>
-<li><a href="#org8c4fa4d">Combinatoric functions</a></li>
-<li><a href="#orgb5fc546">Factorial</a></li>
-<li><a href="#org5058bd8">Pochhammer symbol</a></li>
-<li><a href="#org82e376c">Computational complexity</a></li>
-<li><a href="#org8d00c2e">Caching results</a></li>
+<li><a href="#org38dfad7">Numbers</a></li>
+<li><a href="#org37e891e">Numeric differentiation</a></li>
+<li><a href="#orgd78232a">Mathematical optimisation</a></li>
+<li><a href="#orgc8e0717">LogSumExp function</a></li>
+<li><a href="#org180c536">Combinatoric functions</a></li>
+<li><a href="#org0db2aa5">Factorial</a></li>
+<li><a href="#orga5adf80">Pochhammer symbol</a></li>
+<li><a href="#org7877b20">Computational complexity</a></li>
+<li><a href="#org2f74878">Caching results</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+<div id="outline-container-org77a26d6" class="outline-2">
+<h2 id="org77a26d6">Linear algebra</h2>
+<div class="outline-text-2" id="text-org77a26d6">
+<ul class="org-ul">
+<li>The <i>rank</i> of a matrix is the maximum number of linearly independent rows in
+the matrix.</li>
+<li>For a square matrix, the <i>trace</i> of the matrix is the sum of the elements on
+the main diagonal. The trace of a matrix is equal to the sum of the
+eigenvalues (counted with multiplicities).</li>
+<li>The determinant of a triangular matrix is the product of the elements on its
+main diagonal. For two matricies \(\mathbf{A}\) and \(\mathbf{B}\) we have
+\(|\mathbf{AB}|=|\mathbf{A}||\mathbf{B}|\). For invertible matrices
+\(|\mathbf{A}^{-1}|=|\mathbf{A}|^{-1}\).</li>
+<li>The column space of a matrix is the space spanned by the column vectors. The
+column space of a matrix \(\mathbf{A}\) consists of all the products of the
+form \(\mathbf{Ax}\). The column space of \(\mathbf{A}\) is equal to the row
+space of \(\mathbf{A}^{\text{T}}\).</li>
+<li>Let \(\mathbf{L}\in\mathbb{R}^{n\times r}\) and
+\(\mathbf{v}\in\mathbb{R}^{n}\) then
+\(\mathbf{v}^{T}(\mathbf{L}\mathbf{L}^T)\mathbf{v}=(\mathbf{v}^{T}\mathbf{L})\mathbf{L}^T\mathbf{v}=(\mathbf{L}^{T}\mathbf{v})^T\mathbf{L}^T\mathbf{v}\geq0\)
+so we know \(\mathbf{L}\mathbf{L}^T\) is positive semi-definite. If you add a
+diagonal matrix, \(\mathbf{\sigma}\mathbf{I}\), which has positive elements on
+the main diagonal, the matrix
+\(\mathbf{\sigma}\mathbf{I}+\mathbf{L}\mathbf{L}^T\) is positive definite.</li>
+<li>An <i>orthogonal matrix</i>, \(\mathbf{Q}\) is a real square matrix with
+orthonormal rows and columns. As a consequence, the inverse of an orthogonal
+matrix is its transpose: \(\mathbf{Q}^{-1}=\mathbf{Q}^{T}\). The determinant
+of an orthogonal matrix is \(\pm1\).</li>
+<li>The <i>QR decomposition</i> of a matrix \(\mathbf{A}\) is
+\(\mathbf{A}=\mathbf{Q}\mathbf{R}\) where \(\mathbf{Q}\) is an orthogonal
+matrix and \(\mathbf{R}\) is an upper triangular matrix. If \(\mathbf{A}\) is
+\(m\times n\) with \(m>n\) then \(\mathbf{Q}\) is \(m\times m\) and still
+orthogonal, and \(\mathbf{R}\) is \(m\times n\) with \(m-n\) rows of zeros at
+the bottom.
+<ul class="org-ul">
+<li>The QR decomposition is useful for solving for \(\mathbf{x}\) in
+\(\mathbf{A}\mathbf{x}=\mathbf{b}\). Since \(\mathbf{Q}\) is orthogonal, its
+transpose is its inverse and back-substitution provides a very efficient
+algorithm for solving \(\mathbf{R}\mathbf{x}=\mathbf{Q}^{T}\mathbf{b}\).</li>
+</ul></li>
+</ul>
 
-<div id="outline-container-org879d7d0" class="outline-2">
-<h2 id="org879d7d0">Numerics notes</h2>
-<div class="outline-text-2" id="text-org879d7d0">
-</div>
-<div id="outline-container-orgaede273" class="outline-3">
-<h3 id="orgaede273">Numbers</h3>
-<div class="outline-text-3" id="text-orgaede273">
 <p>
-IEEE-754 compliant double precision numbers have a precision of about 16 decimal
-places.
+If \(\mathbf{A}\) and \(\mathbf{B}\) are matrices such that
+\(\mathbf{B}\mathbf{A}=\mathbf{I}\). If there is a matrix \(\mathbf{C}\) such
+that \(\mathbf{A}\mathbf{C}=\mathbf{I}\), then \(\mathbf{C}=\mathbf{B}\), and so
+\(\mathbf{B}\mathbf{A}=\mathbf{A}\mathbf{B}=\mathbf{I}\). To see why this is
+true note
+\(\mathbf{B}=\mathbf{BI}=\mathbf{B}(\mathbf{AC})=(\mathbf{BA})\mathbf{C}=\mathbf{IC}=\mathbf{C}\)
 </p>
 </div>
-
-<div id="outline-container-orgb0166ba" class="outline-4">
-<h4 id="orgb0166ba">Examples from R</h4>
-<div class="outline-text-4" id="text-orgb0166ba">
+</div>
+<div id="outline-container-org7cb925e" class="outline-2">
+<h2 id="org7cb925e">Numerics notes</h2>
+<div class="outline-text-2" id="text-org7cb925e">
+</div>
+<div id="outline-container-org38dfad7" class="outline-3">
+<h3 id="org38dfad7">Numbers</h3>
+<div class="outline-text-3" id="text-org38dfad7">
 <p>
-Expand the number of digits printed with <code>options(digits = 20)</code>
+IEEE-754 compliant double precision numbers have a precision of about
+16 decimal places.
 </p>
 
-<pre class="example" id="org428647f">
-&gt; (1e10 + 1e-7) == 1e10
-[1] TRUE
-&gt; (1e10 + 1e-6) == 1e10
-[1] FALSE
-</pre>
-
-<p>
-You can see the limits of representing integers with doubles
-</p>
-
-<pre class="example" id="orgdfd4442">
-&gt; 1612850010110005250
-[1] 1612850010110005248
-</pre>
-
-<p>
-The following code never finishes if <code>i</code> is a double.
-</p>
-
-<pre class="example" id="orgd0cc1de">
-&gt; i &lt;- 10; while(i != 0) {i &lt;- i - 0.01}
-</pre>
+<ul class="org-ul">
+<li>There is a clever trick used by <a href="https://doi.org/10.3390/v14081648">Scire <i>et al</i> (2022)</a> to avoid
+numerical underflow when solving a linear system of differential
+equations (which represent a probability distribution).</li>
+</ul>
 </div>
 </div>
-</div>
-
-<div id="outline-container-org9d48550" class="outline-3">
-<h3 id="org9d48550">Numeric differentiation</h3>
-<div class="outline-text-3" id="text-org9d48550">
+<div id="outline-container-org37e891e" class="outline-3">
+<h3 id="org37e891e">Numeric differentiation</h3>
+<div class="outline-text-3" id="text-org37e891e">
 <p>
 The following functions use a five-point stencil to compute first and second
 derivatives and have an error of order \(h^4\)
@@ -321,10 +348,9 @@ secondDerivative h f x =
 </pre>
 </div>
 </div>
-
-<div id="outline-container-org18ac2d7" class="outline-4">
-<h4 id="org18ac2d7">Gradient</h4>
-<div class="outline-text-4" id="text-org18ac2d7">
+<div id="outline-container-orga364b3d" class="outline-4">
+<h4 id="orga364b3d">Gradient</h4>
+<div class="outline-text-4" id="text-orga364b3d">
 <p>
 The <code>firstDerivative</code> function above can then be used to numerically evaluate
 the gradient
@@ -343,14 +369,13 @@ gradient h f x =
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgad5715b" class="outline-3">
-<h3 id="orgad5715b">Mathematical optimisation</h3>
-<div class="outline-text-3" id="text-orgad5715b">
+<div id="outline-container-orgd78232a" class="outline-3">
+<h3 id="orgd78232a">Mathematical optimisation</h3>
+<div class="outline-text-3" id="text-orgd78232a">
 </div>
-<div id="outline-container-orgc1fc3b5" class="outline-4">
-<h4 id="orgc1fc3b5">Nelder-Mead</h4>
-<div class="outline-text-4" id="text-orgc1fc3b5">
+<div id="outline-container-org043635a" class="outline-4">
+<h4 id="org043635a">Nelder-Mead</h4>
+<div class="outline-text-4" id="text-org043635a">
 <p>
 The Nelder-Mead algorithm is a gradient free method which is a simple way to get
 a rough estimate. The <span class="underline">rule of thumb</span> for the number of iterations to use for
@@ -359,10 +384,9 @@ space.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orga08ed63" class="outline-4">
-<h4 id="orga08ed63">Golden section</h4>
-<div class="outline-text-4" id="text-orga08ed63">
+<div id="outline-container-org959274a" class="outline-4">
+<h4 id="org959274a">Golden section</h4>
+<div class="outline-text-4" id="text-org959274a">
 <p>
 The golden section algorithm is a gradient free method which can be used to
 obtain an estimate up to a precision of about \(\sqrt{\epsilon}\) where
@@ -437,10 +461,9 @@ gwl r tol f (x0,x1,x2,x3) (f1,f2) =
 </div>
 </div>
 </div>
-
-<div id="outline-container-org856c4df" class="outline-3">
-<h3 id="org856c4df">LogSumExp function</h3>
-<div class="outline-text-3" id="text-org856c4df">
+<div id="outline-container-orgc8e0717" class="outline-3">
+<h3 id="orgc8e0717">LogSumExp function</h3>
+<div class="outline-text-3" id="text-orgc8e0717">
 <p>
 Consider the LogSumExp (LSE) function
 </p>
@@ -474,10 +497,9 @@ logSumExp xs = x' + log (sum [exp (x - x') | x &lt;- xs])
 </div>
 </div>
 </div>
-
-<div id="outline-container-org8c4fa4d" class="outline-3">
-<h3 id="org8c4fa4d">Combinatoric functions</h3>
-<div class="outline-text-3" id="text-org8c4fa4d">
+<div id="outline-container-org180c536" class="outline-3">
+<h3 id="org180c536">Combinatoric functions</h3>
+<div class="outline-text-3" id="text-org180c536">
 <p>
 The following is taken from the <code>math-functions</code> haskell package which
 demonstrates some useful implementations of functions for working with binomial
@@ -543,10 +565,9 @@ n `choose` k
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgb5fc546" class="outline-3">
-<h3 id="orgb5fc546">Factorial</h3>
-<div class="outline-text-3" id="text-orgb5fc546">
+<div id="outline-container-org0db2aa5" class="outline-3">
+<h3 id="org0db2aa5">Factorial</h3>
+<div class="outline-text-3" id="text-org0db2aa5">
 <p>
 The factorial function has the following definition for positive integers
 </p>
@@ -563,10 +584,9 @@ need a safe implementation of the gamma function to work with factorials.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org5058bd8" class="outline-3">
-<h3 id="org5058bd8">Pochhammer symbol</h3>
-<div class="outline-text-3" id="text-org5058bd8">
+<div id="outline-container-orga5adf80" class="outline-3">
+<h3 id="orga5adf80">Pochhammer symbol</h3>
+<div class="outline-text-3" id="text-orga5adf80">
 <p>
 For a positive integer, \(n\), the Pochhammer function, rising factorial, is
 given by
@@ -594,10 +614,9 @@ Pochhammer function.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org82e376c" class="outline-3">
-<h3 id="org82e376c">Computational complexity</h3>
-<div class="outline-text-3" id="text-org82e376c">
+<div id="outline-container-org7877b20" class="outline-3">
+<h3 id="org7877b20">Computational complexity</h3>
+<div class="outline-text-3" id="text-org7877b20">
 <p>
 Suppose you have a program that depends on a parameter <code>n</code> and takes <code>t</code> seconds
 to evaluate. The following snippet can be used as a starting point for
@@ -605,13 +624,13 @@ estimating how long it will take to run on a larger input.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">df <span style="color: #ba2f59; font-weight: bold;">&lt;-</span> data.frame<span style="color: #3a81c3;">(</span>t = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">38</span>,<span style="color: #4e3163;">106</span>,<span style="color: #4e3163;">255</span>,<span style="color: #4e3163;">847</span><span style="color: #6c3163;">)</span>, n = c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">180</span>,<span style="color: #4e3163;">190</span>,<span style="color: #4e3163;">200</span>,<span style="color: #4e3163;">210</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+<pre class="src src-R">df <span style="color: #D0372D;">&lt;-</span> data.frame(t = c(38,106,255,847), n = c(180,190,200,210))
 
-ggplot<span style="color: #3a81c3;">(</span>data = df, mapping = aes<span style="color: #6c3163;">(</span>x = n, y = t / <span style="color: #4e3163;">60</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span> +
-  geom_point<span style="color: #3a81c3;">()</span> +
-  scale_y_log10<span style="color: #3a81c3;">(</span>n.breaks = <span style="color: #4e3163;">10</span><span style="color: #3a81c3;">)</span> +
-  geom_smooth<span style="color: #3a81c3;">(</span>method = <span style="color: #2d9574;">"lm"</span>, fullrange = <span style="color: #4e3163;">TRUE</span><span style="color: #3a81c3;">)</span> +
-  xlim<span style="color: #3a81c3;">(</span>c<span style="color: #6c3163;">(</span><span style="color: #4e3163;">170</span>, <span style="color: #4e3163;">220</span><span style="color: #6c3163;">)</span><span style="color: #3a81c3;">)</span>
+ggplot(data = df, mapping = aes(x = n, y = t / 60)) +
+  geom_point() +
+  scale_y_log10(n.breaks = 10) +
+  geom_smooth(method = <span style="color: #008000;">"lm"</span>, fullrange = <span style="color: #6434A3;">TRUE</span>) +
+  xlim(c(170, 220))
 </pre>
 </div>
 
@@ -620,10 +639,9 @@ Of course, this assumes an exponential complexity, but is easy to tweak for
 polynomial complexity.
 </p>
 </div>
-
-<div id="outline-container-org611fef8" class="outline-4">
-<h4 id="org611fef8">Time</h4>
-<div class="outline-text-4" id="text-org611fef8">
+<div id="outline-container-orgc413366" class="outline-4">
+<h4 id="orgc413366">Time</h4>
+<div class="outline-text-4" id="text-orgc413366">
 <p>
 Here is a table that might help you decide is something runs fast enough.
 </p>
@@ -682,32 +700,31 @@ Here is a table that might help you decide is something runs fast enough.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org8d00c2e" class="outline-3">
-<h3 id="org8d00c2e">Caching results</h3>
-<div class="outline-text-3" id="text-org8d00c2e">
+<div id="outline-container-org2f74878" class="outline-3">
+<h3 id="org2f74878">Caching results</h3>
+<div class="outline-text-3" id="text-org2f74878">
 <p>
 Consider the following Java programs. The first one computes the logarithms each
 time they are used.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">AAA</span> <span style="color: #3a81c3;">{</span>
-    <span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">static</span> <span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">main</span><span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">String</span><span style="color: #2d9574;">[]</span> <span style="color: #715ab1;">args</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
-        <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">size</span> = <span style="color: #4e3163;">100000</span>;
-        <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">answer</span> = <span style="color: #4e3163;">1051287</span>.<span style="color: #4e3163;">7089736538</span>;
-        <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">repeats</span> = Integer.parseInt<span style="color: #2d9574;">(</span>args<span style="color: #67b11d;">[</span><span style="color: #4e3163;">0</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span>;
-        <span style="color: #3a81c3;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">m</span> = <span style="color: #4e3163;">0</span>; m &lt; <span style="color: #ba2f59; font-weight: bold;">repeats</span>; m++<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">x</span> = <span style="color: #4e3163;">0</span>;
-            <span style="color: #3a81c3;">for</span> <span style="color: #67b11d;">(</span><span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">n</span> = <span style="color: #4e3163;">1</span>.<span style="color: #4e3163;">0</span>; n &lt; <span style="color: #ba2f59; font-weight: bold;">size</span>; n+=<span style="color: #4e3163;">1</span>.<span style="color: #4e3163;">0</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
-                x += Math.log<span style="color: #b1951d;">(</span>n<span style="color: #b1951d;">)</span>;
-            <span style="color: #67b11d;">}</span>
-            <span style="color: #3a81c3;">if</span> <span style="color: #67b11d;">(</span>x != answer<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3;">throw</span> <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">RuntimeException</span><span style="color: #b1951d;">(</span><span style="color: #2d9574;">"incorrect value"</span><span style="color: #b1951d;">)</span>;
-            <span style="color: #67b11d;">}</span>
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #6c3163;">}</span>
-<span style="color: #3a81c3;">}</span>
+<pre class="src src-java"><span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">AAA</span> {
+    <span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">static</span> <span style="color: #6434A3;">void</span> <span style="color: #006699;">main</span>(<span style="color: #6434A3;">String</span>[] <span style="color: #BA36A5;">args</span>) {
+        <span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">size</span> = 100000;
+        <span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">answer</span> = 1051287.7089736538;
+        <span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">repeats</span> = Integer.parseInt(args[0]);
+        <span style="color: #0000FF; font-weight: bold;">for</span> (<span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">m</span> = 0; m &lt; repeats; m++) {
+            <span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">x</span> = 0;
+            <span style="color: #0000FF; font-weight: bold;">for</span> (<span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">n</span> = 1.0; n &lt; size; n+=1.0) {
+                x += Math.log(n);
+            }
+            <span style="color: #0000FF; font-weight: bold;">if</span> (x != answer) {
+                <span style="color: #0000FF; font-weight: bold;">throw</span> <span style="color: #0000FF; font-weight: bold;">new</span> <span style="color: #6434A3;">RuntimeException</span>(<span style="color: #008000;">"incorrect value"</span>);
+            }
+        }
+    }
+}
 </pre>
 </div>
 
@@ -716,84 +733,90 @@ The second saves the results in an array and re-uses them.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">class</span> <span style="color: #ba2f59; font-weight: bold;">BBB</span> <span style="color: #3a81c3;">{</span>
-    <span style="color: #3a81c3;">public</span> <span style="color: #3a81c3;">static</span> <span style="color: #ba2f59; font-weight: bold;">void</span> <span style="color: #6c3163; font-weight: bold;">main</span><span style="color: #6c3163;">(</span><span style="color: #ba2f59; font-weight: bold;">String</span><span style="color: #2d9574;">[]</span> <span style="color: #715ab1;">args</span><span style="color: #6c3163;">)</span> <span style="color: #6c3163;">{</span>
-        <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">size</span> = <span style="color: #4e3163;">100000</span>;
-        <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">answer</span> = <span style="color: #4e3163;">1051287</span>.<span style="color: #4e3163;">7089736538</span>;
-        <span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">repeats</span> = Integer.parseInt<span style="color: #2d9574;">(</span>args<span style="color: #67b11d;">[</span><span style="color: #4e3163;">0</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span>;
-        <span style="color: #ba2f59; font-weight: bold;">double</span><span style="color: #2d9574;">[]</span> <span style="color: #715ab1;">ls</span>;
-        ls = <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">double</span><span style="color: #2d9574;">[</span>size+<span style="color: #4e3163;">1</span><span style="color: #2d9574;">]</span>;
-        <span style="color: #3a81c3;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">ix</span> = <span style="color: #4e3163;">0</span>; ix &lt;= size; ix++<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            ls<span style="color: #67b11d;">[</span>ix<span style="color: #67b11d;">]</span> = Math.log<span style="color: #67b11d;">(</span>ix<span style="color: #67b11d;">)</span>;
-        <span style="color: #2d9574;">}</span>
+<pre class="src src-java"><span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">class</span> <span style="color: #6434A3;">BBB</span> {
+    <span style="color: #0000FF; font-weight: bold;">public</span> <span style="color: #0000FF; font-weight: bold;">static</span> <span style="color: #6434A3;">void</span> <span style="color: #006699;">main</span>(<span style="color: #6434A3;">String</span>[] <span style="color: #BA36A5;">args</span>) {
+        <span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">size</span> = 100000;
+        <span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">answer</span> = 1051287.7089736538;
+        <span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">repeats</span> = Integer.parseInt(args[0]);
+        <span style="color: #6434A3;">double</span>[] <span style="color: #BA36A5;">ls</span>;
+        ls = <span style="color: #0000FF; font-weight: bold;">new</span> <span style="color: #6434A3;">double</span>[size+1];
+        <span style="color: #0000FF; font-weight: bold;">for</span> (<span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">ix</span> = 0; ix &lt;= size; ix++) {
+            ls[ix] = Math.log(ix);
+        }
 
-        <span style="color: #3a81c3;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">m</span> = <span style="color: #4e3163;">0</span>; m &lt; <span style="color: #ba2f59; font-weight: bold;">repeats</span>; m++<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            <span style="color: #ba2f59; font-weight: bold;">double</span> <span style="color: #715ab1;">x</span> = <span style="color: #4e3163;">0</span>;
-            <span style="color: #3a81c3;">for</span> <span style="color: #67b11d;">(</span><span style="color: #ba2f59; font-weight: bold;">int</span> <span style="color: #715ab1;">n</span> = <span style="color: #4e3163;">1</span>; n &lt; <span style="color: #ba2f59; font-weight: bold;">size</span>; n++<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
-                x += ls<span style="color: #b1951d;">[</span>n<span style="color: #b1951d;">]</span>;
-            <span style="color: #67b11d;">}</span>
-            <span style="color: #3a81c3;">if</span> <span style="color: #67b11d;">(</span>x != answer<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
-                <span style="color: #3a81c3;">throw</span> <span style="color: #3a81c3;">new</span> <span style="color: #ba2f59; font-weight: bold;">RuntimeException</span><span style="color: #b1951d;">(</span><span style="color: #2d9574;">"incorrect value"</span><span style="color: #b1951d;">)</span>;
-            <span style="color: #67b11d;">}</span>
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #6c3163;">}</span>
-<span style="color: #3a81c3;">}</span>
+        <span style="color: #0000FF; font-weight: bold;">for</span> (<span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">m</span> = 0; m &lt; repeats; m++) {
+            <span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">x</span> = 0;
+            <span style="color: #0000FF; font-weight: bold;">for</span> (<span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">n</span> = 1; n &lt; size; n++) {
+                x += ls[n];
+            }
+            <span style="color: #0000FF; font-weight: bold;">if</span> (x != answer) {
+                <span style="color: #0000FF; font-weight: bold;">throw</span> <span style="color: #0000FF; font-weight: bold;">new</span> <span style="color: #6434A3;">RuntimeException</span>(<span style="color: #008000;">"incorrect value"</span>);
+            }
+        }
+    }
+}
 </pre>
 </div>
 
 <p>
 Running this program with varying number of repeats and timing the evaluation
-produces the dataset shown in Listing <a href="#org7aa6ffd">1</a> which is also shown in Figure <a href="#org90cf045">1</a>. This
+produces the dataset shown in Listing <a href="#org1b11d78">1</a> which is also shown in Figure <a href="#org0d53b22">1</a>. This
 shows that for even reasonably small problems it is useful to cache results.
 </p>
 
 
-<div id="org90cf045" class="figure">
+<div id="org0d53b22" class="figure">
 <p><img src="../images/java-log-timing.png" alt="java-log-timing.png" width="400px" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-csv" id="org7aa6ffd">method<span style="color: #a52a2a;">,</span>repeats<span style="color: #a52a2a;">,</span>seconds
-AAA<span style="color: #a52a2a;">,</span>100<span style="color: #a52a2a;">,</span>0.286
-AAA<span style="color: #a52a2a;">,</span>200<span style="color: #a52a2a;">,</span>0.474
-AAA<span style="color: #a52a2a;">,</span>300<span style="color: #a52a2a;">,</span>0.612
-AAA<span style="color: #a52a2a;">,</span>400<span style="color: #a52a2a;">,</span>0.781
-AAA<span style="color: #a52a2a;">,</span>500<span style="color: #a52a2a;">,</span>0.945
-AAA<span style="color: #a52a2a;">,</span>600<span style="color: #a52a2a;">,</span>1.154
-AAA<span style="color: #a52a2a;">,</span>700<span style="color: #a52a2a;">,</span>1.312
-AAA<span style="color: #a52a2a;">,</span>800<span style="color: #a52a2a;">,</span>1.521
-AAA<span style="color: #a52a2a;">,</span>900<span style="color: #a52a2a;">,</span>1.712
-AAA<span style="color: #a52a2a;">,</span>1000<span style="color: #a52a2a;">,</span>1.764
-AAA<span style="color: #a52a2a;">,</span>1100<span style="color: #a52a2a;">,</span>2.084
-AAA<span style="color: #a52a2a;">,</span>1200<span style="color: #a52a2a;">,</span>2.177
-AAA<span style="color: #a52a2a;">,</span>1300<span style="color: #a52a2a;">,</span>2.397
-AAA<span style="color: #a52a2a;">,</span>1400<span style="color: #a52a2a;">,</span>2.619
-AAA<span style="color: #a52a2a;">,</span>1500<span style="color: #a52a2a;">,</span>2.661
-BBB<span style="color: #a52a2a;">,</span>100<span style="color: #a52a2a;">,</span>0.133
-BBB<span style="color: #a52a2a;">,</span>200<span style="color: #a52a2a;">,</span>0.128
-BBB<span style="color: #a52a2a;">,</span>300<span style="color: #a52a2a;">,</span>0.156
-BBB<span style="color: #a52a2a;">,</span>400<span style="color: #a52a2a;">,</span>0.154
-BBB<span style="color: #a52a2a;">,</span>500<span style="color: #a52a2a;">,</span>0.169
-BBB<span style="color: #a52a2a;">,</span>600<span style="color: #a52a2a;">,</span>0.174
-BBB<span style="color: #a52a2a;">,</span>700<span style="color: #a52a2a;">,</span>0.177
-BBB<span style="color: #a52a2a;">,</span>800<span style="color: #a52a2a;">,</span>0.186
-BBB<span style="color: #a52a2a;">,</span>900<span style="color: #a52a2a;">,</span>0.178
-BBB<span style="color: #a52a2a;">,</span>1000<span style="color: #a52a2a;">,</span>0.240
-BBB<span style="color: #a52a2a;">,</span>1100<span style="color: #a52a2a;">,</span>0.205
-BBB<span style="color: #a52a2a;">,</span>1200<span style="color: #a52a2a;">,</span>0.229
-BBB<span style="color: #a52a2a;">,</span>1300<span style="color: #a52a2a;">,</span>0.248
-BBB<span style="color: #a52a2a;">,</span>1400<span style="color: #a52a2a;">,</span>0.254
-BBB<span style="color: #a52a2a;">,</span>1500<span style="color: #a52a2a;">,</span>0.272
+<pre class="src src-csv" id="org1b11d78">method,repeats,seconds
+AAA,100,0.286
+AAA,200,0.474
+AAA,300,0.612
+AAA,400,0.781
+AAA,500,0.945
+AAA,600,1.154
+AAA,700,1.312
+AAA,800,1.521
+AAA,900,1.712
+AAA,1000,1.764
+AAA,1100,2.084
+AAA,1200,2.177
+AAA,1300,2.397
+AAA,1400,2.619
+AAA,1500,2.661
+BBB,100,0.133
+BBB,200,0.128
+BBB,300,0.156
+BBB,400,0.154
+BBB,500,0.169
+BBB,600,0.174
+BBB,700,0.177
+BBB,800,0.186
+BBB,900,0.178
+BBB,1000,0.240
+BBB,1100,0.205
+BBB,1200,0.229
+BBB,1300,0.248
+BBB,1400,0.254
+BBB,1500,0.272
 </pre>
 </div>
+
+<p>
+% Local Variables:
+% fill-column: 80
+% End:
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2023-01-16 Mon 16:03</p>
+<p class="date">Created: 2025-06-04 Wed 16:31</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
