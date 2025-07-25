@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-05-14 Wed 16:57 -->
+<!-- 2025-07-25 Fri 14:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Statistics</title>
+<title>Probability and Statistics</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -194,6 +194,7 @@
   .org-svg { }
 </style>
 <link rel="icon" type="image/png" href="../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 <link rel="stylesheet" href="../microgram.css">
 <script>
@@ -231,7 +232,7 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Statistics</h1>
+<h1 class="title">Probability and Statistics</h1>
 <p>
 <a href="../notes.html">Home</a>
 </p>
@@ -240,6 +241,30 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
+<li><a href="#org95ba083">Probability theory</a>
+<ul>
+<li><a href="#org891fc5d">\(\sigma\)-field</a></li>
+<li><a href="#org11bb49e">Probability measure</a></li>
+<li><a href="#org51c958d">Conditional probability</a></li>
+<li><a href="#org46e5ef2">Poisson process</a></li>
+<li><a href="#org0692f44">Probability generating function (PGF)</a></li>
+<li><a href="#org2b8b375">Birth process</a></li>
+<li><a href="#org25a8618">Birth-death process</a></li>
+<li><a href="#org499def9">Moment closure</a></li>
+<li><a href="#orgfdadc3c">Change/Transformation of variable</a></li>
+<li><a href="#org5114c06">Random walk</a></li>
+<li><a href="#orgd758c40">Geometric series</a></li>
+<li><a href="#org0c636d1">Squeeze theorem</a></li>
+</ul>
+</li>
+<li><a href="#orgc0ba375">Distributions</a>
+<ul>
+<li><a href="#org013d247">Dirichlet process</a></li>
+<li><a href="#org37d13ec">Log-normal</a></li>
+<li><a href="#org585fbe4">Negative binomial</a></li>
+<li><a href="#org57c51dc">Poisson</a></li>
+</ul>
+</li>
 <li><a href="#org08e9998">Bayesian statistics</a>
 <ul>
 <li><a href="#org87ad9f9">Graphical models</a></li>
@@ -285,6 +310,597 @@
 </ul>
 </div>
 </div>
+<div id="outline-container-org95ba083" class="outline-2">
+<h2 id="org95ba083">Probability theory</h2>
+<div class="outline-text-2" id="text-org95ba083">
+</div>
+<div id="outline-container-org891fc5d" class="outline-3">
+<h3 id="org891fc5d">\(\sigma\)-field</h3>
+<div class="outline-text-3" id="text-org891fc5d">
+<p>
+A \(\sigma\)-field, \(\Sigma\), over a set \(\Omega\) is a subset of the power
+set of \(\Omega\) (ie it is a set of subsets of \(\Omega\)) with three
+properties:
+</p>
+
+<ol class="org-ol">
+<li>\(\Sigma\) contains \(\Omega\),</li>
+<li>\(\Sigma\) is closed under complements, and</li>
+<li>\(\Sigma\) is closed under countable unions.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org11bb49e" class="outline-3">
+<h3 id="org11bb49e">Probability measure</h3>
+<div class="outline-text-3" id="text-org11bb49e">
+<p>
+Given a set, \(\Omega\) and a <a href="#org891fc5d">\(\sigma\)-field</a>, \(\Sigma\), over it, a real
+valued function, \(\mu\) is a measure if
+</p>
+
+<ol class="org-ol">
+<li>\(\mu\) is non-negative,</li>
+<li>\(\mu(\emptyset) = 0\), and</li>
+<li>\(\mu\) has countable additivity, ie the measure of a union of a countable
+set of disjoint sets is the sum of the measures of them.</li>
+</ol>
+
+<p>
+A probability measure is a measure where \(\mu(\Omega) = 1\).
+</p>
+</div>
+</div>
+<div id="outline-container-org51c958d" class="outline-3">
+<h3 id="org51c958d">Conditional probability</h3>
+<div class="outline-text-3" id="text-org51c958d">
+<p>
+For a <a href="#org11bb49e">probability measure</a> if \(P(B) > 0\), then the probability of \(A\) given
+\(B\) is defined by
+</p>
+
+<p>
+\[
+P(A\mid B) = \frac{P(A \cap B)}{P(B)}
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org46e5ef2" class="outline-3">
+<h3 id="org46e5ef2">Poisson process</h3>
+<div class="outline-text-3" id="text-org46e5ef2">
+<p>
+This is a continuous time process which counts the arrivals which occur at
+exponentially distributed times with rate \(\lambda\).
+</p>
+</div>
+<div id="outline-container-orgfe9a82f" class="outline-4">
+<h4 id="orgfe9a82f">Properties</h4>
+<div class="outline-text-4" id="text-orgfe9a82f">
+<p>
+<b>Theorem</b> For a Poisson process with rate \(\lambda \geq 0\), the
+number of events in an interval of duration \(t\) is a Poisson random
+variable with mean \(\lambda t\).
+</p>
+</div>
+</div>
+<div id="outline-container-org7a08921" class="outline-4">
+<h4 id="org7a08921">Probability generating function</h4>
+<div class="outline-text-4" id="text-org7a08921">
+<p>
+The master equations for this process are
+</p>
+
+<p>
+\[
+\frac{dp_0}{dt} = - \lambda p_0
+\]
+</p>
+
+<p>
+and for \(i>0\)
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda p_{i-1} - \lambda p_{i}
+\]
+</p>
+
+<p>
+Note that the rate at which the population increases in independent of the size
+of the population. We can multiply through by \(z^{i}\) and sum over \(i\) to
+get the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = \lambda (z - 1) g
+\]
+</p>
+
+<p>
+which, considering the initial condition \(g(z,0)=1\) gives us the PGF
+</p>
+
+<p>
+\[
+g(z,t) = \exp\{ \lambda t (z - 1) \}
+\]
+</p>
+
+<p>
+which is the PGF for a Poisson distribution with rate \(\lambda t\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org0692f44" class="outline-3">
+<h3 id="org0692f44">Probability generating function (PGF)</h3>
+<div class="outline-text-3" id="text-org0692f44">
+<p>
+For a discrete random variable \(X\) taking values from the non-negative
+integers, the <i>probability generating function</i> is defined as
+</p>
+
+<p>
+\[
+G(z) = \mathbb{E}(z^{X}) = \sum_{x=0}^{\infty} f_X(x) z^{x}
+\]
+</p>
+
+<p>
+where \(f_X\) is the <i>probability mass function</i> (PMF).
+</p>
+</div>
+</div>
+<div id="outline-container-org2b8b375" class="outline-3">
+<h3 id="org2b8b375">Birth process</h3>
+<div class="outline-text-3" id="text-org2b8b375">
+<p>
+Consider a process where individuals give birth with rate \(\lambda\). In this
+case the rate at which the population increases in size depends on the current
+population size. The master equation for this is
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda (i - 1) p_{i-1} - \lambda i p_i
+\]
+</p>
+
+<p>
+for \(i\geq n\) where the process starts with a population of size \(n\):
+\(p_{n}(0) = 1\). Multiplying through by \(z^i\) and summing over \(i\) gives
+the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = \lambda (z^2 - z) \frac{\partial g}{\partial z}.
+\]
+</p>
+
+<p>
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) =
+z^n\). The method of characteristics looks suitable for solving this; the
+function, \(g\), will be constant along the curves satisfying
+</p>
+
+<p>
+\[
+\frac{dz}{dt} = \lambda (z - z^2).
+\]
+</p>
+
+<p>
+(Hopefully you remember how to do partial fractions!)
+This leads us to conclude that the function is constant upon curves where
+</p>
+
+<p>
+\[
+C = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
+\]
+</p>
+
+<p>
+So we know that \(g\) must be a function of the RHS of the previous equation.
+With the initial condition \(n=1\) &#x2014; which due to independence is usually
+sufficient to consider &#x2014; that function is the identity function so
+</p>
+
+<p>
+\[
+g(z,t) = \frac{z \exp\{ -\lambda t\}}{1 - z (1 - \exp\{ -\lambda t\})}.
+\]
+</p>
+
+<p>
+From this we can then see that
+</p>
+
+<p>
+\[
+\lim _{z\to 1} g_{z}(z,t) = \exp\{\lambda t\}
+\]
+</p>
+
+<p>
+which agrees with the mean-field approximation. To check that this is actually a
+solution to the PDE, we can use the following little bit of Maxima
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">define(g(z,t), z * exp(-l * t) / (1 - z * ( 1- exp(-l * t))));
+
+is(equal(l * z * (z - 1) * diff(g(z,t), z), diff(g(z,t), t)));
+is(equal(g(z,0), z));
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org25a8618" class="outline-3">
+<h3 id="org25a8618">Birth-death process</h3>
+<div class="outline-text-3" id="text-org25a8618">
+<p>
+Consider a process where individuals give birth at a rate \(\lambda\) and die at
+a rate \(\mu\). The master equation for this is
+</p>
+
+<p>
+\[
+\frac{dp_i}{dt} = \lambda (i - 1) p_{i-1} - \lambda i p_{i} + \mu (i + 1) p_{i+1} - \mu i p_{i}.
+\]
+</p>
+
+<p>
+with the condition that \(p_i=0\) for \(i<0\). Multiplying through by \(z^i\)
+and summing over \(i\) gives the following PDE for the PGF, \(g(z,t)\)
+</p>
+
+<p>
+\[
+\frac{\partial g}{\partial t} = (1 - z) ( \mu - \lambda z) \frac{\partial g}{\partial z}.
+\]
+</p>
+
+<p>
+Given the initial condition, the boundary condition for the PDE is \(g(z,0) =
+z^n\). The method of characteristics looks suitable for solving this; the
+function, \(g\), will be constant along the curves satisfying
+</p>
+
+<p>
+\[
+\frac{dz}{dt} = (1 - z) ( \mu - \lambda z).
+\]
+</p>
+
+<p>
+(Hopefully you remember how to do partial fractions!)
+This leads us to conclude that the function is constant upon curves where
+</p>
+
+<p>
+\[
+C = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \lambda (z-1)}.
+\]
+</p>
+
+<p>
+So we know that the solution can only be a function of the RHS of the previous
+equation. Since this simplifies to \(z\) at \(t=0\) and assuming the initial
+condition \(n=1\) we get the solution
+</p>
+
+<p>
+\[
+g(z,t) = \frac{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \mu (z-1)}{(\lambda z - \mu) \exp\{ - (\lambda - \mu) t \} - \lambda (z-1)}.
+\]
+</p>
+
+<p>
+We can then test this in maxima with the following
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">define(g(z,t), ((b * z - a) * exp(- (b - a) * t) - a * ( z- 1)) / ((b * z - a) * exp(- (b - a) * t) - b * ( z- 1)));
+
+is(equal((1-z)*(b*z-a) * diff(g(z,t), z), -diff(g(z,t), t)));
+is(equal(g(z,0), z));
+</pre>
+</div>
+
+<p>
+Taking the derivative and the limit we get that the expected population size is
+\(exp\{(&lambda;-&mu;)t\} which again agrees with the mean field approximation.
+</p>
+</div>
+</div>
+<div id="outline-container-org499def9" class="outline-3">
+<h3 id="org499def9">Moment closure</h3>
+<div class="outline-text-3" id="text-org499def9">
+<p>
+For notes on moment closure, see my <a href="./statistics-notes.html">statistics notes</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfdadc3c" class="outline-3">
+<h3 id="orgfdadc3c">Change/Transformation of variable</h3>
+<div class="outline-text-3" id="text-orgfdadc3c">
+<p>
+This is a particularly nifty trick when dealing with tricky MCMC problems, see
+my <a href="./statistics-notes.html#orgb01573f">statistics notes</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-org5114c06" class="outline-3">
+<h3 id="org5114c06">Random walk</h3>
+<div class="outline-text-3" id="text-org5114c06">
+</div>
+<div id="outline-container-orgf84a1f2" class="outline-4">
+<h4 id="orgf84a1f2">Polya's Random Walk Theorem</h4>
+<div class="outline-text-4" id="text-orgf84a1f2">
+<blockquote>
+<p>
+<b>Theorem</b> The simple random walk on \(\mathbb{Z}^{d}\) is recurrent in
+ dimensions \(d=1,2\) and transient in dimensions \(d\geq 3\).
+</p>
+</blockquote>
+
+<p>
+Jonathon Novak has a particularly clear <a href="https://doi.org/10.4169/amer.math.monthly.121.08.711">proof</a> of this result.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd758c40" class="outline-3">
+<h3 id="orgd758c40">Geometric series</h3>
+<div class="outline-text-3" id="text-orgd758c40">
+<p>
+\[
+\sum_{k=0}^{\infty} r^{k} = \frac{1}{1 - r}
+\]
+</p>
+
+<p>
+for \(|r| < 1\).
+</p>
+</div>
+</div>
+<div id="outline-container-org0c636d1" class="outline-3">
+<h3 id="org0c636d1">Squeeze theorem</h3>
+<div class="outline-text-3" id="text-org0c636d1">
+<p>
+Let \(\{a_n\}\) and \(\{c_n\}\) be two sequences which converge to \(l\). If
+there is an \(N\) such that for all \(n\geq N\) we have \(a_n \leq b_n \leq
+c_n\), then \(\{b_n\}\) also converges to \(l\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc0ba375" class="outline-2">
+<h2 id="orgc0ba375">Distributions</h2>
+<div class="outline-text-2" id="text-orgc0ba375">
+</div>
+<div id="outline-container-org013d247" class="outline-3">
+<h3 id="org013d247">Dirichlet process</h3>
+<div class="outline-text-3" id="text-org013d247">
+<ul class="org-ul">
+<li>The Dirichlet <i>process</i> is not from the Dirichlet <i>distribution</i>.</li>
+<li>There are three main ways to think about the DP:
+<ul class="org-ul">
+<li>the Chinese restraunt process,</li>
+<li>the stick-breaking process,</li>
+<li>and the Polya urn scheme</li>
+</ul></li>
+<li>The DP has "rich-get-richer" behaviour.</li>
+<li>The DP is defined by a <i>base distribution</i>, \(H\), and a <i>scaling parameter</i>, \(\alpha\).
+<ul class="org-ul">
+<li>For larger values of \(\alpha\) the distribution looks more like \(H\), for
+smaller values it looks like a resampled sample from \(H\) where previously
+sampled values become more likely to be resampled.</li>
+</ul></li>
+<li>This has found substantial use in Bayesian nonparameteric inference where it
+is used as a prior.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org37d13ec" class="outline-3">
+<h3 id="org37d13ec">Log-normal</h3>
+<div class="outline-text-3" id="text-org37d13ec">
+</div>
+<div id="outline-container-orgb0434fa" class="outline-4">
+<h4 id="orgb0434fa">Notation</h4>
+<div class="outline-text-4" id="text-orgb0434fa">
+<p>
+\[
+X \sim \text{Lognormal}(\mu,\sigma^2)
+\]
+</p>
+
+<p>
+where \(\mu\) can be any real number and \(\sigma>0\).
+</p>
+</div>
+</div>
+<div id="outline-container-org9b9f20c" class="outline-4">
+<h4 id="org9b9f20c">Properties</h4>
+<div class="outline-text-4" id="text-org9b9f20c">
+</div>
+<ul class="org-ul">
+<li><a id="org4d54998"></a>Density<br />
+<div class="outline-text-5" id="text-org4d54998">
+<p>
+\[
+f(x) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp\left\{ - \frac{{(\log(x) - \mu)}^{2}}{2\sigma^{2}} \right\}
+\]
+</p>
+
+<p>
+If \(g(x)\) is the density of \(N(\mu, \sigma)\), then
+</p>
+
+<p>
+\[
+f(x) = g(\log x) / x.
+\]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-maxima">load(distrib);
+
+print(is(equal(pdf_lognormal(x, m, s), unit_step(x) * pdf_normal(log(x), m, s) / x)));
+</pre>
+</div>
+
+<p>
+which outputs the message
+</p>
+
+<pre class="example" id="org14a5dbc">
+: true
+</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org585fbe4" class="outline-3">
+<h3 id="org585fbe4">Negative binomial</h3>
+<div class="outline-text-3" id="text-org585fbe4">
+</div>
+<div id="outline-container-org73870c3" class="outline-4">
+<h4 id="org73870c3">Notation</h4>
+<div class="outline-text-4" id="text-org73870c3">
+<p>
+\[
+X \sim \text{NB}(r,p)
+\]
+</p>
+
+<p>
+where \(r>0\) and \(p\in[0,1]\).
+</p>
+</div>
+</div>
+<div id="outline-container-orga378473" class="outline-4">
+<h4 id="orga378473">Properties</h4>
+<div class="outline-text-4" id="text-orga378473">
+<p>
+<b>Note</b> that sometimes the distribution is parameterised in terms of \(1-p\)
+which will change the following expressions.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orgb652df3"></a>Mean and variance<br />
+<div class="outline-text-5" id="text-orgb652df3">
+<p>
+\[
+\mathbb{E}X = \frac{pr}{1-p}
+\]
+</p>
+
+<p>
+\[
+\mathbb{V}X = \frac{pr}{(1-p)^2}
+\]
+</p>
+
+<p>
+and so
+</p>
+
+<p>
+\[
+p = 1 - \frac{m}{v}, \quad r = \frac{m^2}{v - m}
+\]
+</p>
+</div>
+</li>
+<li><a id="org9d64040"></a>Probability generating function<br />
+<div class="outline-text-5" id="text-org9d64040">
+<p>
+\[
+G(z, r, p) = \left(\frac{1-p}{1-pz}\right)^r
+\]
+</p>
+
+<p>
+which has some useful properties:
+</p>
+
+<ul class="org-ul">
+<li>\(G(\alpha z, r, p) = \left(\frac{1 - p}{1 - pz}\right)^r G(z, r, \alpha p)\)</li>
+<li>\(\partial_{z}^{n} G(z, r, p) = r^{\bar{n}} \left( \frac{p}{1-p} \right)^{n}
+  G(z, r + n, p)\) where \(x^{\bar{n}} = x (x + 1) \dots (x + n - 1)\) (ie the
+Pochhammer symbol).</li>
+<li>\(z G(z, r, p) = G(z, r, p) / p - (1 - p) G(z, r - 1, p) / p\)</li>
+</ul>
+
+<p>
+There is a maxima script for showing this is true <a href="./neg-binom.mac">here</a>.
+</p>
+</div>
+</li>
+<li><a id="org6d23454"></a>Moment generating function<br />
+<div class="outline-text-5" id="text-org6d23454">
+<p>
+\[
+M_{X}(t) = \left(\frac{1-p}{1-p e^{t}}\right)^r
+\]
+</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org57c51dc" class="outline-3">
+<h3 id="org57c51dc">Poisson</h3>
+<div class="outline-text-3" id="text-org57c51dc">
+</div>
+<div id="outline-container-org2fc7c0b" class="outline-4">
+<h4 id="org2fc7c0b">Notation</h4>
+<div class="outline-text-4" id="text-org2fc7c0b">
+<p>
+\[
+X \sim \text{Pois}(\lambda\)
+\]
+</p>
+
+<p>
+where \(\lambda > 0\).
+</p>
+</div>
+</div>
+<div id="outline-container-org348c448" class="outline-4">
+<h4 id="org348c448">Properties</h4>
+<div class="outline-text-4" id="text-org348c448">
+<p>
+\[
+\mathbb{E}X = \lambda
+\]
+</p>
+
+<p>
+\[
+\mathbb{V}X = \lambda
+\]
+</p>
+
+<p>
+The moment generating function is
+</p>
+
+<p>
+\[
+G_{x}(z) = \exp[ \lambda (e^z - 1) ]
+\]
+</p>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-org08e9998" class="outline-2">
 <h2 id="org08e9998">Bayesian statistics</h2>
 <div class="outline-text-2" id="text-org08e9998">
@@ -308,30 +924,30 @@ You can also produce with with GraphViz
 </p>
 
 
-<div id="org7fe53a7" class="figure">
+<div id="orgb6cddc9" class="figure">
 <p><img src="../images/graphical-model.gv.png" alt="graphical-model.gv.png" width="600px" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-dot"><span style="color: #0000FF; font-weight: bold;">digraph</span> <span style="color: #006699;">G</span> {
-    <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">Usage</span>
-    <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">-----</span>
-    <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">dot -Tpng graphical-model.gv -O</span>
-    <span style="color: #8D8D84;">//</span>
-    rand [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Stochastic"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">ellipse</span>]
-    det [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Deterministic"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">ellipse</span>, <span style="color: #BA36A5;">style=</span><span style="color: #D0372D;">dashed</span>]
-    const [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Constant"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">box</span>]
-    obs [<span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Clamped\n(observed)"</span>, <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">ellipse</span>, <span style="color: #BA36A5;">style=</span><span style="color: #D0372D;">filled</span>, <span style="color: #BA36A5;">color=</span><span style="color: #008000;">lightgrey</span>]
+<pre class="src src-dot">digraph G {
+    // Usage
+    // -----
+    // dot -Tpng graphical-model.gv -O
+    //
+    rand [label="Stochastic", shape=ellipse]
+    det [label="Deterministic", shape=ellipse, style=dashed]
+    const [label="Constant", shape=box]
+    obs [label="Clamped\n(observed)", shape=ellipse, style=filled, color=lightgrey]
 
-    <span style="color: #0000FF; font-weight: bold;">subgraph</span> <span style="color: #006699;">cluster_plate</span> {
+    subgraph cluster_plate {
         rand
         det
         const
         obs
-        <span style="color: #BA36A5;">label=</span><span style="color: #008000;">"Plate"</span>
-        <span style="color: #BA36A5;">shape=</span><span style="color: #D0372D;">box</span>
-        <span style="color: #BA36A5;">style=</span><span style="color: #D0372D;">dashed</span>
+        label="Plate"
+        shape=box
+        style=dashed
     }
 
 }
@@ -573,7 +1189,7 @@ efficiently.
 </p>
 
 
-<div id="orgc3506cc" class="figure">
+<div id="orgc367b5c" class="figure">
 <p><img src="../images/mcmc-transform-demo.png" alt="mcmc-transform-demo.png" />
 </p>
 </div>
@@ -615,9 +1231,9 @@ intervals.
 <h3 id="r-glm-logistic">GLM: Logistic regression</h3>
 <div class="outline-text-3" id="text-r-glm-logistic">
 </div>
-<div id="outline-container-orgd11d65a" class="outline-4">
-<h4 id="orgd11d65a">Setting up the data</h4>
-<div class="outline-text-4" id="text-orgd11d65a">
+<div id="outline-container-org79dae1b" class="outline-4">
+<h4 id="org79dae1b">Setting up the data</h4>
+<div class="outline-text-4" id="text-org79dae1b">
 <p>
 Note that with the logit link, the linear predictor controls the
 log-odds of the binary outcome. In this example, the true intercept is 0, and the
@@ -637,9 +1253,9 @@ df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2
 </div>
 </div>
 </div>
-<div id="outline-container-orgee3683a" class="outline-4">
-<h4 id="orgee3683a">Fitting the model</h4>
-<div class="outline-text-4" id="text-orgee3683a">
+<div id="outline-container-org4e2cd75" class="outline-4">
+<h4 id="org4e2cd75">Fitting the model</h4>
+<div class="outline-text-4" id="text-org4e2cd75">
 <p>
 The <code>glm</code> function fits the GLM, note that we use the <code>binomial</code>
 family which defaults to using the logit link function. The <code>summary</code>
@@ -669,7 +1285,7 @@ dev.off()
 </div>
 
 
-<div id="orge2d436e" class="figure">
+<div id="org0e48c39" class="figure">
 <p><img src="../images/glm-example-logistic-regression.png" alt="glm-example-logistic-regression.png" width="800px" />
 </p>
 </div>
@@ -680,9 +1296,9 @@ dev.off()
 <h3 id="r-glm-nbinom">GLM: Negative binomial</h3>
 <div class="outline-text-3" id="text-r-glm-nbinom">
 </div>
-<div id="outline-container-org79dae1b" class="outline-4">
-<h4 id="org79dae1b">Setting up the data</h4>
-<div class="outline-text-4" id="text-org79dae1b">
+<div id="outline-container-org2e7ffee" class="outline-4">
+<h4 id="org2e7ffee">Setting up the data</h4>
+<div class="outline-text-4" id="text-org2e7ffee">
 <p>
 Note that with the log-link function, the true intercept should be 1
 and the coefficients should be 1, -1 and 0. The true size parameter of
@@ -701,9 +1317,9 @@ df <span style="color: #D0372D;">&lt;-</span> data.frame(y = y, x1 = x1, x2 = x2
 </div>
 </div>
 </div>
-<div id="outline-container-org4e2cd75" class="outline-4">
-<h4 id="org4e2cd75">Fitting the model</h4>
-<div class="outline-text-4" id="text-org4e2cd75">
+<div id="outline-container-org00cc065" class="outline-4">
+<h4 id="org00cc065">Fitting the model</h4>
+<div class="outline-text-4" id="text-org00cc065">
 <p>
 The following demonstrates that with this data set the coefficients
 are well estimates as is the size parameter of the negative binomial
@@ -908,7 +1524,7 @@ intervals contained the true parameter, then you could not reject the null
 hypothesis that the \(95\%\) coverage is correct.
 </p>
 
-<pre class="example" id="org0853b1a">
+<pre class="example" id="org95870e0">
 &gt; calibration_test(46, size = 50, prob = 0.95)
 $p_val
 [1] 0.316537
@@ -922,7 +1538,7 @@ If instead you only had 44 of the intervals containing the parameter, then you
 could reject this null hypothesis:
 </p>
 
-<pre class="example" id="org0962519">
+<pre class="example" id="orgc8c6a4a">
 &gt; calibration_test(44, size = 50, prob = 0.95)
 $p_val
 [1] 0.03777617
@@ -1619,7 +2235,7 @@ want to extract a figure from a PDF of a paper, see my <a href="./inkscape-notes
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-05-14 Wed 16:57</p>
+<p class="date">Created: 2025-07-25 Fri 14:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

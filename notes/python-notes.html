@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-05-22 Thu 10:22 -->
+<!-- 2025-07-10 Thu 12:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org7ca40c8" class="figure">
+<div id="org48a1ab0" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -228,7 +228,7 @@
 <li><a href="#org8c4ec47">Debugging</a></li>
 <li><a href="#org7538b22"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#orgae9f8ed">High performance computing</a></li>
-<li><a href="#org2da91ce">IO</a></li>
+<li><a href="#org55fe5a7">IO</a></li>
 </ul>
 </li>
 <li><a href="#sec:virtual-envs">Virtual environments</a>
@@ -675,9 +675,9 @@ p.save(<span style="color: #008000;">"foo.png"</span>)
 </div>
 </div>
 </div>
-<div id="outline-container-org2da91ce" class="outline-3">
-<h3 id="org2da91ce">IO</h3>
-<div class="outline-text-3" id="text-org2da91ce">
+<div id="outline-container-org55fe5a7" class="outline-3">
+<h3 id="org55fe5a7">IO</h3>
+<div class="outline-text-3" id="text-org55fe5a7">
 </div>
 <div id="outline-container-org10e6295" class="outline-4">
 <h4 id="org10e6295">Pickle</h4>
@@ -1451,13 +1451,36 @@ Melting is particularly useful in plotting.
 </p>
 </div>
 </div>
-<div id="outline-container-org55fe5a7" class="outline-4">
-<h4 id="org55fe5a7">IO</h4>
-<div class="outline-text-4" id="text-org55fe5a7">
+<div id="outline-container-org823dd9d" class="outline-4">
+<h4 id="org823dd9d">IO</h4>
+<div class="outline-text-4" id="text-org823dd9d">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
 </ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> pandas <span style="color: #0000FF; font-weight: bold;">as</span> pd
+
+<span style="color: #BA36A5;">df</span> = pd.DataFrame({
+    <span style="color: #008000;">"id"</span>: [1, 2, 3, 4],
+    <span style="color: #008000;">"val"</span>: [<span style="color: #008000;">'a'</span>, <span style="color: #008000;">'b'</span>, <span style="color: #008000;">'c'</span>, <span style="color: #008000;">'d'</span>]
+})
+
+df[0:2].to_csv(<span style="color: #008000;">'demo-pandas-csv.csv'</span>, index=<span style="color: #D0372D;">False</span>)
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">NOTE this appends the data to the end of the CSV.</span>
+df[2:4].to_csv(<span style="color: #008000;">'demo-pandas-csv.csv'</span>, index=<span style="color: #D0372D;">False</span>, mode=<span style="color: #008000;">'a'</span>, header=<span style="color: #D0372D;">False</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-csv">id,val
+1,a
+2,b
+3,c
+4,d
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-org53bf449" class="outline-4">
@@ -1681,7 +1704,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-05-22 Thu 10:22</p>
+<p class="date">Created: 2025-07-10 Thu 12:52</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

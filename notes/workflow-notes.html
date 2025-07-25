@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-04-02 Wed 21:50 -->
+<!-- 2025-07-25 Fri 14:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Workflows: Make/Ant/Snakemake</title>
@@ -221,7 +221,9 @@
 <li><a href="#org3e1ea4c">Ant</a></li>
 <li><a href="#orgeda39f0">Snakemake</a>
 <ul>
+<li><a href="#orgf543429">Example: Visualization</a></li>
 <li><a href="#org3fe2b7f">Example: Hello Snakemake!</a></li>
+<li><a href="#orgfd58244">Example: input/output aliases</a></li>
 <li><a href="#org4f1cd62">Example: Linting code</a></li>
 <li><a href="#orgb92743a">Example: Minimal simulation study</a></li>
 </ul>
@@ -313,7 +315,7 @@ making sure variables have the expected values.
 <h2 id="org3e1ea4c">Ant</h2>
 <div class="outline-text-2" id="text-org3e1ea4c">
 
-<div id="org4507620" class="figure">
+<div id="org7cb12f8" class="figure">
 <p><img src="../images/apache-ant-logo.png" alt="apache-ant-logo.png" width="400px" />
 </p>
 </div>
@@ -332,14 +334,15 @@ an Ant XML.</li>
 <h2 id="orgeda39f0">Snakemake</h2>
 <div class="outline-text-2" id="text-orgeda39f0">
 
-<div id="org1723c86" class="figure">
+<div id="org85115cc" class="figure">
 <p><img src="../images/snakemake-logo.png" alt="snakemake-logo.png" width="200px" />
 </p>
 </div>
 
 <p>
 The Snakemake developers strongly recommend the use of Conda. I have
-some <a href="./python-notes.html#conda">notes</a> on how to use Conda.
+some <a href="./python-notes.html#conda">notes</a> on how to use Conda. Conda can be a bit heavy though, <a href="./python-notes.html#venv">venv</a>
+is a lighter weight solution and is part of the standard library.
 </p>
 
 <ul class="org-ul">
@@ -348,6 +351,21 @@ some <a href="./python-notes.html#conda">notes</a> on how to use Conda.
 it, you can remote the <code>n</code> to get a live run.</li>
 <li><code>snakemake --keep-going</code> will keep going if some fail.</li>
 </ul>
+</div>
+<div id="outline-container-orgf543429" class="outline-3">
+<h3 id="orgf543429">Example: Visualization</h3>
+<div class="outline-text-3" id="text-orgf543429">
+<p>
+You can generate a DAG of either the rules or the files (with <code>--dag</code>)
+in a snakefile. The rules provide a higher level overview of the
+pipline.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">snakemake --rulegraph | dot -Tpng &gt; foobar.png
+</pre>
+</div>
+</div>
 </div>
 <div id="outline-container-org3fe2b7f" class="outline-3">
 <h3 id="org3fe2b7f">Example: Hello Snakemake!</h3>
@@ -396,6 +414,29 @@ cat hello.txt
 run on five cores, and if you need to specify the name of the
 snakefile to use there is <code>--snakefile</code>.
 </p>
+</div>
+</div>
+<div id="outline-container-orgfd58244" class="outline-3">
+<h3 id="orgfd58244">Example: input/output aliases</h3>
+<div class="outline-text-3" id="text-orgfd58244">
+<p>
+You can give files aliases but these need to come at the end of the
+list of files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">rule run_stan_model:
+    <span style="color: #006FE0;">input</span>:
+        CONFIGURATION_YAML,
+        <span style="color: #008000;">"stan-renewal-model.stan"</span>,
+        <span style="color: #BA36A5;">script</span> = <span style="color: #008000;">"src/stan-renewal-runner.R"</span>
+    output:
+        posterior_csv,
+        stan_data,
+    shell:
+        <span style="color: #008000;">"Rscript {input.script}"</span>
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-org4f1cd62" class="outline-3">
@@ -571,7 +612,7 @@ The Snakefile makes use of this
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-04-02 Wed 21:50</p>
+<p class="date">Created: 2025-07-25 Fri 14:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

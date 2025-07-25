@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-04-02 Wed 21:50 -->
+<!-- 2025-07-25 Fri 14:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="org316ce01" class="figure">
+<div id="org9c5a875" class="figure">
 <p><img src="../images/git-logo.png" alt="git-logo.png" width="300px" />
 </p>
 </div>
@@ -263,6 +263,7 @@
 <li><a href="#org30600fd">List branch topology</a></li>
 <li><a href="#org89665a1">Update remote to use ssh</a></li>
 <li><a href="#org942bbb8">Undo a commit</a></li>
+<li><a href="#orgfbb8aab">Undo a commit but keep it on a new branch</a></li>
 <li><a href="#org7ad894e">Undo a partial merge resolution</a></li>
 <li><a href="#org46df598">Undo all unstaged changes (checkout all the files)</a></li>
 <li><a href="#org1847119">Unstage all staged files</a></li>
@@ -303,7 +304,7 @@ Make sure that you have got your remote set to the correct location, it should
 look like the following:
 </p>
 
-<pre class="example" id="org22e69c3">
+<pre class="example" id="org2fcd55a">
 origin git@github.com:aezarebski/foobar.git
 </pre>
 
@@ -539,6 +540,27 @@ Or if you want to go back to a particular commit, issue the following command
 <p>
 The <code>--hard</code> part is so that the changes made are removed, if you wanted to keep
 the changes it would be <code>--soft</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfbb8aab" class="outline-3">
+<h3 id="orgfbb8aab">Undo a commit but keep it on a new branch</h3>
+<div class="outline-text-3" id="text-orgfbb8aab">
+<p>
+Oh no! I've commited to <code>main</code> when I wanted to commit to a new branch
+called <code>new-feature-branch</code>. Do this
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">git branch new-feature-branch
+git reset --hard HEAD~1
+git checkout new-feature-branch
+</pre>
+</div>
+
+<p>
+Note if you have accidentally commited <code>n</code> times and you want to have
+them on a separate branch, use <code>HEAD~n</code> instead.
 </p>
 </div>
 </div>
@@ -967,7 +989,7 @@ See my <a href="#sec:ssh-keys">notes</a> on how to use these with GitHub.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-04-02 Wed 21:50</p>
+<p class="date">Created: 2025-07-25 Fri 14:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
