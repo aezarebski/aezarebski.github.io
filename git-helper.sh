@@ -47,7 +47,7 @@ done
 # The ggplot2 gallery
 git add misc/matplotlib/gallery.html
 
-for ix in $(seq -f "%02g" 1 11);
+for ix in $(seq -f "%02g" 1 12);
 do
     git add ./misc/matplotlib/fig$ix.png
 done
