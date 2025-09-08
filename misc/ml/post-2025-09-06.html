@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-09-02 Tue 12:02 -->
+<!-- 2025-09-08 Mon 17:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>My Recipes</title>
+<title>AANN 06/09/2025</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -193,27 +193,196 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link id="stylesheet" rel="stylesheet" type="text/css" href="./recipe-style.css" />
+<link rel="icon" type="image/png" href="../../resources/nicemacs-favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" href="../../microgram.css">
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">My Recipes</h1>
+<h1 class="title">AANN 06/09/2025</h1>
+<div class="nav-buttons">
+  <a class="button button-outline nav-button" href="./post-2025-01-21.html">Previous</a>
+  <a class="button button-outline nav-button" href="../../index.html">Home</a>
+  <a class="button button-outline nav-button" href="./index.html">Index</a>
+  <a class="button button-outline nav-button" href="./post-2025-09-06.html">Next</a>
+</div>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org74fed1b"><code>rsync</code></a>
+<ul>
+<li><a href="#orgb9a5808">Overview</a></li>
+<li><a href="#orga7d5c7c">Info</a></li>
+<li><a href="#orgd75618b">Example</a></li>
+<li><a href="#org0d3c97a">Discussion</a></li>
+<li><a href="#orgf518942">Thanks</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org74fed1b" class="outline-2">
+<h2 id="org74fed1b"><code>rsync</code></h2>
+<div class="outline-text-2" id="text-org74fed1b">
+
+<div id="org06a854a" class="figure">
+<p><img src="./example-2025-09-06/cover-image.png" alt="cover-image.png" width="400px" />
+</p>
+</div>
+</div>
+<div id="outline-container-orgb9a5808" class="outline-3">
+<h3 id="orgb9a5808">Overview</h3>
+<div class="outline-text-3" id="text-orgb9a5808">
 <p>
-<a href="../../index.html">Home</a>
+In this post, we will visit an awesome tool from the 90's that hasn't
+aged a day. It is rsync (<i>remote sync</i>), a tool that takes care of
+copying files between locations (often across different machines on a
+network) in a way that avoids unnecessary copies and preserves
+information about the files.
 </p>
 
-<ul class="org-ul">
-<li><a href="paneer-korma.html">Paneer korma</a></li>
-<li><a href="butternut-squash-risotto.html">Butternut squash and sage risotto</a></li>
-<li><a href="vegetable-ragu.html">Vegetable ragu</a></li>
-<li><a href="baked-feta-pasta.html">Baked feta pasta</a></li>
-<li><a href="broccoli-white-bean-salad.html">Roasted broccoli and white bean salad</a></li>
-<li><a href="sloe-gin.html">Sloe gin</a></li>
-</ul>
+<p>
+When doing computational work, we often have to do bigger tasks on a
+server somewhere, and git isn't always the best solution for larger
+files. I often find myself working on a non-trivial dataset and code
+which will generate a substantial volume output. I can work on the
+code locally and analyse a subset of the data, but when I want to
+analyse the whole thing properly, it all needs to go on the server.
+Then I need to pull some (but not all) of the output back from the
+server. Do this a few times and it gets annoying, so of course I'm
+going to script it.
+</p>
+
+<p>
+Wait! Before you write yet another shell script to do the copying
+to-and-from, or click and drag a bunch of files, remember <code>rsync</code> can
+help.
+</p>
+</div>
+</div>
+<div id="outline-container-orga7d5c7c" class="outline-3">
+<h3 id="orga7d5c7c">Info</h3>
+<div class="outline-text-3" id="text-orga7d5c7c">
+<p>
+rsync is available on most Linux machines. There is a useful
+introduction to rsync <a href="https://everythinglinux.org/rsync/">here</a> (and a simpler one <a href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories">here</a>.) Commands will
+look like the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nil">rsync [OPTIONS] SRC DEST
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd75618b" class="outline-3">
+<h3 id="orgd75618b">Example</h3>
+<div class="outline-text-3" id="text-orgd75618b">
+<p>
+My use case for this is keeping some code, data and results synced up
+between my local machine and a server (in this case, the server is
+called <code>brahms</code>). I have one script to sync my code and some data to
+the server, and another to sync the important contents of the output
+directory back to my local machine (without all the intermediate
+stuff).
+</p>
+
+<p>
+<b>Important</b> The <code>--dry-run</code> flag does exactly what it says and is a
+nice way to check that you aren't accidentally going to mess things
+up!
+</p>
+</div>
+<div id="outline-container-orgece8f10" class="outline-4">
+<h4 id="orgece8f10">Copying to the server</h4>
+<div class="outline-text-4" id="text-orgece8f10">
+<p>
+Here I wanted to send all the code and data from current directory
+(<code>./</code> which is the root of the project) to the server
+(<code>brahms:~/projects/derp-simulation</code>), but exclude existing output and
+the git repository I'm working in.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">rsync --archive --progress --compress <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"out/"</span> <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"/.git/"</span> <span style="color: #008000;">\</span>
+        ./ brahms:~/projects/derp-simulation
+</pre>
+</div>
+
+<p>
+The <code>--archive</code> comment tells rsync to do this recursively while also
+preserving file information. The <code>--progress</code> flag tells rsync to
+print progress out and <code>--compress</code> tells it to compress the diffs
+before sending them. The <code>--exclude</code> examples provide a way to ignore
+files matching those patterns.
+</p>
+</div>
+</div>
+<div id="outline-container-org8cb36ed" class="outline-4">
+<h4 id="org8cb36ed">Copying from the server</h4>
+<div class="outline-text-4" id="text-org8cb36ed">
+<p>
+This script is also runs from the root of the project, <code>./</code>, on my
+local machine, but pulls the output back from the server. There are a
+lot of intermediate files (e.g. the pickle, tree and XML files) that
+get generated, and I don't need them so there are exclude flags to
+prevent them being copied over.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">rsync --archive --progress --compress <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"*pickle"</span> <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"*time"</span> <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"*traj"</span> <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"*tree"</span> <span style="color: #008000;">\</span>
+        --exclude <span style="color: #008000;">"*xml"</span> <span style="color: #008000;">\</span>
+        brahms:~/projects/derp-simulation/out/ ./out
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org0d3c97a" class="outline-3">
+<h3 id="org0d3c97a">Discussion</h3>
+<div class="outline-text-3" id="text-org0d3c97a">
+<p>
+In this post, we have looked at an example of how rsync has helped me
+in to simplify the process of moving (large and numerous) files
+between my laptop and a server. Perhaps not the most exciting topic,
+but it is something that I find far less annoying thanks to rsync.
+</p>
+
+<p>
+If you're not sold on the command line interface, there are graphical
+interfaces: <a href="https://www.opbyte.it/grsync/">Grsync</a> looks like a good option, but I haven't really used
+it. Also, I have heard good things about <a href="https://github.com/bcpierce00/unison">Unison</a> but that feels a bit
+heavy for my needs.
+</p>
+
+<p>
+So remember, before you write yet another shell script to move files
+around or click and drag a bunch of stuff, keep <code>rsync</code> in mind.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf518942" class="outline-3">
+<h3 id="orgf518942">Thanks</h3>
+<div class="outline-text-3" id="text-orgf518942">
+<p>
+Thank you to the members of the <a href="https://rsync.samba.org/">developers and maintainers of rsync</a>
+and to <a href="https://www.infectiousdisease.cam.ac.uk/staff/dr-david-pascall">David Pascall</a> for helpful comments on a draft of this post.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-09-02 Tue 12:02</p>
+<p class="date">Created: 2025-09-08 Mon 17:54</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
