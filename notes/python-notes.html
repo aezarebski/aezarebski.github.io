@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-07-10 Thu 12:52 -->
+<!-- 2025-09-18 Thu 14:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org48a1ab0" class="figure">
+<div id="org5f3c572" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -228,7 +228,7 @@
 <li><a href="#org8c4ec47">Debugging</a></li>
 <li><a href="#org7538b22"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#orgae9f8ed">High performance computing</a></li>
-<li><a href="#org55fe5a7">IO</a></li>
+<li><a href="#org823dd9d">IO</a></li>
 </ul>
 </li>
 <li><a href="#sec:virtual-envs">Virtual environments</a>
@@ -244,6 +244,7 @@
 <li><a href="#orgcb7653b">Biopython</a></li>
 <li><a href="#org1d2fcd4">Black (linting)</a></li>
 <li><a href="#org2053d3f">h5py</a></li>
+<li><a href="#orgfa32f5b">OS</a></li>
 <li><a href="#pyyaml">PyYAML</a></li>
 <li><a href="#python-requests">Requests/lxml</a></li>
 <li><a href="#org594280b">PyTorch</a></li>
@@ -675,9 +676,9 @@ p.save(<span style="color: #008000;">"foo.png"</span>)
 </div>
 </div>
 </div>
-<div id="outline-container-org55fe5a7" class="outline-3">
-<h3 id="org55fe5a7">IO</h3>
-<div class="outline-text-3" id="text-org55fe5a7">
+<div id="outline-container-org823dd9d" class="outline-3">
+<h3 id="org823dd9d">IO</h3>
+<div class="outline-text-3" id="text-org823dd9d">
 </div>
 <div id="outline-container-org10e6295" class="outline-4">
 <h4 id="org10e6295">Pickle</h4>
@@ -733,8 +734,8 @@ There are two main tools for python specific virtual environments:
 <div class="org-src-container">
 <pre class="src src-sh">python3 -m venv venv
 <span style="color: #006FE0;">source</span> venv/bin/activate
-pip install -U pip   <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">update pip</span>
-pip install -r requirements.txt
+pip install -U pip   <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">update pip
+</span>pip install -r requirements.txt
 deactivate
 </pre>
 </div>
@@ -888,8 +889,8 @@ The <code>argparse</code> module is part of the standard library.
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> argparse
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create parser object</span>
-<span style="color: #BA36A5;">parser</span> = argparse.ArgumentParser()
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create parser object
+</span><span style="color: #BA36A5;">parser</span> = argparse.ArgumentParser()
 
 parser.add_argument(
     <span style="color: #008000;">"-v"</span>,
@@ -973,6 +974,31 @@ parent groups in order to create child groups. Having <a href="https://github.co
 is useful while writing these queries.
 </p>
 </div>
+</div>
+</div>
+<div id="outline-container-orgfa32f5b" class="outline-3">
+<h3 id="orgfa32f5b">OS</h3>
+<div class="outline-text-3" id="text-orgfa32f5b">
+<p>
+The <code>os</code> module (in the standard library) is a nice way to interact
+with the operating system. There are functions to manage the working
+directory:
+</p>
+
+<ul class="org-ul">
+<li><code>os.getcwd()</code></li>
+<li><code>os.chdir(path)</code></li>
+</ul>
+
+<p>
+<code>os.path</code> has helpful functions for working with the file system:
+</p>
+
+<ul class="org-ul">
+<li><code>os.path.dirname(path)</code></li>
+<li><code>os.path.basename(path)</code></li>
+<li><code>os.path.exists(path)</code></li>
+</ul>
 </div>
 </div>
 <div id="outline-container-pyyaml" class="outline-3">
@@ -1069,8 +1095,8 @@ we can filter out this information.
 <h4 id="orgf642699">Saving and loading models</h4>
 <div class="outline-text-4" id="text-orgf642699">
 <div class="org-src-container">
-<pre class="src src-python">  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">first train `my_cool_model'</span>
-torch.save(my_cool_model.state_dict(), <span style="color: #008000;">"./demo.pt"</span>)
+<pre class="src src-python">  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">first train `my_cool_model'
+</span>torch.save(my_cool_model.state_dict(), <span style="color: #008000;">"./demo.pt"</span>)
 <span style="color: #BA36A5;">another_cool_model</span> = CoolModel()
 another_cool_model.load_state_dict(torch.load(<span style="color: #008000;">"./demo.pt"</span>))
 </pre>
@@ -1216,8 +1242,8 @@ Any methods with a name starting with "test" are run and there are
         <span style="color: #0000FF; font-weight: bold;">self</span>.<span style="color: #BA36A5;">test_data</span> = np.array([1, 2, 3, 4, 5])
 
     <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">test_mean</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
-        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">use assertAlmostEqual to check 7 (default) decimal places</span>
-        <span style="color: #0000FF; font-weight: bold;">self</span>.assertAlmostEqual(np.mean(<span style="color: #0000FF; font-weight: bold;">self</span>.test_data), 3.0, 7)
+        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">use assertAlmostEqual to check 7 (default) decimal places
+</span>        <span style="color: #0000FF; font-weight: bold;">self</span>.assertAlmostEqual(np.mean(<span style="color: #0000FF; font-weight: bold;">self</span>.test_data), 3.0, 7)
 
     <span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">test_min_max</span>(<span style="color: #0000FF; font-weight: bold;">self</span>):
         <span style="color: #0000FF; font-weight: bold;">self</span>.assertEqual(np.<span style="color: #006FE0;">min</span>(<span style="color: #0000FF; font-weight: bold;">self</span>.test_data), 1)
@@ -1262,26 +1288,26 @@ The following makes use of the <code>python-vlc</code> library to stream radio.
 <pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> vlc
 <span style="color: #0000FF; font-weight: bold;">import</span> time
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">--------------------------------------------------------------------</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">For finding more radio stations, you may want to check out websites</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">such as Internet-Radio or TuneIn, which offer thousands of free</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">online radio stations. Most of these stations provide their</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">streaming URL which you can use to listen in your favorite media</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">player.</span>
-
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">When you navigate these websites, you typically select a station</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">you're interested in and look for an option that says something like</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">"play in your own player" or "manual streaming". This usually leads</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">contain the actual URL(s) for the stream, and can be opened in a</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">text editor to view the stream URL.</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">--------------------------------------------------------------------</span>
-
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">BBC World Service</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"</span>
-
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Majestic Jukebox Radio</span>
-<span style="color: #BA36A5;">url</span> = <span style="color: #008000;">"http://uk3.internet-radio.com:8405/live"</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">--------------------------------------------------------------------
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">For finding more radio stations, you may want to check out websites
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">such as Internet-Radio or TuneIn, which offer thousands of free
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">online radio stations. Most of these stations provide their
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">streaming URL which you can use to listen in your favorite media
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">player.
+</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">When you navigate these websites, you typically select a station
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">you're interested in and look for an option that says something like
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">"play in your own player" or "manual streaming". This usually leads
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">contain the actual URL(s) for the stream, and can be opened in a
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">text editor to view the stream URL.
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">--------------------------------------------------------------------
+</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">BBC World Service
+</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
+</span>
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Majestic Jukebox Radio
+</span><span style="color: #BA36A5;">url</span> = <span style="color: #008000;">"http://uk3.internet-radio.com:8405/live"</span>
 
 
 <span style="color: #BA36A5;">instance</span> = vlc.Instance()
@@ -1290,13 +1316,13 @@ The following makes use of the <code>python-vlc</code> library to stream radio.
 player.set_media(media)
 player.play()
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Keep the program running while the radio plays</span>
-<span style="color: #0000FF; font-weight: bold;">try</span>:
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Keep the program running while the radio plays
+</span><span style="color: #0000FF; font-weight: bold;">try</span>:
     <span style="color: #0000FF; font-weight: bold;">while</span> <span style="color: #D0372D;">True</span>:
         time.sleep(1)
 <span style="color: #0000FF; font-weight: bold;">except</span> <span style="color: #6434A3;">KeyboardInterrupt</span>:
-    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">On Ctrl+C, stop the player and quit</span>
-    player.stop()
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">On Ctrl+C, stop the player and quit
+</span>    player.stop()
 </pre>
 </div>
 </div>
@@ -1451,9 +1477,9 @@ Melting is particularly useful in plotting.
 </p>
 </div>
 </div>
-<div id="outline-container-org823dd9d" class="outline-4">
-<h4 id="org823dd9d">IO</h4>
-<div class="outline-text-4" id="text-org823dd9d">
+<div id="outline-container-orgafb4053" class="outline-4">
+<h4 id="orgafb4053">IO</h4>
+<div class="outline-text-4" id="text-orgafb4053">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1468,13 +1494,13 @@ method. There are similar methods for <code>_json</code> in newer versions of pa
 })
 
 df[0:2].to_csv(<span style="color: #008000;">'demo-pandas-csv.csv'</span>, index=<span style="color: #D0372D;">False</span>)
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">NOTE this appends the data to the end of the CSV.</span>
-df[2:4].to_csv(<span style="color: #008000;">'demo-pandas-csv.csv'</span>, index=<span style="color: #D0372D;">False</span>, mode=<span style="color: #008000;">'a'</span>, header=<span style="color: #D0372D;">False</span>)
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">NOTE this appends the data to the end of the CSV.
+</span>df[2:4].to_csv(<span style="color: #008000;">'demo-pandas-csv.csv'</span>, index=<span style="color: #D0372D;">False</span>, mode=<span style="color: #008000;">'a'</span>, header=<span style="color: #D0372D;">False</span>)
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-csv">id,val
+<pre class="src src-nil">id,val
 1,a
 2,b
 3,c
@@ -1628,8 +1654,8 @@ documentation.
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #BA36A5;">duncan_prestige</span> = sm.datasets.get_rdataset(<span style="color: #008000;">"Duncan"</span>, <span style="color: #008000;">"carData"</span>)
-<span style="color: #006FE0;">print</span>(duncan_prestige.<span style="color: #006FE0;">__doc__</span>) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">for meta-data</span>
-duncan_prestige.data <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">pandas dataframe</span>
+<span style="color: #006FE0;">print</span>(duncan_prestige.<span style="color: #006FE0;">__doc__</span>) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">for meta-data
+</span>duncan_prestige.data <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">pandas dataframe</span>
 </pre>
 </div>
 </div>
@@ -1704,7 +1730,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-07-10 Thu 12:52</p>
+<p class="date">Created: 2025-09-18 Thu 14:22</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
