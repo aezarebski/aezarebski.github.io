@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-09-08 Mon 17:54 -->
+<!-- 2025-10-22 Wed 14:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 06/09/2025</title>
@@ -214,7 +214,7 @@
 <li><a href="#org74fed1b"><code>rsync</code></a>
 <ul>
 <li><a href="#orgb9a5808">Overview</a></li>
-<li><a href="#orga7d5c7c">Info</a></li>
+<li><a href="#org6db712b">Background</a></li>
 <li><a href="#orgd75618b">Example</a></li>
 <li><a href="#org0d3c97a">Discussion</a></li>
 <li><a href="#orgf518942">Thanks</a></li>
@@ -227,7 +227,7 @@
 <h2 id="org74fed1b"><code>rsync</code></h2>
 <div class="outline-text-2" id="text-org74fed1b">
 
-<div id="org06a854a" class="figure">
+<div id="org4d58738" class="figure">
 <p><img src="./example-2025-09-06/cover-image.png" alt="cover-image.png" width="400px" />
 </p>
 </div>
@@ -237,34 +237,34 @@
 <div class="outline-text-3" id="text-orgb9a5808">
 <p>
 In this post, we will visit an awesome tool from the 90's that hasn't
-aged a day. It is rsync (<i>remote sync</i>), a tool that takes care of
+aged a day. It is <a href="https://rsync.samba.org/">rsync</a> (<i>remote sync</i>), a tool that takes care of
 copying files between locations (often across different machines on a
 network) in a way that avoids unnecessary copies and preserves
 information about the files.
 </p>
 
 <p>
-When doing computational work, we often have to do bigger tasks on a
-server somewhere, and git isn't always the best solution for larger
-files. I often find myself working on a non-trivial dataset and code
-which will generate a substantial volume output. I can work on the
-code locally and analyse a subset of the data, but when I want to
-analyse the whole thing properly, it all needs to go on the server.
-Then I need to pull some (but not all) of the output back from the
-server. Do this a few times and it gets annoying, so of course I'm
-going to script it.
+In computational work, we usually do bigger tasks a server, and git
+isn't always the best way to share larger files. I often find myself
+working on a non-trivial dataset and code which will generate a
+substantial volume of output. I can work on the code locally and
+analyse a subset of the data, but when I want to analyse the whole
+thing properly, it all needs to go on the server. Then I need to pull
+some (but not all) of the output back from the server. Do this a few
+times and it gets annoying remembering which files are involved in
+which steps, so of course I'm going to script it.
 </p>
 
 <p>
-Wait! Before you write yet another shell script to do the copying
+<b>Wait!</b> Before you write yet another shell script to do the copying
 to-and-from, or click and drag a bunch of files, remember <code>rsync</code> can
 help.
 </p>
 </div>
 </div>
-<div id="outline-container-orga7d5c7c" class="outline-3">
-<h3 id="orga7d5c7c">Info</h3>
-<div class="outline-text-3" id="text-orga7d5c7c">
+<div id="outline-container-org6db712b" class="outline-3">
+<h3 id="org6db712b">Background</h3>
+<div class="outline-text-3" id="text-org6db712b">
 <p>
 rsync is available on most Linux machines. There is a useful
 introduction to rsync <a href="https://everythinglinux.org/rsync/">here</a> (and a simpler one <a href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories">here</a>.) Commands will
@@ -281,12 +281,12 @@ look like the following:
 <h3 id="orgd75618b">Example</h3>
 <div class="outline-text-3" id="text-orgd75618b">
 <p>
-My use case for this is keeping some code, data and results synced up
+My use case for this is keeping code, data and results synced up
 between my local machine and a server (in this case, the server is
-called <code>brahms</code>). I have one script to sync my code and some data to
-the server, and another to sync the important contents of the output
-directory back to my local machine (without all the intermediate
-stuff).
+called <code>brahms</code>). I have one script to sync my code and data to the
+server, and another to sync the important output back to my local
+machine (without all the intermediate output that I don't really care
+about.)
 </p>
 
 <p>
@@ -301,8 +301,8 @@ up!
 <p>
 Here I wanted to send all the code and data from current directory
 (<code>./</code> which is the root of the project) to the server
-(<code>brahms:~/projects/derp-simulation</code>), but exclude existing output and
-the git repository I'm working in.
+(<code>brahms:~/projects/derp-simulation</code>), but to exclude existing output
+and the git repository I'm working in.
 </p>
 
 <div class="org-src-container">
@@ -317,8 +317,15 @@ the git repository I'm working in.
 The <code>--archive</code> comment tells rsync to do this recursively while also
 preserving file information. The <code>--progress</code> flag tells rsync to
 print progress out and <code>--compress</code> tells it to compress the diffs
-before sending them. The <code>--exclude</code> examples provide a way to ignore
-files matching those patterns.
+before sending them (to reduce network usage). The <code>--exclude</code>
+examples provide a way to ignore files matching those patterns.
+</p>
+
+<p>
+There is an <code>--include</code> flag to tell rsync to include files that would
+be excluded by subsequent <code>--exclude</code> flags, but the order of the
+flags matters here so be careful. Dry runs will help in setting this
+up correctly&#x2026;
 </p>
 </div>
 </div>
@@ -350,17 +357,17 @@ prevent them being copied over.
 <h3 id="org0d3c97a">Discussion</h3>
 <div class="outline-text-3" id="text-org0d3c97a">
 <p>
-In this post, we have looked at an example of how rsync has helped me
-in to simplify the process of moving (large and numerous) files
-between my laptop and a server. Perhaps not the most exciting topic,
-but it is something that I find far less annoying thanks to rsync.
+In this post, we have looked at an example of how rsync has helped to
+simplify moving (large and numerous) files between my laptop and a
+server. Perhaps not the most exciting topic, but it is something that
+I find far less annoying when using rsync.
 </p>
 
 <p>
 If you're not sold on the command line interface, there are graphical
-interfaces: <a href="https://www.opbyte.it/grsync/">Grsync</a> looks like a good option, but I haven't really used
-it. Also, I have heard good things about <a href="https://github.com/bcpierce00/unison">Unison</a> but that feels a bit
-heavy for my needs.
+interfaces: <a href="https://www.opbyte.it/grsync/">Grsync</a> looks like a good option, and there is a pure
+python clone, but I haven't used either. Also, I have heard good
+things about <a href="https://github.com/bcpierce00/unison">Unison</a> but that feels a bit heavy for my needs.
 </p>
 
 <p>
@@ -382,7 +389,7 @@ and to <a href="https://www.infectiousdisease.cam.ac.uk/staff/dr-david-pascall">
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-09-08 Mon 17:54</p>
+<p class="date">Created: 2025-10-22 Wed 14:02</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

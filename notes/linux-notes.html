@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-09-02 Tue 11:19 -->
+<!-- 2025-10-21 Tue 14:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="org7fdd9b6" class="figure">
+<div id="org8fa4fd8" class="figure">
 <p><img src="../images/linux-logo.png" alt="linux-logo.png" width="250px" />
 </p>
 </div>
@@ -285,11 +285,11 @@
 <li><a href="#orgb7be434">Getting help</a></li>
 <li><a href="#org6a88d43">Accounts</a></li>
 <li><a href="#org2699d0c">Bluetooth</a></li>
-<li><a href="#org194c671">Colour selection and hexcodes</a></li>
 </ul>
 </li>
 <li><a href="#org809f6d6">Packages</a>
 <ul>
+<li><a href="#org194c671">Colour selection and hexcodes</a></li>
 <li><a href="#orgcc6c6ee">Removing a PPA</a></li>
 <li><a href="#org9e3638a">Installingfrom a <code>.deb</code> file</a></li>
 <li><a href="#org9182dce">Uninstalling packages</a></li>
@@ -987,6 +987,37 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </li>
 </ul>
 </div>
+<div id="outline-container-org0f00cad" class="outline-4">
+<h4 id="org0f00cad">Attributes</h4>
+<div class="outline-text-4" id="text-org0f00cad">
+<p>
+On Linux, files have attributes. One of those attributes is <code>i</code>, which
+states that a file is immutable (and hence can't be modified or
+removed). You can check the attributes of a file with the <code>lsattr</code>
+command and you can change them with the <code>chattr</code> command. The
+<a href="https://en.wikipedia.org/wiki/Chattr#Attributes">Wikipedia page</a> has a full list of the attributes.
+</p>
+
+<p>
+Here is a little example
+</p>
+
+<pre class="example" id="orgc867ae5">
+$ echo "hello" &gt; demo.txt
+$ lsattr demo.txt
+--------------e------- demo.txt
+$ sudo chattr +i demo.txt
+$ lsattr demo.txt
+----i---------e------- demo.txt
+$ rm demo.txt
+rm: cannot remove 'demo.txt': Operation not permitted
+$ sudo chattr -i demo.txt
+$ lsattr demo.txt
+--------------e------- demo.txt
+$ rm demo.txt
+</pre>
+</div>
+</div>
 <div id="outline-container-org8d1aa1f" class="outline-4">
 <h4 id="org8d1aa1f">Filesystem GUI: <i>Nautilus</i></h4>
 <div class="outline-text-4" id="text-org8d1aa1f">
@@ -1632,18 +1663,33 @@ eventually. Alternatively, you may need to add the following line to
 </div>
 </div>
 </div>
-<div id="outline-container-org194c671" class="outline-3">
-<h3 id="org194c671">Colour selection and hexcodes</h3>
-<div class="outline-text-3" id="text-org194c671">
-<p>
-The program <i>Gpick</i> displays the hexcode of the pixel under the cursor.
-</p>
-</div>
-</div>
 </div>
 <div id="outline-container-org809f6d6" class="outline-2">
 <h2 id="org809f6d6">Packages</h2>
 <div class="outline-text-2" id="text-org809f6d6">
+</div>
+<div id="outline-container-org194c671" class="outline-3">
+<h3 id="org194c671">Colour selection and hexcodes</h3>
+<div class="outline-text-3" id="text-org194c671">
+</div>
+<div id="outline-container-org45e2a20" class="outline-4">
+<h4 id="org45e2a20">Gcolor3</h4>
+<div class="outline-text-4" id="text-org45e2a20">
+<p>
+The program <code>gcolor3</code> displays the hexcode of the pixel under the
+cursor. It is similar to the dropper from inkscape.
+</p>
+</div>
+</div>
+<div id="outline-container-org4a2b765" class="outline-4">
+<h4 id="org4a2b765">Gpick <b>BROKEN on Wayland!</b></h4>
+<div class="outline-text-4" id="text-org4a2b765">
+<p>
+The program <i>Gpick</i> displays the hexcode of the pixel under the
+cursor. It is similar to the dropper from inkscape.
+</p>
+</div>
+</div>
 </div>
 <div id="outline-container-orgcc6c6ee" class="outline-3">
 <h3 id="orgcc6c6ee">Removing a PPA</h3>
@@ -2043,7 +2089,7 @@ servers.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-09-02 Tue 11:19</p>
+<p class="date">Created: 2025-10-21 Tue 14:07</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
