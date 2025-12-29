@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-10-21 Tue 14:07 -->
+<!-- 2025-12-29 Mon 10:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux notes</title>
@@ -234,11 +234,11 @@
 <div id="content" class="content">
 <h1 class="title">Linux notes</h1>
 <p>
-<a href="../index.html">Home</a>
+<a href="../notes.html">Home</a>
 </p>
 
 
-<div id="org8fa4fd8" class="figure">
+<div id="orgce6a8a2" class="figure">
 <p><img src="../images/linux-logo.png" alt="linux-logo.png" width="250px" />
 </p>
 </div>
@@ -948,10 +948,11 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </tr>
 </tbody>
 </table>
-</div>
-<ul class="org-ul">
-<li><a id="org177f5b3"></a>Useful permission codes<br />
-<div class="outline-text-5" id="text-org177f5b3">
+
+<p>
+And here are some useful examples:
+</p>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -984,8 +985,6 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </tbody>
 </table>
 </div>
-</li>
-</ul>
 </div>
 <div id="outline-container-org0f00cad" class="outline-4">
 <h4 id="org0f00cad">Attributes</h4>
@@ -1002,7 +1001,7 @@ command and you can change them with the <code>chattr</code> command. The
 Here is a little example
 </p>
 
-<pre class="example" id="orgc867ae5">
+<pre class="example" id="orgca963ea">
 $ echo "hello" &gt; demo.txt
 $ lsattr demo.txt
 --------------e------- demo.txt
@@ -1393,6 +1392,12 @@ particular directories.
 <div id="outline-container-orgb645649" class="outline-3">
 <h3 id="orgb645649"><code>rsync</code></h3>
 <div class="outline-text-3" id="text-orgb645649">
+<ul class="org-ul">
+<li><a href="#org93a9c8f">Example: library of PDFs</a></li>
+<li><a href="#orgc4e6cc8">Example: scientific computing</a></li>
+<li><a href="#orga0e2b7d">Example: over-engineered runner</a></li>
+</ul>
+
 <p>
 The <code>rsync</code> utility provides a way to synchronize the files between
 locations. It is available on most linux machines. There is a useful
@@ -1549,6 +1554,17 @@ to sync the contents of the output directory back to my local machine.
       brahms:~/projects/derp-simulation/out/ ./out
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-orga0e2b7d" class="outline-4">
+<h4 id="orga0e2b7d">Example: over-engineered runner</h4>
+<div class="outline-text-4" id="text-orga0e2b7d">
+<p>
+<a href="./../misc/stink.py">Stinky</a> is a python script that uses rsync to back up a list of source
+directories into a target directory while printing out a bunch of
+sanity checks along the way. You can probably do all of this in some
+complex invocation of rsync, but this seems simpler to me.
+</p>
 </div>
 </div>
 </div>
@@ -1960,10 +1976,13 @@ As an example, here is a simple shell script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/bin/</span><span style="color: #0000FF; font-weight: bold;">sh</span><span style="color: #8D8D84; font-style: italic;">
+<pre class="src src-sh"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/</span><span style="color: #0000FF; font-weight: bold;">env</span><span style="color: #8D8D84; font-style: italic;"> bash
 </span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">demo.sh
-</span><span style="color: #006FE0;">echo</span> <span style="color: #008000;">"foo: $2"</span>
+</span>
+<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"foo: $2"</span>
 <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"bar: $1"</span>
+
+ls $<span style="color: #BA36A5;">3</span> | head
 </pre>
 </div>
 
@@ -1972,9 +1991,10 @@ Running it we get the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-text">$ ./demo.sh hello world
+<pre class="src src-text">$ ./demo.sh hello world -lh
 foo: world
 bar: hello
+&lt;&lt;&lt; output from ls -lh | head &gt;&gt;&gt;
 </pre>
 </div>
 </div>
@@ -2089,7 +2109,7 @@ servers.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-10-21 Tue 14:07</p>
+<p class="date">Created: 2025-12-29 Mon 10:16</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-07-25 Fri 14:56 -->
+<!-- 2025-11-07 Fri 15:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="org9c5a875" class="figure">
+<div id="orge61ea5a" class="figure">
 <p><img src="../images/git-logo.png" alt="git-logo.png" width="300px" />
 </p>
 </div>
@@ -278,6 +278,7 @@
 </li>
 <li><a href="#org7de39ff">GitHub</a>
 <ul>
+<li><a href="#orgade2092">Reviewing pull requests locally</a></li>
 <li><a href="#orgd4faaa7">Issue tracker</a></li>
 <li><a href="#sec:ssh-keys">ssh keys</a></li>
 <li><a href="#org23d0512">Wikis</a></li>
@@ -304,7 +305,7 @@ Make sure that you have got your remote set to the correct location, it should
 look like the following:
 </p>
 
-<pre class="example" id="org2fcd55a">
+<pre class="example" id="orge5e3736">
 origin git@github.com:aezarebski/foobar.git
 </pre>
 
@@ -343,9 +344,9 @@ Note that you may need to use some extra commands to restart the ssh agent
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #006FE0;">eval</span> <span style="color: #008000;">"$(</span><span style="color: #FF1493;">ssh-agent -s</span><span style="color: #008000;">)"</span>
-<span style="color: #006FE0;">kill</span> -9 &lt;agent pid&gt;
-<span style="color: #006FE0;">eval</span> <span style="color: #FF1493;">`ssh-agent`</span>
+<pre class="src src-sh"><span style="color: #f78fe7;">eval</span> <span style="color: #79a8ff;">"$(</span><span style="color: #f78fe7;">ssh-agent -s</span><span style="color: #79a8ff;">)"</span>
+<span style="color: #f78fe7;">kill</span> -9 &lt;agent pid&gt;
+<span style="color: #f78fe7;">eval</span> <span style="color: #f78fe7;">`ssh-agent`</span>
 ssh-add ~/.ssh/&lt;your private key&gt;
 ssh git@gitprovider.com
 </pre>
@@ -411,7 +412,7 @@ commits that have changed those lines of the file.
 <h3 id="org3eabf48">List current commit hash</h3>
 <div class="outline-text-3" id="text-org3eabf48">
 <div class="org-src-container">
-<pre class="src src-sh">git log -1 --format=<span style="color: #008000;">"%H"</span>
+<pre class="src src-sh">git log -1 --format=<span style="color: #79a8ff;">"%H"</span>
 </pre>
 </div>
 </div>
@@ -738,8 +739,8 @@ messy.
 git checkout -b feature-neat
 git checkout feature-neat
 git merge --squash feature-messy
-git commit <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">This step may require more attention</span>
-git checkout master
+git commit <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">This step may require more attention
+</span>git checkout master
 git merge feature-neat
 </pre>
 </div>
@@ -774,9 +775,9 @@ you want from branch <code>Y</code>. To pull those edits over you can do the fol
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git checkout X                  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">we need to be on X</span>
-git checkout Y f1 f2            <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">checkout out the edited files</span>
-git commit -m <span style="color: #008000;">"Pull edits over"</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Profit!</span>
+<pre class="src src-sh">git checkout X                  <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">we need to be on X
+</span>git checkout Y f1 f2            <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">checkout out the edited files
+</span>git commit -m <span style="color: #79a8ff;">"Pull edits over"</span> <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Profit!</span>
 </pre>
 </div>
 </div>
@@ -813,7 +814,7 @@ The following command should set vim as the default editor on a machine.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">git config --global core.editor <span style="color: #008000;">"vim"</span>
+<pre class="src src-sh">git config --global core.editor <span style="color: #79a8ff;">"vim"</span>
 </pre>
 </div>
 </div>
@@ -822,6 +823,33 @@ The following command should set vim as the default editor on a machine.
 <div id="outline-container-org7de39ff" class="outline-2">
 <h2 id="org7de39ff">GitHub</h2>
 <div class="outline-text-2" id="text-org7de39ff">
+</div>
+<div id="outline-container-orgade2092" class="outline-3">
+<h3 id="orgade2092">Reviewing pull requests locally</h3>
+<div class="outline-text-3" id="text-orgade2092">
+<p>
+If you have a PR on GitHub that you would like to work on locally, you
+can checkout the code with the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git fetch origin pull/&lt;PR_NUMBER&gt;/head:&lt;NEW_BRANCH_NAME&gt;
+git checkout &lt;NEW_BRANCH_NAME&gt;
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">make some edits...
+</span>git push origin &lt;NEW_BRANCH_NAME&gt;
+</pre>
+</div>
+
+<p>
+where <code>&lt;PR_NUMBER&gt;</code> is a number associated with the PR by GitHub.
+</p>
+
+<p>
+The result of all of this is a new branch pushed to GitHub which
+starts with the PR code and then has whatever other commits you make
+added to it.
+</p>
+</div>
 </div>
 <div id="outline-container-orgd4faaa7" class="outline-3">
 <h3 id="orgd4faaa7">Issue tracker</h3>
@@ -890,7 +918,7 @@ some keys do the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #006FE0;">cd</span> ~/.ssh
+<pre class="src src-shell"><span style="color: #f78fe7;">cd</span> ~/.ssh
 ssh-keygen
 </pre>
 </div>
@@ -951,23 +979,23 @@ determine how many times my <a href="https://aezarebski.github.io/timtam/">timta
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> requests
+<pre class="src src-python"><span style="color: #b6a0ff;">import</span> requests
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Replace with your repository details</span>
-<span style="color: #BA36A5;">owner</span> = <span style="color: #008000;">'aezarebski'</span>
-<span style="color: #BA36A5;">repo</span> = <span style="color: #008000;">'timtam2'</span>
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Replace with your repository details
+</span><span style="color: #00d3d0;">owner</span> = <span style="color: #79a8ff;">'aezarebski'</span>
+<span style="color: #00d3d0;">repo</span> = <span style="color: #79a8ff;">'timtam2'</span>
 
-<span style="color: #BA36A5;">response</span> = requests.get(f<span style="color: #008000;">'https://api.github.com/repos/</span>{owner}<span style="color: #008000;">/</span>{repo}<span style="color: #008000;">/releases'</span>)
-<span style="color: #BA36A5;">releases</span> = response.json()
+<span style="color: #00d3d0;">response</span> = requests.get(f<span style="color: #79a8ff;">'https://api.github.com/repos/</span>{owner}<span style="color: #79a8ff;">/</span>{repo}<span style="color: #79a8ff;">/releases'</span>)
+<span style="color: #00d3d0;">releases</span> = response.json()
 
-<span style="color: #BA36A5;">counts</span> = []
-<span style="color: #0000FF; font-weight: bold;">for</span> release <span style="color: #0000FF; font-weight: bold;">in</span> releases:
-    <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Release: </span>{release['name']}<span style="color: #008000;">"</span>)
-    <span style="color: #0000FF; font-weight: bold;">for</span> asset <span style="color: #0000FF; font-weight: bold;">in</span> release[<span style="color: #008000;">'assets'</span>]:
-        <span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"  Asset: </span>{asset['name']}<span style="color: #008000;">, Downloads: </span>{asset['download_count']}<span style="color: #008000;">"</span>)
-        counts.append(asset[<span style="color: #008000;">'download_count'</span>])
+<span style="color: #00d3d0;">counts</span> = []
+<span style="color: #b6a0ff;">for</span> release <span style="color: #b6a0ff;">in</span> releases:
+    <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Release: </span>{release['name']}<span style="color: #79a8ff;">"</span>)
+    <span style="color: #b6a0ff;">for</span> asset <span style="color: #b6a0ff;">in</span> release[<span style="color: #79a8ff;">'assets'</span>]:
+        <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"  Asset: </span>{asset['name']}<span style="color: #79a8ff;">, Downloads: </span>{asset['download_count']}<span style="color: #79a8ff;">"</span>)
+        counts.append(asset[<span style="color: #79a8ff;">'download_count'</span>])
 
-<span style="color: #006FE0;">print</span>(f<span style="color: #008000;">"Total download count: </span>{<span style="color: #006FE0;">sum</span>(counts)}<span style="color: #008000;">"</span>)
+<span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Total download count: </span>{<span style="color: #f78fe7;">sum</span>(counts)}<span style="color: #79a8ff;">"</span>)
 </pre>
 </div>
 </div>
@@ -989,7 +1017,7 @@ See my <a href="#sec:ssh-keys">notes</a> on how to use these with GitHub.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-07-25 Fri 14:56</p>
+<p class="date">Created: 2025-11-07 Fri 15:58</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

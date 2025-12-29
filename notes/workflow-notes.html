@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-07-25 Fri 14:56 -->
+<!-- 2025-10-27 Mon 16:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Workflows: Make/Ant/Snakemake</title>
@@ -246,7 +246,7 @@ Remember to use <span class="underline">TABS</span> before each command!
 </p>
 
 <div class="org-src-container">
-<pre class="src src-makefile"><span style="color: #0000ff; font-weight: bold;">target [target ...]</span>: [component ...]
+<pre class="src src-makefile"><span style="color: #feacd0;">target [target ...]</span>: [component ...]
   [command 1]
         [command 2]
   ...
@@ -275,10 +275,10 @@ of the <code>&amp;:</code> to separate the targets from the prerequisites
 </p>
 
 <div class="org-src-container">
-<pre class="src src-makefile"><span style="color: #0000ff; font-weight: bold;">foo bar biz &amp;</span>: baz boz
-        echo $<span style="color: #D0372D;">^</span> &gt; foo
-        echo $<span style="color: #D0372D;">^</span> &gt; bar
-        echo $<span style="color: #D0372D;">^</span> &gt; biz
+<pre class="src src-makefile"><span style="color: #feacd0;">foo bar biz &amp;</span>: baz boz
+        echo $<span style="color: #00bcff;">^</span> &gt; foo
+        echo $<span style="color: #00bcff;">^</span> &gt; bar
+        echo $<span style="color: #00bcff;">^</span> &gt; biz
 </pre>
 </div>
 </div>
@@ -315,7 +315,7 @@ making sure variables have the expected values.
 <h2 id="org3e1ea4c">Ant</h2>
 <div class="outline-text-2" id="text-org3e1ea4c">
 
-<div id="org7cb12f8" class="figure">
+<div id="org892762a" class="figure">
 <p><img src="../images/apache-ant-logo.png" alt="apache-ant-logo.png" width="400px" />
 </p>
 </div>
@@ -334,7 +334,7 @@ an Ant XML.</li>
 <h2 id="orgeda39f0">Snakemake</h2>
 <div class="outline-text-2" id="text-orgeda39f0">
 
-<div id="org85115cc" class="figure">
+<div id="orgab24f39" class="figure">
 <p><img src="../images/snakemake-logo.png" alt="snakemake-logo.png" width="200px" />
 </p>
 </div>
@@ -376,7 +376,7 @@ Create a directory for the project and touch a Snakefile.
 
 <div class="org-src-container">
 <pre class="src src-sh">mkdir snakemake_example
-<span style="color: #006FE0;">cd</span> snakemake_example
+<span style="color: #f78fe7;">cd</span> snakemake_example
 touch Snakefile
 </pre>
 </div>
@@ -387,14 +387,14 @@ Snakemake!" to a text file.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Snakefile</span>
-rule hello_world:
+<pre class="src src-python"><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Snakefile
+</span>rule hello_world:
     params:
-        <span style="color: #BA36A5;">greeting</span>=<span style="color: #008000;">"Hello"</span>
+        <span style="color: #00d3d0;">greeting</span>=<span style="color: #79a8ff;">"Hello"</span>
     output:
-        <span style="color: #008000;">"hello.txt"</span>
+        <span style="color: #79a8ff;">"hello.txt"</span>
     shell:
-        <span style="color: #008000;">"echo '{params.greeting}, Snakemake!' &gt; {output}"</span>
+        <span style="color: #79a8ff;">"echo '{params.greeting}, Snakemake!' &gt; {output}"</span>
 </pre>
 </div>
 
@@ -426,15 +426,15 @@ list of files.
 
 <div class="org-src-container">
 <pre class="src src-python">rule run_stan_model:
-    <span style="color: #006FE0;">input</span>:
+    <span style="color: #f78fe7;">input</span>:
         CONFIGURATION_YAML,
-        <span style="color: #008000;">"stan-renewal-model.stan"</span>,
-        <span style="color: #BA36A5;">script</span> = <span style="color: #008000;">"src/stan-renewal-runner.R"</span>
+        <span style="color: #79a8ff;">"stan-renewal-model.stan"</span>,
+        <span style="color: #00d3d0;">script</span> = <span style="color: #79a8ff;">"src/stan-renewal-runner.R"</span>
     output:
         posterior_csv,
         stan_data,
     shell:
-        <span style="color: #008000;">"Rscript {input.script}"</span>
+        <span style="color: #79a8ff;">"Rscript {input.script}"</span>
 </pre>
 </div>
 </div>
@@ -454,7 +454,7 @@ to your snakemake file.
 <div class="org-src-container">
 <pre class="src src-python">rule lint_code:
     shell:
-        <span style="color: #008000;">"black src"</span>
+        <span style="color: #79a8ff;">"black src"</span>
 </pre>
 </div>
 
@@ -478,7 +478,7 @@ scripts) and touch a Snakefile.
 
 <div class="org-src-container">
 <pre class="src src-sh">mkdir snakemake_example
-<span style="color: #006FE0;">cd</span> snakemake_example
+<span style="color: #f78fe7;">cd</span> snakemake_example
 touch Snakefile
 touch config.yaml
 mkdir src
@@ -497,44 +497,46 @@ this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #D0372D;">N</span>: 99
+<pre class="src src-yaml"><span style="color: #00bcff;">N</span>: 99
 </pre>
 </div>
 
 <p>
-The Snakefile makes use of this
+The Snakefile makes use of this when the file is hard-coded into the
+snakefile. Note that you can also specify this configuration file at
+the command line using the <code>--configfile</code> command line argument.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-snakemake"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Snakefile</span>
-<span style="color: #0000FF; font-weight: bold;">configfile</span>: <span style="color: #008000;">"config.yaml"</span>
-<span style="color: #BA36A5;">histogram_png</span> = <span style="color: #008000;">"out/histogram.png"</span>
+<pre class="src src-snakemake"><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Snakefile
+</span><span style="color: #b6a0ff;">configfile</span>: <span style="color: #79a8ff;">"config.yaml"</span>
+<span style="color: #00d3d0;">histogram_png</span> = <span style="color: #79a8ff;">"out/histogram.png"</span>
 
-<span style="color: #0000FF; font-weight: bold;">rule</span> <span style="color: #006699;">all</span>:
-    <span style="color: #6434A3;">input</span>:
+<span style="color: #b6a0ff;">rule</span> <span style="color: #feacd0;">all</span>:
+    <span style="color: #6ae4b9;">input</span>:
         histogram_png
 
-<span style="color: #0000FF; font-weight: bold;">rule</span> <span style="color: #006699;">simulate</span>:
-    <span style="color: #6434A3;">output</span>:
-        <span style="color: #008000;">"out/sim_data_{index}.csv"</span>
-    <span style="color: #6434A3;">shell</span>:
-        <span style="color: #008000;">"python src/simulate.py {output}"</span>
+<span style="color: #b6a0ff;">rule</span> <span style="color: #feacd0;">simulate</span>:
+    <span style="color: #6ae4b9;">output</span>:
+        <span style="color: #79a8ff;">"out/sim_data_{index}.csv"</span>
+    <span style="color: #6ae4b9;">shell</span>:
+        <span style="color: #79a8ff;">"python src/simulate.py {output}"</span>
 
-<span style="color: #0000FF; font-weight: bold;">rule</span> <span style="color: #006699;">compute_mean</span>:
-    <span style="color: #6434A3;">input</span>:
-        <span style="color: #008000;">"out/sim_data_{index}.csv"</span>
-    <span style="color: #6434A3;">output</span>:
-        <span style="color: #008000;">"out/mean_{index}.txt"</span>
-    <span style="color: #6434A3;">shell</span>:
-        <span style="color: #008000;">"python src/compute_mean.py {input} {output}"</span>
+<span style="color: #b6a0ff;">rule</span> <span style="color: #feacd0;">compute_mean</span>:
+    <span style="color: #6ae4b9;">input</span>:
+        <span style="color: #79a8ff;">"out/sim_data_{index}.csv"</span>
+    <span style="color: #6ae4b9;">output</span>:
+        <span style="color: #79a8ff;">"out/mean_{index}.txt"</span>
+    <span style="color: #6ae4b9;">shell</span>:
+        <span style="color: #79a8ff;">"python src/compute_mean.py {input} {output}"</span>
 
-<span style="color: #0000FF; font-weight: bold;">rule</span> <span style="color: #006699;">plot_histogram</span>:
-    <span style="color: #6434A3;">input</span>:
-        <span style="color: #006FE0;">expand</span>(<span style="color: #008000;">"out/mean_{index}.txt"</span>, index=[f<span style="color: #008000;">"</span>{i:02d}<span style="color: #008000;">"</span> <span style="color: #0000FF; font-weight: bold;">for</span> i <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(1, config[<span style="color: #008000;">'N'</span>]+1)])
-    <span style="color: #6434A3;">output</span>:
+<span style="color: #b6a0ff;">rule</span> <span style="color: #feacd0;">plot_histogram</span>:
+    <span style="color: #6ae4b9;">input</span>:
+        <span style="color: #f78fe7;">expand</span>(<span style="color: #79a8ff;">"out/mean_{index}.txt"</span>, index=[f<span style="color: #79a8ff;">"</span>{i:02d}<span style="color: #79a8ff;">"</span> <span style="color: #b6a0ff;">for</span> i <span style="color: #b6a0ff;">in</span> <span style="color: #f78fe7;">range</span>(1, config[<span style="color: #79a8ff;">'N'</span>]+1)])
+    <span style="color: #6ae4b9;">output</span>:
         histogram_png
-    <span style="color: #6434A3;">shell</span>:
-        <span style="color: #008000;">"python src/generate_histogram.py {input} {output}"</span>
+    <span style="color: #6ae4b9;">shell</span>:
+        <span style="color: #79a8ff;">"python src/generate_histogram.py {input} {output}"</span>
 </pre>
 </div>
 </div>
@@ -542,66 +544,66 @@ The Snakefile makes use of this
 <h4 id="org6ec15fe">Python scripts</h4>
 <div class="outline-text-4" id="text-org6ec15fe">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">simulate.py</span>
-<span style="color: #0000FF; font-weight: bold;">import</span> sys
-<span style="color: #0000FF; font-weight: bold;">import</span> csv
-<span style="color: #0000FF; font-weight: bold;">import</span> random
+<pre class="src src-python"><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">simulate.py
+</span><span style="color: #b6a0ff;">import</span> sys
+<span style="color: #b6a0ff;">import</span> csv
+<span style="color: #b6a0ff;">import</span> random
 
-<span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">main</span>():
-    <span style="color: #BA36A5;">num_samples</span> = 10
-    <span style="color: #BA36A5;">csv_file</span> = sys.argv[1]
+<span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">main</span>():
+    <span style="color: #00d3d0;">num_samples</span> = 10
+    <span style="color: #00d3d0;">csv_file</span> = sys.argv[1]
 
-    <span style="color: #0000FF; font-weight: bold;">with</span> <span style="color: #006FE0;">open</span>(csv_file, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF; font-weight: bold;">as</span> <span style="color: #006FE0;">file</span>:
-        <span style="color: #BA36A5;">writer</span> = csv.writer(<span style="color: #006FE0;">file</span>)
-        <span style="color: #0000FF; font-weight: bold;">for</span> _ <span style="color: #0000FF; font-weight: bold;">in</span> <span style="color: #006FE0;">range</span>(num_samples):
+    <span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(csv_file, <span style="color: #79a8ff;">'w'</span>) <span style="color: #b6a0ff;">as</span> <span style="color: #f78fe7;">file</span>:
+        <span style="color: #00d3d0;">writer</span> = csv.writer(<span style="color: #f78fe7;">file</span>)
+        <span style="color: #b6a0ff;">for</span> _ <span style="color: #b6a0ff;">in</span> <span style="color: #f78fe7;">range</span>(num_samples):
             writer.writerow([random.random()])
 
-<span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #006FE0;">__name__</span> == <span style="color: #008000;">"__main__"</span>:
+<span style="color: #b6a0ff;">if</span> <span style="color: #f78fe7;">__name__</span> == <span style="color: #79a8ff;">"__main__"</span>:
     main()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">compute_mean.py</span>
-<span style="color: #0000FF; font-weight: bold;">import</span> sys
-<span style="color: #0000FF; font-weight: bold;">import</span> csv
+<pre class="src src-python"><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">compute_mean.py
+</span><span style="color: #b6a0ff;">import</span> sys
+<span style="color: #b6a0ff;">import</span> csv
 
-<span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">main</span>():
-    <span style="color: #BA36A5;">csv_file</span> = sys.argv[1]
-    <span style="color: #BA36A5;">txt_file</span> = sys.argv[2]
+<span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">main</span>():
+    <span style="color: #00d3d0;">csv_file</span> = sys.argv[1]
+    <span style="color: #00d3d0;">txt_file</span> = sys.argv[2]
 
-    <span style="color: #0000FF; font-weight: bold;">with</span> <span style="color: #006FE0;">open</span>(csv_file, <span style="color: #008000;">'r'</span>) <span style="color: #0000FF; font-weight: bold;">as</span> <span style="color: #006FE0;">file</span>:
-        <span style="color: #BA36A5;">reader</span> = csv.reader(<span style="color: #006FE0;">file</span>)
-        <span style="color: #BA36A5;">data</span> = [<span style="color: #006FE0;">float</span>(row[0]) <span style="color: #0000FF; font-weight: bold;">for</span> row <span style="color: #0000FF; font-weight: bold;">in</span> reader]
+    <span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(csv_file, <span style="color: #79a8ff;">'r'</span>) <span style="color: #b6a0ff;">as</span> <span style="color: #f78fe7;">file</span>:
+        <span style="color: #00d3d0;">reader</span> = csv.reader(<span style="color: #f78fe7;">file</span>)
+        <span style="color: #00d3d0;">data</span> = [<span style="color: #f78fe7;">float</span>(row[0]) <span style="color: #b6a0ff;">for</span> row <span style="color: #b6a0ff;">in</span> reader]
 
-    <span style="color: #BA36A5;">mean</span> = <span style="color: #006FE0;">sum</span>(data) / <span style="color: #006FE0;">len</span>(data)
-    <span style="color: #0000FF; font-weight: bold;">with</span> <span style="color: #006FE0;">open</span>(txt_file, <span style="color: #008000;">'w'</span>) <span style="color: #0000FF; font-weight: bold;">as</span> <span style="color: #006FE0;">file</span>:
-        <span style="color: #006FE0;">file</span>.write(<span style="color: #006FE0;">str</span>(mean))
+    <span style="color: #00d3d0;">mean</span> = <span style="color: #f78fe7;">sum</span>(data) / <span style="color: #f78fe7;">len</span>(data)
+    <span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(txt_file, <span style="color: #79a8ff;">'w'</span>) <span style="color: #b6a0ff;">as</span> <span style="color: #f78fe7;">file</span>:
+        <span style="color: #f78fe7;">file</span>.write(<span style="color: #f78fe7;">str</span>(mean))
 
-<span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #006FE0;">__name__</span> == <span style="color: #008000;">"__main__"</span>:
+<span style="color: #b6a0ff;">if</span> <span style="color: #f78fe7;">__name__</span> == <span style="color: #79a8ff;">"__main__"</span>:
     main()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">generate_histogram.py</span>
-<span style="color: #0000FF; font-weight: bold;">import</span> sys
-<span style="color: #0000FF; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #0000FF; font-weight: bold;">as</span> plt
+<pre class="src src-python"><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">generate_histogram.py
+</span><span style="color: #b6a0ff;">import</span> sys
+<span style="color: #b6a0ff;">import</span> matplotlib.pyplot <span style="color: #b6a0ff;">as</span> plt
 
-<span style="color: #0000FF; font-weight: bold;">def</span> <span style="color: #006699;">main</span>():
-    <span style="color: #BA36A5;">png_file</span> = sys.argv[-1]
-    <span style="color: #BA36A5;">txt_files</span> = sys.argv[1:-1]
+<span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">main</span>():
+    <span style="color: #00d3d0;">png_file</span> = sys.argv[-1]
+    <span style="color: #00d3d0;">txt_files</span> = sys.argv[1:-1]
 
-    <span style="color: #BA36A5;">data</span> = []
-    <span style="color: #0000FF; font-weight: bold;">for</span> txt_file <span style="color: #0000FF; font-weight: bold;">in</span> txt_files:
-        <span style="color: #0000FF; font-weight: bold;">with</span> <span style="color: #006FE0;">open</span>(txt_file, <span style="color: #008000;">'r'</span>) <span style="color: #0000FF; font-weight: bold;">as</span> <span style="color: #006FE0;">file</span>:
-            data.append(<span style="color: #006FE0;">float</span>(<span style="color: #006FE0;">file</span>.read()))
+    <span style="color: #00d3d0;">data</span> = []
+    <span style="color: #b6a0ff;">for</span> txt_file <span style="color: #b6a0ff;">in</span> txt_files:
+        <span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(txt_file, <span style="color: #79a8ff;">'r'</span>) <span style="color: #b6a0ff;">as</span> <span style="color: #f78fe7;">file</span>:
+            data.append(<span style="color: #f78fe7;">float</span>(<span style="color: #f78fe7;">file</span>.read()))
 
     plt.figure()
     plt.hist(data)
     plt.savefig(png_file)
 
-<span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #006FE0;">__name__</span> == <span style="color: #008000;">"__main__"</span>:
+<span style="color: #b6a0ff;">if</span> <span style="color: #f78fe7;">__name__</span> == <span style="color: #79a8ff;">"__main__"</span>:
     main()
 </pre>
 </div>
@@ -612,7 +614,7 @@ The Snakefile makes use of this
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-07-25 Fri 14:56</p>
+<p class="date">Created: 2025-10-27 Mon 16:27</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

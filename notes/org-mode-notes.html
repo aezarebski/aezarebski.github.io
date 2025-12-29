@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-07-25 Fri 14:56 -->
+<!-- 2025-12-29 Mon 10:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>org-mode notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="org2b12b31" class="figure">
+<div id="orgafe572a" class="figure">
 <p><img src="../images/org-mode-logo.png" alt="org-mode-logo.png" width="250px" />
 </p>
 </div>
@@ -223,6 +223,7 @@
 <li><a href="#orgc286bec">Configuration</a></li>
 <li><a href="#orgd5c56ba"><span class="todo TODO">TODO</span> Citation engine</a></li>
 <li><a href="#org37b4faa">Using LaTeX</a></li>
+<li><a href="#org1c56a3c">Pandoc</a></li>
 <li><a href="#orgdc943e9">Source code</a></li>
 <li><a href="#html-export-header">HTML export from header</a></li>
 <li><a href="#orgb60224f">HTML export from body</a></li>
@@ -232,6 +233,7 @@
 <li><a href="#orgd66208d">Computational notebooks</a></li>
 <li><a href="#org64cfabb">Literate programming with noweb</a></li>
 <li><a href="#orgafb99ea">Figures</a></li>
+<li><a href="#org9946931">Latex</a></li>
 <li><a href="#org71ecebd">Beamer</a></li>
 <li><a href="#org195e88d">Quotation</a></li>
 <li><a href="#org6b19330">Tables</a></li>
@@ -292,6 +294,29 @@ various list types: ordered or unordered.</li>
 <li>For a description style list use <code>::</code> to separate the name and its
 description.</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orgd0d5086" class="outline-4">
+<h4 id="orgd0d5086">Quick example for quick LaTeX export</h4>
+<div class="outline-text-4" id="text-orgd0d5086">
+<p>
+Adding the following header to an org-mode file provides a no-frills
+PDF export via LaTeX, which is very helpful if you want to write a
+small note including some mathematics.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #008ED1; background-color: #EAEAFF;">#+OPTIONS: toc:nil author:nil date:nil num:nil</span>
+<span style="color: #008ED1; background-color: #EAEAFF;">#+LATEX_HEADER: \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}</span>
+<span style="color: #008ED1; background-color: #EAEAFF;">#+LATEX_HEADER: \usepackage{enumitem}</span>
+<span style="color: #008ED1; background-color: #EAEAFF;">#+LATEX_HEADER: \setlist[itemize]{label=$\rhd$}</span>
+</pre>
+</div>
+
+<p>
+There is also the <code>org-latex-preview</code> in emacs which is great for
+seeing how a single equation will render.
+</p>
 </div>
 </div>
 </div>
@@ -441,6 +466,19 @@ there.
 Amazingly, you can use latex environments without any issue and they should be
 handled correctly in both latex and HTML export.
 </p>
+</div>
+</div>
+<div id="outline-container-org1c56a3c" class="outline-3">
+<h3 id="org1c56a3c">Pandoc</h3>
+<div class="outline-text-3" id="text-org1c56a3c">
+<p>
+<b>From</b> org-mode <b>to</b> markdown, <b>output</b> <code>foo.md</code> using <code>bar.org</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">pandoc -f org -t markdown -o foo.md bar.org
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-orgdc943e9" class="outline-3">
@@ -649,8 +687,8 @@ mean(1:10)
 \#+end_src
 
 <span style="color: #008ED1; background-color: #EAEAFF;">#+RESULTS[57c60ad6be3794c58f0a94dc3c107a692489cb2b]: x</span>
-<span style="color: #006400; background-color: #FDFFF7;">: 5.5</span>
-
+<span style="color: #006400; background-color: #FDFFF7;">: 5.5
+</span>
 Carry out an action using the variable <span style="color: #0066CC; background-color: #F7FDFF;">=x=</span>
 
 \#+begin_src R :var x = x
@@ -713,28 +751,28 @@ resulting output are exported.
 \#+end_src
 
 <span style="color: #008ED1; background-color: #EAEAFF;">#+RESULTS:</span>
-<span style="color: #555555; background-color: #E2E1D5; text-decoration: underline;">#+begin_example</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                - aa           - aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                              %e     y + y + %e     x</span>
-<span style="color: #000088; background-color: #FFFFE0;">                          a = -----------------------</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                     - aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                   %e     y + x</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                    aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                 (%e   + 1) y + x</span>
-<span style="color: #000088; background-color: #FFFFE0;">                             b = ----------------</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                          aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                    y + %e   x</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                    aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                  %e   y + y + x</span>
-<span style="color: #000088; background-color: #FFFFE0;">                              c = --------------</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                          aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                    y + %e   x</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                  - aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                %e     (y + x) + y</span>
-<span style="color: #000088; background-color: #FFFFE0;">                            d = ------------------</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                     - aa</span>
-<span style="color: #000088; background-color: #FFFFE0;">                                   %e     y + x</span>
-<span style="color: #555555; background-color: #E2E1D5; text-decoration: overline;">#+end_example</span>
+<span style="color: #555555; background-color: #E2E1D5; text-decoration: underline;">#+begin_example
+</span><span style="color: #000088; background-color: #FFFFE0;">                                - aa           - aa
+                              %e     y + y + %e     x
+                          a = -----------------------
+                                     - aa
+                                   %e     y + x
+                                    aa
+                                 (%e   + 1) y + x
+                             b = ----------------
+                                          aa
+                                    y + %e   x
+                                    aa
+                                  %e   y + y + x
+                              c = --------------
+                                          aa
+                                    y + %e   x
+                                  - aa
+                                %e     (y + x) + y
+                            d = ------------------
+                                     - aa
+                                   %e     y + x
+</span><span style="color: #555555; background-color: #E2E1D5; text-decoration: overline;">#+end_example</span>
 </pre>
 </div>
 </div>
@@ -843,12 +881,44 @@ equation and then link back to it from else where in the document.
 </div>
 </div>
 </div>
+<div id="outline-container-org9946931" class="outline-3">
+<h3 id="org9946931">Latex</h3>
+<div class="outline-text-3" id="text-org9946931">
+</div>
+<div id="outline-container-org3fb8087" class="outline-4">
+<h4 id="org3fb8087">Basic example</h4>
+<div class="outline-text-4" id="text-org3fb8087">
+<p>
+Put this at the start of your org-mode file and the produced LaTeX
+export should look sensible.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nil">#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [12pt]
+#+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
+#+LATEX_HEADER: \usepackage{titlesec}
+#+LATEX_HEADER: \titleformat{\section}{\sffamily\bfseries\Large}{\thesection}{1em}{}
+#+LATEX_HEADER: \titleformat{\subsection}{\sffamily\bfseries\large}{\thesubsection}{1em}{}
+#+LATEX_HEADER: \titleformat{\subsubsection}{\sffamily\bfseries\normalsize}{\thesubsubsection}{1em}{}
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-org71ecebd" class="outline-3">
 <h3 id="org71ecebd">Beamer</h3>
 <div class="outline-text-3" id="text-org71ecebd">
+</div>
+<div id="outline-container-org51e4604" class="outline-4">
+<h4 id="org51e4604">Basic usage</h4>
+<div class="outline-text-4" id="text-org51e4604">
 <p>
-The command <code>org-beamer-export-to-latex</code> produces a TEX file from your ORG file.
-So, given your presentation is in <code>slides.org</code> use the following to create a PDF
+The command <code>org-beamer-export-to-latex</code> produces a TEX file from your
+ORG file. So, given your presentation is in <code>slides.org</code> use the
+following to create a PDF
 </p>
 
 <div class="org-src-container">
@@ -858,9 +928,63 @@ pdflatex slides.tex
 </div>
 
 <p>
-There are slightly shorter ways to do this, but having the intermediate TEX is good for fine tuning the resulting slides.
-<b>NOTE</b> if there are <code>TODO</code> items in the slides, these seem to break the export.
+There are slightly shorter ways to do this, but having the
+intermediate TEX is good for fine tuning the resulting slides. <b>NOTE</b>
+if there are <code>TODO</code> items in the slides, these seem to break the
+export.
 </p>
+</div>
+</div>
+<div id="outline-container-org613d017" class="outline-4">
+<h4 id="org613d017">Additional configuration</h4>
+<div class="outline-text-4" id="text-org613d017">
+<p>
+You'll probably want to include some extra Beamer configuration into
+your export. There are a few ways to do this, but I think the cleanest
+is to put all the preamble you want to add in a single file, e.g.
+<code>foo.tex</code> and include this on export.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nil">#+BEAMER_HEADER: \input{foo.tex}
+#+OPTIONS: H:2 toc:nil # not necessary, but nice IMO
+\* Foo
+\** Frame 1
+\*** Clever observation
+\** Frame 2
+\*** Silly observation
+</pre>
+</div>
+
+<p>
+As an example of what <code>foo.tex</code> might look like, you can start with
+the following. You will be able to find additional macros that I like
+in my <a href="./latex-notes.html#sec-macros-prob">notes</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span style="color: #0000FF; font-weight: bold;">\setbeamertemplate</span>{navigation symbols}{}
+<span style="color: #0000FF; font-weight: bold;">\setbeamertemplate</span>{footline}[frame number]
+
+<span style="color: #8D8D84;">%% </span><span style="color: #8D8D84; font-style: italic;">============================================================
+</span><span style="color: #8D8D84;">%% </span><span style="color: #8D8D84; font-style: italic;">Distribution macros following the notation from BDA.
+</span><span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Uniform</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{U}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Multinomial</span>}[3]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Multin}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2,<span style="color: #0000FF; font-weight: bold;">\ldots</span>,#3<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Normal</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{N}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Lognormal</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{lognormal}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\GammaDist</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Gamma}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Exponential</span>}[1]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Expon}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Beta</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Beta}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Poisson</span>}[1]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Poisson}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Binomial</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Bin}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\NegativeBinomial</span>}[2]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Neg-bin}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1,#2<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Prob</span>}[1]{<span style="color: #0000FF; font-weight: bold;">\text</span>{Pr}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\E</span>}[1]{<span style="color: #0000FF; font-weight: bold;">\text</span>{E}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #0000FF; font-weight: bold;">\newcommand</span>{<span style="color: #006699;">\Variance</span>}[1]{<span style="color: #0000FF; font-weight: bold;">\text</span>{var}<span style="color: #0000FF; font-weight: bold;">\left</span>(#1<span style="color: #0000FF; font-weight: bold;">\right</span>)}
+<span style="color: #8D8D84;">%% </span><span style="color: #8D8D84; font-style: italic;">============================================================</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 <div id="outline-container-org195e88d" class="outline-3">
@@ -1130,7 +1254,7 @@ Which will generate a link like <a href="./haskell-notes.html#orgce0c9a8">this</
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-07-25 Fri 14:56</p>
+<p class="date">Created: 2025-12-29 Mon 10:16</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

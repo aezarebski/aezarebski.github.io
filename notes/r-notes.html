@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-04-02 Wed 21:50 -->
+<!-- 2025-12-29 Mon 10:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>R notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="org91d9031" class="figure">
+<div id="orgb7aeea6" class="figure">
 <p><img src="../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -277,6 +277,7 @@
 <li><a href="#org32880cb">Working with Mustache templates</a></li>
 <li><a href="#testthat-expectations">Unit testing with <code>testthat</code></a></li>
 <li><a href="#org6523acf">Dependency management with <code>packrat</code></a></li>
+<li><a href="#org0287139">Progress bars with <code>progress</code></a></li>
 <li><a href="#org6883eae">Package and project management with <code>usethis</code></a></li>
 <li><a href="#org9813862">Date handling with <code>lubridate</code></a></li>
 <li><a href="#org1cb46fe">String handling with <code>stringr</code></a></li>
@@ -289,6 +290,7 @@
 </li>
 <li><a href="#orgd819028">Programming in R (language and evaluation)</a>
 <ul>
+<li><a href="#org1e32889">Syntax</a></li>
 <li><a href="#org6658936">Recommended reading</a></li>
 <li><a href="#org72567c3">Memory usage</a></li>
 <li><a href="#orga17b4fd">Benchmarking and optimising impementations</a></li>
@@ -549,23 +551,23 @@ line.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/env Rscript</span>
-<span style="color: #8D8D84;">##</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Usage</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">=====</span>
-<span style="color: #8D8D84;">##</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">./stylr.R &lt;path_to_directory&gt;</span>
-<span style="color: #8D8D84;">##</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Styles all the R files in the specified directory.</span>
-<span style="color: #8D8D84;">##</span>
-<span style="color: #D0372D;">library</span>(styler)
+<pre class="src src-R"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/env Rscript
+</span><span style="color: #8D8D84;">##</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Usage
+</span><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">=====
+</span><span style="color: #8D8D84;">##</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">./stylr.R &lt;path_to_directory&gt;
+</span><span style="color: #8D8D84;">##</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Styles all the R files in the specified directory.
+</span><span style="color: #8D8D84;">##</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #D0372D;">library</span>(styler)
 
 
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Style the R files in the specified directory</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">dir_path</span><span style="color: #8D8D84; font-style: italic;"> The path to the directory containing the R files</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">style_r_files</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(dir_path) {
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Style the R files in the specified directory
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">dir_path</span><span style="color: #8D8D84; font-style: italic;"> The path to the directory containing the R files
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">style_r_files</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(dir_path) {
   <span style="color: #0000FF; font-weight: bold;">if</span> (!grepl(<span style="color: #008000;">"/$"</span>, dir_path)) {
     dir_path <span style="color: #D0372D;">&lt;-</span> paste0(dir_path, <span style="color: #008000;">"/"</span>)
   }
@@ -656,13 +658,13 @@ function.
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">message</span>(<span style="color: #008000;">"loading the run_command function."</span>)
 
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Helper function for running system commands.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Example</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> &gt; run_command("stack build")</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> &gt; run_command("Rscript R/make-simulation-configuration-1.R")</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">run_command</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(cmd, silent = <span style="color: #6434A3;">TRUE</span>, ...) {
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Helper function for running system commands.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Example
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> &gt; run_command("stack build")
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> &gt; run_command("Rscript R/make-simulation-configuration-1.R")
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">run_command</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(cmd, silent = <span style="color: #6434A3;">TRUE</span>, ...) {
   <span style="color: #D0372D;">message</span>(sprintf(<span style="color: #008000;">"\nRunning command:\n\t%s"</span>, cmd))
   tmp <span style="color: #D0372D;">&lt;-</span> unlist(strsplit(cmd, <span style="color: #008000;">" "</span>))
   cmd_name <span style="color: #D0372D;">&lt;-</span> head(tmp, 1)
@@ -755,8 +757,8 @@ Hadley has a nice <a href="http://adv-r.had.co.nz/Exceptions-Debugging.html#cond
     error = <span style="color: #0000FF; font-weight: bold;">function</span>(c) <span style="color: #008000;">"error"</span>
   )
 }
-show_condition(<span style="color: #0000FF; font-weight: bold;">stop</span>(<span style="color: #008000;">"!"</span>)) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">evaluates to the string "error"</span>
-show_condition(10) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">evalates to the numeric 10</span>
+show_condition(<span style="color: #0000FF; font-weight: bold;">stop</span>(<span style="color: #008000;">"!"</span>)) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">evaluates to the string "error"
+</span>show_condition(10) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">evalates to the numeric 10</span>
 </pre>
 </div>
 </div>
@@ -975,7 +977,7 @@ Casting is difficult, this figure made by <a href="https://seananderson.ca/2013/
 </p>
 
 
-<div id="orgd02f623" class="figure">
+<div id="orga3fb878" class="figure">
 <p><img src="../images/dcast-illustration.png" alt="dcast-illustration.png" width="700px" />
 </p>
 </div>
@@ -990,8 +992,8 @@ The simplest example is probably what you'll need most of the time
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">demo.R</span>
-args <span style="color: #D0372D;">&lt;-</span> commandArgs(trailingOnly = <span style="color: #6434A3;">TRUE</span>)
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">demo.R
+</span>args <span style="color: #D0372D;">&lt;-</span> commandArgs(trailingOnly = <span style="color: #6434A3;">TRUE</span>)
 print(args)
 </pre>
 </div>
@@ -1021,8 +1023,8 @@ See the <a href="https://cran.r-project.org/web/packages/argparse/vignettes/argp
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(argparse)
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create parser object</span>
-parser <span style="color: #D0372D;">&lt;-</span> ArgumentParser()
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create parser object
+</span>parser <span style="color: #D0372D;">&lt;-</span> ArgumentParser()
 
 parser$add_argument(
          <span style="color: #008000;">"-v"</span>,
@@ -1087,9 +1089,9 @@ the time.
 There is the <code>htmltools</code> package for generating HTML in R.
 </p>
 </div>
-<div id="outline-container-org0f620be" class="outline-4">
-<h4 id="org0f620be">Example</h4>
-<div class="outline-text-4" id="text-org0f620be">
+<div id="outline-container-orgc5c5cd9" class="outline-4">
+<h4 id="orgc5c5cd9">Example</h4>
+<div class="outline-text-4" id="text-orgc5c5cd9">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(htmltools)
 
@@ -1153,14 +1155,14 @@ in your HTML but still want to include figures.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> An HTML tag encoding an image stored in a PNG.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This uses the \code{base64enc} and \code{htmltools} packages.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">filepath</span><span style="color: #8D8D84; font-style: italic;"> is the path to the PNG</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> is additional arguments to \code{tags$img} such as style.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">png_as_img</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(filepath, ...) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> An HTML tag encoding an image stored in a PNG.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This uses the \code{base64enc} and \code{htmltools} packages.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">filepath</span><span style="color: #8D8D84; font-style: italic;"> is the path to the PNG
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> is additional arguments to \code{tags$img} such as style.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">png_as_img</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(filepath, ...) {
   <span style="color: #0000FF; font-weight: bold;">if</span> (tools::file_ext(filepath) == <span style="color: #008000;">"png"</span>) {
     b64 <span style="color: #D0372D;">&lt;-</span> base64enc::base64encode(what = filepath)
     tags$img(
@@ -1179,14 +1181,14 @@ in your HTML but still want to include figures.
 <h4 id="org0467019">Example: including a table representation of a dataframe</h4>
 <div class="outline-text-4" id="text-org0467019">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> An HTML tag encoding a data frame as a basic table.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This uses the \code{xtable} package to generate the HTML for the table.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">df</span><span style="color: #8D8D84; font-style: italic;"> data.frame to create an table from</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> additional parameters for \code{xtable::xtable}.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">df_as_table</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(df, ...) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> An HTML tag encoding a data frame as a basic table.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This uses the \code{xtable} package to generate the HTML for the table.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">df</span><span style="color: #8D8D84; font-style: italic;"> data.frame to create an table from
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> additional parameters for \code{xtable::xtable}.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">df_as_table</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(df, ...) {
   tmp_file <span style="color: #D0372D;">&lt;-</span> tempfile()
   print(xtable::xtable(df, ...),
         type = <span style="color: #008000;">"html"</span>,
@@ -1292,8 +1294,8 @@ bappa_node <span style="color: #D0372D;">&lt;-</span> xmlNode(
 foo[[<span style="color: #008000;">"beast"</span>]][[<span style="color: #008000;">"input"</span>]][[<span style="color: #008000;">"kappa"</span>]] <span style="color: #D0372D;">&lt;-</span> bappa_node
 
 saveXML(
-  foo$beast, <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&lt;-- need to specify the node.</span>
-  file = <span style="color: #008000;">"demo-again.xml"</span>,
+  foo$beast, <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">&lt;-- need to specify the node.
+</span>  file = <span style="color: #008000;">"demo-again.xml"</span>,
   prefix = <span style="color: #008000;">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?&gt;\n"</span>
 )
 </pre>
@@ -1321,9 +1323,9 @@ xmlGetAttr(kappa_node, <span style="color: #008000;">"idref"</span>)
 <h3 id="org32880cb">Working with Mustache templates</h3>
 <div class="outline-text-3" id="text-org32880cb">
 </div>
-<div id="outline-container-orge454f6b" class="outline-4">
-<h4 id="orge454f6b">Example</h4>
-<div class="outline-text-4" id="text-orge454f6b">
+<div id="outline-container-org6c55e39" class="outline-4">
+<h4 id="org6c55e39">Example</h4>
+<div class="outline-text-4" id="text-org6c55e39">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #D0372D;">library</span>(whisker)
 
@@ -1362,11 +1364,11 @@ Hadley.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">expect_true(x) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">takes a logical.</span>
-expect_false(x)
+<pre class="src src-R">expect_true(x) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">takes a logical.
+</span>expect_false(x)
 expect_is(x, y)
-expect_equal(x, y) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">has a tolerance argument.</span>
-expect_equivalent(x, y)
+expect_equal(x, y) <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">has a tolerance argument.
+</span>expect_equivalent(x, y)
 expect_identical(x, y)
 expect_matches(x, y)
 expect_output(x, y)
@@ -1480,6 +1482,12 @@ from the project directory).</li>
 </div>
 </div>
 </div>
+<div id="outline-container-org0287139" class="outline-3">
+<h3 id="org0287139">Progress bars with <code>progress</code></h3>
+</div>
+
+
+
 <div id="outline-container-org6883eae" class="outline-3">
 <h3 id="org6883eae">Package and project management with <code>usethis</code></h3>
 <div class="outline-text-3" id="text-org6883eae">
@@ -1623,22 +1631,22 @@ Here is an example from <i>R Packages</i>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Remove duplicated strings</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> `str_unique()` removes duplicated values, with optional control over</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> how duplication is measured.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">string</span><span style="color: #8D8D84; font-style: italic;"> Input vector. Either a character vector, or something</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">  coercible to one.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> Other options used to control matching behavior between duplicate</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   strings. Passed on to [stringi::stri_opts_collator()].</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@returns</span><span style="color: #8D8D84; font-style: italic;"> A character vector, usually shorter than `string`.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@seealso</span><span style="color: #8D8D84; font-style: italic;"> [unique()], [stringi::stri_unique()] which this function wraps.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@examples</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> str_unique(c("a", "b", "c", "b", "a"))</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">@export</span>
-<span style="color: #006699;">str_unique</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(string, ...) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Remove duplicated strings
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> `str_unique()` removes duplicated values, with optional control over
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> how duplication is measured.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">string</span><span style="color: #8D8D84; font-style: italic;"> Input vector. Either a character vector, or something
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">  coercible to one.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> Other options used to control matching behavior between duplicate
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   strings. Passed on to [stringi::stri_opts_collator()].
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@returns</span><span style="color: #8D8D84; font-style: italic;"> A character vector, usually shorter than `string`.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@seealso</span><span style="color: #8D8D84; font-style: italic;"> [unique()], [stringi::stri_unique()] which this function wraps.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@examples</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> str_unique(c("a", "b", "c", "b", "a"))
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">@export</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">str_unique</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(string, ...) {
   ...
 }
 </pre>
@@ -1736,18 +1744,18 @@ file.remove(all_my_rd_files[not_exported_mask])
 <h3 id="org9dc1863"><code>Rmath.h</code></h3>
 <div class="outline-text-3" id="text-org9dc1863">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #8D8D84;">/*</span>
+<pre class="src src-C"><span style="color: #8D8D84;">/*</span><span style="color: #8D8D84; font-style: italic;">
 
-<span style="color: #8D8D84; font-style: italic;">  To compile and run this I used the following...</span>
+  To compile and run this I used the following...
 
 
-<span style="color: #8D8D84; font-style: italic;">  $ sudo apt update</span>
-<span style="color: #8D8D84; font-style: italic;">  $ sudo apt install r-mathlib</span>
-<span style="color: #8D8D84; font-style: italic;">  $ sudo apt install r-base-dev</span>
-<span style="color: #8D8D84; font-style: italic;">  $ gcc -o mathlibtest demo.c -lRmath -lm</span>
-<span style="color: #8D8D84; font-style: italic;">  $ ./mathlibtest</span>
+  $ sudo apt update
+  $ sudo apt install r-mathlib
+  $ sudo apt install r-base-dev
+  $ gcc -o mathlibtest demo.c -lRmath -lm
+  $ ./mathlibtest
 
-<span style="color: #8D8D84;"> */</span>
+</span><span style="color: #8D8D84;"> */</span>
 
 <span style="color: #808080;">#include</span> <span style="color: #008000;">&lt;stdio.h&gt;</span>
 
@@ -1818,6 +1826,26 @@ my_dict[[<span style="color: #008000;">"key"</span>]] <span style="color: #8D8D8
 <div id="outline-container-orgd819028" class="outline-2">
 <h2 id="orgd819028">Programming in R (language and evaluation)</h2>
 <div class="outline-text-2" id="text-orgd819028">
+</div>
+<div id="outline-container-org1e32889" class="outline-3">
+<h3 id="org1e32889">Syntax</h3>
+<div class="outline-text-3" id="text-org1e32889">
+</div>
+<div id="outline-container-orgadb9b65" class="outline-4">
+<h4 id="orgadb9b65">Conditionals</h4>
+<div class="outline-text-4" id="text-orgadb9b65">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #0000FF; font-weight: bold;">if</span> (foo) {
+  print(<span style="color: #008000;">"foo"</span>)
+} <span style="color: #0000FF; font-weight: bold;">else</span> <span style="color: #0000FF; font-weight: bold;">if</span> (bar) {
+  print(<span style="color: #008000;">"bar"</span>)
+} <span style="color: #0000FF; font-weight: bold;">else</span> {
+  print(<span style="color: #008000;">"baz"</span>)
+}
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-org6658936" class="outline-3">
 <h3 id="org6658936">Recommended reading</h3>
@@ -2010,8 +2038,8 @@ function in <code>()</code> when using it in a pipeline).</li>
 <h3 id="org8594b5b">R/Haskell Prelude</h3>
 <div class="outline-text-3" id="text-org8594b5b">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile</span>
-<span style="color: #006699;">drop_while</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(p, xs) {
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:dropWhile
+</span><span style="color: #006699;">drop_while</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(p, xs) {
   <span style="color: #0000FF; font-weight: bold;">if</span> (length(xs) == 0) {
     xs
   } <span style="color: #0000FF; font-weight: bold;">else</span> {
@@ -2025,8 +2053,8 @@ function in <code>()</code> when using it in a pipeline).</li>
   }
 }
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile</span>
-<span style="color: #006699;">take_while</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(p, xs) {
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">See https://hackage.haskell.org/package/base-4.15.0.0/docs/Prelude.html#v:takeWhile
+</span><span style="color: #006699;">take_while</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(p, xs) {
   <span style="color: #0000FF; font-weight: bold;">if</span> (length(xs) == 0) {
     xs
   } <span style="color: #0000FF; font-weight: bold;">else</span> {
@@ -2109,11 +2137,11 @@ Instead we can do the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">this has a syntax error</span>
-data.frame(letters[1] = 2)
+<pre class="src src-R"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">this has a syntax error
+</span>data.frame(letters[1] = 2)
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">this works!</span>
-eval(parse(text = sprintf(<span style="color: #008000;">"data.frame(%s = 2)"</span>, letters[1])))
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">this works!
+</span>eval(parse(text = sprintf(<span style="color: #008000;">"data.frame(%s = 2)"</span>, letters[1])))
 </pre>
 </div>
 </div>
@@ -2127,8 +2155,8 @@ or list, etc.
 
 <div class="org-src-container">
 <pre class="src src-R">with(mtcars, mpg[cyl == 8  &amp;  disp &gt; 350])
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">is the same as, but nicer than</span>
-mtcars$mpg[mtcars$cyl == 8  &amp;  mtcars$disp &gt; 350]
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">is the same as, but nicer than
+</span>mtcars$mpg[mtcars$cyl == 8  &amp;  mtcars$disp &gt; 350]
 </pre>
 </div>
 </div>
@@ -2374,14 +2402,14 @@ in the former to get the value returned as a numeric.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Find the first matching node and return the named attribute</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x</span><span style="color: #8D8D84; font-style: italic;"> the XML document</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xp</span><span style="color: #8D8D84; font-style: italic;"> the xpath</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">the</span><span style="color: #8D8D84; font-style: italic;"> attribute</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">as_numeric</span><span style="color: #8D8D84; font-style: italic;"> boolean for casting to numeric (default is FALSE)</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">xml_find_attr</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x, xp, attr, as_numeric=<span style="color: #6434A3;">FALSE</span>) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Find the first matching node and return the named attribute
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x</span><span style="color: #8D8D84; font-style: italic;"> the XML document
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xp</span><span style="color: #8D8D84; font-style: italic;"> the xpath
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">the</span><span style="color: #8D8D84; font-style: italic;"> attribute
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">as_numeric</span><span style="color: #8D8D84; font-style: italic;"> boolean for casting to numeric (default is FALSE)
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">xml_find_attr</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x, xp, attr, as_numeric=<span style="color: #6434A3;">FALSE</span>) {
   a <span style="color: #D0372D;">&lt;-</span> xml_attr(xml_find_first(x, xpath = xp), attr)
   <span style="color: #0000FF; font-weight: bold;">if</span> (!as_numeric) {
     a
@@ -2390,14 +2418,14 @@ in the former to get the value returned as a numeric.
   }
 }
 
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Find the first matching node and set the named attribute</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x</span><span style="color: #8D8D84; font-style: italic;"> the XML document</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xp</span><span style="color: #8D8D84; font-style: italic;"> the xpath</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">attr</span><span style="color: #8D8D84; font-style: italic;"> the attribute</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">v</span><span style="color: #8D8D84; font-style: italic;"> the value for the attribute</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">xml_find_set_attr</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x, xp, attr, v) {
+<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Find the first matching node and set the named attribute
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x</span><span style="color: #8D8D84; font-style: italic;"> the XML document
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xp</span><span style="color: #8D8D84; font-style: italic;"> the xpath
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">attr</span><span style="color: #8D8D84; font-style: italic;"> the attribute
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">v</span><span style="color: #8D8D84; font-style: italic;"> the value for the attribute
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">xml_find_set_attr</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x, xp, attr, v) {
   n <span style="color: #D0372D;">&lt;-</span> xml_find_first(x, xpath = xp)
   xml_set_attr(n, attr, v)
 }
@@ -2414,11 +2442,11 @@ lint a file in place.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Format an XML file in place using js-beautify</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x</span><span style="color: #8D8D84; font-style: italic;"> is the filepath</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">beautify_xml</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Format an XML file in place using js-beautify
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">x</span><span style="color: #8D8D84; font-style: italic;"> is the filepath
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">beautify_xml</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x) {
   system2(command = <span style="color: #008000;">"html-beautify"</span>, args = c(<span style="color: #008000;">"-f"</span>, x, <span style="color: #008000;">"-r"</span>))
 }
 </pre>
@@ -2759,8 +2787,8 @@ of creating a copy.
 <div class="org-src-container">
 <pre class="src src-R">demo_df <span style="color: #D0372D;">&lt;-</span> data.frame(x = 1:100, y = rnorm(100))
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">take every third sample</span>
-thinning_factor <span style="color: #D0372D;">&lt;-</span> 3
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">take every third sample
+</span>thinning_factor <span style="color: #D0372D;">&lt;-</span> 3
 
 demo_df <span style="color: #D0372D;">&lt;-</span> demo_df[seq(from = 1, to = nrow(demo_df), by = thinning_factor), ]
 </pre>
@@ -2830,16 +2858,16 @@ ggplot() +
 <h3 id="org2fe9fc6">Function to save a ggplot to both PNG and SVG</h3>
 <div class="outline-text-3" id="text-org2fe9fc6">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Save a ggplot to both PNG and SVG.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">filepath</span><span style="color: #8D8D84; font-style: italic;"> is the path to save the plot to.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">plot</span><span style="color: #8D8D84; font-style: italic;"> is the ggplot object to save.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> are additional arguments to pass to ggsave.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@examples</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> ggsave_plus("plot.png", ggplot() + geom_point(aes(x = 1:10, y = 1:10))</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">ggsave_plus</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(filepath, plot, ...) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Save a ggplot to both PNG and SVG.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">filepath</span><span style="color: #8D8D84; font-style: italic;"> is the path to save the plot to.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">plot</span><span style="color: #8D8D84; font-style: italic;"> is the ggplot object to save.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> are additional arguments to pass to ggsave.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@examples</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> ggsave_plus("plot.png", ggplot() + geom_point(aes(x = 1:10, y = 1:10))
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">ggsave_plus</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(filepath, plot, ...) {
   <span style="color: #0000FF; font-weight: bold;">if</span> (stringr::str_ends(filepath, <span style="color: #008000;">".png"</span>)) {
     filepath_png <span style="color: #D0372D;">&lt;-</span> filepath
     filepath_svg <span style="color: #D0372D;">&lt;-</span> str_replace(filepath, <span style="color: #008000;">".png"</span>, <span style="color: #008000;">".svg"</span>)
@@ -2922,26 +2950,26 @@ streamlines this process a little bit.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Convert GLM Fit to LaTeX-Ready xtable</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This function takes a GLM fit object, formats the summary information,</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> and returns an xtable object for LaTeX export.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">fit</span><span style="color: #8D8D84; font-style: italic;"> A GLM fit object obtained through the `glm()` function.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">num_fmt</span><span style="color: #8D8D84; font-style: italic;"> A string indicating the format for numerical values (default is "%f").</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> Additional arguments passed to xtable.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@return</span><span style="color: #8D8D84; font-style: italic;"> An xtable object containing formatted GLM summary data.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@examples</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> fit &lt;- glm(mpg ~ wt + hp, data=mtcars, family=gaussian())</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> tab &lt;- glm_fit_as_xtable(fit, num_fmt="%.2f")</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> print.xtable(tab, include.rownames=FALSE, type="latex", file="demo-latex-table.tex")</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@importFrom</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xtable</span><span style="color: #8D8D84; font-style: italic;"> xtable</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@importFrom</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">stats</span><span style="color: #8D8D84; font-style: italic;"> as.data.frame confint summary</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">glm_fit_as_xtable</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(fit, num_fmt=<span style="color: #008000;">"%f"</span>, ...) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Convert GLM Fit to LaTeX-Ready xtable
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This function takes a GLM fit object, formats the summary information,
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> and returns an xtable object for LaTeX export.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">fit</span><span style="color: #8D8D84; font-style: italic;"> A GLM fit object obtained through the `glm()` function.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">num_fmt</span><span style="color: #8D8D84; font-style: italic;"> A string indicating the format for numerical values (default is "%f").
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">...</span><span style="color: #8D8D84; font-style: italic;"> Additional arguments passed to xtable.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@return</span><span style="color: #8D8D84; font-style: italic;"> An xtable object containing formatted GLM summary data.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@examples</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> fit &lt;- glm(mpg ~ wt + hp, data=mtcars, family=gaussian())
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> tab &lt;- glm_fit_as_xtable(fit, num_fmt="%.2f")
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> print.xtable(tab, include.rownames=FALSE, type="latex", file="demo-latex-table.tex")
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@importFrom</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">xtable</span><span style="color: #8D8D84; font-style: italic;"> xtable
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@importFrom</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">stats</span><span style="color: #8D8D84; font-style: italic;"> as.data.frame confint summary
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">glm_fit_as_xtable</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(fit, num_fmt=<span style="color: #008000;">"%f"</span>, ...) {
 
   ns <span style="color: #D0372D;">&lt;-</span> c(var = <span style="color: #008000;">"Variable"</span>,
           est_and_ci = <span style="color: #008000;">"Estimate and CI (95%)"</span>,
@@ -2962,8 +2990,8 @@ streamlines this process a little bit.
 
   rownames(fs_df) <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">NULL</span>
 
-  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Return xtable object</span>
-  <span style="color: #0000FF; font-weight: bold;">return</span>(xtable(fs_df[ns[c(1,2,3)]],
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Return xtable object
+</span>  <span style="color: #0000FF; font-weight: bold;">return</span>(xtable(fs_df[ns[c(1,2,3)]],
                 align = c(<span style="color: #008000;">"l"</span>, <span style="color: #008000;">"l"</span>, <span style="color: #008000;">"r"</span>, <span style="color: #008000;">"c"</span>),
                 ...))
 }
@@ -3001,9 +3029,9 @@ configured with the global variable <code>RUN_TESTS</code>.
 <div class="org-src-container">
 <pre class="src src-R">RUN_TESTS <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">TRUE</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define a little tester function that evaluates an expression and</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">stops with a suitable error message if it evaluates to false</span>
-<span style="color: #006699;">tts_test</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(expr) {
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define a little tester function that evaluates an expression and
+</span><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">stops with a suitable error message if it evaluates to false
+</span><span style="color: #006699;">tts_test</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(expr) {
   <span style="color: #0000FF; font-weight: bold;">if</span> (RUN_TESTS) {
     <span style="color: #0000FF; font-weight: bold;">if</span> (!expr) {
       cat(<span style="color: #008000;">"Test expression: "</span>, deparse(substitute(expr)), <span style="color: #008000;">"\n"</span>)
@@ -3031,26 +3059,26 @@ The following snippet defines a vectorised step function.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorized step function.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This function creates a vectorized step function that changes</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> values at specified time points (`ts`). The resulting step function</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> will produce a constant value between each pair of consecutive</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> times in `ts`, and return the corresponding value in `vs` for any</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> given input. If an input value is less than the first time in `ts`,</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> it will return the first value in `vs`. If an input value is</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> greater than or equal to the last time in `ts`, it will return the</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> last value in `vs`.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">ts</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of times at which the step function</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   changes values. Must be sorted in strictly increasing order and</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   have at least one element.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">vs</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of values corresponding to the steps.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   Must have one more element than `ts` because the function needs</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   to cover all time ranges, including values less than the first</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   time and values greater than or equal to the last time.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">step_function_factory</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(ts, vs) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorized step function.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This function creates a vectorized step function that changes
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> values at specified time points (`ts`). The resulting step function
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> will produce a constant value between each pair of consecutive
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> times in `ts`, and return the corresponding value in `vs` for any
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> given input. If an input value is less than the first time in `ts`,
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> it will return the first value in `vs`. If an input value is
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> greater than or equal to the last time in `ts`, it will return the
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> last value in `vs`.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">ts</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of times at which the step function
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   changes values. Must be sorted in strictly increasing order and
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   have at least one element.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">vs</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of values corresponding to the steps.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   Must have one more element than `ts` because the function needs
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   to cover all time ranges, including values less than the first
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   time and values greater than or equal to the last time.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">step_function_factory</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(ts, vs) {
   n <span style="color: #D0372D;">&lt;-</span> length(ts)
   <span style="color: #0000FF; font-weight: bold;">if</span> (n &lt; 1) {
     <span style="color: #0000FF; font-weight: bold;">stop</span>(<span style="color: #008000;">"need at least one step time."</span>)
@@ -3140,14 +3168,14 @@ binary function \(F\). This can be implemented as follows
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorised step function resulting from the point-wise application</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> of a binary function to two step functions.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">step_func_a</span><span style="color: #8D8D84; font-style: italic;"> a step function (see \code{step_function_factory}.)</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">step_func_b</span><span style="color: #8D8D84; font-style: italic;"> a step function (see \code{step_function_factory}.)</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">binary_func</span><span style="color: #8D8D84; font-style: italic;"> a binary function.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">map_step_function</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(step_func_a, step_func_b, binary_func) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorised step function resulting from the point-wise application
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> of a binary function to two step functions.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">step_func_a</span><span style="color: #8D8D84; font-style: italic;"> a step function (see \code{step_function_factory}.)
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">step_func_b</span><span style="color: #8D8D84; font-style: italic;"> a step function (see \code{step_function_factory}.)
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">binary_func</span><span style="color: #8D8D84; font-style: italic;"> a binary function.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">map_step_function</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(step_func_a, step_func_b, binary_func) {
   times_c <span style="color: #D0372D;">&lt;-</span> sort(union(step_func_a$times, step_func_b$times))
   n <span style="color: #D0372D;">&lt;-</span> length(times_c)
   values_c <span style="color: #D0372D;">&lt;-</span> numeric(n + 1)
@@ -3251,23 +3279,23 @@ evaluated at a single point and a matrix when given a vector of times.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorized step vector-function.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This is similar to the `step_function_factory` function except that</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> it returns a vector-value instead of a single value. The use case</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> for this is to be able to have a distribution of step functions</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> obtained from a posterior sample.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">ts</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of times at which the step function</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   changes values. Must be sorted in strictly increasing order and</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   have at least one element.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">vs_list</span><span style="color: #8D8D84; font-style: italic;"> A list of numeric vectors of values corresponding to</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   the steps. Each vector must have one more element than `ts`</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   because the function needs to cover all time ranges, including</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   values less than the first time and values greater than or equal</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   to the last time.</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #006699;">step_function_factory_multi</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(ts, vs_list) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Return a vectorized step vector-function.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> This is similar to the `step_function_factory` function except that
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> it returns a vector-value instead of a single value. The use case
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> for this is to be able to have a distribution of step functions
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> obtained from a posterior sample.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">ts</span><span style="color: #8D8D84; font-style: italic;"> A numeric vector of times at which the step function
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   changes values. Must be sorted in strictly increasing order and
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   have at least one element.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #0000FF; font-weight: bold; font-style: italic;">@param</span><span style="color: #8D8D84; font-style: italic;"> </span><span style="color: #BA36A5; font-style: italic;">vs_list</span><span style="color: #8D8D84; font-style: italic;"> A list of numeric vectors of values corresponding to
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   the steps. Each vector must have one more element than `ts`
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   because the function needs to cover all time ranges, including
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   values less than the first time and values greater than or equal
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">   to the last time.
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #006699;">step_function_factory_multi</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(ts, vs_list) {
   n <span style="color: #D0372D;">&lt;-</span> length(ts)
   <span style="color: #0000FF; font-weight: bold;">if</span> (n &lt; 1) {
     <span style="color: #0000FF; font-weight: bold;">stop</span>(<span style="color: #008000;">"need at least one step time."</span>)
@@ -3377,11 +3405,11 @@ useful to help guard against attempting to parse an empty file with <code>read.c
 <h3 id="orgafd3605">Julian day of the year</h3>
 <div class="outline-text-3" id="text-orgafd3605">
 <div class="org-src-container">
-<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Julian day of the year</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> &gt; j_day("2014-01-03", "2014-01-01")</span>
-<span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> 3</span>
-<span style="color: #006699;">j_day</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(date_string, first_day_of_year_string) {
+<pre class="src src-R"><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> Julian day of the year
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;">
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> &gt; j_day("2014-01-03", "2014-01-01")
+</span><span style="color: #000000; font-weight: bold;">#</span><span style="color: #000000; font-weight: bold; font-style: italic;">'</span><span style="color: #8D8D84; font-style: italic;"> 3
+</span><span style="color: #006699;">j_day</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(date_string, first_day_of_year_string) {
   as.integer(as.Date(date_string) - as.Date(first_day_of_year_string)) + 1
 }
 </pre>
@@ -3471,7 +3499,7 @@ edition.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-04-02 Wed 21:50</p>
+<p class="date">Created: 2025-12-29 Mon 10:16</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
