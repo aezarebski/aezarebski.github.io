@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-08-26 Tue 17:23 -->
+<!-- 2026-01-09 Fri 17:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>matplotlib gallery</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="orgae0e5ac" class="figure">
+<div id="org34c6191" class="figure">
 <p><img src="../../images/matplotlib-logo.png" alt="matplotlib-logo.png" width="250px" />
 </p>
 </div>
@@ -230,6 +230,10 @@
 	<a href="#fig-10"><img src="./fig10.png" width="250px"/></a>
 	<a href="#fig-11"><img src="./fig11.png" width="250px"/></a>
 	<a href="#fig-12"><img src="./fig12.png" width="250px"/></a>
+    </div>
+    <div class="row">
+	<a href="#fig-13"><img src="./fig13.png" width="250px"/></a>
+	<a href="#fig-14"><img src="./fig14.png" width="250px"/></a>
     </div>
   </div>
 </div>
@@ -657,10 +661,95 @@ plt.title(<span style="color: #008000;">"Title"</span>)
 plt.savefig(<span style="color: #008000;">"fig12.png"</span>, dpi=300)
 </pre>
 </div>
+
+<h3 id="fig-13">Figure 13</h3>
+<div><img src="./fig13.png" width="900px" /></div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">import</span> numpy <span style="color: #0000FF; font-weight: bold;">as</span> np
+<span style="color: #0000FF; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #0000FF; font-weight: bold;">as</span> plt
+
+np.random.seed(7)
+
+<span style="color: #BA36A5;">x</span> = np.linspace(0, 10, 200)
+<span style="color: #BA36A5;">y_left</span> = np.sin(x)
+<span style="color: #BA36A5;">y_right</span> = 100 * np.cos(x)
+
+<span style="color: #BA36A5;">fig</span>, <span style="color: #BA36A5;">ax_left</span> = plt.subplots()
+
+ax_left.plot(x, y_left, color=<span style="color: #008000;">"green"</span>)
+ax_left.set_xlabel(<span style="color: #008000;">"x"</span>)
+ax_left.set_ylabel(<span style="color: #008000;">"sin(x)"</span>, color=<span style="color: #008000;">"green"</span>)
+ax_left.tick_params(axis=<span style="color: #008000;">"y"</span>, colors=<span style="color: #008000;">"green"</span>)
+<span style="color: #BA36A5;">left_ticks</span> = [-1.0, -0.5, 0.0, 0.5, 0.6, 0.7, 1.0]
+ax_left.set_yticks(left_ticks)
+
+<span style="color: #BA36A5;">ax_right</span> = ax_left.twinx()
+ax_right.plot(x, y_right, color=<span style="color: #008000;">"purple"</span>)
+ax_right.set_ylabel(<span style="color: #008000;">"100 cos(x)"</span>, color=<span style="color: #008000;">"purple"</span>)
+ax_right.tick_params(axis=<span style="color: #008000;">"y"</span>, colors=<span style="color: #008000;">"purple"</span>)
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">NOTE This is needed to keep the scales displayed!
+</span>fig.tight_layout()
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">plt.show()
+</span>plt.savefig(<span style="color: #008000;">"fig13.png"</span>, dpi=300)
+</pre>
+</div>
+
+<h3 id="fig-14">Figure 14</h3>
+<div><img src="./fig14.png" width="900px" /></div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #0000FF; font-weight: bold;">from</span> Bio <span style="color: #0000FF; font-weight: bold;">import</span> Phylo
+<span style="color: #0000FF; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #0000FF; font-weight: bold;">as</span> plt
+
+
+<span style="color: #BA36A5;">tree</span> = Phylo.read(<span style="color: #008000;">"tree.newick"</span>, <span style="color: #008000;">"newick"</span>)
+
+<span style="color: #BA36A5;">tip_distances</span> = [tree.distance(tree.root, tip) <span style="color: #0000FF; font-weight: bold;">for</span> tip <span style="color: #0000FF; font-weight: bold;">in</span> tree.get_terminals()]
+<span style="color: #BA36A5;">max_tip_distance</span> = <span style="color: #006FE0;">max</span>(tip_distances) <span style="color: #0000FF; font-weight: bold;">if</span> tip_distances <span style="color: #0000FF; font-weight: bold;">else</span> 0
+<span style="color: #BA36A5;">halfway</span> = max_tip_distance / 2
+<span style="color: #BA36A5;">label_offset</span> = 0.05
+
+<span style="color: #BA36A5;">fig</span>, <span style="color: #BA36A5;">ax</span> = plt.subplots()
+Phylo.draw(
+    tree,
+    do_show=<span style="color: #D0372D;">False</span>,
+    axes=ax,
+    label_func=<span style="color: #0000FF; font-weight: bold;">lambda</span> clade: clade.name <span style="color: #0000FF; font-weight: bold;">if</span> clade.is_terminal() <span style="color: #0000FF; font-weight: bold;">else</span> <span style="color: #D0372D;">None</span>,
+)
+ax.axvline(x=halfway, color=<span style="color: #008000;">"red"</span>)
+ax.axvline(x=max_tip_distance, color=<span style="color: #008000;">"blue"</span>)
+ax.text(
+    halfway - label_offset,
+    0.98,
+    f<span style="color: #008000;">"halfway=</span>{halfway:.3g}<span style="color: #008000;">"</span>,
+    color=<span style="color: #008000;">"red"</span>,
+    ha=<span style="color: #008000;">"right"</span>,
+    va=<span style="color: #008000;">"top"</span>,
+    transform=ax.get_xaxis_transform(),
+)
+ax.text(
+    max_tip_distance - label_offset,
+    0.90,
+    f<span style="color: #008000;">"last tip=</span>{max_tip_distance:.3g}<span style="color: #008000;">"</span>,
+    color=<span style="color: #008000;">"blue"</span>,
+    ha=<span style="color: #008000;">"right"</span>,
+    va=<span style="color: #008000;">"top"</span>,
+    transform=ax.get_xaxis_transform(),
+)
+ax.yaxis.set_ticks([])
+ax.set_ylabel(<span style="color: #008000;">""</span>)
+ax.set_xlabel(<span style="color: #008000;">"Branch length"</span>)
+
+fig.savefig(<span style="color: #008000;">"fig14.png"</span>, dpi=300)
+</pre>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-08-26 Tue 17:23</p>
+<p class="date">Created: 2026-01-09 Fri 17:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
