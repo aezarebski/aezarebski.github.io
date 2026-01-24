@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-11-13 Thu 11:31 -->
+<!-- 2026-01-24 Sat 16:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="orgc2460bb" class="figure">
+<div id="org067ebff" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -228,7 +228,7 @@
 <li><a href="#org8c4ec47">Debugging</a></li>
 <li><a href="#org7538b22"><span class="todo TODO">TODO</span> Functional programming</a></li>
 <li><a href="#orgae9f8ed">High performance computing</a></li>
-<li><a href="#orgd227052">IO</a></li>
+<li><a href="#orge0dbe6e">IO</a></li>
 </ul>
 </li>
 <li><a href="#sec:virtual-envs">Virtual environments</a>
@@ -246,19 +246,20 @@
 <li><a href="#org2053d3f">h5py</a></li>
 <li><a href="#orgfa32f5b">OS</a></li>
 <li><a href="#pyyaml">PyYAML</a></li>
-<li><a href="#python-requests">Requests/lxml</a></li>
 <li><a href="#org594280b">PyTorch</a></li>
 <li><a href="#orga3a9e52">Scipy</a></li>
 <li><a href="#org66a5201">Snakemake</a></li>
+<li><a href="#org476c283">tqdm (progress bars)</a></li>
 <li><a href="#org1fd1a59">Unittest</a></li>
 <li><a href="#orgd9a19c4">Pypfilt</a></li>
 <li><a href="#org674f430">Plotnine</a></li>
-<li><a href="#org2eb6edc">VLC</a></li>
 <li><a href="#org9fd82cd">Numpy</a></li>
 <li><a href="#orgdc2a375">Pandas</a></li>
 <li><a href="#org1ac134d">Matplotlib</a></li>
+<li><a href="#python-requests">Requests/lxml</a></li>
 <li><a href="#orgc7e4c61">Statsmodels</a></li>
 <li><a href="#orgb371da9">NetworkX</a></li>
+<li><a href="#org2eb6edc">VLC</a></li>
 </ul>
 </li>
 <li><a href="#orgc55beee">Hy</a></li>
@@ -676,9 +677,9 @@ p.save(<span style="color: #79a8ff;">"foo.png"</span>)
 </div>
 </div>
 </div>
-<div id="outline-container-orgd227052" class="outline-3">
-<h3 id="orgd227052">IO</h3>
-<div class="outline-text-3" id="text-orgd227052">
+<div id="outline-container-orge0dbe6e" class="outline-3">
+<h3 id="orge0dbe6e">IO</h3>
+<div class="outline-text-3" id="text-orge0dbe6e">
 </div>
 <div id="outline-container-org10e6295" class="outline-4">
 <h4 id="org10e6295">Pickle</h4>
@@ -1033,60 +1034,6 @@ directory:
 </div>
 </div>
 </div>
-<div id="outline-container-python-requests" class="outline-3">
-<h3 id="python-requests">Requests/lxml</h3>
-<div class="outline-text-3" id="text-python-requests">
-</div>
-<div id="outline-container-orgc23ac78" class="outline-4">
-<h4 id="orgc23ac78">Example: Getting a list of references from an article</h4>
-<div class="outline-text-4" id="text-orgc23ac78">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> requests
-<span style="color: #b6a0ff;">from</span> lxml <span style="color: #b6a0ff;">import</span> html
-</pre>
-</div>
-
-<p>
-The request information I got from the <b>Network</b> tab in <b>Inspect</b>
-(Firefox) after looking for a request that returned HTML and looking
-at the response to see it did include the references.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">url</span> = <span style="color: #79a8ff;">"https://doi.org/10.1371/journal.pcbi.1009805"</span>
-<span style="color: #00d3d0;">headers</span> = {
-    <span style="color: #79a8ff;">"Accept"</span>: <span style="color: #79a8ff;">"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"</span>,
-    <span style="color: #79a8ff;">"Accept-Language"</span>: <span style="color: #79a8ff;">"en-GB,en;q=0.5"</span>,
-    <span style="color: #79a8ff;">"User-Agent"</span>: <span style="color: #79a8ff;">"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0"</span>,
-}
-</pre>
-</div>
-
-<p>
-The request returns the HTML for the whole page, but the references
-are in an <code>ol</code> with the class <code>references</code> so with XPath (via <code>lxml</code>)
-we can filter out this information.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">response</span> = requests.get(url, headers=headers)
-
-<span style="color: #b6a0ff;">if</span> response.status_code == 200:
-    <span style="color: #00d3d0;">tree</span> = html.fromstring(response.content)
-    <span style="color: #00d3d0;">xpath</span> = <span style="color: #79a8ff;">"//ol[@class='references']"</span>
-    <span style="color: #00d3d0;">ordered_list</span> = tree.xpath(xpath)
-
-    <span style="color: #b6a0ff;">if</span> ordered_list:
-        <span style="color: #f78fe7;">print</span>(html.tostring(ordered_list[0], pretty_print=<span style="color: #00bcff;">True</span>).decode())
-    <span style="color: #b6a0ff;">else</span>:
-        <span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"Ordered list not found in the HTML."</span>)
-<span style="color: #b6a0ff;">else</span>:
-    <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Failed to retrieve data: Status code </span>{response.status_code}<span style="color: #79a8ff;">"</span>)
-</pre>
-</div>
-</div>
-</div>
-</div>
 <div id="outline-container-org594280b" class="outline-3">
 <h3 id="org594280b">PyTorch</h3>
 <div class="outline-text-3" id="text-org594280b">
@@ -1132,6 +1079,22 @@ another_cool_model.load_state_dict(torch.load(<span style="color: #79a8ff;">"./d
 <p>
 See my <a href="./workflow-notes.html">snakemake notes</a>.
 </p>
+</div>
+</div>
+<div id="outline-container-org476c283" class="outline-3">
+<h3 id="org476c283">tqdm (progress bars)</h3>
+<div class="outline-text-3" id="text-org476c283">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b6a0ff;">import</span> tqdm
+<span style="color: #b6a0ff;">import</span> time
+
+<span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"starting loop..."</span>)
+
+<span style="color: #b6a0ff;">for</span> x <span style="color: #b6a0ff;">in</span> tqdm.tqdm(<span style="color: #f78fe7;">range</span>(10)):
+    time.sleep(1)
+<span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"done."</span>)
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-org1fd1a59" class="outline-3">
@@ -1291,56 +1254,6 @@ Any methods with a name starting with "test" are run and there are
 </p>
 </div>
 </div>
-<div id="outline-container-org2eb6edc" class="outline-3">
-<h3 id="org2eb6edc">VLC</h3>
-<div class="outline-text-3" id="text-org2eb6edc">
-<p>
-The following makes use of the <code>python-vlc</code> library to stream radio.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> vlc
-<span style="color: #b6a0ff;">import</span> time
-
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">--------------------------------------------------------------------
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">For finding more radio stations, you may want to check out websites
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">such as Internet-Radio or TuneIn, which offer thousands of free
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">online radio stations. Most of these stations provide their
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">streaming URL which you can use to listen in your favorite media
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">player.
-</span>
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">When you navigate these websites, you typically select a station
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">you're interested in and look for an option that says something like
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">"play in your own player" or "manual streaming". This usually leads
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">contain the actual URL(s) for the stream, and can be opened in a
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">text editor to view the stream URL.
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">--------------------------------------------------------------------
-</span>
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">BBC World Service
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
-</span>
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Majestic Jukebox Radio
-</span><span style="color: #00d3d0;">url</span> = <span style="color: #79a8ff;">"http://uk3.internet-radio.com:8405/live"</span>
-
-
-<span style="color: #00d3d0;">instance</span> = vlc.Instance()
-<span style="color: #00d3d0;">player</span> = instance.media_player_new()
-<span style="color: #00d3d0;">media</span> = instance.media_new(url)
-player.set_media(media)
-player.play()
-
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Keep the program running while the radio plays
-</span><span style="color: #b6a0ff;">try</span>:
-    <span style="color: #b6a0ff;">while</span> <span style="color: #00bcff;">True</span>:
-        time.sleep(1)
-<span style="color: #b6a0ff;">except</span> <span style="color: #6ae4b9;">KeyboardInterrupt</span>:
-    <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">On Ctrl+C, stop the player and quit
-</span>    player.stop()
-</pre>
-</div>
-</div>
-</div>
 <div id="outline-container-org9fd82cd" class="outline-3">
 <h3 id="org9fd82cd">Numpy</h3>
 <div class="outline-text-3" id="text-org9fd82cd">
@@ -1459,6 +1372,7 @@ result will also modify the original dataframe. To avoid this you need a
 <li>There is a <code>drop</code> method for removing elements of series and dataframes.</li>
 <li>There are summary statistics, which take an <code>axis</code> argument to specify which
 axis to apply them to.</li>
+<li>The <code>index</code> of a data frame in pandas is the <i>row labels</i> of R.</li>
 </ul></li>
 <li><b>Beware</b> the difference between views and copies of data when using pandas.
 There is the <code>copy</code> method to help you a lot of the time.</li>
@@ -1491,9 +1405,9 @@ Melting is particularly useful in plotting.
 </p>
 </div>
 </div>
-<div id="outline-container-orge0dbe6e" class="outline-4">
-<h4 id="orge0dbe6e">IO</h4>
-<div class="outline-text-4" id="text-orge0dbe6e">
+<div id="outline-container-orge850b22" class="outline-4">
+<h4 id="orge850b22">IO</h4>
+<div class="outline-text-4" id="text-orge850b22">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
@@ -1642,6 +1556,60 @@ methods, eg <code>bar</code> and <code>text</code> to draw other things.</li>
 </div>
 </div>
 </div>
+<div id="outline-container-python-requests" class="outline-3">
+<h3 id="python-requests">Requests/lxml</h3>
+<div class="outline-text-3" id="text-python-requests">
+</div>
+<div id="outline-container-orgc23ac78" class="outline-4">
+<h4 id="orgc23ac78">Example: Getting a list of references from an article</h4>
+<div class="outline-text-4" id="text-orgc23ac78">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b6a0ff;">import</span> requests
+<span style="color: #b6a0ff;">from</span> lxml <span style="color: #b6a0ff;">import</span> html
+</pre>
+</div>
+
+<p>
+The request information I got from the <b>Network</b> tab in <b>Inspect</b>
+(Firefox) after looking for a request that returned HTML and looking
+at the response to see it did include the references.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #00d3d0;">url</span> = <span style="color: #79a8ff;">"https://doi.org/10.1371/journal.pcbi.1009805"</span>
+<span style="color: #00d3d0;">headers</span> = {
+    <span style="color: #79a8ff;">"Accept"</span>: <span style="color: #79a8ff;">"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"</span>,
+    <span style="color: #79a8ff;">"Accept-Language"</span>: <span style="color: #79a8ff;">"en-GB,en;q=0.5"</span>,
+    <span style="color: #79a8ff;">"User-Agent"</span>: <span style="color: #79a8ff;">"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0"</span>,
+}
+</pre>
+</div>
+
+<p>
+The request returns the HTML for the whole page, but the references
+are in an <code>ol</code> with the class <code>references</code> so with XPath (via <code>lxml</code>)
+we can filter out this information.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #00d3d0;">response</span> = requests.get(url, headers=headers)
+
+<span style="color: #b6a0ff;">if</span> response.status_code == 200:
+    <span style="color: #00d3d0;">tree</span> = html.fromstring(response.content)
+    <span style="color: #00d3d0;">xpath</span> = <span style="color: #79a8ff;">"//ol[@class='references']"</span>
+    <span style="color: #00d3d0;">ordered_list</span> = tree.xpath(xpath)
+
+    <span style="color: #b6a0ff;">if</span> ordered_list:
+        <span style="color: #f78fe7;">print</span>(html.tostring(ordered_list[0], pretty_print=<span style="color: #00bcff;">True</span>).decode())
+    <span style="color: #b6a0ff;">else</span>:
+        <span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"Ordered list not found in the HTML."</span>)
+<span style="color: #b6a0ff;">else</span>:
+    <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Failed to retrieve data: Status code </span>{response.status_code}<span style="color: #79a8ff;">"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-orgc7e4c61" class="outline-3">
 <h3 id="orgc7e4c61">Statsmodels</h3>
 <div class="outline-text-3" id="text-orgc7e4c61">
@@ -1697,6 +1665,56 @@ algorithms.</li>
 </div>
 </div>
 </div>
+<div id="outline-container-org2eb6edc" class="outline-3">
+<h3 id="org2eb6edc">VLC</h3>
+<div class="outline-text-3" id="text-org2eb6edc">
+<p>
+The following makes use of the <code>python-vlc</code> library to stream radio.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b6a0ff;">import</span> vlc
+<span style="color: #b6a0ff;">import</span> time
+
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">--------------------------------------------------------------------
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">For finding more radio stations, you may want to check out websites
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">such as Internet-Radio or TuneIn, which offer thousands of free
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">online radio stations. Most of these stations provide their
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">streaming URL which you can use to listen in your favorite media
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">player.
+</span>
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">When you navigate these websites, you typically select a station
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">you're interested in and look for an option that says something like
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">"play in your own player" or "manual streaming". This usually leads
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">contain the actual URL(s) for the stream, and can be opened in a
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">text editor to view the stream URL.
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">--------------------------------------------------------------------
+</span>
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">BBC World Service
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
+</span>
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Majestic Jukebox Radio
+</span><span style="color: #00d3d0;">url</span> = <span style="color: #79a8ff;">"http://uk3.internet-radio.com:8405/live"</span>
+
+
+<span style="color: #00d3d0;">instance</span> = vlc.Instance()
+<span style="color: #00d3d0;">player</span> = instance.media_player_new()
+<span style="color: #00d3d0;">media</span> = instance.media_new(url)
+player.set_media(media)
+player.play()
+
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Keep the program running while the radio plays
+</span><span style="color: #b6a0ff;">try</span>:
+    <span style="color: #b6a0ff;">while</span> <span style="color: #00bcff;">True</span>:
+        time.sleep(1)
+<span style="color: #b6a0ff;">except</span> <span style="color: #6ae4b9;">KeyboardInterrupt</span>:
+    <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">On Ctrl+C, stop the player and quit
+</span>    player.stop()
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-orgc55beee" class="outline-2">
 <h2 id="orgc55beee">Hy</h2>
@@ -1744,7 +1762,7 @@ toolz==0.11.1
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-11-13 Thu 11:31</p>
+<p class="date">Created: 2026-01-24 Sat 16:17</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

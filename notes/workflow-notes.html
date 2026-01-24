@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-10-27 Mon 16:27 -->
+<!-- 2026-01-20 Tue 11:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Workflows: Make/Ant/Snakemake</title>
@@ -221,11 +221,13 @@
 <li><a href="#org3e1ea4c">Ant</a></li>
 <li><a href="#orgeda39f0">Snakemake</a>
 <ul>
+<li><a href="#orga66730c">Configuration</a></li>
+<li><a href="#org26d667d">Example: the <code>expand</code> function</a></li>
 <li><a href="#orgf543429">Example: Visualization</a></li>
 <li><a href="#org3fe2b7f">Example: Hello Snakemake!</a></li>
 <li><a href="#orgfd58244">Example: input/output aliases</a></li>
 <li><a href="#org4f1cd62">Example: Linting code</a></li>
-<li><a href="#orgb92743a">Example: Minimal simulation study</a></li>
+<li><a href="#sec:snakemake:minimal-example">Example: Minimal simulation study</a></li>
 </ul>
 </li>
 </ul>
@@ -315,7 +317,7 @@ making sure variables have the expected values.
 <h2 id="org3e1ea4c">Ant</h2>
 <div class="outline-text-2" id="text-org3e1ea4c">
 
-<div id="org892762a" class="figure">
+<div id="org969fde1" class="figure">
 <p><img src="../images/apache-ant-logo.png" alt="apache-ant-logo.png" width="400px" />
 </p>
 </div>
@@ -334,7 +336,7 @@ an Ant XML.</li>
 <h2 id="orgeda39f0">Snakemake</h2>
 <div class="outline-text-2" id="text-orgeda39f0">
 
-<div id="orgab24f39" class="figure">
+<div id="orga375d1f" class="figure">
 <p><img src="../images/snakemake-logo.png" alt="snakemake-logo.png" width="200px" />
 </p>
 </div>
@@ -342,15 +344,38 @@ an Ant XML.</li>
 <p>
 The Snakemake developers strongly recommend the use of Conda. I have
 some <a href="./python-notes.html#conda">notes</a> on how to use Conda. Conda can be a bit heavy though, <a href="./python-notes.html#venv">venv</a>
-is a lighter weight solution and is part of the standard library.
+is a lighter weight solution and is part of the standard library and
+seems to work fine.
 </p>
 
 <ul class="org-ul">
-<li><code>snakemake -pn</code> (the <code>n</code> is for a dry run). This is a good way to do
-<code>snakemake -n --printshellcmds</code>, and then when you are happy with
-it, you can remote the <code>n</code> to get a live run.</li>
-<li><code>snakemake --keep-going</code> will keep going if some fail.</li>
+<li><code>snakemake -pn</code> (the <code>n</code> is for a dry run), and then when you are
+happy with it, you can remote the <code>n</code> to get a live run.</li>
+<li><code>snakemake --keep-going</code> will keep going if some rules fail.</li>
 </ul>
+</div>
+<div id="outline-container-orga66730c" class="outline-3">
+<h3 id="orga66730c">Configuration</h3>
+<div class="outline-text-3" id="text-orga66730c">
+<p>
+There is strong support for <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html">configuring pipelines with JSON</a>. This has
+some syntactic sugar for working with the configuration object that
+gets created. There is also support for validating different data
+against schema. There is an example <a href="./workflow-notes.html#sec:snakemake:minimal-example">here</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-org26d667d" class="outline-3">
+<h3 id="org26d667d">Example: the <code>expand</code> function</h3>
+<div class="outline-text-3" id="text-org26d667d">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b6a0ff;">from</span> snakemake.io <span style="color: #b6a0ff;">import</span> expand
+expand(<span style="color: #79a8ff;">"foo/{bar}.{ext}"</span>, bar=[<span style="color: #79a8ff;">"aaa"</span>,<span style="color: #79a8ff;">"bbb"</span>], ext=[<span style="color: #79a8ff;">"json"</span>,<span style="color: #79a8ff;">"csv"</span>])
+<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">produces the list of strings
+</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">['foo/aaa.json', 'foo/aaa.csv', 'foo/bbb.json', 'foo/bbb.csv']</span>
+</pre>
+</div>
+</div>
 </div>
 <div id="outline-container-orgf543429" class="outline-3">
 <h3 id="orgf543429">Example: Visualization</h3>
@@ -464,9 +489,9 @@ to your snakemake file.
 </div>
 </div>
 </div>
-<div id="outline-container-orgb92743a" class="outline-3">
-<h3 id="orgb92743a">Example: Minimal simulation study</h3>
-<div class="outline-text-3" id="text-orgb92743a">
+<div id="outline-container-sec:snakemake:minimal-example" class="outline-3">
+<h3 id="sec:snakemake:minimal-example">Example: Minimal simulation study</h3>
+<div class="outline-text-3" id="text-sec:snakemake:minimal-example">
 <p>
 The output of this is a histogram in a PNG.
 </p>
@@ -614,7 +639,7 @@ the command line using the <code>--configfile</code> command line argument.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-10-27 Mon 16:27</p>
+<p class="date">Created: 2026-01-20 Tue 11:13</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
