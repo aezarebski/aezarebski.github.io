@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-12-29 Mon 10:16 -->
+<!-- 2026-02-27 Fri 16:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux notes</title>
@@ -238,7 +238,7 @@
 </p>
 
 
-<div id="orgce6a8a2" class="figure">
+<div id="org3f94bcc" class="figure">
 <p><img src="../images/linux-logo.png" alt="linux-logo.png" width="250px" />
 </p>
 </div>
@@ -256,6 +256,7 @@
 <li><a href="#org6886b28">Linux and Ubuntu notes</a>
 <ul>
 <li><a href="#bashrc"><code>.bashrc</code></a></li>
+<li><a href="#orgb9aa263">JavaScript</a></li>
 <li><a href="#orgc220609">Setting up a server</a></li>
 <li><a href="#researcher-desktop">The Melbourne Researcher Desktop</a></li>
 <li><a href="#org77add0e">ImageMagick and <code>convert</code></a></li>
@@ -272,7 +273,8 @@
 <li><a href="#org2a27ba6">Finding your IP address</a></li>
 <li><a href="#orgc579708"><code>scp</code></a></li>
 <li><a href="#orgae5ad2a">Symlinks</a></li>
-<li><a href="#org7b3efcf">Searching files with <code>grep</code></a></li>
+<li><a href="#subsec:ripgrep">Searching files with <code>rg</code> (ripgrep)</a></li>
+<li><a href="#subsec:grep">Searching files with <code>grep</code></a></li>
 <li><a href="#orgc7a3334">Watching files with <code>inotifywait</code></a></li>
 <li><a href="#org5d7e9fb">Monitor configuration</a></li>
 <li><a href="#orgc6a02c5">Keyboard configuration</a></li>
@@ -367,19 +369,29 @@ regardless.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">if</span> [ -f $<span style="color: #BA36A5;">HOME</span>/.bashrc ]; <span style="color: #0000FF; font-weight: bold;">then</span>
-    <span style="color: #006FE0;">source</span> $<span style="color: #BA36A5;">HOME</span>/.bashrc
-<span style="color: #0000FF; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #778c00; font-weight: bold;">if</span> [ -f $<span style="color: #007ec4;">HOME</span>/.bashrc ]; <span style="color: #778c00; font-weight: bold;">then</span>
+    <span style="color: #596e76; font-weight: bold;">source</span> $<span style="color: #007ec4;">HOME</span>/.bashrc
+<span style="color: #778c00; font-weight: bold;">fi</span>
 </pre>
 </div>
 
 <p>
-By default, tab completion is case sensitive, to fix this add the following line
-to the file <code>/etc/inputrc</code>.
+By default, tab completion is case sensitive, to fix this add the
+following line to the file <code>/etc/inputrc</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #006FE0;">set</span> completion-ignore-case on
+<pre class="src src-sh"><span style="color: #596e76; font-weight: bold;">set</span> completion-ignore-case on
+</pre>
+</div>
+
+<p>
+Alternatively, (and my preferred option) you can add the following to
+your <code>~/.bashrc</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #596e76; font-weight: bold;">bind</span> <span style="color: #11948b;">'set completion-ignore-case on'</span>
 </pre>
 </div>
 </div>
@@ -392,7 +404,7 @@ get a useful prompt.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #BA36A5;">PS1</span>=<span style="color: #008000;">'${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\[\033[1;31m\](Hostalias)\[\033[0m\]\$ '</span>
+<pre class="src src-sh"><span style="color: #007ec4;">PS1</span>=<span style="color: #11948b;">'${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\[\033[1;31m\](Hostalias)\[\033[0m\]\$ '</span>
 </pre>
 </div>
 </div>
@@ -408,24 +420,33 @@ automatically. The modular approach also makes it easier to adjust.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #BA36A5;">RED</span>=<span style="color: #008000;">'\[\033[01;31m\]'</span>
-<span style="color: #BA36A5;">YELLOW</span>=<span style="color: #008000;">'\[\033[33m\]'</span>
-<span style="color: #BA36A5;">GREEN</span>=<span style="color: #008000;">'\[\033[01;32m\]'</span>
-<span style="color: #BA36A5;">BLUE</span>=<span style="color: #008000;">'\[\033[01;34m\]'</span>
-<span style="color: #BA36A5;">MAGENTA</span>=<span style="color: #008000;">'\[\033[01;35m\]'</span>
-<span style="color: #BA36A5;">RESET</span>=<span style="color: #008000;">'\[\033[00m\]'</span>
+<pre class="src src-sh"><span style="color: #007ec4;">RED</span>=<span style="color: #11948b;">'\[\033[01;31m\]'</span>
+<span style="color: #007ec4;">YELLOW</span>=<span style="color: #11948b;">'\[\033[33m\]'</span>
+<span style="color: #007ec4;">GREEN</span>=<span style="color: #11948b;">'\[\033[01;32m\]'</span>
+<span style="color: #007ec4;">BLUE</span>=<span style="color: #11948b;">'\[\033[01;34m\]'</span>
+<span style="color: #007ec4;">MAGENTA</span>=<span style="color: #11948b;">'\[\033[01;35m\]'</span>
+<span style="color: #007ec4;">RESET</span>=<span style="color: #11948b;">'\[\033[00m\]'</span>
 
-<span style="color: #BA36A5;">TIME</span>=<span style="color: #008000;">"${YELLOW}\t${RESET} "</span>
-<span style="color: #BA36A5;">CHROOT</span>=<span style="color: #008000;">'${debian_chroot:+($debian_chroot)}'</span>
-<span style="color: #BA36A5;">USER</span>=<span style="color: #008000;">"${GREEN}\u${RESET}"</span>
-<span style="color: #BA36A5;">DIR</span>=<span style="color: #008000;">"${BLUE}\W${RESET}"</span>
-<span style="color: #BA36A5;">TAG</span>=<span style="color: #008000;">"${MAGENTA}(dell)${RESET}"</span>
-<span style="color: #BA36A5;">SYMBOL</span>=<span style="color: #008000;">'\$'</span>
+<span style="color: #007ec4;">TIME</span>=<span style="color: #11948b;">"${YELLOW}\t${RESET} "</span>
+<span style="color: #007ec4;">CHROOT</span>=<span style="color: #11948b;">'${debian_chroot:+($debian_chroot)}'</span>
+<span style="color: #007ec4;">USER</span>=<span style="color: #11948b;">"${GREEN}\u${RESET}"</span>
+<span style="color: #007ec4;">DIR</span>=<span style="color: #11948b;">"${BLUE}\W${RESET}"</span>
+<span style="color: #007ec4;">TAG</span>=<span style="color: #11948b;">"${MAGENTA}(dell)${RESET}"</span>
+<span style="color: #007ec4;">SYMBOL</span>=<span style="color: #11948b;">'\$'</span>
 
-<span style="color: #BA36A5;">PS1</span>=<span style="color: #008000;">"${TIME}${CHROOT}${USER}:${DIR}${TAG}${SYMBOL} "</span>
+<span style="color: #007ec4;">PS1</span>=<span style="color: #11948b;">"${TIME}${CHROOT}${USER}:${DIR}${TAG}${SYMBOL} "</span>
 </pre>
 </div>
 </div>
+</div>
+</div>
+<div id="outline-container-orgb9aa263" class="outline-3">
+<h3 id="orgb9aa263">JavaScript</h3>
+<div class="outline-text-3" id="text-orgb9aa263">
+<p>
+Visit the <a href="https://nodejs.org/en">Node.js</a> website to get installation instructions for node
+and nvm. You'll need this up to date to use both copilot and codex.
+</p>
 </div>
 </div>
 <div id="outline-container-orgc220609" class="outline-3">
@@ -492,14 +513,14 @@ root/administrative privileges.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span style="color: #333333; background-color: #FFFFFF;">&lt;</span><span style="color: #AE1B9A;">policymap</span><span style="color: #333333; background-color: #FFFFFF;">&gt;</span><span style="color: #333333; background-color: #FFFFFF;">
+<pre class="src src-xml"><span style="color: #596e76; background-color: #fffce9;">&lt;</span><span style="color: #007ec4;">policymap</span><span style="color: #596e76; background-color: #fffce9;">&gt;</span><span style="color: #596e76; background-color: #fffce9;">
   ...
-  </span><span style="color: #333333; background-color: #FFFFFF;">&lt;</span><span style="color: #AE1B9A;">policies</span><span style="color: #333333; background-color: #FFFFFF;">&gt;</span>
-    <span style="color: #333333; background-color: #FFFFFF;">&lt;</span><span style="color: #AE1B9A;">policy</span> <span style="color: #BA36A5;">domain</span>=<span style="color: #008000;">"coder"</span> <span style="color: #BA36A5;">rights</span>=<span style="color: #008000;">"none"</span> <span style="color: #BA36A5;">pattern</span>=<span style="color: #008000;">"PDF"</span> <span style="color: #333333; background-color: #FFFFFF;">/</span><span style="color: #333333; background-color: #FFFFFF;">&gt;</span><span style="color: #333333; background-color: #FFFFFF;">
+  </span><span style="color: #596e76; background-color: #fffce9;">&lt;</span><span style="color: #007ec4;">policies</span><span style="color: #596e76; background-color: #fffce9;">&gt;</span>
+    <span style="color: #596e76; background-color: #fffce9;">&lt;</span><span style="color: #007ec4;">policy</span> <span style="color: #007ec4;">domain</span>=<span style="color: #11948b;">"coder"</span> <span style="color: #007ec4;">rights</span>=<span style="color: #11948b;">"none"</span> <span style="color: #007ec4;">pattern</span>=<span style="color: #11948b;">"PDF"</span> <span style="color: #596e76; background-color: #fffce9;">/</span><span style="color: #596e76; background-color: #fffce9;">&gt;</span><span style="color: #596e76; background-color: #fffce9;">
     ...
-  </span><span style="color: #333333; background-color: #FFFFFF;">&lt;</span><span style="color: #333333; background-color: #FFFFFF;">/</span><span style="color: #AE1B9A;">policies</span><span style="color: #333333; background-color: #FFFFFF;">&gt;</span><span style="color: #333333; background-color: #FFFFFF;">
+  </span><span style="color: #596e76; background-color: #fffce9;">&lt;</span><span style="color: #596e76; background-color: #fffce9;">/</span><span style="color: #007ec4;">policies</span><span style="color: #596e76; background-color: #fffce9;">&gt;</span><span style="color: #596e76; background-color: #fffce9;">
   ...
-</span><span style="color: #333333; background-color: #FFFFFF;">&lt;</span><span style="color: #333333; background-color: #FFFFFF;">/</span><span style="color: #AE1B9A;">policymap</span><span style="color: #333333; background-color: #FFFFFF;">&gt;</span>
+</span><span style="color: #596e76; background-color: #fffce9;">&lt;</span><span style="color: #596e76; background-color: #fffce9;">/</span><span style="color: #007ec4;">policymap</span><span style="color: #596e76; background-color: #fffce9;">&gt;</span>
 </pre>
 </div>
 
@@ -508,7 +529,7 @@ root/administrative privileges.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span style="color: #333333; background-color: #FFFFFF;">&lt;</span><span style="color: #AE1B9A;">policy</span> <span style="color: #BA36A5;">domain</span>=<span style="color: #008000;">"coder"</span> <span style="color: #BA36A5;">rights</span>=<span style="color: #008000;">"read|write"</span> <span style="color: #BA36A5;">pattern</span>=<span style="color: #008000;">"PDF"</span> <span style="color: #333333; background-color: #FFFFFF;">/</span><span style="color: #333333; background-color: #FFFFFF;">&gt;</span>
+<pre class="src src-xml"><span style="color: #596e76; background-color: #fffce9;">&lt;</span><span style="color: #007ec4;">policy</span> <span style="color: #007ec4;">domain</span>=<span style="color: #11948b;">"coder"</span> <span style="color: #007ec4;">rights</span>=<span style="color: #11948b;">"read|write"</span> <span style="color: #007ec4;">pattern</span>=<span style="color: #11948b;">"PDF"</span> <span style="color: #596e76; background-color: #fffce9;">/</span><span style="color: #596e76; background-color: #fffce9;">&gt;</span>
 </pre>
 </div>
 
@@ -888,7 +909,7 @@ read, write or execute. The <code>chmod</code> functions is used to change the p
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">chmod 750 foo.sh  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">makes foo.sh rwxr-x---</span>
+<pre class="src src-shell">chmod 750 foo.sh  <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">makes foo.sh rwxr-x---</span>
 </pre>
 </div>
 
@@ -1001,7 +1022,7 @@ command and you can change them with the <code>chattr</code> command. The
 Here is a little example
 </p>
 
-<pre class="example" id="orgca963ea">
+<pre class="example" id="org03a97c2">
 $ echo "hello" &gt; demo.txt
 $ lsattr demo.txt
 --------------e------- demo.txt
@@ -1053,7 +1074,7 @@ To find all the PNG files down from the current directory.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find . -regex <span style="color: #008000;">".*png$"</span>
+<pre class="src src-shell">find . -regex <span style="color: #11948b;">".*png$"</span>
 </pre>
 </div>
 </div>
@@ -1066,7 +1087,7 @@ following.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find . -name <span style="color: #008000;">\*</span>figure-1<span style="color: #008000;">\*</span> -print
+<pre class="src src-shell">find . -name <span style="color: #11948b;">\*</span>figure-1<span style="color: #11948b;">\*</span> -print
 </pre>
 </div>
 </div>
@@ -1149,11 +1170,11 @@ my laptop.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #BA36A5;">LOCAL_DIR</span>=out/result-v2
-<span style="color: #BA36A5;">REMOTE_DIR</span>=/home/aez/projects/example/$<span style="color: #BA36A5;">LOCAL_DIR</span>
-<span style="color: #BA36A5;">REMOTE_HOST</span>=zool
+<pre class="src src-sh"><span style="color: #007ec4;">LOCAL_DIR</span>=out/result-v2
+<span style="color: #007ec4;">REMOTE_DIR</span>=/home/aez/projects/example/$<span style="color: #007ec4;">LOCAL_DIR</span>
+<span style="color: #007ec4;">REMOTE_HOST</span>=zool
 
-scp $<span style="color: #BA36A5;">REMOTE_HOST</span>:$<span style="color: #BA36A5;">REMOTE_DIR</span>/*{html,png} $<span style="color: #BA36A5;">LOCAL_DIR</span>/
+scp $<span style="color: #007ec4;">REMOTE_HOST</span>:$<span style="color: #007ec4;">REMOTE_DIR</span>/*{html,png} $<span style="color: #007ec4;">LOCAL_DIR</span>/
 </pre>
 </div>
 
@@ -1175,23 +1196,67 @@ Note that these paths need to be full paths otherwise the file wont get found.
 </p>
 </div>
 </div>
-<div id="outline-container-org7b3efcf" class="outline-3">
-<h3 id="org7b3efcf">Searching files with <code>grep</code></h3>
-<div class="outline-text-3" id="text-org7b3efcf">
+<div id="outline-container-subsec:ripgrep" class="outline-3">
+<h3 id="subsec:ripgrep">Searching files with <code>rg</code> (ripgrep)</h3>
+<div class="outline-text-3" id="text-subsec:ripgrep">
+<p>
+This <code>rg</code> is a faster alternative to <a href="#subsec:grep">grep</a>. It is geared towards
+searching code bases rather than generic files, and has been optimized
+for this purpose.
+</p>
+</div>
+<div id="outline-container-org7f0b395" class="outline-4">
+<h4 id="org7f0b395"><code>rg</code> example</h4>
+<div class="outline-text-4" id="text-org7f0b395">
+<div class="org-src-container">
+<pre class="src src-sh">rg -n -g <span style="color: #11948b;">"*test*"</span> <span style="color: #11948b;">"plot"</span>
+</pre>
+</div>
+
+<p>
+will print the numbers, <code>-n</code>, for each match. It will only search
+files that have a filename matching the <i>glob</i> <code>*test*</code> and it will
+search for the string <code>"plot"</code> in the files.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-subsec:grep" class="outline-3">
+<h3 id="subsec:grep">Searching files with <code>grep</code></h3>
+<div class="outline-text-3" id="text-subsec:grep">
+<p>
+Note that you probably should be using <a href="#subsec:ripgrep">rg described here</a>.
+</p>
+
 <p>
 <code>grep [OPTION]... PATTERNS [FILE]...</code>
 </p>
 </div>
-<div id="outline-container-orgb4eb645" class="outline-4">
-<h4 id="orgb4eb645"><code>grep</code> example 1</h4>
-<div class="outline-text-4" id="text-orgb4eb645">
+<div id="outline-container-orgd73069e" class="outline-4">
+<h4 id="orgd73069e"><code>grep</code> example 10</h4>
+<div class="outline-text-4" id="text-orgd73069e">
 <p>
-Search files in the current directory with filenames matching <code>"*l*notes.org"</code>
-which contain the string <code>"foo"</code>, and show the line <i>number</i>.
+Search the file <code>foobar.org</code> for the pattern <code>myPattern</code> will print
+the lines in the file matching the pattern.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">grep -r -n --include=<span style="color: #008000;">"*l*notes.org"</span> <span style="color: #008000;">"foo"</span> .
+<pre class="src src-shell">grep <span style="color: #11948b;">"foobar.org"</span> <span style="color: #11948b;">"myPattern"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2991d44" class="outline-4">
+<h4 id="org2991d44"><code>grep</code> example 20</h4>
+<div class="outline-text-4" id="text-org2991d44">
+<p>
+Search files in the current directory with filenames matching
+<code>"*l*notes.org"</code> which contain the string <code>"foo"</code>, and show the line
+<i>number</i>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">grep -r -n --include=<span style="color: #11948b;">"*l*notes.org"</span> <span style="color: #11948b;">"foo"</span> .
 </pre>
 </div>
 </div>
@@ -1206,7 +1271,7 @@ looking for lines matching the pattern <code>"rnest"</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">find public-site/org/ -regex <span style="color: #008000;">".*book.*"</span> -print0 | xargs -0 grep <span style="color: #008000;">"rnest"</span>
+<pre class="src src-shell">find public-site/org/ -regex <span style="color: #11948b;">".*book.*"</span> -print0 | xargs -0 grep <span style="color: #11948b;">"rnest"</span>
 </pre>
 </div>
 </div>
@@ -1238,12 +1303,12 @@ achieve this using <code>inotifywait</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #BA36A5;">WATCH_FILE</span>=demo.tex
+<pre class="src src-sh"><span style="color: #007ec4;">WATCH_FILE</span>=demo.tex
 
-inotifywait -q -m -e close_write $<span style="color: #BA36A5;">WATCH_FILE</span> |
-    <span style="color: #0000FF; font-weight: bold;">while </span><span style="color: #006FE0;">read</span> -r filename event; <span style="color: #0000FF; font-weight: bold;">do</span>
-        pdflatex $<span style="color: #BA36A5;">WATCH_FILE</span>
-    <span style="color: #0000FF; font-weight: bold;">done</span>
+inotifywait -q -m -e close_write $<span style="color: #007ec4;">WATCH_FILE</span> |
+    <span style="color: #778c00; font-weight: bold;">while </span><span style="color: #596e76; font-weight: bold;">read</span> -r filename event; <span style="color: #778c00; font-weight: bold;">do</span>
+        pdflatex $<span style="color: #007ec4;">WATCH_FILE</span>
+    <span style="color: #778c00; font-weight: bold;">done</span>
 </pre>
 </div>
 </div>
@@ -1511,8 +1576,8 @@ my local library.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #008000;">\</span>
-      --recursive --times --perms --links <span style="color: #008000;">\</span>
+<pre class="src src-shell">rsync --verbose --progress --stats --compress --rsh=/usr/bin/ssh <span style="color: #a67c00; font-weight: bold;">\</span>
+      --recursive --times --perms --links <span style="color: #a67c00; font-weight: bold;">\</span>
       zool:/home/aez/Documents/library/* /home/aez/Documents/library/
 </pre>
 </div>
@@ -1534,23 +1599,23 @@ to sync the contents of the output directory back to my local machine.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">sync code to server
-</span>rsync --archive --progress --compress <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"out"</span> <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"/.git/"</span> <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"*~"</span> <span style="color: #008000;">\</span>
+<pre class="src src-shell"><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">sync code to server
+</span>rsync --archive --progress --compress <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"out"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"/.git/"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"*~"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
       ./ brahms:~/projects/derp-simulation
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">sync output from server
-</span>rsync --archive --progress --compress <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"*pickle"</span> <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"*time"</span> <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"*traj"</span> <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"*tree"</span> <span style="color: #008000;">\</span>
-      --exclude <span style="color: #008000;">"*xml"</span> <span style="color: #008000;">\</span>
+<pre class="src src-shell"><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">sync output from server
+</span>rsync --archive --progress --compress <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"*pickle"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"*time"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"*traj"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"*tree"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
+      --exclude <span style="color: #11948b;">"*xml"</span> <span style="color: #a67c00; font-weight: bold;">\</span>
       brahms:~/projects/derp-simulation/out/ ./out
 </pre>
 </div>
@@ -1610,7 +1675,7 @@ An example command to add a user is the following:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sudo useradd -c <span style="color: #008000;">"Jerry Smith"</span> -d /home/jsmith -m -s /bin/bash jsmith
+<pre class="src src-sh">sudo useradd -c <span style="color: #11948b;">"Jerry Smith"</span> -d /home/jsmith -m -s /bin/bash jsmith
 </pre>
 </div>
 
@@ -1777,7 +1842,7 @@ There are instructions on how to install this program <a href="http://ytdl-org.g
 <h4 id="org1dc9c4a">Download audio as MP3</h4>
 <div class="outline-text-4" id="text-org1dc9c4a">
 <div class="org-src-container">
-<pre class="src src-sh">youtube-dl --extract-audio --audio-format <span style="color: #008000;">"mp3"</span> &lt;VIDEO/URL&gt;
+<pre class="src src-sh">youtube-dl --extract-audio --audio-format <span style="color: #11948b;">"mp3"</span> &lt;VIDEO/URL&gt;
 </pre>
 </div>
 </div>
@@ -1829,7 +1894,7 @@ This one-liner carries out the following pipeline:
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-sh">grep <span style="color: #008000;">"^tree STATE_"</span> your_file.nexus | head -n 5000 | awk -F<span style="color: #008000;">"= "</span> <span style="color: #008000;">'{print $2}'</span> &gt; first_5000_trees.nwk
+<pre class="src src-sh">grep <span style="color: #11948b;">"^tree STATE_"</span> your_file.nexus | head -n 5000 | awk -F<span style="color: #11948b;">"= "</span> <span style="color: #11948b;">'{print $2}'</span> &gt; first_5000_trees.nwk
 </pre>
 </div>
 </div>
@@ -1844,15 +1909,15 @@ the following example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">if</span> [ -d <span style="color: #008000;">"foobar"</span> ]; <span style="color: #0000FF; font-weight: bold;">then</span>
-    <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"There is a directory called foobar"</span>
-    <span style="color: #0000FF; font-weight: bold;">exit</span> 0
-<span style="color: #0000FF; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #778c00; font-weight: bold;">if</span> [ -d <span style="color: #11948b;">"foobar"</span> ]; <span style="color: #778c00; font-weight: bold;">then</span>
+    <span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"There is a directory called foobar"</span>
+    <span style="color: #778c00; font-weight: bold;">exit</span> 0
+<span style="color: #778c00; font-weight: bold;">fi</span>
 
-<span style="color: #0000FF; font-weight: bold;">if</span> [ ! -d <span style="color: #008000;">"foobar"</span> ]; <span style="color: #0000FF; font-weight: bold;">then</span>
-    <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Could not find directory: foobar"</span>
-    <span style="color: #0000FF; font-weight: bold;">exit</span> 1
-<span style="color: #0000FF; font-weight: bold;">fi</span>
+<span style="color: #778c00; font-weight: bold;">if</span> [ <span style="color: #a67c00; font-weight: bold;">!</span> -d <span style="color: #11948b;">"foobar"</span> ]; <span style="color: #778c00; font-weight: bold;">then</span>
+    <span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"Could not find directory: foobar"</span>
+    <span style="color: #778c00; font-weight: bold;">exit</span> 1
+<span style="color: #778c00; font-weight: bold;">fi</span>
 </pre>
 </div>
 </div>
@@ -1865,24 +1930,73 @@ the following example
 <h4 id="org8c7ea4f">Example 1</h4>
 <div class="outline-text-4" id="text-org8c7ea4f">
 <p>
+Here is a very simple example of how to use the <code>wait</code> command to run
+some parts of a shell script in parallel, wait for the result and then
+do some more stuff. This is a crude simplification of <a href="#subsec:claire-miller-example">this approach</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #596e76; font-weight: bold;">echo</span> $(<span style="color: #5e65b6; font-weight: bold;">date +%T</span>)
+sleep 2
+sleep 2
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"A"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"B"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> $(<span style="color: #5e65b6; font-weight: bold;">date +%T</span>)
+<span style="color: #596e76; font-weight: bold;">wait</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> $(<span style="color: #5e65b6; font-weight: bold;">date +%T</span>)
+sleep 2 &amp;
+sleep 2 &amp;
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"C"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"D"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> $(<span style="color: #5e65b6; font-weight: bold;">date +%T</span>)
+<span style="color: #596e76; font-weight: bold;">wait</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> $(<span style="color: #5e65b6; font-weight: bold;">date +%T</span>)
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"DONE"</span>
+</pre>
+</div>
+
+<p>
+Produces the following output. Note both the size of the differences
+in time (the first two sleeps are in series) and when the sleep
+finishes (they are backgrounded in the second instance).
+</p>
+
+<pre class="example" id="orgb8ed0be">
+19:01:58
+A
+B
+19:02:02
+19:02:02
+C
+D
+19:02:02
+19:02:04
+DONE
+</pre>
+</div>
+</div>
+<div id="outline-container-subsec:claire-miller-example" class="outline-4">
+<h4 id="subsec:claire-miller-example">Example 2</h4>
+<div class="outline-text-4" id="text-subsec:claire-miller-example">
+<p>
 This solution came from the very clever <a href="https://www.clairemmiller.com/">Claire Miller</a> for how one can do
 map-reduce style computations correctly via bash. Note that this actually needs
 <code>bash</code>, it does not work with <code>sh</code> alone.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">waiter.sh
-</span><span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Starting"</span>
+<pre class="src src-sh"><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">waiter.sh
+</span><span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"Starting"</span>
 
-<span style="color: #BA36A5;">pids</span>=()
+<span style="color: #007ec4;">pids</span>=()
 
-<span style="color: #0000FF; font-weight: bold;">for</span> i<span style="color: #0000FF; font-weight: bold;"> in</span> $(<span style="color: #FF1493;">seq 1 5</span>)
-<span style="color: #0000FF; font-weight: bold;">do</span>
-  sleep 4 &amp;&amp; <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Done part $i"</span> &amp; <span style="color: #BA36A5;">pids</span>+=($<span style="color: #BA36A5;">!</span>)
-<span style="color: #0000FF; font-weight: bold;">done</span>
+<span style="color: #778c00; font-weight: bold;">for</span> i<span style="color: #778c00; font-weight: bold;"> in</span> $(<span style="color: #5e65b6; font-weight: bold;">seq 1 5</span>)
+<span style="color: #778c00; font-weight: bold;">do</span>
+  sleep 4 &amp;&amp; <span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"Done part $i"</span> &amp; <span style="color: #007ec4;">pids</span>+=($<span style="color: #007ec4;">!</span>)
+<span style="color: #778c00; font-weight: bold;">done</span>
 
-<span style="color: #006FE0;">wait</span> <span style="color: #008000;">"${pids[@]}"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Finished :)"</span>
+<span style="color: #596e76; font-weight: bold;">wait</span> <span style="color: #11948b;">"${pids[@]}"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"Finished :)"</span>
 </pre>
 </div>
 
@@ -1901,35 +2015,35 @@ Finished :)
 </div>
 </div>
 </div>
-<div id="outline-container-orgb21492c" class="outline-4">
-<h4 id="orgb21492c">Example 2</h4>
-<div class="outline-text-4" id="text-orgb21492c">
+<div id="outline-container-orgd304355" class="outline-4">
+<h4 id="orgd304355">Example 3</h4>
+<div class="outline-text-4" id="text-orgd304355">
 <p>
 A slightly more complicated example demonstrating how to chunk processes into
 subsets to run in parallel before moving onto the next chunk.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/</span><span style="color: #0000FF; font-weight: bold;">env</span><span style="color: #8D8D84; font-style: italic;"> bash
+<pre class="src src-sh"><span style="color: #98a6a6;">#</span><span style="color: #98a6a6;">!/usr/bin/</span><span style="color: #778c00; font-weight: bold;">env</span><span style="color: #98a6a6;"> bash
 </span>
-<span style="color: #BA36A5;">chunk_size</span>=5                    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">the number of processes in each chunk
-</span><span style="color: #BA36A5;">limit</span>=20                        <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">the total number of processes
-</span><span style="color: #BA36A5;">ix</span>=0
+<span style="color: #007ec4;">chunk_size</span>=5                    <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">the number of processes in each chunk
+</span><span style="color: #007ec4;">limit</span>=20                        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">the total number of processes
+</span><span style="color: #007ec4;">ix</span>=0
 
-<span style="color: #BA36A5;">outer_limit</span>=<span style="color: #008000;">"$(</span><span style="color: #FF1493;">($limit-$chunk_size</span><span style="color: #008000;">))"</span>
-<span style="color: #0000FF; font-weight: bold;">while</span> [ $<span style="color: #BA36A5;">ix</span> -le $<span style="color: #BA36A5;">outer_limit</span> ]
-<span style="color: #0000FF; font-weight: bold;">do</span>
-    <span style="color: #BA36A5;">pids</span>=()
-    <span style="color: #BA36A5;">chunk_limit</span>=<span style="color: #008000;">"$(</span><span style="color: #FF1493;">($ix+$chunk_size</span><span style="color: #008000;">))"</span>
-    <span style="color: #0000FF; font-weight: bold;">while</span> [ $<span style="color: #BA36A5;">ix</span> -lt $<span style="color: #BA36A5;">chunk_limit</span> ]
-    <span style="color: #0000FF; font-weight: bold;">do</span>
-        <span style="color: #BA36A5;">padded_num</span>=$(<span style="color: #FF1493;">printf "%03d" $ix</span>)
-        <span style="color: #006FE0;">echo</span> $<span style="color: #BA36A5;">padded_num</span> &amp;&amp; sleep 1s &amp; <span style="color: #BA36A5;">pids</span>+=($<span style="color: #BA36A5;">!</span>)
+<span style="color: #007ec4;">outer_limit</span>=<span style="color: #11948b;">"$(</span><span style="color: #5e65b6; font-weight: bold;">($limit-$chunk_size</span><span style="color: #11948b;">))"</span>
+<span style="color: #778c00; font-weight: bold;">while</span> [ $<span style="color: #007ec4;">ix</span> -le $<span style="color: #007ec4;">outer_limit</span> ]
+<span style="color: #778c00; font-weight: bold;">do</span>
+    <span style="color: #007ec4;">pids</span>=()
+    <span style="color: #007ec4;">chunk_limit</span>=<span style="color: #11948b;">"$(</span><span style="color: #5e65b6; font-weight: bold;">($ix+$chunk_size</span><span style="color: #11948b;">))"</span>
+    <span style="color: #778c00; font-weight: bold;">while</span> [ $<span style="color: #007ec4;">ix</span> -lt $<span style="color: #007ec4;">chunk_limit</span> ]
+    <span style="color: #778c00; font-weight: bold;">do</span>
+        <span style="color: #007ec4;">padded_num</span>=$(<span style="color: #5e65b6; font-weight: bold;">printf "%03d" $ix</span>)
+        <span style="color: #596e76; font-weight: bold;">echo</span> $<span style="color: #007ec4;">padded_num</span> &amp;&amp; sleep 1s &amp; <span style="color: #007ec4;">pids</span>+=($<span style="color: #007ec4;">!</span>)
         ((ix++))
-    <span style="color: #0000FF; font-weight: bold;">done</span>
-    <span style="color: #006FE0;">wait</span> <span style="color: #008000;">"${pids[@]}"</span>
-    <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"---"</span>
-<span style="color: #0000FF; font-weight: bold;">done</span>
+    <span style="color: #778c00; font-weight: bold;">done</span>
+    <span style="color: #596e76; font-weight: bold;">wait</span> <span style="color: #11948b;">"${pids[@]}"</span>
+    <span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"---"</span>
+<span style="color: #778c00; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -1976,13 +2090,13 @@ As an example, here is a simple shell script
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">!/usr/bin/</span><span style="color: #0000FF; font-weight: bold;">env</span><span style="color: #8D8D84; font-style: italic;"> bash
-</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">demo.sh
+<pre class="src src-sh"><span style="color: #98a6a6;">#</span><span style="color: #98a6a6;">!/usr/bin/</span><span style="color: #778c00; font-weight: bold;">env</span><span style="color: #98a6a6;"> bash
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">demo.sh
 </span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"foo: $2"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"bar: $1"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"foo: $2"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"bar: $1"</span>
 
-ls $<span style="color: #BA36A5;">3</span> | head
+ls $<span style="color: #007ec4;">3</span> | head
 </pre>
 </div>
 
@@ -2011,8 +2125,8 @@ Here is an example of a function which converts an ODG to a PDF
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #006699;">ConvertODG2PDF</span> () {
-    libreoffice --headless --convert-to pdf $<span style="color: #BA36A5;">1</span>
+<pre class="src src-sh"><span style="color: #007ec4;">ConvertODG2PDF</span> () {
+    libreoffice --headless --convert-to pdf $<span style="color: #007ec4;">1</span>
 }
 
 ConvertODG2PDF awesome-figure.odg
@@ -2025,12 +2139,12 @@ ConvertODG2PDF awesome-figure.odg
 <div class="outline-text-4" id="text-orgec25ab5">
 <div class="org-src-container">
 <pre class="src src-sh">
-<span style="color: #006699;">compileStandAlone</span> () {
-    pdflatex $<span style="color: #BA36A5;">1</span>.tex
-    convert -flatten -density 300 $<span style="color: #BA36A5;">1</span>.pdf -colorspace RGB $<span style="color: #BA36A5;">1</span>.png
-    rm $<span style="color: #BA36A5;">1</span>.aux
-    rm $<span style="color: #BA36A5;">1</span>.log
-    rm $<span style="color: #BA36A5;">1</span>.pdf
+<span style="color: #007ec4;">compileStandAlone</span> () {
+    pdflatex $<span style="color: #007ec4;">1</span>.tex
+    convert -flatten -density 300 $<span style="color: #007ec4;">1</span>.pdf -colorspace RGB $<span style="color: #007ec4;">1</span>.png
+    rm $<span style="color: #007ec4;">1</span>.aux
+    rm $<span style="color: #007ec4;">1</span>.log
+    rm $<span style="color: #007ec4;">1</span>.pdf
 }
 
 </pre>
@@ -2046,10 +2160,10 @@ Here is a silly little example of how to loop over an explicity list of strings.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">for</span> month<span style="color: #0000FF; font-weight: bold;"> in</span> jan feb mar;
-<span style="color: #0000FF; font-weight: bold;">do</span>
-    cat foo-$<span style="color: #BA36A5;">month</span>.csv
-<span style="color: #0000FF; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #778c00; font-weight: bold;">for</span> month<span style="color: #778c00; font-weight: bold;"> in</span> jan feb mar;
+<span style="color: #778c00; font-weight: bold;">do</span>
+    cat foo-$<span style="color: #007ec4;">month</span>.csv
+<span style="color: #778c00; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -2065,10 +2179,10 @@ standard out.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">for</span> ix<span style="color: #0000FF; font-weight: bold;"> in</span> <span style="color: #FF1493;">`seq 1 3`</span>;
-<span style="color: #0000FF; font-weight: bold;">do</span>
-    <span style="color: #006FE0;">echo</span> $<span style="color: #BA36A5;">ix</span>
-<span style="color: #0000FF; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #778c00; font-weight: bold;">for</span> ix<span style="color: #778c00; font-weight: bold;"> in</span> <span style="color: #5e65b6; font-weight: bold;">`seq 1 3`</span>;
+<span style="color: #778c00; font-weight: bold;">do</span>
+    <span style="color: #596e76; font-weight: bold;">echo</span> $<span style="color: #007ec4;">ix</span>
+<span style="color: #778c00; font-weight: bold;">done</span>
 </pre>
 </div>
 </div>
@@ -2083,24 +2197,24 @@ servers.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">for</span> i<span style="color: #0000FF; font-weight: bold;"> in</span> $(<span style="color: #FF1493;">seq 1140 1165</span>)
-<span style="color: #0000FF; font-weight: bold;">do</span>
-    sleep 2                     <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">be nice!
-</span>    google-chrome --headless --disable-gpu --print-to-pdf https://www.theguardian.com/crosswords/quiptic/$<span style="color: #BA36A5;">i</span>/print
-    mv output.pdf quiptic-$<span style="color: #BA36A5;">i</span>.pdf
-<span style="color: #0000FF; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #778c00; font-weight: bold;">for</span> i<span style="color: #778c00; font-weight: bold;"> in</span> $(<span style="color: #5e65b6; font-weight: bold;">seq 1140 1165</span>)
+<span style="color: #778c00; font-weight: bold;">do</span>
+    sleep 2                     <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">be nice!
+</span>    google-chrome --headless --disable-gpu --print-to-pdf https://www.theguardian.com/crosswords/quiptic/$<span style="color: #007ec4;">i</span>/print
+    mv output.pdf quiptic-$<span style="color: #007ec4;">i</span>.pdf
+<span style="color: #778c00; font-weight: bold;">done</span>
 
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"==========================================================="</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Guardian - Quiptics"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"-------------------"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"Use the following command to compile the quiptics into a"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"single pdf after you have removed any broken ones by hand:"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"pdftk quiptic-* cat output quiptics.pdf"</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">""</span>
-<span style="color: #006FE0;">echo</span> <span style="color: #008000;">"==========================================================="</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"==========================================================="</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">""</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"Guardian - Quiptics"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"-------------------"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">""</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"Use the following command to compile the quiptics into a"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"single pdf after you have removed any broken ones by hand:"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">""</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"pdftk quiptic-* cat output quiptics.pdf"</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">""</span>
+<span style="color: #596e76; font-weight: bold;">echo</span> <span style="color: #11948b;">"==========================================================="</span>
 </pre>
 </div>
 </div>
@@ -2109,7 +2223,7 @@ servers.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-12-29 Mon 10:16</p>
+<p class="date">Created: 2026-02-27 Fri 16:33</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
