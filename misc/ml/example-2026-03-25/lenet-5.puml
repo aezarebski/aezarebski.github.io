@@ -1,0 +1,97 @@
+@startuml
+<style>
+
+:root {
+	--text: #0b0c0c;
+	--line: #0b0c0c;
+	--brand: #1d70b8;
+	--success: #0f7a52;
+	--surface-border: #8eb8dc;
+	--surface-background: #f4f8fb;
+	--main-background: #ffffff;
+	--focus: #ffdd00;
+}
+
+document {
+  BackGroundColor var(--main-background);
+}
+
+arrow {
+  LineColor var(--line);
+  LineThickness 1.4
+}
+
+object {
+  BackGroundColor: var(--main-background);
+  LineColor: var(--line);
+  LineThickness 1.3
+  FontColor: var(--text);
+  FontName "DejaVu Sans"
+  FontSize 12
+  RoundCorner 6
+}
+</style>
+
+top to bottom direction
+hide stereotype
+
+/'
+ ' note "1998 LeNet as described on Wikipedia\nSome of the details are unclear..." as n0
+ '/
+
+object "InputLayer" as img {
+  input = [(None, 32, 32)]
+  output = [(None, 1, 32, 32)]
+}
+
+object "Convolutional" as c1 {
+	kernel = 5x5
+	input = [(None, 1, 32, 32)]
+	output = [(None, 6, 28, 28)]
+}
+
+object "Pooling" as m1 {
+	stride = 2
+	pooling = Avg/Max(?)
+	input = [(None, 6, 28, 28)]
+	output = [(None, 6, 14, 14)]
+}
+
+object "Convolutional" as c2 {
+	kernel = 5x5
+	input = [(None, 6, 14, 14)]
+	output = [(None, 16, 10, 10)]
+}
+
+object "Pooling" as m2 {
+	stride = 2
+	pooling = Avg/Max(?)
+	input = [(None, 16, 10, 10)]
+	output = [(None, 16, 5, 5)]
+}
+
+object "Convolutional" as c3 {
+	kernel = 16x5x5
+	input = [(None, 6, 5, 5)]
+	output = [(None, 120, 1, 1)]
+}
+
+object "Dense" as d1 {
+  input  = (None, 120)
+  output = (None, 84)
+}
+
+object "Dense" as d2 {
+  input  = (None, 84)
+  output = (None, 10)
+}
+
+img --> c1
+c1 --> m1
+m1 --> c2
+c2 --> m2
+m2 --> c3
+c3 --> d1
+d1 --> d2
+
+@enduml

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-01-06 Tue 14:42 -->
+<!-- 2026-03-17 Tue 16:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>R base graphics gallery</title>
@@ -206,7 +206,7 @@
 </p>
 
 
-<div id="orge45f2aa" class="figure">
+<div id="org11179fa" class="figure">
 <p><img src="../../images/r-logo.png" alt="r-logo.png" width="250px" />
 </p>
 </div>
@@ -223,7 +223,10 @@
 	<a href="#fig-05"><img src="./fig05.png" width="250px"/></a>
 	<a href="#fig-06"><img src="./fig06.png" width="250px"/></a>
 	<a href="#fig-07"><img src="./fig07.png" width="250px"/></a>
-	<!-- <a href="#fig-08"><img src="./fig08.png" width="250px"/></a> -->
+	<a href="#fig-08"><img src="./fig08.png" width="250px"/></a>
+    </div>
+    <div class="row">
+	<a href="#fig-09"><img src="./fig09.png" width="250px"/></a>
     </div>
   </div>
 </div>
@@ -236,25 +239,25 @@
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig01.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig01.png"</span>)
 
-plot(iris[iris$Species == <span style="color: #008000;">"setosa"</span>, ]$Sepal.Length,
-     iris[iris$Species == <span style="color: #008000;">"setosa"</span>, ]$Petal.Length,
-     col = <span style="color: #008000;">"red"</span>, pch = 1,
-     xlab = <span style="color: #008000;">"Sepal Length"</span>, ylab = <span style="color: #008000;">"Petal Length"</span>,
+plot(iris[iris$Species == <span style="color: #11948b;">"setosa"</span>, ]$Sepal.Length,
+     iris[iris$Species == <span style="color: #11948b;">"setosa"</span>, ]$Petal.Length,
+     col = <span style="color: #11948b;">"red"</span>, pch = 1,
+     xlab = <span style="color: #11948b;">"Sepal Length"</span>, ylab = <span style="color: #11948b;">"Petal Length"</span>,
      xlim = range(iris$Sepal.Length), ylim = range(iris$Petal.Length))
-points(iris[iris$Species == <span style="color: #008000;">"versicolor"</span>, ]$Sepal.Length,
-       iris[iris$Species == <span style="color: #008000;">"versicolor"</span>, ]$Petal.Length,
-       col = <span style="color: #008000;">"green"</span>, pch = 2)
-points(iris[iris$Species == <span style="color: #008000;">"virginica"</span>, ]$Sepal.Length,
-       iris[iris$Species == <span style="color: #008000;">"virginica"</span>, ]$Petal.Length,
-       col = <span style="color: #008000;">"blue"</span>, pch = 3)
+points(iris[iris$Species == <span style="color: #11948b;">"versicolor"</span>, ]$Sepal.Length,
+       iris[iris$Species == <span style="color: #11948b;">"versicolor"</span>, ]$Petal.Length,
+       col = <span style="color: #11948b;">"green"</span>, pch = 2)
+points(iris[iris$Species == <span style="color: #11948b;">"virginica"</span>, ]$Sepal.Length,
+       iris[iris$Species == <span style="color: #11948b;">"virginica"</span>, ]$Petal.Length,
+       col = <span style="color: #11948b;">"blue"</span>, pch = 3)
 legend(6.5, 3,
-       title = <span style="color: #008000;">"Species"</span>,
-       legend = c(<span style="color: #008000;">"Setosa"</span>, <span style="color: #008000;">"Versicolor"</span>, <span style="color: #008000;">"Virginica"</span>),
-       col = c(<span style="color: #008000;">"red"</span>, <span style="color: #008000;">"green"</span>, <span style="color: #008000;">"blue"</span>),
+       title = <span style="color: #11948b;">"Species"</span>,
+       legend = c(<span style="color: #11948b;">"Setosa"</span>, <span style="color: #11948b;">"Versicolor"</span>, <span style="color: #11948b;">"Virginica"</span>),
+       col = c(<span style="color: #11948b;">"red"</span>, <span style="color: #11948b;">"green"</span>, <span style="color: #11948b;">"blue"</span>),
        pch = c(1, 2, 3),
-       bg = <span style="color: #008000;">"orange"</span>)
+       bg = <span style="color: #11948b;">"orange"</span>)
 
 dev.off()
 </pre>
@@ -268,18 +271,18 @@ dev.off()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig02.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig02.png"</span>)
 
-x <span style="color: #D0372D;">&lt;-</span> seq(0, 2, length.out = 100)
-<span style="color: #006699;">foo</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x) x
-<span style="color: #006699;">bar</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF; font-weight: bold;">function</span>(x) exp(-(x - 1)^2) * sin(x * 8)
-points_data <span style="color: #D0372D;">&lt;-</span> data.frame(x = seq(0, 2, length = 10), y = rnorm(10))
-plot(x, foo(x), type = <span style="color: #008000;">"l"</span>, col = <span style="color: #008000;">"blue"</span>, xlim = c(0, 2), ylim = c(-1.5, 1.5),
-     xlab = <span style="color: #008000;">"x"</span>, ylab = <span style="color: #008000;">"y"</span>, main = <span style="color: #008000;">"Function"</span>, cex.main = 1.5)
-lines(x, bar(x), col = <span style="color: #008000;">"red"</span>)
-points(points_data$x, points_data$y, col = <span style="color: #008000;">"green"</span>)
-legend(<span style="color: #008000;">"topright"</span>, legend = c(<span style="color: #008000;">"Foo"</span>, <span style="color: #008000;">"Bar"</span>, <span style="color: #008000;">"Baz"</span>), lty = 1, col = c(<span style="color: #008000;">"blue"</span>, <span style="color: #008000;">"red"</span>, <span style="color: #008000;">"green"</span>),
-         cex = 0.8, title = expression(bold(italic(<span style="color: #008000;">"Function"</span>))))
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(0, 2, length.out = 100)
+<span style="color: #007ec4;">foo</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x) x
+<span style="color: #007ec4;">bar</span> <span style="color: #007ec4; font-weight: bold;">&lt;-</span> <span style="color: #778c00; font-weight: bold;">function</span>(x) exp(-(x - 1)^2) * sin(x * 8)
+points_data <span style="color: #007ec4; font-weight: bold;">&lt;-</span> data.frame(x = seq(0, 2, length = 10), y = rnorm(10))
+plot(x, foo(x), type = <span style="color: #11948b;">"l"</span>, col = <span style="color: #11948b;">"blue"</span>, xlim = c(0, 2), ylim = c(-1.5, 1.5),
+     xlab = <span style="color: #11948b;">"x"</span>, ylab = <span style="color: #11948b;">"y"</span>, main = <span style="color: #11948b;">"Function"</span>, cex.main = 1.5)
+lines(x, bar(x), col = <span style="color: #11948b;">"red"</span>)
+points(points_data$x, points_data$y, col = <span style="color: #11948b;">"green"</span>)
+legend(<span style="color: #11948b;">"topright"</span>, legend = c(<span style="color: #11948b;">"Foo"</span>, <span style="color: #11948b;">"Bar"</span>, <span style="color: #11948b;">"Baz"</span>), lty = 1, col = c(<span style="color: #11948b;">"blue"</span>, <span style="color: #11948b;">"red"</span>, <span style="color: #11948b;">"green"</span>),
+         cex = 0.8, title = expression(bold(italic(<span style="color: #11948b;">"Function"</span>))))
 
 dev.off()
 </pre>
@@ -293,22 +296,22 @@ dev.off()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig03.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig03.png"</span>)
 
 data(faithful)
 
-<span style="color: #D0372D;">par</span>(bg = <span style="color: #008000;">"lightgrey"</span>)
+<span style="color: #007ec4; font-weight: bold;">par</span>(bg = <span style="color: #11948b;">"lightgrey"</span>)
 hist(faithful$waiting,
-     main = expression(italic(<span style="color: #008000;">"Waiting Time between Eruptions"</span>)),
+     main = expression(italic(<span style="color: #11948b;">"Waiting Time between Eruptions"</span>)),
      breaks = seq(40, 100, by = 5),
-     xlab = <span style="color: #6434A3;">NULL</span>, ylab = <span style="color: #6434A3;">NULL</span>,
-     col = <span style="color: #008000;">"blue"</span>, border = <span style="color: #008000;">"orange"</span>, bg = <span style="color: #008000;">"grey"</span>)
-axis(side = 1, col.axis = <span style="color: #008000;">"blue"</span>, col = <span style="color: #008000;">"orange"</span>)
-title(xlab = <span style="color: #008000;">"Waiting Time (mins)"</span>,
-        col.lab = <span style="color: #008000;">"orange"</span>, line = 3)
-axis(side = 2, col.axis = <span style="color: #008000;">"orange"</span>, col = <span style="color: #008000;">"green"</span>)
-title(ylab = <span style="color: #008000;">"Frequency"</span>,
-        col.lab = <span style="color: #008000;">"green"</span>, line = 3)
+     xlab = <span style="color: #a67c00;">NULL</span>, ylab = <span style="color: #a67c00;">NULL</span>,
+     col = <span style="color: #11948b;">"blue"</span>, border = <span style="color: #11948b;">"orange"</span>, bg = <span style="color: #11948b;">"grey"</span>)
+axis(side = 1, col.axis = <span style="color: #11948b;">"blue"</span>, col = <span style="color: #11948b;">"orange"</span>)
+title(xlab = <span style="color: #11948b;">"Waiting Time (mins)"</span>,
+        col.lab = <span style="color: #11948b;">"orange"</span>, line = 3)
+axis(side = 2, col.axis = <span style="color: #11948b;">"orange"</span>, col = <span style="color: #11948b;">"green"</span>)
+title(ylab = <span style="color: #11948b;">"Frequency"</span>,
+        col.lab = <span style="color: #11948b;">"green"</span>, line = 3)
 
 dev.off()
 </pre>
@@ -322,25 +325,25 @@ dev.off()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig04.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig04.png"</span>)
 
 data(iris)
 
-<span style="color: #D0372D;">par</span>(bg = <span style="color: #008000;">"lightblue"</span>, mar = c(5, 4, 4, 2) + 0.1)
+<span style="color: #007ec4; font-weight: bold;">par</span>(bg = <span style="color: #11948b;">"lightblue"</span>, mar = c(5, 4, 4, 2) + 0.1)
 
 boxplot(iris$Sepal.Length ~ iris$Species,
-          main = <span style="color: #008000;">"Distribution of Sepal Length in Iris Dataset"</span>,
-          col.main = <span style="color: #008000;">"purple"</span>,
-          xlab = expression(italic(<span style="color: #008000;">"Species"</span>)),
-          ylab = <span style="color: #008000;">"Sepal Length (cm)"</span>,
-          col = <span style="color: #008000;">"purple"</span>,
-          border = <span style="color: #008000;">"red"</span>,
-          notch = <span style="color: #6434A3;">TRUE</span>,
+          main = <span style="color: #11948b;">"Distribution of Sepal Length in Iris Dataset"</span>,
+          col.main = <span style="color: #11948b;">"purple"</span>,
+          xlab = expression(italic(<span style="color: #11948b;">"Species"</span>)),
+          ylab = <span style="color: #11948b;">"Sepal Length (cm)"</span>,
+          col = <span style="color: #11948b;">"purple"</span>,
+          border = <span style="color: #11948b;">"red"</span>,
+          notch = <span style="color: #a67c00;">TRUE</span>,
           boxwex = 0.5,
           staplewex = 0.5,
           outpch = 16,
-          outcol = <span style="color: #008000;">"blue"</span>,
-          horizontal = <span style="color: #6434A3;">FALSE</span>)
+          outcol = <span style="color: #11948b;">"blue"</span>,
+          horizontal = <span style="color: #a67c00;">FALSE</span>)
 
 dev.off()
 </pre>
@@ -354,20 +357,20 @@ dev.off()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig05.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig05.png"</span>)
 
-nrows <span style="color: #D0372D;">&lt;-</span> 5
-ncols <span style="color: #D0372D;">&lt;-</span> 5
-data <span style="color: #D0372D;">&lt;-</span> matrix(runif(nrows * ncols), nrow = nrows)
-rownames <span style="color: #D0372D;">&lt;-</span> as.character(5:9)
-colnames <span style="color: #D0372D;">&lt;-</span> letters[1:5]
+nrows <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 5
+ncols <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 5
+data <span style="color: #007ec4; font-weight: bold;">&lt;-</span> matrix(runif(nrows * ncols), nrow = nrows)
+rownames <span style="color: #007ec4; font-weight: bold;">&lt;-</span> as.character(5:9)
+colnames <span style="color: #007ec4; font-weight: bold;">&lt;-</span> letters[1:5]
 
 heatmap(data,
-          Rowv = <span style="color: #6434A3;">TRUE</span>, <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">include row dendrogram
-</span>          Colv = <span style="color: #6434A3;">NA</span>,
-          xlab = <span style="color: #008000;">"X Axis Label"</span>,
-          ylab = <span style="color: #008000;">"Y Axis Label"</span>,
-          main = expression(bold(italic(<span style="color: #008000;">"Main Title"</span>))),
+          Rowv = <span style="color: #a67c00;">TRUE</span>, <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">include row dendrogram
+</span>          Colv = <span style="color: #a67c00;">NA</span>,
+          xlab = <span style="color: #11948b;">"X Axis Label"</span>,
+          ylab = <span style="color: #11948b;">"Y Axis Label"</span>,
+          main = expression(bold(italic(<span style="color: #11948b;">"Main Title"</span>))),
           labRow = rownames,
           labCol = colnames,
           col = heat.colors(256))
@@ -384,25 +387,25 @@ dev.off()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig06.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig06.png"</span>)
 
-n <span style="color: #D0372D;">&lt;-</span> 100
-x <span style="color: #D0372D;">&lt;-</span> seq(0, 2, length.out = n)
+n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 100
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(0, 2, length.out = n)
 
-y_lines <span style="color: #D0372D;">&lt;-</span> matrix(<span style="color: #6434A3;">NA</span>, nrow = n, ncol = 2)
-y_lines[,1] <span style="color: #D0372D;">&lt;-</span> sin(x)
-y_lines[,2] <span style="color: #D0372D;">&lt;-</span> cos(x)
-y_points <span style="color: #D0372D;">&lt;-</span> matrix(<span style="color: #6434A3;">NA</span>, nrow = n, ncol = 2)
-y_points[,1] <span style="color: #D0372D;">&lt;-</span> rnorm(n = n, mean = sin(x))
-y_points[,2] <span style="color: #D0372D;">&lt;-</span> rnorm(n = n, mean = cos(x))
+y_lines <span style="color: #007ec4; font-weight: bold;">&lt;-</span> matrix(<span style="color: #a67c00;">NA</span>, nrow = n, ncol = 2)
+y_lines[,1] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sin(x)
+y_lines[,2] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> cos(x)
+y_points <span style="color: #007ec4; font-weight: bold;">&lt;-</span> matrix(<span style="color: #a67c00;">NA</span>, nrow = n, ncol = 2)
+y_points[,1] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rnorm(n = n, mean = sin(x))
+y_points[,2] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> rnorm(n = n, mean = cos(x))
 
-matplot(x, y_lines, type = <span style="color: #008000;">"l"</span>, lwd = 3,
+matplot(x, y_lines, type = <span style="color: #11948b;">"l"</span>, lwd = 3,
         ylim = c(min(y_points), max(y_points)),
-        col = c(<span style="color: #008000;">"red"</span>, <span style="color: #008000;">"blue"</span>),
-        ylab = <span style="color: #008000;">"my ylab"</span>, xlab = <span style="color: #008000;">"my xlab"</span>)
-matpoints(x, y_points, pch = 1, col = c(<span style="color: #008000;">"red"</span>, <span style="color: #008000;">"blue"</span>))
+        col = c(<span style="color: #11948b;">"red"</span>, <span style="color: #11948b;">"blue"</span>),
+        ylab = <span style="color: #11948b;">"my ylab"</span>, xlab = <span style="color: #11948b;">"my xlab"</span>)
+matpoints(x, y_points, pch = 1, col = c(<span style="color: #11948b;">"red"</span>, <span style="color: #11948b;">"blue"</span>))
 text(x = 1, y = 0,
-     labels = <span style="color: #008000;">"matplot, matpoints and matlines"</span>,
+     labels = <span style="color: #11948b;">"matplot, matpoints and matlines"</span>,
      srt = 30, cex = 2.5, font = 4)
 
 dev.off()
@@ -417,37 +420,99 @@ dev.off()
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">png(<span style="color: #008000;">"fig07.png"</span>)
+<pre class="src src-R">png(<span style="color: #11948b;">"fig07.png"</span>)
 
-n <span style="color: #D0372D;">&lt;-</span> 100
-x <span style="color: #D0372D;">&lt;-</span> seq(0, 2, length.out = n)
-y_lines <span style="color: #D0372D;">&lt;-</span> matrix(<span style="color: #6434A3;">NA</span>, nrow = n, ncol = 4)
-y_lines[,1] <span style="color: #D0372D;">&lt;-</span> sin(x)
-y_lines[,2] <span style="color: #D0372D;">&lt;-</span> cos(x)
-y_lines[,3] <span style="color: #D0372D;">&lt;-</span> sin(x) + 0.5
-y_lines[,4] <span style="color: #D0372D;">&lt;-</span> cos(x) + 0.5
+n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 100
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(0, 2, length.out = n)
+y_lines <span style="color: #007ec4; font-weight: bold;">&lt;-</span> matrix(<span style="color: #a67c00;">NA</span>, nrow = n, ncol = 4)
+y_lines[,1] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sin(x)
+y_lines[,2] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> cos(x)
+y_lines[,3] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sin(x) + 0.5
+y_lines[,4] <span style="color: #007ec4; font-weight: bold;">&lt;-</span> cos(x) + 0.5
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Play with some of the colours
-</span>col_codes <span style="color: #D0372D;">&lt;-</span> hcl.colors(n = ncol(y_lines), palette = <span style="color: #008000;">"Dark 3"</span>)
-<span style="color: #D0372D;">par</span>(bg = <span style="color: #008000;">"purple"</span>,
-    fg = <span style="color: #008000;">"white"</span>,
-    col.axis = <span style="color: #008000;">"white"</span>,
-    col.lab = <span style="color: #008000;">"white"</span>,
-    col.main = <span style="color: #008000;">"white"</span>)
+<span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">Play with some of the colours
+</span>col_codes <span style="color: #007ec4; font-weight: bold;">&lt;-</span> hcl.colors(n = ncol(y_lines), palette = <span style="color: #11948b;">"Dark 3"</span>)
+<span style="color: #007ec4; font-weight: bold;">par</span>(bg = <span style="color: #11948b;">"purple"</span>,
+    fg = <span style="color: #11948b;">"white"</span>,
+    col.axis = <span style="color: #11948b;">"white"</span>,
+    col.lab = <span style="color: #11948b;">"white"</span>,
+    col.main = <span style="color: #11948b;">"white"</span>)
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">NOTE this initializes an empty plot first.
+<span style="color: #98a6a6;">## </span><span style="color: #98a6a6;">NOTE this initializes an empty plot first.
 </span>plot(0, 0,
-     type = <span style="color: #008000;">"n"</span>,
+     type = <span style="color: #11948b;">"n"</span>,
      xlim = range(x), ylim = range(y_lines),
-     xlab = <span style="color: #008000;">"my xlab"</span>, ylab = <span style="color: #008000;">"my ylab"</span>)
-<span style="color: #0000FF; font-weight: bold;">for</span> (jx <span style="color: #0000FF; font-weight: bold;">in</span> seq_len(ncol(y_lines))) {
+     xlab = <span style="color: #11948b;">"my xlab"</span>, ylab = <span style="color: #11948b;">"my ylab"</span>)
+<span style="color: #778c00; font-weight: bold;">for</span> (jx <span style="color: #778c00; font-weight: bold;">in</span> seq_len(ncol(y_lines))) {
   lines(x, y_lines[,jx], col = col_codes[jx], lwd = 2)
 }
 text(x = 1, y = 0.5,
-     labels = <span style="color: #008000;">"Initializing an empty plot first!"</span>,
-     col = <span style="color: #008000;">"green"</span>,
+     labels = <span style="color: #11948b;">"Initializing an empty plot first!"</span>,
+     col = <span style="color: #11948b;">"green"</span>,
      srt = 30, cex = 2.5, font = 4)
 
+
+dev.off()
+</pre>
+</div>
+
+<h3 id="fig-08">Figure 8</h3>
+<div><img src="./fig08.png" width="900px" /></div>
+
+<p>
+<b>Keywords:</b> image plot, matrix plotting, colour scale
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">png(<span style="color: #11948b;">"fig08.png"</span>)
+
+n <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 20
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(-pi, pi, length.out = n)
+y <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(-pi, pi, length.out = n)
+mixing_matrix <span style="color: #007ec4; font-weight: bold;">&lt;-</span> outer(x, y,
+                       <span style="color: #778c00; font-weight: bold;">function</span>(x, y) sin(x) * cos(y) + cos(2 * x - y))
+tick_at <span style="color: #007ec4; font-weight: bold;">&lt;-</span> seq(1, n, length.out = 10)
+
+image(x = seq_len(n),
+      y = seq_len(n),
+      z = mixing_matrix,
+      axes = <span style="color: #a67c00;">FALSE</span>,
+      ylab = <span style="color: #11948b;">"Foo"</span>, xlab = <span style="color: #11948b;">"Bar"</span>,
+      col = rainbow(10),
+      asp = 1)
+axis(1, at = tick_at, labels = LETTERS[1:10])
+axis(2, at = tick_at, labels = LETTERS[1:10], las = 1)
+
+dev.off()
+</pre>
+</div>
+
+<h3 id="fig-09">Figure 9</h3>
+<div><img src="./fig09.png" width="900px" /></div>
+
+<p>
+<b>Keywords:</b> polygon, shaded region, line plot, transparency
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">png(<span style="color: #11948b;">"fig09.png"</span>)
+
+x <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 1:100
+y <span style="color: #007ec4; font-weight: bold;">&lt;-</span> sin(x / 10)
+se <span style="color: #007ec4; font-weight: bold;">&lt;-</span> 0.2
+
+upper <span style="color: #007ec4; font-weight: bold;">&lt;-</span> y + se
+lower <span style="color: #007ec4; font-weight: bold;">&lt;-</span> y - se
+
+plot(x, y,
+     type = <span style="color: #11948b;">"n"</span>,
+     ylim = range(lower, upper),
+     xlab = <span style="color: #11948b;">"x"</span>, ylab = <span style="color: #11948b;">"sin(x / 10)"</span>)
+polygon(c(x, rev(x)),
+        c(upper, rev(lower)),
+        col = <span style="color: #11948b;">"green"</span>,
+        border = <span style="color: #11948b;">"red"</span>)
+lines(x, y, lwd = 2, col = <span style="color: #11948b;">"purple"</span>)
 
 dev.off()
 </pre>
@@ -455,7 +520,7 @@ dev.off()
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2026-01-06 Tue 14:42</p>
+<p class="date">Created: 2026-03-17 Tue 16:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

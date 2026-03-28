@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-28 Sat 13:18 -->
+<!-- 2026-03-28 Sat 13:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Alex's adventures with neural networks (AANN)</title>
+<title>AANN 25/03/2026</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -199,93 +199,120 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Alex's adventures with neural networks (AANN)</h1>
+<h1 class="title">AANN 25/03/2026</h1>
+<div class="nav-buttons">
+  <a class="button button-outline nav-button" href="./post-2025-11-01.html">Previous</a>
+  <a class="button button-outline nav-button" href="../../index.html">Home</a>
+  <a class="button button-outline nav-button" href="./index.html">Index</a>
+  <a class="button button-outline nav-button" href="./post-2026-03-25.html">Next</a>
+</div>
+
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9fa183a">Posts</a></li>
-<li><a href="#orgbe0c38f">References</a></li>
+<li><a href="#org1a3c599">Visualising neural networks</a>
+<ul>
+<li><a href="#org7dd9904">Example: LeNet (1998)</a></li>
+<li><a href="#org165a6a2">Example: Zarebski <i>et al</i> (2026)</a></li>
+<li><a href="#orge26ad16">Thanks</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<p>
-<a href="../../index.html">Home</a>
+<div id="outline-container-org1a3c599" class="outline-2">
+<h2 id="org1a3c599">Visualising neural networks</h2>
+<div class="outline-text-2" id="text-org1a3c599">
+
+<div id="orgb2535d6" class="figure">
+<p><img src="./example-2026-03-25/cover-image.png" alt="cover-image.png" width="400px" />
 </p>
-<div id="outline-container-org9fa183a" class="outline-2">
-<h2 id="org9fa183a">Posts</h2>
-<div class="outline-text-2" id="text-org9fa183a">
-<dl class="org-dl">
-<dt>2026-03-25</dt><dd><a href="./post-2026-03-25.html">Visualising neural networks</a></dd>
-<dt>2025-11-01</dt><dd><a href="./post-2025-11-01.html">B-splines</a></dd>
-<dt>2025-09-06</dt><dd><a href="./post-2025-09-06.html"><code>rsync</code></a></dd>
-<dt>2025-01-21</dt><dd><a href="./post-2025-01-21.html">Conditional Real NVP</a></dd>
-<dt>2024-12-28</dt><dd><a href="./post-2024-12-28.html">Real NVP</a></dd>
-<dt>2024-06-06</dt><dd><a href="./post-2024-06-06.html">Speed reading</a> with h5py</dd>
-<dt>2024-05-16</dt><dd><a href="./post-2024-05-16.html">Universal approximation theorem</a></dd>
-<dt>2024-05-02</dt><dd><a href="./post-2024-05-02.html">Hyperparameter optimisation with Optuna</a></dd>
-<dt>2024-03-28</dt><dd><a href="./post-2024-03-28.html">Orthonormal certificates</a> for epistemic uncertainty</dd>
-<dt>2024-03-14</dt><dd><a href="./post-2024-03-14.html">Another look at SQR</a></dd>
-<dt>2024-02-22</dt><dd><a href="./post-2024-02-22.html">Early stopping rule</a> with a <code>ValidationManager</code></dd>
-<dt>2024-02-08</dt><dd><a href="./post-2024-02-08.html">Gated multimodal units</a> with synthetic data</dd>
-<dt>2024-01-25</dt><dd><a href="./post-2024-01-25.html">Simultaneous quantile regression</a> (SQR) with the pinball loss</dd>
-<dt>2024-01-11</dt><dd><a href="./post-2024-01-11.html">Neural Bayes estimators</a> using a permutation invariant architecture</dd>
-<dt>2024-01-09</dt><dd><a href="./post-2024-01-09.html">Fine-tuning for MNIST classification</a></dd>
-<dt>2024-01-07</dt><dd><a href="./post-2024-01-04.html">CNN with dropout for MNIST classification</a></dd>
-<dt>2024-01-04</dt><dd><a href="./post-2024-01-04.html">CNN using PyTorch for MNIST classification</a></dd>
-<dt>2024-01-03</dt><dd><a href="./post-2024-01-03.html">Basic model using PyTorch for MNIST classification</a></dd>
-</dl>
 </div>
+
+<p>
+People really like to visualise neural network architectures. Some of
+these figures are helpful, some are not, there are <a href="https://github.com/ashishpatel26/Tools-to-Design-or-Visualize-Architecture-of-Neural-Network">many tools</a> for
+generating them. I haven't found one I like. When I saw Figure 12 from
+<a href="https://doi.org/10.48550/arXiv.2508.02404">Tomaselli et al (2025)</a>, it got me wondering if it would be <del>possible</del>
+<i>convenient</i> to do this in <b>PlantUML</b><sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. <a href="https://en.wikipedia.org/wiki/PlantUML">PlantUML</a> is a language
+for making these types of diagrams which I think does a good job of
+balancing ease of use with flexibility<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
+</p>
+
+<p>
+Here are a couple of figures I created and PlantUML files to generate
+them. I think a <a href="https://en.wikipedia.org/wiki/Plate_notation">plate notation</a>, like the one used for visualising
+graphical models would be nice if you wanted to represent a very deep
+network. However, that complexity might make them harder to read.
+</p>
+
+<p>
+If you have any suggestions for how to improve these, please send them
+my way!
+</p>
 </div>
-<div id="outline-container-orgbe0c38f" class="outline-2">
-<h2 id="orgbe0c38f">References</h2>
-<div class="outline-text-2" id="text-orgbe0c38f">
-</div>
-<div id="outline-container-orgc05f4a0" class="outline-3">
-<h3 id="orgc05f4a0">Software</h3>
-<div class="outline-text-3" id="text-orgc05f4a0">
-<ul class="org-ul">
-<li><a href="https://pytorch.org/docs/stable/index.html">PyTorch Documentation</a></li>
-<li><a href="https://www.oreilly.com/library/view/pytorch-pocket-reference/9781492089995/">Papa (2021)</a> <i>PyTorch Pocket Reference</i></li>
-<li><a href="https://doi.org/10.48550/arXiv.1907.10902">Akiba et al (2019)</a> the reference for <a href="https://optuna.readthedocs.io/en/stable/index.html">Optuna</a></li>
-<li><a href="https://rsync.samba.org/">rsync</a> <i>remote synchronisation</i></li>
-<li><a href="http://plantuml.com/">PlantUML</a></li>
-</ul>
-</div>
-<div id="outline-container-orga77ee21" class="outline-4">
-<h4 id="orga77ee21">Repositories</h4>
-<div class="outline-text-4" id="text-orga77ee21">
-<ul class="org-ul">
-<li><a href="https://github.com/srush/Tensor-Puzzles">Tensor puzzles</a> to help learn <i>broadcasting</i> in PyTorch.</li>
-</ul>
+<div id="outline-container-org7dd9904" class="outline-3">
+<h3 id="org7dd9904">Example: LeNet (1998)</h3>
+<div class="outline-text-3" id="text-org7dd9904">
+<p>
+In Fig <a href="#orgbb63b75">1</a> I've shown a diagram of <a href="https://en.wikipedia.org/wiki/LeNet#1998_LeNet">LeNet (1998)</a> based on the
+description on Wikipedia. The PlantUML file is <a href="./example-2026-03-25/lenet-5.puml">here</a>.
+</p>
+
+
+<div id="orgbb63b75" class="figure">
+<p><img src="./example-2026-03-25/lenet-5.png" alt="lenet-5.png" width="200px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>LeNet (1998) based on the description in Wikipedia</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org2dfaa5f" class="outline-3">
-<h3 id="org2dfaa5f">Theory</h3>
-<div class="outline-text-3" id="text-org2dfaa5f">
-<ul class="org-ul">
-<li><a href="https://cs231n.github.io/convolutional-networks/">CS231n: Deep Learning for Computer Vision</a></li>
-<li><a href="https://arxiv.org/abs/1207.0580">Hinton et al (2012)</a> the reference for <i>dropout regularisation</i>.</li>
-<li><a href="https://doi.org/10.1080/00031305.2023.2249522">Sainsbury-Dale et al (2023)</a> for a review of <i>neural Bayes estimators</i>.</li>
-<li><a href="https://doi.org/10.1007/3-540-49430-8_3">Prechelt (1998)</a> the reference for three types of <i>early-stopping</i>.</li>
-<li><a href="https://doi.org/10.48550/arXiv.1811.00908">Tagasovska and Lopez-Paz (2019)</a> the reference for <i>simultaneous quantile regression</i>.</li>
-<li><a href="https://arxiv.org/abs/1905.03222">Romano et al (2019)</a>) the reference for <i>conformalized quantile regression</i>.</li>
-<li><a href="https://arxiv.org/abs/1702.01992">Arevalo et al (2017)</a> the reference for <i>gated multimodal units</i>.</li>
-<li><a href="https://doi.org/10.48550/arXiv.1606.08415">Hendrycks and Gimpel (2016)</a> the reference for <i>Gaussian error linear units</i>.</li>
-<li><a href="https://www.bishopbook.com/">Bishop and Bishop (2024)</a> provides a comprehensive introduction to deep learning.
-<ul class="org-ul">
-<li>Chapter 18 covers <i>normalizing flows</i></li>
-</ul></li>
-<li><a href="https://doi.org/10.48550/arXiv.1605.08803">Dinh et al (2017)</a> the reference for <i>real NVP</i>.</li>
-</ul>
+<div id="outline-container-org165a6a2" class="outline-3">
+<h3 id="org165a6a2">Example: Zarebski <i>et al</i> (2026)</h3>
+<div class="outline-text-3" id="text-org165a6a2">
+<p>
+In Fig <a href="#orgf9db6f8">2</a> I've shown a diagram of a recursive neural network
+from my recent preprint, <a href="https://doi.org/10.48550/arXiv.2603.08345">Zarebski et al (2026)</a>. I've tried to indicate
+the recursion with some dashed lines; there must be a better way to do
+this. The PlantUML file is <a href="./example-2026-03-25/derp.puml">here</a>.
+</p>
+
+
+<div id="orgf9db6f8" class="figure">
+<p><img src="./example-2026-03-25/derp.png" alt="derp.png" width="800px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Recursive neural network used for amortized simulation-based inference. The blue nodes and edges highlight the recursion.</p>
 </div>
 </div>
 </div>
+<div id="outline-container-orge26ad16" class="outline-3">
+<h3 id="orge26ad16">Thanks</h3>
+<div class="outline-text-3" id="text-orge26ad16">
+<p>
+Thanks for reading! Please get in touch if you have any feedback :)
+</p>
 </div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Which may have been generated by <a href="https://keras.io/api/utils/model_plotting_utils/">Keras</a> (and Graphviz).
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+PlantUML files are plain text, so they are easier for our AI collaborators to read, and you don't need to mess about with laying out the nodes. <a href="https://en.wikipedia.org/wiki/YEd">yEd</a> also deserves an honourable mention as a freemium GUI option if you don't like plain text.
+</p></div></div>
+
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2026-03-28 Sat 13:18</p>
+<p class="date">Created: 2026-03-28 Sat 13:20</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
