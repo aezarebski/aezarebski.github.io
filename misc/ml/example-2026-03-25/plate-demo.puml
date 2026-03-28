@@ -1,0 +1,106 @@
+@startuml
+<style>
+
+:root {
+	--text: #0b0c0c;
+	--line: #0b0c0c;
+	--brand: #1d70b8;
+	--success: #0f7a52;
+	--surface-border: #8eb8dc;
+	--surface-background: #f4f8fb;
+	--main-background: #ffffff;
+	--focus: #ffdd00;
+}
+
+document {
+  BackGroundColor var(--main-background);
+}
+
+arrow {
+  LineColor var(--line);
+  LineThickness 1.4
+}
+
+frame {
+  LineThickness 1.2
+  LineColor: var(--success);
+  FontColor: var(--success);
+  FontName "DejaVu Sans"
+  FontSize 13
+  RoundCorner 6
+}
+
+object {
+  BackGroundColor: var(--main-background);
+  LineThickness 1.3
+  LineColor: var(--line);
+  FontColor: var(--text);
+  FontName "DejaVu Sans"
+  FontSize 12
+  RoundCorner 6
+  .plate {
+    LineColor: var(--success);
+    FontColor: var(--success);
+  }
+}
+</style>
+
+top to bottom direction
+hide stereotype
+
+note as n1
+	Without plate notation
+end note
+
+object "Dense" as a1 {
+  input  = (None, 100)
+  output = (None, 90)
+}
+
+object "Dense" as a2 {
+  input  = (None, 90)
+  output = (None, 80)
+}
+
+object "Dense" as a3 {
+  input  = (None, 80)
+  output = (None, 70)
+}
+
+object "Dense" as a4 {
+  input  = (None, 70)
+  output = (None, 60)
+}
+
+a1 --> a2
+a2 --> a3
+a3 --> a4
+
+
+note as n2
+	With plate notation
+end note
+
+object "Dense" as b1 {
+  input  = (None, 100)
+  output = (None, 90)
+}
+
+frame "i = 90,80" as f {
+
+object "Dense" as b2 <<plate>> {
+  input  = (None, i)
+  output = (None, i-10)
+}
+}
+
+object "Dense" as b3 {
+  input  = (None, 70)
+  output = (None, 60)
+}
+
+
+b1 -[#0f7a52]-> f
+f -[#0f7a52]-> b3
+
+@enduml
