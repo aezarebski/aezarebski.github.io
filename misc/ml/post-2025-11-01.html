@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-11-01 Sat 19:58 -->
+<!-- 2026-03-28 Sat 13:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AANN 06/09/2025</title>
+<title>AANN 01/11/2025</title>
 <meta name="author" content="Alexander E. Zarebski" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -196,200 +196,222 @@
 <link rel="icon" type="image/png" href="../../resources/nicemacs-favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 <link rel="stylesheet" href="../../microgram.css">
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">AANN 06/09/2025</h1>
+<h1 class="title">AANN 01/11/2025</h1>
 <div class="nav-buttons">
-  <a class="button button-outline nav-button" href="./post-2025-01-21.html">Previous</a>
+  <a class="button button-outline nav-button" href="./post-2025-09-06.html">Previous</a>
   <a class="button button-outline nav-button" href="../../index.html">Home</a>
   <a class="button button-outline nav-button" href="./index.html">Index</a>
-  <a class="button button-outline nav-button" href="./post-2025-11-01.html">Next</a>
+  <a class="button button-outline nav-button" href="./post-2026-03-25.html">Next</a>
 </div>
 
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org74fed1b"><code>rsync</code></a>
+<li><a href="#orged7b83c">B-splines</a>
 <ul>
-<li><a href="#orgb9a5808">Overview</a></li>
-<li><a href="#org6db712b">Background</a></li>
-<li><a href="#orgd75618b">Example</a></li>
-<li><a href="#org0d3c97a">Discussion</a></li>
-<li><a href="#orgf518942">Thanks</a></li>
+<li><a href="#org6d1fd9d">Overview</a></li>
+<li><a href="#org5298637">Background</a></li>
+<li><a href="#orga21bca7">Example</a></li>
+<li><a href="#orgb798099">Discussion</a></li>
+<li><a href="#org88a2f7f">Thanks</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org74fed1b" class="outline-2">
-<h2 id="org74fed1b"><code>rsync</code></h2>
-<div class="outline-text-2" id="text-org74fed1b">
+<div id="outline-container-orged7b83c" class="outline-2">
+<h2 id="orged7b83c">B-splines</h2>
+<div class="outline-text-2" id="text-orged7b83c">
 
-<div id="org68d542c" class="figure">
-<p><img src="./example-2025-09-06/cover-image.png" alt="cover-image.png" width="400px" />
+<div id="orgda28569" class="figure">
+<p><img src="./example-2025-11-01/cover-image.png" alt="cover-image.png" width="400px" />
 </p>
 </div>
 </div>
-<div id="outline-container-orgb9a5808" class="outline-3">
-<h3 id="orgb9a5808">Overview</h3>
-<div class="outline-text-3" id="text-orgb9a5808">
+<div id="outline-container-org6d1fd9d" class="outline-3">
+<h3 id="org6d1fd9d">Overview</h3>
+<div class="outline-text-3" id="text-org6d1fd9d">
 <p>
-In this post, we will visit an awesome tool from the 90's that hasn't
-aged a day. It is <a href="https://rsync.samba.org/">rsync</a> (<i>remote sync</i>), a tool that takes care of
-copying files between locations (often across different machines on a
-network) in a way that avoids unnecessary copies and preserves
-information about the files.
-</p>
-
-<p>
-In computational work, we usually do bigger tasks a server, and git
-isn't always the best way to share larger files. I often find myself
-working on a non-trivial dataset and code which will generate a
-substantial volume of output. I can work on the code locally and
-analyse a subset of the data, but when I want to analyse the whole
-thing properly, it all needs to go on the server. Then I need to pull
-some (but not all) of the output back from the server. Do this a few
-times and it gets annoying remembering which files are involved in
-which steps, so of course I'm going to script it.
-</p>
-
-<p>
-<b>Wait!</b> Before you write yet another shell script to do the copying
-to-and-from, or click and drag a bunch of files, remember <code>rsync</code> can
-help.
+In this post we will consider one of the classic methods of curve
+fitting, <a href="https://en.wikipedia.org/wiki/B-spline">B-slines</a>. This is one of those things that I probably was
+taught in my undergrad numerics course but have since completely
+forgotten. Basically, the idea is to build some simple functions and
+use a linear combination of them to approximate the curve of interest.
+If you can tolerate some calculus and linear alegbra, you can then
+find neat ways to regularise this problem. Don't worry though, this
+post just demonstrates how you might work with these objects in
+Python.
 </p>
 </div>
 </div>
-<div id="outline-container-org6db712b" class="outline-3">
-<h3 id="org6db712b">Background</h3>
-<div class="outline-text-3" id="text-org6db712b">
+<div id="outline-container-org5298637" class="outline-3">
+<h3 id="org5298637">Background</h3>
+<div class="outline-text-3" id="text-org5298637">
 <p>
-rsync is available on most Linux machines. There is a useful
-introduction to rsync <a href="https://everythinglinux.org/rsync/">here</a> (and a simpler one <a href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories">here</a>.) Commands will
-look like the following:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-nil">rsync [OPTIONS] SRC DEST
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgd75618b" class="outline-3">
-<h3 id="orgd75618b">Example</h3>
-<div class="outline-text-3" id="text-orgd75618b">
-<p>
-My use case for this is keeping code, data and results synced up
-between my local machine and a server (in this case, the server is
-called <code>brahms</code>). I have one script to sync my code and data to the
-server, and another to sync the important output back to my local
-machine (without all the intermediate output that I don't really care
-about.)
+B-spline basis elements, \(B_{i,p}(x)\), are piece-wise polynomial
+functions. To construct these functions, you need to specify two
+things: the degree \(p\) of the polynomials, and a set of "knots",
+\(x_0 \leq x_1 \leq ... \leq x_m\). (The knots after the first \(p\)
+and before the last \(p\) are called the internal knots.) The most
+popular choice is \(p=3\), <i>cubic splines</i>.
 </p>
 
 <p>
-<b>Important</b> The <code>--dry-run</code> flag does exactly what it says and is a
-nice way to check that you aren't accidentally going to mess things
-up!
-</p>
-</div>
-<div id="outline-container-orgece8f10" class="outline-4">
-<h4 id="orgece8f10">Copying to the server</h4>
-<div class="outline-text-4" id="text-orgece8f10">
-<p>
-Here I wanted to send all the code and data from current directory
-(<code>./</code> which is the root of the project) to the server
-(<code>brahms:~/projects/derp-simulation</code>), but to exclude existing output
-and the git repository I'm working in.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">rsync --archive --progress --compress <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"out/"</span> <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"/.git/"</span> <span style="color: #79a8ff;">\</span>
-        ./ brahms:~/projects/derp-simulation
-</pre>
-</div>
-
-<p>
-The <code>--archive</code> comment tells rsync to do this recursively while also
-preserving file information. The <code>--progress</code> flag tells rsync to
-print progress out and <code>--compress</code> tells it to compress the diffs
-before sending them (to reduce network usage). The <code>--exclude</code>
-examples provide a way to ignore files matching those patterns.
+The functions are constructed recursively. The base case
+for constant functions is the following:
 </p>
 
 <p>
-There is an <code>--include</code> flag to tell rsync to include files that would
-be excluded by subsequent <code>--exclude</code> flags, but the order of the
-flags matters here so be careful. Dry runs will help in setting this
-up correctly&#x2026;
-</p>
-</div>
-</div>
-<div id="outline-container-org8cb36ed" class="outline-4">
-<h4 id="org8cb36ed">Copying from the server</h4>
-<div class="outline-text-4" id="text-org8cb36ed">
-<p>
-This script is also runs from the root of the project, <code>./</code>, on my
-local machine, but pulls the output back from the server. There are a
-lot of intermediate files (e.g. the pickle, tree and XML files) that
-get generated, and I don't need them so there are exclude flags to
-prevent them being copied over.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">rsync --archive --progress --compress <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"*pickle"</span> <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"*time"</span> <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"*traj"</span> <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"*tree"</span> <span style="color: #79a8ff;">\</span>
-        --exclude <span style="color: #79a8ff;">"*xml"</span> <span style="color: #79a8ff;">\</span>
-        brahms:~/projects/derp-simulation/out/ ./out
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-org0d3c97a" class="outline-3">
-<h3 id="org0d3c97a">Discussion</h3>
-<div class="outline-text-3" id="text-org0d3c97a">
-<p>
-In this post, we have looked at an example of how rsync has helped to
-simplify moving (large and numerous) files between my laptop and a
-server. Perhaps not the most exciting topic, but it is something that
-I find far less annoying when using rsync.
+\[
+B_{i,0} = \begin{cases}
+      1 & x_i\leq x < x_{i+1} \\
+      0 & \text{otherwise}
+   \end{cases}
+\]
 </p>
 
 <p>
-If you're not sold on the command line interface, there are graphical
-interfaces: <a href="https://www.opbyte.it/grsync/">Grsync</a> looks like a good option, and there is a pure
-python clone, but I haven't used either. Also, I have heard good
-things about <a href="https://github.com/bcpierce00/unison">Unison</a> but that feels a bit heavy for my needs.
+The \(B_{i,p}(x)\) is only non-zero on the interval \([x_i,
+x_{i+p+1})\). The recursion is
 </p>
 
 <p>
-So remember, before you write yet another shell script to move files
-around or click and drag a bunch of stuff, keep <code>rsync</code> in mind.
+\[
+B_{i,p}(x) = \frac{x-x_i}{x_{i+p}-x_{i}}B_{i,p-1}(x) + \frac{x_{i+p+1}-x}{x_{i+p+1}-x_{i+1}} B_{i+1,p-1}(x)
+\]
 </p>
-</div>
-</div>
-<div id="outline-container-orgf518942" class="outline-3">
-<h3 id="orgf518942">Thanks</h3>
-<div class="outline-text-3" id="text-orgf518942">
+
 <p>
-Thank you to the members of the <a href="https://rsync.samba.org/">developers and maintainers of rsync</a>
-and to <a href="https://www.infectiousdisease.cam.ac.uk/staff/dr-david-pascall">David Pascall</a> for helpful comments on a draft of this post.
+Looking at the powers of \(x\), you can see why they are degree \(p\)
+polynomials over some of the intervals and zero outside this interval.
+If you set things up correctly, these functions sum to \(1\) and are
+non-negative.
+</p>
+
+<p>
+The approximations we will construct, \(\hat{f}(x)\), with these basis
+functions are of the form \(\hat{f}(x) = \sum_i w_i B_{i,p}(x)\). The
+idea here is to set this up as a linear algebra problem where we just
+need to select appropriate \(w_i\).
 </p>
 </div>
+</div>
+<div id="outline-container-orga21bca7" class="outline-3">
+<h3 id="orga21bca7">Example</h3>
+<div class="outline-text-3" id="text-orga21bca7">
+<p>
+As a toy example, lets consider an experiment the little robot
+character carried out. You can get a copy of the script <a href="./example-2025-11-01/demo.py">here</a>. Everyday
+for 100 days, they flipped a coin 10 times and recorded the number of
+heads. They think the probability of getting a heads changes across
+this time and want to model the probability of heads through time. The
+time series of binomial random variables resulting from this is shown
+below.
+</p>
+
+
+<div id="org1d08d53" class="figure">
+<p><img src="./example-2025-11-01/binomial_data.png" alt="binomial_data.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>The number of heads among 10 flips as seen by the little robot each day.</p>
+</div>
+
+<p>
+Our B-spline basis can be computed using the <code>BSpline</code> class provided
+by <code>scipy.interpolate</code> (although it is a bit of a hassle to get these
+values to match up with the ones provided by R, you need to add some
+extra knots at each end. If you are using R, there is the
+<code>splines::bs</code> function.
+</p>
+
+<p>
+Taking a set of 17 cubic splines, we get the basis shown in the
+following plot. We can also sample from random weights \(w_i\) from a
+uniform distribution to construct some random functions.
+</p>
+
+
+<div id="orgd4ced12" class="figure">
+<p><img src="./example-2025-11-01/bsplines_and_random_function.png" alt="bsplines_and_random_function.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>A basis of cubic B-splines and a couple of random combinations of them.</p>
+</div>
+
+<p>
+If we consider weights \(0\leq w_i \leq 1\) then the \(\hat{f}\) will
+provide values in \([0,1]\). We model the number of heads on day
+\(i\), (in Figure <a href="#org1d08d53">1</a>) as \(H_i\sim\text{Binomial}(10, f(i))\), where
+\(f\) is a function returning the probability of heads. We are
+interested in estimating a function \(\hat{f}(x) = \sum_i w_i
+B_{i,3}(x)\) to approximate \(f(x)\). Since we can write down a
+log-likelihood for this model, this reduces to optimizing the \(w_i\).
+There are probably cleaner ways to do this, but throwing this in a
+standard PyTorch loop gives us the fit shown below which is decent.
+</p>
+
+
+<div id="orge294092" class="figure">
+<p><img src="./example-2025-11-01/fitted_vs_true_probabilities.png" alt="fitted_vs_true_probabilities.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 3: </span>The true probability used to simulate the coin flips and the fitted function describing the daily probability of heads.</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb798099" class="outline-3">
+<h3 id="orgb798099">Discussion</h3>
+<div class="outline-text-3" id="text-orgb798099">
+<p>
+In this post, we have looked at an example of how you can use
+B-splines to approximate functions. By turning function approximation
+into a linear algebra problem, it becomes far easier to tackle with
+computers.
+</p>
+</div>
+</div>
+<div id="outline-container-org88a2f7f" class="outline-3">
+<h3 id="org88a2f7f">Thanks</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-11-01 Sat 19:58</p>
+<p class="date">Created: 2026-03-28 Sat 13:19</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
