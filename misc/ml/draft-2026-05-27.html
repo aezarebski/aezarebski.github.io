@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-29 Wed 12:52 -->
+<!-- 2026-05-14 Thu 19:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AANN 27/05/2026</title>
@@ -234,10 +234,10 @@
 <div id="content" class="content">
 <h1 class="title">AANN 27/05/2026</h1>
 <div class="nav-buttons">
-  <a class="button button-outline nav-button" href="./post-2025-11-01.html">Previous</a>
+  <a class="button button-outline nav-button" href="./post-2026-04-18.html">Previous</a>
   <a class="button button-outline nav-button" href="../../index.html">Home</a>
   <a class="button button-outline nav-button" href="./index.html">Index</a>
-  <a class="button button-outline nav-button" href="./post-2026-03-25.html">Next</a>
+  <a class="button button-outline nav-button" href="./draft-2026-06-03.html">Next</a>
 </div>
 
 <div id="table-of-contents" role="doc-toc">
@@ -249,15 +249,15 @@
 <li><a href="#sec:overview">Overview</a></li>
 <li><a href="#sec:background">Background</a>
 <ul>
-<li><a href="#org6c57f2b">Renewal models and active surveillance</a></li>
-<li><a href="#orgc364f29">ERRIC, a one-dimensional CNN with residual connections</a></li>
+<li><a href="#org2aab1a8">Renewal models and active surveillance</a></li>
+<li><a href="#orgd733a9c">ERRIC, a one-dimensional CNN with residual connections</a></li>
 </ul>
 </li>
 <li><a href="#sec:example">Example</a>
 <ul>
 <li><a href="#sec:simulation">Simulating data</a></li>
 <li><a href="#sec:training">Training ERRIC</a></li>
-<li><a href="#org560e748">Predictions</a></li>
+<li><a href="#org84a1d31">Predictions</a></li>
 </ul>
 </li>
 <li><a href="#sec:discussion">Discussion</a></li>
@@ -272,7 +272,7 @@
 <h2 id="sec:cnns">ERRIC the estimator: part 1</h2>
 <div class="outline-text-2" id="text-sec:cnns">
 
-<div id="org4e6c79e" class="figure">
+<div id="org5effc6a" class="figure">
 <p><img src="./example-2026-05-27/cover-image.png" alt="cover-image.png" width="400px" />
 </p>
 </div>
@@ -292,12 +292,13 @@ architecture for this problem.
 </p>
 
 <p>
-I plan to build up this estimator over a couple more posts. Here we
-are just going to get our bearings with how to use a Conv1D for this
-task. I'll defer uncertainty quantification and parametric uncertainty
-for subsequent posts<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. Since every network needs a name, let's call
-this one <b>ERRIC</b> for <i>Estimating Renewal with ResIdual Convolutional
-networks</i>. Yes, it's a bit of a stretch&hellip;
+I plan to build up this estimator over a couple more posts. (You can
+find <a href="./draft-2026-06-03.html">part 2 here</a>.) For now, we are just going to get our bearings with
+how to use a Conv1D for this task. I'll defer uncertainty
+quantification and parametric uncertainty for subsequent posts<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
+Since every network needs a name, let's call this one <b>ERRIC</b> for
+<i>Estimating Renewal with ResIdual Convolutional networks</i>. Yes, it's a
+bit of a stretch&hellip;
 </p>
 </div>
 </div>
@@ -309,9 +310,9 @@ Before we get into ERRIC, we need to understand the task we are trying
 to solve first.
 </p>
 </div>
-<div id="outline-container-org6c57f2b" class="outline-4">
-<h4 id="org6c57f2b">Renewal models and active surveillance</h4>
-<div class="outline-text-4" id="text-org6c57f2b">
+<div id="outline-container-org2aab1a8" class="outline-4">
+<h4 id="org2aab1a8">Renewal models and active surveillance</h4>
+<div class="outline-text-4" id="text-org2aab1a8">
 <p>
 Renewal models are a convenient structure for describing an epidemic
 time series. In this model, the number of infections \(I_t\) on day
@@ -352,7 +353,7 @@ false-positives).
 </p>
 
 <p>
-Figure <a href="#org9ebf17d">1</a> shows an example of what this process might look
+Figure <a href="#org443112c">1</a> shows an example of what this process might look
 like. The top panel has the \(\beta_t\), which is a random sum of
 trigonometric functions (see <a href="#sec:simulation">below</a> for details); the middle panel
 shows the \(I_t\), the daily number of infections; and the bottom
@@ -362,7 +363,7 @@ epidemic of 365 days.
 </p>
 
 
-<div id="org9ebf17d" class="figure">
+<div id="org443112c" class="figure">
 <p><img src="./example-2026-05-27/img/example-timeseries.png" alt="example-timeseries.png" width="600px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Epidemic time series generated with a renewal model. Top panel shows the values of beta across 365 days, the dashed line at one indicates the critical threshold for epidemics. The middle panel shows the daily number of infections. This looks smooth because they are drawn from a Poisson distribution with a large mean. Note that by day 250 there are no further infections. The bottom panel shows daily number of positive tests assuming the tests are distributed to members of the population at random.</p>
@@ -376,12 +377,12 @@ uncertainty.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc364f29" class="outline-4">
-<h4 id="orgc364f29">ERRIC, a one-dimensional CNN with residual connections</h4>
-<div class="outline-text-4" id="text-orgc364f29">
+<div id="outline-container-orgd733a9c" class="outline-4">
+<h4 id="orgd733a9c">ERRIC, a one-dimensional CNN with residual connections</h4>
+<div class="outline-text-4" id="text-orgd733a9c">
 <p>
 We are attempting to regress one time series onto another. Figure
-<a href="#org7ca3ab3">2</a> shows the architecture of ERRIC, a convolutional neural
+<a href="#org4998b8d">2</a> shows the architecture of ERRIC, a convolutional neural
 network (CNN) that maps our two input channels: the daily number of
 positive and \(Y_t\) negative tests \(N_{\text{test}}-Y_t\)<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>, to
 our two output channels: the predictions of \(\beta_t\) and \(I_t\).
@@ -391,7 +392,7 @@ them in <a href="https://www.bishopbook.com/">Bishop &amp; Bishop (2024)</a>.
 </p>
 
 
-<div id="org7ca3ab3" class="figure">
+<div id="org4998b8d" class="figure">
 <p><img src="./example-2026-05-27/network.png" alt="network.png" width="900px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Example of a residual CNN with eight Conv1D residual blocks. (If you like this figure, you might like <a href="./post-2026-03-25.html">this post</a>.) This is a pre-activation residual network. The initial Conv1D is needed as the number of input channels may differ from the number of internal channels.</p>
@@ -429,7 +430,7 @@ The values of \(\beta_t\) are random functions,
 
 <p>
 \[
-\beta_{t}=f_{a,b}\left(b - a\frac{t}{365} + \sum_{i=1}^{3}Z_{i,1}\sin\left(\frac{2\pi t}{365}\right)+Z_{i,2}\cos\left(\frac{2\pi t}{365}\right)\right)
+\beta_{t}=f_{a,b}\left(b - a\frac{t}{365} + \sum_{i=1}^{3}Z_{i,1}\sin\left(\frac{2\pi ti}{365}\right)+Z_{i,2}\cos\left(\frac{2\pi ti}{365}\right)\right)
 \]
 </p>
 
@@ -445,29 +446,38 @@ f_{a,b}(x)=(b-a)\frac{x-\min(x)}{\max(x)-\min(x)} + a
 </p>
 
 <p>
-Figure <a href="#org9448388">3</a> shows a random sample of these \(\beta_{t}\)
+Figure <a href="#orge3d8f93">3</a> shows a random sample of these \(\beta_{t}\)
 functions. Because there can be multiple peaks in \(\beta_t\), the
 simulated epidemics often display waves of infection.
 </p>
 
 
-<div id="org9448388" class="figure">
+<div id="orge3d8f93" class="figure">
 <p><img src="./example-2026-05-27/img/example-beta-funcs.png" alt="example-beta-funcs.png" width="600px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>The \(\beta_t\) are smooth functions generated as random sums of trigonometric functions.</p>
 </div>
 
 <p>
-Figure <a href="#org17e1b0e">4</a> shows the kernels used to describe how
+Figure <a href="#org3a0b4e7">4</a> shows the kernels used to describe how
 infectiousness and test positivity changes across the course of an
 individuals infection. The values are obtained by evaluating a Poisson
-distribuion on the range 0 to 19. These parameters are fixed across
+distribution on the range 0 to 19. These parameters are fixed across
 all the simulations, accounting for uncertainty in these parameters is
 a task for future iterations of ERRIC.
 </p>
 
+<p>
+To be precise, to get the elements of \(\lambda\), we use the following:
+</p>
 
-<div id="org17e1b0e" class="figure">
+<ol class="org-ol">
+<li>\(\lambda\leftarrow\texttt{dpois}([0,\ldots,19],3)\)</li>
+<li>\(\lambda\leftarrow\lambda/\texttt{sum}(\lambda)\)</li>
+</ol>
+
+
+<div id="org3a0b4e7" class="figure">
 <p><img src="./example-2026-05-27/img/example-kernels.png" alt="example-kernels.png" width="600px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>The \(\lambda\) and \(v\) kernels used in the infection and observation models. These values come from Poisson distributions with means 3 and 5 truncated to the support of 0 to 19 (which is used to model the first 20 days post infection.)</p>
@@ -508,12 +518,12 @@ can run on the CPU in under and hour.
 </p>
 </div>
 </div>
-<div id="outline-container-org560e748" class="outline-4">
-<h4 id="org560e748">Predictions</h4>
-<div class="outline-text-4" id="text-org560e748">
+<div id="outline-container-org84a1d31" class="outline-4">
+<h4 id="org84a1d31">Predictions</h4>
+<div class="outline-text-4" id="text-org84a1d31">
 <p>
-Figure <a href="#org25c38be">5</a> shows some of the predicted point estimates from
-ERRIC for the same test-set simulation shown in Figure <a href="#org9ebf17d">1</a>.
+Figure <a href="#orgc9329fc">5</a> shows some of the predicted point estimates from
+ERRIC for the same test-set simulation shown in Figure <a href="#org443112c">1</a>.
 We note that in the period where there are a substantial number of
 positive tests (approx. days 25&ndash;225) there are sensible looking
 estimates generated. By around day 250 there is no more signal, so
@@ -524,7 +534,7 @@ inference.
 </p>
 
 
-<div id="org25c38be" class="figure">
+<div id="orgc9329fc" class="figure">
 <p><img src="./example-2026-05-27/img/example-predictions.png" alt="example-predictions.png" width="600px" />
 </p>
 <p><span class="figure-number">Figure 5: </span>Predictions of daily infections and infection parameters. The top panel shows the daily number of tests that were negative or positive for infection. Note that the vast majority of the tests come back negative because the tests were distributed randomly through the population. The middle panel shows the predicted estimate of the daily number of infections \(I_t\) along with the true value. The bottom panel shows the predicted estimates of the daily values of \(\beta_t\) and the true values used in the simulation. Note that after day 250 there are no further infections detected and the predictions effectively predict the mean value under the prior distribution.</p>
@@ -545,8 +555,9 @@ Convolutional networks</i>.
 
 <p>
 This was a very simple attempt at building an estimator and in future
-posts we will add uncertainty quantification, variable parameters of
-the simulation and various additional features to the simulation.
+posts we will add uncertainty quantification (see <a href="./draft-2026-06-03.html">part 2</a>) and various
+improvements to the complexity of the epidemiological model (see <a href="./draft-2026-06-17.html">part
+3</a>).
 </p>
 </div>
 </div>
@@ -598,7 +609,7 @@ Recall that <code>log1p</code> is the function \(f(x)=\log(x+1)\) which is usefu
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2026-04-29 Wed 12:52</p>
+<p class="date">Created: 2026-05-14 Thu 19:13</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
