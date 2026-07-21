@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-05-05 Mon 13:21 -->
+<!-- 2026-07-12 Sun 17:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL notes</title>
@@ -57,6 +57,7 @@
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
   pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-c:before { content: 'C'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -71,7 +72,7 @@
   pre.src-haskell:before { content: 'Haskell'; }
   pre.src-hledger:before { content: 'hledger'; }
   pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
+  pre.src-js:before { content: 'JavaScript'; }
   pre.src-latex:before { content: 'LaTeX'; }
   pre.src-ledger:before { content: 'Ledger'; }
   pre.src-lisp:before { content: 'Lisp'; }
@@ -209,60 +210,76 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6fa005d">Structured Query Language</a>
+<li><a href="#orgbe15ff7">Structured Query Language</a>
 <ul>
-<li><a href="#orga4036d2">Distinct</a></li>
-<li><a href="#org6e2640d">Filtering and sorting</a></li>
-<li><a href="#org30a8e0f">Joints</a></li>
+<li><a href="#org6f350f2">Deleting data</a></li>
+<li><a href="#org86843e0">Distinct</a></li>
+<li><a href="#org1181227">Filtering and sorting</a></li>
+<li><a href="#org58a4e44">Joints</a></li>
 </ul>
 </li>
-<li><a href="#org75db18a">Database engines</a>
+<li><a href="#org912fe71">Relational databases</a>
 <ul>
-<li><a href="#org7aac8da">MySQL</a></li>
-<li><a href="#org5b63c4e">SQLite</a></li>
+<li><a href="#org2713b8f">MySQL</a></li>
+<li><a href="#org78a11cc">SQLite</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org6fa005d" class="outline-2">
-<h2 id="org6fa005d">Structured Query Language</h2>
-<div class="outline-text-2" id="text-org6fa005d">
+<div id="outline-container-orgbe15ff7" class="outline-2">
+<h2 id="orgbe15ff7">Structured Query Language</h2>
+<div class="outline-text-2" id="text-orgbe15ff7">
 </div>
-<div id="outline-container-orga4036d2" class="outline-3">
-<h3 id="orga4036d2">Distinct</h3>
-<div class="outline-text-3" id="text-orga4036d2">
+<div id="outline-container-org6f350f2" class="outline-3">
+<h3 id="org6f350f2">Deleting data</h3>
+<div class="outline-text-3" id="text-org6f350f2">
+<p>
+The following will remove all rows from <code>mytable</code> where <code>mycondition</code>
+evaluates to true.
+</p>
+
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #0000FF; font-weight: bold;">SELECT</span> <span style="color: #0000FF; font-weight: bold;">DISTINCT</span> col <span style="color: #0000FF; font-weight: bold;">FROM</span> mytable;
-</pre>
+<pre class="src src-sql"><code><span style="color: #0000FF; font-weight: bold;">DELETE</span> <span style="color: #0000FF; font-weight: bold;">FROM</span> mytable
+<span style="color: #0000FF; font-weight: bold;">WHERE</span> mycondition;
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org6e2640d" class="outline-3">
-<h3 id="org6e2640d">Filtering and sorting</h3>
-<div class="outline-text-3" id="text-org6e2640d">
+<div id="outline-container-org86843e0" class="outline-3">
+<h3 id="org86843e0">Distinct</h3>
+<div class="outline-text-3" id="text-org86843e0">
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #0000FF; font-weight: bold;">SELECT</span> col_a, col_b
+<pre class="src src-sql"><code><span style="color: #0000FF; font-weight: bold;">SELECT</span> <span style="color: #0000FF; font-weight: bold;">DISTINCT</span> col <span style="color: #0000FF; font-weight: bold;">FROM</span> mytable;
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1181227" class="outline-3">
+<h3 id="org1181227">Filtering and sorting</h3>
+<div class="outline-text-3" id="text-org1181227">
+<div class="org-src-container">
+<pre class="src src-sql"><code><span style="color: #0000FF; font-weight: bold;">SELECT</span> col_a, col_b
 <span style="color: #0000FF; font-weight: bold;">FROM</span> mytable
 <span style="color: #0000FF; font-weight: bold;">WHERE</span> condition
 <span style="color: #0000FF; font-weight: bold;">ORDER</span> <span style="color: #0000FF; font-weight: bold;">BY</span> col <span style="color: #0000FF; font-weight: bold;">ASC</span>/<span style="color: #0000FF; font-weight: bold;">DESC</span>
 <span style="color: #0000FF; font-weight: bold;">LIMIT</span> num_lim;
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org30a8e0f" class="outline-3">
-<h3 id="org30a8e0f">Joints</h3>
-<div class="outline-text-3" id="text-org30a8e0f">
+<div id="outline-container-org58a4e44" class="outline-3">
+<h3 id="org58a4e44">Joints</h3>
+<div class="outline-text-3" id="text-org58a4e44">
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #0000FF; font-weight: bold;">SELECT</span> col_from_a, col_from_b
+<pre class="src src-sql"><code><span style="color: #0000FF; font-weight: bold;">SELECT</span> col_from_a, col_from_b
 <span style="color: #0000FF; font-weight: bold;">FROM</span> table_a
 <span style="color: #0000FF; font-weight: bold;">INNER</span> <span style="color: #0000FF; font-weight: bold;">JOIN</span> table_b
     <span style="color: #0000FF; font-weight: bold;">ON</span> table_a.id = table_b.matching_id
 <span style="color: #0000FF; font-weight: bold;">WHERE</span> condition
 <span style="color: #0000FF; font-weight: bold;">ORDER</span> <span style="color: #0000FF; font-weight: bold;">BY</span> col <span style="color: #0000FF; font-weight: bold;">ASC</span>/<span style="color: #0000FF; font-weight: bold;">DESC</span>
 <span style="color: #0000FF; font-weight: bold;">LIMIT</span> num_lim;
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -272,15 +289,22 @@ of rows you are sure you want in your results.
 </div>
 </div>
 </div>
-<div id="outline-container-org75db18a" class="outline-2">
-<h2 id="org75db18a">Database engines</h2>
-<div class="outline-text-2" id="text-org75db18a">
+<div id="outline-container-org912fe71" class="outline-2">
+<h2 id="org912fe71">Relational databases</h2>
+<div class="outline-text-2" id="text-org912fe71">
+<ul class="org-ul">
+<li>The <i>primary key</i> uniquely identifies a row in a table. This is
+related to the <i>foreign key</i> which uniquely identifies a row in
+another table.</li>
+<li>The combination of multiple columns yields a <i>compound key</i>.</li>
+<li>An SQL query returns a table called a <i>result set</i>.</li>
+</ul>
 </div>
-<div id="outline-container-org7aac8da" class="outline-3">
-<h3 id="org7aac8da">MySQL</h3>
-<div class="outline-text-3" id="text-org7aac8da">
+<div id="outline-container-org2713b8f" class="outline-3">
+<h3 id="org2713b8f">MySQL</h3>
+<div class="outline-text-3" id="text-org2713b8f">
 
-<div id="org8b93f28" class="figure">
+<div id="org98c22c6" class="figure">
 <p><img src="../images/mysql-logo.png" alt="mysql-logo.png" width="250px" />
 </p>
 </div>
@@ -295,20 +319,33 @@ using <code>root</code>.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5b63c4e" class="outline-3">
-<h3 id="org5b63c4e">SQLite</h3>
-<div class="outline-text-3" id="text-org5b63c4e">
+<div id="outline-container-org78a11cc" class="outline-3">
+<h3 id="org78a11cc">SQLite</h3>
+<div class="outline-text-3" id="text-org78a11cc">
 <ul class="org-ul">
 <li><a href="https://sqlitebrowser.org/">DB Browser for SQLite</a> is a GUI for inspecting and interactive with a
 SQLite database file.</li>
+<li>There are five storage classes: null, integer, real, text, and blob.
+On top of these storage classes there are datatypes, for example
+Boolean, which consists of the integers 0 (false) and 1 (true).
+<a href="https://sqlite.org/datatype3.html#date_and_time_datatype">Dates and times</a> can be stored as text, reals or integers.</li>
 </ul>
+</div>
+<div id="outline-container-org0d15e78" class="outline-4">
+<h4 id="org0d15e78">SQLite3 REPL</h4>
+<div class="outline-text-4" id="text-org0d15e78">
+<ul class="org-ul">
+<li><code>.schema &lt;tableName&gt;</code> will show the schema for the given table.</li>
+<li><code>.tables</code> will list the tables in the current database.</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2025-05-05 Mon 13:21</p>
+<p class="date">Created: 2026-07-12 Sun 17:00</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

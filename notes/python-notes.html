@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-01-24 Sat 16:17 -->
+<!-- 2026-06-29 Mon 15:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python notes</title>
@@ -57,6 +57,7 @@
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
   pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-c:before { content: 'C'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -71,7 +72,7 @@
   pre.src-haskell:before { content: 'Haskell'; }
   pre.src-hledger:before { content: 'hledger'; }
   pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
+  pre.src-js:before { content: 'JavaScript'; }
   pre.src-latex:before { content: 'LaTeX'; }
   pre.src-ledger:before { content: 'Ledger'; }
   pre.src-lisp:before { content: 'Lisp'; }
@@ -206,7 +207,7 @@
 </p>
 
 
-<div id="org067ebff" class="figure">
+<div id="orgace3128" class="figure">
 <p><img src="../images/python-logo.png" alt="python-logo.png" width="250px" />
 </p>
 </div>
@@ -215,94 +216,133 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf1c2c3c">Python notes</a>
+<li><a href="#org6ff814b">Python notes</a>
 <ul>
-<li><a href="#orgd61cf6f">Reading</a></li>
-<li><a href="#org30c486c">Syntax</a></li>
-<li><a href="#org6b671a2">Object oriented programming</a></li>
-<li><a href="#org73ad20e">Pip</a></li>
-<li><a href="#org542a49a">PIP VANISHED!!!</a></li>
-<li><a href="#org393b194">Colab</a></li>
-<li><a href="#org0205d12">Jupyter via Nix</a></li>
-<li><a href="#org6a307c2">Help</a></li>
-<li><a href="#org8c4ec47">Debugging</a></li>
-<li><a href="#org7538b22"><span class="todo TODO">TODO</span> Functional programming</a></li>
-<li><a href="#orgae9f8ed">High performance computing</a></li>
-<li><a href="#orge0dbe6e">IO</a></li>
+<li><a href="#org3b9d326">Reading</a></li>
+<li><a href="#orgd353e39">Syntax</a></li>
+<li><a href="#org0a1522d">Object oriented programming</a></li>
+<li><a href="#orgad53021">Pip</a></li>
+<li><a href="#orga96bb2c">PIP VANISHED!!!</a></li>
+<li><a href="#orgc36dd8d">Help</a></li>
+<li><a href="#org443f9f8">Debugging</a></li>
+<li><a href="#org038809d"><span class="todo TODO">TODO</span> Functional programming</a></li>
+<li><a href="#orgaae874a">High performance computing</a></li>
+<li><a href="#orgc671e2e">IO</a></li>
 </ul>
 </li>
 <li><a href="#sec:virtual-envs">Virtual environments</a>
 <ul>
 <li><a href="#venv"><code>venv</code></a></li>
 <li><a href="#conda">Conda</a></li>
-<li><a href="#orgb56b8b3">Conda Examples</a></li>
+<li><a href="#orga4d8bd4">Conda Examples</a></li>
 </ul>
 </li>
-<li><a href="#org019bed2">Python packages</a>
+<li><a href="#orgf93c0f2">Python packages</a>
 <ul>
-<li><a href="#orge560168">argparse</a></li>
-<li><a href="#orgcb7653b">Biopython</a></li>
-<li><a href="#org1d2fcd4">Black (linting)</a></li>
-<li><a href="#org2053d3f">h5py</a></li>
-<li><a href="#orgfa32f5b">OS</a></li>
+<li><a href="#org98e1fb5">argparse</a></li>
+<li><a href="#orgdb81582">Biopython</a></li>
+<li><a href="#org23fb3cd">h5py</a></li>
+<li><a href="#orgb3f1ffc">logging</a></li>
+<li><a href="#org52125ad">OS</a></li>
 <li><a href="#pyyaml">PyYAML</a></li>
-<li><a href="#org594280b">PyTorch</a></li>
-<li><a href="#orga3a9e52">Scipy</a></li>
-<li><a href="#org66a5201">Snakemake</a></li>
-<li><a href="#org476c283">tqdm (progress bars)</a></li>
-<li><a href="#org1fd1a59">Unittest</a></li>
-<li><a href="#orgd9a19c4">Pypfilt</a></li>
-<li><a href="#org674f430">Plotnine</a></li>
-<li><a href="#org9fd82cd">Numpy</a></li>
-<li><a href="#orgdc2a375">Pandas</a></li>
-<li><a href="#org1ac134d">Matplotlib</a></li>
+<li><a href="#org0970d9e">PyTorch</a></li>
+<li><a href="#org39835cc">Scipy</a></li>
+<li><a href="#orgb7e2a71">Snakemake</a></li>
+<li><a href="#org3d2507f">tqdm (progress bars)</a></li>
+<li><a href="#org5e9a4b6">Unittest</a></li>
+<li><a href="#orge12d63f">Pypfilt</a></li>
+<li><a href="#org686f117">Plotnine</a></li>
+<li><a href="#orgb9cc6b6">Numpy</a></li>
+<li><a href="#orga2cdf3f">Pandas</a></li>
+<li><a href="#org44a5aa0">Matplotlib</a></li>
 <li><a href="#python-requests">Requests/lxml</a></li>
-<li><a href="#orgc7e4c61">Statsmodels</a></li>
-<li><a href="#orgb371da9">NetworkX</a></li>
-<li><a href="#org2eb6edc">VLC</a></li>
+<li><a href="#org8fbba75">Statsmodels</a></li>
+<li><a href="#orgf5d38ae">NetworkX</a></li>
+<li><a href="#org005ddf5">VLC</a></li>
 </ul>
 </li>
-<li><a href="#orgc55beee">Hy</a></li>
+<li><a href="#org87c3254">Tooling</a>
+<ul>
+<li><a href="#org09a66e1">Spyder</a></li>
+<li><a href="#org3a5e034">Black</a></li>
+<li><a href="#orgf7b1f14">Jupyter via Nix</a></li>
+<li><a href="#orge47193f">Colab</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf1c2c3c" class="outline-2">
-<h2 id="orgf1c2c3c">Python notes</h2>
-<div class="outline-text-2" id="text-orgf1c2c3c">
+<div id="outline-container-org6ff814b" class="outline-2">
+<h2 id="org6ff814b">Python notes</h2>
+<div class="outline-text-2" id="text-org6ff814b">
 </div>
-<div id="outline-container-orgd61cf6f" class="outline-3">
-<h3 id="orgd61cf6f">Reading</h3>
-<div class="outline-text-3" id="text-orgd61cf6f">
+<div id="outline-container-org3b9d326" class="outline-3">
+<h3 id="org3b9d326">Reading</h3>
+<div class="outline-text-3" id="text-org3b9d326">
 <ul class="org-ul">
 <li><a href="https://zerowithdot.com/improve-data-science-code/">How to write better scientific code in Python?</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org30c486c" class="outline-3">
-<h3 id="org30c486c">Syntax</h3>
-<div class="outline-text-3" id="text-org30c486c">
+<div id="outline-container-orgd353e39" class="outline-3">
+<h3 id="orgd353e39">Syntax</h3>
+<div class="outline-text-3" id="text-orgd353e39">
 </div>
-<div id="outline-container-org47436f0" class="outline-4">
-<h4 id="org47436f0">Type hints</h4>
-<div class="outline-text-4" id="text-org47436f0">
+<div id="outline-container-org37ba227" class="outline-4">
+<h4 id="org37ba227">Type hints</h4>
+<div class="outline-text-4" id="text-org37ba227">
 <p>
 <a href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">Mypy cheat sheet</a>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">my_function</span>(x: <span style="color: #f78fe7;">int</span>, y: <span style="color: #f78fe7;">float</span>) -&gt; <span style="color: #f78fe7;">float</span>:
-    <span style="color: #b6a0ff;">return</span> x + y
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">my_function</span>(x: <span style="color: #596e76; font-weight: bold;">int</span>, y: <span style="color: #596e76; font-weight: bold;">float</span>) -&gt; <span style="color: #596e76; font-weight: bold;">float</span>:
+    <span style="color: #778c00; font-weight: bold;">return</span> x + y
+</code></pre>
+</div>
+
+<ul class="org-ul">
+<li><code>my_function</code> has type <code>Callable[[int, float], float]</code></li>
+<li><i>either</i> types, e.g. <code>int | float</code> or <code>Union[int, float]</code></li>
+<li><i>maybe</i> types, e.g. <code>int | None</code> or <code>Optional[int]</code></li>
+<li><code>NewType</code> from the <code>typing</code> module allows you to create distinct
+type, e.g. <code>NewType("MyInt", int)</code> will work like an <code>int</code> by as far
+as the type checker is concerned, it is a different type.</li>
+</ul>
 </div>
 </div>
-</div>
-<div id="outline-container-org392a5b8" class="outline-4">
-<h4 id="org392a5b8">Assertions</h4>
-<div class="outline-text-4" id="text-org392a5b8">
+<div id="outline-container-orgbf98e27" class="outline-4">
+<h4 id="orgbf98e27">Dataclasses</h4>
+<div class="outline-text-4" id="text-orgbf98e27">
+<p>
+In this example, because the dataclass if frozen, you could not add a
+melon to this fruit bowl. See the <a href="https://docs.python.org/3/library/dataclasses.html">dataclass docs</a> for details.
+</p>
+
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">assert</span> 1 == 1
-<span style="color: #b6a0ff;">assert</span> 1 == 1, <span style="color: #79a8ff;">"mathematics is a lie!"</span>
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">from</span> dataclasses <span style="color: #778c00; font-weight: bold;">import</span> dataclass
+
+<span style="color: #a67c00;">@dataclass</span>(frozen=<span style="color: #007ec4; font-weight: bold;">True</span>)
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">FruitBowl</span>:
+    <span style="color: #11948b;">"""A bowl of three types of fruit"""</span>
+    <span style="color: #007ec4;">location</span>: <span style="color: #596e76; font-weight: bold;">str</span> = <span style="color: #11948b;">"Kitchen"</span>
+    num_apples: <span style="color: #596e76; font-weight: bold;">int</span>
+    num_bananas: <span style="color: #596e76; font-weight: bold;">int</span>
+    num_kiwi: <span style="color: #596e76; font-weight: bold;">int</span>
+
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">total_fruit</span>(<span style="color: #778c00; font-weight: bold;">self</span>) -&gt; <span style="color: #596e76; font-weight: bold;">int</span>:
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #778c00; font-weight: bold;">self</span>.num_apples + <span style="color: #778c00; font-weight: bold;">self</span>.num_bananas + <span style="color: #778c00; font-weight: bold;">self</span>.num_kiwi
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgafd3bbc" class="outline-4">
+<h4 id="orgafd3bbc">Assertions</h4>
+<div class="outline-text-4" id="text-orgafd3bbc">
+<div class="org-src-container">
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">assert</span> 1 == 1
+<span style="color: #778c00; font-weight: bold;">assert</span> 1 == 1, <span style="color: #11948b;">"mathematics is a lie!"</span>
+</code></pre>
 </div>
 
 <p>
@@ -311,12 +351,12 @@ if the assertion fails.
 </p>
 </div>
 </div>
-<div id="outline-container-org122c717" class="outline-4">
-<h4 id="org122c717">Dictionary</h4>
-<div class="outline-text-4" id="text-org122c717">
+<div id="outline-container-orgdc6972b" class="outline-4">
+<h4 id="orgdc6972b">Dictionary</h4>
+<div class="outline-text-4" id="text-orgdc6972b">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">my_dict</span> = {<span style="color: #79a8ff;">"foo"</span>: 1, <span style="color: #79a8ff;">"bar"</span>: <span style="color: #79a8ff;">'a'</span>}
-</pre>
+<pre class="src src-python"><code><span style="color: #007ec4;">my_dict</span> = {<span style="color: #11948b;">"foo"</span>: 1, <span style="color: #11948b;">"bar"</span>: <span style="color: #11948b;">'a'</span>}
+</code></pre>
 </div>
 
 <p>
@@ -325,23 +365,23 @@ and provides a default if it is missing.
 </p>
 </div>
 </div>
-<div id="outline-container-org7d3a5bf" class="outline-4">
-<h4 id="org7d3a5bf">List comprehension</h4>
-<div class="outline-text-4" id="text-org7d3a5bf">
+<div id="outline-container-org51fd974" class="outline-4">
+<h4 id="org51fd974">List comprehension</h4>
+<div class="outline-text-4" id="text-org51fd974">
 <div class="org-src-container">
-<pre class="src src-sh">[f(x) <span style="color: #b6a0ff;">for</span> x<span style="color: #b6a0ff;"> in</span> xs if p(x)]
-</pre>
+<pre class="src src-sh"><code>[f(x) <span style="color: #778c00; font-weight: bold;">for</span> x<span style="color: #778c00; font-weight: bold;"> in</span> xs if p(x)]
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org82d5a12" class="outline-4">
-<h4 id="org82d5a12">Keyword arguments</h4>
-<div class="outline-text-4" id="text-org82d5a12">
+<div id="outline-container-orgbfea1a7" class="outline-4">
+<h4 id="orgbfea1a7">Keyword arguments</h4>
+<div class="outline-text-4" id="text-orgbfea1a7">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">my_function</span>(**kwargs):
-    <span style="color: #b6a0ff;">for</span> key, value <span style="color: #b6a0ff;">in</span> kwargs.items():
-        <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"</span>{key}<span style="color: #79a8ff;">: </span>{value}<span style="color: #79a8ff;">"</span>)
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">my_function</span>(**kwargs):
+    <span style="color: #778c00; font-weight: bold;">for</span> key, value <span style="color: #778c00; font-weight: bold;">in</span> kwargs.items():
+        <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{key}<span style="color: #11948b;">: </span>{value}<span style="color: #11948b;">"</span>)
+</code></pre>
 </div>
 
 <p>
@@ -349,48 +389,48 @@ and provides a default if it is missing.
 </p>
 </div>
 </div>
-<div id="outline-container-org4aec77c" class="outline-4">
-<h4 id="org4aec77c">Case/switch statements</h4>
-<div class="outline-text-4" id="text-org4aec77c">
+<div id="outline-container-orgd3bf79c" class="outline-4">
+<h4 id="orgd3bf79c">Case/switch statements</h4>
+<div class="outline-text-4" id="text-orgd3bf79c">
 <p>
 Taken from the <a href="https://docs.python.org/3.10/tutorial/controlflow.html#match-statements">documentation</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">http_error</span>(status):
-  <span style="color: #b6a0ff;">match</span> status:
-      <span style="color: #b6a0ff;">case</span> 400:
-          <span style="color: #b6a0ff;">return</span> <span style="color: #79a8ff;">"Bad request"</span>
-      <span style="color: #b6a0ff;">case</span> 404:
-          <span style="color: #b6a0ff;">return</span> <span style="color: #79a8ff;">"Not found"</span>
-      <span style="color: #b6a0ff;">case</span> 418:
-          <span style="color: #b6a0ff;">return</span> <span style="color: #79a8ff;">"I'm a teapot"</span>
-      <span style="color: #b6a0ff;">case</span> _:
-          <span style="color: #b6a0ff;">return</span> <span style="color: #79a8ff;">"Something's wrong with the internet"</span>
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">http_error</span>(status):
+  <span style="color: #778c00; font-weight: bold;">match</span> status:
+      <span style="color: #778c00; font-weight: bold;">case</span> 400:
+          <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"Bad request"</span>
+      <span style="color: #778c00; font-weight: bold;">case</span> 404:
+          <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"Not found"</span>
+      <span style="color: #778c00; font-weight: bold;">case</span> 418:
+          <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"I'm a teapot"</span>
+      <span style="color: #778c00; font-weight: bold;">case</span> _:
+          <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"Something's wrong with the internet"</span>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgadca6b3" class="outline-4">
-<h4 id="orgadca6b3">Case/switch statements with pattern matching</h4>
-<div class="outline-text-4" id="text-orgadca6b3">
+<div id="outline-container-org5bda5f0" class="outline-4">
+<h4 id="org5bda5f0">Case/switch statements with pattern matching</h4>
+<div class="outline-text-4" id="text-org5bda5f0">
 <p>
 Taken from the <a href="https://docs.python.org/3.10/tutorial/controlflow.html#match-statements">documentation</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">match</span> point:
-    <span style="color: #b6a0ff;">case</span> Point(x, y) <span style="color: #b6a0ff;">if</span> x == y:
-        <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Y=X at </span>{x}<span style="color: #79a8ff;">"</span>)
-    <span style="color: #b6a0ff;">case</span> Point(x, y):
-        <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Not on the diagonal"</span>)
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">match</span> point:
+    <span style="color: #778c00; font-weight: bold;">case</span> Point(x, y) <span style="color: #778c00; font-weight: bold;">if</span> x == y:
+        <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"Y=X at </span>{x}<span style="color: #11948b;">"</span>)
+    <span style="color: #778c00; font-weight: bold;">case</span> Point(x, y):
+        <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"Not on the diagonal"</span>)
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc14b6ca" class="outline-4">
-<h4 id="orgc14b6ca">Loops</h4>
-<div class="outline-text-4" id="text-orgc14b6ca">
+<div id="outline-container-orgfc3c488" class="outline-4">
+<h4 id="orgfc3c488">Loops</h4>
+<div class="outline-text-4" id="text-orgfc3c488">
 <p>
 The use of the <code>continue</code> keyword will cause the iteration with <code>i=1</code>
 to be skipped and the loop will move straight to the next iteration.
@@ -398,101 +438,101 @@ This will work with a while-loop too.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">for</span> i <span style="color: #b6a0ff;">in</span> <span style="color: #f78fe7;">range</span>(5):
-    <span style="color: #b6a0ff;">if</span> i == 3:
-        <span style="color: #b6a0ff;">continue</span>
-    <span style="color: #f78fe7;">print</span>(i)
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">for</span> i <span style="color: #778c00; font-weight: bold;">in</span> <span style="color: #596e76; font-weight: bold;">range</span>(5):
+    <span style="color: #778c00; font-weight: bold;">if</span> i == 3:
+        <span style="color: #778c00; font-weight: bold;">continue</span>
+    <span style="color: #596e76; font-weight: bold;">print</span>(i)
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org6b671a2" class="outline-3">
-<h3 id="org6b671a2">Object oriented programming</h3>
-<div class="outline-text-3" id="text-org6b671a2">
+<div id="outline-container-org0a1522d" class="outline-3">
+<h3 id="org0a1522d">Object oriented programming</h3>
+<div class="outline-text-3" id="text-org0a1522d">
 </div>
-<div id="outline-container-orgd2ed00e" class="outline-4">
-<h4 id="orgd2ed00e">UML design and Python implementation</h4>
-<div class="outline-text-4" id="text-orgd2ed00e">
+<div id="outline-container-org07ed1d5" class="outline-4">
+<h4 id="org07ed1d5">UML design and Python implementation</h4>
+<div class="outline-text-4" id="text-org07ed1d5">
 
-<div id="org3761339" class="figure">
+<div id="org0862196" class="figure">
 <p><img src="../resources/uml-class-diagram-example.png" alt="uml-class-diagram-example.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Example of a UML class diagram</p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">from</span> abc <span style="color: #b6a0ff;">import</span> ABC, abstractmethod
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">from</span> abc <span style="color: #778c00; font-weight: bold;">import</span> ABC, abstractmethod
 
-<span style="color: #b6a0ff;">class</span> <span style="color: #6ae4b9;">Mammal</span>:
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">__init__</span>(<span style="color: #b6a0ff;">self</span>, name):
-        <span style="color: #b6a0ff;">self</span>.<span style="color: #00d3d0;">name</span> = name
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Mammal</span>:
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">__init__</span>(<span style="color: #778c00; font-weight: bold;">self</span>, name):
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">name</span> = name
 
-<span style="color: #b6a0ff;">class</span> <span style="color: #6ae4b9;">Flippable</span>(ABC):
-    <span style="color: #6ae4b9;">@abstractmethod</span>
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">doBackFlip</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">pass</span>
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Flippable</span>(ABC):
+    <span style="color: #a67c00;">@abstractmethod</span>
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">doBackFlip</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">pass</span>
 
-<span style="color: #b6a0ff;">class</span> <span style="color: #6ae4b9;">Person</span>(Mammal, Flippable):
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">__init__</span>(<span style="color: #b6a0ff;">self</span>, name):
-        <span style="color: #f78fe7;">super</span>().__init__(name)
-        <span style="color: #b6a0ff;">self</span>.<span style="color: #00d3d0;">backpack</span> = Backpack()
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Person</span>(Mammal, Flippable):
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">__init__</span>(<span style="color: #778c00; font-weight: bold;">self</span>, name):
+        <span style="color: #596e76; font-weight: bold;">super</span>().__init__(name)
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">backpack</span> = Backpack()
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">doBackFlip</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"</span>{<span style="color: #b6a0ff;">self</span>.name}<span style="color: #79a8ff;"> did a backflip!"</span>)
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">doBackFlip</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{<span style="color: #778c00; font-weight: bold;">self</span>.name}<span style="color: #11948b;"> did a backflip!"</span>)
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">checkForApple</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">return</span> <span style="color: #b6a0ff;">self</span>.backpack.checkForApple()
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">checkForApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #778c00; font-weight: bold;">self</span>.backpack.checkForApple()
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">eatApple</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">self</span>.backpack.getApple():
-            <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"</span>{<span style="color: #b6a0ff;">self</span>.name}<span style="color: #79a8ff;"> ate an apple!"</span>)
-        <span style="color: #b6a0ff;">else</span>:
-            <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"</span>{<span style="color: #b6a0ff;">self</span>.name}<span style="color: #79a8ff;"> has no apples to eat!"</span>)
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">eatApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #778c00; font-weight: bold;">self</span>.backpack.getApple():
+            <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{<span style="color: #778c00; font-weight: bold;">self</span>.name}<span style="color: #11948b;"> ate an apple!"</span>)
+        <span style="color: #778c00; font-weight: bold;">else</span>:
+            <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"</span>{<span style="color: #778c00; font-weight: bold;">self</span>.name}<span style="color: #11948b;"> has no apples to eat!"</span>)
 
-<span style="color: #b6a0ff;">class</span> <span style="color: #6ae4b9;">Backpack</span>:
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">__init__</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">self</span>.<span style="color: #00d3d0;">content</span> = [<span style="color: #79a8ff;">'apple'</span>, <span style="color: #79a8ff;">'sandwich'</span>]
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">Backpack</span>:
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">__init__</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">content</span> = [<span style="color: #11948b;">'apple'</span>, <span style="color: #11948b;">'sandwich'</span>]
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">checkForApple</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">return</span> <span style="color: #79a8ff;">"apple"</span> <span style="color: #b6a0ff;">in</span> <span style="color: #b6a0ff;">self</span>.content
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">checkForApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"apple"</span> <span style="color: #778c00; font-weight: bold;">in</span> <span style="color: #778c00; font-weight: bold;">self</span>.content
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">getApple</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">if</span> <span style="color: #b6a0ff;">self</span>.checkForApple():
-            <span style="color: #b6a0ff;">self</span>.content.remove(<span style="color: #79a8ff;">"apple"</span>)
-            <span style="color: #b6a0ff;">return</span> <span style="color: #79a8ff;">"apple"</span>
-        <span style="color: #b6a0ff;">return</span> <span style="color: #00bcff;">None</span>
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">getApple</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #778c00; font-weight: bold;">self</span>.checkForApple():
+            <span style="color: #778c00; font-weight: bold;">self</span>.content.remove(<span style="color: #11948b;">"apple"</span>)
+            <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #11948b;">"apple"</span>
+        <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #007ec4; font-weight: bold;">None</span>
 
-<span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">main</span>():
-    <span style="color: #00d3d0;">john</span> = Person(<span style="color: #79a8ff;">"John"</span>)
+<span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">main</span>():
+    <span style="color: #007ec4;">john</span> = Person(<span style="color: #11948b;">"John"</span>)
     john.doBackFlip()
-    <span style="color: #b6a0ff;">if</span> john.checkForApple():
+    <span style="color: #778c00; font-weight: bold;">if</span> john.checkForApple():
         john.eatApple()
         john.eatApple()
 
-<span style="color: #b6a0ff;">if</span> <span style="color: #f78fe7;">__name__</span> == <span style="color: #79a8ff;">"__main__"</span>:
+<span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #596e76; font-weight: bold;">__name__</span> == <span style="color: #11948b;">"__main__"</span>:
     main()
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org73ad20e" class="outline-3">
-<h3 id="org73ad20e">Pip</h3>
-<div class="outline-text-3" id="text-org73ad20e">
+<div id="outline-container-orgad53021" class="outline-3">
+<h3 id="orgad53021">Pip</h3>
+<div class="outline-text-3" id="text-orgad53021">
 <p>
 To install a package from source
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">pip install &lt;package&gt; -e &lt;path/to/source&gt;
-</pre>
+<pre class="src src-sh"><code>pip install &lt;package&gt; -e &lt;path/to/source&gt;
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org542a49a" class="outline-3">
-<h3 id="org542a49a">PIP VANISHED!!!</h3>
-<div class="outline-text-3" id="text-org542a49a">
+<div id="outline-container-orga96bb2c" class="outline-3">
+<h3 id="orga96bb2c">PIP VANISHED!!!</h3>
+<div class="outline-text-3" id="text-orga96bb2c">
 <p>
 If you get a weird message about pip not being there you can try running
 <code>python3 -m ensurepip</code>. I do not understand why pip vanished but this brought it
@@ -500,61 +540,9 @@ back.
 </p>
 </div>
 </div>
-<div id="outline-container-org393b194" class="outline-3">
-<h3 id="org393b194">Colab</h3>
-<div class="outline-text-3" id="text-org393b194">
-<p>
-If you are using Google's Colab to run notebooks, the <code>requests</code> package is
-useful for reading files from Github.
-</p>
-</div>
-</div>
-<div id="outline-container-org0205d12" class="outline-3">
-<h3 id="org0205d12">Jupyter via Nix</h3>
-<div class="outline-text-3" id="text-org0205d12">
-<div class="org-src-container">
-<pre class="src src-sh">nix-shell --command <span style="color: #79a8ff;">"jupyter lab"</span>
-</pre>
-</div>
-
-<p>
-can be run from a directory with the following <code>shell.nix</code> file to start a
-jupyter lab server.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-nix"># This provides a shell running a jupyter lab server. To start the server run
-# the following command
-#
-# $ nix-shell --command "jupyter lab"
-
-let
-  jupyter = import (builtins.fetchGit {
-    url = https://github.com/tweag/jupyterWith;
-    rev = "10d64ee254050de69d0dc51c9c39fdadf1398c38";
-  }) {};
-
-  ipython = jupyter.kernels.iPythonWith {
-    name = "python";
-    packages = p: with p; [ numpy
-                            altair
-                            scipy
-                            pandas
-                            matplotlib ];
-  };
-
-  jupyterEnvironment = jupyter.jupyterlabWith {
-    kernels = [ ipython ];
-  };
-in
-  jupyterEnvironment.env
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org6a307c2" class="outline-3">
-<h3 id="org6a307c2">Help</h3>
-<div class="outline-text-3" id="text-org6a307c2">
+<div id="outline-container-orgc36dd8d" class="outline-3">
+<h3 id="orgc36dd8d">Help</h3>
+<div class="outline-text-3" id="text-orgc36dd8d">
 <p>
 There is the function <code>help</code> which you can give an object and it will attempt to
 provide some information about the class of the object. You can also get a list
@@ -562,17 +550,17 @@ of the attributes of an object with the <code>.__dir__()</code> method.
 </p>
 </div>
 </div>
-<div id="outline-container-org8c4ec47" class="outline-3">
-<h3 id="org8c4ec47">Debugging</h3>
-<div class="outline-text-3" id="text-org8c4ec47">
+<div id="outline-container-org443f9f8" class="outline-3">
+<h3 id="org443f9f8">Debugging</h3>
+<div class="outline-text-3" id="text-org443f9f8">
 <p>
 There is a built-in debugger, <code>pdb</code>, which can be included with the
 following commands.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> pdb; pdb.set_trace()
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> pdb; pdb.set_trace()
+</code></pre>
 </div>
 
 <p>
@@ -581,9 +569,9 @@ for this.
 </p>
 </div>
 </div>
-<div id="outline-container-org7538b22" class="outline-3">
-<h3 id="org7538b22"><span class="todo TODO">TODO</span> Functional programming</h3>
-<div class="outline-text-3" id="text-org7538b22">
+<div id="outline-container-org038809d" class="outline-3">
+<h3 id="org038809d"><span class="todo TODO">TODO</span> Functional programming</h3>
+<div class="outline-text-3" id="text-org038809d">
 <ul class="org-ul">
 <li>Python 3.10 supports structural pattern matching!</li>
 <li>Python 3.5 supports type hints!</li>
@@ -596,19 +584,79 @@ for this.
 </ul>
 </div>
 </div>
-<div id="outline-container-orgae9f8ed" class="outline-3">
-<h3 id="orgae9f8ed">High performance computing</h3>
-<div class="outline-text-3" id="text-orgae9f8ed">
+<div id="outline-container-orgaae874a" class="outline-3">
+<h3 id="orgaae874a">High performance computing</h3>
+<div class="outline-text-3" id="text-orgaae874a">
+<ul class="org-ul">
+<li><a href="#hpc-ex-cpuboundpar">Running CPU-bound tasks in parallel</a></li>
+<li><a href="#hpc-ex-queue">Queuing processes</a></li>
+<li><a href="#hpc-ex-timing">Timing small snippets</a></li>
+</ul>
 </div>
-<div id="outline-container-orge467de8" class="outline-4">
-<h4 id="orge467de8">Example: Using python to run a queue of processes</h4>
-<div class="outline-text-4" id="text-orge467de8">
-<div class="org-src-container">
-<pre class="src src-py">from concurrent.futures import ThreadPoolExecutor
-import subprocess
+<div id="outline-container-hpc-ex-cpuboundpar" class="outline-4">
+<h4 id="hpc-ex-cpuboundpar">Example: Running CPU-bound tasks in parallel</h4>
+<div class="outline-text-4" id="text-hpc-ex-cpuboundpar">
+<p>
+The following example is modified from <a href="https://docs.python.org/3/library/concurrent.futures.html#processpoolexecutor-example">this example</a> in the Python
+documentation. It demonstrates how using a process pool allows you to
+run CPU-bound tasks in parallel. The results will be returned out of
+order because they are returned in the order the finished (as far as I
+can tell).
+</p>
 
-def run_commands_in_parallel(parameters, command_template, max_workers=4):
-    """
+<div class="org-src-container">
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> concurrent.futures
+<span style="color: #778c00; font-weight: bold;">import</span> math
+
+<span style="color: #007ec4;">PRIMES</span> = [
+    112272535095293,
+    112582705942171,
+    112272535095293,
+    115280095190773,
+    115797848077099,
+    1099726899285419]
+
+<span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">is_prime</span>(n):
+    <span style="color: #778c00; font-weight: bold;">if</span> n &lt; 2:
+        <span style="color: #778c00; font-weight: bold;">return</span> (n, <span style="color: #007ec4; font-weight: bold;">False</span>)
+    <span style="color: #778c00; font-weight: bold;">if</span> n == 2:
+        <span style="color: #778c00; font-weight: bold;">return</span> (n, <span style="color: #007ec4; font-weight: bold;">True</span>)
+    <span style="color: #778c00; font-weight: bold;">if</span> n % 2 == 0:
+        <span style="color: #778c00; font-weight: bold;">return</span> (n, <span style="color: #007ec4; font-weight: bold;">False</span>)
+
+    <span style="color: #007ec4;">sqrt_n</span> = <span style="color: #596e76; font-weight: bold;">int</span>(math.floor(math.sqrt(n)))
+    <span style="color: #778c00; font-weight: bold;">for</span> i <span style="color: #778c00; font-weight: bold;">in</span> <span style="color: #596e76; font-weight: bold;">range</span>(3, sqrt_n + 1, 2):
+        <span style="color: #778c00; font-weight: bold;">if</span> n % i == 0:
+            <span style="color: #778c00; font-weight: bold;">return</span> (n, <span style="color: #007ec4; font-weight: bold;">False</span>)
+    <span style="color: #778c00; font-weight: bold;">return</span> (n, <span style="color: #007ec4; font-weight: bold;">True</span>)
+
+<span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">main</span>():
+    <span style="color: #007ec4;">is_serial</span> = <span style="color: #007ec4; font-weight: bold;">True</span>
+    <span style="color: #778c00; font-weight: bold;">if</span> is_serial:
+        <span style="color: #778c00; font-weight: bold;">for</span> number, prime <span style="color: #778c00; font-weight: bold;">in</span> [is_prime(p) <span style="color: #778c00; font-weight: bold;">for</span> p <span style="color: #778c00; font-weight: bold;">in</span> PRIMES]:
+            <span style="color: #596e76; font-weight: bold;">print</span>(<span style="color: #11948b;">'%d is prime: %s'</span> % (number, prime))
+    <span style="color: #778c00; font-weight: bold;">else</span>:
+        <span style="color: #778c00; font-weight: bold;">with</span> concurrent.futures.ProcessPoolExecutor() <span style="color: #778c00; font-weight: bold;">as</span> executor:
+            <span style="color: #007ec4;">futures</span> = [executor.submit(is_prime, p) <span style="color: #778c00; font-weight: bold;">for</span> p <span style="color: #778c00; font-weight: bold;">in</span> PRIMES]
+            <span style="color: #778c00; font-weight: bold;">for</span> f <span style="color: #778c00; font-weight: bold;">in</span> concurrent.futures.as_completed(futures):
+                <span style="color: #007ec4;">number</span>, <span style="color: #007ec4;">prime</span> = f.result()
+                <span style="color: #596e76; font-weight: bold;">print</span>(<span style="color: #11948b;">'%d is prime: %s'</span> % (number, prime))
+
+<span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #596e76; font-weight: bold;">__name__</span> == <span style="color: #11948b;">'__main__'</span>:
+    main()
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-hpc-ex-queue" class="outline-4">
+<h4 id="hpc-ex-queue">Example: Using python to run a queue of processes</h4>
+<div class="outline-text-4" id="text-hpc-ex-queue">
+<div class="org-src-container">
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">from</span> concurrent.futures <span style="color: #778c00; font-weight: bold;">import</span> ThreadPoolExecutor
+<span style="color: #778c00; font-weight: bold;">import</span> subprocess
+
+<span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">run_commands_in_parallel</span>(parameters, command_template, max_workers=4):
+    <span style="color: #11948b;">"""
     Executes a command in parallel over a set of parameters.
 
     Args:
@@ -618,72 +666,72 @@ def run_commands_in_parallel(parameters, command_template, max_workers=4):
 
     Raises:
     - subprocess.CalledProcessError: If a command fails to execute successfully.
-    """
-    def run_command(parameter):
-        cmd = command_template.format(parameter)
-        subprocess.run(cmd, shell=True, check=True)
+    """</span>
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">run_command</span>(parameter):
+        <span style="color: #007ec4;">cmd</span> = command_template.<span style="color: #596e76; font-weight: bold;">format</span>(parameter)
+        subprocess.run(cmd, shell=<span style="color: #007ec4; font-weight: bold;">True</span>, check=<span style="color: #007ec4; font-weight: bold;">True</span>)
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        executor.map(run_command, parameters)
+    <span style="color: #778c00; font-weight: bold;">with</span> ThreadPoolExecutor(max_workers=max_workers) <span style="color: #778c00; font-weight: bold;">as</span> executor:
+        executor.<span style="color: #596e76; font-weight: bold;">map</span>(run_command, parameters)
 
-# Example usage
-filenames = ["foobar1.xml", "foobar2.xml", "foobar3.xml"]
-command = "&lt;some/command/taking/a/file&gt; {}"
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Example usage
+</span><span style="color: #007ec4;">filenames</span> = [<span style="color: #11948b;">"foobar1.xml"</span>, <span style="color: #11948b;">"foobar2.xml"</span>, <span style="color: #11948b;">"foobar3.xml"</span>]
+<span style="color: #007ec4;">command</span> = <span style="color: #11948b;">"&lt;some/command/taking/a/file&gt; {}"</span>
 run_commands_in_parallel(filenames, command)
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org956bcaf" class="outline-4">
-<h4 id="org956bcaf">Example: Timing statement execution</h4>
-<div class="outline-text-4" id="text-org956bcaf">
+<div id="outline-container-hpc-ex-timing" class="outline-4">
+<h4 id="hpc-ex-timing">Example: Timing statement execution</h4>
+<div class="outline-text-4" id="text-hpc-ex-timing">
 <p>
-Figure <a href="#org69d9307">2</a> is produced by the following snippet which
+Figure <a href="#org493f1e0">2</a> is produced by the following snippet which
 demonstrates how to use the <code>timeit</code> module (which is part of the
 standard library).
 </p>
 
 
-<div id="org69d9307" class="figure">
+<div id="org493f1e0" class="figure">
 <p><img src="./../images/timeit-example.png" alt="timeit-example.png" width="600px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The computational cost of adding up the numbers in a list grows linearly with the size of the list.</p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> timeit
-<span style="color: #b6a0ff;">import</span> pandas <span style="color: #b6a0ff;">as</span> pd
-<span style="color: #b6a0ff;">import</span> plotnine <span style="color: #b6a0ff;">as</span> p9
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> timeit
+<span style="color: #778c00; font-weight: bold;">import</span> pandas <span style="color: #778c00; font-weight: bold;">as</span> pd
+<span style="color: #778c00; font-weight: bold;">import</span> plotnine <span style="color: #778c00; font-weight: bold;">as</span> p9
 
-<span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">demo</span>(n):
-    <span style="color: #b6a0ff;">return</span> <span style="color: #f78fe7;">sum</span>(<span style="color: #f78fe7;">range</span>(n))
+<span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">demo</span>(n):
+    <span style="color: #778c00; font-weight: bold;">return</span> <span style="color: #596e76; font-weight: bold;">sum</span>(<span style="color: #596e76; font-weight: bold;">range</span>(n))
 
-<span style="color: #00d3d0;">vals</span> = [
-    {<span style="color: #79a8ff;">"n"</span>: 2*k,
-     <span style="color: #79a8ff;">"time"</span>: timeit.timeit(<span style="color: #b6a0ff;">lambda</span>: demo(10*k), number=100)}
-    <span style="color: #b6a0ff;">for</span> k <span style="color: #b6a0ff;">in</span> <span style="color: #f78fe7;">range</span>(1, 10000, 1000)]
+<span style="color: #007ec4;">vals</span> = [
+    {<span style="color: #11948b;">"n"</span>: 2*k,
+     <span style="color: #11948b;">"time"</span>: timeit.timeit(<span style="color: #778c00; font-weight: bold;">lambda</span>: demo(10*k), number=100)}
+    <span style="color: #778c00; font-weight: bold;">for</span> k <span style="color: #778c00; font-weight: bold;">in</span> <span style="color: #596e76; font-weight: bold;">range</span>(1, 10000, 1000)]
 
-<span style="color: #00d3d0;">df</span> = pd.DataFrame(vals)
+<span style="color: #007ec4;">df</span> = pd.DataFrame(vals)
 
-<span style="color: #00d3d0;">p</span> = (p9.ggplot(df, p9.aes(x=<span style="color: #79a8ff;">"n"</span>, y=<span style="color: #79a8ff;">"time"</span>)) +
+<span style="color: #007ec4;">p</span> = (p9.ggplot(df, p9.aes(x=<span style="color: #11948b;">"n"</span>, y=<span style="color: #11948b;">"time"</span>)) +
      p9.geom_point(size = 4) +
-     p9.geom_smooth(method=<span style="color: #79a8ff;">"lm"</span>) +
-     p9.labs(x = <span style="color: #79a8ff;">"Size"</span>, y = <span style="color: #79a8ff;">"Time (s)"</span>) +
+     p9.geom_smooth(method=<span style="color: #11948b;">"lm"</span>) +
+     p9.labs(x = <span style="color: #11948b;">"Size"</span>, y = <span style="color: #11948b;">"Time (s)"</span>) +
      p9.theme_bw())
 
-p.save(<span style="color: #79a8ff;">"foo.png"</span>)
-</pre>
+p.save(<span style="color: #11948b;">"foo.png"</span>)
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orge0dbe6e" class="outline-3">
-<h3 id="orge0dbe6e">IO</h3>
-<div class="outline-text-3" id="text-orge0dbe6e">
+<div id="outline-container-orgc671e2e" class="outline-3">
+<h3 id="orgc671e2e">IO</h3>
+<div class="outline-text-3" id="text-orgc671e2e">
 </div>
-<div id="outline-container-org10e6295" class="outline-4">
-<h4 id="org10e6295">Pickle</h4>
-<div class="outline-text-4" id="text-org10e6295">
+<div id="outline-container-orgf0cdec4" class="outline-4">
+<h4 id="orgf0cdec4">Pickle</h4>
+<div class="outline-text-4" id="text-orgf0cdec4">
 <p>
 The <a href="https://docs.python.org/3/library/pickle.html">pickle</a> library provides a simple way to save Python objects to
 disk. Since pickle is a binary format, you need to have the <code>b</code> in the
@@ -691,31 +739,31 @@ file format.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> pickle
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> pickle
 
-<span style="color: #00d3d0;">obj</span> = {<span style="color: #79a8ff;">'foo'</span>: <span style="color: #79a8ff;">'bar'</span>}
+<span style="color: #007ec4;">obj</span> = {<span style="color: #11948b;">'foo'</span>: <span style="color: #11948b;">'bar'</span>}
 
-<span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(<span style="color: #79a8ff;">'demo.pkl'</span>, <span style="color: #79a8ff;">'wb'</span>) <span style="color: #b6a0ff;">as</span> f:
+<span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #596e76; font-weight: bold;">open</span>(<span style="color: #11948b;">'demo.pkl'</span>, <span style="color: #11948b;">'wb'</span>) <span style="color: #778c00; font-weight: bold;">as</span> f:
     pickle.dump(obj, f)
 
-<span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(<span style="color: #79a8ff;">'demo.pkl'</span>, <span style="color: #79a8ff;">'rb'</span>) <span style="color: #b6a0ff;">as</span> f:
-    <span style="color: #00d3d0;">obj</span> = pickle.load(f)
-</pre>
+<span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #596e76; font-weight: bold;">open</span>(<span style="color: #11948b;">'demo.pkl'</span>, <span style="color: #11948b;">'rb'</span>) <span style="color: #778c00; font-weight: bold;">as</span> f:
+    <span style="color: #007ec4;">obj</span> = pickle.load(f)
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org9c305cb" class="outline-4">
-<h4 id="org9c305cb">Working with JSON</h4>
-<div class="outline-text-4" id="text-org9c305cb">
+<div id="outline-container-org3534461" class="outline-4">
+<h4 id="org3534461">Working with JSON</h4>
+<div class="outline-text-4" id="text-org3534461">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> json
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> json
 
-<span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(<span style="color: #79a8ff;">'foo.json'</span>, <span style="color: #79a8ff;">'r'</span>) <span style="color: #b6a0ff;">as</span> f:
-    <span style="color: #00d3d0;">d</span> = json.load(f)
+<span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #596e76; font-weight: bold;">open</span>(<span style="color: #11948b;">'foo.json'</span>, <span style="color: #11948b;">'r'</span>) <span style="color: #778c00; font-weight: bold;">as</span> f:
+    <span style="color: #007ec4;">d</span> = json.load(f)
 
-<span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(<span style="color: #79a8ff;">'bar.json'</span>, <span style="color: #79a8ff;">'w'</span>) <span style="color: #b6a0ff;">as</span> f:
+<span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #596e76; font-weight: bold;">open</span>(<span style="color: #11948b;">'bar.json'</span>, <span style="color: #11948b;">'w'</span>) <span style="color: #778c00; font-weight: bold;">as</span> f:
     json.dump(d, f, indent=4)
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
@@ -733,12 +781,12 @@ There are two main tools for python specific virtual environments:
 <h3 id="venv"><code>venv</code></h3>
 <div class="outline-text-3" id="text-venv">
 <div class="org-src-container">
-<pre class="src src-sh">python3 -m venv venv
-<span style="color: #f78fe7;">source</span> venv/bin/activate
-pip install -U pip   <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">update pip
+<pre class="src src-sh"><code>python3 -m venv venv
+<span style="color: #596e76; font-weight: bold;">source</span> venv/bin/activate
+pip install -U pip   <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">update pip
 </span>pip install -r requirements.txt
 deactivate
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -748,8 +796,8 @@ packages which makes it easy to recreate the environment later.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">pip freeze &gt; requirements.txt
-</pre>
+<pre class="src src-sh"><code>pip freeze &gt; requirements.txt
+</code></pre>
 </div>
 </div>
 </div>
@@ -758,30 +806,30 @@ packages which makes it easy to recreate the environment later.
 <div class="outline-text-3" id="text-conda">
 <p>
 You can install Conda with Miniconda. By default this is a bit
-aggressive &#x2014; it will activate conda when it starts a new shell &#x2014;
+aggressive &mdash; it will activate conda when it starts a new shell &mdash;
 but you can stop it activating in a new shell with the following
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">conda config --set auto_activate_base false
-</pre>
+<pre class="src src-sh"><code>conda config --set auto_activate_base false
+</code></pre>
 </div>
 </div>
-<div id="outline-container-orgf67c963" class="outline-4">
-<h4 id="orgf67c963">Listing existing Conda environments</h4>
-<div class="outline-text-4" id="text-orgf67c963">
+<div id="outline-container-orgcc5e585" class="outline-4">
+<h4 id="orgcc5e585">Listing existing Conda environments</h4>
+<div class="outline-text-4" id="text-orgcc5e585">
 <div class="org-src-container">
-<pre class="src src-sh">conda env list
-</pre>
+<pre class="src src-sh"><code>conda env list
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org1f0f60b" class="outline-4">
-<h4 id="org1f0f60b">Creating/removing a Conda environment</h4>
-<div class="outline-text-4" id="text-org1f0f60b">
+<div id="outline-container-org6ebb497" class="outline-4">
+<h4 id="org6ebb497">Creating/removing a Conda environment</h4>
+<div class="outline-text-4" id="text-org6ebb497">
 <div class="org-src-container">
-<pre class="src src-sh">conda create -n myenv <span style="color: #00d3d0;">python</span>=3.10
-</pre>
+<pre class="src src-sh"><code>conda create -n myenv <span style="color: #007ec4;">python</span>=3.10
+</code></pre>
 </div>
 
 <p>
@@ -790,8 +838,8 @@ to remove this later, this can be managed by Conda too.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">conda env remove -n myenv
-</pre>
+<pre class="src src-sh"><code>conda env remove -n myenv
+</code></pre>
 </div>
 
 <p>
@@ -799,22 +847,22 @@ To remove old caches there is <code>conda clean --all</code>.
 </p>
 </div>
 </div>
-<div id="outline-container-org59ae028" class="outline-4">
-<h4 id="org59ae028">Activating/deactivating a Conda environment</h4>
-<div class="outline-text-4" id="text-org59ae028">
+<div id="outline-container-org664e4b4" class="outline-4">
+<h4 id="org664e4b4">Activating/deactivating a Conda environment</h4>
+<div class="outline-text-4" id="text-org664e4b4">
 <div class="org-src-container">
-<pre class="src src-sh">conda activate myenv
+<pre class="src src-sh"><code>conda activate myenv
 conda deactivate
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orge297c59" class="outline-4">
-<h4 id="orge297c59">Installing Snakemake in Conda</h4>
-<div class="outline-text-4" id="text-orge297c59">
+<div id="outline-container-org7ba57f5" class="outline-4">
+<h4 id="org7ba57f5">Installing Snakemake in Conda</h4>
+<div class="outline-text-4" id="text-org7ba57f5">
 <div class="org-src-container">
-<pre class="src src-sh">conda install -c bioconda -c conda-forge snakemake
-</pre>
+<pre class="src src-sh"><code>conda install -c bioconda -c conda-forge snakemake
+</code></pre>
 </div>
 
 <p>
@@ -823,22 +871,22 @@ following command instead seemed to fix things.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">conda install -c conda-forge -c bioconda --force-reinstall coincbc pulp snakemake
-</pre>
+<pre class="src src-sh"><code>conda install -c conda-forge -c bioconda --force-reinstall coincbc pulp snakemake
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org4646ade" class="outline-4">
-<h4 id="org4646ade">Exporting/recreating a Conda environment</h4>
-<div class="outline-text-4" id="text-org4646ade">
+<div id="outline-container-org2f72758" class="outline-4">
+<h4 id="org2f72758">Exporting/recreating a Conda environment</h4>
+<div class="outline-text-4" id="text-org2f72758">
 <div class="org-src-container">
-<pre class="src src-sh">conda env export &gt; environment.yaml
-</pre>
+<pre class="src src-sh"><code>conda env export &gt; environment.yaml
+</code></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh">conda env create -f environment.yaml
-</pre>
+<pre class="src src-sh"><code>conda env create -f environment.yaml
+</code></pre>
 </div>
 
 <p>
@@ -847,98 +895,89 @@ If you want to update an existing environment to match those in a
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">conda env update -n myenv -f environment.yml
-</pre>
+<pre class="src src-sh"><code>conda env update -n myenv -f environment.yml
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb56b8b3" class="outline-3">
-<h3 id="orgb56b8b3">Conda Examples</h3>
-<div class="outline-text-3" id="text-orgb56b8b3">
+<div id="outline-container-orga4d8bd4" class="outline-3">
+<h3 id="orga4d8bd4">Conda Examples</h3>
+<div class="outline-text-3" id="text-orga4d8bd4">
 </div>
-<div id="outline-container-orgf651ce5" class="outline-4">
-<h4 id="orgf651ce5">Example: Recording the environment</h4>
-<div class="outline-text-4" id="text-orgf651ce5">
+<div id="outline-container-org237ed03" class="outline-4">
+<h4 id="org237ed03">Example: Recording the environment</h4>
+<div class="outline-text-4" id="text-org237ed03">
 <div class="org-src-container">
-<pre class="src src-nil">rule conda_environment:
+<pre class="src src-nil"><code>rule conda_environment:
     output:
         "config/environment.yaml"
     shell:
         "conda env export &gt; config/environment.yaml"
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org019bed2" class="outline-2">
-<h2 id="org019bed2">Python packages</h2>
-<div class="outline-text-2" id="text-org019bed2">
+<div id="outline-container-orgf93c0f2" class="outline-2">
+<h2 id="orgf93c0f2">Python packages</h2>
+<div class="outline-text-2" id="text-orgf93c0f2">
 <p>
-For notes on installation of packages see the notes above about <a href="#org73ad20e">pip</a> or
+For notes on installation of packages see the notes above about <a href="#orgad53021">pip</a> or
 <a href="#sec:virtual-envs">virtual environments</a>.
 </p>
 </div>
-<div id="outline-container-orge560168" class="outline-3">
-<h3 id="orge560168">argparse</h3>
-<div class="outline-text-3" id="text-orge560168">
+<div id="outline-container-org98e1fb5" class="outline-3">
+<h3 id="org98e1fb5">argparse</h3>
+<div class="outline-text-3" id="text-org98e1fb5">
 <p>
 The <code>argparse</code> module is part of the standard library.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> argparse
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> argparse
 
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">create parser object
-</span><span style="color: #00d3d0;">parser</span> = argparse.ArgumentParser()
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">create parser object
+</span><span style="color: #007ec4;">parser</span> = argparse.ArgumentParser()
 
 parser.add_argument(
-    <span style="color: #79a8ff;">"-v"</span>,
-    <span style="color: #79a8ff;">"--verbose"</span>,
-    action=<span style="color: #79a8ff;">"store_true"</span>,
-    default=<span style="color: #00bcff;">False</span>,
-    <span style="color: #f78fe7;">help</span>=<span style="color: #79a8ff;">"Verbose output"</span>
+    <span style="color: #11948b;">"-v"</span>,
+    <span style="color: #11948b;">"--verbose"</span>,
+    action=<span style="color: #11948b;">"store_true"</span>,
+    default=<span style="color: #007ec4; font-weight: bold;">False</span>,
+    <span style="color: #596e76; font-weight: bold;">help</span>=<span style="color: #11948b;">"Verbose output"</span>
 )
 parser.add_argument(
-    <span style="color: #79a8ff;">"-s"</span>,
-    <span style="color: #79a8ff;">"--seed"</span>,
-    <span style="color: #f78fe7;">type</span>=<span style="color: #f78fe7;">int</span>,
+    <span style="color: #11948b;">"-s"</span>,
+    <span style="color: #11948b;">"--seed"</span>,
+    <span style="color: #596e76; font-weight: bold;">type</span>=<span style="color: #596e76; font-weight: bold;">int</span>,
     default=1,
-    <span style="color: #f78fe7;">help</span>=<span style="color: #79a8ff;">"PRNG seed"</span>
+    <span style="color: #596e76; font-weight: bold;">help</span>=<span style="color: #11948b;">"PRNG seed"</span>
 )
 parser.add_argument(
-    <span style="color: #79a8ff;">"-p"</span>,
-    <span style="color: #79a8ff;">"--parameters"</span>,
-    <span style="color: #f78fe7;">type</span>=<span style="color: #f78fe7;">str</span>,
-    <span style="color: #f78fe7;">help</span>=<span style="color: #79a8ff;">"Filepath to parameters JSON"</span>
+    <span style="color: #11948b;">"-p"</span>,
+    <span style="color: #11948b;">"--parameters"</span>,
+    <span style="color: #596e76; font-weight: bold;">type</span>=<span style="color: #596e76; font-weight: bold;">str</span>,
+    <span style="color: #596e76; font-weight: bold;">help</span>=<span style="color: #11948b;">"Filepath to parameters JSON"</span>
 )
 
-<span style="color: #00d3d0;">args</span> = parser.parse_args()
-</pre>
+<span style="color: #007ec4;">args</span> = parser.parse_args()
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcb7653b" class="outline-3">
-<h3 id="orgcb7653b">Biopython</h3>
-<div class="outline-text-3" id="text-orgcb7653b">
+<div id="outline-container-orgdb81582" class="outline-3">
+<h3 id="orgdb81582">Biopython</h3>
+<div class="outline-text-3" id="text-orgdb81582">
 <p>
 See my notes <a href="./phylogenetics-notes.html">here</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-org1d2fcd4" class="outline-3">
-<h3 id="org1d2fcd4">Black (linting)</h3>
-<div class="outline-text-3" id="text-org1d2fcd4">
-<p>
-Once you have <a href="https://black.readthedocs.io/en/stable/">black</a> installed, just run <code>black src</code> (assuming your
-code is in <code>src/</code>).
-</p>
-</div>
-</div>
-<div id="outline-container-org2053d3f" class="outline-3">
-<h3 id="org2053d3f">h5py</h3>
-<div class="outline-text-3" id="text-org2053d3f">
+<div id="outline-container-org23fb3cd" class="outline-3">
+<h3 id="org23fb3cd">h5py</h3>
+<div class="outline-text-3" id="text-org23fb3cd">
 <ul class="org-ul">
 <li>This package is a wrapper around the HDF5 (hierarchical data format)
 C library.</li>
@@ -954,19 +993,19 @@ method to create new datasets within an object.</li>
 </ul></li>
 </ul>
 </div>
-<div id="outline-container-orgd98ad87" class="outline-4">
-<h4 id="orgd98ad87">Example: Getting data using full paths</h4>
-<div class="outline-text-4" id="text-orgd98ad87">
+<div id="outline-container-orgd6978fc" class="outline-4">
+<h4 id="orgd6978fc">Example: Getting data using full paths</h4>
+<div class="outline-text-4" id="text-orgd6978fc">
 <p>
 As described in the <a href="https://docs.h5py.org/en/stable/quick.html">Quick start guide</a>, there is a simple way to pull
 out data:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">f</span> = h5py.File(<span style="color: #79a8ff;">'mydataset.hdf5'</span>, <span style="color: #79a8ff;">'a'</span>)
-<span style="color: #00d3d0;">dset3</span> = f.create_dataset(<span style="color: #79a8ff;">'subgroup2/dataset_three'</span>, (10,), dtype=<span style="color: #79a8ff;">'i'</span>)
-<span style="color: #00d3d0;">dataset_three</span> = f[<span style="color: #79a8ff;">'subgroup2/dataset_three'</span>]
-</pre>
+<pre class="src src-python"><code><span style="color: #007ec4;">f</span> = h5py.File(<span style="color: #11948b;">'mydataset.hdf5'</span>, <span style="color: #11948b;">'a'</span>)
+<span style="color: #007ec4;">dset3</span> = f.create_dataset(<span style="color: #11948b;">'subgroup2/dataset_three'</span>, (10,), dtype=<span style="color: #11948b;">'i'</span>)
+<span style="color: #007ec4;">dataset_three</span> = f[<span style="color: #11948b;">'subgroup2/dataset_three'</span>]
+</code></pre>
 </div>
 
 <p>
@@ -977,9 +1016,32 @@ is useful while writing these queries.
 </div>
 </div>
 </div>
-<div id="outline-container-orgfa32f5b" class="outline-3">
-<h3 id="orgfa32f5b">OS</h3>
-<div class="outline-text-3" id="text-orgfa32f5b">
+<div id="outline-container-orgb3f1ffc" class="outline-3">
+<h3 id="orgb3f1ffc">logging</h3>
+<div class="outline-text-3" id="text-orgb3f1ffc">
+<p>
+Here is a minimal example of how to use the <code>logging</code> package.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> logging
+
+<span style="color: #007ec4;">LOG_DIR</span> = Path(<span style="color: #11948b;">".logs"</span>)
+LOG_DIR.mkdir(exist_ok=<span style="color: #007ec4; font-weight: bold;">True</span>)
+<span style="color: #007ec4;">LOG_FILE</span> = LOG_DIR / f<span style="color: #11948b;">"browse-epidemiological-data-</span>{pd.Timestamp.now().strftime('%Y%m%d-%H%M%S')}<span style="color: #11948b;">.log"</span>
+logging.basicConfig(
+    level=logging.INFO,
+    <span style="color: #596e76; font-weight: bold;">format</span>=<span style="color: #11948b;">"%(asctime)s | %(levelname)s | %(name)s | %(message)s"</span>,
+    handlers=[logging.FileHandler(LOG_FILE)],
+)
+logging.info(<span style="color: #11948b;">"Logging initialized."</span>)
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org52125ad" class="outline-3">
+<h3 id="org52125ad">OS</h3>
+<div class="outline-text-3" id="text-org52125ad">
 <p>
 The <code>os</code> module (in the standard library) is a nice way to interact
 with the operating system. There are functions to manage the working
@@ -1006,37 +1068,37 @@ directory:
 <h3 id="pyyaml">PyYAML</h3>
 <div class="outline-text-3" id="text-pyyaml">
 </div>
-<div id="outline-container-orgb829899" class="outline-4">
-<h4 id="orgb829899">Reading YAML Files</h4>
-<div class="outline-text-4" id="text-orgb829899">
+<div id="outline-container-orgdd8bb99" class="outline-4">
+<h4 id="orgdd8bb99">Reading YAML Files</h4>
+<div class="outline-text-4" id="text-orgdd8bb99">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> yaml
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> yaml
 
-<span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(<span style="color: #79a8ff;">'config.yaml'</span>, <span style="color: #79a8ff;">'r'</span>) <span style="color: #b6a0ff;">as</span> <span style="color: #f78fe7;">file</span>:
-    <span style="color: #00d3d0;">config</span> = yaml.safe_load(<span style="color: #f78fe7;">file</span>)
-</pre>
+<span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #596e76; font-weight: bold;">open</span>(<span style="color: #11948b;">'config.yaml'</span>, <span style="color: #11948b;">'r'</span>) <span style="color: #778c00; font-weight: bold;">as</span> file:
+    <span style="color: #007ec4;">config</span> = yaml.safe_load(file)
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc1262d2" class="outline-4">
-<h4 id="orgc1262d2">Writing YAML Files</h4>
-<div class="outline-text-4" id="text-orgc1262d2">
+<div id="outline-container-orga3bc639" class="outline-4">
+<h4 id="orga3bc639">Writing YAML Files</h4>
+<div class="outline-text-4" id="text-orga3bc639">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">data</span> = {
-<span style="color: #79a8ff;">'name'</span>: <span style="color: #79a8ff;">'Clark Evans'</span>,
-<span style="color: #79a8ff;">'features'</span>: [<span style="color: #79a8ff;">'YAML'</span>]
+<pre class="src src-python"><code><span style="color: #007ec4;">data</span> = {
+<span style="color: #11948b;">'name'</span>: <span style="color: #11948b;">'Clark Evans'</span>,
+<span style="color: #11948b;">'features'</span>: [<span style="color: #11948b;">'YAML'</span>]
 }
 
-<span style="color: #b6a0ff;">with</span> <span style="color: #f78fe7;">open</span>(<span style="color: #79a8ff;">'output.yaml'</span>, <span style="color: #79a8ff;">'w'</span>) <span style="color: #b6a0ff;">as</span> <span style="color: #f78fe7;">file</span>:
-    yaml.dump(data, <span style="color: #f78fe7;">file</span>)
-</pre>
+<span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #596e76; font-weight: bold;">open</span>(<span style="color: #11948b;">'output.yaml'</span>, <span style="color: #11948b;">'w'</span>) <span style="color: #778c00; font-weight: bold;">as</span> file:
+    yaml.dump(data, file)
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org594280b" class="outline-3">
-<h3 id="org594280b">PyTorch</h3>
-<div class="outline-text-3" id="text-org594280b">
+<div id="outline-container-org0970d9e" class="outline-3">
+<h3 id="org0970d9e">PyTorch</h3>
+<div class="outline-text-3" id="text-org0970d9e">
 <ul class="org-ul">
 <li><a href="#sec:pytorch:funcs-tensor-manipulation">Useful functions: tensor manipulation</a></li>
 <li><a href="#sec:pytorch:saving-loading-models">Saving and loading models</a></li>
@@ -1056,57 +1118,57 @@ directory:
 <h4 id="sec:pytorch:saving-loading-models">Saving and loading models</h4>
 <div class="outline-text-4" id="text-sec:pytorch:saving-loading-models">
 <div class="org-src-container">
-<pre class="src src-python">  <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">first train `my_cool_model'
-</span>torch.save(my_cool_model.state_dict(), <span style="color: #79a8ff;">"./demo.pt"</span>)
-<span style="color: #00d3d0;">another_cool_model</span> = CoolModel()
-another_cool_model.load_state_dict(torch.load(<span style="color: #79a8ff;">"./demo.pt"</span>))
-</pre>
+<pre class="src src-python"><code>  <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">first train `my_cool_model'
+</span>torch.save(my_cool_model.state_dict(), <span style="color: #11948b;">"./demo.pt"</span>)
+<span style="color: #007ec4;">another_cool_model</span> = CoolModel()
+another_cool_model.load_state_dict(torch.load(<span style="color: #11948b;">"./demo.pt"</span>))
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orga3a9e52" class="outline-3">
-<h3 id="orga3a9e52">Scipy</h3>
-<div class="outline-text-3" id="text-orga3a9e52">
+<div id="outline-container-org39835cc" class="outline-3">
+<h3 id="org39835cc">Scipy</h3>
+<div class="outline-text-3" id="text-org39835cc">
 <ul class="org-ul">
 <li><a href="https://docs.scipy.org/doc/scipy/reference/stats.html">scipy stats documentation</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org66a5201" class="outline-3">
-<h3 id="org66a5201">Snakemake</h3>
-<div class="outline-text-3" id="text-org66a5201">
+<div id="outline-container-orgb7e2a71" class="outline-3">
+<h3 id="orgb7e2a71">Snakemake</h3>
+<div class="outline-text-3" id="text-orgb7e2a71">
 <p>
 See my <a href="./workflow-notes.html">snakemake notes</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-org476c283" class="outline-3">
-<h3 id="org476c283">tqdm (progress bars)</h3>
-<div class="outline-text-3" id="text-org476c283">
+<div id="outline-container-org3d2507f" class="outline-3">
+<h3 id="org3d2507f">tqdm (progress bars)</h3>
+<div class="outline-text-3" id="text-org3d2507f">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> tqdm
-<span style="color: #b6a0ff;">import</span> time
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> tqdm
+<span style="color: #778c00; font-weight: bold;">import</span> time
 
-<span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"starting loop..."</span>)
+<span style="color: #596e76; font-weight: bold;">print</span>(<span style="color: #11948b;">"starting loop..."</span>)
 
-<span style="color: #b6a0ff;">for</span> x <span style="color: #b6a0ff;">in</span> tqdm.tqdm(<span style="color: #f78fe7;">range</span>(10)):
+<span style="color: #778c00; font-weight: bold;">for</span> x <span style="color: #778c00; font-weight: bold;">in</span> tqdm.tqdm(<span style="color: #596e76; font-weight: bold;">range</span>(10)):
     time.sleep(1)
-<span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"done."</span>)
-</pre>
+<span style="color: #596e76; font-weight: bold;">print</span>(<span style="color: #11948b;">"done."</span>)
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org1fd1a59" class="outline-3">
-<h3 id="org1fd1a59">Unittest</h3>
-<div class="outline-text-3" id="text-org1fd1a59">
+<div id="outline-container-org5e9a4b6" class="outline-3">
+<h3 id="org5e9a4b6">Unittest</h3>
+<div class="outline-text-3" id="text-org5e9a4b6">
 <p>
 <a href="https://docs.python.org/3/library/unittest.html">Unittest Documentation</a>
 </p>
 </div>
-<div id="outline-container-orgc37a54b" class="outline-4">
-<h4 id="orgc37a54b">Common assertions</h4>
-<div class="outline-text-4" id="text-orgc37a54b">
+<div id="outline-container-org2fee0ff" class="outline-4">
+<h4 id="org2fee0ff">Common assertions</h4>
+<div class="outline-text-4" id="text-org2fee0ff">
 <p>
 Here is a table of common assertions <a href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.debug">from the docs</a>.
 </p>
@@ -1194,9 +1256,9 @@ Here is a table of common assertions <a href="https://docs.python.org/3/library/
 </table>
 </div>
 </div>
-<div id="outline-container-org835332f" class="outline-4">
-<h4 id="org835332f">Example</h4>
-<div class="outline-text-4" id="text-org835332f">
+<div id="outline-container-org7c8fa15" class="outline-4">
+<h4 id="org7c8fa15">Example</h4>
+<div class="outline-text-4" id="text-org7c8fa15">
 <p>
 There is a built-in unit testing library for Python. The following
 code runs with <code>python demo.py</code>.
@@ -1208,59 +1270,59 @@ Any methods with a name starting with "test" are run and there are
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> unittest
-<span style="color: #b6a0ff;">import</span> scipy.stats <span style="color: #b6a0ff;">as</span> stats
-<span style="color: #b6a0ff;">import</span> numpy <span style="color: #b6a0ff;">as</span> np
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> unittest
+<span style="color: #778c00; font-weight: bold;">import</span> scipy.stats <span style="color: #778c00; font-weight: bold;">as</span> stats
+<span style="color: #778c00; font-weight: bold;">import</span> numpy <span style="color: #778c00; font-weight: bold;">as</span> np
 
 
-<span style="color: #b6a0ff;">class</span> <span style="color: #6ae4b9;">TestScipyStats</span>(unittest.TestCase):
+<span style="color: #778c00; font-weight: bold;">class</span> <span style="color: #a67c00;">TestScipyStats</span>(unittest.TestCase):
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">setUp</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">self</span>.<span style="color: #00d3d0;">test_data</span> = np.array([1, 2, 3, 4, 5])
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">setUp</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">self</span>.<span style="color: #007ec4;">test_data</span> = np.array([1, 2, 3, 4, 5])
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">test_mean</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">use assertAlmostEqual to check 7 (default) decimal places
-</span>        <span style="color: #b6a0ff;">self</span>.assertAlmostEqual(np.mean(<span style="color: #b6a0ff;">self</span>.test_data), 3.0, 7)
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">test_mean</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">use assertAlmostEqual to check 7 (default) decimal places
+</span>        <span style="color: #778c00; font-weight: bold;">self</span>.assertAlmostEqual(np.mean(<span style="color: #778c00; font-weight: bold;">self</span>.test_data), 3.0, 7)
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">test_min_max</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">self</span>.assertEqual(np.<span style="color: #f78fe7;">min</span>(<span style="color: #b6a0ff;">self</span>.test_data), 1)
-        <span style="color: #b6a0ff;">self</span>.assertEqual(np.<span style="color: #f78fe7;">max</span>(<span style="color: #b6a0ff;">self</span>.test_data), 5)
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">test_min_max</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">self</span>.assertEqual(np.<span style="color: #596e76; font-weight: bold;">min</span>(<span style="color: #778c00; font-weight: bold;">self</span>.test_data), 1)
+        <span style="color: #778c00; font-weight: bold;">self</span>.assertEqual(np.<span style="color: #596e76; font-weight: bold;">max</span>(<span style="color: #778c00; font-weight: bold;">self</span>.test_data), 5)
 
-    <span style="color: #b6a0ff;">def</span> <span style="color: #feacd0;">test_bogus</span>(<span style="color: #b6a0ff;">self</span>):
-        <span style="color: #b6a0ff;">with</span> <span style="color: #b6a0ff;">self</span>.assertRaises(<span style="color: #6ae4b9;">AttributeError</span>):
-            <span style="color: #b6a0ff;">self</span>.test_data.fake()
+    <span style="color: #778c00; font-weight: bold;">def</span> <span style="color: #007ec4;">test_bogus</span>(<span style="color: #778c00; font-weight: bold;">self</span>):
+        <span style="color: #778c00; font-weight: bold;">with</span> <span style="color: #778c00; font-weight: bold;">self</span>.assertRaises(<span style="color: #a67c00;">AttributeError</span>):
+            <span style="color: #778c00; font-weight: bold;">self</span>.test_data.fake()
 
 
-<span style="color: #b6a0ff;">if</span> <span style="color: #f78fe7;">__name__</span> == <span style="color: #79a8ff;">'__main__'</span>:
+<span style="color: #778c00; font-weight: bold;">if</span> <span style="color: #596e76; font-weight: bold;">__name__</span> == <span style="color: #11948b;">'__main__'</span>:
     unittest.main()
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd9a19c4" class="outline-3">
-<h3 id="orgd9a19c4">Pypfilt</h3>
-<div class="outline-text-3" id="text-orgd9a19c4">
+<div id="outline-container-orge12d63f" class="outline-3">
+<h3 id="orge12d63f">Pypfilt</h3>
+<div class="outline-text-3" id="text-orge12d63f">
 <p>
 <a href="./pypfilt-notes.html">My notes</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org674f430" class="outline-3">
-<h3 id="org674f430">Plotnine</h3>
-<div class="outline-text-3" id="text-org674f430">
+<div id="outline-container-org686f117" class="outline-3">
+<h3 id="org686f117">Plotnine</h3>
+<div class="outline-text-3" id="text-org686f117">
 <p>
 <a href="../misc/plotnine/gallery.html">Gallery</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org9fd82cd" class="outline-3">
-<h3 id="org9fd82cd">Numpy</h3>
-<div class="outline-text-3" id="text-org9fd82cd">
+<div id="outline-container-orgb9cc6b6" class="outline-3">
+<h3 id="orgb9cc6b6">Numpy</h3>
+<div class="outline-text-3" id="text-orgb9cc6b6">
 </div>
-<div id="outline-container-org182ea55" class="outline-4">
-<h4 id="org182ea55">Notes</h4>
-<div class="outline-text-4" id="text-org182ea55">
+<div id="outline-container-orga56c053" class="outline-4">
+<h4 id="orga56c053">Notes</h4>
+<div class="outline-text-4" id="text-orga56c053">
 <ul class="org-ul">
 <li>The <code>ndarray</code> is the core data type, it consists of <i>n</i>-dimensional
 homogeneous arrays of a fixed size.
@@ -1295,9 +1357,9 @@ explicitly <code>del my_array</code> to free memory though.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd48a592" class="outline-4">
-<h4 id="orgd48a592">Comparison with R</h4>
-<div class="outline-text-4" id="text-orgd48a592">
+<div id="outline-container-orgc2f1b55" class="outline-4">
+<h4 id="orgc2f1b55">Comparison with R</h4>
+<div class="outline-text-4" id="text-orgc2f1b55">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1347,13 +1409,45 @@ explicitly <code>del my_array</code> to free memory though.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgdc2a375" class="outline-3">
-<h3 id="orgdc2a375">Pandas</h3>
-<div class="outline-text-3" id="text-orgdc2a375">
+<div id="outline-container-orga2cdf3f" class="outline-3">
+<h3 id="orga2cdf3f">Pandas</h3>
+<div class="outline-text-3" id="text-orga2cdf3f">
 <p>
 Pandas is an attempt to bring R-style data frames to python. There is a
 <a href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r">comparison with R</a> in the quickstart guide.
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">R</th>
+<th scope="col" class="org-left">pandas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>abs(x)</code></td>
+<td class="org-left"><code>x.abs()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>diff(x)</code></td>
+<td class="org-left"><code>x.diff()</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>mean(x, na.rm=TRUE)</code></td>
+<td class="org-left"><code>x.mean()</code></td>
+</tr>
+</tbody>
+</table>
 
 <ul class="org-ul">
 <li><code>import pandas as pd</code> and import <code>Series</code> and <code>DataFrame</code> into the global
@@ -1378,19 +1472,39 @@ axis to apply them to.</li>
 There is the <code>copy</code> method to help you a lot of the time.</li>
 </ul>
 </div>
-<div id="outline-container-org91f3d45" class="outline-4">
-<h4 id="org91f3d45">Reshaping (melting) data</h4>
-<div class="outline-text-4" id="text-org91f3d45">
+<div id="outline-container-orgd7e9da9" class="outline-4">
+<h4 id="orgd7e9da9">Group summary</h4>
+<div class="outline-text-4" id="text-orgd7e9da9">
+<div class="org-src-container">
+<pre class="src src-R"><code>df_summary <span style="color: #007ec4; font-weight: bold;">&lt;-</span> df |&gt;
+  group_by(group_var) |&gt;
+  summarise(mean_x = mean(diff(x), na.rm=<span style="color: #a67c00;">TRUE</span>))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><code><span style="color: #007ec4;">df_summary</span> = (
+  df
+  .groupby(<span style="color: #11948b;">"group_var"</span>)
+  .agg(mean_x=(<span style="color: #11948b;">"x"</span>, <span style="color: #778c00; font-weight: bold;">lambda</span> x: x.diff().mean()))
+)
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1f92a84" class="outline-4">
+<h4 id="org1f92a84">Reshaping (melting) data</h4>
+<div class="outline-text-4" id="text-org1f92a84">
 <p>
 Dataframes have a <code>melt</code> method to go from a wide to long format.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">sales_melted</span> = sales.melt(id_vars=[<span style="color: #79a8ff;">'Year'</span>],
-                          value_vars=[<span style="color: #79a8ff;">'product_a'</span>, <span style="color: #79a8ff;">'product_b'</span>, <span style="color: #79a8ff;">'product_c'</span>],
-                          var_name=<span style="color: #79a8ff;">'Product'</span>,
-                          value_name=<span style="color: #79a8ff;">'Sales'</span>)
-</pre>
+<pre class="src src-python"><code><span style="color: #007ec4;">sales_melted</span> = sales.melt(id_vars=[<span style="color: #11948b;">'Year'</span>],
+                          value_vars=[<span style="color: #11948b;">'product_a'</span>, <span style="color: #11948b;">'product_b'</span>, <span style="color: #11948b;">'product_c'</span>],
+                          var_name=<span style="color: #11948b;">'Product'</span>,
+                          value_name=<span style="color: #11948b;">'Sales'</span>)
+</code></pre>
 </div>
 
 <ul class="org-ul">
@@ -1405,55 +1519,55 @@ Melting is particularly useful in plotting.
 </p>
 </div>
 </div>
-<div id="outline-container-orge850b22" class="outline-4">
-<h4 id="orge850b22">IO</h4>
-<div class="outline-text-4" id="text-orge850b22">
+<div id="outline-container-orgb1c5661" class="outline-4">
+<h4 id="orgb1c5661">IO</h4>
+<div class="outline-text-4" id="text-orgb1c5661">
 <ul class="org-ul">
 <li>Reading in data with <code>pd.read_csv</code> and <code>pd.read_table</code> there is a <code>to_csv</code>
 method. There are similar methods for <code>_json</code> in newer versions of pandas.</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> pandas <span style="color: #b6a0ff;">as</span> pd
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> pandas <span style="color: #778c00; font-weight: bold;">as</span> pd
 
-<span style="color: #00d3d0;">df</span> = pd.DataFrame({
-    <span style="color: #79a8ff;">"id"</span>: [1, 2, 3, 4],
-    <span style="color: #79a8ff;">"val"</span>: [<span style="color: #79a8ff;">'a'</span>, <span style="color: #79a8ff;">'b'</span>, <span style="color: #79a8ff;">'c'</span>, <span style="color: #79a8ff;">'d'</span>]
+<span style="color: #007ec4;">df</span> = pd.DataFrame({
+    <span style="color: #11948b;">"id"</span>: [1, 2, 3, 4],
+    <span style="color: #11948b;">"val"</span>: [<span style="color: #11948b;">'a'</span>, <span style="color: #11948b;">'b'</span>, <span style="color: #11948b;">'c'</span>, <span style="color: #11948b;">'d'</span>]
 })
 
-df[0:2].to_csv(<span style="color: #79a8ff;">'demo-pandas-csv.csv'</span>, index=<span style="color: #00bcff;">False</span>)
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">NOTE this appends the data to the end of the CSV.
-</span>df[2:4].to_csv(<span style="color: #79a8ff;">'demo-pandas-csv.csv'</span>, index=<span style="color: #00bcff;">False</span>, mode=<span style="color: #79a8ff;">'a'</span>, header=<span style="color: #00bcff;">False</span>)
-</pre>
+df[0:2].to_csv(<span style="color: #11948b;">'demo-pandas-csv.csv'</span>, index=<span style="color: #007ec4; font-weight: bold;">False</span>)
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">NOTE this appends the data to the end of the CSV.
+</span>df[2:4].to_csv(<span style="color: #11948b;">'demo-pandas-csv.csv'</span>, index=<span style="color: #007ec4; font-weight: bold;">False</span>, mode=<span style="color: #11948b;">'a'</span>, header=<span style="color: #007ec4; font-weight: bold;">False</span>)
+</code></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-nil">id,val
+<pre class="src src-nil"><code>id,val
 1,a
 2,b
 3,c
 4,d
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org53bf449" class="outline-4">
-<h4 id="org53bf449">Munging</h4>
-<div class="outline-text-4" id="text-org53bf449">
+<div id="outline-container-org4f39545" class="outline-4">
+<h4 id="org4f39545">Munging</h4>
+<div class="outline-text-4" id="text-org4f39545">
 <p>
 The pandas data frame has a <code>rename</code> method to rename the columns:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">my_df.rename(columns={<span style="color: #79a8ff;">"old_name_1"</span>: <span style="color: #79a8ff;">"new_name_1"</span>,
-                      <span style="color: #79a8ff;">"old_name_2"</span>: <span style="color: #79a8ff;">"new_name_2"</span>})
-</pre>
+<pre class="src src-python"><code>my_df.rename(columns={<span style="color: #11948b;">"old_name_1"</span>: <span style="color: #11948b;">"new_name_1"</span>,
+                      <span style="color: #11948b;">"old_name_2"</span>: <span style="color: #11948b;">"new_name_2"</span>})
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd707dc6" class="outline-4">
-<h4 id="orgd707dc6">Exploratory data analysis</h4>
-<div class="outline-text-4" id="text-orgd707dc6">
+<div id="outline-container-org0117692" class="outline-4">
+<h4 id="org0117692">Exploratory data analysis</h4>
+<div class="outline-text-4" id="text-org0117692">
 <ul class="org-ul">
 <li>A combination of the <code>describe</code>, <code>info</code> and <code>dtypes</code> method provide an
 acceptable replacement for the <code>str</code> and <code>summary</code> functions from R.</li>
@@ -1463,17 +1577,17 @@ probabilities to evaluate the quantiles at.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org100d103" class="outline-4">
-<h4 id="org100d103">Cross tabulation</h4>
-<div class="outline-text-4" id="text-org100d103">
+<div id="outline-container-orgcfd5fa5" class="outline-4">
+<h4 id="orgcfd5fa5">Cross tabulation</h4>
+<div class="outline-text-4" id="text-orgcfd5fa5">
 <p>
 Assume `df` has columns `discrete<sub>a</sub>` and `discrete<sub>b</sub>`, then the following will
 cross tabulate the number of each pair.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">pd.crosstab(df.discrete_a, df.discrete_b)
-</pre>
+<pre class="src src-python"><code>pd.crosstab(df.discrete_a, df.discrete_b)
+</code></pre>
 </div>
 
 <ul class="org-ul">
@@ -1485,17 +1599,17 @@ data frames themselves and can be used in subsequent calculations.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orga0ba4c3" class="outline-4">
-<h4 id="orga0ba4c3">Filtering by column values</h4>
-<div class="outline-text-4" id="text-orga0ba4c3">
+<div id="outline-container-org91a36fe" class="outline-4">
+<h4 id="org91a36fe">Filtering by column values</h4>
+<div class="outline-text-4" id="text-org91a36fe">
 <p>
 Given a data frame, `gapminder`, with a column called `year` the following will
 select only the rows corresponding to the year 2002.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">gapminder_not_2002</span> = gapminder[gapminder.year != 2002]
-</pre>
+<pre class="src src-python"><code><span style="color: #007ec4;">gapminder_not_2002</span> = gapminder[gapminder.year != 2002]
+</code></pre>
 </div>
 
 <p>
@@ -1505,9 +1619,9 @@ only return a view of the data.
 </div>
 </div>
 </div>
-<div id="outline-container-org1ac134d" class="outline-3">
-<h3 id="org1ac134d">Matplotlib</h3>
-<div class="outline-text-3" id="text-org1ac134d">
+<div id="outline-container-org44a5aa0" class="outline-3">
+<h3 id="org44a5aa0">Matplotlib</h3>
+<div class="outline-text-3" id="text-org44a5aa0">
 <p>
 <a href="../misc/matplotlib/gallery.html">GALLERY</a>
 </p>
@@ -1516,19 +1630,19 @@ only return a view of the data.
 <a href="https://github.com/matplotlib/cheatsheets#cheatsheets">Cheatsheets</a>
 </p>
 </div>
-<div id="outline-container-org49f8bda" class="outline-4">
-<h4 id="org49f8bda">Jupyter</h4>
-<div class="outline-text-4" id="text-org49f8bda">
+<div id="outline-container-orga131447" class="outline-4">
+<h4 id="orga131447">Jupyter</h4>
+<div class="outline-text-4" id="text-orga131447">
 <p>
 To get this working in a jupyter notebook you'll need the following at the head
 of the first cell pretty much.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">%matplotlib inline
+<pre class="src src-python"><code>%matplotlib inline
 
-<span style="color: #b6a0ff;">import</span> matplotlib.pyplot <span style="color: #b6a0ff;">as</span> plt
-</pre>
+<span style="color: #778c00; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #778c00; font-weight: bold;">as</span> plt
+</code></pre>
 </div>
 
 <p>
@@ -1537,9 +1651,9 @@ hist. Legends need to be added seperately.
 </p>
 </div>
 </div>
-<div id="outline-container-org0e8337c" class="outline-4">
-<h4 id="org0e8337c">Random notes</h4>
-<div class="outline-text-4" id="text-org0e8337c">
+<div id="outline-container-orgdd1a631" class="outline-4">
+<h4 id="orgdd1a631">Random notes</h4>
+<div class="outline-text-4" id="text-orgdd1a631">
 <ul class="org-ul">
 <li>You want to use the pyplot interface: <code>import matplotlib.pyplot as plt</code>.</li>
 <li>You create a figure object first: <code>fig = plt.figure()</code></li>
@@ -1560,13 +1674,13 @@ methods, eg <code>bar</code> and <code>text</code> to draw other things.</li>
 <h3 id="python-requests">Requests/lxml</h3>
 <div class="outline-text-3" id="text-python-requests">
 </div>
-<div id="outline-container-orgc23ac78" class="outline-4">
-<h4 id="orgc23ac78">Example: Getting a list of references from an article</h4>
-<div class="outline-text-4" id="text-orgc23ac78">
+<div id="outline-container-org1474551" class="outline-4">
+<h4 id="org1474551">Example: Getting a list of references from an article</h4>
+<div class="outline-text-4" id="text-org1474551">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> requests
-<span style="color: #b6a0ff;">from</span> lxml <span style="color: #b6a0ff;">import</span> html
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> requests
+<span style="color: #778c00; font-weight: bold;">from</span> lxml <span style="color: #778c00; font-weight: bold;">import</span> html
+</code></pre>
 </div>
 
 <p>
@@ -1576,13 +1690,13 @@ at the response to see it did include the references.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">url</span> = <span style="color: #79a8ff;">"https://doi.org/10.1371/journal.pcbi.1009805"</span>
-<span style="color: #00d3d0;">headers</span> = {
-    <span style="color: #79a8ff;">"Accept"</span>: <span style="color: #79a8ff;">"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"</span>,
-    <span style="color: #79a8ff;">"Accept-Language"</span>: <span style="color: #79a8ff;">"en-GB,en;q=0.5"</span>,
-    <span style="color: #79a8ff;">"User-Agent"</span>: <span style="color: #79a8ff;">"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0"</span>,
+<pre class="src src-python"><code><span style="color: #007ec4;">url</span> = <span style="color: #11948b;">"https://doi.org/10.1371/journal.pcbi.1009805"</span>
+<span style="color: #007ec4;">headers</span> = {
+    <span style="color: #11948b;">"Accept"</span>: <span style="color: #11948b;">"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"</span>,
+    <span style="color: #11948b;">"Accept-Language"</span>: <span style="color: #11948b;">"en-GB,en;q=0.5"</span>,
+    <span style="color: #11948b;">"User-Agent"</span>: <span style="color: #11948b;">"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0"</span>,
 }
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -1592,39 +1706,39 @@ we can filter out this information.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">response</span> = requests.get(url, headers=headers)
+<pre class="src src-python"><code><span style="color: #007ec4;">response</span> = requests.get(url, headers=headers)
 
-<span style="color: #b6a0ff;">if</span> response.status_code == 200:
-    <span style="color: #00d3d0;">tree</span> = html.fromstring(response.content)
-    <span style="color: #00d3d0;">xpath</span> = <span style="color: #79a8ff;">"//ol[@class='references']"</span>
-    <span style="color: #00d3d0;">ordered_list</span> = tree.xpath(xpath)
+<span style="color: #778c00; font-weight: bold;">if</span> response.status_code == 200:
+    <span style="color: #007ec4;">tree</span> = html.fromstring(response.content)
+    <span style="color: #007ec4;">xpath</span> = <span style="color: #11948b;">"//ol[@class='references']"</span>
+    <span style="color: #007ec4;">ordered_list</span> = tree.xpath(xpath)
 
-    <span style="color: #b6a0ff;">if</span> ordered_list:
-        <span style="color: #f78fe7;">print</span>(html.tostring(ordered_list[0], pretty_print=<span style="color: #00bcff;">True</span>).decode())
-    <span style="color: #b6a0ff;">else</span>:
-        <span style="color: #f78fe7;">print</span>(<span style="color: #79a8ff;">"Ordered list not found in the HTML."</span>)
-<span style="color: #b6a0ff;">else</span>:
-    <span style="color: #f78fe7;">print</span>(f<span style="color: #79a8ff;">"Failed to retrieve data: Status code </span>{response.status_code}<span style="color: #79a8ff;">"</span>)
-</pre>
+    <span style="color: #778c00; font-weight: bold;">if</span> ordered_list:
+        <span style="color: #596e76; font-weight: bold;">print</span>(html.tostring(ordered_list[0], pretty_print=<span style="color: #007ec4; font-weight: bold;">True</span>).decode())
+    <span style="color: #778c00; font-weight: bold;">else</span>:
+        <span style="color: #596e76; font-weight: bold;">print</span>(<span style="color: #11948b;">"Ordered list not found in the HTML."</span>)
+<span style="color: #778c00; font-weight: bold;">else</span>:
+    <span style="color: #596e76; font-weight: bold;">print</span>(f<span style="color: #11948b;">"Failed to retrieve data: Status code </span>{response.status_code}<span style="color: #11948b;">"</span>)
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc7e4c61" class="outline-3">
-<h3 id="orgc7e4c61">Statsmodels</h3>
-<div class="outline-text-3" id="text-orgc7e4c61">
+<div id="outline-container-org8fbba75" class="outline-3">
+<h3 id="org8fbba75">Statsmodels</h3>
+<div class="outline-text-3" id="text-org8fbba75">
 <p>
-Where the <a href="#orgdc2a375">Pandas</a> package provides R-style data frames in python, the Statsmodels
+Where the <a href="#orga2cdf3f">Pandas</a> package provides R-style data frames in python, the Statsmodels
 attempts to provide all of the statistics functionality of R (primarily
 regression functions). The standard import statements for using Statsmodels are
 shown below.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> pandas <span style="color: #b6a0ff;">as</span> pd
-<span style="color: #b6a0ff;">import</span> statsmodels.api <span style="color: #b6a0ff;">as</span> sm
-<span style="color: #b6a0ff;">import</span> statsmodels.formula.api <span style="color: #b6a0ff;">as</span> smf
-</pre>
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> pandas <span style="color: #778c00; font-weight: bold;">as</span> pd
+<span style="color: #778c00; font-weight: bold;">import</span> statsmodels.api <span style="color: #778c00; font-weight: bold;">as</span> sm
+<span style="color: #778c00; font-weight: bold;">import</span> statsmodels.formula.api <span style="color: #778c00; font-weight: bold;">as</span> smf
+</code></pre>
 </div>
 
 <p>
@@ -1635,16 +1749,16 @@ documentation.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #00d3d0;">duncan_prestige</span> = sm.datasets.get_rdataset(<span style="color: #79a8ff;">"Duncan"</span>, <span style="color: #79a8ff;">"carData"</span>)
-<span style="color: #f78fe7;">print</span>(duncan_prestige.<span style="color: #f78fe7;">__doc__</span>) <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">for meta-data
-</span>duncan_prestige.data <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">pandas dataframe</span>
-</pre>
+<pre class="src src-python"><code><span style="color: #007ec4;">duncan_prestige</span> = sm.datasets.get_rdataset(<span style="color: #11948b;">"Duncan"</span>, <span style="color: #11948b;">"carData"</span>)
+<span style="color: #596e76; font-weight: bold;">print</span>(duncan_prestige.<span style="color: #596e76; font-weight: bold;">__doc__</span>) <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">for meta-data
+</span>duncan_prestige.data <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">pandas dataframe</span>
+</code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb371da9" class="outline-3">
-<h3 id="orgb371da9">NetworkX</h3>
-<div class="outline-text-3" id="text-orgb371da9">
+<div id="outline-container-orgf5d38ae" class="outline-3">
+<h3 id="orgf5d38ae">NetworkX</h3>
+<div class="outline-text-3" id="text-orgf5d38ae">
 <ul class="org-ul">
 <li>A node can be any hashable object (importantly it can be a dictionary); the
 value of <code>None</code> is reserved to indicate that something is <i>not</i> a node.</li>
@@ -1656,113 +1770,184 @@ pairs).</li>
 algorithms.</li>
 </ul>
 </div>
-<div id="outline-container-orgec39c32" class="outline-4">
-<h4 id="orgec39c32">Mutating a network</h4>
-<div class="outline-text-4" id="text-orgec39c32">
+<div id="outline-container-orgdc4bdc2" class="outline-4">
+<h4 id="orgdc4bdc2">Mutating a network</h4>
+<div class="outline-text-4" id="text-orgdc4bdc2">
 <ul class="org-ul">
 <li>relabel a node with <a href="https://networkx.org/documentation/stable/reference/generated/networkx.relabel.relabel_nodes.html?highlight=rename#networkx-relabel-relabel-nodes"><code>networkx.relabel.relabel_nodes</code></a></li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org2eb6edc" class="outline-3">
-<h3 id="org2eb6edc">VLC</h3>
-<div class="outline-text-3" id="text-org2eb6edc">
+<div id="outline-container-org005ddf5" class="outline-3">
+<h3 id="org005ddf5">VLC</h3>
+<div class="outline-text-3" id="text-org005ddf5">
 <p>
 The following makes use of the <code>python-vlc</code> library to stream radio.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b6a0ff;">import</span> vlc
-<span style="color: #b6a0ff;">import</span> time
+<pre class="src src-python"><code><span style="color: #778c00; font-weight: bold;">import</span> vlc
+<span style="color: #778c00; font-weight: bold;">import</span> time
 
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">--------------------------------------------------------------------
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">For finding more radio stations, you may want to check out websites
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">such as Internet-Radio or TuneIn, which offer thousands of free
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">online radio stations. Most of these stations provide their
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">streaming URL which you can use to listen in your favorite media
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">player.
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">For finding more radio stations, you may want to check out websites
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">such as Internet-Radio or TuneIn, which offer thousands of free
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">online radio stations. Most of these stations provide their
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">streaming URL which you can use to listen in your favorite media
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">player.
 </span>
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">When you navigate these websites, you typically select a station
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">you're interested in and look for an option that says something like
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">"play in your own player" or "manual streaming". This usually leads
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">contain the actual URL(s) for the stream, and can be opened in a
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">text editor to view the stream URL.
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">--------------------------------------------------------------------
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">When you navigate these websites, you typically select a station
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">you're interested in and look for an option that says something like
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">"play in your own player" or "manual streaming". This usually leads
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">to a .pls, .m3u, .asx or .xspf file being downloaded. These files
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">contain the actual URL(s) for the stream, and can be opened in a
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">text editor to view the stream URL.
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">--------------------------------------------------------------------
 </span>
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">BBC World Service
-</span><span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">BBC World Service
+</span><span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 </span>
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Majestic Jukebox Radio
-</span><span style="color: #00d3d0;">url</span> = <span style="color: #79a8ff;">"http://uk3.internet-radio.com:8405/live"</span>
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Majestic Jukebox Radio
+</span><span style="color: #007ec4;">url</span> = <span style="color: #11948b;">"http://uk3.internet-radio.com:8405/live"</span>
 
 
-<span style="color: #00d3d0;">instance</span> = vlc.Instance()
-<span style="color: #00d3d0;">player</span> = instance.media_player_new()
-<span style="color: #00d3d0;">media</span> = instance.media_new(url)
+<span style="color: #007ec4;">instance</span> = vlc.Instance()
+<span style="color: #007ec4;">player</span> = instance.media_player_new()
+<span style="color: #007ec4;">media</span> = instance.media_new(url)
 player.set_media(media)
 player.play()
 
-<span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">Keep the program running while the radio plays
-</span><span style="color: #b6a0ff;">try</span>:
-    <span style="color: #b6a0ff;">while</span> <span style="color: #00bcff;">True</span>:
+<span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">Keep the program running while the radio plays
+</span><span style="color: #778c00; font-weight: bold;">try</span>:
+    <span style="color: #778c00; font-weight: bold;">while</span> <span style="color: #007ec4; font-weight: bold;">True</span>:
         time.sleep(1)
-<span style="color: #b6a0ff;">except</span> <span style="color: #6ae4b9;">KeyboardInterrupt</span>:
-    <span style="color: #ff9f80;"># </span><span style="color: #ff9f80;">On Ctrl+C, stop the player and quit
+<span style="color: #778c00; font-weight: bold;">except</span> <span style="color: #a67c00;">KeyboardInterrupt</span>:
+    <span style="color: #98a6a6;"># </span><span style="color: #98a6a6;">On Ctrl+C, stop the player and quit
 </span>    player.stop()
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc55beee" class="outline-2">
-<h2 id="orgc55beee">Hy</h2>
-<div class="outline-text-2" id="text-orgc55beee">
+<div id="outline-container-org87c3254" class="outline-2">
+<h2 id="org87c3254">Tooling</h2>
+<div class="outline-text-2" id="text-org87c3254">
+</div>
+<div id="outline-container-org09a66e1" class="outline-3">
+<h3 id="org09a66e1">Spyder</h3>
+<div class="outline-text-3" id="text-org09a66e1">
+<ul class="org-ul">
+<li>Use <b>Tools</b> &gt; <b>Preferences</b> &gt; <b>Python interpretor</b> to set your
+virtual environment.</li>
+<li>The hamburger menu in the editor allows you to split the panel to
+show multiple files.</li>
+<li>Use <b>Run</b> &gt; <b>Configuration per file</b> to set the command line
+arguments for a particular file (if you can't use a terminal&hellip;)</li>
+</ul>
+</div>
+<div id="outline-container-orga0ca2aa" class="outline-4">
+<h4 id="orga0ca2aa">Keyboard shortcuts</h4>
+<div class="outline-text-4" id="text-orga0ca2aa">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>C i</code></td>
+<td class="org-left">Inspect an entities' documentation</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F8</code></td>
+<td class="org-left">Run code analysis</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F9</code></td>
+<td class="org-left">Run current line/region</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F5</code></td>
+<td class="org-left">Run script</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org3a5e034" class="outline-3">
+<h3 id="org3a5e034">Black</h3>
+<div class="outline-text-3" id="text-org3a5e034">
+<p>
+Once you have <a href="https://black.readthedocs.io/en/stable/">black</a> installed, just run <code>black src</code> (assuming your
+code is in <code>src/</code>).
+</p>
+</div>
+</div>
+<div id="outline-container-orgf7b1f14" class="outline-3">
+<h3 id="orgf7b1f14">Jupyter via Nix</h3>
+<div class="outline-text-3" id="text-orgf7b1f14">
 <div class="org-src-container">
-<pre class="src src-hy">(import [matplotlib.pyplot :as plt])
-
-(defn fib [n]
-  (if (&lt; n 2)
-      1
-      (+ (fib (- n 1))
-         (fib (- n 2)))))
-
-(setv x_vals (range 10))
-(setv fib_vals (list (map fib x_vals)))
-(do
-  (plt.figure)
-  (plt.scatter x_vals fib_vals :color "r")
-  (plt.show))
-</pre>
+<pre class="src src-sh"><code>nix-shell --command <span style="color: #11948b;">"jupyter lab"</span>
+</code></pre>
 </div>
 
+<p>
+can be run from a directory with the following <code>shell.nix</code> file to start a
+jupyter lab server.
+</p>
+
 <div class="org-src-container">
-<pre class="src src-nil">appdirs==1.4.4
-astor==0.8.1
-colorama==0.4.4
-cycler==0.10.0
-funcparserlib==0.3.6
-hy==0.20.0
-jedhy==1
-kiwisolver==1.3.2
-matplotlib==3.4.3
-numpy==1.21.3
-Pillow==8.4.0
-pkg_resources==0.0.0
-pyparsing==3.0.1
-python-dateutil==2.8.2
-rply==0.7.8
-six==1.16.0
-toolz==0.11.1
-</pre>
+<pre class="src src-nix"><code># This provides a shell running a jupyter lab server. To start the server run
+# the following command
+#
+# $ nix-shell --command "jupyter lab"
+
+let
+  jupyter = import (builtins.fetchGit {
+    url = https://github.com/tweag/jupyterWith;
+    rev = "10d64ee254050de69d0dc51c9c39fdadf1398c38";
+  }) {};
+
+  ipython = jupyter.kernels.iPythonWith {
+    name = "python";
+    packages = p: with p; [ numpy
+                            altair
+                            scipy
+                            pandas
+                            matplotlib ];
+  };
+
+  jupyterEnvironment = jupyter.jupyterlabWith {
+    kernels = [ ipython ];
+  };
+in
+  jupyterEnvironment.env
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge47193f" class="outline-3">
+<h3 id="orge47193f">Colab</h3>
+<div class="outline-text-3" id="text-orge47193f">
+<p>
+If you are using Google's Colab to run notebooks, the <code>requests</code> package is
+useful for reading files from Github.
+</p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alexander E. Zarebski</p>
-<p class="date">Created: 2026-01-24 Sat 16:17</p>
+<p class="date">Created: 2026-06-29 Mon 15:30</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
